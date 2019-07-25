@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="ImportSrcFlow">
+    <default-activity id="__7">initImportSource</default-activity>
+    <managed-bean id="__8">
+      <managed-bean-name id="__10">ImportSourceBean</managed-bean-name>
+      <managed-bean-class id="__9">xxatcust.oracle.apps.sudoku.bean.ImportSource</managed-bean-class>
+      <managed-bean-scope id="__11">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="ImportSource">
+      <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSource.jsff</page>
+    </view>
+    <method-call id="initImportSource">
+      <method>#{bindings.initImportSource.execute}</method>
+      <outcome id="__1">
+        <fixed-outcome>initImportSource</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">initImportSource</from-activity-id>
+      <control-flow-case id="__6">
+        <from-outcome id="__5">initImportSource</from-outcome>
+        <to-activity-id id="__4">ImportSource</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

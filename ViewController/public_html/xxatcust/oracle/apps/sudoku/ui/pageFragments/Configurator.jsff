@@ -1,0 +1,289 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html">
+  <af:panelStretchLayout id="psl1" dimensionsFrom="children"
+                         styleClass="AFStretchWidth">
+    <f:facet name="bottom">
+      <af:panelGroupLayout id="pgl6">
+        <af:resource type="javascript">
+          function clientCellSelectionCall(event) {
+              component = event.getSource();
+              var columnName = component.getProperty("columnName");
+              AdfCustomEvent.queue(component, "cellSelection", 
+              {
+                  payload : component, column : columnName
+              },
+true);
+          }
+        </af:resource>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="center">
+      <af:panelGroupLayout layout="scroll"
+                           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                           id="pgl1" partialTriggers="ctb1">
+        <af:listView id="sysLv"
+                     value="#{pageFlowScope.SysInfraBean.sysInfraTreeModel}"
+                     var="node" groupDisclosurePolicy="initiallyExpanded"
+                     binding="#{pageFlowScope.SysInfraBean.sysInfraListView}">
+          <f:facet name="groupHeaderStamp">
+            <af:listItem id="li1" styleClass="ABHeader">
+              <af:panelGroupLayout id="pgl3" layout="horizontal">
+                <af:panelBorderLayout id="pbl1"
+                                      inlineStyle="width:20px;background-color:Red;">
+                  <f:facet name="start">
+                    <af:outputFormatted id="of1" value="."/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:panelBorderLayout id="pbl2"
+                                      inlineStyle="width:20px;background-color:Teal;">
+                  <f:facet name="start">
+                    <af:outputFormatted value="." id="of2"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:spacer width="10" height="10" id="s3"/>
+                <af:outputFormatted value="#{node.nodeName}" id="of3"
+                                    styleClass="ABHeader"
+                                    inlineStyle="font-size:medium; font-weight:bolder;"/>
+              </af:panelGroupLayout>
+            </af:listItem>
+          </f:facet>
+          <af:listItem id="li2">
+            <af:panelGridLayout id="pgl2" styleClass="AFStretchWidth"
+                                dimensionsFrom="children">
+              <af:gridRow marginTop="5px" height="auto" id="gr1">
+                <af:gridCell marginStart="5px" width="50%" id="gc3"
+                             styleClass="AFStretchWidth">
+                  <af:iterator
+                              var="topNode"
+                               value="#{pageFlowScope.SysInfraBean.sdiCollection}">
+                    <af:panelGroupLayout id="pgl4" layout="horizontal">
+                      <af:panelGroupLayout id="pgl5" layout="horizontal"
+                                           rendered="#{node.codeName eq topNode.index}">
+                        <af:panelBorderLayout id="pbl4"
+                                              inlineStyle="height:10px; width:20px; border-style:groove;background-color:#{node.nodeRefColor};">
+                          <f:facet name="start"/>
+                          <f:facet name="bottom"/>
+                          <f:facet name="end"/>
+                          <f:facet name="top"/>
+                        </af:panelBorderLayout>
+                        <af:panelBorderLayout id="pbl5"
+                                              inlineStyle="height:10px; width:20px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                          <f:facet name="start"/>
+                          <f:facet name="bottom"/>
+                          <f:facet name="end"/>
+                          <f:facet name="top"/>
+                        </af:panelBorderLayout>
+                      </af:panelGroupLayout>
+                      <af:showDetail id="sd1"
+                                     disclosedText="#{node.nodeName}"
+                                     rendered="#{node.codeName eq topNode.index}">
+                        <af:iterator id="i2"
+                                     value="#{topNode.uiFieldCollection}"
+                                     var="theadIter">
+                          <af:panelGroupLayout id="theadPgl" layout="horizontal"
+                                               binding="#{pageFlowScope.SysInfraBean.theadPanelGrp}">
+                            <af:spacer width="100" height="10" id="s1"/>
+                            <af:panelBorderLayout id="pbl3"
+                                                  inlineStyle="height:25px; width:250px; border-style:none;">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="pgl12" halign="left"
+                                                     layout="horizontal">
+                                  <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                      id="of4"/>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="s2"/>
+                            <af:panelBorderLayout id="pbl9"
+                                                  inlineStyle="height:25px; width:60px; border-style:none;">
+                              <f:facet name="innerLeft"/>
+                            </af:panelBorderLayout>
+                            <af:panelBorderLayout id="pb20"
+                                                  inlineStyle="height:25px; width:60px; border-style:none;">
+                              <f:facet name="innerLeft"/>
+                            </af:panelBorderLayout>
+                            <af:panelBorderLayout id="pb1"
+                                                  inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="pgl7"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="cl1"
+                                                  actionListener="#{pageFlowScope.SysInfraBean.handleNodeSelection}"
+                                                  disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}">
+                                    <af:outputFormatted id="th_of1"
+                                                        value="#{theadIter.uiField1}"
+                                                        inlineStyle="#{theadIter.uiField1_bgColor}"/>
+                                    <af:inputText id="ip1_helper"
+                                                  visible="false"
+                                                  value="#{theadIter.czNodeName1}"
+                                                  shortDesc="#{theadIter.uiField1_identifier}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="s4"/>
+                            <af:panelBorderLayout id="pb2"
+                                                  inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="pgl_7"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="cl2"
+                                                  actionListener="#{pageFlowScope.SysInfraBean.handleNodeSelection}"
+                                                  disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
+                                    <af:outputFormatted id="th_of2"
+                                                        value="#{theadIter.uiField2}"
+                                                        inlineStyle="#{theadIter.uiField2_bgColor}"/>
+                                    <af:inputText id="ip2_helper"
+                                                  visible="false"
+                                                  value="#{theadIter.czNodeName2}"
+                                                  shortDesc="#{theadIter.uiField2_identifier}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="s5"/>
+                            <af:panelBorderLayout id="pb3"
+                                                  inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="pgl_71"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="cl3"
+                                                  actionListener="#{pageFlowScope.SysInfraBean.handleNodeSelection}"
+                                                  disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
+                                    <af:outputFormatted id="th_of3"
+                                                        value="#{theadIter.uiField3}"
+                                                        inlineStyle="#{theadIter.uiField3_bgColor}"/>
+                                    <af:inputText id="ip3_helper"
+                                                  visible="false"
+                                                  value="#{theadIter.czNodeName3}"
+                                                  shortDesc="#{theadIter.uiField3_identifier}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="s6"/>
+                            <af:panelBorderLayout id="pb4"
+                                                  inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="pgl_17"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="cl4"
+                                                  actionListener="#{pageFlowScope.SysInfraBean.handleNodeSelection}"
+                                                  disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
+                                    <af:outputFormatted id="th_of4"
+                                                        value="#{theadIter.uiField4}"
+                                                        inlineStyle="#{theadIter.uiField4_bgColor}"/>
+                                    <af:inputText id="ip4_helper"
+                                                  visible="false"
+                                                  value="#{theadIter.czNodeName4}"
+                                                  shortDesc="#{theadIter.uiField4_identifier}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="s8"/>
+                            <af:panelBorderLayout id="pb5"
+                                                  inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="pgl9"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="cl5"
+                                                  actionListener="#{pageFlowScope.SysInfraBean.handleNodeSelection}"
+                                                  disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
+                                    <af:outputFormatted id="th_of5"
+                                                        value="#{theadIter.uiField5}"
+                                                        inlineStyle="#{theadIter.uiField5_bgColor}"/>
+                                    <af:inputText id="ip5_helper"
+                                                  visible="false"
+                                                  value="#{theadIter.czNodeName5}"
+                                                  shortDesc="#{theadIter.uiField5_identifier}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="s7"/>
+                            <af:panelBorderLayout id="pb6"
+                                                  inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="pgl10"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="cl6"
+                                                  actionListener="#{pageFlowScope.SysInfraBean.handleNodeSelection}"
+                                                  disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
+                                    <af:outputFormatted id="th_of6"
+                                                        value="#{theadIter.uiField6}"
+                                                        inlineStyle="#{theadIter.uiField6_bgColor}"/>
+                                    <af:inputText id="ip6_helper"
+                                                  visible="false"
+                                                  value="#{theadIter.czNodeName6}"
+                                                  shortDesc="#{theadIter.uiField6_identifier}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="s9"/>
+                            <af:panelBorderLayout id="pb7"
+                                                  inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="pgl20"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="cl7"
+                                                  actionListener="#{pageFlowScope.SysInfraBean.handleNodeSelection}"
+                                                  disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
+                                    <af:outputFormatted id="th_of7"
+                                                        value="#{theadIter.uiField7}"
+                                                        inlineStyle="#{theadIter.uiField7_bgColor}"/>
+                                    <af:inputText id="ip7_helper"
+                                                  visible="false"
+                                                  value="#{theadIter.czNodeName7}"
+                                                  shortDesc="#{theadIter.uiField7_identifier}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="s13"/>
+                          </af:panelGroupLayout>
+                        </af:iterator>
+                      </af:showDetail>
+                    </af:panelGroupLayout>
+                  </af:iterator>
+                </af:gridCell>
+              </af:gridRow>
+            </af:panelGridLayout>
+          </af:listItem>
+        </af:listView>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="start"/>
+    <f:facet name="end"/>
+    <f:facet name="top">
+      <af:panelHeader text="Configurator" id="ph1" size="-1">
+        <f:facet name="context"/>
+        <f:facet name="menuBar"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t1">
+            <af:commandToolbarButton text="Refresh" id="ctb1"
+                                     actionListener="#{pageFlowScope.SysInfraBean.refreshView}"/>
+            <af:commandToolbarButton text="EBS Servlet call" id="ctb2"
+                                     actionListener="#{pageFlowScope.SysInfraBean.callEBSServlet}"/>
+            <af:inputText label="Label 1" id="it2"
+                          binding="#{pageFlowScope.SysInfraBean.jsessionId}"
+                          autoSubmit="true"/>
+          </af:toolbar>
+        </f:facet>
+        <f:facet name="legend"/>
+        <f:facet name="info"/>
+      </af:panelHeader>
+    </f:facet>
+  </af:panelStretchLayout>
+</jsp:root>

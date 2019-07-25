@@ -1,0 +1,176 @@
+@charset "UTF-8";
+
+/**ADFFaces_Skin_File / DO NOT REMOVE**/
+@namespace af "http://xmlns.oracle.com/adf/faces/rich";
+
+@namespace dvt "http://xmlns.oracle.com/dss/adf/faces";
+
+.AFButtonForeground:alias {
+}
+
+.AFButtonBorderColor:alias {
+}
+
+.AFDefaultFontFamily:alias {
+       font-family: 'Lucida Sans Unicode';
+}
+
+.AFButtonGradientStartActiveColor:alias {
+    color: #C60063;
+}
+
+.AFButtonBorderTopActiveColor:alias {
+    color: #D71D7A;
+}
+
+.AFButtonBorderActiveColor:alias {
+    color: #BA1166;
+}
+
+.AFButtonGradientEndActiveColor:alias {
+    color: #73013A;
+}
+
+.AFTextColor:alias {
+    color: Black;
+}
+/*INFO: Color value exceeded range after adjustment: HSL(0, 0%, -20%)*/
+.AFTextPrimaryColor:alias {
+    color: #000000;
+}
+
+.AFLabelColor:alias {
+    color: #1C1C1C;
+}
+
+.AFTextSecondaryColor:alias {
+    color: #1C1C1C;
+}
+
+.AFTextTertiaryColor:alias {
+    color: #000000;
+}
+
+af|selectOneChoice {
+    background-color: #e6f2ff;
+}
+
+af|inputListOfValues {
+    background-color: #e6f2ff;
+}
+
+af|inputText {
+    background-color: #e6f2ff;
+}
+
+af|listItem {
+    color: Black;
+}
+
+af|panelLabelAndMessage::label {
+    color: Black;
+}
+
+af|panelSplitter::pane {
+}
+
+af|popup {
+    background-color: #f7f7f7;
+}
+
+af|separator {
+    color: Black;
+}
+
+af|commandToolbarButton {
+}
+
+af|inputFile {
+    background-color: #008484;
+}
+
+af|inputFile::label {
+    text-align: center;
+}
+
+af|commandToolbarButton::text {
+    color: Black;
+    position: center;
+}
+
+af|commandToolbarButton:disabled::text {
+}
+
+af|selectBooleanRadio[theme="medium"] {
+}
+
+af|commandToolbarButton[theme="medium"] {
+}
+
+af|inputText.searchIT af|inputText::content {
+        
+    border: solid #ABABAB 1.5px;
+        
+    border-right: none;
+        
+    height: 17px;
+        
+    line-height: 17px;
+        
+    width: 100px;
+        
+    padding: 2px 4px;
+        
+    border-top-left-radius: 5px;
+        
+    border-bottom-left-radius: 5px;
+        
+    font-weight: bold;
+}
+
+af|commandButton.submitButton:text-only {
+        
+    border: solid #ABABAB 1.5px;
+        
+    border-left: none;
+        
+    height: 23px;
+        
+    width: 30px;
+        
+    border-top-left-radius: 0px;
+        
+    border-bottom-left-radius: 0px;
+        
+    border-top-right-radius: 5px;
+        
+    border-bottom-right-radius: 5px;
+        
+    margin-left: -1px;
+        
+    background-image: url('/Resources/images/select.png');
+        
+    background-repeat: no-repeat;
+        
+    background-color: transparent;
+        
+    background-position: center;
+}
+
+af|listItem::expanded-icon-style {
+    background-image:  url("/select.png"); 
+}
+
+af|listItem::collapsed-icon-style {
+    background-image:  url("/select.png"); 
+}
+af|commandLink {
+    color: Black; 
+}
+af|panelAccordion::disclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+
+af|panelAccordion::undisclosed-icon-style {
+    background-image: url("/select.png"); 
+}

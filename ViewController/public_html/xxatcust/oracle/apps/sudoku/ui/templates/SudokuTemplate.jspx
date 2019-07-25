@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+  <c:set var="viewcontrollerBundle"
+         value="#{adfBundle['view.ViewControllerBundle']}"/>
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplateDef var="attrs">
+    <af:panelStretchLayout id="pt_psl1" topHeight="110px"
+                           dimensionsFrom="parent" startWidth="10px"
+                           endWidth="10px" bottomHeight="30px">
+      <f:facet name="center">
+        <af:facetRef facetName="ConsumerFacet"/>
+      </f:facet>
+      <f:facet name="top">
+        <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                             id="pt_pgl1" styleClass="AFStretchWidth"
+                             layout="vertical">
+          <af:panelGroupLayout id="pt_pgl7" layout="horizontal"
+                               styleClass="AFStretchWidth">
+            <af:panelGroupLayout id="pgl1" layout="horizontal"
+                                 styleClass="AFStretchWidth">
+              <af:panelGroupLayout id="panelGroupLayout1" layout="vertical">
+                <af:spacer width="6" height="10" id="pt_s6"/>
+                <af:navigationPane id="pt_np1" value="#{HomeMenu}"
+                                   var="menuItem" level="0" hint="bar">
+                  <f:facet name="nodeStamp">
+                    <af:commandNavigationItem text="#{menuItem.label}"
+                                              id="pt_cni1"
+                                              action="#{menuItem.doAction}"
+                                              rendered="#{menuItem.rendered}"
+                                              immediate="true"
+                                              inlineStyle="font-size:medium;"
+                                              icon="/Resources/images/icons8-file-32.png">
+                      <af:setActionListener from="#{pageFlowScope.TemplateBean.currentTimeStamp}"
+                                            to="#{pageFlowScope.TemplateBean.taskFlowParam}"/>
+                    </af:commandNavigationItem>
+                  </f:facet>
+                </af:navigationPane>
+              </af:panelGroupLayout>
+             
+              <af:panelGroupLayout id="pgl0" layout="horizontal" halign="right"
+                                   visible="false"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout id="pt_pgl4" layout="horizontal"
+                                 halign="center" styleClass="AFStretchWidth">
+              <af:panelGroupLayout id="pt_pgl3" layout="vertical" styleClass="AFStretchWidth"
+                                   halign="end">
+                <af:panelGroupLayout id="pt_pgl10" halign="end">
+                  <af:image id="pt_i1" source="/Resources/images/adv.gif"
+                            inlineStyle="width:215px;"/>
+                </af:panelGroupLayout>
+                <af:spacer width="20" height="5" id="spacer1"/>
+                <af:panelGroupLayout id="pt_pgl11" layout="horizontal"
+                                     halign="left">
+                  <af:commandImageLink id="pt_cil2"
+                                       icon="/Resources/images/icons8-shutdown-32.png"
+                                       actionListener="#{pageFlowScope.TemplateBean.logout}"
+                                       shortDesc="Logout.."/>
+                  <af:spacer width="20" height="10" id="pt_s2"/>
+                  <af:commandImageLink id="pt_cil1"
+                                       icon="/Resources/images/icons8-home-page-32.png"
+                                       actionListener="#{pageFlowScope.TemplateBean.redirectToHome}"
+                                       shortDesc="Redirect to EBS Home.."
+                                       rendered="true"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="10" id="pt_s1"/>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout id="pt_pgl2" styleClass="AFStretchWidth"
+                               layout="vertical" rendered="false">
+            <af:panelGroupLayout id="pt_pgl6" styleClass="AFStretchWidth"
+                                 halign="right" rendered="false">
+              <af:navigationPane id="pt_np2" value="#{HomeMenu}" var="menuItem"
+                                 level="1" hint="bar">
+                <f:facet name="nodeStamp">
+                  <af:commandNavigationItem text="#{menuItem.label}"
+                                            id="pt_cni2"
+                                            action="#{menuItem.doAction}"
+                                            rendered="#{menuItem.rendered}"
+                                            inlineStyle="font-size:medium; color:Red;"
+                                            immediate="true"/>
+                </f:facet>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="bottom">
+        <af:panelGroupLayout id="pt_pgl5" halign="right">
+          <af:panelBox text="Welcome : #{sessionScope.UserName}" id="pt_pb1"
+                       showDisclosure="false" ramp="highlight"
+                       background="light"
+                       contentStyle="font-size:x-large; color:#910048; font-weight:bold;">
+            <f:facet name="toolbar">
+              <af:outputText value="V93000 Configurator" id="pt_ot5"
+                             styleClass="AFHeaderLevelTwo"
+                             inlineStyle="font-size:x-large; color:#910048; font-weight:bold;"/>
+            </f:facet>
+          </af:panelBox>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="start">
+        <af:panelGroupLayout id="pt_pgl8"/>
+      </f:facet>
+      <f:facet name="end">
+        <af:panelGroupLayout id="pt_pgl9"/>
+      </f:facet>
+    </af:panelStretchLayout>
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <display-name>HarscoTemplate</display-name>
+        <facet>
+          <description>Consumer Facet</description>
+          <facet-name>ConsumerFacet</facet-name>
+        </facet>
+        <attribute>
+          <attribute-name>PageName</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+  </af:pageTemplateDef>
+</jsp:root>

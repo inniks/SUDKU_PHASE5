@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">ImportSource</property>
+      <property
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSource.jsff</property>
+      <property
+         name="start">false</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>ImportSource&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">163.89648</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">441.0</property>
+   </View>
+   <MethodCall
+      id="MethodCall5">
+      <property
+         name="activityId">initImportSource</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>initImportSource&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">173.14941</property>
+      <property
+         name="x">183.68457</property>
+   </MethodCall>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase6"
+      from="MethodCall5"
+      to="View2">
+      <property
+         name="fromOutcome">initImportSource</property>
+      <property
+         name="sdm:polyPoints">R50,224.68457,172.79883,400.0,163.5459,L50</property>
+   </ControlFlowCase>
+</SDM>

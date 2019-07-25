@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">Configurator</property>
+      <property
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pageFragments/Configurator.jsff</property>
+      <property
+         name="start">false</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>Configurator&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">172.89648</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">484.0</property>
+   </View>
+   <MethodCall
+      id="MethodCall3">
+      <property
+         name="activityId">initConfiguratorRuleSet</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>initConfiguratorRuleSet&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">166.14941</property>
+      <property
+         name="x">168.0332</property>
+   </MethodCall>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="MethodCall3"
+      to="View2">
+      <property
+         name="fromOutcome">initConfiguratorRuleSet</property>
+      <property
+         name="sdm:polyPoints">R50,209.0332,165.79883,443.0,172.5459,L50</property>
+   </ControlFlowCase>
+</SDM>

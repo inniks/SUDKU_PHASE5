@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="ImportSourcePageDef"
+                Package="xxatcust.oracle.apps.sudoku.ui.pageFragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ImportSourceVO1" RangeSize="25"
+              DataControl="SudokuAMDataControl" id="ImportSourceVO1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="ImportSourceVO1Iterator" StaticList="false"
+          Uses="LOV_ImportSrcMeaning" id="ImportSrcMeaning"
+          DTSupportsMRU="false"/>
+    <button IterBinding="ImportSourceVO1Iterator" id="CopyRefConfig"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="CopyRefConfig"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="ImportSourceVO1Iterator" StaticList="false"
+          Uses="LOV_ReuseQuote" id="ReuseQuote" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="ImportSourceVO1Iterator" id="BudgetQuoteId">
+      <AttrNames>
+        <Item Value="BudgetQuoteId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ImportSourceVO1Iterator" id="FormalQuoteId">
+      <AttrNames>
+        <Item Value="FormalQuoteId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callDuplicateQuoteAPI"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callDuplicateQuoteAPI"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.callDuplicateQuoteAPI_SudokuAMDataControl_dataProvider_callDuplicateQuoteAPI_result">
+      <NamedData NDName="quoteFromSesion" NDType="java.lang.String"/>
+      <NamedData NDName="respId" NDType="int"/>
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
+    <methodAction id="getQuoteNum"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getQuoteNum"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getQuoteNum_SudokuAMDataControl_dataProvider_getQuoteNum_result">
+      <NamedData NDName="headerid" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getFNDMsges"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getFNDMsges"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getFNDMsges_SudokuAMDataControl_dataProvider_getFNDMsges_result">
+      <NamedData NDName="msgName" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application"
+             version="11.1.1.64.93" id="DataBindings" SeparateXMLFiles="false"
+             Package="xxatcust.oracle.apps.sudoku.view" ClientType="Generic">
+  <definitionFactories>
+    <factory nameSpace="http://xmlns.oracle.com/adf/controller/binding"
+             className="oracle.adf.controller.internal.binding.TaskFlowBindingDefFactoryImpl"/>
+    <dtfactory className="oracle.adf.controller.internal.dtrt.binding.BindingDTObjectFactory"/>
+  </definitionFactories>
+  <pageMap>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportXML.jsff"
+          usageId="xxat_apps_sudoku_view_uploadXMLPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pages/SudokuHome.jspx"
+          usageId="xxat_apps_sudoku_view_SudokuHomePageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pages/Quoting.jspx"
+          usageId="xxat_apps_sudoku_view_QuotingPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/quoting.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_quotingPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/SearchQuote.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_SearchQuotePageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml#QuotingFlow@initQuoteSearch"
+          usageId="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_initQuoteSearchPageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml#QuotingFlow@clearQuoteFields"
+          usageId="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSource.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_ImportSourcePageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/templates/SudokuTemplate.jspx"
+          usageId="xxatcust_oracle_apps_sudoku_view_SudokuTemplatePageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pages/SudokuDashboard.jspx"
+          usageId="xxatcust_oracle_apps_sudoku_view_SudokuDashboardPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/QuoteUpdate.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_QuoteUpdatePageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuoteUpdateFlow.xml#QuoteUpdateFlow@getUpdateQuote"
+          usageId="xxatcust_oracle_apps_sudoku_view_QuoteUpdateFlow_QuoteUpdateFlow_getUpdateQuotePageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UploadXMLFlow.xml#UploadXMLFlow@initXMLUpload"
+          usageId="xxatcust_oracle_apps_sudoku_view_UploadXMLFlow_UploadXMLFlow_initXMLUploadPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pages/SkinningDemo.jspx"
+          usageId="xxatcust_oracle_apps_sudoku_view_SkinningDemoPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/RuleSet.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_RuleSetPageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/RuleSetFlow.xml#RuleSetFlow@initRuleSet"
+          usageId="xxatcust_oracle_apps_sudoku_view_RuleSetFlow_RuleSetFlow_initRuleSetPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/TargetConfiguration.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_TargetConfigurationPageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml#QuotingFlow@initQuotePage"
+          usageId="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_initQuotePagePageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ImportSrcFlow.xml#ImportSrcFlow@initImportSource"
+          usageId="xxatcust_oracle_apps_sudoku_view_ImportSrcFlow_ImportSrcFlow_initImportSourcePageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/Configurator.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_ConfiguratorPageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ConfiguratorFlow.xml#ConfiguratorFlow@initConfiguratorRuleSet"
+          usageId="xxatcust_oracle_apps_sudoku_view_ConfiguratorFlow_ConfiguratorFlow_initConfiguratorRuleSetPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.uploadXMLPageDef"/>
+    <page id="xxat_apps_sudoku_view_SudokuHomePageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pages.SudokuHomePageDef"/>
+    <page id="xxat_apps_sudoku_view_QuotingPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pages.QuotingPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_quotingPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.quotingPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_SearchQuotePageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.SearchQuotePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_initQuoteSearchPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.QuotingFlow_QuotingFlow_initQuoteSearchPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_ImportSourcePageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.ImportSourcePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_SudokuTemplatePageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.templates.SudokuTemplatePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_SudokuDashboardPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pages.SudokuDashboardPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_QuoteUpdatePageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.QuoteUpdatePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_QuoteUpdateFlow_QuoteUpdateFlow_getUpdateQuotePageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.QuoteUpdateFlow_QuoteUpdateFlow_getUpdateQuotePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_UploadXMLFlow_UploadXMLFlow_initXMLUploadPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.UploadXMLFlow_UploadXMLFlow_initXMLUploadPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_SkinningDemoPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pages.SkinningDemoPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_RuleSetPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.RuleSetPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_RuleSetFlow_RuleSetFlow_initRuleSetPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.RuleSetFlow_RuleSetFlow_initRuleSetPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_TargetConfigurationPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.TargetConfigurationPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_initQuotePagePageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.QuotingFlow_QuotingFlow_initQuotePagePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_ImportSrcFlow_ImportSrcFlow_initImportSourcePageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.ImportSrcFlow_ImportSrcFlow_initImportSourcePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_ConfiguratorPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.ConfiguratorPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_ConfiguratorFlow_ConfiguratorFlow_initConfiguratorRuleSetPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.ConfiguratorFlow_ConfiguratorFlow_initConfiguratorRuleSetPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <BC4JDataControl id="SudokuAMDataControl"
+                     Package="xxatcust.oracle.apps.sudoku.model.module"
+                     FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                     SupportsTransactions="true" SupportsFindMode="true"
+                     SupportsRangesize="true" SupportsResetState="true"
+                     SupportsSortCollection="true" Configuration="SudokuAMLocal"
+                     syncMode="Immediate"
+                     xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+  </dataControlUsages>
+</Application>

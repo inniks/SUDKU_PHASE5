@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="ConfiguratorFlow">
+    <default-activity id="__1">initConfiguratorRuleSet</default-activity>
+    <managed-bean id="__9">
+      <managed-bean-name id="__7">SysInfraBean</managed-bean-name>
+      <managed-bean-class id="__8">xxatcust.oracle.apps.sudoku.bean.SysInfraBean</managed-bean-class>
+      <managed-bean-scope id="__6">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="Configurator">
+      <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/Configurator.jsff</page>
+    </view>
+    <method-call id="initConfiguratorRuleSet">
+      <method>#{bindings.initConfiguratorRuleSet.execute}</method>
+      <outcome id="__2">
+        <fixed-outcome>initConfiguratorRuleSet</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__4">initConfiguratorRuleSet</from-activity-id>
+      <control-flow-case id="__11">
+        <from-outcome id="__10">initConfiguratorRuleSet</from-outcome>
+        <to-activity-id id="__5">Configurator</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>
