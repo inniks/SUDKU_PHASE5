@@ -34,10 +34,10 @@ import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 import xxatcust.oracle.apps.sudoku.util.JaxbParser;
 import xxatcust.oracle.apps.sudoku.util.NodeComparator;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.ConfiguratorNodePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ConfiguratorNodePOJO;
 import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.NodeCategory;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.QuoteLinePOJO;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.V93kQuote;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.QuoteLinePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 
 
 public class TargetConfiguration {

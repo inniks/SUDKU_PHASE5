@@ -13,6 +13,7 @@
 
 .AFDefaultFontFamily:alias {
        font-family: 'Lucida Sans Unicode';
+       font-size: 11px !important;
 }
 
 .AFButtonGradientStartActiveColor:alias {
@@ -172,5 +173,13 @@ af|panelAccordion::disclosed-icon-style {
 }
 
 af|panelAccordion::undisclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+
+af|showDetailHeader::disclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+
+af|showDetailHeader::undisclosed-icon-style {
     background-image: url("/select.png"); 
 }

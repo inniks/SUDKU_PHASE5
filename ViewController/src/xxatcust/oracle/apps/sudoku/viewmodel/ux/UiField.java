@@ -132,9 +132,13 @@ public class UiField {
                         if (uiField1_readOnly) {
                             uiField1_bgColor = "color:#d9b3ff;";
                         }
-                        if(uiField1_color!=null){
-                            uiField1_bgColor = "color:InfoBackground";
+                        
+                        if(uiField1_dis){
+                            uiField1_color="Yellow";
                         }
+//                        if(uiField1_color!=null){
+//                            uiField1_bgColor = "color:InfoBackground";
+//                        }
                     }
 
 
@@ -164,6 +168,9 @@ public class UiField {
                         if(uiField2_color!=null){
                             uiField2_bgColor = "color:InfoBackground";
                         }
+                        if(uiField2_dis){
+                            uiField2_color="Yellow";
+                        }
                     }
                     break;
                 case 2:
@@ -189,6 +196,9 @@ public class UiField {
                         }
                         if(uiField3_color!=null){
                             uiField3_bgColor = "color:InfoBackground";
+                        }
+                        if(uiField3_dis){
+                            uiField3_color="Yellow";
                         }
                     }
                     break;
@@ -216,6 +226,9 @@ public class UiField {
                         if(uiField4_color!=null){
                             uiField4_bgColor = "color:InfoBackground";
                         }
+                        if(uiField4_dis){
+                            uiField4_color="Yellow";
+                        }
                     }
                     break;
                 case 4:
@@ -241,6 +254,9 @@ public class UiField {
                         }
                         if(uiField5_color!=null){
                             uiField5_bgColor = "color:InfoBackground";
+                        }
+                        if(uiField5_dis){
+                            uiField5_color="Yellow";
                         }
                     }
                     break;
@@ -268,6 +284,9 @@ public class UiField {
                         if(uiField6_color!=null){
                             uiField6_bgColor = "color:InfoBackground";
                         }
+                        if(uiField6_dis){
+                            uiField6_color="Yellow";
+                        }
                     }
                     break;
 
@@ -294,6 +313,9 @@ public class UiField {
                         }
                         if(uiField7_color!=null){
                             uiField7_bgColor = "color:InfoBackground";
+                        }
+                        if(uiField7_dis){
+                            uiField7_color="Yellow";
                         }
                     }
                     break;

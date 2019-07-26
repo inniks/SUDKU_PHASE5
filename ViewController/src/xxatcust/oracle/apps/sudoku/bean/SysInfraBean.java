@@ -20,6 +20,8 @@ import java.util.Map;
 
 import java.util.Set;
 
+import java.util.TreeMap;
+
 import javax.faces.component.UIComponent;
 
 import javax.faces.component.UIForm;
@@ -28,6 +30,7 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.ServletException;
 
 import oracle.adf.share.ADFContext;
+import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichListView;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
@@ -35,6 +38,7 @@ import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
 import oracle.adf.view.rich.component.rich.layout.RichShowDetailItem;
 import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.component.rich.output.RichOutputText;
+import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.render.ClientEvent;
 
 import org.apache.myfaces.trinidad.event.DisclosureEvent;
@@ -59,23 +63,16 @@ import xxatcust.oracle.apps.sudoku.viewmodel.ui.UiSelection;
 import xxatcust.oracle.apps.sudoku.viewmodel.ux.ShowDetailItemCollection;
 
 public class SysInfraBean {
-    private List<ShowDetailItemCollection> sdiCollection ;
+    private List<ShowDetailItemCollection> sdiCollection;
     private ChildPropertyTreeModel sysInfraTreeModel;
     private ArrayList<UxTreeNode> root;
     private RichPanelGroupLayout theadPanelGrp;
-    private RichOutputFormatted uiBind1;
     private RichOutputText pageInitText;
-    private RichPanelGroupLayout dutPanelGrp;
-    private RichPanelGroupLayout utilityPanelGrp;
-    private ArrayList<UiField> theadUiFieldCollection;
-    private ArrayList<UiField> dutUiFieldCollection;
-    private ArrayList<UiField> utilityUiFieldCollection;
-    private ArrayList<UiField> manipulatorUiFieldCollection;
-    private ArrayList<UiField> coolingUnitFieldCollection;
-    private ArrayList<UiField> miscUiFieldCollection;
     private RichListView sysInfraListView;
     private RichShowDetailItem sysInfraSdi;
     private RichInputText jsessionId;
+    private RichPopup confirmPopup;
+    private RichOutputFormatted warnText;
 
     public SysInfraBean() {
         super();
@@ -107,20 +104,6 @@ public class SysInfraBean {
 
     }
 
-    public void theadSelection(ActionEvent actionEvent) {
-        UIComponent component = actionEvent.getComponent();
-        //UIComponent parent = component.getParent();
-        List<UIComponent> children = component.getChildren();
-        System.out.println("Children " + children);
-        //System.out.println("Value "+ADFUtils.evaluateEL("#{feach.uiField7}"));
-        for (UIComponent comp : children) {
-            if (comp instanceof RichOutputFormatted) {
-                RichOutputFormatted of = (RichOutputFormatted)comp;
-                System.out.println("Value returned " + of.getValue());
-            }
-        }
-    }
-
 
     public void setTheadPanelGrp(RichPanelGroupLayout theadPanelGrp) {
         this.theadPanelGrp = theadPanelGrp;
@@ -130,118 +113,17 @@ public class SysInfraBean {
         return theadPanelGrp;
     }
 
-    public void setUiBind1(RichOutputFormatted uiBind1) {
-        this.uiBind1 = uiBind1;
-    }
 
-    public RichOutputFormatted getUiBind1() {
-        return uiBind1;
-    }
-
-    public RichOutputText getPageInitText() {
+    public RichOutputText getPageInitText() throws IOException,
+                                                   JsonGenerationException,
+                                                   JsonMappingException {
         System.out.println("Initializing Page.....");
+        refreshView(null);
         return pageInitText;
     }
 
     public void setPageInitText(RichOutputText pageInitText) {
         this.pageInitText = pageInitText;
-    }
-
-    public void setDutPanelGrp(RichPanelGroupLayout dutPanelGrp) {
-        this.dutPanelGrp = dutPanelGrp;
-    }
-
-    public RichPanelGroupLayout getDutPanelGrp() {
-        return dutPanelGrp;
-    }
-
-    public void setUtilityPanelGrp(RichPanelGroupLayout utilityPanelGrp) {
-        this.utilityPanelGrp = utilityPanelGrp;
-    }
-
-    public RichPanelGroupLayout getUtilityPanelGrp() {
-        return utilityPanelGrp;
-    }
-
-
-    public void utilityLineSelection(ActionEvent actionEvent) {
-        UIComponent component = actionEvent.getComponent();
-        //UIComponent parent = component.getParent();
-        List<UIComponent> children = component.getChildren();
-        System.out.println("Children " + children);
-        //System.out.println("Value "+ADFUtils.evaluateEL("#{feach.uiField7}"));
-        for (UIComponent comp : children) {
-            if (comp instanceof RichOutputFormatted) {
-                RichOutputFormatted of = (RichOutputFormatted)comp;
-                System.out.println("Value returned " + of.getValue());
-            }
-        }
-    }
-
-    public void setTheadUiFieldCollection(ArrayList<UiField> theadUiFieldCollection) {
-        this.theadUiFieldCollection = theadUiFieldCollection;
-    }
-
-    public ArrayList<UiField> getTheadUiFieldCollection() {
-        return theadUiFieldCollection;
-    }
-
-    public void setDutUiFieldCollection(ArrayList<UiField> dutUiFieldCollection) {
-        this.dutUiFieldCollection = dutUiFieldCollection;
-    }
-
-    public ArrayList<UiField> getDutUiFieldCollection() {
-        return dutUiFieldCollection;
-    }
-
-    public void setUtilityUiFieldCollection(ArrayList<UiField> utilityUiFieldCollection) {
-        this.utilityUiFieldCollection = utilityUiFieldCollection;
-    }
-
-    public ArrayList<UiField> getUtilityUiFieldCollection() {
-        return utilityUiFieldCollection;
-    }
-
-    public void dutLineSelection(ActionEvent actionEvent) {
-        UIComponent component = actionEvent.getComponent();
-        //UIComponent parent = component.getParent();
-        List<UIComponent> children = component.getChildren();
-        System.out.println("Children " + children);
-        //System.out.println("Value "+ADFUtils.evaluateEL("#{feach.uiField7}"));
-        for (UIComponent comp : children) {
-            if (comp instanceof RichOutputFormatted) {
-                RichOutputFormatted of = (RichOutputFormatted)comp;
-                System.out.println("Value returned " + of.getValue());
-            }
-        }
-        if (sysInfraSdi != null) {
-            sysInfraSdi.setDisclosed(false);
-            //sysInfraSdi.setDisclosed(true);
-        }
-    }
-
-    public void setManipulatorUiFieldCollection(ArrayList<UiField> manipulatorUiFieldCollection) {
-        this.manipulatorUiFieldCollection = manipulatorUiFieldCollection;
-    }
-
-    public ArrayList<UiField> getManipulatorUiFieldCollection() {
-        return manipulatorUiFieldCollection;
-    }
-
-    public void manipulatorLineSelection(ActionEvent actionEvent) {
-        // Add event code here...
-    }
-
-    public void setCoolingUnitFieldCollection(ArrayList<UiField> coolingUnitFieldCollection) {
-        this.coolingUnitFieldCollection = coolingUnitFieldCollection;
-    }
-
-    public ArrayList<UiField> getCoolingUnitFieldCollection() {
-        return coolingUnitFieldCollection;
-    }
-
-    public void coolingLineSelection(ActionEvent actionEvent) {
-        // Add event code here...
     }
 
     public V93kQuote callConfigurator(V93kQuote v93k) {
@@ -294,7 +176,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
-                    
+
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();
                     if (listOfElements != null && !listOfElements.isEmpty()) {
@@ -323,6 +205,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void refreshView(ActionEvent actionEvent) throws IOException,
                                                             JsonGenerationException,
                                                             JsonMappingException {
+        
+        sysInfraTreeModel=null;
         //Call configurator to load data
         V93kQuote v93k = new V93kQuote();
         SessionDetails sessionDetails = new SessionDetails();
@@ -338,10 +222,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                  null ? "0" :
                                  (String)ADFUtils.getSessionScopeValue("UserId"));
         inputParam.setImportSource("LOAD_CONFIG_UI");
-        String userId = (String)ADFUtils.getSessionScopeValue("UserId") ==
-                                 null ? "0" :
-                                 (String)ADFUtils.getSessionScopeValue("UserId");
-        String timestamp =  Long.toString( System.currentTimeMillis());
+        String userId =
+            (String)ADFUtils.getSessionScopeValue("UserId") == null ? "0" :
+            (String)ADFUtils.getSessionScopeValue("UserId");
+        String timestamp = Long.toString(System.currentTimeMillis());
         String uniqueSessionId = userId.concat(timestamp);
         ADFUtils.setSessionScopeValue("uniqueSessionId", uniqueSessionId);
         UiSelection uiSelection = new UiSelection();
@@ -350,7 +234,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         v93k.setUiSelection(uiSelection);
         v93k.setInputParams(inputParam);
         buildConfiguratorUI(v93k);
-        
+
     }
 
     public void setSysInfraListView(RichListView sysInfraListView) {
@@ -373,13 +257,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         return sysInfraSdi;
     }
 
-    public void setMiscUiFieldCollection(ArrayList<UiField> miscUiFieldCollection) {
-        this.miscUiFieldCollection = miscUiFieldCollection;
-    }
-
-    public ArrayList<UiField> getMiscUiFieldCollection() {
-        return miscUiFieldCollection;
-    }
 
     public ChildPropertyTreeModel populateParentTreeModel(ChildPropertyTreeModel childModel) {
         V93kQuote v93k =
@@ -388,10 +265,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getSystemInfraGroup() != null) {
+            SystemInfraGroup systemInfraGrp =   v93k.getUiRoot().getSystemInfraGroup();
+            String refColor = systemInfraGrp.isDisplayReferenceColor()? SudokuUtils.REFERENCE_COLOR:null;
+            String tarColor = systemInfraGrp.isDisplayTargetColor()? SudokuUtils.TARGET_COLOR:null;
             UxTreeNode firstLevel =
                 new UxTreeNode("sysInfra", "System Infrastructure", "Zero",
-                               null, null,null,null);//For top level color, code later
+                               null, null, refColor,
+                               tarColor); //For top level color, code later
             root.add(firstLevel);
+       
             uiGroupMap =
                     v93k.getUiRoot().getSystemInfraGroup().getUiGroupMap();
             Iterator it = uiGroupMap.entrySet().iterator();
@@ -399,23 +281,24 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 String uiGrpName = (String)pair.getKey();
-                
+
                 ConfiguratorUiGroup uiGrp =
                     (ConfiguratorUiGroup)pair.getValue();
                 Boolean isReferenceColor = uiGrp.isDisplayReferenceColor();
                 Boolean isTargetColor = uiGrp.isDisplayTargetColor();
                 String nodeRefColor = null;
                 String nodeTargetColor = null;
-                if(isReferenceColor!=null && isReferenceColor){
+                if (isReferenceColor != null && isReferenceColor) {
                     nodeRefColor = SudokuUtils.REFERENCE_COLOR;
                 }
-                if(isTargetColor!=null && isTargetColor){
+                if (isTargetColor != null && isTargetColor) {
                     nodeTargetColor = SudokuUtils.TARGET_COLOR;
                 }
                 if (uiGrpName != null) {
                     UxTreeNode childNodeOfSysInfra =
                         new UxTreeNode(Integer.toString(index), uiGrpName,
-                                       "First", null, null,nodeRefColor,nodeTargetColor);
+                                       "First", null, null, nodeRefColor,
+                                       nodeTargetColor);
                     firstLevel.addNodes(childNodeOfSysInfra);
 
                     index = index + 1;
@@ -474,9 +357,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         sdiCollection = new ArrayList<ShowDetailItemCollection>();
         if (listofcollections != null && !listofcollections.isEmpty()) {
             int counter = 1;
-            for(int i=0;i<listofcollections.size();i++){
-                
-                ShowDetailItemCollection sdi = new ShowDetailItemCollection(Integer.toString(counter),listofcollections.get(i),listofcollections.get(i).get(0).getSelectedValue());
+            for (int i = 0; i < listofcollections.size(); i++) {
+
+                ShowDetailItemCollection sdi =
+                    new ShowDetailItemCollection(Integer.toString(counter),
+                                                 listofcollections.get(i),
+                                                 listofcollections.get(i).get(0).getSelectedValue());
                 sdiCollection.add(sdi);
                 counter++;
             }
@@ -486,34 +372,185 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void handleNodeSelection(ActionEvent actionEvent) throws IOException,
                                                                     JsonGenerationException,
                                                                     JsonMappingException {
-        System.out.println("Evaluated EL " +
-                           ADFUtils.evaluateEL("#{node.nodeName}"));
-        System.out.println(ADFUtils.evaluateEL("#{theadIter.selectedValue}"));
         UIComponent component = actionEvent.getComponent();
         List<UIComponent> children = component.getChildren();
         String selectedValue = null;
+        HashMap<String, String> selectedNodeValueMap =
+            new HashMap<String, String>();
         String uiSubGrpName = (String)ADFUtils.evaluateEL("#{node.nodeName}");
-        String czNodeName = null;//(String)ADFUtils.evaluateEL("#{theadIter.uiField1}");
-        String uniqueSessionId =
-            (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
-        V93kQuote v93k = new V93kQuote();
+        selectedNodeValueMap.put("uiSubGrpName", uiSubGrpName);
+        String czNodeName = null;
+
         String identifier = null;
-            //(V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        //(V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         for (UIComponent comp : children) {
             if (comp instanceof RichOutputFormatted) {
                 RichOutputFormatted of = (RichOutputFormatted)comp;
                 selectedValue = (String)of.getValue();
+                selectedNodeValueMap.put("selectedValue", selectedValue);
                 //czNodeName = of.getShortDesc() ;
             }
-            if(comp instanceof RichInputText){
+            if (comp instanceof RichInputText) {
                 RichInputText it = (RichInputText)comp;
-                if(it!=null){
+                if (it != null) {
                     identifier = it.getShortDesc();
                     czNodeName = (String)it.getValue();
+                    selectedNodeValueMap.put("identifier", identifier);
+                    selectedNodeValueMap.put("czNodeName", czNodeName);
                 }
             }
         }
-        if (v93k != null) {
+        V93kQuote v93 =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93 != null && v93.getExceptionMap() != null) {
+            TreeMap<String, ArrayList<String>> warnings =
+                v93.getExceptionMap().getWarningList();
+            TreeMap<String, ArrayList<String>> notifications =
+                v93.getExceptionMap().getNotificationList();
+            StringBuilder warningMessage = new StringBuilder("<html><body>");
+            if (warnings != null && warnings.size() > 0) {
+
+
+                for (Map.Entry<String, ArrayList<String>> entry :
+                     warnings.entrySet()) {
+                    String key = entry.getKey();
+                    //iterate for each key
+                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
+                    ArrayList<String> value = entry.getValue();
+                    for (String str : value) {
+                        warningMessage.append("<p><b>" + str + "</b></p>");
+                    }
+                }
+                warningMessage.append("</body></html>");
+            }
+            if (notifications != null && notifications.size() > 0) {
+                for (Map.Entry<String, ArrayList<String>> entry :
+                     notifications.entrySet()) {
+                    String key = entry.getKey();
+                    ArrayList<String> value = entry.getValue();
+                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
+                    for (String str : value) {
+                        warningMessage.append("<p><b>" + str + "</b></p>");
+                    }
+                }
+                warningMessage.append("</body></html>");
+
+
+            }
+            if (warningMessage != null &&
+                !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
+                confirmPopup != null) {
+                warnText.setValue(warningMessage.toString());
+                RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                confirmPopup.show(hints);
+            } else {
+                continueWithSelection();
+            }
+        }
+
+        ADFUtils.setSessionScopeValue("selectedNodeValueMap",
+                                      selectedNodeValueMap);
+
+    }
+
+    public void buildConfiguratorUI(V93kQuote v93k) throws IOException,
+                                                           JsonGenerationException,
+                                                           JsonMappingException {
+        String jsonStr = JSONUtils.convertObjToJson(v93k);
+        System.out.println("Json String build is" + jsonStr);
+        //If config is live use this
+
+        String jid = null;
+        if (jsessionId != null) {
+            jid = (String)jsessionId.getValue();
+        }
+        ADFUtils.setSessionScopeValue("jsessionId", jid);
+                String responseJson =
+                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+                System.out.println("Response Json from Configurator : " +
+                                   responseJson);
+                ObjectMapper mapper = new ObjectMapper();
+                Object obj = mapper.readValue(responseJson, V93kQuote.class);
+                v93k = (V93kQuote)obj;
+        //else use this
+        //v93k = (V93kQuote)convertJsonToObject(null);
+        ADFUtils.setSessionScopeValue("parentObject", v93k);
+        ADFUtils.setSessionScopeValue("refreshImport", "Y");
+        if (sysInfraTreeModel == null) {
+            populateParentTreeModel(sysInfraTreeModel);
+        }
+        populateSubGroups(v93k);
+    }
+
+    public void setJsessionId(RichInputText jsessionId) {
+        this.jsessionId = jsessionId;
+    }
+
+    public RichInputText getJsessionId() {
+        return jsessionId;
+    }
+
+    public void setSdiCollection(List<ShowDetailItemCollection> sdiCollection) {
+        this.sdiCollection = sdiCollection;
+    }
+
+    public List<ShowDetailItemCollection> getSdiCollection() {
+        return sdiCollection;
+    }
+
+    public void configDialogListener(DialogEvent dialogEvent) {
+        // Add event code here...
+    }
+
+    public void setConfirmPopup(RichPopup confirmPopup) {
+        this.confirmPopup = confirmPopup;
+    }
+
+    public RichPopup getConfirmPopup() {
+        return confirmPopup;
+    }
+
+    public void setWarnText(RichOutputFormatted warnText) {
+        this.warnText = warnText;
+    }
+
+    public RichOutputFormatted getWarnText() {
+        return warnText;
+    }
+
+    public void warnPopupDialogListener(DialogEvent dialogEvent) throws IOException,
+                                                                        JsonGenerationException,
+                                                                        JsonMappingException {
+        if (dialogEvent.getOutcome() == DialogEvent.Outcome.ok) {
+            continueWithSelection();
+        }
+
+        if (dialogEvent.getOutcome() == DialogEvent.Outcome.cancel) {
+            confirmPopup.cancel();
+        }
+    }
+
+    public void continueWithSelection() throws IOException,
+                                               JsonGenerationException,
+                                               JsonMappingException {
+        String uniqueSessionId =
+            (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
+
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93k == null) {
+            v93k = new V93kQuote();
+        }
+        HashMap selectedNodeValueMap =
+            (HashMap)ADFUtils.getSessionScopeValue("selectedNodeValueMap");
+        if (v93k != null && selectedNodeValueMap != null &&
+            !selectedNodeValueMap.isEmpty()) {
+            String uiSubGrpName =
+                (String)selectedNodeValueMap.get("uiSubGrpName");
+            String selectedValue =
+                (String)selectedNodeValueMap.get("selectedValue");
+            String czNodeName = (String)selectedNodeValueMap.get("czNodeName");
+            String identifier = (String)selectedNodeValueMap.get("identifier");
             UiSelection uiSelection = new UiSelection();
             uiSelection.setParentGroupName("System Infrastructure");
             uiSelection.setSubGroupName(uiSubGrpName);
@@ -539,53 +576,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             v93k.setSessionDetails(sessionDetails);
             v93k.setInputParams(inputParam);
             buildConfiguratorUI(v93k);
+            ADFUtils.setSessionScopeValue("selectedNodeValueMap", null);
+            confirmPopup.hide();
         }
-    }
-    
-    public void buildConfiguratorUI(V93kQuote v93k) throws IOException,
-                                                           JsonGenerationException,
-                                                           JsonMappingException {
-        String jsonStr = JSONUtils.convertObjToJson(v93k);
-        System.out.println("Json String build is" +
-                           jsonStr);
-        //If config is live use this
-        String jid = (String)jsessionId.getValue();
-        ADFUtils.setSessionScopeValue("jsessionId", jid);
-        String responseJson =
-            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        System.out.println("Response Json from Configurator : " +
-                           responseJson);
-        ObjectMapper mapper = new ObjectMapper();
-        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-        v93k = (V93kQuote)obj;
-        //else use this
-       //v93k = (V93kQuote)convertJsonToObject(null);
-        ADFUtils.setSessionScopeValue("parentObject", v93k);
-       // ADFUtils.setSessionScopeValue("refreshImport", "Y");
-        if (sysInfraTreeModel == null) {
-            populateParentTreeModel(sysInfraTreeModel);
-        }
-        populateSubGroups(v93k);
-    }
-
-    public void callEBSServlet(ActionEvent actionEvent) throws ServletException,
-                                                               IOException {
-        ConfiguratorUtils.callEBSServlet(null);
-    }
-
-    public void setJsessionId(RichInputText jsessionId) {
-        this.jsessionId = jsessionId;
-    }
-
-    public RichInputText getJsessionId() {
-        return jsessionId;
-    }
-
-    public void setSdiCollection(List<ShowDetailItemCollection> sdiCollection) {
-        this.sdiCollection = sdiCollection;
-    }
-
-    public List<ShowDetailItemCollection> getSdiCollection() {
-        return sdiCollection;
     }
 }

@@ -311,6 +311,9 @@ public class LoadDynamicRegionBean {
 
 
     public void saveQuoteFromSysToOrcl(ActionEvent actionEvent) {
+        //Before calling all the API's,Pass import source as "SAVE_CONFIG_TO_QUOTE"
+        
+        
         String createQtMsg = getFndMessages(SudokuUtils.createQteMsg);
         String discount = null;
         int respid =
