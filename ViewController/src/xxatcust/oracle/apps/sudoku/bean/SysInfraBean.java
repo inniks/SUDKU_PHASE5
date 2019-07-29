@@ -205,8 +205,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void refreshView(ActionEvent actionEvent) throws IOException,
                                                             JsonGenerationException,
                                                             JsonMappingException {
-        
-        sysInfraTreeModel=null;
+
+        sysInfraTreeModel = null;
         //Call configurator to load data
         V93kQuote v93k = new V93kQuote();
         SessionDetails sessionDetails = new SessionDetails();
@@ -265,15 +265,20 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getSystemInfraGroup() != null) {
-            SystemInfraGroup systemInfraGrp =   v93k.getUiRoot().getSystemInfraGroup();
-            String refColor = systemInfraGrp.isDisplayReferenceColor()? SudokuUtils.REFERENCE_COLOR:null;
-            String tarColor = systemInfraGrp.isDisplayTargetColor()? SudokuUtils.TARGET_COLOR:null;
+            SystemInfraGroup systemInfraGrp =
+                v93k.getUiRoot().getSystemInfraGroup();
+            String refColor =
+                systemInfraGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
+                null;
+            String tarColor =
+                systemInfraGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
+                null;
             UxTreeNode firstLevel =
                 new UxTreeNode("sysInfra", "System Infrastructure", "Zero",
                                null, null, refColor,
                                tarColor); //For top level color, code later
             root.add(firstLevel);
-       
+
             uiGroupMap =
                     v93k.getUiRoot().getSystemInfraGroup().getUiGroupMap();
             Iterator it = uiGroupMap.entrySet().iterator();
@@ -465,13 +470,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             jid = (String)jsessionId.getValue();
         }
         ADFUtils.setSessionScopeValue("jsessionId", jid);
-                String responseJson =
-                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-                System.out.println("Response Json from Configurator : " +
-                                   responseJson);
-                ObjectMapper mapper = new ObjectMapper();
-                Object obj = mapper.readValue(responseJson, V93kQuote.class);
-                v93k = (V93kQuote)obj;
+        String responseJson =
+            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        System.out.println("Response Json from Configurator : " +
+                           responseJson);
+        ObjectMapper mapper = new ObjectMapper();
+        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        v93k = (V93kQuote)obj;
         //else use this
         //v93k = (V93kQuote)convertJsonToObject(null);
         ADFUtils.setSessionScopeValue("parentObject", v93k);
