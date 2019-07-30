@@ -19,6 +19,10 @@
         ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.RuleSetTopLevelLOV_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <Variable
+    Name="bindVar"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
   <SQLQuery>
     <![CDATA[select lookup_code, meaning from fnd_lookup_values where lookup_type = 'XXAT_CZ_SUDOKU_RULE_SET_MAIN']]>
   </SQLQuery>
@@ -53,6 +57,42 @@
       <Attr Name="_DisplaySize" Value="80"/>
     </DesignTime>
   </ViewAttribute>
+  <ViewCriteria
+    Name="RuleSetTopLevelLOVCriteria"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.RuleSetTopLevelLOV"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow10"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="Meaning"
+        ViewAttribute="Meaning"
+        Operator="CONTAINS"
+        Conjunction="AND"
+        Value=":bindVar"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <AttrArray Name="KeyAttributes">
     <Item Value="LookupCode"/>
   </AttrArray>

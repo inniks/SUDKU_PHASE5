@@ -37,18 +37,18 @@ import org.w3c.dom.Element;
 
 import org.w3c.dom.Node;
 
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Config;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.ConfiguratorNodePOJO;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Contract;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Customer;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Deal;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.ModelBom;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.PogoMappingFile;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.QHeader;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.QuoteLinePOJO;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Ruleset;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Salesteam;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.V93kQuote;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Config;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ConfiguratorNodePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Contract;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Customer;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Deal;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ModelBom;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.PogoMappingFile;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.QHeader;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.QuoteLinePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Ruleset;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Salesteam;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 
 public class DOMParser {
     public DOMParser() {

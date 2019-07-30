@@ -2,7 +2,7 @@ package xxatcust.oracle.apps.sudoku.util;
 
 import java.util.Comparator;
 
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.ConfiguratorNodePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ConfiguratorNodePOJO;
 
 public class ConfigNodeComparator implements Comparator<ConfiguratorNodePOJO> {
     public ConfigNodeComparator() {

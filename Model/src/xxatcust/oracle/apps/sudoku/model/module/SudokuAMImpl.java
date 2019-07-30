@@ -1927,12 +1927,12 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     }
     
     public void initConfiguratorRuleSet(){
-//        System.out.println("Init Configurator Flow..");
-//        ViewObjectImpl vo = this.getRuleSetVO();
-//        if(vo!=null){
-//            Row cRow = vo.createRow();
-//            vo.insertRow(cRow);
-//        }
+        System.out.println("Init Configurator Flow..");
+        ViewObjectImpl vo = this.getRuleSetVO();
+        if(vo!=null){
+            Row cRow = vo.createRow();
+            vo.insertRow(cRow);
+        }
     }
 
     public String callDuplicateQuoteAPI(String quoteFromSesion, int respId,

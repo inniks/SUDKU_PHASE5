@@ -195,6 +195,14 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
             AppsRequestWrapper wrappedRequest = null;
             String applServerID = null;
             Connection EBSconn = null;
+            String jSession = (String)request.getAttribute("JSESSION");
+            Map map1 = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+            if(jSession==null){
+                jSession = map1.get("JSESSION") ==null ? "" : map1.get("JSESSION").toString();
+            }
+            sessionADF.setAttribute("JSESSION", jSession);
+            _logger.info("********JSSION********** "+jSession);
+            
             try {
                 ApplicationModule am = getAppModule();
                 javax.naming.Context initialContext =
@@ -216,9 +224,6 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                                                INSTANCE);
                 oracle.apps.fnd.ext.common.Session sessionEBS =
                     wrappedRequest.getAppsSession(true);
-//                String cookie = sessionEBS.getCookieValue() ;
-//                ADFUtils.setSessionScopeValue("jsessionid", cookie);
-//                _logger.info("EBS Cookie Value Set into ADF Session "+cookie);
                _logger.info("sessionEBS : " + sessionEBS);
                 if (sessionEBS != null) {
                     if (!isEBSSessionValid(sessionEBS)) {

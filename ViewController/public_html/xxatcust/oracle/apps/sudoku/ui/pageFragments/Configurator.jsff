@@ -23,7 +23,7 @@ true);
     <f:facet name="center">
       <af:panelGroupLayout layout="scroll"
                            xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                           id="pgl1" partialTriggers="ctb1">
+                           id="confPGL" partialTriggers="ctb1">
         <af:listView id="sysLv"
                      value="#{pageFlowScope.SysInfraBean.sysInfraTreeModel}"
                      var="node" groupDisclosurePolicy="initiallyExpanded"
@@ -82,7 +82,8 @@ true);
                         </af:panelGroupLayout>
                         <af:showDetailHeader id="sd1"
                                        rendered="#{node.codeName eq topNode.index}"
-                                             text="#{node.nodeName}">
+                                             text="#{node.nodeName}"
+                                             binding="#{pageFlowScope.SysInfraBean.shwDetHdrBind}">
                           <af:iterator id="i2"
                                        value="#{topNode.uiFieldCollection}"
                                        var="theadIter">
@@ -117,7 +118,8 @@ true);
                                                        halign="left">
                                     <af:commandLink id="cl1"
                                                     actionListener="#{pageFlowScope.SysInfraBean.handleNodeSelection}"
-                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}">
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                    partialSubmit="false">
                                       <af:outputFormatted id="th_of1"
                                                           value="#{theadIter.uiField1}"
                                                           inlineStyle="#{theadIter.uiField1_bgColor}"/>
@@ -302,7 +304,33 @@ true);
     <f:facet name="end"/>
     <f:facet name="top">
       <af:panelHeader text="Configurator" id="ph1" size="-1">
-        <f:facet name="context"/>
+        <f:facet name="context">
+          <af:panelGroupLayout id="pgl13" layout="horizontal" halign="end"
+                               rendered="false">
+            <af:inputListOfValues id="topLevelMeaningId"
+                                  popupTitle="Search and Select: #{bindings.TopLevelMeaning.hints.label}"
+                                  value="#{bindings.TopLevelMeaning.inputValue}"
+                                  label="RuleSet"
+                                  model="#{bindings.TopLevelMeaning.listOfValuesModel}"
+                                  required="#{bindings.TopLevelMeaning.hints.mandatory}"
+                                  columns="20"
+                                  shortDesc="#{bindings.TopLevelMeaning.hints.tooltip}"
+                                  launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
+                                  autoSubmit="true">
+              <f:validator binding="#{bindings.TopLevelMeaning.validator}"/>
+            </af:inputListOfValues>
+            <af:inputListOfValues id="secondLevelMeaningId"
+                                  popupTitle="Search and Select: #{bindings.SecondLevelMeaning.hints.label}"
+                                  value="#{bindings.SecondLevelMeaning.inputValue}"
+                                  model="#{bindings.SecondLevelMeaning.listOfValuesModel}"
+                                  required="#{bindings.SecondLevelMeaning.hints.mandatory}"
+                                  columns="20"
+                                  shortDesc="#{bindings.SecondLevelMeaning.hints.tooltip}"
+                                  partialTriggers="topLevelMeaningId">
+              <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
+            </af:inputListOfValues>
+          </af:panelGroupLayout>
+        </f:facet>
         <f:facet name="menuBar"/>
         <f:facet name="toolbar">
           <af:toolbar id="t1">
@@ -310,7 +338,7 @@ true);
                                      actionListener="#{pageFlowScope.SysInfraBean.refreshView}"/>
             <af:inputText label="Label 1" id="it2"
                           binding="#{pageFlowScope.SysInfraBean.jsessionId}"
-                          autoSubmit="true"/>
+                          autoSubmit="true" value="#{sessionScope.JSESSION}"/>
           </af:toolbar>
         </f:facet>
         <f:facet name="legend"/>

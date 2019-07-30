@@ -2,7 +2,7 @@ package xxatcust.oracle.apps.sudoku.util;
 
 import java.util.Comparator;
 
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.NodeCategory;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.NodeCategory;
 
 public class NodeComparator implements Comparator<NodeCategory> {
     public NodeComparator() {

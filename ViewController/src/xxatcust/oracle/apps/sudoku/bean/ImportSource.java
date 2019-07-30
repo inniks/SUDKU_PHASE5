@@ -56,9 +56,10 @@ import xxatcust.oracle.apps.sudoku.util.JSONUtils;
 import xxatcust.oracle.apps.sudoku.util.JaxbParser;
 import xxatcust.oracle.apps.sudoku.util.SudokuUtils;
 import xxatcust.oracle.apps.sudoku.util.XMLUtils;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.InputParams;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.SessionDetails;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.V93kQuote;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.InputParams;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.SessionDetails;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
+import xxatcust.oracle.apps.sudoku.viewmodel.ui.UiSelection;
 
 
 public class ImportSource {
@@ -474,7 +475,14 @@ public class ImportSource {
         String importSource = null;
         Object obj = null;
         SessionDetails sessionDetails = new SessionDetails();
+        String userId =
+            (String)ADFUtils.getSessionScopeValue("UserId") == null ? "0" :
+            (String)ADFUtils.getSessionScopeValue("UserId");
+        String timestamp = Long.toString(System.currentTimeMillis());
+        String uniqueSessionId = userId.concat(timestamp);
         InputParams inputParam = new InputParams();
+        UiSelection uiSelection = new UiSelection();
+        uiSelection.setUniqueSessionId(uniqueSessionId);
         //Get Session details added to the POJO object
         sessionDetails.setApplicationId((String)ADFUtils.getSessionScopeValue("ApplId") ==
                                         null ? "880" :
@@ -530,6 +538,7 @@ public class ImportSource {
             //Add session and input params
             parent.setSessionDetails(sessionDetails);
             parent.setInputParams(inputParam);
+            parent.setUiSelection(uiSelection);
             //Check if xml file contains quote Numner
             String otherTemp = null;
             if (parent != null && parent.getQheaderObject() != null &&

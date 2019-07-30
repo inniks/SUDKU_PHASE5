@@ -37,9 +37,9 @@
   <ListBinding
     Name="LOV_TopLevelMeaning"
     ListVOName="RuleSetTopLevelLOV1"
-    ListRangeSize="-1"
-    NullValueFlag="start"
-    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_TopLevelMeaning_LOVUIHints_NullValueId"
     MRUCount="0">
     <AttrArray Name="AttrNames">
       <Item Value="TopLevelMeaning"/>
@@ -54,7 +54,9 @@
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Meaning"/>
     </AttrArray>
-    <DisplayCriteria/>
+    <DisplayCriteria
+      Hint="showAndExecute"
+      Name="RuleSetTopLevelLOVCriteria"/>
   </ListBinding>
   <ListBinding
     Name="LOV_TopLevelCode"
@@ -125,7 +127,7 @@
   <ListBinding
     Name="LOV_SecondLevelMeaning"
     ListVOName="RSetSecLevelLOVI1"
-    ListRangeSize="-1"
+    ListRangeSize="10"
     NullValueFlag="none"
     NullValueId="LOV_SecondLevelMeaning_LOVUIHints_NullValueId"
     MRUCount="0">
@@ -142,7 +144,9 @@
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Meaning"/>
     </AttrArray>
-    <DisplayCriteria/>
+    <DisplayCriteria
+      Name="RSetSecLevelLOVICriteria"
+      Hint="showAndExecute"/>
   </ListBinding>
   <ListBinding
     Name="LOV_SecondLevelMeaning1"
@@ -164,7 +168,9 @@
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Meaning"/>
     </AttrArray>
-    <DisplayCriteria/>
+    <DisplayCriteria
+      Name="RSetSecLevelLOVIICriteria"
+      Hint="showAndExecute"/>
   </ListBinding>
   <ViewAttribute
     Name="TopLevelCode"
@@ -196,10 +202,10 @@
       <SchemaBasedProperties>
         <LABEL
           ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.RuleSetVO.TopLevelMeaning_LABEL"/>
-        <CONTROLTYPE
-          Value="choice"/>
         <DISPLAYWIDTH
           Value="30"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -241,7 +247,7 @@
         <DISPLAYWIDTH
           Value="30"/>
         <CONTROLTYPE
-          Value="choice"/>
+          Value="input_text_lov"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

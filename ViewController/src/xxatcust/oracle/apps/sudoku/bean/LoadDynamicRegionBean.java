@@ -1,10 +1,14 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import java.net.MalformedURLException;
 
 import java.util.HashMap;
 
@@ -32,11 +36,14 @@ import oracle.binding.OperationBinding;
 import oracle.jbo.Row;
 
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
+import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
 import xxatcust.oracle.apps.sudoku.util.DOMParser;
+import xxatcust.oracle.apps.sudoku.util.JSONUtils;
 import xxatcust.oracle.apps.sudoku.util.SudokuUtils;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.ConfiguratorNodePOJO;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.QuoteLinePOJO;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.V93kQuote;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ConfiguratorNodePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.InputParams;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.QuoteLinePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 
 
 public class LoadDynamicRegionBean {
@@ -310,8 +317,24 @@ public class LoadDynamicRegionBean {
     }
 
 
-    public void saveQuoteFromSysToOrcl(ActionEvent actionEvent) {
+    public void saveQuoteFromSysToOrcl(ActionEvent actionEvent) throws MalformedURLException,
+                                                                       IOException {
         //Before calling all the API's,Pass import source as "SAVE_CONFIG_TO_QUOTE"
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(v93k!=null && v93k.getInputParams()!=null){
+           v93k.getInputParams().setImportSource("SAVE_CONFIG_TO_QUOTE");
+            String jsonStr = JSONUtils.convertObjToJson(v93k);
+            String responseJson =
+                ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+            System.out.println("Response Json from Configurator : " +
+                               responseJson);
+            ObjectMapper mapper = new ObjectMapper();
+            Object obj = mapper.readValue(responseJson, V93kQuote.class);
+            v93k = (V93kQuote)obj;
+            ADFUtils.setSessionScopeValue("parentObject", v93k);
+        }
+        
         
         
         String createQtMsg = getFndMessages(SudokuUtils.createQteMsg);
@@ -324,8 +347,7 @@ public class LoadDynamicRegionBean {
             Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
                              null ? "0" :
                              (String)ADFUtils.getSessionScopeValue("UserId"));
-        V93kQuote v93k =
-            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+       
         //        FacesContext fc = FacesContext.getCurrentInstance();
         BindingContainer bindings = getBindings();
         StringBuilder resultMsg = new StringBuilder("<html><body>");

@@ -24,30 +24,30 @@ import org.apache.commons.io.IOUtils;
 
 import org.xml.sax.SAXException;
 
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Config;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Contract;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Cooling;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Customer;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Deal;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Digital;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Docking;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Dps;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.DutifUtil;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Infra;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.InfraUpgrade;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Mani;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.ModelBom;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Pmf;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.PogoMappingFile;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.QHeader;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Ruleset;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Salesteam;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.SwLicenses;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Thead;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.V93kQuote;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.Wksta;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.WtySupport;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.XClass;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Config;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Contract;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Cooling;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Customer;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Deal;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Digital;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Docking;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Dps;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.DutifUtil;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Infra;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.InfraUpgrade;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Mani;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ModelBom;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Pmf;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.PogoMappingFile;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.QHeader;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Ruleset;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Salesteam;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.SwLicenses;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Thead;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Wksta;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.WtySupport;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.XClass;
 
 
 public class JaxbParser {

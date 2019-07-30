@@ -136,9 +136,9 @@ public class UiField {
                         if(uiField1_dis){
                             uiField1_color="Yellow";
                         }
-//                        if(uiField1_color!=null){
-//                            uiField1_bgColor = "color:InfoBackground";
-//                        }
+                        if(uiField1_color!=null){
+                            uiField1_bgColor = "color:InfoBackground";
+                        }
                     }
 
 

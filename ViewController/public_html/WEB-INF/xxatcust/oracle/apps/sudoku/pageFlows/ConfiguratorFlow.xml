@@ -7,6 +7,11 @@
       <managed-bean-class id="__8">xxatcust.oracle.apps.sudoku.bean.SysInfraBean</managed-bean-class>
       <managed-bean-scope id="__6">pageFlow</managed-bean-scope>
     </managed-bean>
+    <managed-bean id="__12">
+      <managed-bean-name id="__13">PartialSearchBean</managed-bean-name>
+      <managed-bean-class id="__14">xxatcust.oracle.apps.sudoku.bean.LOVPartialSearchClasss</managed-bean-class>
+      <managed-bean-scope id="__15">pageFlow</managed-bean-scope>
+    </managed-bean>
     <view id="Configurator">
       <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/Configurator.jsff</page>
     </view>

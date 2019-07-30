@@ -10,7 +10,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.V93kQuote;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 
 public class StaxParser {
     public StaxParser() {

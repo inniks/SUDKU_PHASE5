@@ -60,11 +60,11 @@ import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
 import xxatcust.oracle.apps.sudoku.util.JSONUtils;
 import xxatcust.oracle.apps.sudoku.util.JaxbParser;
 import xxatcust.oracle.apps.sudoku.util.NodeComparator;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.ConfiguratorNodePOJO;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.NodeCategory;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.QuoteLinePOJO;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.SessionDetails;
-import xxatcust.oracle.apps.sudoku.viewmodelp4.pojo.V93kQuote;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ConfiguratorNodePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.NodeCategory;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.QuoteLinePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.SessionDetails;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 
 
 public class XMLImportPageBean {
