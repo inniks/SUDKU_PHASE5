@@ -4,7 +4,7 @@
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:h="http://java.sun.com/jsf/html">
   <af:panelStretchLayout id="psl1" dimensionsFrom="children"
-                         styleClass="AFStretchWidth">
+                         styleClass="AFStretchWidth" topHeight="120px">
     <f:facet name="bottom">
       <af:panelGroupLayout id="pgl6">
         <af:resource type="javascript">
@@ -126,7 +126,8 @@ true);
                                       <af:inputText id="ip1_helper"
                                                     visible="false"
                                                     value="#{theadIter.czNodeName1}"
-                                                    shortDesc="#{theadIter.uiField1_identifier}"/>
+                                                    shortDesc="#{theadIter.uiField1_identifier}"
+                                                    label="#{theadIter.uiField1_color}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -147,7 +148,8 @@ true);
                                       <af:inputText id="ip2_helper"
                                                     visible="false"
                                                     value="#{theadIter.czNodeName2}"
-                                                    shortDesc="#{theadIter.uiField2_identifier}"/>
+                                                    shortDesc="#{theadIter.uiField2_identifier}"
+                                                    label="#{theadIter.uiField2_color}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -168,7 +170,8 @@ true);
                                       <af:inputText id="ip3_helper"
                                                     visible="false"
                                                     value="#{theadIter.czNodeName3}"
-                                                    shortDesc="#{theadIter.uiField3_identifier}"/>
+                                                    shortDesc="#{theadIter.uiField3_identifier}"
+                                                    label="#{theadIter.uiField3_color}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -189,7 +192,8 @@ true);
                                       <af:inputText id="ip4_helper"
                                                     visible="false"
                                                     value="#{theadIter.czNodeName4}"
-                                                    shortDesc="#{theadIter.uiField4_identifier}"/>
+                                                    shortDesc="#{theadIter.uiField4_identifier}"
+                                                    label="#{theadIter.uiField4_color}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -210,7 +214,8 @@ true);
                                       <af:inputText id="ip5_helper"
                                                     visible="false"
                                                     value="#{theadIter.czNodeName5}"
-                                                    shortDesc="#{theadIter.uiField5_identifier}"/>
+                                                    shortDesc="#{theadIter.uiField5_identifier}"
+                                                    label="#{theadIter.uiField5_color}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -231,7 +236,8 @@ true);
                                       <af:inputText id="ip6_helper"
                                                     visible="false"
                                                     value="#{theadIter.czNodeName6}"
-                                                    shortDesc="#{theadIter.uiField6_identifier}"/>
+                                                    shortDesc="#{theadIter.uiField6_identifier}"
+                                                    label="#{theadIter.uiField6_color}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -252,7 +258,8 @@ true);
                                       <af:inputText id="ip7_helper"
                                                     visible="false"
                                                     value="#{theadIter.czNodeName7}"
-                                                    shortDesc="#{theadIter.uiField7_identifier}"/>
+                                                    shortDesc="#{theadIter.uiField7_identifier}"
+                                                    label="#{theadIter.uiField7_color}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -303,10 +310,11 @@ true);
     <f:facet name="start"/>
     <f:facet name="end"/>
     <f:facet name="top">
-      <af:panelHeader text="Configurator" id="ph1" size="-1">
-        <f:facet name="context">
-          <af:panelGroupLayout id="pgl13" layout="horizontal" halign="end"
-                               rendered="false">
+      <af:panelBox text="Configurator" id="ph1" showDisclosure="false"
+                   styleClass="AFStretchWidth">
+        <af:panelGroupLayout id="pgl1">
+          <af:panelGroupLayout id="pgl13" layout="vertical" halign="end"
+                               rendered="true">
             <af:inputListOfValues id="topLevelMeaningId"
                                   popupTitle="Search and Select: #{bindings.TopLevelMeaning.hints.label}"
                                   value="#{bindings.TopLevelMeaning.inputValue}"
@@ -330,20 +338,16 @@ true);
               <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
             </af:inputListOfValues>
           </af:panelGroupLayout>
-        </f:facet>
-        <f:facet name="menuBar"/>
+        </af:panelGroupLayout>
         <f:facet name="toolbar">
-          <af:toolbar id="t1">
-            <af:commandToolbarButton text="Refresh" id="ctb1"
-                                     actionListener="#{pageFlowScope.SysInfraBean.refreshView}"/>
-            <af:inputText label="Label 1" id="it2"
-                          binding="#{pageFlowScope.SysInfraBean.jsessionId}"
-                          autoSubmit="true" value="#{sessionScope.JSESSION}"/>
-          </af:toolbar>
+          <af:group id="g1">
+            <af:toolbar id="t1">
+              <af:commandToolbarButton text="Refresh" id="ctb1"
+                                       actionListener="#{pageFlowScope.SysInfraBean.refreshView}"/>
+            </af:toolbar>
+          </af:group>
         </f:facet>
-        <f:facet name="legend"/>
-        <f:facet name="info"/>
-      </af:panelHeader>
+      </af:panelBox>
     </f:facet>
   </af:panelStretchLayout>
 </jsp:root>

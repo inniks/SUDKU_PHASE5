@@ -112,7 +112,7 @@ public class SysInfraBean {
                                                    JsonGenerationException,
                                                    JsonMappingException {
         System.out.println("Initializing Page.....");
-        refreshView(null);
+        //refreshView(null);
         return pageInitText;
     }
 
@@ -202,8 +202,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
         sysInfraTreeModel = null;
         //Call configurator to load data
-        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        if (v93k==null) {
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93k == null) {
             v93k = new V93kQuote();
             SessionDetails sessionDetails = new SessionDetails();
             InputParams inputParam = new InputParams();
@@ -382,7 +383,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         String uiSubGrpName = (String)ADFUtils.evaluateEL("#{node.nodeName}");
         selectedNodeValueMap.put("uiSubGrpName", uiSubGrpName);
         String czNodeName = null;
-
+        String nodeColor = null;
         String identifier = null;
         //(V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         for (UIComponent comp : children) {
@@ -397,8 +398,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 if (it != null) {
                     identifier = it.getShortDesc();
                     czNodeName = (String)it.getValue();
+                    nodeColor = it.getLabel();
                     selectedNodeValueMap.put("identifier", identifier);
                     selectedNodeValueMap.put("czNodeName", czNodeName);
+                    selectedNodeValueMap.put("nodeColor", nodeColor);
                 }
             }
         }
@@ -453,41 +456,36 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             }
         }
 
-        
+
     }
 
     public void buildConfiguratorUI(V93kQuote v93k) throws IOException,
                                                            JsonGenerationException,
                                                            JsonMappingException {
-        
-      
-            sysInfraTreeModel = null;
-            String jsonStr = JSONUtils.convertObjToJson(v93k);
-            System.out.println("Json String build is" + jsonStr);
-            //If config is live use this
 
-            String jid = null;
-            if (jsessionId != null) {
-                jid = (String)jsessionId.getValue();
-            }
-            ADFUtils.setSessionScopeValue("jsessionId", jid);
-            String responseJson =
-                ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-            System.out.println("Response Json from Configurator : " +
-                               responseJson);
-            ObjectMapper mapper = new ObjectMapper();
-            Object obj = mapper.readValue(responseJson, V93kQuote.class);
-            v93k = (V93kQuote)obj;
-            //else use this
-            //v93k = (V93kQuote)convertJsonToObject(null);
-            ADFUtils.setSessionScopeValue("parentObject", v93k);
-            ADFUtils.setSessionScopeValue("refreshImport", "Y");
-            if (sysInfraTreeModel == null) {
-                populateParentTreeModel(sysInfraTreeModel);
-            }
-            populateSubGroups(v93k);
-            ADFUtils.setSessionScopeValue("rebuildUI", null);
-        
+
+        sysInfraTreeModel = null;
+        String jsonStr = JSONUtils.convertObjToJson(v93k);
+        System.out.println("Json String build is" + jsonStr);
+        //If config is live use this
+
+        String responseJson =
+            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        System.out.println("Response Json from Configurator : " +
+                           responseJson);
+        ObjectMapper mapper = new ObjectMapper();
+        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        v93k = (V93kQuote)obj;
+        //else use this
+        //v93k = (V93kQuote)convertJsonToObject(null);
+        ADFUtils.setSessionScopeValue("parentObject", v93k);
+        ADFUtils.setSessionScopeValue("refreshImport", "Y");
+        if (sysInfraTreeModel == null) {
+            populateParentTreeModel(sysInfraTreeModel);
+        }
+        populateSubGroups(v93k);
+        ADFUtils.setSessionScopeValue("rebuildUI", null);
+
     }
 
     public void setJsessionId(RichInputText jsessionId) {
@@ -559,13 +557,30 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 (String)selectedNodeValueMap.get("selectedValue");
             String czNodeName = (String)selectedNodeValueMap.get("czNodeName");
             String identifier = (String)selectedNodeValueMap.get("identifier");
-            UiSelection uiSelection = new UiSelection();
+            String nodeColor = (String)selectedNodeValueMap.get("nodeColor");
+            String selectionState = null;
+            if(nodeColor!=null && nodeColor.equalsIgnoreCase(SudokuUtils.TARGET_COLOR)){
+                //means node is already selected,set selecteion state as false
+                selectionState = "FALSE";
+            }
+            if(nodeColor!=null && nodeColor.equalsIgnoreCase(SudokuUtils.REFERENCE_COLOR)){
+                //means node is not selected
+                selectionState = "TRUE";
+            }
+            if(nodeColor==null){
+                selectionState = "TRUE";
+            }
+           UiSelection uiSelection = new UiSelection();
+            if (uiSelection == null) {
+                uiSelection = new UiSelection();
+            }
             uiSelection.setParentGroupName("System Infrastructure");
             uiSelection.setSubGroupName(uiSubGrpName);
             uiSelection.setValueSelected(selectedValue);
             uiSelection.setUniqueSessionId(uniqueSessionId);
             uiSelection.setCzNodeName(czNodeName);
             uiSelection.setIdentifier(identifier);
+            uiSelection.setSelectionState(selectionState);
             v93k.setUiSelection(uiSelection);
 
             SessionDetails sessionDetails = new SessionDetails();
@@ -584,14 +599,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             v93k.setSessionDetails(sessionDetails);
             v93k.setInputParams(inputParam);
             ADFUtils.setSessionScopeValue("parentObject", v93k);
-           
+
             buildConfiguratorUI(v93k);
             ADFUtils.setSessionScopeValue("selectedNodeValueMap", null);
             confirmPopup.hide();
-//            shwDetHdrBind.setDisclosed(false);
-//            
-//            shwDetHdrBind.setDisclosed(true);
-//            ADFUtils.addPartialTarget(shwDetHdrBind);
+            //            shwDetHdrBind.setDisclosed(false);
+            //
+            //            shwDetHdrBind.setDisclosed(true);
+            //            ADFUtils.addPartialTarget(shwDetHdrBind);
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         }
     }

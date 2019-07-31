@@ -8,6 +8,10 @@ public class UiSelection {
     private String uiType;
     private String czNodeName;
     private String identifier;
+    private int referenceQuantity;
+    private int targetQuantity;
+    private String selectionState;// TRUE if value is selected, FALSE if value is de-selected.
+    
     public UiSelection() {
         super();
     }
@@ -66,5 +70,29 @@ public class UiSelection {
 
     public String getIdentifier() {
         return identifier;
+    }
+
+    public void setReferenceQuantity(int referenceQuantity) {
+        this.referenceQuantity = referenceQuantity;
+    }
+
+    public int getReferenceQuantity() {
+        return referenceQuantity;
+    }
+
+    public void setTargetQuantity(int targetQuantity) {
+        this.targetQuantity = targetQuantity;
+    }
+
+    public int getTargetQuantity() {
+        return targetQuantity;
+    }
+
+    public void setSelectionState(String selectionState) {
+        this.selectionState = selectionState;
+    }
+
+    public String getSelectionState() {
+        return selectionState;
     }
 }

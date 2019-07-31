@@ -23,6 +23,9 @@ public class ConfiguratorUiNode {
     
      String czNodeName = "";
      int czNodeType = -1;
+     
+    int referenceQuantiy = -1;
+    int targetQuantity = -1;
 
     public void setUiNodeName(String uiNodeName) {
         this.uiNodeName = uiNodeName;
@@ -110,5 +113,21 @@ public class ConfiguratorUiNode {
 
     public boolean isReadOnly() {
         return readOnly;
+    }
+
+    public void setReferenceQuantiy(int referenceQuantiy) {
+        this.referenceQuantiy = referenceQuantiy;
+    }
+
+    public int getReferenceQuantiy() {
+        return referenceQuantiy;
+    }
+
+    public void setTargetQuantity(int targetQuantity) {
+        this.targetQuantity = targetQuantity;
+    }
+
+    public int getTargetQuantity() {
+        return targetQuantity;
     }
 }

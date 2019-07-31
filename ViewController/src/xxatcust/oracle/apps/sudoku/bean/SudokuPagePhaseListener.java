@@ -69,8 +69,8 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
     }
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
-        //Comment for local run
-        //validateEBSSession(pagePhaseEvent);
+       
+            //validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {
@@ -147,22 +147,21 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
             EBiz instance = new EBiz(EBSconn, applServerID);
             wrappedRequest =
                     new AppsRequestWrapper(request, response, EBSconn, instance);
-           
+
             logoutEbsUrl =
                     wrappedRequest.getEbizInstance().getAppsServletAgent();
             logoutEbsUrl = logoutEbsUrl + "OALogout.jsp?menu=Y";
             _logger.info("logoutEbsUrl = " + logoutEbsUrl);
             Session sessionEBS = wrappedRequest.getAppsSession();
-          
+
             //logout only if it is present
             if (sessionEBS != null) {
                 AppsSessionHelper helper =
                     new AppsSessionHelper(wrappedRequest.getEbizInstance());
                 helper.destroyAppsSession(wrappedRequest.getAppsSession(),
                                           wrappedRequest, response);
-                
-                
-                
+
+
             }
             ExternalContext ectx =
                 FacesContext.getCurrentInstance().getExternalContext();
@@ -185,130 +184,145 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void validateEBSSession(PagePhaseEvent pagePhaseEvent) {
         if (ADFLifecycle.INIT_CONTEXT_ID == pagePhaseEvent.getPhaseId()) {
-            EBiz INSTANCE = null;
-            Environment env = ADFContext.getCurrent().getEnvironment();
-            HttpServletRequest request =
-                ((HttpServletRequest)env.getRequest());
-            HttpServletResponse response =
-                ((HttpServletResponse)env.getResponse());
-            HttpSession sessionADF = request.getSession();
-            AppsRequestWrapper wrappedRequest = null;
-            String applServerID = null;
-            Connection EBSconn = null;
-            String jSession = (String)request.getAttribute("JSESSION");
-            Map map1 = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-            if(jSession==null){
-                jSession = map1.get("JSESSION") ==null ? "" : map1.get("JSESSION").toString();
-            }
-            sessionADF.setAttribute("JSESSION", jSession);
-            _logger.info("********JSSION********** "+jSession);
-            
-            try {
-                ApplicationModule am = getAppModule();
-                javax.naming.Context initialContext =
-                    new javax.naming.InitialContext();
-                javax.sql.DataSource dataSource =
-                    (javax.sql.DataSource)initialContext.lookup("jdbc/myDS1");
-
-                EBSconn = dataSource.getConnection();
-                SudokuAMImpl amClient = (SudokuAMImpl)am;
-                manageAttributes(amClient);
-                ServletContext servContext =
-                    (ServletContext)ADFContext.getCurrent().getEnvironment().getContext();
-                _logger.info("servLetContext : " + servContext);
-                applServerID = servContext.getInitParameter("APPL_SERVER_ID");
-                _logger.info("applServerID: " + applServerID);
-                INSTANCE = new EBiz(EBSconn, applServerID);
-                wrappedRequest =
-                        new AppsRequestWrapper(request, response, EBSconn,
-                                               INSTANCE);
-                oracle.apps.fnd.ext.common.Session sessionEBS =
-                    wrappedRequest.getAppsSession(true);
-               _logger.info("sessionEBS : " + sessionEBS);
-                if (sessionEBS != null) {
-                    if (!isEBSSessionValid(sessionEBS)) {
-                        _logger.info("EBS Session Not valid ,Logging out ");
-                        logoutEBS();
-                        return;
-                    } else {
-                        String userId = sessionEBS.getUserId();
-                        _logger.info("UserId : " + userId);
-                        String userName = sessionEBS.getUserName();
-                        _logger.info("userName : " + userName);
-                        String language = wrappedRequest.getLangCode();
-                        _logger.info("language : " + language);
-                        Map<String, String> info = sessionEBS.getInfo();
-                        String respId = info.get("RESPONSIBILITY_ID");
-                        _logger.info("respId : " + respId);
-                        String respApplId =
-                            info.get("RESPONSIBILITY_APPLICATION_ID");
-                        _logger.info("respApplId : " + respApplId);
-                        String applicationId = info.get("RESP_APPL_ID");
-                        _logger.info("applicationId : " + applicationId);
-                        String secGrpId = info.get("SECURITY_GROUP_ID");
-                        _logger.info("secGrpId : " + secGrpId);
-                        String orgId = info.get("ORG_ID");
-                        _logger.info("orgId : " + orgId);
-                        //Initialize appsContext
-                        _logger.info("Initializing Apps Context.....");
-                        initializeAppsContext(respId, userId, applicationId);
-                        _logger.info("Apps Context Initialized.....");
-                        String sessionCookieValue =
-                            wrappedRequest.getICXCookieValue();
-                         Cookie[] listOfCookies =    wrappedRequest.getCookies();
-                        
-                        for(Cookie cookie : listOfCookies){
-                            _logger.info("Cookie value "+cookie.getName()+" "+cookie.getValue());
-                        }
-                        _logger.info("Session Cookie Value "+sessionCookieValue);
-                        _logger.info("Session ID "+sessionEBS.getSessionId());
-                        _logger.info("Raw Info "+sessionEBS.getRawInfo());
-                        sessionADF.setAttribute("EBS_SESSION_INSTANCE",
-                                                INSTANCE);
-                        sessionADF.setAttribute("EBS_APPS_SESSION_INSTANCE",
-                                                sessionEBS);
-                        sessionADF.setAttribute("listOfCookies", listOfCookies);
-                        sessionADF.setAttribute("SessionCookieValue",
-                                                sessionCookieValue);
-                        sessionADF.setAttribute("UserId", userId);
-                        sessionADF.setAttribute("RespId", respId);
-                        sessionADF.setAttribute("ApplId", respApplId);
-                        sessionADF.setAttribute("UserName", userName);
-                        sessionADF.setAttribute("Language", language);
-                        sessionADF.setAttribute("SecGrpId", secGrpId);
-                        sessionADF.setAttribute("OrgId", orgId);
-
-                        javax.servlet.http.Cookie cookie =
-                            wrappedRequest.getICXCookie();
-                        String icxcookieName = cookie.getName();
-                        String icxcookieValue = cookie.getValue();
-                        _logger.info("Cookie Name "+icxcookieName);
-                        _logger.info("Cookie Value "+icxcookieValue);
-                        sessionADF.setAttribute("cookie", cookie);
-                        sessionADF.setAttribute("icxcookieName",
-                                                icxcookieName);
-                        sessionADF.setAttribute("icxcookieValue",
-                                                icxcookieValue);
-                    }
+            if (ADFUtils.getSessionScopeValue("JSESSIONID")==null) {
+                EBiz INSTANCE = null;
+                Environment env = ADFContext.getCurrent().getEnvironment();
+                HttpServletRequest request =
+                    ((HttpServletRequest)env.getRequest());
+                HttpServletResponse response =
+                    ((HttpServletResponse)env.getResponse());
+                HttpSession sessionADF = request.getSession();
+                AppsRequestWrapper wrappedRequest = null;
+                String applServerID = null;
+                Connection EBSconn = null;
+                String jSession = (String)request.getAttribute("JSESSION");
+                Map map1 =
+                    FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+                if (jSession == null) {
+                    jSession =
+                            map1.get("JSESSION") == null ? "" : map1.get("JSESSION").toString();
                 }
+                sessionADF.setAttribute("JSESSIONID", jSession);
+                _logger.info("********JSSION********** " +
+                             ADFUtils.getSessionScopeValue("JSESSIONID"));
 
-            } catch (SQLException se) {
-
-                _logger.info("Exception in " + this.getClass().getName() +
-                             se.getMessage());
-                se.printStackTrace();
-            } catch (Exception e) {
-                _logger.info("Exception in " + this.getClass().getName() +
-                             e.getMessage());
-                e.printStackTrace();
-            } finally {
                 try {
-                    if (EBSconn != null) {
-                        EBSconn.close();
+                    ApplicationModule am = getAppModule();
+                    javax.naming.Context initialContext =
+                        new javax.naming.InitialContext();
+                    javax.sql.DataSource dataSource =
+                        (javax.sql.DataSource)initialContext.lookup("jdbc/myDS1");
+
+                    EBSconn = dataSource.getConnection();
+                    SudokuAMImpl amClient = (SudokuAMImpl)am;
+                    manageAttributes(amClient);
+                    ServletContext servContext =
+                        (ServletContext)ADFContext.getCurrent().getEnvironment().getContext();
+                    _logger.info("servLetContext : " + servContext);
+                    applServerID =
+                            servContext.getInitParameter("APPL_SERVER_ID");
+                    _logger.info("applServerID: " + applServerID);
+                    INSTANCE = new EBiz(EBSconn, applServerID);
+                    wrappedRequest =
+                            new AppsRequestWrapper(request, response, EBSconn,
+                                                   INSTANCE);
+                    oracle.apps.fnd.ext.common.Session sessionEBS =
+                        wrappedRequest.getAppsSession(true);
+                    _logger.info("sessionEBS : " + sessionEBS);
+                    if (sessionEBS != null) {
+                        if (!isEBSSessionValid(sessionEBS)) {
+                            _logger.info("EBS Session Not valid ,Logging out ");
+                            logoutEBS();
+                            return;
+                        } else {
+                            String userId = sessionEBS.getUserId();
+                            _logger.info("UserId : " + userId);
+                            String userName = sessionEBS.getUserName();
+                            _logger.info("userName : " + userName);
+                            String language = wrappedRequest.getLangCode();
+                            _logger.info("language : " + language);
+                            Map<String, String> info = sessionEBS.getInfo();
+                            String respId = info.get("RESPONSIBILITY_ID");
+                            _logger.info("respId : " + respId);
+                            String respApplId =
+                                info.get("RESPONSIBILITY_APPLICATION_ID");
+                            _logger.info("respApplId : " + respApplId);
+                            String applicationId = info.get("RESP_APPL_ID");
+                            _logger.info("applicationId : " + applicationId);
+                            String secGrpId = info.get("SECURITY_GROUP_ID");
+                            _logger.info("secGrpId : " + secGrpId);
+                            String orgId = info.get("ORG_ID");
+                            _logger.info("orgId : " + orgId);
+                            //Initialize appsContext
+                            _logger.info("Initializing Apps Context.....");
+                            initializeAppsContext(respId, userId,
+                                                  applicationId);
+                            _logger.info("Apps Context Initialized.....");
+                            String sessionCookieValue =
+                                wrappedRequest.getICXCookieValue();
+                            Cookie[] listOfCookies =
+                                wrappedRequest.getCookies();
+
+                            for (Cookie cookie : listOfCookies) {
+                                _logger.info("Cookie value " +
+                                             cookie.getName() + " " +
+                                             cookie.getValue());
+                            }
+                            _logger.info("Session Cookie Value " +
+                                         sessionCookieValue);
+                            _logger.info("Session ID " +
+                                         sessionEBS.getSessionId());
+                            _logger.info("Raw Info " +
+                                         sessionEBS.getRawInfo());
+                            sessionADF.setAttribute("EBS_SESSION_INSTANCE",
+                                                    INSTANCE);
+                            sessionADF.setAttribute("EBS_APPS_SESSION_INSTANCE",
+                                                    sessionEBS);
+                            sessionADF.setAttribute("listOfCookies",
+                                                    listOfCookies);
+                            sessionADF.setAttribute("SessionCookieValue",
+                                                    sessionCookieValue);
+                            sessionADF.setAttribute("UserId", userId);
+                            sessionADF.setAttribute("RespId", respId);
+                            sessionADF.setAttribute("ApplId", respApplId);
+                            sessionADF.setAttribute("UserName", userName);
+                            sessionADF.setAttribute("Language", language);
+                            sessionADF.setAttribute("SecGrpId", secGrpId);
+                            sessionADF.setAttribute("OrgId", orgId);
+
+                            javax.servlet.http.Cookie cookie =
+                                wrappedRequest.getICXCookie();
+                            String icxcookieName = cookie.getName();
+                            String icxcookieValue = cookie.getValue();
+                            _logger.info("Cookie Name " + icxcookieName);
+                            _logger.info("Cookie Value " + icxcookieValue);
+                            sessionADF.setAttribute("cookie", cookie);
+                            sessionADF.setAttribute("icxcookieName",
+                                                    icxcookieName);
+                            sessionADF.setAttribute("icxcookieValue",
+                                                    icxcookieValue);
+                        }
                     }
+
                 } catch (SQLException se) {
+
                     _logger.info("Exception in " + this.getClass().getName() +
                                  se.getMessage());
+                    se.printStackTrace();
+                } catch (Exception e) {
+                    _logger.info("Exception in " + this.getClass().getName() +
+                                 e.getMessage());
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (EBSconn != null) {
+                            EBSconn.close();
+                        }
+                    } catch (SQLException se) {
+                        _logger.info("Exception in " +
+                                     this.getClass().getName() +
+                                     se.getMessage());
+                    }
                 }
             }
         }

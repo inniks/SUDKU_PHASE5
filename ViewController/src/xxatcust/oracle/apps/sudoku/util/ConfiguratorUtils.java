@@ -52,11 +52,8 @@ public class ConfiguratorUtils {
         String cookieBuf = null;
         String str1 = null;
         String str2 = null;
-        String jsessionId = (String)ADFUtils.getSessionScopeValue("jsessionId");
-//        if(listOfCookies!=null && listOfCookies.length>1){
-//            str1 = listOfCookies[0].getName()+"="+listOfCookies[0].getValue()+";";
-//            //str2 = listOfCookies[1].getName()+"="+listOfCookies[1].getValue();
-//        }
+        String jsessionId = (String)ADFUtils.getSessionScopeValue("JSESSIONID");
+        _logger.info("JSESSION ID while calling configurator is "+jsessionId);
         if(jsessionId!=null){
             for(Cookie cookie :listOfCookies){
                 if(cookie.getName().equalsIgnoreCase("SPT2")){
@@ -67,8 +64,8 @@ public class ConfiguratorUtils {
             str2 = "JSESSIONID="+jsessionId;
         }
       
-       
         cookieBuf = str1+str2;
+        _logger.info("Cookie id formed "+cookieBuf);
         URL url =
             new URL("http://usdcnvspt2ap1.adv.advantest.com:8000/OA_HTML/configurator/XXATSudokuCzServletP5");
         _logger.info("Print url in callConfiguratorServlet " + url);
