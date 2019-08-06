@@ -52,7 +52,7 @@ public class ConfiguratorUtils {
         String cookieBuf = null;
         String str1 = null;
         String str2 = null;
-        String jsessionId = (String)ADFUtils.getSessionScopeValue("JSESSIONID");
+        String jsessionId = (String)ADFUtils.getSessionScopeValue("jsenid"); //JSESSIONID
         _logger.info("JSESSION ID while calling configurator is "+jsessionId);
         if(jsessionId!=null){
             for(Cookie cookie :listOfCookies){

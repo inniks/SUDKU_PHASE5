@@ -463,7 +463,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                            JsonGenerationException,
                                                            JsonMappingException {
 
-
+        String jsenId = (String)jsessionId.getValue();
+        ADFUtils.setSessionScopeValue("jsenid", jsenId);
         sysInfraTreeModel = null;
         String jsonStr = JSONUtils.convertObjToJson(v93k);
         System.out.println("Json String build is" + jsonStr);

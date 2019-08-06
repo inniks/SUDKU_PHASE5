@@ -2,6 +2,11 @@
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="ConfiguratorFlow">
     <default-activity id="__1">initConfiguratorRuleSet</default-activity>
+    <input-parameter-definition id="__17">
+      <name id="__16">refreshFlag</name>
+      <value>#{pageFlowScope.refreshFlag}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
     <managed-bean id="__9">
       <managed-bean-name id="__7">SysInfraBean</managed-bean-name>
       <managed-bean-class id="__8">xxatcust.oracle.apps.sudoku.bean.SysInfraBean</managed-bean-class>

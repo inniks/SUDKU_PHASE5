@@ -344,6 +344,9 @@ true);
             <af:toolbar id="t1">
               <af:commandToolbarButton text="Refresh" id="ctb1"
                                        actionListener="#{pageFlowScope.SysInfraBean.refreshView}"/>
+              <af:inputText label="jsessionId" id="it1"
+                            binding="#{pageFlowScope.SysInfraBean.jsessionId}"
+                            autoSubmit="true"/>
             </af:toolbar>
           </af:group>
         </f:facet>
