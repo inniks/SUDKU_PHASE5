@@ -18,6 +18,7 @@ import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
 
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.SessionDetails;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 
 
@@ -91,6 +92,17 @@ public class QuotingBean {
                     }
 
                 }
+            } else {
+                V93kQuote v93kNew = new V93kQuote();
+                SessionDetails sesDet = new SessionDetails();
+                String[] arrOfStr = msg.split(":", 2);
+
+                if (arrOfStr[1] != null)
+                    sesDet.setTargetQuoteNumber(arrOfStr[1].toString());
+                ADFUtils.setSessionScopeValue("targetQuoteNumber",
+                                              arrOfStr[1]);
+                v93kNew.setSessionDetails(sesDet);
+                ADFUtils.setSessionScopeValue("parentObject", v93kNew);
             }
         } else {
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -348,7 +360,8 @@ public class QuotingBean {
 
     public void custNameRPL(ReturnPopupEvent returnPopupEvent) {
         if (returnPopupEvent != null) {
-            System.out.println("rop:" + returnPopupEvent.getReturnValue().toString());
+            System.out.println("rop:" +
+                               returnPopupEvent.getReturnValue().toString());
             OperationBinding ob =
                 getBindings().getOperationBinding("getQuoteCustmerAddress");
             ob.getParamsMap().put("curRow", null);
@@ -467,20 +480,18 @@ public class QuotingBean {
             fc.addMessage(null, message);
         } else if (msg.contains("S-")) {
 
-           
-                if (getBindDiscount().getValue() != null) {
-                    V93kQuote v93k =
-                        (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-                    if (v93k != null) {
-                        if (v93k.getQheaderObject() != null) {
-                            if (v93k.getQheaderObject().getDealObject() !=
-                                null) {
-                                v93k.getQheaderObject().getDealObject().setDdiscount(getBindDiscount().getValue().toString());
-                            }
+
+            if (getBindDiscount().getValue() != null) {
+                V93kQuote v93k =
+                    (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+                if (v93k != null) {
+                    if (v93k.getQheaderObject() != null) {
+                        if (v93k.getQheaderObject().getDealObject() != null) {
+                            v93k.getQheaderObject().getDealObject().setDdiscount(getBindDiscount().getValue().toString());
                         }
                     }
                 }
-           
+            }
 
 
             String[] resultMsg = msg.split("-", 2);
