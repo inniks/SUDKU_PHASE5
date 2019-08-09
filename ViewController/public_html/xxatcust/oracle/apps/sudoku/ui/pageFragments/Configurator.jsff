@@ -24,12 +24,27 @@ true);
       <af:panelGroupLayout layout="scroll"
                            xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                            id="confPGL" partialTriggers="ctb1">
+        <af:outputText value="outputText1" id="ot1"
+                       binding="#{pageFlowScope.ConfiguratorBean.pageInitText}"
+                       visible="false"/>
+<af:popup id="cnfPopup" autoCancel="disabled"
+                        binding="#{pageFlowScope.ConfiguratorBean.confirmPopup}">
+                <af:dialog id="d1"
+                           title="Configuration has below warning(s)"
+                           contentWidth="450" contentHeight="200"
+                           dialogListener="#{pageFlowScope.ConfiguratorBean.warnPopupDialogListener}">
+                  <af:panelGroupLayout id="pg12l4" layout="scroll">
+                    <af:outputFormatted id="ofpop4"
+                                        binding="#{pageFlowScope.ConfiguratorBean.warnText}"/>
+                  </af:panelGroupLayout>
+                </af:dialog>
+              </af:popup>
         <af:listView id="sysLv"
                      value="#{pageFlowScope.ConfiguratorBean.sysInfraTreeModel}"
                      var="node" groupDisclosurePolicy="initiallyExpanded"
                      binding="#{pageFlowScope.ConfiguratorBean.sysInfraListView}">
           <f:facet name="groupHeaderStamp">
-            <af:listItem id="li1" styleClass="ABHeader">
+            <af:listItem id="li1" styleClass="ABHeader" rendered="true">
               <af:panelGroupLayout id="pgl3" layout="horizontal">
                 <af:panelBorderLayout id="pbl1"
                                       inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
@@ -57,8 +72,7 @@ true);
               <af:gridRow marginTop="5px" height="auto" id="gr1">
                 <af:gridCell marginStart="5px" width="50%" id="gc3"
                              styleClass="AFStretchWidth">
-                  <af:iterator
-                              var="topNode"
+                  <af:iterator var="topNode"
                                value="#{pageFlowScope.ConfiguratorBean.sdiCollection}">
                     <af:panelGroupLayout id="pgl4" layout="vertical">
                       <af:panelGroupLayout id="pgl11" layout="horizontal">
@@ -80,7 +94,7 @@ true);
                           </af:panelBorderLayout>
                         </af:panelGroupLayout>
                         <af:showDetailHeader id="sd1"
-                                       rendered="#{node.codeName eq topNode.index}"
+                                             rendered="#{node.codeName eq topNode.index}"
                                              text="#{node.nodeName}"
                                              binding="#{pageFlowScope.ConfiguratorBean.shwDetHdrBind}">
                           <af:iterator id="i2"
@@ -275,9 +289,11 @@ true);
                             <f:facet name="legend"/>
                             <f:facet name="info"/>
                             <af:panelGroupLayout id="pgl8" layout="vertical">
-                              <af:commandLink text="Product Description" id="cl8"/>
+                              <af:commandLink text="Product Description"
+                                              id="cl8"/>
                               <af:commandLink text="Specifications" id="cl9"/>
-                              <af:commandLink text="Drawings and Pictures" id="c20"/>
+                              <af:commandLink text="Drawings and Pictures"
+                                              id="c20"/>
                             </af:panelGroupLayout>
                           </af:showDetailHeader>
                         </af:showDetailHeader>
@@ -305,200 +321,215 @@ true);
                 <af:gridCell marginStart="5px" width="50%" id="gc5">
                   <af:iterator id="i1" var="wrntyIter"
                                value="#{pageFlowScope.ConfiguratorBean.warrantyUiCollection}">
-                    <af:showDetailHeader text="#{warrantyNode.nodeName}"
-                                         disclosed="false" id="sdh2">
-                      <af:panelGroupLayout id="wrntyPgl" layout="horizontal">
-                        <af:spacer width="100" height="10" id="wrntys1"/>
-                        <af:panelBorderLayout id="wrntypbl3"
-                                              inlineStyle="height:25px; width:250px; border-style:none;">
-                          <f:facet name="innerLeft">
-                            <af:panelGroupLayout id="wrntypgl12" halign="left"
-                                                 layout="horizontal">
-                              <af:outputFormatted value="#{wrntyIter.selectedValue}"
-                                                  id="outputFormatted1"/>
-                            </af:panelGroupLayout>
-                          </f:facet>
-                        </af:panelBorderLayout>
-                        <af:spacer width="10" height="10" id="spacer1"/>
-                        <af:panelBorderLayout id="wrntypanelBorderLayout1"
-                                              inlineStyle="height:25px; width:60px; border-style:none;">
-                          <f:facet name="innerLeft"/>
-                        </af:panelBorderLayout>
-                        <af:panelBorderLayout id="wrntypanelBorderLayout2"
-                                              inlineStyle="height:25px; width:60px; border-style:none;">
-                          <f:facet name="innerLeft"/>
-                        </af:panelBorderLayout>
-                        <af:panelBorderLayout id="wrntypanelBorderLayout3"
-                                              inlineStyle="height:25px; width:130px; border-style:none;background-color:#{wrntyIter.uiField1_color};">
-                          <f:facet name="innerLeft">
-                            <af:panelGroupLayout id="panelGroupLayout1"
-                                                 layout="horizontal"
-                                                 halign="left">
-                              <af:commandLink id="commandLink1"
-                                              actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
-                                              disabled="#{wrntyIter.uiField1_dis or wrntyIter.uiField1_readOnly}"
-                                              partialSubmit="false">
-                                <af:outputFormatted id="outputFormatted2"
-                                                    value="#{wrntyIter.uiField1}"
-                                                    inlineStyle="#{wrntyIter.uiField1_bgColor}"/>
-                                <af:inputText id="inputText1" visible="false"
-                                              value="#{wrntyIter.czNodeName1}"
-                                              shortDesc="#{wrntyIter.uiField1_identifier}"
-                                              label="#{wrntyIter.uiField1_color}"/>
-                              </af:commandLink>
-                            </af:panelGroupLayout>
-                          </f:facet>
-                        </af:panelBorderLayout>
-                        <af:spacer width="10" height="10" id="spacer2"/>
-                        <af:panelBorderLayout id="panelBorderLayout4"
-                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField2_color};">
-                          <f:facet name="innerLeft">
-                            <af:panelGroupLayout id="panelGroupLayout2"
-                                                 layout="horizontal"
-                                                 halign="left">
-                              <af:commandLink id="commandLink2"
-                                              actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
-                                              disabled="#{wrntyIter.uiField2_dis or wrntyIter.uiField2_readOnly}">
-                                <af:outputFormatted id="outputFormatted3"
-                                                    value="#{wrntyIter.uiField2}"
-                                                    inlineStyle="#{wrntyIter.uiField2_bgColor}"/>
-                                <af:inputText id="inputText2" visible="false"
-                                              value="#{wrntyIter.czNodeName2}"
-                                              shortDesc="#{wrntyIter.uiField2_identifier}"
-                                              label="#{wrntyIter.uiField2_color}"/>
-                              </af:commandLink>
-                            </af:panelGroupLayout>
-                          </f:facet>
-                        </af:panelBorderLayout>
-                        <af:spacer width="10" height="10" id="spacer3"/>
-                        <af:panelBorderLayout id="panelBorderLayout5"
-                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField3_color};">
-                          <f:facet name="innerLeft">
-                            <af:panelGroupLayout id="panelGroupLayout3"
-                                                 layout="horizontal"
-                                                 halign="left">
-                              <af:commandLink id="commandLink3"
-                                              actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
-                                              disabled="#{wrntyIter.uiField3_dis or wrntyIter.uiField3_readOnly}">
-                                <af:outputFormatted id="outputFormatted4"
-                                                    value="#{wrntyIter.uiField3}"
-                                                    inlineStyle="#{wrntyIter.uiField3_bgColor}"/>
-                                <af:inputText id="inputText3" visible="false"
-                                              value="#{wrntyIter.czNodeName3}"
-                                              shortDesc="#{wrntyIter.uiField3_identifier}"
-                                              label="#{wrntyIter.uiField3_color}"/>
-                              </af:commandLink>
-                            </af:panelGroupLayout>
-                          </f:facet>
-                        </af:panelBorderLayout>
-                        <af:spacer width="10" height="10" id="spacer4"/>
-                        <af:panelBorderLayout id="panelBorderLayout6"
-                                              inlineStyle="height:25px; width:130px; border-style:none;background-color:#{wrntyIter.uiField4_color};">
-                          <f:facet name="innerLeft">
-                            <af:panelGroupLayout id="panelGroupLayout4"
-                                                 layout="horizontal"
-                                                 halign="left">
-                              <af:commandLink id="commandLink4"
-                                              actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
-                                              disabled="#{wrntyIter.uiField4_dis or wrntyIter.uiField4_readOnly}">
-                                <af:outputFormatted id="outputFormatted5"
-                                                    value="#{wrntyIter.uiField4}"
-                                                    inlineStyle="#{wrntyIter.uiField4_bgColor}"/>
-                                <af:inputText id="inputText4" visible="false"
-                                              value="#{wrntyIter.czNodeName4}"
-                                              shortDesc="#{wrntyIter.uiField4_identifier}"
-                                              label="#{wrntyIter.uiField4_color}"/>
-                              </af:commandLink>
-                            </af:panelGroupLayout>
-                          </f:facet>
-                        </af:panelBorderLayout>
-                        <af:spacer width="10" height="10" id="spacer5"/>
-                        <af:panelBorderLayout id="panelBorderLayout7"
-                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField5_color};">
-                          <f:facet name="innerLeft">
-                            <af:panelGroupLayout id="panelGroupLayout5"
-                                                 layout="horizontal"
-                                                 halign="left">
-                              <af:commandLink id="commandLink5"
-                                              actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
-                                              disabled="#{wrntyIter.uiField5_dis or wrntyIter.uiField5_readOnly}">
-                                <af:outputFormatted id="outputFormatted6"
-                                                    value="#{wrntyIter.uiField5}"
-                                                    inlineStyle="#{wrntyIter.uiField5_bgColor}"/>
-                                <af:inputText id="inputText5" visible="false"
-                                              value="#{wrntyIter.czNodeName5}"
-                                              shortDesc="#{wrntyIter.uiField5_identifier}"
-                                              label="#{wrntyIter.uiField5_color}"/>
-                              </af:commandLink>
-                            </af:panelGroupLayout>
-                          </f:facet>
-                        </af:panelBorderLayout>
-                        <af:spacer width="10" height="10" id="spacer6"/>
-                        <af:panelBorderLayout id="panelBorderLayout8"
-                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField6_color};">
-                          <f:facet name="innerLeft">
-                            <af:panelGroupLayout id="panelGroupLayout6"
-                                                 layout="horizontal"
-                                                 halign="left">
-                              <af:commandLink id="commandLink6"
-                                              actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
-                                              disabled="#{wrntyIter.uiField6_dis or wrntyIter.uiField6_readOnly}">
-                                <af:outputFormatted id="outputFormatted7"
-                                                    value="#{wrntyIter.uiField6}"
-                                                    inlineStyle="#{wrntyIter.uiField6_bgColor}"/>
-                                <af:inputText id="inputText6" visible="false"
-                                              value="#{wrntyIter.czNodeName6}"
-                                              shortDesc="#{wrntyIter.uiField6_identifier}"
-                                              label="#{wrntyIter.uiField6_color}"/>
-                              </af:commandLink>
-                            </af:panelGroupLayout>
-                          </f:facet>
-                        </af:panelBorderLayout>
-                        <af:spacer width="10" height="10" id="spacer7"/>
-                        <af:panelBorderLayout id="panelBorderLayout9"
-                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField7_color};">
-                          <f:facet name="innerLeft">
-                            <af:panelGroupLayout id="panelGroupLayout7"
-                                                 layout="horizontal"
-                                                 halign="left">
-                              <af:commandLink id="commandLink7"
-                                              actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
-                                              disabled="#{wrntyIter.uiField7_dis or wrntyIter.uiField7_readOnly}">
-                                <af:outputFormatted id="outputFormatted8"
-                                                    value="#{wrntyIter.uiField7}"
-                                                    inlineStyle="#{wrntyIter.uiField7_bgColor}"/>
-                                <af:inputText id="inputText7" visible="false"
-                                              value="#{wrntyIter.czNodeName7}"
-                                              shortDesc="#{wrntyIter.uiField7_identifier}"
-                                              label="#{wrntyIter.uiField7_color}"/>
-                              </af:commandLink>
-                            </af:panelGroupLayout>
-                          </f:facet>
-                        </af:panelBorderLayout>
-                        <af:spacer width="10" height="10" id="spacer8"/>
+                    <af:panelGroupLayout id="pgl15" layout="vertical">
+                      <af:panelGroupLayout id="pgl16" layout="horizontal">
+                      <af:panelGroupLayout id="wrnty_pgl5" layout="horizontal"
+                                             >
+                          <af:panelBorderLayout id="wrnty_pbl4"
+                                                inlineStyle="height:15px; width:25px;">
+                            <f:facet name="start"/>
+                            <f:facet name="bottom"/>
+                            <f:facet name="end"/>
+                            <f:facet name="top"/>
+                          </af:panelBorderLayout>
+                          <af:panelBorderLayout id="wrnty_pbl5"
+                                                inlineStyle="height:15px; width:25px;">
+                            <f:facet name="start"/>
+                            <f:facet name="bottom"/>
+                            <f:facet name="end"/>
+                            <f:facet name="top"/>
+                          </af:panelBorderLayout>
+                        </af:panelGroupLayout>
+                        <af:showDetailHeader text="#{warrantyNode.nodeName}"
+                                             disclosed="false" id="sdh2">
+                          <af:panelGroupLayout id="wrntyPgl"
+                                               layout="horizontal">
+                            <af:spacer width="100" height="10" id="wrntys1"/>
+                            <af:panelBorderLayout id="wrntypbl3"
+                                                  inlineStyle="height:25px; width:250px; border-style:none;">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="wrntypgl12"
+                                                     halign="left"
+                                                     layout="horizontal">
+                                  <af:outputFormatted value="#{wrntyIter.selectedValue}"
+                                                      id="outputFormatted1"/>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="spacer1"/>
+                            <af:panelBorderLayout id="wrntypanelBorderLayout1"
+                                                  inlineStyle="height:25px; width:60px; border-style:none;">
+                              <f:facet name="innerLeft"/>
+                            </af:panelBorderLayout>
+                            <af:panelBorderLayout id="wrntypanelBorderLayout2"
+                                                  inlineStyle="height:25px; width:60px; border-style:none;">
+                              <f:facet name="innerLeft"/>
+                            </af:panelBorderLayout>
+                            <af:panelBorderLayout id="wrntypanelBorderLayout3"
+                                                  inlineStyle="height:25px; width:130px; border-style:none;background-color:#{wrntyIter.uiField1_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="panelGroupLayout1"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="commandLink1"
+                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  disabled="#{wrntyIter.uiField1_dis or wrntyIter.uiField1_readOnly}"
+                                                  partialSubmit="false">
+                                    <af:outputFormatted id="outputFormatted2"
+                                                        value="#{wrntyIter.uiField1}"
+                                                        inlineStyle="#{wrntyIter.uiField1_bgColor}"/>
+                                    <af:inputText id="inputText1"
+                                                  visible="false"
+                                                  value="#{wrntyIter.czNodeName1}"
+                                                  shortDesc="#{wrntyIter.uiField1_identifier}"
+                                                  label="#{wrntyIter.uiField1_color}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="spacer2"/>
+                            <af:panelBorderLayout id="panelBorderLayout4"
+                                                  inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField2_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="panelGroupLayout2"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="commandLink2"
+                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  disabled="#{wrntyIter.uiField2_dis or wrntyIter.uiField2_readOnly}">
+                                    <af:outputFormatted id="outputFormatted3"
+                                                        value="#{wrntyIter.uiField2}"
+                                                        inlineStyle="#{wrntyIter.uiField2_bgColor}"/>
+                                    <af:inputText id="inputText2"
+                                                  visible="false"
+                                                  value="#{wrntyIter.czNodeName2}"
+                                                  shortDesc="#{wrntyIter.uiField2_identifier}"
+                                                  label="#{wrntyIter.uiField2_color}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="spacer3"/>
+                            <af:panelBorderLayout id="panelBorderLayout5"
+                                                  inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField3_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="panelGroupLayout3"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="commandLink3"
+                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  disabled="#{wrntyIter.uiField3_dis or wrntyIter.uiField3_readOnly}">
+                                    <af:outputFormatted id="outputFormatted4"
+                                                        value="#{wrntyIter.uiField3}"
+                                                        inlineStyle="#{wrntyIter.uiField3_bgColor}"/>
+                                    <af:inputText id="inputText3"
+                                                  visible="false"
+                                                  value="#{wrntyIter.czNodeName3}"
+                                                  shortDesc="#{wrntyIter.uiField3_identifier}"
+                                                  label="#{wrntyIter.uiField3_color}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="spacer4"/>
+                            <af:panelBorderLayout id="panelBorderLayout6"
+                                                  inlineStyle="height:25px; width:130px; border-style:none;background-color:#{wrntyIter.uiField4_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="panelGroupLayout4"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="commandLink4"
+                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  disabled="#{wrntyIter.uiField4_dis or wrntyIter.uiField4_readOnly}">
+                                    <af:outputFormatted id="outputFormatted5"
+                                                        value="#{wrntyIter.uiField4}"
+                                                        inlineStyle="#{wrntyIter.uiField4_bgColor}"/>
+                                    <af:inputText id="inputText4"
+                                                  visible="false"
+                                                  value="#{wrntyIter.czNodeName4}"
+                                                  shortDesc="#{wrntyIter.uiField4_identifier}"
+                                                  label="#{wrntyIter.uiField4_color}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="spacer5"/>
+                            <af:panelBorderLayout id="panelBorderLayout7"
+                                                  inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField5_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="panelGroupLayout5"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="commandLink5"
+                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  disabled="#{wrntyIter.uiField5_dis or wrntyIter.uiField5_readOnly}">
+                                    <af:outputFormatted id="outputFormatted6"
+                                                        value="#{wrntyIter.uiField5}"
+                                                        inlineStyle="#{wrntyIter.uiField5_bgColor}"/>
+                                    <af:inputText id="inputText5"
+                                                  visible="false"
+                                                  value="#{wrntyIter.czNodeName5}"
+                                                  shortDesc="#{wrntyIter.uiField5_identifier}"
+                                                  label="#{wrntyIter.uiField5_color}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="spacer6"/>
+                            <af:panelBorderLayout id="panelBorderLayout8"
+                                                  inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField6_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="panelGroupLayout6"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="commandLink6"
+                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  disabled="#{wrntyIter.uiField6_dis or wrntyIter.uiField6_readOnly}">
+                                    <af:outputFormatted id="outputFormatted7"
+                                                        value="#{wrntyIter.uiField6}"
+                                                        inlineStyle="#{wrntyIter.uiField6_bgColor}"/>
+                                    <af:inputText id="inputText6"
+                                                  visible="false"
+                                                  value="#{wrntyIter.czNodeName6}"
+                                                  shortDesc="#{wrntyIter.uiField6_identifier}"
+                                                  label="#{wrntyIter.uiField6_color}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="spacer7"/>
+                            <af:panelBorderLayout id="panelBorderLayout9"
+                                                  inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField7_color};">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="panelGroupLayout7"
+                                                     layout="horizontal"
+                                                     halign="left">
+                                  <af:commandLink id="commandLink7"
+                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  disabled="#{wrntyIter.uiField7_dis or wrntyIter.uiField7_readOnly}">
+                                    <af:outputFormatted id="outputFormatted8"
+                                                        value="#{wrntyIter.uiField7}"
+                                                        inlineStyle="#{wrntyIter.uiField7_bgColor}"/>
+                                    <af:inputText id="inputText7"
+                                                  visible="false"
+                                                  value="#{wrntyIter.czNodeName7}"
+                                                  shortDesc="#{wrntyIter.uiField7_identifier}"
+                                                  label="#{wrntyIter.uiField7_color}"/>
+                                  </af:commandLink>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:spacer width="10" height="10" id="spacer8"/>
+                          </af:panelGroupLayout>
+                        </af:showDetailHeader>
                       </af:panelGroupLayout>
-                    </af:showDetailHeader>
+                    </af:panelGroupLayout>
                   </af:iterator>
                 </af:gridCell>
               </af:gridRow>
             </af:panelGridLayout>
           </af:listItem>
         </af:listView>
-        <af:outputText value="outputText1" id="ot1"
-                       binding="#{pageFlowScope.ConfiguratorBean.pageInitText}"
-                       visible="false"/>
-<af:popup id="cnfPopup" autoCancel="disabled"
-                        binding="#{pageFlowScope.ConfiguratorBean.confirmPopup}">
-                <af:dialog id="d1"
-                           title="Configuration has below warning(s)"
-                           contentWidth="450" contentHeight="200"
-                           dialogListener="#{pageFlowScope.ConfiguratorBean.warnPopupDialogListener}">
-                  <af:panelGroupLayout id="pg12l4" layout="scroll">
-                    <af:outputFormatted id="ofpop4"
-                                        binding="#{pageFlowScope.ConfiguratorBean.warnText}"/>
-                  </af:panelGroupLayout>
-                </af:dialog>
-              </af:popup>
       </af:panelGroupLayout>
     </f:facet>
     <f:facet name="start"/>

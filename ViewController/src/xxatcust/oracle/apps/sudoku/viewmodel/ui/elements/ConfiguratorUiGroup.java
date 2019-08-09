@@ -17,6 +17,8 @@ public class ConfiguratorUiGroup {
     
     boolean displayTargetColor = false; // column I7
     
+    boolean required = false;
+    
     ProductSpecfications productSpecs = null; //Product Description, Specifications, Drawings and Pictures
 
     public void setUiGroupName(String uiGroupName) {
@@ -61,5 +63,13 @@ public class ConfiguratorUiGroup {
     
     public void addSubGroup(String subGroupName, ConfiguratorUiSubGroup subGrp) {
         this.subGroups.put(subGroupName, subGrp);
+    }
+
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
+    public boolean isRequired() {
+        return required;
     }
 }

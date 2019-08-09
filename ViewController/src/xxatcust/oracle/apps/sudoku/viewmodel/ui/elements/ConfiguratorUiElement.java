@@ -20,6 +20,8 @@ public class ConfiguratorUiElement {
      *   4 -> LISTOFVALUES
      */
     
+    boolean required = false;
+    
 //    SelectionListUiNode selectionListUiNode = null;
 //    
 //    NumericUiNode numericUiNode = null;
@@ -115,4 +117,11 @@ public class ConfiguratorUiElement {
         
     }
 
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
+    public boolean isRequired() {
+        return required;
+    }
 }
