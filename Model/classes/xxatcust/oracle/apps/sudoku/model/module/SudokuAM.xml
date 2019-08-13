@@ -316,10 +316,5 @@
         Name="usrId"
         Type="int"/>
     </Method>
-    <Method
-      Name="initConfiguratorRuleSet">
-      <Return
-        Type="void"/>
-    </Method>
   </ClientInterface>
 </AppModule>

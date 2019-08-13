@@ -162,6 +162,8 @@
                           <af:setPropertyListener from="configurator"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
+                          <af:setActionListener from="#{viewScope.LoadDynamicRegionBean.refreshToken}"
+                                                to="#{sessionScope.refreshFlag}"/>
                         </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s8"/>
                         <af:commandImageLink id="ctb7" disabled="true"

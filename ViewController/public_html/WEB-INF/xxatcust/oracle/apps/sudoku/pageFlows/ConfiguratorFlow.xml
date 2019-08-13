@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="ConfiguratorFlow">
-    <default-activity id="__1">initConfiguratorRuleSet</default-activity>
+    <default-activity id="__22">initRuleSet</default-activity>
     <input-parameter-definition id="__17">
       <name id="__16">refreshFlag</name>
       <value>#{pageFlowScope.refreshFlag}</value>
@@ -17,20 +17,38 @@
       <managed-bean-class id="__14">xxatcust.oracle.apps.sudoku.bean.LOVPartialSearchClasss</managed-bean-class>
       <managed-bean-scope id="__15">pageFlow</managed-bean-scope>
     </managed-bean>
+    <managed-bean id="__18">
+      <managed-bean-name id="__19">RuleSetBean</managed-bean-name>
+      <managed-bean-class id="__20">xxatcust.oracle.apps.sudoku.bean.RuleSet</managed-bean-class>
+      <managed-bean-scope id="__11">pageFlow</managed-bean-scope>
+    </managed-bean>
     <view id="Configurator">
       <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/Configurator.jsff</page>
     </view>
-    <method-call id="initConfiguratorRuleSet">
-      <method>#{bindings.initConfiguratorRuleSet.execute}</method>
-      <outcome id="__2">
-        <fixed-outcome>initConfiguratorRuleSet</fixed-outcome>
+    <method-call id="initConfig">
+      <method>#{pageFlowScope.ConfiguratorBean.initConfigurator}</method>
+      <outcome id="__21">
+        <fixed-outcome>init</fixed-outcome>
       </outcome>
     </method-call>
-    <control-flow-rule id="__3">
-      <from-activity-id id="__4">initConfiguratorRuleSet</from-activity-id>
-      <control-flow-case id="__11">
-        <from-outcome id="__10">initConfiguratorRuleSet</from-outcome>
-        <to-activity-id id="__5">Configurator</to-activity-id>
+    <method-call id="initRuleSet">
+      <method>#{bindings.initRuleSet.execute}</method>
+      <outcome id="__23">
+        <fixed-outcome>initRuleSet</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">initConfig</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome id="__10">init</from-outcome>
+        <to-activity-id id="__4">Configurator</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__24">
+      <from-activity-id id="__25">initRuleSet</from-activity-id>
+      <control-flow-case id="__27">
+        <from-outcome id="__26">initRuleSet</from-outcome>
+        <to-activity-id id="__28">initConfig</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

@@ -170,10 +170,4 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
             this.riInvokeExportedMethod(this,"callUpdateDiscountAPI",new String [] {"java.lang.String","java.lang.String","int","int"},new Object[] {quoteNum, discount, new Integer(respId), new Integer(usrId)});
         return (String)_ret;
     }
-
-    public void initConfiguratorRuleSet() {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"initConfiguratorRuleSet",null,null);
-        return;
-    }
 }

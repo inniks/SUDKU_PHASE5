@@ -21,6 +21,7 @@ import javax.faces.event.ActionEvent;
 import oracle.adf.controller.TaskFlowId;
 import oracle.adf.model.BindingContext;
 import oracle.adf.share.ADFContext;
+import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.nav.RichCommandImageLink;
@@ -47,6 +48,8 @@ import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 
 
 public class LoadDynamicRegionBean {
+    private static ADFLogger _logger =
+        ADFLogger.createADFLogger(LoadDynamicRegionBean.class);
     private String taskFlowId =
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ConfiguratorFlow.xml#ConfiguratorFlow";
     private String quoteTFId =
@@ -371,8 +374,14 @@ public class LoadDynamicRegionBean {
                                     operationMode.equalsIgnoreCase("CREATE")) {
                                     OperationBinding createOb =
                                         bindings.getOperationBinding("callConfigLineToAddQuoteAPI");
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....QUOTE NUM "+v93k.getSessionDetails().getTargetQuoteNumber());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....OPERATION CODE "+list.getOperationCode());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigHdrId "+list.getConfigHrdId());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigRevNum  "+list.getConfigRevNum());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ITEM NUM "+list.getItemName());
                                     createOb.getParamsMap().put("quoteNum",
                                                                 v93k.getSessionDetails().getTargetQuoteNumber());
+                                    
                                     createOb.getParamsMap().put("itemNumber",
                                                                 list.getItemName());
                                     createOb.getParamsMap().put("itemQty", 1);
@@ -485,6 +494,11 @@ public class LoadDynamicRegionBean {
                                     operationMode.equalsIgnoreCase("CREATE")) {
                                     OperationBinding dCreateOb =
                                         bindings.getOperationBinding("callConfigLineToAddQuoteAPI");
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....QUOTE NUM "+v93k.getSessionDetails().getTargetQuoteNumber());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....OPERATION CODE "+list.getOperationCode());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigHdrId "+list.getConfigHrdId());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigRevNum  "+list.getConfigRevNum());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ITEM NUM "+list.getItemName());
                                     dCreateOb.getParamsMap().put("quoteNum",
                                                                  targetQuote);
                                     dCreateOb.getParamsMap().put("itemNumber",
@@ -598,6 +612,12 @@ public class LoadDynamicRegionBean {
                                     operationMode.equalsIgnoreCase("UPDATE")) {
                                     OperationBinding ob =
                                         bindings.getOperationBinding("callConfigLineToUpdateQuoteAPI");
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....QUOTE NUM "+v93k.getSessionDetails().getSourceQuoteNumber());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....OPERATION CODE "+list.getOperationCode());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ConfigHdrId "+list.getConfigHrdId());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ConfigRevNum  "+list.getConfigRevNum());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ITEM NUM "+list.getItemName());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....QUOTE LINE NUM "+list.getQuoteLineId());
                                     ob.getParamsMap().put("quoteNum",
                                                           v93k.getSessionDetails().getSourceQuoteNumber());
                                     ob.getParamsMap().put("quoteLineNum",

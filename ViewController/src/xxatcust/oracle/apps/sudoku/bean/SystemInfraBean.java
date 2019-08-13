@@ -31,6 +31,8 @@ public class SystemInfraBean {
         //For each ui subgroup,One UIField object is to be created
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
+        String requiredFlag = "N" ;
+        
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getSystemInfraGroup() != null) {
@@ -51,7 +53,7 @@ public class SystemInfraBean {
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
-
+                    requiredFlag = subGroup.isRequired()? "Y" :"N" ;
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();
                     if (listOfElements != null && !listOfElements.isEmpty()) {
@@ -64,7 +66,7 @@ public class SystemInfraBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName);
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag);
 
                         uiFieldCollection.add(uiField);
                     }
@@ -92,10 +94,11 @@ public class SystemInfraBean {
             String tarColor =
                 systemInfraGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
                 null;
+            String grpRequiredFlag = systemInfraGrp.isRequired() ? "Y" : "N" ;
             UxTreeNode firstLevel =
                 new UxTreeNode("sysInfra", "System Infrastructure", "Zero",
                                null, null, refColor,
-                               tarColor); //For top level color, code later
+                               tarColor,grpRequiredFlag); //For top level color, code later
             sysInfraroot.add(firstLevel);
 
             uiGroupMap =
@@ -110,19 +113,24 @@ public class SystemInfraBean {
                     (ConfiguratorUiGroup)pair.getValue();
                 Boolean isReferenceColor = uiGrp.isDisplayReferenceColor();
                 Boolean isTargetColor = uiGrp.isDisplayTargetColor();
+                Boolean isRequired = uiGrp.isRequired();
                 String nodeRefColor = null;
                 String nodeTargetColor = null;
+                String requiredFlag = "N" ;
                 if (isReferenceColor != null && isReferenceColor) {
                     nodeRefColor = SudokuUtils.REFERENCE_COLOR;
                 }
                 if (isTargetColor != null && isTargetColor) {
                     nodeTargetColor = SudokuUtils.TARGET_COLOR;
                 }
+                if(isRequired!=null && isRequired){
+                    requiredFlag = "Y";
+                }
                 if (uiGrpName != null) {
                     UxTreeNode childNodeOfSysInfra =
                         new UxTreeNode(Integer.toString(index), uiGrpName,
                                        "First", null, null, nodeRefColor,
-                                       nodeTargetColor);
+                                       nodeTargetColor,requiredFlag);
                     firstLevel.addNodes(childNodeOfSysInfra);
 
                     index = index + 1;

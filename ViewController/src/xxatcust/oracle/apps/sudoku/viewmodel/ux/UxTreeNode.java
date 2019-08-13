@@ -12,12 +12,13 @@ public class UxTreeNode {
     private String nodeRefColor;
     private String nodeTargetColor;
     List<UxTreeNode> childNodeList =new ArrayList<UxTreeNode>();
+    private String requiredFlag;
 
     public UxTreeNode() {
         super();
     }
 
-    public UxTreeNode(String codeName,String nodeName, String levelName,List<UxTablePojo> childTableList, List<UxTreeNode> childNodeList,String nodeRefColor,String nodeTargetColor) {
+    public UxTreeNode(String codeName,String nodeName, String levelName,List<UxTablePojo> childTableList, List<UxTreeNode> childNodeList,String nodeRefColor,String nodeTargetColor,String requiredFlag) {
         //super();
         this.CodeName = codeName;
         this.nodeName = nodeName;
@@ -26,6 +27,7 @@ public class UxTreeNode {
         childNodeList = new ArrayList<UxTreeNode>();
         this.nodeRefColor = nodeRefColor ;
         this.nodeTargetColor = nodeTargetColor;
+        this.requiredFlag = requiredFlag ;
     }
 
     public void setChildNodeList(List<UxTreeNode> childNodeList) {
@@ -88,5 +90,13 @@ public class UxTreeNode {
 
     public String getNodeTargetColor() {
         return nodeTargetColor;
+    }
+
+    public void setRequiredFlag(String requiredFlag) {
+        this.requiredFlag = requiredFlag;
+    }
+
+    public String getRequiredFlag() {
+        return requiredFlag;
     }
 }

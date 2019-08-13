@@ -5,13 +5,18 @@
   <parameters/>
   <executables>
     <variableIterator id="variables"/>
-    <iterator Binds="RuleSetVO" RangeSize="25" DataControl="SudokuAMDataControl"
-              id="RuleSetVOIterator"/>
+    <iterator Binds="RuleSetVO1" RangeSize="25" DataControl="SudokuAMDataControl"
+              id="RuleSetVO1Iterator"/>
   </executables>
   <bindings>
-    <listOfValues StaticList="false" IterBinding="RuleSetVOIterator"
+    <listOfValues StaticList="false" IterBinding="RuleSetVO1Iterator"
                   Uses="LOV_TopLevelMeaning" id="TopLevelMeaning"/>
-    <listOfValues StaticList="false" IterBinding="RuleSetVOIterator"
+    <listOfValues StaticList="false" IterBinding="RuleSetVO1Iterator"
                   Uses="LOV_SecondLevelMeaning" id="SecondLevelMeaning"/>
+    <methodAction id="initRuleSet"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="initRuleSet"
+                  IsViewObjectMethod="false"/>
   </bindings>
 </pageDefinition>

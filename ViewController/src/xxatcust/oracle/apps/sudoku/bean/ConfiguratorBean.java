@@ -42,6 +42,8 @@ import oracle.adf.view.rich.component.rich.output.RichOutputText;
 import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.render.ClientEvent;
 
+import oracle.binding.OperationBinding;
+
 import org.apache.myfaces.trinidad.event.DisclosureEvent;
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
 
@@ -112,12 +114,23 @@ public class ConfiguratorBean {
         return theadPanelGrp;
     }
 
+    public void initConfigurator() throws IOException, JsonGenerationException,
+                                          JsonMappingException {
+        //The refresh should happen only if there is a v93k object available
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93k != null && v93k.getInputParams() != null &&
+            v93k.getInputParams().getImportSource() != null) {
+
+            refreshView(null);
+        }
+    }
 
     public RichOutputText getPageInitText() throws IOException,
                                                    JsonGenerationException,
                                                    JsonMappingException {
         System.out.println("Initializing Page.....");
-        //refreshView(null);
+
         return pageInitText;
     }
 
@@ -148,13 +161,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         return obj;
     }
 
-   
 
-   
     public void refreshView(ActionEvent actionEvent) throws IOException,
                                                             JsonGenerationException,
                                                             JsonMappingException {
-
+        System.out.println("RECREATING THE UI TREE......");
         sysInfraTreeModel = null;
         warrantyTreeModel = null;
         //Call configurator to load data
@@ -211,10 +222,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         return sysInfraSdi;
     }
 
-  
-   
-   
-   
+
     public void handleNodeSelection(ActionEvent actionEvent) throws IOException,
                                                                     JsonGenerationException,
                                                                     JsonMappingException {
@@ -306,7 +314,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                            JsonGenerationException,
                                                            JsonMappingException {
 
-        String jsenId = (String)jsessionId.getValue();
+        String jsenId = null;
+        if (jsessionId != null) {
+            jsenId = (String)jsessionId.getValue();
+        }
         ADFUtils.setSessionScopeValue("jsenid", jsenId);
         sysInfraTreeModel = null;
         warrantyTreeModel = null;
@@ -320,20 +331,27 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                            responseJson);
         ObjectMapper mapper = new ObjectMapper();
         Object obj = mapper.readValue(responseJson, V93kQuote.class);
-        v93k = (V93kQuote)obj;
+       v93k = (V93kQuote)obj;
         //else use this
-        //v93k = (V93kQuote)convertJsonToObject(null);
+       // v93k = (V93kQuote)convertJsonToObject(null);
         ADFUtils.setSessionScopeValue("parentObject", v93k);
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         if (sysInfraTreeModel == null) {
-            sysInfraTreeModel = SystemInfraBean.populateSysInfraParentTreeModel(sysInfraTreeModel,sysInfraroot);
-            sdiCollection = SystemInfraBean.populateSysInfraSubGroups(v93k, sdiCollection);
+            sysInfraTreeModel =
+                    SystemInfraBean.populateSysInfraParentTreeModel(sysInfraTreeModel,
+                                                                    sysInfraroot);
+            sdiCollection =
+                    SystemInfraBean.populateSysInfraSubGroups(v93k, sdiCollection);
         }
         if (warrantyTreeModel == null) {
-          warrantyTreeModel = WtyTrainingAndSupportBean.populateWarrantyParentModel(warrantyTreeModel, rootWarranty);
-          warrantyUiCollection = WtyTrainingAndSupportBean.populateWarrantySubGrps(v93k, warrantyUiCollection);
+            warrantyTreeModel =
+                    WtyTrainingAndSupportBean.populateWarrantyParentModel(warrantyTreeModel,
+                                                                          rootWarranty);
+            warrantyUiCollection =
+                    WtyTrainingAndSupportBean.populateWarrantySubGrps(v93k,
+                                                                      warrantyUiCollection);
         }
-        
+
         ADFUtils.setSessionScopeValue("rebuildUI", null);
 
     }

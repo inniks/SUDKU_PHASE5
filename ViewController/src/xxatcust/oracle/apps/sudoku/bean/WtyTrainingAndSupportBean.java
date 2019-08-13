@@ -30,6 +30,7 @@ public class WtyTrainingAndSupportBean {
         //For each ui subgroup,One UIField object is to be created
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
+        String requiredFlag = "N";
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getWtyTrainingSAndSGroup() != null) {
@@ -50,7 +51,7 @@ public class WtyTrainingAndSupportBean {
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
-
+                    requiredFlag = subGroup.isRequired()?"Y":"N";
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();
                     if (listOfElements != null && !listOfElements.isEmpty()) {
@@ -63,7 +64,7 @@ public class WtyTrainingAndSupportBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName);
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag);
 
                         uiFieldCollection.add(uiField);
                     }
@@ -96,7 +97,7 @@ public class WtyTrainingAndSupportBean {
                 UxTreeNode firstLevel =
                     new UxTreeNode("warranty", "Warranty, Training, Service and Support",
                                    "Zero", null, null, refColor,
-                                   tarColor); //For top level color, code later
+                                   tarColor,null); //For top level color, code later
                 rootWarranty.add(firstLevel);
                 uiGroupMap = warrantyGrp.getUiGroupMap();
                 Iterator it = uiGroupMap.entrySet().iterator();
@@ -121,7 +122,7 @@ public class WtyTrainingAndSupportBean {
                         UxTreeNode childNodeOfSysInfra =
                             new UxTreeNode(Integer.toString(index), uiGrpName,
                                            "First", null, null, nodeRefColor,
-                                           nodeTargetColor);
+                                           nodeTargetColor,null);
                         firstLevel.addNodes(childNodeOfSysInfra);
                         index = index + 1;
                     }

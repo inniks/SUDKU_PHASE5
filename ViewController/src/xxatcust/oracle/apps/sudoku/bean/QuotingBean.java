@@ -79,6 +79,7 @@ public class QuotingBean {
 
                     if (arrOfStr[1] != null)
                         v93k.getSessionDetails().setTargetQuoteNumber(arrOfStr[1].toString());
+                    ADFUtils.setSessionScopeValue("parentObject", v93k);
                     ADFUtils.setSessionScopeValue("targetQuoteNumber",
                                                   arrOfStr[1]);
 
@@ -294,6 +295,12 @@ public class QuotingBean {
                         //                                    }
                     }
 
+                    else {
+                        OperationBinding ob1 =
+                            getBindings().getOperationBinding("clearQuoteFields");
+                        if (ob1.getErrors().size() == 0)
+                            ob1.execute();
+                    }
                 } else {
                     OperationBinding ob1 =
                         getBindings().getOperationBinding("clearQuoteFields");

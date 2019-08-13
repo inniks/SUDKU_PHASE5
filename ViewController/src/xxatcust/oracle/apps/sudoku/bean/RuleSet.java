@@ -63,4 +63,54 @@ public class RuleSet {
             }
         }
     }
+
+    public void topLevelChangeConfig(ValueChangeEvent valueChangeEvent) {
+        System.out.println("from Rule Set Toplevel");
+        UIComponent ui = (UIComponent)valueChangeEvent.getSource();
+        ui.processUpdates(FacesContext.getCurrentInstance());
+        DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
+        if (iter != null) {
+            Row currRow = iter.getCurrentRow();
+            if (currRow != null) {
+                currRow.setAttribute("SecondLevelMeaning",
+                                     null); // reset the second level choice
+                String topLevelCode =
+                    (String)currRow.getAttribute("TopLevelCode");
+                System.out.println("Top Level Code " + topLevelCode);
+                HashMap inputParamsMap =
+                    (HashMap)ADFUtils.getSessionScopeValue("inputParamsMapFromConfig");
+                if (inputParamsMap == null) {
+                    inputParamsMap = new HashMap();
+                }
+                inputParamsMap.put("ruleSetTop", topLevelCode);
+                ADFUtils.setSessionScopeValue("inputParamsMapFromConfig",
+                                              inputParamsMap);
+            }
+        }
+    }
+
+    public void secondlevelVCEConfig(ValueChangeEvent valueChangeEvent) {
+        System.out.println("from Rule Set secondLevel");
+        UIComponent ui = (UIComponent)valueChangeEvent.getSource();
+        ui.processUpdates(FacesContext.getCurrentInstance());
+        DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
+        if (iter != null) {
+            Row currRw = iter.getCurrentRow();
+            if (currRw != null) {
+                String secondLevelCode =
+                    (String)currRw.getAttribute("SecondLevelCode");
+                System.out.println("Second Level Code " + secondLevelCode);
+                HashMap inputParamsMap =
+                    (HashMap)ADFUtils.getSessionScopeValue("inputParamsMapFromConfig");
+                if (inputParamsMap == null) {
+                    inputParamsMap = new HashMap();
+                }
+                inputParamsMap.put("ruleSetSecond", secondLevelCode);
+                inputParamsMap.put("error", "N");
+                ADFUtils.setSessionScopeValue("inputParamsMapFromConfig",
+                                              inputParamsMap);
+
+            }
+        }
+    }
 }

@@ -209,7 +209,6 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
     //
     //        }
     
-    
     String query = "SELECT hca.cust_account_id,\n" +
         "  hca.account_number,\n" +
         "  hz.party_id,\n" +
@@ -231,6 +230,10 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
         "AND psu.site_use_type     = ? --use 'BILL_TO' to get bill to address\n" +
         "AND psu.primary_per_type  = 'Y'\n" +
         "AND ps.location_id        = hl.location_id";
+    
+    
+    
+    
     
     
 //    String query = "SELECT \n" +
@@ -268,45 +271,46 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
     public void getQuoteCustmerAddress(Row curRow) {
         String shipTo = "";
         String quoteTo = "";
-        BigDecimal partyId = null;
-        BigDecimal orgid = null;
+        String custNumber = null;
+//        BigDecimal orgid = null;
         ViewObjectImpl quoteVO = null;
         Row row = null;
         PreparedStatement cs = null, cs1 = null;
         if (curRow != null) {
-            if ((BigDecimal)curRow.getAttribute("PartyId") != null &&
-                (BigDecimal)curRow.getAttribute("OrgId") != null) {
-                partyId = (BigDecimal)curRow.getAttribute("PartyId");
-                orgid = (BigDecimal)curRow.getAttribute("OrgId");
+            if ((String)curRow.getAttribute("CustomerNumber") != null ) {
+                custNumber = (String)curRow.getAttribute("CustomerNumber");
+//                orgid = (BigDecimal)curRow.getAttribute("OrgId");
             }
         } else {
             quoteVO = this.getQuotesVO();
             if (quoteVO != null) {
                 row = quoteVO.getCurrentRow();
                 if (row != null) {
-                    partyId = (BigDecimal)row.getAttribute("PartyId");
-                    orgid = (BigDecimal)row.getAttribute("OrgId");
+                    custNumber = (String)row.getAttribute("CustomerNumber");
+//                    orgid = (BigDecimal)row.getAttribute("OrgId");
                 }
             }
         }
         try {
             cs = this.getDBTransaction().createPreparedStatement(query, 0);
-            cs.setBigDecimal(1, partyId);
+            cs.setString(1, custNumber);
             cs.setString(2, "BILL_TO");
-            cs.setBigDecimal(3, orgid);
+            
+//            cs.setBigDecimal(3, orgid);
 
             ResultSet rs = cs.executeQuery();
             while (rs.next()) {
-                quoteTo = rs.getString(2);
+                
+                quoteTo = rs.getString(5);
                 //                System.out.println("quoteTo is:" + quoteTo);
             }
             cs1 = this.getDBTransaction().createPreparedStatement(query, 0);
-            cs1.setBigDecimal(1, partyId);
+            cs1.setString(1, custNumber);
             cs1.setString(2, "SHIP_TO");
-            cs1.setBigDecimal(3, orgid);
+//            cs1.setBigDecimal(3, orgid);
             ResultSet rs1 = cs1.executeQuery();
             while (rs1.next()) {
-                shipTo = rs1.getString(2);
+                shipTo = rs1.getString(5);
                 //                System.out.println("ShipTo is:" + shipTo);
             }
             if (curRow != null) {
@@ -796,14 +800,14 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             Row row = quoteVO.getCurrentRow();
             if (row != null) {
                 BigDecimal partyId = (BigDecimal)row.getAttribute("PartyId");
-                BigDecimal orgid = (BigDecimal)row.getAttribute("OrgId");
+//                BigDecimal orgid = (BigDecimal)row.getAttribute("OrgId");
 
                 try {
                     cs =
  this.getDBTransaction().createPreparedStatement(query, 0);
                     cs.setBigDecimal(1, partyId);
                     cs.setString(2, "BILL_TO");
-                    cs.setBigDecimal(3, orgid);
+//                    cs.setBigDecimal(3, orgid);
 
                     ResultSet rs = cs.executeQuery();
                     while (rs.next()) {
@@ -814,7 +818,7 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
 this.getDBTransaction().createPreparedStatement(query, 0);
                     cs1.setBigDecimal(1, partyId);
                     cs1.setString(2, "SHIP_TO");
-                    cs1.setBigDecimal(3, orgid);
+//                    cs1.setBigDecimal(3, orgid);
                     ResultSet rs1 = cs1.executeQuery();
                     while (rs1.next()) {
                         shipTo = rs1.getString(2);
@@ -1890,6 +1894,75 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         System.out.println("Init Rule Set");
         ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
         if (ruleSetVO != null) {
+//            AttributeDef[] attDef = ruleSetVO.getAttributeDefs();
+//            for (AttributeDef af : attDef) {
+//                System.out.println(af.getName());
+//            }
+            //get value of rulset top level and second level choices
+            Row cRow = ruleSetVO.createRow();
+            ruleSetVO.insertRow(cRow);
+            Map ruleSetMap =
+                (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
+            Map ruleSetMapConfig =
+            (Map)ADFContext.getCurrent().getSessionScope().get("inputParamsMapFromConfig");
+            if(ruleSetMapConfig!=null){
+                    ruleSetVO.setCurrentRow(cRow);
+                    String topLevelCode = (String)ruleSetMapConfig.get("ruleSetTop");
+                    String secondLevelCode =
+                        (String)ruleSetMapConfig.get("ruleSetSecond");
+                    String error = (String)ruleSetMapConfig.get("error");
+                    if (error != null && error.equalsIgnoreCase("N")) {
+                        if (secondLevelCode != null) {
+                            secondLevelCode = secondLevelCode.toUpperCase();
+                        }
+                        cRow.setAttribute("TopLevelCode", topLevelCode);
+                        cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                        RuleSetVORowImpl rwImpl =
+                            (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                        String secondLevelMeaning =
+                            rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                        System.out.println("From AM Impl second level meaning " +
+                                           secondLevelMeaning);
+                        cRow.setAttribute("SecondLevelMeaning",
+                                          secondLevelMeaning);
+                    }    
+                }
+           else if (ruleSetMap != null) {
+                String topLevelCode = (String)ruleSetMap.get("topLevelCode");
+                String secondLevelCode =
+                    (String)ruleSetMap.get("secondLevelCode");
+                String error = (String)ruleSetMap.get("error");
+                if (error != null && error.equalsIgnoreCase("N")) {
+                    if (secondLevelCode != null) {
+                        secondLevelCode = secondLevelCode.toUpperCase();
+                    }
+                    cRow.setAttribute("TopLevelCode", topLevelCode);
+                    cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                    RuleSetVORowImpl rwImpl =
+                        (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                    String secondLevelMeaning =
+                        rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                    System.out.println("From AM Impl second level meaning " +
+                                       secondLevelMeaning);
+                    cRow.setAttribute("SecondLevelMeaning",
+                                      secondLevelMeaning);
+                }
+
+                ruleSetVO.setCurrentRow(cRow);
+
+            }
+            else{
+                    ruleSetVO.setCurrentRow(cRow);
+                }
+        }
+    }
+
+
+
+    public void initRuleSetT() {
+        System.out.println("Init Rule Set");
+        ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
+        if (ruleSetVO != null) {
             AttributeDef[] attDef = ruleSetVO.getAttributeDefs();
             for (AttributeDef af : attDef) {
                 System.out.println(af.getName());
@@ -1925,15 +1998,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             }
         }
     }
-    
-    public void initConfiguratorRuleSet(){
-        System.out.println("Init Configurator Flow..");
-        ViewObjectImpl vo = this.getRuleSetVO();
-        if(vo!=null){
-            Row cRow = vo.createRow();
-            vo.insertRow(cRow);
-        }
-    }
+
+
+
 
     public String callDuplicateQuoteAPI(String quoteFromSesion, int respId,
                                         int usrId) {
@@ -2155,6 +2222,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                               String ConfighdrId,
                                               String configRevNum, int respId,
                                               int usrId) {
+        System.out.println("Passing the below values to API...");
+        System.out.println("QuoteNumber.... "+quoteNum);
+        System.out.println("Item Number.... "+itemNumber);
+        System.out.println("Operation Code..... "+orgNum);
+        System.out.println("ConfigHdrId...."+ConfighdrId);
+        System.out.println("Org...."+"GDO");
+        System.out.println("ConfigRevNum...."+configRevNum);
+        
         orgNum = "GDO";
         CallableStatement cs = null;
         String returnval = null;
@@ -2534,5 +2609,8 @@ this.getDBTransaction().createPreparedStatement(query, 0);
      */
     public ViewObjectImpl getRuleSetVO() {
         return (ViewObjectImpl)findViewObject("RuleSetVO");
+    }
+
+    public void initConfiguratorRuleSet() {
     }
 }

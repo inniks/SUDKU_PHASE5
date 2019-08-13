@@ -60,6 +60,14 @@ true);
                     <af:outputFormatted value="." id="of2" rendered="false"/>
                   </f:facet>
                 </af:panelBorderLayout>
+                <af:panelBorderLayout id="pbl3"
+                                      inlineStyle="height:25px;width:10px;"
+                                      rendered="#{node.requiredFlag eq 'Y'}">
+                  <f:facet name="innerLeft">
+                    <af:outputFormatted value="*" id="of11"
+                                        inlineStyle="color:Red; font-size:x-large;"/>
+                  </f:facet>
+                </af:panelBorderLayout>
                 <af:outputFormatted value="#{node.nodeName}" id="of3"
                                     styleClass="ABHeader"
                                     inlineStyle="font-size:medium; font-weight:bolder;"/>
@@ -80,10 +88,7 @@ true);
                                              rendered="#{node.codeName eq topNode.index}">
                           <af:panelBorderLayout id="pbl4"
                                                 inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
-                            <f:facet name="start"/>
-                            <f:facet name="bottom"/>
-                            <f:facet name="end"/>
-                            <f:facet name="top"/>
+                            <f:facet name="innerLeft"/>
                           </af:panelBorderLayout>
                           <af:panelBorderLayout id="pbl5"
                                                 inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
@@ -91,6 +96,14 @@ true);
                             <f:facet name="bottom"/>
                             <f:facet name="end"/>
                             <f:facet name="top"/>
+                          </af:panelBorderLayout>
+                          <af:panelBorderLayout id="pbl6"
+                                                inlineStyle="height:15px; width:10px; border-style:none;">
+                            <f:facet name="innerLeft">
+                              <af:outputFormatted value="*" id="of6"
+                                                  inlineStyle="color:Red; font-size:x-large;"
+                                                  rendered="#{node.requiredFlag eq 'Y'}"/>
+                            </f:facet>
                           </af:panelBorderLayout>
                         </af:panelGroupLayout>
                         <af:showDetailHeader id="sd1"
@@ -104,8 +117,8 @@ true);
                                                  layout="horizontal"
                                                  binding="#{pageFlowScope.ConfiguratorBean.theadPanelGrp}">
                               <af:spacer width="100" height="10" id="s1"/>
-                              <af:panelBorderLayout id="pbl3"
-                                                    inlineStyle="height:25px; width:250px; border-style:none;">
+                              <af:panelBorderLayout id="pb_l3"
+                                                    inlineStyle="height:25px; width:240px; border-style:none;">
                                 <f:facet name="innerLeft">
                                   <af:panelGroupLayout id="pgl12" halign="left"
                                                        layout="horizontal">
@@ -115,6 +128,15 @@ true);
                                 </f:facet>
                               </af:panelBorderLayout>
                               <af:spacer width="10" height="10" id="s2"/>
+                              <af:panelBorderLayout id="pbl8"
+                                                    inlineStyle="height:25px; width:10px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:outputFormatted value="*"
+                                                      id="of9"
+                                                      inlineStyle="font-size:x-large; color:Red;"
+                                                      rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                </f:facet>
+                              </af:panelBorderLayout>
                               <af:panelBorderLayout id="pbl9"
                                                     inlineStyle="height:25px; width:60px; border-style:none;">
                                 <f:facet name="innerLeft"/>
@@ -326,18 +348,28 @@ true);
                       <af:panelGroupLayout id="wrnty_pgl5" layout="horizontal"
                                              >
                           <af:panelBorderLayout id="wrnty_pbl4"
-                                                inlineStyle="height:15px; width:25px;">
+                                                inlineStyle="height:15px; width:25px; border-style:groove;">
+                            <f:facet name="innerBottom">
+                              <af:outputFormatted value="*"
+                                                  id="of7"
+                                                  inlineStyle="color:Red; font-size:large;"
+                                                  rendered="#{warrantyNode.requiredFlag eq 'Y'}"/>
+                            </f:facet>
+                          </af:panelBorderLayout>
+                          <af:panelBorderLayout id="wrnty_pbl5"
+                                                inlineStyle="height:15px; width:25px; border-style:groove;">
                             <f:facet name="start"/>
                             <f:facet name="bottom"/>
                             <f:facet name="end"/>
                             <f:facet name="top"/>
                           </af:panelBorderLayout>
-                          <af:panelBorderLayout id="wrnty_pbl5"
-                                                inlineStyle="height:15px; width:25px;">
-                            <f:facet name="start"/>
-                            <f:facet name="bottom"/>
-                            <f:facet name="end"/>
-                            <f:facet name="top"/>
+                          <af:panelBorderLayout id="pbl7"
+                                                inlineStyle="height:15px; width:10px; border-style:none;">
+                            <f:facet name="innerLeft">
+                              <af:outputFormatted value="*"
+                                                  id="of8"
+                                                  rendered="#{warrantyNode.requiredFlag eq 'Y'}"/>
+                            </f:facet>
                           </af:panelBorderLayout>
                         </af:panelGroupLayout>
                         <af:showDetailHeader text="#{warrantyNode.nodeName}"
@@ -346,7 +378,7 @@ true);
                                                layout="horizontal">
                             <af:spacer width="100" height="10" id="wrntys1"/>
                             <af:panelBorderLayout id="wrntypbl3"
-                                                  inlineStyle="height:25px; width:250px; border-style:none;">
+                                                  inlineStyle="height:25px; width:240px; border-style:none;">
                               <f:facet name="innerLeft">
                                 <af:panelGroupLayout id="wrntypgl12"
                                                      halign="left"
@@ -357,6 +389,15 @@ true);
                               </f:facet>
                             </af:panelBorderLayout>
                             <af:spacer width="10" height="10" id="spacer1"/>
+                            <af:panelBorderLayout id="pbl10"
+                                                  inlineStyle="height:25px; width:10px; border-style:none;">
+                              <f:facet name="innerLeft">
+                                <af:outputFormatted value="*"
+                                                    id="of10"
+                                                    inlineStyle="font-size:x-large; color:Red;"
+                                                    rendered="#{wrntyIter.requiredFlagSubGrp eq 'Y'}"/>
+                              </f:facet>
+                            </af:panelBorderLayout>
                             <af:panelBorderLayout id="wrntypanelBorderLayout1"
                                                   inlineStyle="height:25px; width:60px; border-style:none;">
                               <f:facet name="innerLeft"/>
