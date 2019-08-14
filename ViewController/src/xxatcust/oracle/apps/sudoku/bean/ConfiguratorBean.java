@@ -45,6 +45,7 @@ import oracle.adf.view.rich.render.ClientEvent;
 import oracle.binding.OperationBinding;
 
 import org.apache.myfaces.trinidad.event.DisclosureEvent;
+import org.apache.myfaces.trinidad.event.RowDisclosureEvent;
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
 
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
@@ -82,6 +83,7 @@ public class ConfiguratorBean {
     private RichListView warrantyListView;
     private ChildPropertyTreeModel warrantyTreeModel;
     private ArrayList<UiField> warrantyUiCollection;
+    private String groupDiscPolicy;
 
     public ConfiguratorBean() {
         super();
@@ -200,6 +202,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         }
         buildConfiguratorUI(v93k);
 
+        //try
+
+
     }
 
     public void setSysInfraListView(RichListView sysInfraListView) {
@@ -236,6 +241,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         String czNodeName = null;
         String nodeColor = null;
         String identifier = null;
+        String parentGroupName = null;
         //(V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         for (UIComponent comp : children) {
             if (comp instanceof RichOutputFormatted) {
@@ -250,9 +256,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     identifier = it.getShortDesc();
                     czNodeName = (String)it.getValue();
                     nodeColor = it.getLabel();
+                    parentGroupName = it.getPlaceholder();
                     selectedNodeValueMap.put("identifier", identifier);
                     selectedNodeValueMap.put("czNodeName", czNodeName);
                     selectedNodeValueMap.put("nodeColor", nodeColor);
+                    selectedNodeValueMap.put("parentGroupName",
+                                             parentGroupName);
                 }
             }
         }
@@ -331,9 +340,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                            responseJson);
         ObjectMapper mapper = new ObjectMapper();
         Object obj = mapper.readValue(responseJson, V93kQuote.class);
-       v93k = (V93kQuote)obj;
+        v93k = (V93kQuote)obj;
         //else use this
-       // v93k = (V93kQuote)convertJsonToObject(null);
+        //v93k = (V93kQuote)convertJsonToObject(null);
         ADFUtils.setSessionScopeValue("parentObject", v93k);
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         if (sysInfraTreeModel == null) {
@@ -426,6 +435,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String czNodeName = (String)selectedNodeValueMap.get("czNodeName");
             String identifier = (String)selectedNodeValueMap.get("identifier");
             String nodeColor = (String)selectedNodeValueMap.get("nodeColor");
+            String parentGroupName =
+                (String)selectedNodeValueMap.get("parentGroupName");
             String selectionState = null;
             if (nodeColor != null &&
                 nodeColor.equalsIgnoreCase(SudokuUtils.TARGET_COLOR)) {
@@ -444,7 +455,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             if (uiSelection == null) {
                 uiSelection = new UiSelection();
             }
-            uiSelection.setParentGroupName("System Infrastructure");
+            uiSelection.setParentGroupName(parentGroupName);
             uiSelection.setSubGroupName(uiSubGrpName);
             uiSelection.setValueSelected(selectedValue);
             uiSelection.setUniqueSessionId(uniqueSessionId);
@@ -507,5 +518,19 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public ArrayList<UiField> getWarrantyUiCollection() {
         return warrantyUiCollection;
+    }
+
+    public void setGroupDiscPolicy(String groupDiscPolicy) {
+        this.groupDiscPolicy = groupDiscPolicy;
+    }
+
+    public String getGroupDiscPolicy() {
+        return groupDiscPolicy;
+    }
+
+    public void groupDisclosureListener(RowDisclosureEvent rowDisclosureEvent) {
+        //        RichListView listView = (RichListView)rowDisclosureEvent.getSource();
+        //        groupDiscPolicy=null;
+        //        ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
     }
 }

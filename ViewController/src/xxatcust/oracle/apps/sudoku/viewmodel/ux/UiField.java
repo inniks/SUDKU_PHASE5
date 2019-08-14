@@ -34,6 +34,7 @@ public class UiField {
     private String uiField7_code;
     private String inputValue;
     private String selectedValue;
+    private String parentGroupName;
     private String requiredFlagSubGrp;
     private String czNodeName1;
     private String czNodeName2;
@@ -103,7 +104,7 @@ public class UiField {
     }
 
     public UiField(List<ConfiguratorUiElement> listOfNodes,
-                   String subGrpName,String requireFlagSubGrp) {
+                   String subGrpName,String requireFlagSubGrp,String parentGroupName) {
         super();
         this.listOfNodes = listOfNodes;
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
@@ -119,6 +120,7 @@ public class UiField {
                         selectedValue = subGrpName;
                         requiredFlagSubGrp = requireFlagSubGrp ;
                         czNodeName1 = node.getCzNodeName();
+                        this.parentGroupName = parentGroupName;
                         if (node.isDisplayReferenceColor())
                             uiField1_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -817,5 +819,13 @@ public class UiField {
 
     public String getRequiredFlagSubGrp() {
         return requiredFlagSubGrp;
+    }
+
+    public void setParentGroupName(String parentGroupName) {
+        this.parentGroupName = parentGroupName;
+    }
+
+    public String getParentGroupName() {
+        return parentGroupName;
     }
 }

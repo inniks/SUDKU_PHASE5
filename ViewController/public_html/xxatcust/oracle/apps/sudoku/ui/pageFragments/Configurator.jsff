@@ -25,24 +25,25 @@ true);
                            xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                            id="confPGL" partialTriggers="ctb1">
         <af:outputText value="outputText1" id="ot1"
-                       binding="#{pageFlowScope.ConfiguratorBean.pageInitText}"
+                       binding="#{ConfiguratorBean.pageInitText}"
                        visible="false"/>
 <af:popup id="cnfPopup" autoCancel="disabled"
-                        binding="#{pageFlowScope.ConfiguratorBean.confirmPopup}">
+                        binding="#{ConfiguratorBean.confirmPopup}">
                 <af:dialog id="d1"
                            title="Configuration has below warning(s)"
                            contentWidth="450" contentHeight="200"
-                           dialogListener="#{pageFlowScope.ConfiguratorBean.warnPopupDialogListener}">
+                           dialogListener="#{ConfiguratorBean.warnPopupDialogListener}">
                   <af:panelGroupLayout id="pg12l4" layout="scroll">
                     <af:outputFormatted id="ofpop4"
-                                        binding="#{pageFlowScope.ConfiguratorBean.warnText}"/>
+                                        binding="#{ConfiguratorBean.warnText}"/>
                   </af:panelGroupLayout>
                 </af:dialog>
               </af:popup>
         <af:listView id="sysLv"
-                     value="#{pageFlowScope.ConfiguratorBean.sysInfraTreeModel}"
-                     var="node" groupDisclosurePolicy="initiallyExpanded"
-                     binding="#{pageFlowScope.ConfiguratorBean.sysInfraListView}">
+                     value="#{ConfiguratorBean.sysInfraTreeModel}"
+                     var="node"
+                     binding="#{ConfiguratorBean.sysInfraListView}"
+                     groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}">
           <f:facet name="groupHeaderStamp">
             <af:listItem id="li1" styleClass="ABHeader" rendered="true">
               <af:panelGroupLayout id="pgl3" layout="horizontal">
@@ -81,7 +82,7 @@ true);
                 <af:gridCell marginStart="5px" width="50%" id="gc3"
                              styleClass="AFStretchWidth">
                   <af:iterator var="topNode"
-                               value="#{pageFlowScope.ConfiguratorBean.sdiCollection}">
+                               value="#{ConfiguratorBean.sdiCollection}">
                     <af:panelGroupLayout id="pgl4" layout="vertical">
                       <af:panelGroupLayout id="pgl11" layout="horizontal">
                         <af:panelGroupLayout id="pgl5" layout="horizontal"
@@ -109,13 +110,13 @@ true);
                         <af:showDetailHeader id="sd1"
                                              rendered="#{node.codeName eq topNode.index}"
                                              text="#{node.nodeName}"
-                                             binding="#{pageFlowScope.ConfiguratorBean.shwDetHdrBind}">
+                                             binding="#{ConfiguratorBean.shwDetHdrBind}">
                           <af:iterator id="i2"
                                        value="#{topNode.uiFieldCollection}"
                                        var="theadIter">
                             <af:panelGroupLayout id="theadPgl"
                                                  layout="horizontal"
-                                                 binding="#{pageFlowScope.ConfiguratorBean.theadPanelGrp}">
+                                                 binding="#{ConfiguratorBean.theadPanelGrp}">
                               <af:spacer width="100" height="10" id="s1"/>
                               <af:panelBorderLayout id="pb_l3"
                                                     inlineStyle="height:25px; width:240px; border-style:none;">
@@ -131,8 +132,7 @@ true);
                               <af:panelBorderLayout id="pbl8"
                                                     inlineStyle="height:25px; width:10px; border-style:none;">
                                 <f:facet name="innerLeft">
-                                  <af:outputFormatted value="*"
-                                                      id="of9"
+                                  <af:outputFormatted value="*" id="of9"
                                                       inlineStyle="font-size:x-large; color:Red;"
                                                       rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                 </f:facet>
@@ -152,7 +152,7 @@ true);
                                                        layout="horizontal"
                                                        halign="left">
                                     <af:commandLink id="cl1"
-                                                    actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                     disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
                                                     partialSubmit="false">
                                       <af:outputFormatted id="th_of1"
@@ -162,7 +162,8 @@ true);
                                                     visible="false"
                                                     value="#{theadIter.czNodeName1}"
                                                     shortDesc="#{theadIter.uiField1_identifier}"
-                                                    label="#{theadIter.uiField1_color}"/>
+                                                    label="#{theadIter.uiField1_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -175,7 +176,7 @@ true);
                                                        layout="horizontal"
                                                        halign="left">
                                     <af:commandLink id="cl2"
-                                                    actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                     disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
                                       <af:outputFormatted id="th_of2"
                                                           value="#{theadIter.uiField2}"
@@ -184,7 +185,8 @@ true);
                                                     visible="false"
                                                     value="#{theadIter.czNodeName2}"
                                                     shortDesc="#{theadIter.uiField2_identifier}"
-                                                    label="#{theadIter.uiField2_color}"/>
+                                                    label="#{theadIter.uiField2_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -197,7 +199,7 @@ true);
                                                        layout="horizontal"
                                                        halign="left">
                                     <af:commandLink id="cl3"
-                                                    actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                     disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
                                       <af:outputFormatted id="th_of3"
                                                           value="#{theadIter.uiField3}"
@@ -206,7 +208,8 @@ true);
                                                     visible="false"
                                                     value="#{theadIter.czNodeName3}"
                                                     shortDesc="#{theadIter.uiField3_identifier}"
-                                                    label="#{theadIter.uiField3_color}"/>
+                                                    label="#{theadIter.uiField3_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -219,7 +222,7 @@ true);
                                                        layout="horizontal"
                                                        halign="left">
                                     <af:commandLink id="cl4"
-                                                    actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                     disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
                                       <af:outputFormatted id="th_of4"
                                                           value="#{theadIter.uiField4}"
@@ -228,7 +231,8 @@ true);
                                                     visible="false"
                                                     value="#{theadIter.czNodeName4}"
                                                     shortDesc="#{theadIter.uiField4_identifier}"
-                                                    label="#{theadIter.uiField4_color}"/>
+                                                    label="#{theadIter.uiField4_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -241,7 +245,7 @@ true);
                                                        layout="horizontal"
                                                        halign="left">
                                     <af:commandLink id="cl5"
-                                                    actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                     disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
                                       <af:outputFormatted id="th_of5"
                                                           value="#{theadIter.uiField5}"
@@ -250,7 +254,8 @@ true);
                                                     visible="false"
                                                     value="#{theadIter.czNodeName5}"
                                                     shortDesc="#{theadIter.uiField5_identifier}"
-                                                    label="#{theadIter.uiField5_color}"/>
+                                                    label="#{theadIter.uiField5_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -263,7 +268,7 @@ true);
                                                        layout="horizontal"
                                                        halign="left">
                                     <af:commandLink id="cl6"
-                                                    actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                     disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
                                       <af:outputFormatted id="th_of6"
                                                           value="#{theadIter.uiField6}"
@@ -272,7 +277,8 @@ true);
                                                     visible="false"
                                                     value="#{theadIter.czNodeName6}"
                                                     shortDesc="#{theadIter.uiField6_identifier}"
-                                                    label="#{theadIter.uiField6_color}"/>
+                                                    label="#{theadIter.uiField6_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -285,7 +291,7 @@ true);
                                                        layout="horizontal"
                                                        halign="left">
                                     <af:commandLink id="cl7"
-                                                    actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                     disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
                                       <af:outputFormatted id="th_of7"
                                                           value="#{theadIter.uiField7}"
@@ -294,7 +300,8 @@ true);
                                                     visible="false"
                                                     value="#{theadIter.czNodeName7}"
                                                     shortDesc="#{theadIter.uiField7_identifier}"
-                                                    label="#{theadIter.uiField7_color}"/>
+                                                    label="#{theadIter.uiField7_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
                                     </af:commandLink>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -328,12 +335,13 @@ true);
           </af:listItem>
         </af:listView>
         <af:listView id="lv1"
-                     binding="#{pageFlowScope.ConfiguratorBean.warrantyListView}"
-                     value="#{pageFlowScope.ConfiguratorBean.warrantyTreeModel}"
-                     var="warrantyNode">
+                     binding="#{ConfiguratorBean.warrantyListView}"
+                     value="#{ConfiguratorBean.warrantyTreeModel}"
+                     var="node"
+                     groupDisclosurePolicy="#{ConfiguratorBean.groupDiscPolicy}">
           <f:facet name="groupHeaderStamp">
             <af:listItem id="li3" styleClass="ABHeader">
-              <af:outputFormatted id="of5" value="#{warrantyNode.nodeName}"
+              <af:outputFormatted id="of5" value="#{node.nodeName}"
                                   inlineStyle="font-size:medium; font-weight:bolder;"/>
             </af:listItem>
           </f:facet>
@@ -342,18 +350,17 @@ true);
               <af:gridRow marginTop="5px" height="auto" id="gr3">
                 <af:gridCell marginStart="5px" width="50%" id="gc5">
                   <af:iterator id="i1" var="wrntyIter"
-                               value="#{pageFlowScope.ConfiguratorBean.warrantyUiCollection}">
+                               value="#{ConfiguratorBean.warrantyUiCollection}">
                     <af:panelGroupLayout id="pgl15" layout="vertical">
                       <af:panelGroupLayout id="pgl16" layout="horizontal">
-                      <af:panelGroupLayout id="wrnty_pgl5" layout="horizontal"
-                                             >
+                        <af:panelGroupLayout id="wrnty_pgl5"
+                                             layout="horizontal">
                           <af:panelBorderLayout id="wrnty_pbl4"
                                                 inlineStyle="height:15px; width:25px; border-style:groove;">
                             <f:facet name="innerBottom">
-                              <af:outputFormatted value="*"
-                                                  id="of7"
+                              <af:outputFormatted value="*" id="of7"
                                                   inlineStyle="color:Red; font-size:large;"
-                                                  rendered="#{warrantyNode.requiredFlag eq 'Y'}"/>
+                                                  rendered="#{node.requiredFlag eq 'Y'}"/>
                             </f:facet>
                           </af:panelBorderLayout>
                           <af:panelBorderLayout id="wrnty_pbl5"
@@ -366,13 +373,12 @@ true);
                           <af:panelBorderLayout id="pbl7"
                                                 inlineStyle="height:15px; width:10px; border-style:none;">
                             <f:facet name="innerLeft">
-                              <af:outputFormatted value="*"
-                                                  id="of8"
-                                                  rendered="#{warrantyNode.requiredFlag eq 'Y'}"/>
+                              <af:outputFormatted value="*" id="of8"
+                                                  rendered="#{node.requiredFlag eq 'Y'}"/>
                             </f:facet>
                           </af:panelBorderLayout>
                         </af:panelGroupLayout>
-                        <af:showDetailHeader text="#{warrantyNode.nodeName}"
+                        <af:showDetailHeader text="#{node.nodeName}"
                                              disclosed="false" id="sdh2">
                           <af:panelGroupLayout id="wrntyPgl"
                                                layout="horizontal">
@@ -392,8 +398,7 @@ true);
                             <af:panelBorderLayout id="pbl10"
                                                   inlineStyle="height:25px; width:10px; border-style:none;">
                               <f:facet name="innerLeft">
-                                <af:outputFormatted value="*"
-                                                    id="of10"
+                                <af:outputFormatted value="*" id="of10"
                                                     inlineStyle="font-size:x-large; color:Red;"
                                                     rendered="#{wrntyIter.requiredFlagSubGrp eq 'Y'}"/>
                               </f:facet>
@@ -413,7 +418,7 @@ true);
                                                      layout="horizontal"
                                                      halign="left">
                                   <af:commandLink id="commandLink1"
-                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                   disabled="#{wrntyIter.uiField1_dis or wrntyIter.uiField1_readOnly}"
                                                   partialSubmit="false">
                                     <af:outputFormatted id="outputFormatted2"
@@ -423,7 +428,8 @@ true);
                                                   visible="false"
                                                   value="#{wrntyIter.czNodeName1}"
                                                   shortDesc="#{wrntyIter.uiField1_identifier}"
-                                                  label="#{wrntyIter.uiField1_color}"/>
+                                                  label="#{wrntyIter.uiField1_color}"
+                                                  placeholder="#{wrntyIter.parentGroupName}"/>
                                   </af:commandLink>
                                 </af:panelGroupLayout>
                               </f:facet>
@@ -436,7 +442,7 @@ true);
                                                      layout="horizontal"
                                                      halign="left">
                                   <af:commandLink id="commandLink2"
-                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                   disabled="#{wrntyIter.uiField2_dis or wrntyIter.uiField2_readOnly}">
                                     <af:outputFormatted id="outputFormatted3"
                                                         value="#{wrntyIter.uiField2}"
@@ -445,7 +451,8 @@ true);
                                                   visible="false"
                                                   value="#{wrntyIter.czNodeName2}"
                                                   shortDesc="#{wrntyIter.uiField2_identifier}"
-                                                  label="#{wrntyIter.uiField2_color}"/>
+                                                  label="#{wrntyIter.uiField2_color}"
+                                                  placeholder="#{wrntyIter.parentGroupName}"/>
                                   </af:commandLink>
                                 </af:panelGroupLayout>
                               </f:facet>
@@ -458,7 +465,7 @@ true);
                                                      layout="horizontal"
                                                      halign="left">
                                   <af:commandLink id="commandLink3"
-                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                   disabled="#{wrntyIter.uiField3_dis or wrntyIter.uiField3_readOnly}">
                                     <af:outputFormatted id="outputFormatted4"
                                                         value="#{wrntyIter.uiField3}"
@@ -467,7 +474,8 @@ true);
                                                   visible="false"
                                                   value="#{wrntyIter.czNodeName3}"
                                                   shortDesc="#{wrntyIter.uiField3_identifier}"
-                                                  label="#{wrntyIter.uiField3_color}"/>
+                                                  label="#{wrntyIter.uiField3_color}"
+                                                  placeholder="#{wrntyIter.parentGroupName}"/>
                                   </af:commandLink>
                                 </af:panelGroupLayout>
                               </f:facet>
@@ -480,7 +488,7 @@ true);
                                                      layout="horizontal"
                                                      halign="left">
                                   <af:commandLink id="commandLink4"
-                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                   disabled="#{wrntyIter.uiField4_dis or wrntyIter.uiField4_readOnly}">
                                     <af:outputFormatted id="outputFormatted5"
                                                         value="#{wrntyIter.uiField4}"
@@ -489,7 +497,8 @@ true);
                                                   visible="false"
                                                   value="#{wrntyIter.czNodeName4}"
                                                   shortDesc="#{wrntyIter.uiField4_identifier}"
-                                                  label="#{wrntyIter.uiField4_color}"/>
+                                                  label="#{wrntyIter.uiField4_color}"
+                                                  placeholder="#{wrntyIter.parentGroupName}"/>
                                   </af:commandLink>
                                 </af:panelGroupLayout>
                               </f:facet>
@@ -502,7 +511,7 @@ true);
                                                      layout="horizontal"
                                                      halign="left">
                                   <af:commandLink id="commandLink5"
-                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                   disabled="#{wrntyIter.uiField5_dis or wrntyIter.uiField5_readOnly}">
                                     <af:outputFormatted id="outputFormatted6"
                                                         value="#{wrntyIter.uiField5}"
@@ -511,7 +520,8 @@ true);
                                                   visible="false"
                                                   value="#{wrntyIter.czNodeName5}"
                                                   shortDesc="#{wrntyIter.uiField5_identifier}"
-                                                  label="#{wrntyIter.uiField5_color}"/>
+                                                  label="#{wrntyIter.uiField5_color}"
+                                                  placeholder="#{wrntyIter.parentGroupName}"/>
                                   </af:commandLink>
                                 </af:panelGroupLayout>
                               </f:facet>
@@ -524,7 +534,7 @@ true);
                                                      layout="horizontal"
                                                      halign="left">
                                   <af:commandLink id="commandLink6"
-                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                   disabled="#{wrntyIter.uiField6_dis or wrntyIter.uiField6_readOnly}">
                                     <af:outputFormatted id="outputFormatted7"
                                                         value="#{wrntyIter.uiField6}"
@@ -533,7 +543,8 @@ true);
                                                   visible="false"
                                                   value="#{wrntyIter.czNodeName6}"
                                                   shortDesc="#{wrntyIter.uiField6_identifier}"
-                                                  label="#{wrntyIter.uiField6_color}"/>
+                                                  label="#{wrntyIter.uiField6_color}"
+                                                  placeholder="#{wrntyIter.parentGroupName}"/>
                                   </af:commandLink>
                                 </af:panelGroupLayout>
                               </f:facet>
@@ -546,7 +557,7 @@ true);
                                                      layout="horizontal"
                                                      halign="left">
                                   <af:commandLink id="commandLink7"
-                                                  actionListener="#{pageFlowScope.ConfiguratorBean.handleNodeSelection}"
+                                                  actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                   disabled="#{wrntyIter.uiField7_dis or wrntyIter.uiField7_readOnly}">
                                     <af:outputFormatted id="outputFormatted8"
                                                         value="#{wrntyIter.uiField7}"
@@ -555,7 +566,8 @@ true);
                                                   visible="false"
                                                   value="#{wrntyIter.czNodeName7}"
                                                   shortDesc="#{wrntyIter.uiField7_identifier}"
-                                                  label="#{wrntyIter.uiField7_color}"/>
+                                                  label="#{wrntyIter.uiField7_color}"
+                                                  placeholder="#{wrntyIter.parentGroupName}"/>
                                   </af:commandLink>
                                 </af:panelGroupLayout>
                               </f:facet>
@@ -609,9 +621,9 @@ true);
           <af:group id="g1">
             <af:toolbar id="t1">
               <af:commandToolbarButton text="Refresh" id="ctb1"
-                                       actionListener="#{pageFlowScope.ConfiguratorBean.refreshView}"/>
+                                       actionListener="#{ConfiguratorBean.refreshView}"/>
               <af:inputText label="jsessionId" id="it1"
-                            binding="#{pageFlowScope.ConfiguratorBean.jsessionId}"
+                            binding="#{ConfiguratorBean.jsessionId}"
                             autoSubmit="true"/>
             </af:toolbar>
           </af:group>

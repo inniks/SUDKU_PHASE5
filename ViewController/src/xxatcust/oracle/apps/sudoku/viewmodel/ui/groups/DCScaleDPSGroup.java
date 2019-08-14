@@ -14,6 +14,8 @@ public class DCScaleDPSGroup {
     
     boolean displayTargetColor = false; // column I7
 
+    boolean required = false;
+
 
     public void addUiGroup(String uiGroupName, ConfiguratorUiGroup uiGroup) {
         this.uiGroupMap.put(uiGroupName, uiGroup);
@@ -41,5 +43,13 @@ public class DCScaleDPSGroup {
 
     public boolean isDisplayTargetColor() {
         return displayTargetColor;
+    }
+
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
+    public boolean isRequired() {
+        return required;
     }
 }
