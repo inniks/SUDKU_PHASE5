@@ -159,6 +159,7 @@ true);
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
+                              <af:spacer width="20" height="10" id="s11"/>
                               <af:panelBorderLayout id="pbl8"
                                                     inlineStyle="height:25px; width:10px; border-style:none;">
                                 <f:facet name="innerLeft">
@@ -450,6 +451,7 @@ true);
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
+                            <af:spacer width="20" height="10" id="s10"/>
                             <af:panelBorderLayout id="pbl10"
                                                   inlineStyle="height:25px; width:10px; border-style:none;">
                               <f:facet name="innerLeft">
@@ -733,6 +735,7 @@ true);
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
+                              <af:spacer width="20" height="10" id="s9"/>
                               <af:panelBorderLayout id="syscon_pbl10"
                                                     inlineStyle="height:25px; width:10px; border-style:none;">
                                 <f:facet name="innerLeft">
@@ -915,8 +918,310 @@ true);
             </af:panelGridLayout>
           </af:listItem>
         </af:listView>
-        <af:listView id="lv3">
-          <f:facet name="groupHeaderStamp"/>
+       <af:listView id="addSwToolLv" 
+                     var="node" 
+                     groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
+                    value="#{ConfiguratorBean.addToolsTreeModel}">
+          <f:facet name="groupHeaderStamp">
+            <af:listItem id="addSwTool_li1" styleClass="ABHeader" rendered="true">
+              <af:panelGroupLayout id="addSwTool_pgl3" layout="horizontal">
+                <af:panelBorderLayout id="addSwTool_pbl1"
+                                      inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
+                                      rendered="#{node.nodeRefColor ne null}">
+                  <f:facet name="start">
+                    <af:outputFormatted id="addSwTool_of1" value="." rendered="false"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:panelBorderLayout id="addSwTool_pbl2"
+                                      inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
+                                      rendered="#{node.nodeTargetColor ne null}">
+                  <f:facet name="start">
+                    <af:outputFormatted value="." id="addSwTool_of2" rendered="false"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:panelBorderLayout id="addSwTool_pbl3"
+                                      inlineStyle="height:25px;width:10px;"
+                                      rendered="#{node.requiredFlag eq 'Y'}">
+                  <f:facet name="innerLeft">
+                    <af:outputFormatted value="*" id="addSwTool_of11"
+                                        inlineStyle="color:Red; font-size:x-large;"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:outputFormatted value="#{node.nodeName}" id="addSwTool_of3"
+                                    styleClass="ABHeader"
+                                    inlineStyle="font-size:medium; font-weight:bolder;"/>
+              </af:panelGroupLayout>
+            </af:listItem>
+          </f:facet>
+          <af:listItem id="addSwTool_li2">
+            <af:panelGridLayout id="addSwTool_pgl2" styleClass="AFStretchWidth"
+                                dimensionsFrom="children">
+              <af:gridRow marginTop="5px" height="auto" id="addSwTool_gr1">
+                <af:gridCell marginStart="5px" width="50%" id="addSwTool_gc3"
+                             styleClass="AFStretchWidth">
+                  <af:iterator var="topNode"
+                               value="#{ConfiguratorBean.addSwToolsSdiCollection}">
+                    <af:panelGroupLayout id="addSwTool_pgl4" layout="vertical">
+                      <af:panelGroupLayout id="addSwTool_pgl11" layout="horizontal">
+                        <af:panelGroupLayout id="addSwTool_pgl5" layout="horizontal"
+                                             rendered="#{node.codeName eq topNode.index}">
+                          <af:panelBorderLayout id="addSwTool_pbl4"
+                                                inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                            <f:facet name="innerLeft"/>
+                          </af:panelBorderLayout>
+                          <af:panelBorderLayout id="addSwTool_pbl5"
+                                                inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                            <f:facet name="start"/>
+                            <f:facet name="bottom"/>
+                            <f:facet name="end"/>
+                            <f:facet name="top"/>
+                          </af:panelBorderLayout>
+                          <af:panelBorderLayout id="addSwTool_pbl6"
+                                                inlineStyle="height:15px; width:10px; border-style:none;">
+                            <f:facet name="innerLeft">
+                              <af:outputFormatted value="*" id="addSwTool_of6"
+                                                  inlineStyle="color:Red; font-size:x-large;"
+                                                  rendered="#{node.requiredFlag eq 'Y'}"/>
+                            </f:facet>
+                          </af:panelBorderLayout>
+                        </af:panelGroupLayout>
+                        <af:showDetailHeader id="addSwTool_sd1"
+                                             rendered="#{node.codeName eq topNode.index}"
+                                             text="#{node.nodeName}"
+                                             >
+                          <af:iterator id="addSwTool_i2"
+                                       value="#{topNode.uiFieldCollection}"
+                                       var="theadIter">
+                            <af:panelGroupLayout id="addSwTool_theadPgl"
+                                                 layout="horizontal">
+                              <af:spacer width="50" height="10" id="addSwTool_s1"/>
+                              <af:panelBorderLayout id="addSwTool_pbl11"
+                                                    inlineStyle="height:25px; width:30px; border-style:groove;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl18"
+                                                       layout="horizontal">
+                                    <af:inputText id="addSwTool_it2" columns="5"
+                                                  rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:spacer width="10" height="10" id="addSwTool_s2"/>
+                              <af:panelBorderLayout id="addSwTool_pb_l3"
+                                                    inlineStyle="height:25px; width:200px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl12" halign="left"
+                                                       layout="horizontal">
+                                    <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                        id="addSwTool_of4"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="addSwTool_pbl12"
+                                                    inlineStyle="height:25px; width:20px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl19">
+                                    <af:outputFormatted value="0"
+                                                        id="addSwTool_of13"
+                                                        inlineStyle="color:Maroon;"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:spacer width="10" height="10" id="addSwTool_s3"/>
+                              <af:panelBorderLayout id="addSwTool_pbl13"
+                                                    inlineStyle="height:25px; width:20px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl21">
+                                    <af:outputFormatted value="1024"
+                                                        id="addSwTool_of14"
+                                                        inlineStyle="color:Teal;"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:spacer width="20" height="10" id="s8"/>
+                              <af:panelBorderLayout id="addSwTool_pbl8"
+                                                    inlineStyle="height:25px; width:10px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:outputFormatted value="*" id="addSwTool_of9"
+                                                      inlineStyle="font-size:x-large; color:Red;"
+                                                      rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="addSwTool_pbl9"
+                                                    inlineStyle="height:25px; width:60px; border-style:none;">
+                                <f:facet name="innerLeft"/>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="addSwTool_pb20"
+                                                    inlineStyle="height:25px; width:60px; border-style:none;">
+                                <f:facet name="innerLeft"/>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="addSwTool_pb1"
+                                                    inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl7"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="addSwTool_cl1"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                    partialSubmit="false">
+                                      <af:outputFormatted id="addSwTool_th_of1"
+                                                          value="#{theadIter.uiField1}"
+                                                          inlineStyle="#{theadIter.uiField1_bgColor}"/>
+                                      <af:inputText id="addSwTool_ip1_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName1}"
+                                                    shortDesc="#{theadIter.uiField1_identifier}"
+                                                    label="#{theadIter.uiField1_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="addSwTool_pb2"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl_7"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="addSwTool_cl2"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
+                                      <af:outputFormatted id="addSwTool_th_of2"
+                                                          value="#{theadIter.uiField2}"
+                                                          inlineStyle="#{theadIter.uiField2_bgColor}"/>
+                                      <af:inputText id="addSwTool_ip2_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName2}"
+                                                    shortDesc="#{theadIter.uiField2_identifier}"
+                                                    label="#{theadIter.uiField2_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="addSwTool_pb3"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl_71"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="addSwTool_cl3"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
+                                      <af:outputFormatted id="addSwTool_th_of3"
+                                                          value="#{theadIter.uiField3}"
+                                                          inlineStyle="#{theadIter.uiField3_bgColor}"/>
+                                      <af:inputText id="addSwTool_ip3_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName3}"
+                                                    shortDesc="#{theadIter.uiField3_identifier}"
+                                                    label="#{theadIter.uiField3_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="addSwTool_pb4"
+                                                    inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl_17"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="addSwTool_cl4"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
+                                      <af:outputFormatted id="addSwTool_th_of4"
+                                                          value="#{theadIter.uiField4}"
+                                                          inlineStyle="#{theadIter.uiField4_bgColor}"/>
+                                      <af:inputText id="addSwTool_ip4_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName4}"
+                                                    shortDesc="#{theadIter.uiField4_identifier}"
+                                                    label="#{theadIter.uiField4_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="addSwTool_pb5"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl9"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="addSwTool_cl5"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
+                                      <af:outputFormatted id="addSwTool_th_of5"
+                                                          value="#{theadIter.uiField5}"
+                                                          inlineStyle="#{theadIter.uiField5_bgColor}"/>
+                                      <af:inputText id="addSwTool_ip5_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName5}"
+                                                    shortDesc="#{theadIter.uiField5_identifier}"
+                                                    label="#{theadIter.uiField5_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="addSwTool_pb6"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl10"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="addSwTool_cl6"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
+                                      <af:outputFormatted id="addSwTool_th_of6"
+                                                          value="#{theadIter.uiField6}"
+                                                          inlineStyle="#{theadIter.uiField6_bgColor}"/>
+                                      <af:inputText id="addSwTool_ip6_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName6}"
+                                                    shortDesc="#{theadIter.uiField6_identifier}"
+                                                    label="#{theadIter.uiField6_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="addSwTool_pb7"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="addSwTool_pgl20"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="addSwTool_cl7"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
+                                      <af:outputFormatted id="addSwTool_th_of7"
+                                                          value="#{theadIter.uiField7}"
+                                                          inlineStyle="#{theadIter.uiField7_bgColor}"/>
+                                      <af:inputText id="addSwTool_ip7_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName7}"
+                                                    shortDesc="#{theadIter.uiField7_identifier}"
+                                                    label="#{theadIter.uiField7_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                            </af:panelGroupLayout>
+                          </af:iterator>
+                         
+                        </af:showDetailHeader>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  </af:iterator>
+                </af:gridCell>
+              </af:gridRow>
+            </af:panelGridLayout>
+          </af:listItem>
         </af:listView>
       </af:panelGroupLayout>
     </f:facet>

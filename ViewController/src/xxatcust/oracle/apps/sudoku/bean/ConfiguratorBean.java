@@ -72,10 +72,13 @@ import xxatcust.oracle.apps.sudoku.viewmodel.ux.ShowDetailItemCollection;
 public class ConfiguratorBean {
     private List<ShowDetailItemCollection> sdiCollection;
     private List<ShowDetailItemCollection> sysConSdiCollection;
+    private List<ShowDetailItemCollection> addSwToolsSdiCollection;
+    private ChildPropertyTreeModel addToolsTreeModel;
     private ChildPropertyTreeModel sysInfraTreeModel;
     private ArrayList<UxTreeNode> sysInfraroot;
     private ArrayList<UxTreeNode> rootWarranty;
     private ArrayList<UxTreeNode> rootSysController;
+     private ArrayList<UxTreeNode> rootAddSwTools;;
     private RichPanelGroupLayout theadPanelGrp;
     private RichOutputText pageInitText;
     private RichListView sysInfraListView;
@@ -338,6 +341,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         sysInfraTreeModel = null;
         warrantyTreeModel = null;
         sysControllerTreeModel=null;
+        addToolsTreeModel = null;
         String jsonStr = JSONUtils.convertObjToJson(v93k);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
@@ -372,6 +376,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             sysControllerTreeModel = SystemControllerBean.populateSysControllerParentModel(sysControllerTreeModel, rootSysController);
             //sysControllerUiCollection = SystemControllerBean.populateSysControllerSubGrps(v93k, sysControllerUiCollection);
             sysConSdiCollection = SystemControllerBean.populateSysContSubGroups(v93k, sysConSdiCollection);
+            
+        }
+        if(addToolsTreeModel==null){
+            addToolsTreeModel = AdditionalSfwToolsBean.populateAddSwToolsParentTreeModel(addToolsTreeModel, rootAddSwTools);
+            addSwToolsSdiCollection = AdditionalSfwToolsBean.populateAddSwToolsSubGroups(v93k, addSwToolsSdiCollection);
             
         }
 
@@ -582,5 +591,29 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public void handleInput(ValueChangeEvent valueChangeEvent) {
         // Add event code here...
+    }
+
+    public void setAddSwToolsSdiCollection(List<ShowDetailItemCollection> addSwToolsSdiCollection) {
+        this.addSwToolsSdiCollection = addSwToolsSdiCollection;
+    }
+
+    public List<ShowDetailItemCollection> getAddSwToolsSdiCollection() {
+        return addSwToolsSdiCollection;
+    }
+
+    public void setRootAddSwTools(  ArrayList<UxTreeNode> rootAddSwTools) {
+        this.rootAddSwTools = rootAddSwTools;
+    }
+
+    public   ArrayList<UxTreeNode> getRootAddSwTools() {
+        return rootAddSwTools;
+    }
+
+    public void setAddToolsTreeModel(ChildPropertyTreeModel addToolsTreeModel) {
+        this.addToolsTreeModel = addToolsTreeModel;
+    }
+
+    public ChildPropertyTreeModel getAddToolsTreeModel() {
+        return addToolsTreeModel;
     }
 }

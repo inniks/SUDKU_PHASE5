@@ -457,40 +457,41 @@ public class UiField {
                         listOfNodes.get(i).getConfigUiNodes() != null &&
                         !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                         node = listOfNodes.get(i).getConfigUiNodes().get(0);
-                        uiField7 = node.getUiNodeName();
+                        uiField8 = node.getUiNodeName();
                         selectedValue = subGrpName;
-                        czNodeName7 = node.getCzNodeName();
+                        czNodeName8 = node.getCzNodeName();
                         if (node.isDisplayReferenceColor())
-                            uiField7_color = SudokuUtils.REFERENCE_COLOR;
+                            uiField8_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
-                            uiField7_color = SudokuUtils.TARGET_COLOR;
-                        uiField7_dis = node.isDisableNode();
-                        uiField7_readOnly = node.isReadOnly();
-                        uiField7_identifier = node.getIdentifier();
+                            uiField8_color = SudokuUtils.TARGET_COLOR;
+                        uiField8_dis = node.isDisableNode();
+                        uiField8_readOnly = node.isReadOnly();
+                        uiField8_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        System.out.println("Element Type for 8th field "+uiElementType);
                         switch (uiElementType) {
                         case 1:
-                            uiField7_type = "NUMERIC";
+                            uiField8_type = "NUMERIC";
                         case 2:
-                            uiField7_type = "TEXT";
+                            uiField8_type = "TEXT";
                         case 3:
-                            uiField7_type = "OPTION";
+                            uiField8_type = "OPTION";
                         case 4:
-                            uiField7_type = "LISTOFVALUES";
+                            uiField8_type = "LISTOFVALUES";
 
                         }
-                        if (uiField7_dis) {
-                            uiField7_bgColor = "color:Silver;";
+                        if (uiField8_dis) {
+                            uiField8_bgColor = "color:Silver;";
                         }
-                        if (uiField7_readOnly) {
-                            uiField7_bgColor = "color:#d9b3ff;";
+                        if (uiField8_readOnly) {
+                            uiField8_bgColor = "color:#d9b3ff;";
                         }
-                        if (uiField7_color != null) {
-                            uiField7_bgColor = "color:InfoBackground";
+                        if (uiField8_color != null) {
+                            uiField8_bgColor = "color:InfoBackground";
                         }
-                        if (uiField7_dis) {
-                            uiField7_color = "Yellow";
+                        if (uiField8_dis) {
+                            uiField8_color = "Yellow";
                         }
                     }
                     break;
@@ -500,40 +501,41 @@ public class UiField {
                             listOfNodes.get(i).getConfigUiNodes() != null &&
                             !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                             node = listOfNodes.get(i).getConfigUiNodes().get(0);
-                            uiField8 = node.getUiNodeName();
+                            //Ui field 9 is to show the reference quantity
+                            uiField9 = node.getReferenceQuantiy()==-1? null:Integer.toString(node.getReferenceQuantiy());//node.getUiNodeName();
                             selectedValue = subGrpName;
-                            czNodeName8 = node.getCzNodeName();
+                            czNodeName9 = node.getCzNodeName();
                             if (node.isDisplayReferenceColor())
-                                uiField8_color = SudokuUtils.REFERENCE_COLOR;
+                                uiField9_color = SudokuUtils.REFERENCE_COLOR;
                             else if (node.isDisplayTargetColor())
-                                uiField8_color = SudokuUtils.TARGET_COLOR;
-                            uiField8_dis = node.isDisableNode();
-                            uiField8_readOnly = node.isReadOnly();
-                            uiField8_identifier = node.getIdentifier();
+                                uiField9_color = SudokuUtils.TARGET_COLOR;
+                            uiField9_dis = node.isDisableNode();
+                            uiField9_readOnly = node.isReadOnly();
+                            uiField9_identifier = node.getIdentifier();
                             ConfiguratorUiElement uiElement = listOfNodes.get(i);
                             int uiElementType = uiElement.getUiElementType();
                             switch (uiElementType) {
                             case 1:
-                                uiField8_type = "NUMERIC";
+                                uiField9_type = "NUMERIC";
                             case 2:
-                                uiField8_type = "TEXT";
+                                uiField9_type = "TEXT";
                             case 3:
-                                uiField8_type = "OPTION";
+                                uiField9_type = "OPTION";
                             case 4:
-                                uiField8_type = "LISTOFVALUES";
+                                uiField9_type = "LISTOFVALUES";
 
                             }
-                            if (uiField8_dis) {
-                                uiField8_bgColor = "color:Silver;";
+                            if (uiField9_dis) {
+                                uiField9_bgColor = "color:Silver;";
                             }
-                            if (uiField8_readOnly) {
-                                uiField8_bgColor = "color:#d9b3ff;";
+                            if (uiField9_readOnly) {
+                                uiField9_bgColor = "color:#d9b3ff;";
                             }
-                            if (uiField8_color != null) {
-                                uiField8_bgColor = "color:InfoBackground";
+                            if (uiField9_color != null) {
+                                uiField9_bgColor = "color:InfoBackground";
                             }
-                            if (uiField8_dis) {
-                                uiField8_color = "Yellow";
+                            if (uiField9_dis) {
+                                uiField9_color = "Yellow";
                             }
                         }
                     break;
@@ -542,40 +544,40 @@ public class UiField {
                         listOfNodes.get(i).getConfigUiNodes() != null &&
                         !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                         node = listOfNodes.get(i).getConfigUiNodes().get(0);
-                        uiField9 = node.getUiNodeName();
+                        uiField10 = node.getTargetQuantity()==-1?null:Integer.toString(node.getTargetQuantity());//node.getUiNodeName();
                         selectedValue = subGrpName;
-                        czNodeName9 = node.getCzNodeName();
+                        czNodeName10 = node.getCzNodeName();
                         if (node.isDisplayReferenceColor())
-                            uiField9_color = SudokuUtils.REFERENCE_COLOR;
+                            uiField10_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
-                            uiField9_color = SudokuUtils.TARGET_COLOR;
-                        uiField9_dis = node.isDisableNode();
-                        uiField9_readOnly = node.isReadOnly();
-                        uiField9_identifier = node.getIdentifier();
+                            uiField10_color = SudokuUtils.TARGET_COLOR;
+                        uiField10_dis = node.isDisableNode();
+                        uiField10_readOnly = node.isReadOnly();
+                        uiField10_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
                         switch (uiElementType) {
                         case 1:
-                            uiField9_type = "NUMERIC";
+                            uiField10_type = "NUMERIC";
                         case 2:
-                            uiField9_type = "TEXT";
+                            uiField10_type = "TEXT";
                         case 3:
-                            uiField9_type = "OPTION";
+                            uiField10_type = "OPTION";
                         case 4:
-                            uiField9_type = "LISTOFVALUES";
+                            uiField10_type = "LISTOFVALUES";
 
                         }
-                        if (uiField9_dis) {
-                            uiField9_bgColor = "color:Silver;";
+                        if (uiField10_dis) {
+                            uiField10_bgColor = "color:Silver;";
                         }
-                        if (uiField9_readOnly) {
-                            uiField9_bgColor = "color:#d9b3ff;";
+                        if (uiField10_readOnly) {
+                            uiField10_bgColor = "color:#d9b3ff;";
                         }
-                        if (uiField9_color != null) {
-                            uiField9_bgColor = "color:InfoBackground";
+                        if (uiField10_color != null) {
+                            uiField10_bgColor = "color:InfoBackground";
                         }
-                        if (uiField9_dis) {
-                            uiField9_color = "Yellow";
+                        if (uiField10_dis) {
+                            uiField10_color = "Yellow";
                         }
                     }
                     break;
