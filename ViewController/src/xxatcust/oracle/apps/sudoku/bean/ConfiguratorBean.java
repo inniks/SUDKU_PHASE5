@@ -27,6 +27,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.event.ActionEvent;
 
+import javax.faces.event.ValueChangeEvent;
+
 import javax.servlet.ServletException;
 
 import oracle.adf.share.ADFContext;
@@ -69,9 +71,11 @@ import xxatcust.oracle.apps.sudoku.viewmodel.ux.ShowDetailItemCollection;
 
 public class ConfiguratorBean {
     private List<ShowDetailItemCollection> sdiCollection;
+    private List<ShowDetailItemCollection> sysConSdiCollection;
     private ChildPropertyTreeModel sysInfraTreeModel;
     private ArrayList<UxTreeNode> sysInfraroot;
     private ArrayList<UxTreeNode> rootWarranty;
+    private ArrayList<UxTreeNode> rootSysController;
     private RichPanelGroupLayout theadPanelGrp;
     private RichOutputText pageInitText;
     private RichListView sysInfraListView;
@@ -83,7 +87,10 @@ public class ConfiguratorBean {
     private RichListView warrantyListView;
     private ChildPropertyTreeModel warrantyTreeModel;
     private ArrayList<UiField> warrantyUiCollection;
+    private ArrayList<UiField> sysControllerUiCollection;
     private String groupDiscPolicy;
+    private RichListView sysControllerListViewBinding;
+    private ChildPropertyTreeModel sysControllerTreeModel;
 
     public ConfiguratorBean() {
         super();
@@ -330,6 +337,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         ADFUtils.setSessionScopeValue("jsenid", jsenId);
         sysInfraTreeModel = null;
         warrantyTreeModel = null;
+        sysControllerTreeModel=null;
         String jsonStr = JSONUtils.convertObjToJson(v93k);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
@@ -359,6 +367,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             warrantyUiCollection =
                     WtyTrainingAndSupportBean.populateWarrantySubGrps(v93k,
                                                                       warrantyUiCollection);
+        }
+        if(sysControllerTreeModel==null){
+            sysControllerTreeModel = SystemControllerBean.populateSysControllerParentModel(sysControllerTreeModel, rootSysController);
+            //sysControllerUiCollection = SystemControllerBean.populateSysControllerSubGrps(v93k, sysControllerUiCollection);
+            sysConSdiCollection = SystemControllerBean.populateSysContSubGroups(v93k, sysConSdiCollection);
+            
         }
 
         ADFUtils.setSessionScopeValue("rebuildUI", null);
@@ -532,5 +546,41 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         //        RichListView listView = (RichListView)rowDisclosureEvent.getSource();
         //        groupDiscPolicy=null;
         //        ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
+    }
+
+    public void setSysControllerListViewBinding(RichListView sysControllerListViewBinding) {
+        this.sysControllerListViewBinding = sysControllerListViewBinding;
+    }
+
+    public RichListView getSysControllerListViewBinding() {
+        return sysControllerListViewBinding;
+    }
+
+    public void setSysControllerTreeModel(ChildPropertyTreeModel sysControllerTreeModel) {
+        this.sysControllerTreeModel = sysControllerTreeModel;
+    }
+
+    public ChildPropertyTreeModel getSysControllerTreeModel() {
+        return sysControllerTreeModel;
+    }
+
+    public void setSysControllerUiCollection(ArrayList<UiField> sysControllerUiCollection) {
+        this.sysControllerUiCollection = sysControllerUiCollection;
+    }
+
+    public ArrayList<UiField> getSysControllerUiCollection() {
+        return sysControllerUiCollection;
+    }
+
+    public void setSysConSdiCollection(List<ShowDetailItemCollection> sysConSdiCollection) {
+        this.sysConSdiCollection = sysConSdiCollection;
+    }
+
+    public List<ShowDetailItemCollection> getSysConSdiCollection() {
+        return sysConSdiCollection;
+    }
+
+    public void handleInput(ValueChangeEvent valueChangeEvent) {
+        // Add event code here...
     }
 }

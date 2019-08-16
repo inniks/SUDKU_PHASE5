@@ -17,6 +17,9 @@ public class AdditionalSoftToolsGroup {
 
     boolean required = false;
 
+    public void addUiGroup(String uiGroupName, ConfiguratorUiGroup uiGroup) {
+        this.uiGroupMap.put(uiGroupName, uiGroup);
+    }
 
     public void setUiGroupMap(LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap) {
         this.uiGroupMap = uiGroupMap;
