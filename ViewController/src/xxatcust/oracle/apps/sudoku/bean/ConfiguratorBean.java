@@ -73,10 +73,13 @@ public class ConfiguratorBean {
     private List<ShowDetailItemCollection> sdiCollection;
     private List<ShowDetailItemCollection> sysConSdiCollection;
     private List<ShowDetailItemCollection> addSwToolsSdiCollection;
+    private List<ShowDetailItemCollection> calDiagSdiCollection;
     private ChildPropertyTreeModel addToolsTreeModel;
     private ChildPropertyTreeModel sysInfraTreeModel;
+    private ChildPropertyTreeModel calDiagTreeModel;
     private ArrayList<UxTreeNode> sysInfraroot;
     private ArrayList<UxTreeNode> rootWarranty;
+    private ArrayList<UxTreeNode> rootCalDiag;
     private ArrayList<UxTreeNode> rootSysController;
      private ArrayList<UxTreeNode> rootAddSwTools;;
     private RichPanelGroupLayout theadPanelGrp;
@@ -178,9 +181,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                             JsonGenerationException,
                                                             JsonMappingException {
         System.out.println("RECREATING THE UI TREE......");
+        //Call configurator to load data
         sysInfraTreeModel = null;
         warrantyTreeModel = null;
-        //Call configurator to load data
+        sysControllerTreeModel=null;
+        addToolsTreeModel = null;
+        calDiagTreeModel = null;
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
@@ -338,23 +344,20 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             jsenId = (String)jsessionId.getValue();
         }
         ADFUtils.setSessionScopeValue("jsenid", jsenId);
-        sysInfraTreeModel = null;
-        warrantyTreeModel = null;
-        sysControllerTreeModel=null;
-        addToolsTreeModel = null;
+        
         String jsonStr = JSONUtils.convertObjToJson(v93k);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
 
-        String responseJson =
-            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        System.out.println("Response Json from Configurator : " +
-                           responseJson);
-        ObjectMapper mapper = new ObjectMapper();
-        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-        v93k = (V93kQuote)obj;
+//        String responseJson =
+//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+//        System.out.println("Response Json from Configurator : " +
+//                           responseJson);
+//        ObjectMapper mapper = new ObjectMapper();
+//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+//        v93k = (V93kQuote)obj;
         //else use this
-        //v93k = (V93kQuote)convertJsonToObject(null);
+        v93k = (V93kQuote)convertJsonToObject(null);
         ADFUtils.setSessionScopeValue("parentObject", v93k);
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         if (sysInfraTreeModel == null) {
@@ -382,6 +385,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             addToolsTreeModel = AdditionalSfwToolsBean.populateAddSwToolsParentTreeModel(addToolsTreeModel, rootAddSwTools);
             addSwToolsSdiCollection = AdditionalSfwToolsBean.populateAddSwToolsSubGroups(v93k, addSwToolsSdiCollection);
             
+        }
+        if(calDiagTreeModel==null){
+            calDiagTreeModel = DiagCalEquipmentBean.populateCalDiagParentTreeModel(calDiagTreeModel, rootCalDiag);
+            calDiagSdiCollection = DiagCalEquipmentBean.populateCalDiagSubGroups(v93k, calDiagSdiCollection);
         }
 
         ADFUtils.setSessionScopeValue("rebuildUI", null);
@@ -615,5 +622,21 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public ChildPropertyTreeModel getAddToolsTreeModel() {
         return addToolsTreeModel;
+    }
+
+    public void setCalDiagSdiCollection(List<ShowDetailItemCollection> calDiagSdiCollection) {
+        this.calDiagSdiCollection = calDiagSdiCollection;
+    }
+
+    public List<ShowDetailItemCollection> getCalDiagSdiCollection() {
+        return calDiagSdiCollection;
+    }
+
+    public void setCalDiagTreeModel(ChildPropertyTreeModel calDiagTreeModel) {
+        this.calDiagTreeModel = calDiagTreeModel;
+    }
+
+    public ChildPropertyTreeModel getCalDiagTreeModel() {
+        return calDiagTreeModel;
     }
 }

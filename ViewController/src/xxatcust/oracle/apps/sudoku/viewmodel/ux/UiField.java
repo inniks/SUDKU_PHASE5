@@ -503,6 +503,7 @@ public class UiField {
                             node = listOfNodes.get(i).getConfigUiNodes().get(0);
                             //Ui field 9 is to show the reference quantity
                             uiField9 = node.getReferenceQuantiy()==-1? null:Integer.toString(node.getReferenceQuantiy());//node.getUiNodeName();
+                            System.out.println("UiField9 Value "+uiField9);
                             selectedValue = subGrpName;
                             czNodeName9 = node.getCzNodeName();
                             if (node.isDisplayReferenceColor())
@@ -545,6 +546,7 @@ public class UiField {
                         !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                         node = listOfNodes.get(i).getConfigUiNodes().get(0);
                         uiField10 = node.getTargetQuantity()==-1?null:Integer.toString(node.getTargetQuantity());//node.getUiNodeName();
+                        System.out.println("Field 10 value "+uiField10);
                         selectedValue = subGrpName;
                         czNodeName10 = node.getCzNodeName();
                         if (node.isDisplayReferenceColor())

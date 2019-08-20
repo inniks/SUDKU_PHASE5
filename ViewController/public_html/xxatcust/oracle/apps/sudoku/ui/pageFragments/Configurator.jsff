@@ -142,7 +142,7 @@ true);
                                                     inlineStyle="height:25px; width:20px; border-style:none;">
                                 <f:facet name="innerLeft">
                                   <af:panelGroupLayout id="pgl19">
-                                    <af:outputFormatted value="0"
+                                    <af:outputFormatted value="#{theadIter.uiField9}"
                                                         id="of13"
                                                         inlineStyle="color:Maroon;"/>
                                   </af:panelGroupLayout>
@@ -153,7 +153,7 @@ true);
                                                     inlineStyle="height:25px; width:20px; border-style:none;">
                                 <f:facet name="innerLeft">
                                   <af:panelGroupLayout id="pgl21">
-                                    <af:outputFormatted value="1024"
+                                    <af:outputFormatted value="#{theadIter.uiField10}"
                                                         id="of14"
                                                         inlineStyle="color:Teal;"/>
                                   </af:panelGroupLayout>
@@ -433,7 +433,7 @@ true);
                                                     inlineStyle="height:25px; width:20px; border-style:none;">
                                 <f:facet name="innerLeft">
                                   <af:panelGroupLayout id="wty_pgl19">
-                                    <af:outputFormatted value="0"
+                                    <af:outputFormatted value="#{wrntyIter.uiField9}"
                                                         id="wty_of13"
                                                         inlineStyle="color:Maroon;"/>
                                   </af:panelGroupLayout>
@@ -446,7 +446,7 @@ true);
                                   <af:panelGroupLayout id="wty_pgl21">
                                     <af:outputFormatted
                                                         id="wty_of14"
-                                                        value="1024"
+                                                        value="#{wrntyIter.uiField9}"
                                                         inlineStyle="color:Teal;"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
@@ -718,7 +718,7 @@ true);
                                                     inlineStyle="height:25px; width:20px; border-style:none;">
                                 <f:facet name="innerLeft">
                                   <af:panelGroupLayout id="syscon_pgl19">
-                                    <af:outputFormatted value="0"
+                                    <af:outputFormatted value="#{sysConIter.uiField9}"
                                                         id="syscon_of13"
                                                         inlineStyle="color:Maroon;"/>
                                   </af:panelGroupLayout>
@@ -729,7 +729,7 @@ true);
                                                     inlineStyle="height:25px; width:20px; border-style:none;">
                                 <f:facet name="innerLeft">
                                   <af:panelGroupLayout id="syscon_pgl21">
-                                    <af:outputFormatted value="1024"
+                                    <af:outputFormatted value="#{sysConIter.uiField10}"
                                                         id="syscon_of14"
                                                         inlineStyle="color:Teal;"/>
                                   </af:panelGroupLayout>
@@ -1022,7 +1022,7 @@ true);
                                                     inlineStyle="height:25px; width:20px; border-style:none;">
                                 <f:facet name="innerLeft">
                                   <af:panelGroupLayout id="addSwTool_pgl19">
-                                    <af:outputFormatted value="0"
+                                    <af:outputFormatted value="#{theadIter.uiField9}"
                                                         id="addSwTool_of13"
                                                         inlineStyle="color:Maroon;"/>
                                   </af:panelGroupLayout>
@@ -1033,7 +1033,7 @@ true);
                                                     inlineStyle="height:25px; width:20px; border-style:none;">
                                 <f:facet name="innerLeft">
                                   <af:panelGroupLayout id="addSwTool_pgl21">
-                                    <af:outputFormatted value="1024"
+                                    <af:outputFormatted value="#{theadIter.uiField10}"
                                                         id="addSwTool_of14"
                                                         inlineStyle="color:Teal;"/>
                                   </af:panelGroupLayout>
@@ -1214,6 +1214,312 @@ true);
                             </af:panelGroupLayout>
                           </af:iterator>
                          
+                        </af:showDetailHeader>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  </af:iterator>
+                </af:gridCell>
+              </af:gridRow>
+            </af:panelGridLayout>
+          </af:listItem>
+        </af:listView>
+       <af:listView id="diagCalLv" 
+                     var="node" 
+                     groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
+                    value="#{ConfiguratorBean.calDiagTreeModel}">
+          <f:facet name="groupHeaderStamp">
+            <af:listItem id="diagCal_li1" styleClass="ABHeader" rendered="true">
+              <af:panelGroupLayout id="diagCal_pgl3" layout="horizontal">
+                <af:panelBorderLayout id="diagCal_pbl1"
+                                      inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
+                                      rendered="#{node.nodeRefColor ne null}">
+                  <f:facet name="start">
+                    <af:outputFormatted id="diagCal_of1" value="." rendered="false"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:panelBorderLayout id="diagCal_pbl2"
+                                      inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
+                                      rendered="#{node.nodeTargetColor ne null}">
+                  <f:facet name="start">
+                    <af:outputFormatted value="." id="diagCal_of2" rendered="false"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:panelBorderLayout id="diagCal_pbl3"
+                                      inlineStyle="height:25px;width:10px;"
+                                      rendered="#{node.requiredFlag eq 'Y'}">
+                  <f:facet name="innerLeft">
+                    <af:outputFormatted value="*" id="diagCal_of11"
+                                        inlineStyle="color:Red; font-size:x-large;"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:outputFormatted value="#{node.nodeName}" id="diagCal_of3"
+                                    styleClass="ABHeader"
+                                    inlineStyle="font-size:medium; font-weight:bolder;"/>
+              </af:panelGroupLayout>
+            </af:listItem>
+          </f:facet>
+          <af:listItem id="diagCal_li2">
+            <af:panelGridLayout id="diagCal_pgl2" styleClass="AFStretchWidth"
+                                dimensionsFrom="children">
+              <af:gridRow marginTop="5px" height="auto" id="diagCal_gr1">
+                <af:gridCell marginStart="5px" width="50%" id="diagCal_gc3"
+                             styleClass="AFStretchWidth">
+                  <af:iterator var="topNode"
+                               value="#{ConfiguratorBean.calDiagSdiCollection}">
+                    <af:panelGroupLayout id="diagCal_pgl4" layout="vertical">
+                      <af:panelGroupLayout id="diagCal_pgl11" layout="horizontal">
+                        <af:panelGroupLayout id="diagCal_pgl5" layout="horizontal"
+                                             rendered="#{node.codeName eq topNode.index}">
+                          <af:panelBorderLayout id="diagCal_pbl4"
+                                                inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                            <f:facet name="innerLeft"/>
+                          </af:panelBorderLayout>
+                          <af:panelBorderLayout id="diagCal_pbl5"
+                                                inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                            <f:facet name="start"/>
+                            <f:facet name="bottom"/>
+                            <f:facet name="end"/>
+                            <f:facet name="top"/>
+                          </af:panelBorderLayout>
+                          <af:panelBorderLayout id="diagCal_pbl6"
+                                                inlineStyle="height:15px; width:10px; border-style:none;">
+                            <f:facet name="innerLeft">
+                              <af:outputFormatted value="*" id="diagCal_of6"
+                                                  inlineStyle="color:Red; font-size:x-large;"
+                                                  rendered="#{node.requiredFlag eq 'Y'}"/>
+                            </f:facet>
+                          </af:panelBorderLayout>
+                        </af:panelGroupLayout>
+                        <af:showDetailHeader id="diagCal_sd1"
+                                             rendered="#{node.codeName eq topNode.index}"
+                                             text="#{node.nodeName}">
+                                            
+                          <af:iterator id="diagCal_i2"
+                                       value="#{topNode.uiFieldCollection}"
+                                       var="theadIter">
+                            <af:panelGroupLayout id="diagCal_theadPgl"
+                                                 layout="horizontal"
+                                                 >
+                              <af:spacer width="50" height="10" id="diagCal_s1"/>
+                              <af:panelBorderLayout id="diagCal_pbl11"
+                                                    inlineStyle="height:25px; width:30px; border-style:groove;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl18"
+                                                       layout="horizontal">
+                                    <af:inputText id="diagCal_it2" columns="5"
+                                                  rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:spacer width="10" height="10" id="diagCal_s2"/>
+                              <af:panelBorderLayout id="diagCal_pb_l3"
+                                                    inlineStyle="height:25px; width:200px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl12" halign="left"
+                                                       layout="horizontal">
+                                    <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                        id="diagCal_of4"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="diagCal_pbl12"
+                                                    inlineStyle="height:25px; width:20px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl19">
+                                    <af:outputFormatted value="#{theadIter.uiField9}"
+                                                        id="diagCal_of13"
+                                                        inlineStyle="color:Maroon;"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:spacer width="10" height="10" id="diagCal_s3"/>
+                              <af:panelBorderLayout id="diagCal_pbl13"
+                                                    inlineStyle="height:25px; width:20px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl21">
+                                    <af:outputFormatted value="#{theadIter.uiField10}"
+                                                        id="diagCal_of14"
+                                                        inlineStyle="color:Teal;"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:spacer width="20" height="10" id="diagCal_s11"/>
+                              <af:panelBorderLayout id="diagCal_pbl8"
+                                                    inlineStyle="height:25px; width:10px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:outputFormatted value="*" id="diagCal_of9"
+                                                      inlineStyle="font-size:x-large; color:Red;"
+                                                      rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="diagCal_pbl9"
+                                                    inlineStyle="height:25px; width:60px; border-style:none;">
+                                <f:facet name="innerLeft"/>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="diagCal_pb20"
+                                                    inlineStyle="height:25px; width:60px; border-style:none;">
+                                <f:facet name="innerLeft"/>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="diagCal_pb1"
+                                                    inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl7"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="diagCal_cl1"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                    partialSubmit="false">
+                                      <af:outputFormatted id="diagCal_th_of1"
+                                                          value="#{theadIter.uiField1}"
+                                                          inlineStyle="#{theadIter.uiField1_bgColor}"/>
+                                      <af:inputText id="diagCal_ip1_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName1}"
+                                                    shortDesc="#{theadIter.uiField1_identifier}"
+                                                    label="#{theadIter.uiField1_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="diagCal_pb2"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl_7"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="diagCal_cl2"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
+                                      <af:outputFormatted id="diagCal_th_of2"
+                                                          value="#{theadIter.uiField2}"
+                                                          inlineStyle="#{theadIter.uiField2_bgColor}"/>
+                                      <af:inputText id="diagCal_ip2_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName2}"
+                                                    shortDesc="#{theadIter.uiField2_identifier}"
+                                                    label="#{theadIter.uiField2_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="diagCal_pb3"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl_71"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="diagCal_cl3"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
+                                      <af:outputFormatted id="diagCal_th_of3"
+                                                          value="#{theadIter.uiField3}"
+                                                          inlineStyle="#{theadIter.uiField3_bgColor}"/>
+                                      <af:inputText id="diagCal_ip3_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName3}"
+                                                    shortDesc="#{theadIter.uiField3_identifier}"
+                                                    label="#{theadIter.uiField3_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="diagCal_pb4"
+                                                    inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl_17"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="diagCal_cl4"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
+                                      <af:outputFormatted id="diagCal_th_of4"
+                                                          value="#{theadIter.uiField4}"
+                                                          inlineStyle="#{theadIter.uiField4_bgColor}"/>
+                                      <af:inputText id="diagCal_ip4_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName4}"
+                                                    shortDesc="#{theadIter.uiField4_identifier}"
+                                                    label="#{theadIter.uiField4_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="diagCal_pb5"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl9"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="diagCal_cl5"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
+                                      <af:outputFormatted id="diagCal_th_of5"
+                                                          value="#{theadIter.uiField5}"
+                                                          inlineStyle="#{theadIter.uiField5_bgColor}"/>
+                                      <af:inputText id="diagCal_ip5_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName5}"
+                                                    shortDesc="#{theadIter.uiField5_identifier}"
+                                                    label="#{theadIter.uiField5_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="diagCal_pb6"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl10"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="diagCal_cl6"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
+                                      <af:outputFormatted id="diagCal_th_of6"
+                                                          value="#{theadIter.uiField6}"
+                                                          inlineStyle="#{theadIter.uiField6_bgColor}"/>
+                                      <af:inputText id="diagCal_ip6_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName6}"
+                                                    shortDesc="#{theadIter.uiField6_identifier}"
+                                                    label="#{theadIter.uiField6_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="diagCal_pb7"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="diagCal_pgl20"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="diagCal_cl7"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
+                                      <af:outputFormatted id="diagCal_th_of7"
+                                                          value="#{theadIter.uiField7}"
+                                                          inlineStyle="#{theadIter.uiField7_bgColor}"/>
+                                      <af:inputText id="diagCal_ip7_helper"
+                                                    visible="false"
+                                                    value="#{theadIter.czNodeName7}"
+                                                    shortDesc="#{theadIter.uiField7_identifier}"
+                                                    label="#{theadIter.uiField7_color}"
+                                                    placeholder="#{theadIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                            </af:panelGroupLayout>
+                          </af:iterator>
+                          
                         </af:showDetailHeader>
                       </af:panelGroupLayout>
                     </af:panelGroupLayout>
