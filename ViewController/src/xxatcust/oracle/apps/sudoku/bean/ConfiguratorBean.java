@@ -81,7 +81,7 @@ public class ConfiguratorBean {
     private ArrayList<UxTreeNode> rootWarranty;
     private ArrayList<UxTreeNode> rootCalDiag;
     private ArrayList<UxTreeNode> rootSysController;
-     private ArrayList<UxTreeNode> rootAddSwTools;;
+    private ArrayList<UxTreeNode> rootAddSwTools;
     private RichPanelGroupLayout theadPanelGrp;
     private RichOutputText pageInitText;
     private RichListView sysInfraListView;
@@ -184,7 +184,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         //Call configurator to load data
         sysInfraTreeModel = null;
         warrantyTreeModel = null;
-        sysControllerTreeModel=null;
+        sysControllerTreeModel = null;
         addToolsTreeModel = null;
         calDiagTreeModel = null;
         V93kQuote v93k =
@@ -344,20 +344,20 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             jsenId = (String)jsessionId.getValue();
         }
         ADFUtils.setSessionScopeValue("jsenid", jsenId);
-        
+
         String jsonStr = JSONUtils.convertObjToJson(v93k);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
 
-//        String responseJson =
-//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-//        System.out.println("Response Json from Configurator : " +
-//                           responseJson);
-//        ObjectMapper mapper = new ObjectMapper();
-//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-//        v93k = (V93kQuote)obj;
+                String responseJson =
+                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+                System.out.println("Response Json from Configurator : " +
+                                   responseJson);
+                ObjectMapper mapper = new ObjectMapper();
+                Object obj = mapper.readValue(responseJson, V93kQuote.class);
+                v93k = (V93kQuote)obj;
         //else use this
-        v93k = (V93kQuote)convertJsonToObject(null);
+        //v93k = (V93kQuote)convertJsonToObject(null);
         ADFUtils.setSessionScopeValue("parentObject", v93k);
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         if (sysInfraTreeModel == null) {
@@ -375,20 +375,32 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     WtyTrainingAndSupportBean.populateWarrantySubGrps(v93k,
                                                                       warrantyUiCollection);
         }
-        if(sysControllerTreeModel==null){
-            sysControllerTreeModel = SystemControllerBean.populateSysControllerParentModel(sysControllerTreeModel, rootSysController);
+        if (sysControllerTreeModel == null) {
+            sysControllerTreeModel =
+                    SystemControllerBean.populateSysControllerParentModel(sysControllerTreeModel,
+                                                                          rootSysController);
             //sysControllerUiCollection = SystemControllerBean.populateSysControllerSubGrps(v93k, sysControllerUiCollection);
-            sysConSdiCollection = SystemControllerBean.populateSysContSubGroups(v93k, sysConSdiCollection);
-            
+            sysConSdiCollection =
+                    SystemControllerBean.populateSysContSubGroups(v93k,
+                                                                  sysConSdiCollection);
+
         }
-        if(addToolsTreeModel==null){
-            addToolsTreeModel = AdditionalSfwToolsBean.populateAddSwToolsParentTreeModel(addToolsTreeModel, rootAddSwTools);
-            addSwToolsSdiCollection = AdditionalSfwToolsBean.populateAddSwToolsSubGroups(v93k, addSwToolsSdiCollection);
-            
+        if (addToolsTreeModel == null) {
+            addToolsTreeModel =
+                    AdditionalSfwToolsBean.populateAddSwToolsParentTreeModel(addToolsTreeModel,
+                                                                             rootAddSwTools);
+            addSwToolsSdiCollection =
+                    AdditionalSfwToolsBean.populateAddSwToolsSubGroups(v93k,
+                                                                       addSwToolsSdiCollection);
+
         }
-        if(calDiagTreeModel==null){
-            calDiagTreeModel = DiagCalEquipmentBean.populateCalDiagParentTreeModel(calDiagTreeModel, rootCalDiag);
-            calDiagSdiCollection = DiagCalEquipmentBean.populateCalDiagSubGroups(v93k, calDiagSdiCollection);
+        if (calDiagTreeModel == null) {
+            calDiagTreeModel =
+                    DiagCalEquipmentBean.populateCalDiagParentTreeModel(calDiagTreeModel,
+                                                                        rootCalDiag);
+            calDiagSdiCollection =
+                    DiagCalEquipmentBean.populateCalDiagSubGroups(v93k,
+                                                                  calDiagSdiCollection);
         }
 
         ADFUtils.setSessionScopeValue("rebuildUI", null);
@@ -434,12 +446,23 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void warnPopupDialogListener(DialogEvent dialogEvent) throws IOException,
                                                                         JsonGenerationException,
                                                                         JsonMappingException {
+        HashMap selectedNodeValueMap =
+                    (HashMap)ADFUtils.getSessionScopeValue("selectedNodeValueMap");
+        HashMap inputNodeValueMap =
+                    (HashMap)ADFUtils.getSessionScopeValue("inputNodeValueMap");
+        
         if (dialogEvent.getOutcome() == DialogEvent.Outcome.ok) {
+            if(selectedNodeValueMap!=null && !selectedNodeValueMap.isEmpty()){
             continueWithSelection();
+            }
+            if(inputNodeValueMap!=null && !inputNodeValueMap.isEmpty()){
+                continueWithInput();
+            }
         }
 
         if (dialogEvent.getOutcome() == DialogEvent.Outcome.cancel) {
             confirmPopup.cancel();
+            cancelUIAction();
         }
     }
 
@@ -596,8 +619,78 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         return sysConSdiCollection;
     }
 
-    public void handleInput(ValueChangeEvent valueChangeEvent) {
-        // Add event code here...
+    public void handleInput(ValueChangeEvent valueChangeEvent) throws IOException,
+                                                                      JsonGenerationException,
+                                                                      JsonMappingException {
+        UIComponent component = valueChangeEvent.getComponent();
+        UIComponent parent = component.getParent();
+        List<UIComponent> children = parent.getChildren();
+        String inputValue = (String)valueChangeEvent.getNewValue();
+        HashMap<String, String> inputNodeValueMap =
+            new HashMap<String, String>();
+        String uiSubGrpName = (String)ADFUtils.evaluateEL("#{node.nodeName}");
+        inputNodeValueMap.put("uiSubGrpName", uiSubGrpName);
+        inputNodeValueMap.put("inputValue", inputValue);
+        String parentGroupName = null;
+
+        for (UIComponent comp : children) {
+            if (comp instanceof RichOutputFormatted) {
+                RichOutputFormatted rf = (RichOutputFormatted)comp;
+                if (rf != null) {
+                    parentGroupName = rf.getShortDesc();
+                    inputNodeValueMap.put("parentGroupName", parentGroupName);
+                }
+            }
+        }
+        V93kQuote v93 =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        ADFUtils.setSessionScopeValue("inputNodeValueMap", inputNodeValueMap);
+        if (v93 != null && v93.getExceptionMap() != null) {
+            TreeMap<String, ArrayList<String>> warnings =
+                v93.getExceptionMap().getWarningList();
+            TreeMap<String, ArrayList<String>> notifications =
+                v93.getExceptionMap().getNotificationList();
+            StringBuilder warningMessage = new StringBuilder("<html><body>");
+            if (warnings != null && warnings.size() > 0) {
+
+
+                for (Map.Entry<String, ArrayList<String>> entry :
+                     warnings.entrySet()) {
+                    String key = entry.getKey();
+                    //iterate for each key
+                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
+                    ArrayList<String> value = entry.getValue();
+                    for (String str : value) {
+                        warningMessage.append("<p><b>" + str + "</b></p>");
+                    }
+                }
+                warningMessage.append("</body></html>");
+            }
+            if (notifications != null && notifications.size() > 0) {
+                for (Map.Entry<String, ArrayList<String>> entry :
+                     notifications.entrySet()) {
+                    String key = entry.getKey();
+                    ArrayList<String> value = entry.getValue();
+                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
+                    for (String str : value) {
+                        warningMessage.append("<p><b>" + str + "</b></p>");
+                    }
+                }
+                warningMessage.append("</body></html>");
+
+
+            }
+            if (warningMessage != null &&
+                !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
+                confirmPopup != null) {
+                warnText.setValue(warningMessage.toString());
+                RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                confirmPopup.show(hints);
+            } else {
+                //continueWithSelection();
+                continueWithInput();
+            }
+        }
     }
 
     public void setAddSwToolsSdiCollection(List<ShowDetailItemCollection> addSwToolsSdiCollection) {
@@ -608,11 +701,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         return addSwToolsSdiCollection;
     }
 
-    public void setRootAddSwTools(  ArrayList<UxTreeNode> rootAddSwTools) {
+    public void setRootAddSwTools(ArrayList<UxTreeNode> rootAddSwTools) {
         this.rootAddSwTools = rootAddSwTools;
     }
 
-    public   ArrayList<UxTreeNode> getRootAddSwTools() {
+    public ArrayList<UxTreeNode> getRootAddSwTools() {
         return rootAddSwTools;
     }
 
@@ -638,5 +731,63 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public ChildPropertyTreeModel getCalDiagTreeModel() {
         return calDiagTreeModel;
+    }
+
+    public void continueWithInput() throws IOException,
+                                           JsonGenerationException,
+                                           JsonMappingException {
+        String uniqueSessionId =
+            (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93k == null) {
+            v93k = new V93kQuote();
+        }
+        HashMap inputNodeValueMap =
+            (HashMap)ADFUtils.getSessionScopeValue("inputNodeValueMap");
+        if (v93k != null && inputNodeValueMap != null &&
+            !inputNodeValueMap.isEmpty()) {
+            String uiSubGrpName =
+                (String)inputNodeValueMap.get("uiSubGrpName");
+            String inputValue = (String)inputNodeValueMap.get("inputValue");
+            String parentGroupName =
+                (String)inputNodeValueMap.get("parentGroupName");
+            UiSelection uiSelection = new UiSelection();
+            uiSelection.setParentGroupName(parentGroupName);
+            uiSelection.setSubGroupName(uiSubGrpName);
+            uiSelection.setTargetQuantity(Integer.parseInt(inputValue));
+            uiSelection.setUiType("1");
+            v93k.setUiSelection(uiSelection);
+            uiSelection.setUniqueSessionId(uniqueSessionId);
+            SessionDetails sessionDetails = new SessionDetails();
+            InputParams inputParam = new InputParams();
+            //Get Session details added to the POJO object
+            sessionDetails.setApplicationId((String)ADFUtils.getSessionScopeValue("ApplId") ==
+                                            null ? "880" :
+                                            (String)ADFUtils.getSessionScopeValue("ApplId"));
+            sessionDetails.setRespId((String)ADFUtils.getSessionScopeValue("RespId") ==
+                                     null ? "51156" :
+                                     (String)ADFUtils.getSessionScopeValue("RespId"));
+            sessionDetails.setUserId((String)ADFUtils.getSessionScopeValue("UserId") ==
+                                     null ? "0" :
+                                     (String)ADFUtils.getSessionScopeValue("UserId"));
+            inputParam.setImportSource("REFRESH_CONFIG_UI");
+            v93k.setSessionDetails(sessionDetails);
+            v93k.setInputParams(inputParam);
+            ADFUtils.setSessionScopeValue("parentObject", v93k);
+
+            buildConfiguratorUI(v93k);
+            ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
+            confirmPopup.hide();
+            ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
+        }
+
+    }
+    
+    public void cancelUIAction(){
+        ADFUtils.setSessionScopeValue("inputNodeValueMap",
+                                                     null);
+        ADFUtils.setSessionScopeValue("selectedNodeValueMap",
+                                                     null);
     }
 }

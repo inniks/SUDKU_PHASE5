@@ -163,8 +163,9 @@ public class UiField {
                             uiField1_type = "LISTOFVALUES";
 
                         }
-
-
+                        if(uiElementType==1){
+                            uiField8_type = "NUMERIC";
+                        }
                         uiField1 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         requiredFlagSubGrp = requireFlagSubGrp;

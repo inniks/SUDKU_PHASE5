@@ -123,7 +123,12 @@ true);
                                     <af:inputText id="it2" columns="5"
                                                   rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
                                                   autoSubmit="true"
-                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                         messageDetailNoMatch="Only Numbers allowed.."/>
+                                    </af:inputText>
+                                    <af:outputFormatted id="it3" visible="false"
+                                                        shortDesc="#{theadIter.parentGroupName}"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -359,8 +364,7 @@ true);
           </af:listItem>
         </af:listView>
         <af:listView id="lv1" binding="#{ConfiguratorBean.warrantyListView}"
-                     value="#{ConfiguratorBean.warrantyTreeModel}" var="node"
-                     groupDisclosurePolicy="#{ConfiguratorBean.groupDiscPolicy}">
+                     value="#{ConfiguratorBean.warrantyTreeModel}" var="node">
           <f:facet name="groupHeaderStamp">
             <af:listItem id="li3" styleClass="ABHeader">
               <af:outputFormatted id="of5" value="#{node.nodeName}"
@@ -406,14 +410,19 @@ true);
                                                layout="horizontal">
                             <af:spacer width="50" height="10" id="wrntys1"/>
                             <af:panelBorderLayout id="wty_pbl11"
-                                                    inlineStyle="height:25px; width:30px; border-style:groove;">
+                                                  inlineStyle="height:25px; width:30px; border-style:groove;">
                               <f:facet name="innerLeft">
                                 <af:panelGroupLayout id="wty_pgl18"
                                                      layout="horizontal">
-                                  <af:inputText id="wty_it2" columns="5"
-                                                rendered="#{wrntyIter.uiField8_type eq 'NUMERIC'}"
-                                                valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                autoSubmit="true"/>
+                                   <af:inputText id="wty_it2" columns="5"
+                                                  rendered="#{wrntyIter.uiField8_type eq 'NUMERIC'}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                         messageDetailNoMatch="Only Numbers allowed.."/>
+                                    </af:inputText>
+                                    <af:outputFormatted id="wty_it3" visible="false"
+                                                        shortDesc="#{wrntyIter.parentGroupName}"/>
                                 </af:panelGroupLayout>
                               </f:facet>
                             </af:panelBorderLayout>
@@ -430,27 +439,26 @@ true);
                               </f:facet>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="wty_pbl12"
-                                                    inlineStyle="height:25px; width:20px; border-style:none;">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="wty_pgl19">
-                                    <af:outputFormatted value="#{wrntyIter.uiField9}"
-                                                        id="wty_of13"
-                                                        inlineStyle="color:Maroon;"/>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
+                                                  inlineStyle="height:25px; width:20px; border-style:none;">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="wty_pgl19">
+                                  <af:outputFormatted value="#{wrntyIter.uiField9}"
+                                                      id="wty_of13"
+                                                      inlineStyle="color:Maroon;"/>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
                             <af:spacer width="10" height="10" id="s5"/>
                             <af:panelBorderLayout id="wty_pbl13"
-                                                    inlineStyle="height:25px; width:20px; border-style:none;">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="wty_pgl21">
-                                    <af:outputFormatted
-                                                        id="wty_of14"
-                                                        value="#{wrntyIter.uiField9}"
-                                                        inlineStyle="color:Teal;"/>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
+                                                  inlineStyle="height:25px; width:20px; border-style:none;">
+                              <f:facet name="innerLeft">
+                                <af:panelGroupLayout id="wty_pgl21">
+                                  <af:outputFormatted id="wty_of14"
+                                                      value="#{wrntyIter.uiField9}"
+                                                      inlineStyle="color:Teal;"/>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:panelBorderLayout>
                             <af:spacer width="20" height="10" id="s10"/>
                             <af:panelBorderLayout id="pbl10"
                                                   inlineStyle="height:25px; width:10px; border-style:none;">
@@ -683,25 +691,28 @@ true);
                         <af:showDetailHeader text="#{node.nodeName}"
                                              disclosed="false" id="syscon_sdh2"
                                              rendered="#{node.codeName eq iter.index}">
-                          <af:iterator id="i4"
-                                       value="#{iter.uiFieldCollection}"
+                          <af:iterator id="i4" value="#{iter.uiFieldCollection}"
                                        var="sysConIter">
                             <af:panelGroupLayout id="syscon_Pgl"
                                                  layout="horizontal">
-                              <af:spacer width="50" height="10"
-                                         id="syscon_s1"/>
-                            <af:panelBorderLayout id="syscon_pbl11"
+                              <af:spacer width="50" height="10" id="syscon_s1"/>
+                              <af:panelBorderLayout id="syscon_pbl11"
                                                     inlineStyle="height:25px; width:30px; border-style:groove;">
-                              <f:facet name="innerLeft">
-                                <af:panelGroupLayout id="syscon_pgl18"
-                                                     layout="horizontal">
-                                  <af:inputText id="syscon_it2" columns="5"
-                                                rendered="#{sysConIter.uiField8_type eq 'NUMERIC'}"
-                                                autoSubmit="true"
-                                                valueChangeListener="#{ConfiguratorBean.handleInput}"/>
-                                </af:panelGroupLayout>
-                              </f:facet>
-                            </af:panelBorderLayout>
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="syscon_pgl18"
+                                                       layout="horizontal">
+                                   <af:inputText id="syscon_it2" columns="5"
+                                                  rendered="#{sysConIter.uiField8_type eq 'NUMERIC'}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                         messageDetailNoMatch="Only Numbers allowed.."/>
+                                    </af:inputText>
+                                    <af:outputFormatted id="syscon_it3" visible="false"
+                                                        shortDesc="#{sysConIter.parentGroupName}"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
                               <af:spacer width="10" height="10" id="s6"/>
                               <af:panelBorderLayout id="syscon_l3"
                                                     inlineStyle="height:25px; width:200px; border-style:none;">
@@ -918,25 +929,27 @@ true);
             </af:panelGridLayout>
           </af:listItem>
         </af:listView>
-       <af:listView id="addSwToolLv" 
-                     var="node" 
+        <af:listView id="addSwToolLv" var="node"
                      groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
-                    value="#{ConfiguratorBean.addToolsTreeModel}">
+                     value="#{ConfiguratorBean.addToolsTreeModel}">
           <f:facet name="groupHeaderStamp">
-            <af:listItem id="addSwTool_li1" styleClass="ABHeader" rendered="true">
+            <af:listItem id="addSwTool_li1" styleClass="ABHeader"
+                         rendered="true">
               <af:panelGroupLayout id="addSwTool_pgl3" layout="horizontal">
                 <af:panelBorderLayout id="addSwTool_pbl1"
                                       inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
                                       rendered="#{node.nodeRefColor ne null}">
                   <f:facet name="start">
-                    <af:outputFormatted id="addSwTool_of1" value="." rendered="false"/>
+                    <af:outputFormatted id="addSwTool_of1" value="."
+                                        rendered="false"/>
                   </f:facet>
                 </af:panelBorderLayout>
                 <af:panelBorderLayout id="addSwTool_pbl2"
                                       inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
                                       rendered="#{node.nodeTargetColor ne null}">
                   <f:facet name="start">
-                    <af:outputFormatted value="." id="addSwTool_of2" rendered="false"/>
+                    <af:outputFormatted value="." id="addSwTool_of2"
+                                        rendered="false"/>
                   </f:facet>
                 </af:panelBorderLayout>
                 <af:panelBorderLayout id="addSwTool_pbl3"
@@ -962,8 +975,10 @@ true);
                   <af:iterator var="topNode"
                                value="#{ConfiguratorBean.addSwToolsSdiCollection}">
                     <af:panelGroupLayout id="addSwTool_pgl4" layout="vertical">
-                      <af:panelGroupLayout id="addSwTool_pgl11" layout="horizontal">
-                        <af:panelGroupLayout id="addSwTool_pgl5" layout="horizontal"
+                      <af:panelGroupLayout id="addSwTool_pgl11"
+                                           layout="horizontal">
+                        <af:panelGroupLayout id="addSwTool_pgl5"
+                                             layout="horizontal"
                                              rendered="#{node.codeName eq topNode.index}">
                           <af:panelBorderLayout id="addSwTool_pbl4"
                                                 inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
@@ -987,31 +1002,38 @@ true);
                         </af:panelGroupLayout>
                         <af:showDetailHeader id="addSwTool_sd1"
                                              rendered="#{node.codeName eq topNode.index}"
-                                             text="#{node.nodeName}"
-                                             >
+                                             text="#{node.nodeName}">
                           <af:iterator id="addSwTool_i2"
                                        value="#{topNode.uiFieldCollection}"
                                        var="theadIter">
                             <af:panelGroupLayout id="addSwTool_theadPgl"
                                                  layout="horizontal">
-                              <af:spacer width="50" height="10" id="addSwTool_s1"/>
+                              <af:spacer width="50" height="10"
+                                         id="addSwTool_s1"/>
                               <af:panelBorderLayout id="addSwTool_pbl11"
                                                     inlineStyle="height:25px; width:30px; border-style:groove;">
                                 <f:facet name="innerLeft">
                                   <af:panelGroupLayout id="addSwTool_pgl18"
                                                        layout="horizontal">
-                                    <af:inputText id="addSwTool_it2" columns="5"
+                                     <af:inputText id="addSwTool_it2" columns="5"
                                                   rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
                                                   autoSubmit="true"
-                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                         messageDetailNoMatch="Only Numbers allowed.."/>
+                                    </af:inputText>
+                                    <af:outputFormatted id="addSwTool_it3" visible="false"
+                                                        shortDesc="#{theadIter.parentGroupName}"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
-                              <af:spacer width="10" height="10" id="addSwTool_s2"/>
+                              <af:spacer width="10" height="10"
+                                         id="addSwTool_s2"/>
                               <af:panelBorderLayout id="addSwTool_pb_l3"
                                                     inlineStyle="height:25px; width:200px; border-style:none;">
                                 <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="addSwTool_pgl12" halign="left"
+                                  <af:panelGroupLayout id="addSwTool_pgl12"
+                                                       halign="left"
                                                        layout="horizontal">
                                     <af:outputFormatted value="#{theadIter.selectedValue}"
                                                         id="addSwTool_of4"/>
@@ -1028,7 +1050,8 @@ true);
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
-                              <af:spacer width="10" height="10" id="addSwTool_s3"/>
+                              <af:spacer width="10" height="10"
+                                         id="addSwTool_s3"/>
                               <af:panelBorderLayout id="addSwTool_pbl13"
                                                     inlineStyle="height:25px; width:20px; border-style:none;">
                                 <f:facet name="innerLeft">
@@ -1043,7 +1066,8 @@ true);
                               <af:panelBorderLayout id="addSwTool_pbl8"
                                                     inlineStyle="height:25px; width:10px; border-style:none;">
                                 <f:facet name="innerLeft">
-                                  <af:outputFormatted value="*" id="addSwTool_of9"
+                                  <af:outputFormatted value="*"
+                                                      id="addSwTool_of9"
                                                       inlineStyle="font-size:x-large; color:Red;"
                                                       rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                 </f:facet>
@@ -1213,7 +1237,6 @@ true);
                               </af:panelBorderLayout>
                             </af:panelGroupLayout>
                           </af:iterator>
-                         
                         </af:showDetailHeader>
                       </af:panelGroupLayout>
                     </af:panelGroupLayout>
@@ -1223,10 +1246,9 @@ true);
             </af:panelGridLayout>
           </af:listItem>
         </af:listView>
-       <af:listView id="diagCalLv" 
-                     var="node" 
+        <af:listView id="diagCalLv" var="node"
                      groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
-                    value="#{ConfiguratorBean.calDiagTreeModel}">
+                     value="#{ConfiguratorBean.calDiagTreeModel}">
           <f:facet name="groupHeaderStamp">
             <af:listItem id="diagCal_li1" styleClass="ABHeader" rendered="true">
               <af:panelGroupLayout id="diagCal_pgl3" layout="horizontal">
@@ -1234,14 +1256,16 @@ true);
                                       inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
                                       rendered="#{node.nodeRefColor ne null}">
                   <f:facet name="start">
-                    <af:outputFormatted id="diagCal_of1" value="." rendered="false"/>
+                    <af:outputFormatted id="diagCal_of1" value="."
+                                        rendered="false"/>
                   </f:facet>
                 </af:panelBorderLayout>
                 <af:panelBorderLayout id="diagCal_pbl2"
                                       inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
                                       rendered="#{node.nodeTargetColor ne null}">
                   <f:facet name="start">
-                    <af:outputFormatted value="." id="diagCal_of2" rendered="false"/>
+                    <af:outputFormatted value="." id="diagCal_of2"
+                                        rendered="false"/>
                   </f:facet>
                 </af:panelBorderLayout>
                 <af:panelBorderLayout id="diagCal_pbl3"
@@ -1267,8 +1291,10 @@ true);
                   <af:iterator var="topNode"
                                value="#{ConfiguratorBean.calDiagSdiCollection}">
                     <af:panelGroupLayout id="diagCal_pgl4" layout="vertical">
-                      <af:panelGroupLayout id="diagCal_pgl11" layout="horizontal">
-                        <af:panelGroupLayout id="diagCal_pgl5" layout="horizontal"
+                      <af:panelGroupLayout id="diagCal_pgl11"
+                                           layout="horizontal">
+                        <af:panelGroupLayout id="diagCal_pgl5"
+                                             layout="horizontal"
                                              rendered="#{node.codeName eq topNode.index}">
                           <af:panelBorderLayout id="diagCal_pbl4"
                                                 inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
@@ -1293,31 +1319,37 @@ true);
                         <af:showDetailHeader id="diagCal_sd1"
                                              rendered="#{node.codeName eq topNode.index}"
                                              text="#{node.nodeName}">
-                                            
                           <af:iterator id="diagCal_i2"
                                        value="#{topNode.uiFieldCollection}"
                                        var="theadIter">
                             <af:panelGroupLayout id="diagCal_theadPgl"
-                                                 layout="horizontal"
-                                                 >
-                              <af:spacer width="50" height="10" id="diagCal_s1"/>
+                                                 layout="horizontal">
+                              <af:spacer width="50" height="10"
+                                         id="diagCal_s1"/>
                               <af:panelBorderLayout id="diagCal_pbl11"
                                                     inlineStyle="height:25px; width:30px; border-style:groove;">
                                 <f:facet name="innerLeft">
                                   <af:panelGroupLayout id="diagCal_pgl18"
                                                        layout="horizontal">
-                                    <af:inputText id="diagCal_it2" columns="5"
+                                     <af:inputText id="diagCal_it2" columns="5"
                                                   rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
                                                   autoSubmit="true"
-                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                         messageDetailNoMatch="Only Numbers allowed.."/>
+                                    </af:inputText>
+                                    <af:outputFormatted id="diagCal_it3" visible="false"
+                                                        shortDesc="#{theadIter.parentGroupName}"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
-                              <af:spacer width="10" height="10" id="diagCal_s2"/>
+                              <af:spacer width="10" height="10"
+                                         id="diagCal_s2"/>
                               <af:panelBorderLayout id="diagCal_pb_l3"
                                                     inlineStyle="height:25px; width:200px; border-style:none;">
                                 <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="diagCal_pgl12" halign="left"
+                                  <af:panelGroupLayout id="diagCal_pgl12"
+                                                       halign="left"
                                                        layout="horizontal">
                                     <af:outputFormatted value="#{theadIter.selectedValue}"
                                                         id="diagCal_of4"/>
@@ -1334,7 +1366,8 @@ true);
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
-                              <af:spacer width="10" height="10" id="diagCal_s3"/>
+                              <af:spacer width="10" height="10"
+                                         id="diagCal_s3"/>
                               <af:panelBorderLayout id="diagCal_pbl13"
                                                     inlineStyle="height:25px; width:20px; border-style:none;">
                                 <f:facet name="innerLeft">
@@ -1345,7 +1378,8 @@ true);
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
-                              <af:spacer width="20" height="10" id="diagCal_s11"/>
+                              <af:spacer width="20" height="10"
+                                         id="diagCal_s11"/>
                               <af:panelBorderLayout id="diagCal_pbl8"
                                                     inlineStyle="height:25px; width:10px; border-style:none;">
                                 <f:facet name="innerLeft">
@@ -1519,7 +1553,6 @@ true);
                               </af:panelBorderLayout>
                             </af:panelGroupLayout>
                           </af:iterator>
-                          
                         </af:showDetailHeader>
                       </af:panelGroupLayout>
                     </af:panelGroupLayout>

@@ -54,6 +54,8 @@ public class ConfiguratorUtils {
         String str2 = null;
         String jsessionId = (String)ADFUtils.getSessionScopeValue("jsenid"); //JSESSIONID
         _logger.info("JSESSION ID while calling configurator is "+jsessionId);
+        
+        _logger.info("Input JSON to coonfigurator "+jsonStr);
         if(jsessionId!=null){
             for(Cookie cookie :listOfCookies){
                 if(cookie.getName().equalsIgnoreCase("SPT2")){
