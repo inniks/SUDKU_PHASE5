@@ -1903,31 +1903,32 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             ruleSetVO.insertRow(cRow);
             Map ruleSetMap =
                 (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
-            Map ruleSetMapConfig =
-            (Map)ADFContext.getCurrent().getSessionScope().get("inputParamsMapFromConfig");
-            if(ruleSetMapConfig!=null){
-                    ruleSetVO.setCurrentRow(cRow);
-                    String topLevelCode = (String)ruleSetMapConfig.get("ruleSetTop");
-                    String secondLevelCode =
-                        (String)ruleSetMapConfig.get("ruleSetSecond");
-                    String error = (String)ruleSetMapConfig.get("error");
-                    if (error != null && error.equalsIgnoreCase("N")) {
-                        if (secondLevelCode != null) {
-                            secondLevelCode = secondLevelCode.toUpperCase();
-                        }
-                        cRow.setAttribute("TopLevelCode", topLevelCode);
-                        cRow.setAttribute("SecondLevelCode", secondLevelCode);
-                        RuleSetVORowImpl rwImpl =
-                            (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
-                        String secondLevelMeaning =
-                            rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                        System.out.println("From AM Impl second level meaning " +
-                                           secondLevelMeaning);
-                        cRow.setAttribute("SecondLevelMeaning",
-                                          secondLevelMeaning);
-                    }    
-                }
-           else if (ruleSetMap != null) {
+//            Map ruleSetMapConfig =
+//            (Map)ADFContext.getCurrent().getSessionScope().get("inputParamsMapFromConfig");
+//            if(ruleSetMapConfig!=null && ruleSetMapConfig.size()>0){
+//                    ruleSetVO.setCurrentRow(cRow);
+//                    String topLevelCode = (String)ruleSetMapConfig.get("ruleSetTop");
+//                    String secondLevelCode =
+//                        (String)ruleSetMapConfig.get("ruleSetSecond");
+//                    String error = (String)ruleSetMapConfig.get("error");
+////                    if (error != null && error.equalsIgnoreCase("N")) {
+//                        if (secondLevelCode != null) {
+//                            secondLevelCode = secondLevelCode.toUpperCase();
+//                        }
+//                        cRow.setAttribute("TopLevelCode", topLevelCode);
+//                        cRow.setAttribute("SecondLevelCode", secondLevelCode);
+//                        RuleSetVORowImpl rwImpl =
+//                            (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+//                        String secondLevelMeaning =
+//                            rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+//                        System.out.println("From AM Impl second level meaning " +
+//                                           secondLevelMeaning);
+//                        cRow.setAttribute("SecondLevelMeaning",
+//                                          secondLevelMeaning);
+////                    }    
+//                }
+//           else
+           if (ruleSetMap != null) {
                 String topLevelCode = (String)ruleSetMap.get("topLevelCode");
                 String secondLevelCode =
                     (String)ruleSetMap.get("secondLevelCode");
@@ -1958,9 +1959,8 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     }
 
 
-
-    public void initRuleSetT() {
-        System.out.println("Init Rule Set");
+    public void initRuleSetForRef() {
+        System.out.println("Init Rule Set config");
         ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
         if (ruleSetVO != null) {
             AttributeDef[] attDef = ruleSetVO.getAttributeDefs();
@@ -1972,7 +1972,33 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             ruleSetVO.insertRow(cRow);
             Map ruleSetMap =
                 (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
-            if (ruleSetMap != null) {
+            Map ruleSetMapConfig =
+            (Map)ADFContext.getCurrent().getSessionScope().get("inputParamsMapFromConfig");
+            
+            if(ruleSetMapConfig!=null &&ruleSetMapConfig.size()>0 ){
+                   ruleSetVO.setCurrentRow(cRow);
+                   String topLevelCode = (String)ruleSetMapConfig.get("ruleSetTop");
+                   String secondLevelCode =
+                       (String)ruleSetMapConfig.get("ruleSetSecond");
+                   String error = (String)ruleSetMapConfig.get("error");
+            //                    if (error != null && error.equalsIgnoreCase("N")) {
+                       if (secondLevelCode != null) {
+                           secondLevelCode = secondLevelCode.toUpperCase();
+                       }
+                       cRow.setAttribute("TopLevelCode", topLevelCode);
+                       cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                       RuleSetVORowImpl rwImpl =
+                           (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                       String secondLevelMeaning =
+                           rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                       System.out.println("From AM Impl second level meaning " +
+                                          secondLevelMeaning);
+                       cRow.setAttribute("SecondLevelMeaning",
+                                         secondLevelMeaning);
+            //                    }
+               }
+            
+        else    if (ruleSetMap != null) {
                 String topLevelCode = (String)ruleSetMap.get("topLevelCode");
                 String secondLevelCode =
                     (String)ruleSetMap.get("secondLevelCode");
@@ -1994,12 +2020,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 }
 
                 ruleSetVO.setCurrentRow(cRow);
-
             }
         }
     }
-
-
 
 
     public String callDuplicateQuoteAPI(String quoteFromSesion, int respId,
@@ -2222,14 +2245,6 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                               String ConfighdrId,
                                               String configRevNum, int respId,
                                               int usrId) {
-        System.out.println("Passing the below values to API...");
-        System.out.println("QuoteNumber.... "+quoteNum);
-        System.out.println("Item Number.... "+itemNumber);
-        System.out.println("Operation Code..... "+orgNum);
-        System.out.println("ConfigHdrId...."+ConfighdrId);
-        System.out.println("Org...."+"GDO");
-        System.out.println("ConfigRevNum...."+configRevNum);
-        
         orgNum = "GDO";
         CallableStatement cs = null;
         String returnval = null;

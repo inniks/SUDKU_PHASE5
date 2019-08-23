@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="ConfiguratorFlow">
-    <default-activity id="__22">initRuleSet</default-activity>
+    <default-activity id="__27">initRuleSetForRef</default-activity>
     <input-parameter-definition id="__1">
       <name id="__16">refreshConfigurator</name>
       <value>#{sessionScope.refreshConfigurator}</value>
@@ -31,10 +31,10 @@
         <fixed-outcome>init</fixed-outcome>
       </outcome>
     </method-call>
-    <method-call id="initRuleSet">
-      <method>#{bindings.initRuleSet.execute}</method>
-      <outcome id="__23">
-        <fixed-outcome>initRuleSet</fixed-outcome>
+    <method-call id="initRuleSetForRef">
+      <method>#{bindings.initRuleSetForRef.execute}</method>
+      <outcome id="__17">
+        <fixed-outcome>initRuleSetForRef</fixed-outcome>
       </outcome>
     </method-call>
     <control-flow-rule id="__2">
@@ -44,11 +44,11 @@
         <to-activity-id id="__4">Configurator</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
-    <control-flow-rule id="__24">
-      <from-activity-id id="__25">initRuleSet</from-activity-id>
-      <control-flow-case id="__27">
-        <from-outcome id="__26">initRuleSet</from-outcome>
-        <to-activity-id id="__28">initConfig</to-activity-id>
+    <control-flow-rule id="__22">
+      <from-activity-id id="__23">initRuleSetForRef</from-activity-id>
+      <control-flow-case id="__24">
+        <from-outcome id="__25">initRuleSetForRef</from-outcome>
+        <to-activity-id id="__26">initConfig</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

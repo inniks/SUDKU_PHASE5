@@ -66,7 +66,7 @@ public class SystemControllerBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Warranty, Training, Service and Support");
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"System Controller");
 
                         uiFieldCollection.add(uiField);
                     }

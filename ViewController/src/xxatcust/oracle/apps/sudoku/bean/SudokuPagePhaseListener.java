@@ -118,7 +118,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void logoutEBS() {
         _logger.info("Logging out the user from EBS");
-
+        ADFUtils.setSessionScopeValue("parentObject", null);
         FacesContext fctx = FacesContext.getCurrentInstance();
         HttpServletRequest request =
             (HttpServletRequest)fctx.getExternalContext().getRequest();

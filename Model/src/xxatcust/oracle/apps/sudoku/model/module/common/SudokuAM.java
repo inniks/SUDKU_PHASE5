@@ -66,4 +66,5 @@ public interface SudokuAM extends ApplicationModule {
     String callUpdateDiscountAPI(String quoteNum, String discount, int respId,
                                  int usrId);
 
+    void initRuleSetForRef();
 }

@@ -50,6 +50,7 @@ public class SystemInfraBean {
                     Map.Entry pair = (Map.Entry)it.next();
                     ConfiguratorUiSubGroup subGroup =
                         (ConfiguratorUiSubGroup)pair.getValue();
+                    
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();

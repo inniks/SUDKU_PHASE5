@@ -141,8 +141,28 @@ public class UiField {
                    String requireFlagSubGrp, String parentGroupName) {
         super();
         this.listOfNodes = listOfNodes;
+        String czNodeNameUiField8 = null;
+
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
             ConfiguratorUiNode node = null;
+            if (listOfNodes.get(0) != null) {
+                if (listOfNodes.get(0).getConfigUiNodes() != null &&
+                    listOfNodes.get(0).getConfigUiNodes().size() > 0) {
+                    ConfiguratorUiNode firstNode =
+                        listOfNodes.get(0).getConfigUiNodes().get(0);
+                    uiField8_code = firstNode.getCzNodeName();
+                    int referenceQuantity = firstNode.getReferenceQuantiy();
+                    if (referenceQuantity != -1) {
+                        uiField9 = Integer.toString(referenceQuantity);
+                    }
+                    int targetQuantity = firstNode.getTargetQuantity();
+                    if (targetQuantity != -1) {
+                        uiField10 = Integer.toString(targetQuantity);
+                    }
+
+                }
+            }
+            System.out.println("czNodeNameUiField8 " + czNodeNameUiField8);
             for (int i = 0; i < listOfNodes.size(); i++) {
                 switch (i) {
                 case 0:
@@ -163,7 +183,7 @@ public class UiField {
                             uiField1_type = "LISTOFVALUES";
 
                         }
-                        if(uiElementType==1){
+                        if (uiElementType == 1) {
                             uiField8_type = "NUMERIC";
                         }
                         uiField1 = node.getUiNodeName();
@@ -470,7 +490,8 @@ public class UiField {
                         uiField8_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
-                        System.out.println("Element Type for 8th field "+uiElementType);
+                        System.out.println("Element Type for 8th field " +
+                                           uiElementType);
                         switch (uiElementType) {
                         case 1:
                             uiField8_type = "NUMERIC";
@@ -498,56 +519,58 @@ public class UiField {
                     break;
 
                 case 8:
-                        if (listOfNodes.get(i) != null &&
-                            listOfNodes.get(i).getConfigUiNodes() != null &&
-                            !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
-                            node = listOfNodes.get(i).getConfigUiNodes().get(0);
-                            //Ui field 9 is to show the reference quantity
-                            uiField9 = node.getReferenceQuantiy()==-1? null:Integer.toString(node.getReferenceQuantiy());//node.getUiNodeName();
-                            System.out.println("UiField9 Value "+uiField9);
-                            selectedValue = subGrpName;
-                            czNodeName9 = node.getCzNodeName();
-                            if (node.isDisplayReferenceColor())
-                                uiField9_color = SudokuUtils.REFERENCE_COLOR;
-                            else if (node.isDisplayTargetColor())
-                                uiField9_color = SudokuUtils.TARGET_COLOR;
-                            uiField9_dis = node.isDisableNode();
-                            uiField9_readOnly = node.isReadOnly();
-                            uiField9_identifier = node.getIdentifier();
-                            ConfiguratorUiElement uiElement = listOfNodes.get(i);
-                            int uiElementType = uiElement.getUiElementType();
-                            switch (uiElementType) {
-                            case 1:
-                                uiField9_type = "NUMERIC";
-                            case 2:
-                                uiField9_type = "TEXT";
-                            case 3:
-                                uiField9_type = "OPTION";
-                            case 4:
-                                uiField9_type = "LISTOFVALUES";
+                    if (listOfNodes.get(i) != null &&
+                        listOfNodes.get(i).getConfigUiNodes() != null &&
+                        !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
+                        node = listOfNodes.get(i).getConfigUiNodes().get(0);
+                        //Ui field 9 is to show the reference quantity
+                        uiField9 =
+                                node.getReferenceQuantiy() == -1 ? null : Integer.toString(node.getReferenceQuantiy()); //node.getUiNodeName();
+                        System.out.println("UiField9 Value " + uiField9);
+                        selectedValue = subGrpName;
+                        czNodeName9 = node.getCzNodeName();
+                        if (node.isDisplayReferenceColor())
+                            uiField9_color = SudokuUtils.REFERENCE_COLOR;
+                        else if (node.isDisplayTargetColor())
+                            uiField9_color = SudokuUtils.TARGET_COLOR;
+                        uiField9_dis = node.isDisableNode();
+                        uiField9_readOnly = node.isReadOnly();
+                        uiField9_identifier = node.getIdentifier();
+                        ConfiguratorUiElement uiElement = listOfNodes.get(i);
+                        int uiElementType = uiElement.getUiElementType();
+                        switch (uiElementType) {
+                        case 1:
+                            uiField9_type = "NUMERIC";
+                        case 2:
+                            uiField9_type = "TEXT";
+                        case 3:
+                            uiField9_type = "OPTION";
+                        case 4:
+                            uiField9_type = "LISTOFVALUES";
 
-                            }
-                            if (uiField9_dis) {
-                                uiField9_bgColor = "color:Silver;";
-                            }
-                            if (uiField9_readOnly) {
-                                uiField9_bgColor = "color:#d9b3ff;";
-                            }
-                            if (uiField9_color != null) {
-                                uiField9_bgColor = "color:InfoBackground";
-                            }
-                            if (uiField9_dis) {
-                                uiField9_color = "Yellow";
-                            }
                         }
+                        if (uiField9_dis) {
+                            uiField9_bgColor = "color:Silver;";
+                        }
+                        if (uiField9_readOnly) {
+                            uiField9_bgColor = "color:#d9b3ff;";
+                        }
+                        if (uiField9_color != null) {
+                            uiField9_bgColor = "color:InfoBackground";
+                        }
+                        if (uiField9_dis) {
+                            uiField9_color = "Yellow";
+                        }
+                    }
                     break;
                 case 9:
                     if (listOfNodes.get(i) != null &&
                         listOfNodes.get(i).getConfigUiNodes() != null &&
                         !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                         node = listOfNodes.get(i).getConfigUiNodes().get(0);
-                        uiField10 = node.getTargetQuantity()==-1?null:Integer.toString(node.getTargetQuantity());//node.getUiNodeName();
-                        System.out.println("Field 10 value "+uiField10);
+                        uiField10 =
+                                node.getTargetQuantity() == -1 ? null : Integer.toString(node.getTargetQuantity()); //node.getUiNodeName();
+                        System.out.println("Field 10 value " + uiField10);
                         selectedValue = subGrpName;
                         czNodeName10 = node.getCzNodeName();
                         if (node.isDisplayReferenceColor())

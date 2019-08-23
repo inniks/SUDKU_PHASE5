@@ -316,5 +316,10 @@
         Name="usrId"
         Type="int"/>
     </Method>
+    <Method
+      Name="initRuleSetForRef">
+      <Return
+        Type="void"/>
+    </Method>
   </ClientInterface>
 </AppModule>

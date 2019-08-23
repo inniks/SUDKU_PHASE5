@@ -38,6 +38,13 @@ true);
             </af:panelGroupLayout>
           </af:dialog>
         </af:popup>
+        <af:popup id="resetConfig"
+                  binding="#{ConfiguratorBean.resetConfigurationPopup}">
+          <af:dialog id="d2"
+                     title="Your existing configuration will be lost,Are you sure you want to continue?"
+                     type="yesNo"
+                     dialogListener="#{ConfiguratorBean.resetConfigurationAndCallServlet}"/>
+        </af:popup>
         <af:listView id="sysLv" value="#{ConfiguratorBean.sysInfraTreeModel}"
                      var="node" binding="#{ConfiguratorBean.sysInfraListView}"
                      groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}">
@@ -128,7 +135,8 @@ true);
                                                          messageDetailNoMatch="Only Numbers allowed.."/>
                                     </af:inputText>
                                     <af:outputFormatted id="it3" visible="false"
-                                                        shortDesc="#{theadIter.parentGroupName}"/>
+                                                        shortDesc="#{theadIter.parentGroupName}"
+                                                        value="#{theadIter.uiField8_code}"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -149,7 +157,7 @@ true);
                                   <af:panelGroupLayout id="pgl19">
                                     <af:outputFormatted value="#{theadIter.uiField9}"
                                                         id="of13"
-                                                        inlineStyle="color:Maroon;"/>
+                                                        inlineStyle="color:Maroon; font-weight:bold;"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -160,7 +168,7 @@ true);
                                   <af:panelGroupLayout id="pgl21">
                                     <af:outputFormatted value="#{theadIter.uiField10}"
                                                         id="of14"
-                                                        inlineStyle="color:Teal;"/>
+                                                        inlineStyle="color:Teal; font-weight:bold;"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -367,8 +375,33 @@ true);
                      value="#{ConfiguratorBean.warrantyTreeModel}" var="node">
           <f:facet name="groupHeaderStamp">
             <af:listItem id="li3" styleClass="ABHeader">
-              <af:outputFormatted id="of5" value="#{node.nodeName}"
-                                  inlineStyle="font-size:medium; font-weight:bolder;"/>
+             <af:panelGroupLayout id="Wty_pgl3" layout="horizontal">
+                <af:panelBorderLayout id="wty_pbl1"
+                                      inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
+                                      rendered="#{node.nodeRefColor ne null}">
+                  <f:facet name="start">
+                    <af:outputFormatted id="wty_of1" value="." rendered="false"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:panelBorderLayout id="wty_pbl2"
+                                      inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
+                                      rendered="#{node.nodeTargetColor ne null}">
+                  <f:facet name="start">
+                    <af:outputFormatted value="." id="wty_of2" rendered="false"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:panelBorderLayout id="wty_pbl3"
+                                      inlineStyle="height:25px;width:10px;"
+                                      rendered="#{node.requiredFlag eq 'Y'}">
+                  <f:facet name="innerLeft">
+                    <af:outputFormatted value="*" id="wty_of11"
+                                        inlineStyle="color:Red; font-size:x-large;"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:outputFormatted value="#{node.nodeName}" id="wty_of3"
+                                    styleClass="ABHeader"
+                                    inlineStyle="font-size:medium; font-weight:bolder;"/>
+              </af:panelGroupLayout>
             </af:listItem>
           </f:facet>
           <af:listItem id="li4">
@@ -422,7 +455,8 @@ true);
                                                          messageDetailNoMatch="Only Numbers allowed.."/>
                                     </af:inputText>
                                     <af:outputFormatted id="wty_it3" visible="false"
-                                                        shortDesc="#{wrntyIter.parentGroupName}"/>
+                                                        shortDesc="#{wrntyIter.parentGroupName}"
+                                                        value="#{wrntyIter.uiField8_type}"/>
                                 </af:panelGroupLayout>
                               </f:facet>
                             </af:panelBorderLayout>
@@ -444,7 +478,7 @@ true);
                                 <af:panelGroupLayout id="wty_pgl19">
                                   <af:outputFormatted value="#{wrntyIter.uiField9}"
                                                       id="wty_of13"
-                                                      inlineStyle="color:Maroon;"/>
+                                                      inlineStyle="color:Maroon; font-weight:bold;"/>
                                 </af:panelGroupLayout>
                               </f:facet>
                             </af:panelBorderLayout>
@@ -454,8 +488,8 @@ true);
                               <f:facet name="innerLeft">
                                 <af:panelGroupLayout id="wty_pgl21">
                                   <af:outputFormatted id="wty_of14"
-                                                      value="#{wrntyIter.uiField9}"
-                                                      inlineStyle="color:Teal;"/>
+                                                      value="#{wrntyIter.uiField10}"
+                                                      inlineStyle="color:Teal; font-weight:bolder;"/>
                                 </af:panelGroupLayout>
                               </f:facet>
                             </af:panelBorderLayout>
@@ -647,8 +681,33 @@ true);
                      var="node">
           <f:facet name="groupHeaderStamp">
             <af:listItem id="li5">
-              <af:outputFormatted value="#{node.nodeName}" id="of12"
-                                  inlineStyle="font-size:medium; font-weight:bolder;"/>
+              <af:panelGroupLayout id="syscon_pgl3" layout="horizontal">
+                <af:panelBorderLayout id="syscon_pbl1"
+                                      inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
+                                      rendered="#{node.nodeRefColor ne null}">
+                  <f:facet name="start">
+                    <af:outputFormatted id="syscon_of1" value="." rendered="false"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:panelBorderLayout id="syscon_pbl2"
+                                      inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
+                                      rendered="#{node.nodeTargetColor ne null}">
+                  <f:facet name="start">
+                    <af:outputFormatted value="." id="syscon_of2" rendered="false"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:panelBorderLayout id="syscon_pbl3"
+                                      inlineStyle="height:25px;width:10px;"
+                                      rendered="#{node.requiredFlag eq 'Y'}">
+                  <f:facet name="innerLeft">
+                    <af:outputFormatted value="*" id="syscon_of11"
+                                        inlineStyle="color:Red; font-size:x-large;"/>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <af:outputFormatted value="#{node.nodeName}" id="syscon_of3"
+                                    styleClass="ABHeader"
+                                    inlineStyle="font-size:medium; font-weight:bolder;"/>
+              </af:panelGroupLayout>
             </af:listItem>
           </f:facet>
           <af:listItem id="li6">
@@ -709,7 +768,8 @@ true);
                                                          messageDetailNoMatch="Only Numbers allowed.."/>
                                     </af:inputText>
                                     <af:outputFormatted id="syscon_it3" visible="false"
-                                                        shortDesc="#{sysConIter.parentGroupName}"/>
+                                                        shortDesc="#{sysConIter.parentGroupName}"
+                                                        value="#{sysConIter.uiField8_code}"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -731,7 +791,7 @@ true);
                                   <af:panelGroupLayout id="syscon_pgl19">
                                     <af:outputFormatted value="#{sysConIter.uiField9}"
                                                         id="syscon_of13"
-                                                        inlineStyle="color:Maroon;"/>
+                                                        inlineStyle="color:Maroon; font-weight:bold;"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -742,7 +802,7 @@ true);
                                   <af:panelGroupLayout id="syscon_pgl21">
                                     <af:outputFormatted value="#{sysConIter.uiField10}"
                                                         id="syscon_of14"
-                                                        inlineStyle="color:Teal;"/>
+                                                        inlineStyle="color:Teal; font-weight:bold;"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -1023,7 +1083,8 @@ true);
                                                          messageDetailNoMatch="Only Numbers allowed.."/>
                                     </af:inputText>
                                     <af:outputFormatted id="addSwTool_it3" visible="false"
-                                                        shortDesc="#{theadIter.parentGroupName}"/>
+                                                        shortDesc="#{theadIter.parentGroupName}"
+                                                        value="#{theadIter.uiField8_code}"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -1046,7 +1107,7 @@ true);
                                   <af:panelGroupLayout id="addSwTool_pgl19">
                                     <af:outputFormatted value="#{theadIter.uiField9}"
                                                         id="addSwTool_of13"
-                                                        inlineStyle="color:Maroon;"/>
+                                                        inlineStyle="color:Maroon; font-weight:bold;"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -1058,7 +1119,7 @@ true);
                                   <af:panelGroupLayout id="addSwTool_pgl21">
                                     <af:outputFormatted value="#{theadIter.uiField10}"
                                                         id="addSwTool_of14"
-                                                        inlineStyle="color:Teal;"/>
+                                                        inlineStyle="color:Teal; font-weight:bold;"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -1278,7 +1339,7 @@ true);
                 </af:panelBorderLayout>
                 <af:outputFormatted value="#{node.nodeName}" id="diagCal_of3"
                                     styleClass="ABHeader"
-                                    inlineStyle="font-size:medium; font-weight:bolder;"/>
+                                    inlineStyle="font-size:medium; font-weight:bold;"/>
               </af:panelGroupLayout>
             </af:listItem>
           </f:facet>
@@ -1339,7 +1400,8 @@ true);
                                                          messageDetailNoMatch="Only Numbers allowed.."/>
                                     </af:inputText>
                                     <af:outputFormatted id="diagCal_it3" visible="false"
-                                                        shortDesc="#{theadIter.parentGroupName}"/>
+                                                        shortDesc="#{theadIter.parentGroupName}"
+                                                        value="#{theadIter.uiField8_code}"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -1362,7 +1424,7 @@ true);
                                   <af:panelGroupLayout id="diagCal_pgl19">
                                     <af:outputFormatted value="#{theadIter.uiField9}"
                                                         id="diagCal_of13"
-                                                        inlineStyle="color:Maroon;"/>
+                                                        inlineStyle="color:Maroon; font-weight:bold;"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -1374,7 +1436,7 @@ true);
                                   <af:panelGroupLayout id="diagCal_pgl21">
                                     <af:outputFormatted value="#{theadIter.uiField10}"
                                                         id="diagCal_of14"
-                                                        inlineStyle="color:Teal;"/>
+                                                        inlineStyle="color:Teal; font-weight:bold;"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -1581,7 +1643,8 @@ true);
                                   columns="20"
                                   shortDesc="#{bindings.TopLevelMeaning.hints.tooltip}"
                                   launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
-                                  autoSubmit="true">
+                                  autoSubmit="true"
+                                  valueChangeListener="#{ConfiguratorBean.rulesetChanged}">
               <f:validator binding="#{bindings.TopLevelMeaning.validator}"/>
             </af:inputListOfValues>
             <af:inputListOfValues id="secondLevelMeaningId"
@@ -1591,7 +1654,9 @@ true);
                                   required="#{bindings.SecondLevelMeaning.hints.mandatory}"
                                   columns="20"
                                   shortDesc="#{bindings.SecondLevelMeaning.hints.tooltip}"
-                                  partialTriggers="topLevelMeaningId">
+                                  partialTriggers="topLevelMeaningId"
+                                  autoSubmit="true"
+                                  valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}">
               <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
             </af:inputListOfValues>
           </af:panelGroupLayout>

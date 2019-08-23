@@ -15,11 +15,11 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">172.89648</property>
-      <property
-         name="x">484.0</property>
+         name="y">168.19531</property>
       <property
          name="pageFragment">true</property>
+      <property
+         name="x">690.0</property>
    </View>
    <MethodCall
       id="MethodCall5">
@@ -32,9 +32,9 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">188.29883</property>
+         name="y">99.59766</property>
       <property
-         name="x">323.0</property>
+         name="x">420.0</property>
    </MethodCall>
    <ControlFlowCase
       islink="true"
@@ -44,31 +44,31 @@
       <property
          name="fromOutcome">init</property>
       <property
-         name="sdm:polyPoints">R50,364.0,187.94824,443.0,172.5459,L50</property>
+         name="sdm:polyPoints">R50,461.0,99.24707,649.0,167.84473,L50</property>
    </ControlFlowCase>
    <MethodCall
-      id="MethodCall7">
+      id="MethodCall8">
       <property
-         name="activityId">initRuleSet</property>
+         name="activityId">initRuleSetForRef</property>
       <property
          name="start">true</property>
       <property
-         name="description">&lt;html>&lt;p>&lt;b>initRuleSet&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+         name="description">&lt;html>&lt;p>&lt;b>initRuleSetForRef&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">240.14941</property>
+         name="y">239.14941</property>
       <property
-         name="x">136.5</property>
+         name="x">169.56055</property>
    </MethodCall>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase8"
-      from="MethodCall7"
+      id="ControlFlowCase9"
+      from="MethodCall8"
       to="MethodCall5">
       <property
-         name="fromOutcome">initRuleSet</property>
+         name="fromOutcome">initRuleSetForRef</property>
       <property
-         name="sdm:polyPoints">R50,177.5,239.79883,282.0,187.94824,L50</property>
+         name="sdm:polyPoints">R50,210.56055,238.79883,379.0,99.24707,L50</property>
    </ControlFlowCase>
 </SDM>

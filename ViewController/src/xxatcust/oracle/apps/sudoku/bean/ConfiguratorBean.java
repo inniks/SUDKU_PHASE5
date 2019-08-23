@@ -22,6 +22,7 @@ import java.util.Set;
 
 import java.util.TreeMap;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 
 import javax.faces.component.UIForm;
@@ -31,6 +32,7 @@ import javax.faces.event.ValueChangeEvent;
 
 import javax.servlet.ServletException;
 
+import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.share.ADFContext;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichListView;
@@ -42,9 +44,12 @@ import oracle.adf.view.rich.component.rich.layout.RichShowDetailItem;
 import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.component.rich.output.RichOutputText;
 import oracle.adf.view.rich.event.DialogEvent;
+import oracle.adf.view.rich.event.LaunchPopupEvent;
 import oracle.adf.view.rich.render.ClientEvent;
 
 import oracle.binding.OperationBinding;
+
+import oracle.jbo.Row;
 
 import org.apache.myfaces.trinidad.event.DisclosureEvent;
 import org.apache.myfaces.trinidad.event.RowDisclosureEvent;
@@ -97,6 +102,7 @@ public class ConfiguratorBean {
     private String groupDiscPolicy;
     private RichListView sysControllerListViewBinding;
     private ChildPropertyTreeModel sysControllerTreeModel;
+    private RichPopup resetConfigurationPopup;
 
     public ConfiguratorBean() {
         super();
@@ -338,7 +344,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void buildConfiguratorUI(V93kQuote v93k) throws IOException,
                                                            JsonGenerationException,
                                                            JsonMappingException {
-
+        sysInfraTreeModel = null;
+        warrantyTreeModel = null;
+        sysControllerTreeModel = null;
+        addToolsTreeModel = null;
+        calDiagTreeModel = null;
         String jsenId = null;
         if (jsessionId != null) {
             jsenId = (String)jsessionId.getValue();
@@ -349,15 +359,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
 
-                String responseJson =
-                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-                System.out.println("Response Json from Configurator : " +
-                                   responseJson);
-                ObjectMapper mapper = new ObjectMapper();
-                Object obj = mapper.readValue(responseJson, V93kQuote.class);
-                v93k = (V93kQuote)obj;
+        //        String responseJson =
+        //            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        //        System.out.println("Response Json from Configurator : " +
+        //                           responseJson);
+        //        ObjectMapper mapper = new ObjectMapper();
+        //        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        //        v93k = (V93kQuote)obj;
         //else use this
-        //v93k = (V93kQuote)convertJsonToObject(null);
+        v93k = (V93kQuote)convertJsonToObject(null);
         ADFUtils.setSessionScopeValue("parentObject", v93k);
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         if (sysInfraTreeModel == null) {
@@ -403,7 +413,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                                   calDiagSdiCollection);
         }
 
-        ADFUtils.setSessionScopeValue("rebuildUI", null);
+        //ADFUtils.setSessionScopeValue("rebuildUI", null);
 
     }
 
@@ -447,15 +457,16 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                                         JsonGenerationException,
                                                                         JsonMappingException {
         HashMap selectedNodeValueMap =
-                    (HashMap)ADFUtils.getSessionScopeValue("selectedNodeValueMap");
+            (HashMap)ADFUtils.getSessionScopeValue("selectedNodeValueMap");
         HashMap inputNodeValueMap =
-                    (HashMap)ADFUtils.getSessionScopeValue("inputNodeValueMap");
-        
+            (HashMap)ADFUtils.getSessionScopeValue("inputNodeValueMap");
+
         if (dialogEvent.getOutcome() == DialogEvent.Outcome.ok) {
-            if(selectedNodeValueMap!=null && !selectedNodeValueMap.isEmpty()){
-            continueWithSelection();
+            if (selectedNodeValueMap != null &&
+                !selectedNodeValueMap.isEmpty()) {
+                continueWithSelection();
             }
-            if(inputNodeValueMap!=null && !inputNodeValueMap.isEmpty()){
+            if (inputNodeValueMap != null && !inputNodeValueMap.isEmpty()) {
                 continueWithInput();
             }
         }
@@ -517,8 +528,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             uiSelection.setSelectionState(selectionState);
             v93k.setUiSelection(uiSelection);
 
-            SessionDetails sessionDetails = new SessionDetails();
-            InputParams inputParam = new InputParams();
+            SessionDetails sessionDetails = v93k.getSessionDetails();
+            if (sessionDetails == null) {
+                sessionDetails = new SessionDetails();
+            }
+
+            InputParams inputParam = v93k.getInputParams();
+            if (inputParam != null) {
+                inputParam = new InputParams();
+            }
             //Get Session details added to the POJO object
             sessionDetails.setApplicationId((String)ADFUtils.getSessionScopeValue("ApplId") ==
                                             null ? "880" :
@@ -632,13 +650,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         inputNodeValueMap.put("uiSubGrpName", uiSubGrpName);
         inputNodeValueMap.put("inputValue", inputValue);
         String parentGroupName = null;
-
+        String czNodeName = null ;
         for (UIComponent comp : children) {
             if (comp instanceof RichOutputFormatted) {
                 RichOutputFormatted rf = (RichOutputFormatted)comp;
                 if (rf != null) {
                     parentGroupName = rf.getShortDesc();
                     inputNodeValueMap.put("parentGroupName", parentGroupName);
+                    czNodeName = (String)rf.getValue();
+                    inputNodeValueMap.put("czNodeName", czNodeName);
                 }
             }
         }
@@ -752,6 +772,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String inputValue = (String)inputNodeValueMap.get("inputValue");
             String parentGroupName =
                 (String)inputNodeValueMap.get("parentGroupName");
+            String czNodeName = (String)inputNodeValueMap.get("czNodeName");
             UiSelection uiSelection = new UiSelection();
             uiSelection.setParentGroupName(parentGroupName);
             uiSelection.setSubGroupName(uiSubGrpName);
@@ -759,8 +780,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             uiSelection.setUiType("1");
             v93k.setUiSelection(uiSelection);
             uiSelection.setUniqueSessionId(uniqueSessionId);
+            uiSelection.setCzNodeName(czNodeName);
             SessionDetails sessionDetails = new SessionDetails();
-            InputParams inputParam = new InputParams();
+            
+            InputParams inputParam =  v93k.getInputParams();
+            if(inputParam!=null){
+                inputParam = new InputParams();
+            }
             //Get Session details added to the POJO object
             sessionDetails.setApplicationId((String)ADFUtils.getSessionScopeValue("ApplId") ==
                                             null ? "880" :
@@ -783,11 +809,133 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         }
 
     }
-    
-    public void cancelUIAction(){
-        ADFUtils.setSessionScopeValue("inputNodeValueMap",
-                                                     null);
-        ADFUtils.setSessionScopeValue("selectedNodeValueMap",
-                                                     null);
+
+    public void cancelUIAction() {
+        ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
+        ADFUtils.setSessionScopeValue("selectedNodeValueMap", null);
+    }
+
+    public void rulesetChanged(ValueChangeEvent valueChangeEvent) {
+        DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
+        if (iter != null) {
+            Row currRow = iter.getCurrentRow();
+            if (currRow != null) {
+                currRow.setAttribute("SecondLevelCode",
+                                     null); // reset the second level choice
+                currRow.setAttribute("SecondLevelMeaning",
+                                     null); // reset the second level choice
+            }
+        }
+
+    }
+
+    public void setResetConfigurationPopup(RichPopup resetConfigurationPopup) {
+        this.resetConfigurationPopup = resetConfigurationPopup;
+    }
+
+    public RichPopup getResetConfigurationPopup() {
+        return resetConfigurationPopup;
+    }
+
+    public void resetConfigurationAndCallServlet(DialogEvent dialogEvent) throws IOException,
+                                                                                 JsonGenerationException,
+                                                                                 JsonMappingException {
+
+        DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
+        if (dialogEvent.getOutcome() == DialogEvent.Outcome.yes) {
+
+            String rulesetTopLevelChoice = null, rulesetSecondLevelChoice =
+                null;
+            if (iter != null) {
+                Row r = iter.getCurrentRow();
+                if (r != null) {
+                    rulesetTopLevelChoice =
+                            (String)r.getAttribute("TopLevelCode");
+                    rulesetSecondLevelChoice =
+                            (String)r.getAttribute("SecondLevelCode");
+                }
+            }
+            //CIO has to be called only if both the values are present,
+            if (rulesetTopLevelChoice == null ||
+                rulesetSecondLevelChoice == null) {
+                ADFUtils.addMessage(FacesMessage.SEVERITY_WARN,
+                                    "Enter both top and second level ruleset choices..");
+            }
+            if (rulesetSecondLevelChoice != null &&
+                rulesetTopLevelChoice != null) {
+                //Reset the v93k object and build from start
+                ADFUtils.setSessionScopeValue("parentObject", null);
+                refreshConfiguratorUI((String)ADFUtils.getSessionScopeValue("loadParameter"),
+                                      (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"),
+                                      rulesetTopLevelChoice,
+                                      rulesetSecondLevelChoice);
+            }
+        }
+        if (dialogEvent.getOutcome() == DialogEvent.Outcome.no) {
+            resetConfigurationPopup.cancel();
+        }
+    }
+
+    public void refreshConfiguratorUI(String loadParameter, V93kQuote v93k,
+                                      String rulesetTopChoice,
+                                      String ruleSetSecondChoice) throws IOException,
+                                                                         JsonGenerationException,
+                                                                         JsonMappingException {
+        System.out.println("RECREATING THE UI TREE......");
+        //Call configurator to load data
+        sysInfraTreeModel = null;
+        warrantyTreeModel = null;
+        sysControllerTreeModel = null;
+        addToolsTreeModel = null;
+        calDiagTreeModel = null;
+        v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93k == null) {
+            v93k = new V93kQuote();
+            SessionDetails sessionDetails = new SessionDetails();
+            InputParams inputParam = new InputParams();
+            //Get Session details added to the POJO object
+            sessionDetails.setApplicationId((String)ADFUtils.getSessionScopeValue("ApplId") ==
+                                            null ? "880" :
+                                            (String)ADFUtils.getSessionScopeValue("ApplId"));
+            sessionDetails.setRespId((String)ADFUtils.getSessionScopeValue("RespId") ==
+                                     null ? "51156" :
+                                     (String)ADFUtils.getSessionScopeValue("RespId"));
+            sessionDetails.setUserId((String)ADFUtils.getSessionScopeValue("UserId") ==
+                                     null ? "0" :
+                                     (String)ADFUtils.getSessionScopeValue("UserId"));
+            inputParam.setImportSource(loadParameter);
+            inputParam.setRuleSetTopLevelChoice(rulesetTopChoice);
+            inputParam.setRuleSetSecondLevelChoice(ruleSetSecondChoice);
+            String userId =
+                (String)ADFUtils.getSessionScopeValue("UserId") == null ? "0" :
+                (String)ADFUtils.getSessionScopeValue("UserId");
+            String timestamp = Long.toString(System.currentTimeMillis());
+            String uniqueSessionId = userId.concat(timestamp);
+            ADFUtils.setSessionScopeValue("uniqueSessionId", uniqueSessionId);
+            UiSelection uiSelection = new UiSelection();
+            uiSelection.setUniqueSessionId(uniqueSessionId);
+            v93k.setSessionDetails(sessionDetails);
+            v93k.setUiSelection(uiSelection);
+            v93k.setInputParams(inputParam);
+        }
+        buildConfiguratorUI(v93k);
+        ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
+        //try
+
+
+    }
+
+    public void ruleSetSecondValChange(ValueChangeEvent valueChangeEvent) {
+        System.out.println("New Value is " + valueChangeEvent.getNewValue());
+        if (ADFUtils.getSessionScopeValue("firstLoad") == null) {
+            ADFUtils.setSessionScopeValue("firstLoad", "Y");
+            ADFUtils.setSessionScopeValue("loadParameter", "LOAD_CONFIG_UI");
+        } else {
+            ADFUtils.setSessionScopeValue("loadParameter",
+                                          "RESET_AND_LOAD_CONFIG");
+        }
+        //Invoke the confirmation popup if the ui is NOT being loaded for 1st tim
+        RichPopup.PopupHints hints = new RichPopup.PopupHints();
+        resetConfigurationPopup.show(hints);
     }
 }

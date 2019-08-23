@@ -52,7 +52,7 @@ public class ConfiguratorUtils {
         String cookieBuf = null;
         String str1 = null;
         String str2 = null;
-        String jsessionId = (String)ADFUtils.getSessionScopeValue("jsenid"); //JSESSIONID
+        String jsessionId = (String)ADFUtils.getSessionScopeValue("JSESSIONID"); //JSESSIONID
         _logger.info("JSESSION ID while calling configurator is "+jsessionId);
         
         _logger.info("Input JSON to coonfigurator "+jsonStr);

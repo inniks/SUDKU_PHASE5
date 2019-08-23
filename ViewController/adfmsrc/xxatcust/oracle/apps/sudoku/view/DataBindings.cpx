@@ -48,8 +48,8 @@
           usageId="xxatcust_oracle_apps_sudoku_view_ImportSrcFlow_ImportSrcFlow_initImportSourcePageDef"/>
     <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/Configurator.jsff"
           usageId="xxatcust_oracle_apps_sudoku_view_ConfiguratorPageDef"/>
-    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ConfiguratorFlow.xml#ConfiguratorFlow@initRuleSet"
-          usageId="xxatcust_oracle_apps_sudoku_view_ConfiguratorFlow_ConfiguratorFlow_initRuleSetPageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ConfiguratorFlow.xml#ConfiguratorFlow@initRuleSetForRef"
+          usageId="xxatcust_oracle_apps_sudoku_view_ConfiguratorFlow_ConfiguratorFlow_initRuleSetForRefPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
@@ -92,8 +92,8 @@
           path="xxatcust.oracle.apps.sudoku.pageFlows.ImportSrcFlow_ImportSrcFlow_initImportSourcePageDef"/>
     <page id="xxatcust_oracle_apps_sudoku_view_ConfiguratorPageDef"
           path="xxatcust.oracle.apps.sudoku.ui.pageFragments.ConfiguratorPageDef"/>
-    <page id="xxatcust_oracle_apps_sudoku_view_ConfiguratorFlow_ConfiguratorFlow_initRuleSetPageDef"
-          path="xxatcust.oracle.apps.sudoku.pageFlows.ConfiguratorFlow_ConfiguratorFlow_initRuleSetPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_ConfiguratorFlow_ConfiguratorFlow_initRuleSetForRefPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.ConfiguratorFlow_ConfiguratorFlow_initRuleSetForRefPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <BC4JDataControl id="SudokuAMDataControl"
