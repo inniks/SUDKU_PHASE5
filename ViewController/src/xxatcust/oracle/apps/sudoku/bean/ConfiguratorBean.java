@@ -341,14 +341,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     }
 
-    public void buildConfiguratorUI(V93kQuote v93k) throws IOException,
-                                                           JsonGenerationException,
-                                                           JsonMappingException {
-        sysInfraTreeModel = null;
-        warrantyTreeModel = null;
-        sysControllerTreeModel = null;
-        addToolsTreeModel = null;
-        calDiagTreeModel = null;
+    public V93kQuote callServlet(V93kQuote v93k) throws IOException,
+                                                        JsonGenerationException,
+                                                        JsonMappingException {
         String jsenId = null;
         if (jsessionId != null) {
             jsenId = (String)jsessionId.getValue();
@@ -359,17 +354,29 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
 
-                String responseJson =
-                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-                System.out.println("Response Json from Configurator : " +
-                                   responseJson);
-                ObjectMapper mapper = new ObjectMapper();
-                Object obj = mapper.readValue(responseJson, V93kQuote.class);
-                v93k = (V93kQuote)obj;
+        String responseJson =
+            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        System.out.println("Response Json from Configurator : " +
+                           responseJson);
+        ObjectMapper mapper = new ObjectMapper();
+        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        v93k = (V93kQuote)obj;
         //else use this
         //v93k = (V93kQuote)convertJsonToObject(null);
         ADFUtils.setSessionScopeValue("parentObject", v93k);
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
+        return v93k;
+    }
+
+    public void buildConfiguratorUI(V93kQuote v93k) throws IOException,
+                                                           JsonGenerationException,
+                                                           JsonMappingException {
+        sysInfraTreeModel = null;
+        warrantyTreeModel = null;
+        sysControllerTreeModel = null;
+        addToolsTreeModel = null;
+        calDiagTreeModel = null;
+
         if (sysInfraTreeModel == null) {
             sysInfraTreeModel =
                     SystemInfraBean.populateSysInfraParentTreeModel(sysInfraTreeModel,
@@ -551,7 +558,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             v93k.setSessionDetails(sessionDetails);
             v93k.setInputParams(inputParam);
             ADFUtils.setSessionScopeValue("parentObject", v93k);
-
+            v93k = callServlet(v93k);
             buildConfiguratorUI(v93k);
             ADFUtils.setSessionScopeValue("selectedNodeValueMap", null);
             confirmPopup.hide();
@@ -650,7 +657,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         inputNodeValueMap.put("uiSubGrpName", uiSubGrpName);
         inputNodeValueMap.put("inputValue", inputValue);
         String parentGroupName = null;
-        String czNodeName = null ;
+        String czNodeName = null;
         for (UIComponent comp : children) {
             if (comp instanceof RichOutputFormatted) {
                 RichOutputFormatted rf = (RichOutputFormatted)comp;
@@ -782,9 +789,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             uiSelection.setUniqueSessionId(uniqueSessionId);
             uiSelection.setCzNodeName(czNodeName);
             SessionDetails sessionDetails = new SessionDetails();
-            
-            InputParams inputParam =  v93k.getInputParams();
-            if(inputParam==null){
+
+            InputParams inputParam = v93k.getInputParams();
+            if (inputParam == null) {
                 inputParam = new InputParams();
             }
             //Get Session details added to the POJO object
@@ -801,7 +808,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             v93k.setSessionDetails(sessionDetails);
             v93k.setInputParams(inputParam);
             ADFUtils.setSessionScopeValue("parentObject", v93k);
-
+            v93k = callServlet(v93k);
             buildConfiguratorUI(v93k);
             ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
             confirmPopup.hide();
@@ -918,6 +925,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             v93k.setUiSelection(uiSelection);
             v93k.setInputParams(inputParam);
         }
+        v93k = callServlet(v93k);
         buildConfiguratorUI(v93k);
         ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         //try

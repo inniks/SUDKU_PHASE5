@@ -1,5 +1,7 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -44,7 +46,9 @@ import xxatcust.oracle.apps.sudoku.util.SudokuUtils;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ConfiguratorNodePOJO;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.InputParams;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.QuoteLinePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.SessionDetails;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
+import xxatcust.oracle.apps.sudoku.viewmodel.ui.UiSelection;
 
 
 public class LoadDynamicRegionBean {
@@ -325,8 +329,8 @@ public class LoadDynamicRegionBean {
         //Before calling all the API's,Pass import source as "SAVE_CONFIG_TO_QUOTE"
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        if(v93k!=null && v93k.getInputParams()!=null){
-           v93k.getInputParams().setImportSource("SAVE_CONFIG_TO_QUOTE");
+        if (v93k != null && v93k.getInputParams() != null) {
+            v93k.getInputParams().setImportSource("SAVE_CONFIG_TO_QUOTE");
             String jsonStr = JSONUtils.convertObjToJson(v93k);
             String responseJson =
                 ConfiguratorUtils.callConfiguratorServlet(jsonStr);
@@ -337,9 +341,8 @@ public class LoadDynamicRegionBean {
             v93k = (V93kQuote)obj;
             ADFUtils.setSessionScopeValue("parentObject", v93k);
         }
-        
-        
-        
+
+
         String createQtMsg = getFndMessages(SudokuUtils.createQteMsg);
         String discount = null;
         int respid =
@@ -350,7 +353,7 @@ public class LoadDynamicRegionBean {
             Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
                              null ? "0" :
                              (String)ADFUtils.getSessionScopeValue("UserId"));
-       
+
         //        FacesContext fc = FacesContext.getCurrentInstance();
         BindingContainer bindings = getBindings();
         StringBuilder resultMsg = new StringBuilder("<html><body>");
@@ -374,14 +377,19 @@ public class LoadDynamicRegionBean {
                                     operationMode.equalsIgnoreCase("CREATE")) {
                                     OperationBinding createOb =
                                         bindings.getOperationBinding("callConfigLineToAddQuoteAPI");
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....QUOTE NUM "+v93k.getSessionDetails().getTargetQuoteNumber());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....OPERATION CODE "+list.getOperationCode());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigHdrId "+list.getConfigHrdId());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigRevNum  "+list.getConfigRevNum());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ITEM NUM "+list.getItemName());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....QUOTE NUM " +
+                                                 v93k.getSessionDetails().getTargetQuoteNumber());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....OPERATION CODE " +
+                                                 list.getOperationCode());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigHdrId " +
+                                                 list.getConfigHrdId());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigRevNum  " +
+                                                 list.getConfigRevNum());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ITEM NUM " +
+                                                 list.getItemName());
                                     createOb.getParamsMap().put("quoteNum",
                                                                 v93k.getSessionDetails().getTargetQuoteNumber());
-                                    
+
                                     createOb.getParamsMap().put("itemNumber",
                                                                 list.getItemName());
                                     createOb.getParamsMap().put("itemQty", 1);
@@ -494,11 +502,16 @@ public class LoadDynamicRegionBean {
                                     operationMode.equalsIgnoreCase("CREATE")) {
                                     OperationBinding dCreateOb =
                                         bindings.getOperationBinding("callConfigLineToAddQuoteAPI");
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....QUOTE NUM "+v93k.getSessionDetails().getTargetQuoteNumber());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....OPERATION CODE "+list.getOperationCode());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigHdrId "+list.getConfigHrdId());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigRevNum  "+list.getConfigRevNum());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ITEM NUM "+list.getItemName());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....QUOTE NUM " +
+                                                 v93k.getSessionDetails().getTargetQuoteNumber());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....OPERATION CODE " +
+                                                 list.getOperationCode());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigHdrId " +
+                                                 list.getConfigHrdId());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigRevNum  " +
+                                                 list.getConfigRevNum());
+                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ITEM NUM " +
+                                                 list.getItemName());
                                     dCreateOb.getParamsMap().put("quoteNum",
                                                                  targetQuote);
                                     dCreateOb.getParamsMap().put("itemNumber",
@@ -612,12 +625,18 @@ public class LoadDynamicRegionBean {
                                     operationMode.equalsIgnoreCase("UPDATE")) {
                                     OperationBinding ob =
                                         bindings.getOperationBinding("callConfigLineToUpdateQuoteAPI");
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....QUOTE NUM "+v93k.getSessionDetails().getSourceQuoteNumber());
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....OPERATION CODE "+list.getOperationCode());
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ConfigHdrId "+list.getConfigHrdId());
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ConfigRevNum  "+list.getConfigRevNum());
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ITEM NUM "+list.getItemName());
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....QUOTE LINE NUM "+list.getQuoteLineId());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....QUOTE NUM " +
+                                                 v93k.getSessionDetails().getSourceQuoteNumber());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....OPERATION CODE " +
+                                                 list.getOperationCode());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ConfigHdrId " +
+                                                 list.getConfigHrdId());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ConfigRevNum  " +
+                                                 list.getConfigRevNum());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ITEM NUM " +
+                                                 list.getItemName());
+                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....QUOTE LINE NUM " +
+                                                 list.getQuoteLineId());
                                     ob.getParamsMap().put("quoteNum",
                                                           v93k.getSessionDetails().getSourceQuoteNumber());
                                     ob.getParamsMap().put("quoteLineNum",
@@ -844,7 +863,7 @@ public class LoadDynamicRegionBean {
                                     warrantyOb.getParamsMap().put("usrId",
                                                                   usrId);
                                     String retMsg = null;
-                                    if ( warrantyOb != null) {
+                                    if (warrantyOb != null) {
                                         retMsg = (String)warrantyOb.execute();
                                         if (retMsg != null) {
                                             if (retMsg.contains("<html><body>")) {
@@ -959,9 +978,10 @@ public class LoadDynamicRegionBean {
         ADFUtils.setSessionScopeValue("currView", "quote");
     }
 
-    public void cancelAllConfigurations(ActionEvent actionEvent) {
+    public void cancelAllConfigurations(ActionEvent actionEvent) throws IOException,
+                                                                        JsonGenerationException,
+                                                                        JsonMappingException {
         //This is to cancel all configs and reset all session variables
-        //ParentObject
         ADFUtils.setSessionScopeValue("parentObject", null);
         ADFUtils.setSessionScopeValue("refreshImport", null);
         ADFUtils.setSessionScopeValue("isDuplicateQuote", null);

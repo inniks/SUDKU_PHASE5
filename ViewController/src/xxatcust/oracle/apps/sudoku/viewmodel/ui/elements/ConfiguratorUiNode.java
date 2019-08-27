@@ -24,9 +24,11 @@ public class ConfiguratorUiNode {
      String czNodeName = "";
      int czNodeType = -1;
      
+    int quantity = -1;
     int referenceQuantiy = -1;
     int targetQuantity = -1;
-
+       
+    
     public void setUiNodeName(String uiNodeName) {
         this.uiNodeName = uiNodeName;
     }
@@ -129,5 +131,13 @@ public class ConfiguratorUiNode {
 
     public int getTargetQuantity() {
         return targetQuantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }

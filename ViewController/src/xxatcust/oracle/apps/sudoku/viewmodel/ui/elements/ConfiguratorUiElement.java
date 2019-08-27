@@ -36,6 +36,8 @@ public class ConfiguratorUiElement {
     
     boolean isReadOnly = false;
 
+    int columnIndex = -1;
+
     public void setUiElementName(String uiComponentName) {
         this.uiElementName = uiComponentName;
     }
@@ -123,5 +125,13 @@ public class ConfiguratorUiElement {
 
     public boolean isRequired() {
         return required;
+    }
+
+    public void setColumnIndex(int columnIndex) {
+        this.columnIndex = columnIndex;
+    }
+
+    public int getColumnIndex() {
+        return columnIndex;
     }
 }

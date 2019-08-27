@@ -483,6 +483,7 @@ public class ImportSource {
         InputParams inputParam = new InputParams();
         UiSelection uiSelection = new UiSelection();
         uiSelection.setUniqueSessionId(uniqueSessionId);
+        ADFUtils.setSessionScopeValue("uniqueSessionId", uniqueSessionId);
         //Get Session details added to the POJO object
         sessionDetails.setApplicationId((String)ADFUtils.getSessionScopeValue("ApplId") ==
                                         null ? "880" :
