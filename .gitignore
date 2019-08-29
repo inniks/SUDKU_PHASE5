@@ -26,3 +26,11 @@ ViewController/classes/META-INF/task-flow-registry.xml
 ViewController/classes/.data/00000000/00000486.jdb
 
 ViewController/classes/.data/00000000/00000488.jdb
+
+deploy/SudokuP5.ear
+
+ViewController/deploy/SudokuP5.war
+
+ViewController/classes/.data/00000000/000005a6.jdb
+
+ViewController/classes/.data/00000000/000005be.jdb

@@ -79,14 +79,17 @@ public class ConfiguratorBean {
     private List<ShowDetailItemCollection> sysConSdiCollection;
     private List<ShowDetailItemCollection> addSwToolsSdiCollection;
     private List<ShowDetailItemCollection> calDiagSdiCollection;
+    private List<ShowDetailItemCollection> digitalSdiCollection;
     private ChildPropertyTreeModel addToolsTreeModel;
     private ChildPropertyTreeModel sysInfraTreeModel;
     private ChildPropertyTreeModel calDiagTreeModel;
+    private ChildPropertyTreeModel digitalTreeModel;
     private ArrayList<UxTreeNode> sysInfraroot;
     private ArrayList<UxTreeNode> rootWarranty;
     private ArrayList<UxTreeNode> rootCalDiag;
     private ArrayList<UxTreeNode> rootSysController;
     private ArrayList<UxTreeNode> rootAddSwTools;
+    private ArrayList<UxTreeNode> rootDigital;
     private RichPanelGroupLayout theadPanelGrp;
     private RichOutputText pageInitText;
     private RichListView sysInfraListView;
@@ -193,6 +196,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         sysControllerTreeModel = null;
         addToolsTreeModel = null;
         calDiagTreeModel = null;
+        digitalTreeModel = null;
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
@@ -418,6 +422,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             calDiagSdiCollection =
                     DiagCalEquipmentBean.populateCalDiagSubGroups(v93k,
                                                                   calDiagSdiCollection);
+        }
+        
+        if(digitalTreeModel==null){
+            digitalTreeModel = DigitalResourcesBean.populateDigitalResParentTreeModel(digitalTreeModel, rootDigital);
+            digitalSdiCollection = DigitalResourcesBean.populateDigitalResourcesSubGroups(v93k, digitalSdiCollection);
         }
 
         //ADFUtils.setSessionScopeValue("rebuildUI", null);
@@ -895,6 +904,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         sysControllerTreeModel = null;
         addToolsTreeModel = null;
         calDiagTreeModel = null;
+        digitalTreeModel = null;
         v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
             v93k = new V93kQuote();
@@ -945,5 +955,21 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         //Invoke the confirmation popup if the ui is NOT being loaded for 1st tim
         RichPopup.PopupHints hints = new RichPopup.PopupHints();
         resetConfigurationPopup.show(hints);
+    }
+
+    public void setDigitalSdiCollection(List<ShowDetailItemCollection> digitalSdiCollection) {
+        this.digitalSdiCollection = digitalSdiCollection;
+    }
+
+    public List<ShowDetailItemCollection> getDigitalSdiCollection() {
+        return digitalSdiCollection;
+    }
+
+    public void setDigitalTreeModel(ChildPropertyTreeModel digitalTreeModel) {
+        this.digitalTreeModel = digitalTreeModel;
+    }
+
+    public ChildPropertyTreeModel getDigitalTreeModel() {
+        return digitalTreeModel;
     }
 }

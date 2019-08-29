@@ -152,14 +152,14 @@ public class UiField {
                         listOfNodes.get(0).getConfigUiNodes().get(0);
                     uiField8_code = firstNode.getCzNodeName();
                     //Uncomment this code once mapping for target and ref quantity is clear
-//                    int referenceQuantity = firstNode.getReferenceQuantiy();
-//                    if (referenceQuantity != -1) {
-//                        uiField9 = Integer.toString(referenceQuantity);
-//                    }
-//                    int targetQuantity = firstNode.getTargetQuantity();
-//                    if (targetQuantity != -1) {
-//                        uiField10 = Integer.toString(targetQuantity);
-//                    }
+                    int referenceQuantity = firstNode.getReferenceQuantiy();
+                    if (referenceQuantity != -1) {
+                        uiField9 = Integer.toString(referenceQuantity);
+                    }
+                    int targetQuantity = firstNode.getTargetQuantity();
+                    if (targetQuantity != -1) {
+                        uiField10 = Integer.toString(targetQuantity);
+                    }
 
                 }
             }
