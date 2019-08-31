@@ -64,7 +64,7 @@ public class WtyTrainingAndSupportBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Warranty, Training, Service and Support");
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Warranty, Training, Service and Support",null);
 
                         uiFieldCollection.add(uiField);
                     }

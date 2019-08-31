@@ -208,7 +208,7 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
     //
     //
     //        }
-    
+
     String query = "SELECT hca.cust_account_id,\n" +
         "  hca.account_number,\n" +
         "  hz.party_id,\n" +
@@ -230,56 +230,52 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
         "AND psu.site_use_type     = ? --use 'BILL_TO' to get bill to address\n" +
         "AND psu.primary_per_type  = 'Y'\n" +
         "AND ps.location_id        = hl.location_id";
-    
-    
-    
-    
-    
-    
-//    String query = "SELECT \n" +
-//        "  hzsu.site_use_id   SITE_USE_ID,\n" +
-//        "  hzl.address1||DECODE(hzl.address2,\n" +
-//        "  NULL,\n" +
-//        "  NULL,\n" +
-//        "  ',\n" +
-//        "  '||hzl.address2)||',\n" +
-//        "  '||hzl.city||',\n" +
-//        "  '||hzl.STATE||',\n" +
-//        "  '||hzl.postal_code LOCATION,\n" +
-//        "  hzp.party_id,\n" +
-//        "  hzp.PARTY_NAME\n" +
-//        "FROM \n" +
-//        "  hz_parties hzp,\n" +
-//        "  hz_cust_accounts hza,\n" +
-//        "  hz_cust_acct_sites_all hzas,\n" +
-//        "  hz_cust_site_uses_all hzsu,\n" +
-//        "  hz_party_sites hzps,\n" +
-//        "  hz_locations hzl\n" +
-//        "WHERE \n" +
-//        "hzp.party_id = ?    and\n" +
-//        "  hza.party_id = hzp.party_id      AND\n" +
-//        "  hzas.cust_account_id = hza.cust_account_id      --AND\n" +
-//        "  and hzps.party_site_id = hzas.party_site_id      AND\n" +
-//        "  hzl.location_id = hzps.location_id      AND\n" +
-//        "  hzsu.site_use_code = ?      AND\n" +
-//        "  hzsu.PRIMARY_FLAG='Y' AND\n" +
-//        "  hzsu.ORG_ID=? AND\n" +
-//        "  hzsu.cust_acct_site_id = hzas.cust_acct_site_id AND\n" +
-//        "  hzsu.org_id = hzas.org_id\n ";
+
+
+    //    String query = "SELECT \n" +
+    //        "  hzsu.site_use_id   SITE_USE_ID,\n" +
+    //        "  hzl.address1||DECODE(hzl.address2,\n" +
+    //        "  NULL,\n" +
+    //        "  NULL,\n" +
+    //        "  ',\n" +
+    //        "  '||hzl.address2)||',\n" +
+    //        "  '||hzl.city||',\n" +
+    //        "  '||hzl.STATE||',\n" +
+    //        "  '||hzl.postal_code LOCATION,\n" +
+    //        "  hzp.party_id,\n" +
+    //        "  hzp.PARTY_NAME\n" +
+    //        "FROM \n" +
+    //        "  hz_parties hzp,\n" +
+    //        "  hz_cust_accounts hza,\n" +
+    //        "  hz_cust_acct_sites_all hzas,\n" +
+    //        "  hz_cust_site_uses_all hzsu,\n" +
+    //        "  hz_party_sites hzps,\n" +
+    //        "  hz_locations hzl\n" +
+    //        "WHERE \n" +
+    //        "hzp.party_id = ?    and\n" +
+    //        "  hza.party_id = hzp.party_id      AND\n" +
+    //        "  hzas.cust_account_id = hza.cust_account_id      --AND\n" +
+    //        "  and hzps.party_site_id = hzas.party_site_id      AND\n" +
+    //        "  hzl.location_id = hzps.location_id      AND\n" +
+    //        "  hzsu.site_use_code = ?      AND\n" +
+    //        "  hzsu.PRIMARY_FLAG='Y' AND\n" +
+    //        "  hzsu.ORG_ID=? AND\n" +
+    //        "  hzsu.cust_acct_site_id = hzas.cust_acct_site_id AND\n" +
+    //        "  hzsu.org_id = hzas.org_id\n ";
 
 
     public void getQuoteCustmerAddress(Row curRow) {
         String shipTo = "";
         String quoteTo = "";
         String custNumber = null;
-//        BigDecimal orgid = null;
+        //        BigDecimal orgid = null;
         ViewObjectImpl quoteVO = null;
         Row row = null;
         PreparedStatement cs = null, cs1 = null;
         if (curRow != null) {
-            if ((String)curRow.getAttribute("CustomerNumber") != null ) {
+            if ((String)curRow.getAttribute("CustomerNumber") != null) {
                 custNumber = (String)curRow.getAttribute("CustomerNumber");
-//                orgid = (BigDecimal)curRow.getAttribute("OrgId");
+                //                orgid = (BigDecimal)curRow.getAttribute("OrgId");
             }
         } else {
             quoteVO = this.getQuotesVO();
@@ -287,7 +283,7 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                 row = quoteVO.getCurrentRow();
                 if (row != null) {
                     custNumber = (String)row.getAttribute("CustomerNumber");
-//                    orgid = (BigDecimal)row.getAttribute("OrgId");
+                    //                    orgid = (BigDecimal)row.getAttribute("OrgId");
                 }
             }
         }
@@ -295,19 +291,19 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             cs = this.getDBTransaction().createPreparedStatement(query, 0);
             cs.setString(1, custNumber);
             cs.setString(2, "BILL_TO");
-            
-//            cs.setBigDecimal(3, orgid);
+
+            //            cs.setBigDecimal(3, orgid);
 
             ResultSet rs = cs.executeQuery();
             while (rs.next()) {
-                
+
                 quoteTo = rs.getString(5);
                 //                System.out.println("quoteTo is:" + quoteTo);
             }
             cs1 = this.getDBTransaction().createPreparedStatement(query, 0);
             cs1.setString(1, custNumber);
             cs1.setString(2, "SHIP_TO");
-//            cs1.setBigDecimal(3, orgid);
+            //            cs1.setBigDecimal(3, orgid);
             ResultSet rs1 = cs1.executeQuery();
             while (rs1.next()) {
                 shipTo = rs1.getString(5);
@@ -800,14 +796,14 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             Row row = quoteVO.getCurrentRow();
             if (row != null) {
                 BigDecimal partyId = (BigDecimal)row.getAttribute("PartyId");
-//                BigDecimal orgid = (BigDecimal)row.getAttribute("OrgId");
+                //                BigDecimal orgid = (BigDecimal)row.getAttribute("OrgId");
 
                 try {
                     cs =
  this.getDBTransaction().createPreparedStatement(query, 0);
                     cs.setBigDecimal(1, partyId);
                     cs.setString(2, "BILL_TO");
-//                    cs.setBigDecimal(3, orgid);
+                    //                    cs.setBigDecimal(3, orgid);
 
                     ResultSet rs = cs.executeQuery();
                     while (rs.next()) {
@@ -818,7 +814,7 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
 this.getDBTransaction().createPreparedStatement(query, 0);
                     cs1.setBigDecimal(1, partyId);
                     cs1.setString(2, "SHIP_TO");
-//                    cs1.setBigDecimal(3, orgid);
+                    //                    cs1.setBigDecimal(3, orgid);
                     ResultSet rs1 = cs1.executeQuery();
                     while (rs1.next()) {
                         shipTo = rs1.getString(2);
@@ -1894,41 +1890,41 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         System.out.println("Init Rule Set");
         ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
         if (ruleSetVO != null) {
-//            AttributeDef[] attDef = ruleSetVO.getAttributeDefs();
-//            for (AttributeDef af : attDef) {
-//                System.out.println(af.getName());
-//            }
+            //            AttributeDef[] attDef = ruleSetVO.getAttributeDefs();
+            //            for (AttributeDef af : attDef) {
+            //                System.out.println(af.getName());
+            //            }
             //get value of rulset top level and second level choices
             Row cRow = ruleSetVO.createRow();
             ruleSetVO.insertRow(cRow);
             Map ruleSetMap =
                 (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
-//            Map ruleSetMapConfig =
-//            (Map)ADFContext.getCurrent().getSessionScope().get("inputParamsMapFromConfig");
-//            if(ruleSetMapConfig!=null && ruleSetMapConfig.size()>0){
-//                    ruleSetVO.setCurrentRow(cRow);
-//                    String topLevelCode = (String)ruleSetMapConfig.get("ruleSetTop");
-//                    String secondLevelCode =
-//                        (String)ruleSetMapConfig.get("ruleSetSecond");
-//                    String error = (String)ruleSetMapConfig.get("error");
-////                    if (error != null && error.equalsIgnoreCase("N")) {
-//                        if (secondLevelCode != null) {
-//                            secondLevelCode = secondLevelCode.toUpperCase();
-//                        }
-//                        cRow.setAttribute("TopLevelCode", topLevelCode);
-//                        cRow.setAttribute("SecondLevelCode", secondLevelCode);
-//                        RuleSetVORowImpl rwImpl =
-//                            (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
-//                        String secondLevelMeaning =
-//                            rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-//                        System.out.println("From AM Impl second level meaning " +
-//                                           secondLevelMeaning);
-//                        cRow.setAttribute("SecondLevelMeaning",
-//                                          secondLevelMeaning);
-////                    }    
-//                }
-//           else
-           if (ruleSetMap != null) {
+            //            Map ruleSetMapConfig =
+            //            (Map)ADFContext.getCurrent().getSessionScope().get("inputParamsMapFromConfig");
+            //            if(ruleSetMapConfig!=null && ruleSetMapConfig.size()>0){
+            //                    ruleSetVO.setCurrentRow(cRow);
+            //                    String topLevelCode = (String)ruleSetMapConfig.get("ruleSetTop");
+            //                    String secondLevelCode =
+            //                        (String)ruleSetMapConfig.get("ruleSetSecond");
+            //                    String error = (String)ruleSetMapConfig.get("error");
+            ////                    if (error != null && error.equalsIgnoreCase("N")) {
+            //                        if (secondLevelCode != null) {
+            //                            secondLevelCode = secondLevelCode.toUpperCase();
+            //                        }
+            //                        cRow.setAttribute("TopLevelCode", topLevelCode);
+            //                        cRow.setAttribute("SecondLevelCode", secondLevelCode);
+            //                        RuleSetVORowImpl rwImpl =
+            //                            (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+            //                        String secondLevelMeaning =
+            //                            rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+            //                        System.out.println("From AM Impl second level meaning " +
+            //                                           secondLevelMeaning);
+            //                        cRow.setAttribute("SecondLevelMeaning",
+            //                                          secondLevelMeaning);
+            ////                    }
+            //                }
+            //           else
+            if (ruleSetMap != null) {
                 String topLevelCode = (String)ruleSetMap.get("topLevelCode");
                 String secondLevelCode =
                     (String)ruleSetMap.get("secondLevelCode");
@@ -1951,10 +1947,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                 ruleSetVO.setCurrentRow(cRow);
 
+            } else {
+                ruleSetVO.setCurrentRow(cRow);
             }
-            else{
-                    ruleSetVO.setCurrentRow(cRow);
-                }
         }
     }
 
@@ -1963,42 +1958,37 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         System.out.println("Init Rule Set config");
         ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
         if (ruleSetVO != null) {
-            AttributeDef[] attDef = ruleSetVO.getAttributeDefs();
-            for (AttributeDef af : attDef) {
-                System.out.println(af.getName());
-            }
             //get value of rulset top level and second level choices
             Row cRow = ruleSetVO.createRow();
             ruleSetVO.insertRow(cRow);
             Map ruleSetMap =
                 (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
-            Map ruleSetMapConfig =
-            (Map)ADFContext.getCurrent().getSessionScope().get("inputParamsMapFromConfig");
-            
-            if(ruleSetMapConfig!=null &&ruleSetMapConfig.size()>0 ){
-                   ruleSetVO.setCurrentRow(cRow);
-                   String topLevelCode = (String)ruleSetMapConfig.get("ruleSetTop");
-                   String secondLevelCode =
-                       (String)ruleSetMapConfig.get("ruleSetSecond");
-                   String error = (String)ruleSetMapConfig.get("error");
-            //                    if (error != null && error.equalsIgnoreCase("N")) {
-                       if (secondLevelCode != null) {
-                           secondLevelCode = secondLevelCode.toUpperCase();
-                       }
-                       cRow.setAttribute("TopLevelCode", topLevelCode);
-                       cRow.setAttribute("SecondLevelCode", secondLevelCode);
-                       RuleSetVORowImpl rwImpl =
-                           (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
-                       String secondLevelMeaning =
-                           rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                       System.out.println("From AM Impl second level meaning " +
-                                          secondLevelMeaning);
-                       cRow.setAttribute("SecondLevelMeaning",
-                                         secondLevelMeaning);
-            //                    }
-               }
-            
-        else    if (ruleSetMap != null) {
+            // Map ruleSetMapConfig =
+            // (Map)ADFContext.getCurrent().getSessionScope().get("inputParamsMapFromConfig");
+
+            if (ruleSetMap != null && ruleSetMap.size() > 0) {
+                ruleSetVO.setCurrentRow(cRow);
+                String topLevelCode = (String)ruleSetMap.get("topLevelCode");
+                String secondLevelCode =
+                    (String)ruleSetMap.get("secondLevelCode");
+                String error = (String)ruleSetMap.get("error");
+                //                    if (error != null && error.equalsIgnoreCase("N")) {
+                if (secondLevelCode != null) {
+                    secondLevelCode = secondLevelCode.toUpperCase();
+                }
+                cRow.setAttribute("TopLevelCode", topLevelCode);
+                cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                RuleSetVORowImpl rwImpl =
+                    (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                String secondLevelMeaning =
+                    rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                System.out.println("From AM Impl second level meaning " +
+                                   secondLevelMeaning);
+                cRow.setAttribute("SecondLevelMeaning", secondLevelMeaning);
+                //                    }
+            }
+
+            else if (ruleSetMap != null) {
                 String topLevelCode = (String)ruleSetMap.get("topLevelCode");
                 String secondLevelCode =
                     (String)ruleSetMap.get("secondLevelCode");

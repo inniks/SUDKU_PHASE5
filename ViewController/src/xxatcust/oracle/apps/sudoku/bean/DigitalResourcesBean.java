@@ -44,6 +44,7 @@ public class DigitalResourcesBean {
             }
 
             //Iterate for all subgroups here and place them in a list
+            int index = 1;
             if (mapUiSubGrp != null && !mapUiSubGrp.isEmpty()) {
                 Iterator it = mapUiSubGrp.entrySet().iterator();
                 while (it.hasNext()) {
@@ -66,8 +67,8 @@ public class DigitalResourcesBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Additional Software Tools");
-
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Additional Software Tools",Integer.toString(index));
+                        index++;
                         uiFieldCollection.add(uiField);
                     }
                 }

@@ -106,6 +106,8 @@ public class UiField {
     private String selectedValue;
     private String parentGroupName;
     private String requiredFlagSubGrp;
+    private String uiGrpIndex;
+    private String digitsEntered;
 
     public UiField() {
 
@@ -138,9 +140,10 @@ public class UiField {
     }
 
     public UiField(List<ConfiguratorUiElement> listOfNodes, String subGrpName,
-                   String requireFlagSubGrp, String parentGroupName) {
+                   String requireFlagSubGrp, String parentGroupName,String uiGrpIndex) {
         super();
         this.listOfNodes = listOfNodes;
+        this.uiGrpIndex = uiGrpIndex ;
         String czNodeNameUiField8 = null;
 
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
@@ -155,16 +158,23 @@ public class UiField {
                     int referenceQuantity = firstNode.getReferenceQuantiy();
                     if (referenceQuantity != -1) {
                         uiField9 = Integer.toString(referenceQuantity);
+                        System.out.println("Ref Qty "+referenceQuantity);
+
                     }
                     int targetQuantity = firstNode.getTargetQuantity();
                     if (targetQuantity != -1) {
                         uiField10 = Integer.toString(targetQuantity);
+                        System.out.println("Target Qty "+uiField10);
                     }
-
+                    int inputDigit = firstNode.getQuantity();
+                    if(inputDigit!=-1){
+                        digitsEntered = Integer.toString(inputDigit);
+                        System.out.println("Quantity "+digitsEntered);
+                    }
                 }
             }
-            System.out.println("czNodeNameUiField8 " + czNodeNameUiField8);
             for (int i = 0; i < listOfNodes.size(); i++) {
+                this.lineNum = Integer.toString(i);
                 switch (i) {
                 case 0:
                     if (listOfNodes.get(i) != null &&
@@ -1384,5 +1394,21 @@ public class UiField {
 
     public String getUiField10_type() {
         return uiField10_type;
+    }
+
+    public void setUiGrpIndex(String uiGrpIndex) {
+        this.uiGrpIndex = uiGrpIndex;
+    }
+
+    public String getUiGrpIndex() {
+        return uiGrpIndex;
+    }
+
+    public void setDigitsEntered(String digitsEntered) {
+        this.digitsEntered = digitsEntered;
+    }
+
+    public String getDigitsEntered() {
+        return digitsEntered;
     }
 }

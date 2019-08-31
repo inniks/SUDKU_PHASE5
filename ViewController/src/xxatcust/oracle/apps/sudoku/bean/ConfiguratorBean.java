@@ -348,11 +348,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public V93kQuote callServlet(V93kQuote v93k) throws IOException,
                                                         JsonGenerationException,
                                                         JsonMappingException {
-        String jsenId = null;
-        if (jsessionId != null) {
-            jsenId = (String)jsessionId.getValue();
-        }
-        ADFUtils.setSessionScopeValue("jsenid", jsenId);
+        //        String jsenId = null;
+        //        if (jsessionId != null) {
+        //            jsenId = (String)jsessionId.getValue();
+        //        }
+        //        ADFUtils.setSessionScopeValue("jsenid", jsenId);
 
         String jsonStr = JSONUtils.convertObjToJson(v93k);
         System.out.println("Json String build is" + jsonStr);
@@ -365,6 +365,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         ObjectMapper mapper = new ObjectMapper();
         Object obj = mapper.readValue(responseJson, V93kQuote.class);
         v93k = (V93kQuote)obj;
+        if (v93k.getInputParams() != null) {
+            Map ruleSetMap = new HashMap();
+            ruleSetMap.put("topLevelCode",
+                           v93k.getInputParams().getRuleSetTopLevelChoice());
+            ruleSetMap.put("secondLevelCode",
+                           v93k.getInputParams().getRuleSetSecondLevelChoice());
+            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+        }
         //else use this
         //v93k = (V93kQuote)convertJsonToObject(null);
         ADFUtils.setSessionScopeValue("parentObject", v93k);
@@ -423,10 +431,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     DiagCalEquipmentBean.populateCalDiagSubGroups(v93k,
                                                                   calDiagSdiCollection);
         }
-        
-        if(digitalTreeModel==null){
-            digitalTreeModel = DigitalResourcesBean.populateDigitalResParentTreeModel(digitalTreeModel, rootDigital);
-            digitalSdiCollection = DigitalResourcesBean.populateDigitalResourcesSubGroups(v93k, digitalSdiCollection);
+
+        if (digitalTreeModel == null) {
+            digitalTreeModel =
+                    DigitalResourcesBean.populateDigitalResParentTreeModel(digitalTreeModel,
+                                                                           rootDigital);
+            digitalSdiCollection =
+                    DigitalResourcesBean.populateDigitalResourcesSubGroups(v93k,
+                                                                           digitalSdiCollection);
         }
 
         //ADFUtils.setSessionScopeValue("rebuildUI", null);

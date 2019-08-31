@@ -67,7 +67,7 @@ public class SystemInfraBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"System Infrastructure");
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"System Infrastructure",null);
 
                         uiFieldCollection.add(uiField);
                     }

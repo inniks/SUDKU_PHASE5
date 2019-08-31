@@ -66,7 +66,7 @@ public class DiagCalEquipmentBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Diagnostics and Calibration Equipment");
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Diagnostics and Calibration Equipment",null);
 
                         uiFieldCollection.add(uiField);
                     }

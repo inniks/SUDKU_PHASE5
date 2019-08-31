@@ -196,7 +196,6 @@ public class RuleSetVORowImpl extends ViewRowImpl {
      */
     public String getSecondLevelMeaning() {
         String secondLevelMeaning = null;
-        System.out.println("second Level Meaninggg::");
         if (getAttributeInternal(TOPLEVELCODE) != null) {
             String secondLevelCode =
                 (String)getAttributeInternal(SECONDLEVELCODE);
@@ -215,8 +214,6 @@ public class RuleSetVORowImpl extends ViewRowImpl {
                         if (rows != null && rows.length > 0) {
                             secondLevelMeaning =
                                     (String)rows[0].getAttribute("Meaning");
-                            System.out.println("VO Row Impl E8000SYS : SecondLevel " +
-                                               secondLevelMeaning);
                         }
                     }
                     if (topLevelCode != null &&
@@ -227,8 +224,6 @@ public class RuleSetVORowImpl extends ViewRowImpl {
                         if (rows != null && rows.length > 0) {
                             secondLevelMeaning =
                                     (String)rows[0].getAttribute("Meaning");
-                            System.out.println("VO Row Impl E8008SYS : SecondLevel " +
-                                               secondLevelMeaning);
                         }
                     } 
                 } 

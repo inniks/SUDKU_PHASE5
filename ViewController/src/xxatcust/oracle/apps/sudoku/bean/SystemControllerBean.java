@@ -66,7 +66,7 @@ public class SystemControllerBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"System Controller");
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"System Controller",null);
 
                         uiFieldCollection.add(uiField);
                     }

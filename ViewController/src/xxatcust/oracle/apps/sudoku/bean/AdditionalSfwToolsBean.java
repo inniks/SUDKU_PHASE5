@@ -65,7 +65,7 @@ public class AdditionalSfwToolsBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Additional Software Tools");
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Additional Software Tools",null);
 
                         uiFieldCollection.add(uiField);
                     }
