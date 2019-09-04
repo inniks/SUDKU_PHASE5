@@ -70,7 +70,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
        
-           validateEBSSession(pagePhaseEvent);
+          //validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {

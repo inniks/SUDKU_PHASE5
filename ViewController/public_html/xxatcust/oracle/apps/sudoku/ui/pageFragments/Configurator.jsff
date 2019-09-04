@@ -78,7 +78,9 @@
                        dialogListener="#{ConfiguratorBean.resetConfigurationAndCallServlet}"/>
           </af:popup>
           <af:listView id="sysLv" value="#{ConfiguratorBean.sysInfraTreeModel}"
-                       var="node" binding="#{ConfiguratorBean.sysInfraListView}">
+                       var="node" binding="#{ConfiguratorBean.sysInfraListView}"
+                       groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
+                       emptyText=" ">
             <f:facet name="groupHeaderStamp">
               <af:listItem id="li1" styleClass="ABHeader" rendered="true">
                 <af:panelGroupLayout id="pgl3" layout="horizontal">
@@ -404,8 +406,9 @@
               </af:panelGridLayout>
             </af:listItem>
           </af:listView>
-          <af:listView id="lv1" binding="#{ConfiguratorBean.warrantyListView}"
-                       value="#{ConfiguratorBean.warrantyTreeModel}" var="node">
+          <af:listView id="wtylv1" binding="#{ConfiguratorBean.warrantyListView}"
+                       value="#{ConfiguratorBean.warrantyTreeModel}" var="node"
+                       groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}">
             <f:facet name="groupHeaderStamp">
               <af:listItem id="li3" styleClass="ABHeader">
                 <af:panelGroupLayout id="Wty_pgl3" layout="horizontal">
@@ -712,10 +715,11 @@
               </af:panelGridLayout>
             </af:listItem>
           </af:listView>
-          <af:listView id="lv2"
+          <af:listView id="syscntlv2"
                        binding="#{ConfiguratorBean.sysControllerListViewBinding}"
                        value="#{sessionScope.ConfiguratorBean.sysControllerTreeModel}"
-                       var="node">
+                       var="node"
+                       groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}">
             <f:facet name="groupHeaderStamp">
               <af:listItem id="li5">
                 <af:panelGroupLayout id="syscon_pgl3" layout="horizontal">
@@ -1036,7 +1040,8 @@
           </af:listView>
           <af:listView id="addSwToolLv" var="node"
                        groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
-                       value="#{ConfiguratorBean.addToolsTreeModel}">
+                       value="#{ConfiguratorBean.addToolsTreeModel}"
+                       binding="#{ConfiguratorBean.addSwListBinding}">
             <f:facet name="groupHeaderStamp">
               <af:listItem id="addSwTool_li1" styleClass="ABHeader"
                            rendered="true">
@@ -1360,7 +1365,8 @@
           </af:listView>
           <af:listView id="diagCalLv" var="node"
                        groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
-                       value="#{ConfiguratorBean.calDiagTreeModel}">
+                       value="#{ConfiguratorBean.calDiagTreeModel}"
+                       binding="#{ConfiguratorBean.dianosticListBinding}">
             <f:facet name="groupHeaderStamp">
               <af:listItem id="diagCal_li1" styleClass="ABHeader"
                            rendered="true">
@@ -1680,9 +1686,11 @@
               </af:panelGridLayout>
             </af:listItem>
           </af:listView>
-          <af:listView id="lv3"
+          <af:listView id="digilv3"
                        value="#{sessionScope.ConfiguratorBean.digitalTreeModel}"
-                       var="node" rendered="true">
+                       var="node" rendered="true"
+                       binding="#{ConfiguratorBean.digitalListBinding}"
+                       groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}">
             <f:facet name="groupHeaderStamp">
             <af:listItem id="digi_li1" styleClass="ABHeader"
                            rendered="true">
@@ -1763,10 +1771,7 @@
                                 <af:panelBorderLayout id="drs19_2"
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:group id="g1">
-                                      <af:outputFormatted id="of12"
-                                                          value="#{theadIter.uiField1}"/>
-                                    </af:group>
+                                    <af:group id="g1"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:spacer width="2" height="10" id="drs13_11"/>
@@ -1957,22 +1962,19 @@
                                 <af:panelBorderLayout id="drs47_11"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
                                   <f:facet name="innerLeft">
-                                    <af:inputText id="it6"
-                                                  contentStyle="width:25px;"/>
+                                    <af:inputText id="it6"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs52_11"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
                                   <f:facet name="innerLeft">
-                                    <af:inputText id="it7"
-                                                  contentStyle="width:25px;"/>
+                                    <af:inputText id="it7"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs57_11"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
                                   <f:facet name="innerLeft">
-                                    <af:inputText id="it8" columns="5"
-                                                  contentStyle="width:25px;"/>
+                                    <af:inputText id="it8" columns="5"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs62_11"

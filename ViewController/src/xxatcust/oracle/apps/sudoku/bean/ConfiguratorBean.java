@@ -43,6 +43,7 @@ import oracle.adf.view.rich.component.rich.layout.RichShowDetailHeader;
 import oracle.adf.view.rich.component.rich.layout.RichShowDetailItem;
 import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.component.rich.output.RichOutputText;
+import oracle.adf.view.rich.context.AdfFacesContext;
 import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.event.LaunchPopupEvent;
 import oracle.adf.view.rich.render.ClientEvent;
@@ -51,9 +52,18 @@ import oracle.binding.OperationBinding;
 
 import oracle.jbo.Row;
 
+import oracle.jbo.uicli.binding.JUCtrlHierBinding;
+
+import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
+
 import org.apache.myfaces.trinidad.event.DisclosureEvent;
 import org.apache.myfaces.trinidad.event.RowDisclosureEvent;
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
+
+import org.apache.myfaces.trinidad.model.CollectionModel;
+import org.apache.myfaces.trinidad.model.RowKeySet;
+
+import org.apache.myfaces.trinidad.model.RowKeySetImpl;
 
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
@@ -106,6 +116,9 @@ public class ConfiguratorBean {
     private RichListView sysControllerListViewBinding;
     private ChildPropertyTreeModel sysControllerTreeModel;
     private RichPopup resetConfigurationPopup;
+    private RichListView digitalListBinding;
+    private RichListView dianosticListBinding;
+    private RichListView addSwListBinding;
 
     public ConfiguratorBean() {
         super();
@@ -628,9 +641,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public void groupDisclosureListener(RowDisclosureEvent rowDisclosureEvent) {
-        //        RichListView listView = (RichListView)rowDisclosureEvent.getSource();
-        //        groupDiscPolicy=null;
-        //        ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
+        handleDisclosure(rowDisclosureEvent.getComponent().getId());
     }
 
     public void setSysControllerListViewBinding(RichListView sysControllerListViewBinding) {
@@ -983,5 +994,120 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public ChildPropertyTreeModel getDigitalTreeModel() {
         return digitalTreeModel;
+    }
+
+    public void handleDisclosure(String listViewId) {
+        if(listViewId!=null){
+            if(listViewId.equals("sysLv")){ //Except system infra , collapse all others
+                //sysInfraListView.getGroupDisclosedRowKeys().clear();
+                warrantyListView.getGroupDisclosedRowKeys().clear();
+                sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
+                addSwListBinding.getGroupDisclosedRowKeys().clear();
+                dianosticListBinding.getGroupDisclosedRowKeys().clear();
+                digitalListBinding.getGroupDisclosedRowKeys().clear();
+                //AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+            }
+            if(listViewId.equals("wtylv1")){
+                sysInfraListView.getGroupDisclosedRowKeys().clear();
+                //warrantyListView.getGroupDisclosedRowKeys().clear();
+                sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
+                addSwListBinding.getGroupDisclosedRowKeys().clear();
+                dianosticListBinding.getGroupDisclosedRowKeys().clear();
+                digitalListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
+                //AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+            }
+            if(listViewId.equals("syscntlv2")){
+                sysInfraListView.getGroupDisclosedRowKeys().clear();
+                warrantyListView.getGroupDisclosedRowKeys().clear();
+                //sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
+                addSwListBinding.getGroupDisclosedRowKeys().clear();
+                dianosticListBinding.getGroupDisclosedRowKeys().clear();
+                digitalListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
+                //AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+            }
+            if(listViewId.equals("addSwToolLv")){
+                sysInfraListView.getGroupDisclosedRowKeys().clear();
+                warrantyListView.getGroupDisclosedRowKeys().clear();
+                sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
+                //addSwListBinding.getGroupDisclosedRowKeys().clear();
+                dianosticListBinding.getGroupDisclosedRowKeys().clear();
+                digitalListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
+                //AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+            }
+            if(listViewId.equals("diagCalLv")){
+                sysInfraListView.getGroupDisclosedRowKeys().clear();
+                warrantyListView.getGroupDisclosedRowKeys().clear();
+                sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
+                addSwListBinding.getGroupDisclosedRowKeys().clear();
+                //dianosticListBinding.getGroupDisclosedRowKeys().clear();
+                digitalListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
+                //AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+            }
+            if(listViewId.equals("digilv3")){
+                sysInfraListView.getGroupDisclosedRowKeys().clear();
+                warrantyListView.getGroupDisclosedRowKeys().clear();
+                sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
+                addSwListBinding.getGroupDisclosedRowKeys().clear();
+                dianosticListBinding.getGroupDisclosedRowKeys().clear();
+                //digitalListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
+                //AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+            }
+        }
+        
+      
+    }
+
+    public void setDigitalListBinding(RichListView digitalListBinding) {
+        this.digitalListBinding = digitalListBinding;
+    }
+
+    public RichListView getDigitalListBinding() {
+        return digitalListBinding;
+    }
+
+    public void setDianosticListBinding(RichListView dianosticListBinding) {
+        this.dianosticListBinding = dianosticListBinding;
+    }
+
+    public RichListView getDianosticListBinding() {
+        return dianosticListBinding;
+    }
+
+    public void setAddSwListBinding(RichListView addSwListBinding) {
+        this.addSwListBinding = addSwListBinding;
+    }
+
+    public RichListView getAddSwListBinding() {
+        return addSwListBinding;
     }
 }
