@@ -61,6 +61,16 @@ public class UiField {
     private String czNodeName8;
     private String czNodeName9;
     private String czNodeName10;
+    private String uiField1_qty;
+    private String uiField2_qty;
+    private String uiField3_qty;
+    private String uiField4_qty;
+    private String uiField5_qty;
+    private String uiField6_qty;
+    private String uiField7_qty;
+    private String uiField8_qty;
+    private String uiField9_qty;
+    private String uiField10_qty;
     private Boolean uiField1_dis;
     private Boolean uiField2_dis;
     private Boolean uiField3_dis;
@@ -182,6 +192,10 @@ public class UiField {
                         !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                         node = listOfNodes.get(i).getConfigUiNodes().get(0);
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
+                        int qty = node.getQuantity();
+                        if(qty!=-1){
+                            uiField1_qty = Integer.toString(qty);
+                        }
                         int uiElementType = uiElement.getUiElementType();
                         switch (uiElementType) {
                         case 1:
@@ -246,6 +260,10 @@ public class UiField {
                         uiField2_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        int qty = node.getQuantity();
+                        if(qty!=-1){
+                            uiField2_qty = Integer.toString(qty);
+                        }
                         switch (uiElementType) {
                         case 1:
                             uiField2_type = "NUMERIC";
@@ -289,6 +307,10 @@ public class UiField {
                         uiField3_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        int qty = node.getQuantity();
+                        if(qty!=-1){
+                            uiField3_qty = Integer.toString(qty);
+                        }
                         switch (uiElementType) {
                         case 1:
                             uiField3_type = "NUMERIC";
@@ -331,6 +353,10 @@ public class UiField {
                         uiField4_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        int qty = node.getQuantity();
+                        if(qty!=-1){
+                            uiField4_qty = Integer.toString(qty);
+                        }
                         switch (uiElementType) {
                         case 1:
                             uiField4_type = "NUMERIC";
@@ -373,6 +399,10 @@ public class UiField {
                         uiField5_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        int qty = node.getQuantity();
+                        if(qty!=-1){
+                            uiField5_qty = Integer.toString(qty);
+                        }
                         switch (uiElementType) {
                         case 1:
                             uiField5_type = "NUMERIC";
@@ -415,6 +445,10 @@ public class UiField {
                         uiField6_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        int qty = node.getQuantity();
+                        if(qty!=-1){
+                            uiField6_qty = Integer.toString(qty);
+                        }
                         switch (uiElementType) {
                         case 1:
                             uiField6_type = "NUMERIC";
@@ -458,6 +492,10 @@ public class UiField {
                         uiField7_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        int qty = node.getQuantity();
+                        if(qty!=-1){
+                            uiField7_qty = Integer.toString(qty);
+                        }
                         switch (uiElementType) {
                         case 1:
                             uiField7_type = "NUMERIC";
@@ -501,6 +539,10 @@ public class UiField {
                         uiField8_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        int qty = node.getQuantity();
+                        if(qty!=-1){
+                            uiField8_qty = Integer.toString(qty);
+                        }
                         System.out.println("Element Type for 8th field " +
                                            uiElementType);
                         switch (uiElementType) {
@@ -549,6 +591,10 @@ public class UiField {
                         uiField9_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        int qty = node.getQuantity();
+                        if(qty!=-1){
+                            uiField9_qty = Integer.toString(qty);
+                        }
                         switch (uiElementType) {
                         case 1:
                             uiField9_type = "NUMERIC";
@@ -593,6 +639,10 @@ public class UiField {
                         uiField10_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        int qty = node.getQuantity();
+                        if(qty!=-1){
+                            uiField10_qty = Integer.toString(qty);
+                        }
                         switch (uiElementType) {
                         case 1:
                             uiField10_type = "NUMERIC";
@@ -1410,5 +1460,85 @@ public class UiField {
 
     public String getDigitsEntered() {
         return digitsEntered;
+    }
+
+    public void setUiField1_qty(String uiField1_qty) {
+        this.uiField1_qty = uiField1_qty;
+    }
+
+    public String getUiField1_qty() {
+        return uiField1_qty;
+    }
+
+    public void setUiField2_qty(String uiField2_qty) {
+        this.uiField2_qty = uiField2_qty;
+    }
+
+    public String getUiField2_qty() {
+        return uiField2_qty;
+    }
+
+    public void setUiField3_qty(String uiField3_qty) {
+        this.uiField3_qty = uiField3_qty;
+    }
+
+    public String getUiField3_qty() {
+        return uiField3_qty;
+    }
+
+    public void setUiField4_qty(String uiField4_qty) {
+        this.uiField4_qty = uiField4_qty;
+    }
+
+    public String getUiField4_qty() {
+        return uiField4_qty;
+    }
+
+    public void setUiField5_qty(String uiField5_qty) {
+        this.uiField5_qty = uiField5_qty;
+    }
+
+    public String getUiField5_qty() {
+        return uiField5_qty;
+    }
+
+    public void setUiField6_qty(String uiField6_qty) {
+        this.uiField6_qty = uiField6_qty;
+    }
+
+    public String getUiField6_qty() {
+        return uiField6_qty;
+    }
+
+    public void setUiField7_qty(String uiField7_qty) {
+        this.uiField7_qty = uiField7_qty;
+    }
+
+    public String getUiField7_qty() {
+        return uiField7_qty;
+    }
+
+    public void setUiField8_qty(String uiField8_qty) {
+        this.uiField8_qty = uiField8_qty;
+    }
+
+    public String getUiField8_qty() {
+        return uiField8_qty;
+    }
+
+    public void setUiField9_qty(String uiField9_qty) {
+        this.uiField9_qty = uiField9_qty;
+    }
+
+    public String getUiField9_qty() {
+        return uiField9_qty;
+    }
+
+    public void setUiField10_qty(String uiField10_qty) {
+        this.uiField10_qty = uiField10_qty;
+    }
+
+    public String getUiField10_qty() {
+        return uiField10_qty;
     }
 }

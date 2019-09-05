@@ -67,7 +67,7 @@ public class DigitalResourcesBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Additional Software Tools",Integer.toString(index));
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Digital Resources",Integer.toString(index));
                         index++;
                         uiFieldCollection.add(uiField);
                     }
