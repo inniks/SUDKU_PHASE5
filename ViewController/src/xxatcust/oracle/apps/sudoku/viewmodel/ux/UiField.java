@@ -215,6 +215,7 @@ public class UiField {
                         selectedValue = subGrpName;
                         requiredFlagSubGrp = requireFlagSubGrp;
                         czNodeName1 = node.getCzNodeName();
+                        uiField1_code = czNodeName1;
                         this.parentGroupName = parentGroupName;
                         if (node.isDisplayReferenceColor())
                             uiField1_color = SudokuUtils.REFERENCE_COLOR;
@@ -251,6 +252,7 @@ public class UiField {
                         uiField2 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         czNodeName2 = node.getCzNodeName();
+                        uiField2_code = czNodeName2;
                         if (node.isDisplayReferenceColor())
                             uiField2_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -298,6 +300,7 @@ public class UiField {
                         uiField3 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         czNodeName3 = node.getCzNodeName();
+                        uiField3_code = czNodeName3;
                         if (node.isDisplayReferenceColor())
                             uiField3_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -344,6 +347,7 @@ public class UiField {
                         uiField4 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         czNodeName4 = node.getCzNodeName();
+                        uiField4_code = czNodeName4;
                         if (node.isDisplayReferenceColor())
                             uiField4_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -390,6 +394,7 @@ public class UiField {
                         uiField5 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         czNodeName5 = node.getCzNodeName();
+                        uiField5_code = czNodeName5;
                         if (node.isDisplayReferenceColor())
                             uiField5_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -436,6 +441,7 @@ public class UiField {
                         uiField6 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         czNodeName6 = node.getCzNodeName();
+                        uiField6_code = czNodeName6;
                         if (node.isDisplayReferenceColor())
                             uiField6_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -483,6 +489,7 @@ public class UiField {
                         uiField7 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         czNodeName7 = node.getCzNodeName();
+                        uiField7_code = czNodeName7;
                         if (node.isDisplayReferenceColor())
                             uiField7_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -530,6 +537,7 @@ public class UiField {
                         uiField8 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         czNodeName8 = node.getCzNodeName();
+                        uiField8_code = czNodeName8;
                         if (node.isDisplayReferenceColor())
                             uiField8_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -582,6 +590,7 @@ public class UiField {
                         System.out.println("UiField9 Value " + uiField9);
                         selectedValue = subGrpName;
                         czNodeName9 = node.getCzNodeName();
+                        uiField9_code = czNodeName9;
                         if (node.isDisplayReferenceColor())
                             uiField9_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -630,6 +639,7 @@ public class UiField {
                         System.out.println("Field 10 value " + uiField10);
                         selectedValue = subGrpName;
                         czNodeName10 = node.getCzNodeName();
+                        uiField10_code = czNodeName10;
                         if (node.isDisplayReferenceColor())
                             uiField10_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())

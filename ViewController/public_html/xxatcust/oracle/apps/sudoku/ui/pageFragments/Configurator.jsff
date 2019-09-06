@@ -5,7 +5,8 @@
           xmlns:h="http://java.sun.com/jsf/html">
   <af:panelHeader text=" " id="ph2">
     <f:facet name="context">
-      <af:outputFormatted value="V93000 Configuration and Budgetary Quoting Tool" id="of5"
+      <af:outputFormatted value="V93000 Configuration and Budgetary Quoting Tool"
+                          id="of5"
                           inlineStyle="color:Teal; font-size:x-large;"/>
     </f:facet>
     <f:facet name="toolbar">
@@ -145,8 +146,7 @@
                               </f:facet>
                             </af:panelBorderLayout>
                           </af:panelGroupLayout>
-                          <af:showDetailHeader id="sd1"
-                                               text="#{node.nodeName}"
+                          <af:showDetailHeader id="sd1" text="#{node.nodeName}"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:iterator id="i2"
                                          value="#{topNode.uiFieldCollection}"
@@ -406,7 +406,8 @@
               </af:panelGridLayout>
             </af:listItem>
           </af:listView>
-          <af:listView id="wtylv1" binding="#{ConfiguratorBean.warrantyListView}"
+          <af:listView id="wtylv1"
+                       binding="#{ConfiguratorBean.warrantyListView}"
                        value="#{ConfiguratorBean.warrantyTreeModel}" var="node"
                        groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}">
             <f:facet name="groupHeaderStamp">
@@ -1455,7 +1456,7 @@
                                                     rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
                                                     autoSubmit="true"
                                                     valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                   value="#{theadIter.digitsEntered}">
+                                                    value="#{theadIter.digitsEntered}">
                                         <af:validateRegExp pattern="[0-9]{1,10}"
                                                            messageDetailNoMatch="Only Numbers allowed.."/>
                                       </af:inputText>
@@ -1692,8 +1693,7 @@
                        binding="#{ConfiguratorBean.digitalListBinding}"
                        groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}">
             <f:facet name="groupHeaderStamp">
-            <af:listItem id="digi_li1" styleClass="ABHeader"
-                           rendered="true">
+              <af:listItem id="digi_li1" styleClass="ABHeader" rendered="true">
                 <af:panelGroupLayout id="digipgl3" layout="horizontal">
                   <af:panelBorderLayout id="digipbl1"
                                         inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
@@ -1767,39 +1767,37 @@
                               <af:panelGroupLayout id="drs12_11"
                                                    layout="horizontal"
                                                    rendered="#{theadIter.uiGrpIndex eq '1'}">
-                                <af:spacer width="10" height="10" id="drs1_13_11"/>
+                                <af:spacer width="10" height="10"
+                                           id="drs1_13_11"/>
                                 <af:panelBorderLayout id="drs19_21"
-                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                                      inlineStyle="height:25px; width:40px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:group id="g3">
                                       <af:panelGroupLayout id="drs3412"
-                                                         layout="horizontal"
-                                                         halign="left">
-                                      <af:inputText id="drs3712" visible="true"
-                                                    autoSubmit="true"
-                                                    value="#{theadIter.uiField1}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                    columns="5"
-                                                    disabled="true" rows="2"/>
-                                    </af:panelGroupLayout>
+                                                           layout="horizontal"
+                                                           halign="left">
+                                        <af:outputFormatted id="drs3712"
+                                                            visible="true"
+                                                            value="#{theadIter.uiField1}"/>
+                                      </af:panelGroupLayout>
                                     </af:group>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="20" height="10" id="s13"/>
                                 <af:panelBorderLayout id="drs19_121"
-                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                                      inlineStyle="height:25px; width:40px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                   <af:panelGroupLayout id="drs3422"
+                                    <af:panelGroupLayout id="drs3422"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:inputText id="drs3722" visible="true"
-                                                    value="#{theadIter.uiField2}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                    columns="5"
-                                                    disabled="true" rows="2"/>
+                                      <af:outputFormatted id="drs3722"
+                                                          visible="true"
+                                                          value="#{theadIter.uiField2}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="drs18_11"/>
+                                <af:spacer width="10" height="10"
+                                           id="drs18_11"/>
                                 <af:panelBorderLayout id="drs19_11"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">
                                   <f:facet name="innerLeft"/>
@@ -1808,12 +1806,14 @@
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="dgrs3_11"/>
+                                <af:spacer width="10" height="10"
+                                           id="dgrs3_11"/>
                                 <af:panelBorderLayout id="drs25_11"
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
-                                <af:spacer width="20" height="10" id="drs28_11"/>
+                                <af:spacer width="20" height="10"
+                                           id="drs28_11"/>
                                 <af:panelBorderLayout id="drs29_11"
                                                       inlineStyle="height:25px; width:10px; border-style:none;">
                                   <f:facet name="innerLeft"/>
@@ -1835,7 +1835,7 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs43_11"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs44_11"
                                                          layout="horizontal"
@@ -1843,16 +1843,14 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs47_11"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                                      inlineStyle="height:25px; width:130px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs342h"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:inputText id="drs372h" visible="true"
-                                                    value="#{theadIter.uiField5}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                    disabled="true" rows="3"
-                                                    columns="5"/>
+                                      <af:outputFormatted id="drs372h"
+                                                          visible="true"
+                                                          value="#{theadIter.uiField5}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1862,12 +1860,9 @@
                                     <af:panelGroupLayout id="drs342i"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:inputText id="drs372i" visible="true"
-                                                    value="#{theadIter.uiField6}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                    inlineStyle="width:30px;"
-                                                    columns="5"
-                                                    disabled="true" rows="3"/>
+                                      <af:outputFormatted id="drs372i"
+                                                          visible="true"
+                                                          value="#{theadIter.uiField6}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1877,12 +1872,9 @@
                                     <af:panelGroupLayout id="drs342j"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:inputText id="drs372j" visible="true"
-                                                    autoSubmit="false"
-                                                    value="#{theadIter.uiField7}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                    disabled="false"
-                                                    columns="5" rows="3"/>
+                                      <af:outputFormatted id="drs372j"
+                                                          visible="true"
+                                                          value="#{theadIter.uiField7}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1898,32 +1890,34 @@
                               <af:panelGroupLayout id="drs12_11r"
                                                    layout="horizontal"
                                                    rendered="#{theadIter.uiGrpIndex eq '1'}">
-                                <af:spacer width="10" height="10" id="drs1_13_11r"/>
+                                <af:spacer width="10" height="10"
+                                           id="drs1_13_11r"/>
                                 <af:panelBorderLayout id="drs19_21r"
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:group id="g3r">
                                       <af:panelGroupLayout id="drs3412r"
-                                                         layout="horizontal"
-                                                         halign="left">
-                                      <af:inputText id="drs3712r" visible="true"
-                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
-                                                    columns="5"
-                                                    autoSubmit="true"
-                                                    value="#{theadIter.uiField1_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
-                                      <af:outputFormatted id="drs3612"
-                                                          value="#{theadIter.uiField1_code}"
-                                                          visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
-                                    </af:panelGroupLayout>
+                                                           layout="horizontal"
+                                                           halign="left">
+                                        <af:inputText id="drs3712r"
+                                                      visible="true"
+                                                      disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                      columns="5"
+                                                      autoSubmit="true"
+                                                      value="#{theadIter.uiField1_qty}"
+                                                      valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                        <af:outputFormatted id="drs3612"
+                                                            value="#{theadIter.czNodeName1}"
+                                                            visible="false"
+                                                            shortDesc="#{theadIter.parentGroupName}"/>
+                                      </af:panelGroupLayout>
                                     </af:group>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs19_121r"
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                   <af:panelGroupLayout id="drs3422r"
+                                    <af:panelGroupLayout id="drs3422r"
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:inputText id="drs3722r" visible="true"
@@ -1933,13 +1927,14 @@
                                                     value="#{theadIter.uiField2_qty}"
                                                     valueChangeListener="#{ConfiguratorBean.handleInput}"/>
                                       <af:outputFormatted id="drs3622"
-                                                          value="#{theadIter.uiField2_code}"
+                                                          value="#{theadIter.czNodeName2}"
                                                           visible="false"
                                                           shortDesc="#{theadIter.parentGroupName}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="drs18_11r"/>
+                                <af:spacer width="10" height="10"
+                                           id="drs18_11r"/>
                                 <af:panelBorderLayout id="drs19_11r"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">
                                   <f:facet name="innerLeft">
@@ -1957,28 +1952,47 @@
                                     <af:panelGroupLayout id="drs23_11"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="dgrs3_11r"/>
+                                <af:spacer width="10" height="10"
+                                           id="dgrs3_11r"/>
                                 <af:panelBorderLayout id="drs25_11r"
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="drs26_11r"/>
+                                    <af:panelGroupLayout id="drs26_11r">
+                                      <af:outputFormatted value="*"
+                                                          id="drs_of9r"
+                                                          inlineStyle="font-size:x-large; color:Red;"
+                                                          rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                    </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="20" height="10" id="drs28_11r"/>
+                                <af:spacer width="20" height="10"
+                                           id="drs28_11r"/>
                                 <af:panelBorderLayout id="drs29_11r"
                                                       inlineStyle="height:25px; width:10px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="drs_pgl19r">
+                                      <af:outputFormatted value="#{theadIter.uiField9}"
+                                                          id="drs_of13r"
+                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs31_11r"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="drs_pgl21r">
+                                      <af:outputFormatted value="#{theadIter.uiField10}"
+                                                          id="drs_of14r"
+                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs32_11r"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs33_11r"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField3_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl20_f"
                                                          layout="horizontal"
@@ -2000,7 +2014,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs38_11r"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField4_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl20_g"
                                                          layout="horizontal"
@@ -2022,7 +2036,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs43_11r"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs44_11r"
                                                          layout="horizontal"
@@ -2030,38 +2044,19 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs47_11r"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                                      inlineStyle="height:25px; width:130px; border-style:none};"
+                                                      rendered="#{topNode.index eq '1'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs342hr"
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:inputText id="drs372hr" visible="true"
-                                                    disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}"
-                                                    columns="5"
-                                                    autoSubmit="true"
-                                                    value="#{theadIter.uiField4_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
-                                      <af:outputFormatted id="drs362h"
-                                                          value="#{theadIter.uiField4_code}"
-                                                          inlineStyle="#{theadIter.uiField4_bgColor}"
-                                                          visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
-                                    </af:panelGroupLayout>
-                                  </f:facet>
-                                </af:panelBorderLayout>
-                                <af:panelBorderLayout id="drs52_11r"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
-                                  <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="drs342ir"
-                                                         layout="horizontal"
-                                                         halign="left">
-                                      <af:inputText id="drs372ir" visible="true"
                                                     disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}"
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField5_qty}"
                                                     valueChangeListener="#{ConfiguratorBean.handleInput}"/>
-                                      <af:outputFormatted id="drs362i"
+                                      <af:outputFormatted id="drs362h"
                                                           value="#{theadIter.uiField5_code}"
                                                           inlineStyle="#{theadIter.uiField5_bgColor}"
                                                           visible="false"
@@ -2069,21 +2064,43 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="drs57_1r1"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                <af:panelBorderLayout id="drs52_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none};"
+                                                      rendered="#{topNode.index eq '1'}">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="drs342jr"
+                                    <af:panelGroupLayout id="drs342ir"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:inputText id="drs372jr" visible="true"
+                                      <af:inputText id="drs372ir" visible="true"
                                                     disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}"
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField6_qty}"
                                                     valueChangeListener="#{ConfiguratorBean.handleInput}"/>
-                                      <af:outputFormatted id="drs362j"
+                                      <af:outputFormatted id="drs362i"
                                                           value="#{theadIter.uiField6_code}"
                                                           inlineStyle="#{theadIter.uiField6_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="drs57_1r1"
+                                                      inlineStyle="height:25px; width:90px; border-style:none};"
+                                                      rendered="#{topNode.index eq '1'}">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="drs342jr"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="drs372jr" visible="true"
+                                                    disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField7_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="drs362j"
+                                                          value="#{theadIter.uiField7_code}"
+                                                          inlineStyle="#{theadIter.uiField7_bgColor}"
                                                           visible="false"
                                                           shortDesc="#{theadIter.parentGroupName}"/>
                                     </af:panelGroupLayout>
@@ -2101,11 +2118,12 @@
                               <af:panelGroupLayout id="drs12_21"
                                                    layout="horizontal"
                                                    rendered="#{theadIter.uiGrpIndex eq '2'}">
-                                <af:spacer width="10" height="10" id="drs2_13_11"/>
+                                <af:spacer width="10" height="10"
+                                           id="drs2_13_11"/>
                                 <af:panelBorderLayout id="drs29_21"
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                   <af:panelGroupLayout id="drs346k"
+                                    <af:panelGroupLayout id="drs346k"
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:inputText id="drs376k" visible="true"
@@ -2124,7 +2142,7 @@
                                 <af:panelBorderLayout id="drs19_221"
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                     <af:panelGroupLayout id="drs346l"
+                                    <af:panelGroupLayout id="drs346l"
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:inputText id="drs376l" visible="true"
@@ -2140,7 +2158,8 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="drs28_21"/>
+                                <af:spacer width="10" height="10"
+                                           id="drs28_21"/>
                                 <af:panelBorderLayout id="drs29_x21"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">
                                   <f:facet name="innerLeft">
@@ -2158,25 +2177,46 @@
                                     <af:panelGroupLayout id="drs23_21"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="dgrs3_21"/>
+                                <af:spacer width="10" height="10"
+                                           id="dgrs3_21"/>
                                 <af:panelBorderLayout id="drs25_21"
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs26_21"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="20" height="10" id="drs28_d1"/>
+                                <af:spacer width="20" height="10"
+                                           id="drs28_d1"/>
                                 <af:panelBorderLayout id="drs29_31"
                                                       inlineStyle="height:25px; width:10px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="pgl6">
+                                      <af:outputFormatted value="*"
+                                                          id="drs_of9x"
+                                                          inlineStyle="font-size:x-large; color:Red;"
+                                                          rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs31_21"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="pgl22">
+                                      <af:outputFormatted value="#{theadIter.uiField9}"
+                                                          id="drs_of13x"
+                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs32_21"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="pgl23">
+                                      <af:outputFormatted value="#{theadIter.uiField10}"
+                                                          id="drs_of14x"
+                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs33_21"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
@@ -2224,17 +2264,17 @@
                                                    rendered="#{theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2' and theadIter.uiGrpIndex eq '3'}">
                                 <af:spacer width="10" height="10" id="drs13m"/>
                                 <af:panelBorderLayout id="drs14m"
-                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:100px; border-style:groove;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs1001m"
                                                          layout="horizontal">
                                       <af:outputFormatted id="drs1003m"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="Licenced Features : #{theadIter.uiGrpIndex}  :: #{topNode.index}"/>
+                                                          value="Licenced Features"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="drs18m"/>
+                                <af:spacer width="20" height="10" id="drs18m"/>
                                 <af:panelBorderLayout id="drs19m"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">
                                   <f:facet name="innerLeft"/>
@@ -2275,12 +2315,11 @@
                                 <af:panelBorderLayout id="drs38m"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
                                   <f:facet name="innerLeft">
-                                     <af:panelGroupLayout id="drs341m"
+                                    <af:panelGroupLayout id="drs341m"
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="drs361m"
-                                                          value="#{theadIter.uiField2}}"
-                                                          />
+                                                          value="#{theadIter.uiField2}}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2290,23 +2329,19 @@
                                     <af:panelGroupLayout id="drs342m"
                                                          layout="horizontal"
                                                          halign="left">
-                                     
                                       <af:outputFormatted id="drs362m"
-                                                          value="#{theadIter.uiField3}"
-                                                        />
+                                                          value="#{theadIter.uiField3}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs47m"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
                                   <af:panelGroupLayout id="drs343"
-                                                         layout="horizontal"
-                                                         halign="left">
-                                     
-                                      <af:outputFormatted id="drs363m"
-                                                          value="#{theadIter.uiField4}"
-                                                         />
-                                    </af:panelGroupLayout>
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:outputFormatted id="drs363m"
+                                                        value="#{theadIter.uiField4}"/>
+                                  </af:panelGroupLayout>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs52m"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
@@ -2314,10 +2349,8 @@
                                     <af:panelGroupLayout id="drs345m"
                                                          layout="horizontal"
                                                          halign="left">
-                                     
                                       <af:outputFormatted id="drs365m"
-                                                          value="#{theadIter.uiField5}"
-                                                         />
+                                                          value="#{theadIter.uiField5}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2327,32 +2360,8 @@
                                     <af:panelGroupLayout id="drs346m"
                                                          layout="horizontal"
                                                          halign="left">
-                                    
                                       <af:outputFormatted id="drs366m"
-                                                          value="#{theadIter.uiField6_code}"
-                                                         />
-                                    </af:panelGroupLayout>
-                                  </f:facet>
-                                </af:panelBorderLayout>
-                                <af:panelBorderLayout id="drs62m"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
-                                  <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="drs63m"
-                                                         layout="horizontal"
-                                                         halign="left">
-                                      <af:commandLink id="drs64m"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
-                                        <af:outputFormatted id="drs65"
-                                                            value="#{theadIter.uiField7}"
-                                                            inlineStyle="#{theadIter.uiField7_bgColor}"/>
-                                        <af:inputText id="drs66m"
-                                                      visible="false"
-                                                      value="#{theadIter.czNodeName7}"
-                                                      shortDesc="#{theadIter.uiField7_identifier}"
-                                                      label="#{theadIter.uiField7_color}"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
-                                      </af:commandLink>
+                                                          value="#{theadIter.uiField6}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2369,7 +2378,7 @@
                                       <af:inputText id="drs1002" columns="15"
                                                     autoSubmit="true"
                                                     valueChangeListener="#{sessionScope.ConfiguratorBean.handleInput}"
-                                                   value="#{theadIter.digitsEntered}"
+                                                    value="#{theadIter.digitsEntered}"
                                                     rows="1">
                                         <af:validateRegExp pattern="[0-9]{1,10}"
                                                            messageDetailNoMatch="Only Numbers allowed.."/>
@@ -2425,11 +2434,23 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs31"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="pgl24">
+                                      <af:outputFormatted value="#{theadIter.uiField9}"
+                                                          id="drs_of13y"
+                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs32"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="pgl25">
+                                      <af:outputFormatted value="#{theadIter.uiField10}"
+                                                          id="drs_of14y"
+                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs33"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
@@ -2453,7 +2474,7 @@
                                 <af:panelBorderLayout id="drs38"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
                                   <f:facet name="innerLeft">
-                                     <af:panelGroupLayout id="drs341"
+                                    <af:panelGroupLayout id="drs341"
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:inputText id="drs371" visible="true"
@@ -2492,20 +2513,20 @@
                                 <af:panelBorderLayout id="drs47"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
                                   <af:panelGroupLayout id="drs343mn"
-                                                         layout="horizontal"
-                                                         halign="left">
-                                      <af:inputText id="drs373" visible="true"
-                                                    disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}"
-                                                    columns="5"
-                                                    value="#{theadIter.uiField4_qty}"
-                                                    autoSubmit="true"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
-                                      <af:outputFormatted id="drs363"
-                                                          value="#{theadIter.uiField4_code}"
-                                                          inlineStyle="#{theadIter.uiField4_bgColor}"
-                                                          visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
-                                    </af:panelGroupLayout>
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:inputText id="drs373" visible="true"
+                                                  disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}"
+                                                  columns="5"
+                                                  value="#{theadIter.uiField4_qty}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                    <af:outputFormatted id="drs363"
+                                                        value="#{theadIter.uiField4_code}"
+                                                        inlineStyle="#{theadIter.uiField4_bgColor}"
+                                                        visible="false"
+                                                        shortDesc="#{theadIter.parentGroupName}"/>
+                                  </af:panelGroupLayout>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs52"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
@@ -2557,8 +2578,7 @@
                                         <af:outputFormatted id="drs65m"
                                                             value="#{theadIter.uiField7}"
                                                             inlineStyle="#{theadIter.uiField7_bgColor}"/>
-                                        <af:inputText id="drs66"
-                                                      visible="false"
+                                        <af:inputText id="drs66" visible="false"
                                                       value="#{theadIter.czNodeName7}"
                                                       shortDesc="#{theadIter.uiField7_identifier}"
                                                       label="#{theadIter.uiField7_color}"
@@ -2580,7 +2600,8 @@
                               <af:panelGroupLayout id="drs67" layout="vertical">
                                 <af:commandLink text="Product Description"
                                                 id="drs68"/>
-                                <af:commandLink text="Specifications" id="drs70"/>
+                                <af:commandLink text="Specifications"
+                                                id="drs70"/>
                                 <af:commandLink text="Drawings and Pictures"
                                                 id="drs71"/>
                               </af:panelGroupLayout>

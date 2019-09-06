@@ -94,7 +94,7 @@ public class SystemControllerBean {
                     sysControllerGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                     null;
                 String tarColor =
-                    sysControllerGrp.isDisplayReferenceColor() ? SudokuUtils.TARGET_COLOR :
+                    sysControllerGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
                     null;
                 UxTreeNode firstLevel =
                     new UxTreeNode("warranty", "System Controller",
