@@ -4,20 +4,20 @@ import java.util.LinkedHashMap;
 
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.elements.ConfiguratorUiGroup;
 
-
-//Docking, DUT Board, and Probe Card Accessories
-public class DockingGroup {
-    public DockingGroup() {
+public class InfraUpgradeGroup {
+    public InfraUpgradeGroup() {
         super();
     }
     
-    LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = new LinkedHashMap<String, ConfiguratorUiGroup>();  
-    
+    LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = new LinkedHashMap<String, ConfiguratorUiGroup>();  // this is tea Infrastructure
+    //test head group, DUT interface, maniputalor
+
     boolean displayReferenceColor = false; // column H7
     
     boolean displayTargetColor = false; // column I7
 
     boolean required = false;
+
 
     public void addUiGroup(String uiGroupName, ConfiguratorUiGroup uiGroup) {
         this.uiGroupMap.put(uiGroupName, uiGroup);
@@ -54,4 +54,5 @@ public class DockingGroup {
     public boolean isRequired() {
         return required;
     }
+
 }
