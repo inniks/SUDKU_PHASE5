@@ -26,9 +26,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 
 import javax.faces.component.UIForm;
+import javax.faces.component.UISelectItem;
+import javax.faces.component.UISelectItems;
 import javax.faces.event.ActionEvent;
 
 import javax.faces.event.ValueChangeEvent;
+
+import javax.faces.model.SelectItem;
 
 import javax.servlet.ServletException;
 
@@ -37,6 +41,8 @@ import oracle.adf.share.ADFContext;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichListView;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
+import oracle.adf.view.rich.component.rich.input.RichSelectItem;
+import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
 import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
 import oracle.adf.view.rich.component.rich.layout.RichShowDetailHeader;
@@ -119,6 +125,8 @@ public class ConfiguratorBean {
     private RichListView digitalListBinding;
     private RichListView dianosticListBinding;
     private RichListView addSwListBinding;
+    private RichSelectOneChoice countryLOVBinding;
+    private List<SelectItem> countryList;
 
     public ConfiguratorBean() {
         super();
@@ -304,56 +312,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 }
             }
         }
-        V93kQuote v93 =
-            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         ADFUtils.setSessionScopeValue("selectedNodeValueMap",
                                       selectedNodeValueMap);
-
-        if (v93 != null && v93.getExceptionMap() != null) {
-            TreeMap<String, ArrayList<String>> warnings =
-                v93.getExceptionMap().getWarningList();
-            TreeMap<String, ArrayList<String>> notifications =
-                v93.getExceptionMap().getNotificationList();
-            StringBuilder warningMessage = new StringBuilder("<html><body>");
-            if (warnings != null && warnings.size() > 0) {
-
-
-                for (Map.Entry<String, ArrayList<String>> entry :
-                     warnings.entrySet()) {
-                    String key = entry.getKey();
-                    //iterate for each key
-                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
-                    ArrayList<String> value = entry.getValue();
-                    for (String str : value) {
-                        warningMessage.append("<p><b>" + str + "</b></p>");
-                    }
-                }
-                warningMessage.append("</body></html>");
-            }
-            if (notifications != null && notifications.size() > 0) {
-                for (Map.Entry<String, ArrayList<String>> entry :
-                     notifications.entrySet()) {
-                    String key = entry.getKey();
-                    ArrayList<String> value = entry.getValue();
-                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
-                    for (String str : value) {
-                        warningMessage.append("<p><b>" + str + "</b></p>");
-                    }
-                }
-                warningMessage.append("</body></html>");
-
-
-            }
-            if (warningMessage != null &&
-                !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
-                confirmPopup != null) {
-                warnText.setValue(warningMessage.toString());
-                RichPopup.PopupHints hints = new RichPopup.PopupHints();
-                confirmPopup.show(hints);
-            } else {
-                continueWithSelection();
-            }
-        }
+        continueWithSelection();
 
 
     }
@@ -378,7 +339,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         ObjectMapper mapper = new ObjectMapper();
         Object obj = mapper.readValue(responseJson, V93kQuote.class);
         v93k = (V93kQuote)obj;
-        
+
         //else use this
         //v93k = (V93kQuote)convertJsonToObject(null);
         if (v93k.getInputParams() != null) {
@@ -506,10 +467,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         if (dialogEvent.getOutcome() == DialogEvent.Outcome.ok) {
             if (selectedNodeValueMap != null &&
                 !selectedNodeValueMap.isEmpty()) {
-                continueWithSelection();
+                //continueWithSelection();
+                confirmPopup.cancel();
+                cancelUIAction();
             }
             if (inputNodeValueMap != null && !inputNodeValueMap.isEmpty()) {
-                continueWithInput();
+                confirmPopup.cancel();
+                cancelUIAction();
+                //continueWithInput();
             }
         }
 
@@ -517,6 +482,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             confirmPopup.cancel();
             cancelUIAction();
         }
+        ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
     }
 
     public void continueWithSelection() throws IOException,
@@ -596,7 +562,59 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             v93k = callServlet(v93k);
             buildConfiguratorUI(v93k);
             ADFUtils.setSessionScopeValue("selectedNodeValueMap", null);
-            confirmPopup.hide();
+            V93kQuote v93 =
+                (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+            ADFUtils.setSessionScopeValue("selectedNodeValueMap",
+                                          selectedNodeValueMap);
+
+            if (v93 != null && v93.getExceptionMap() != null) {
+                TreeMap<String, ArrayList<String>> warnings =
+                    v93.getExceptionMap().getWarningList();
+                TreeMap<String, ArrayList<String>> notifications =
+                    v93.getExceptionMap().getNotificationList();
+                StringBuilder warningMessage =
+                    new StringBuilder("<html><body>");
+                if (warnings != null && warnings.size() > 0) {
+
+
+                    for (Map.Entry<String, ArrayList<String>> entry :
+                         warnings.entrySet()) {
+                        String key = entry.getKey();
+                        //iterate for each key
+                        warningMessage.append("<p><b>" + key + " : " +
+                                              "</b></p>");
+                        ArrayList<String> value = entry.getValue();
+                        for (String str : value) {
+                            warningMessage.append("<p><b>" + str + "</b></p>");
+                        }
+                    }
+                    warningMessage.append("</body></html>");
+                }
+                if (notifications != null && notifications.size() > 0) {
+                    for (Map.Entry<String, ArrayList<String>> entry :
+                         notifications.entrySet()) {
+                        String key = entry.getKey();
+                        ArrayList<String> value = entry.getValue();
+                        warningMessage.append("<p><b>" + key + " : " +
+                                              "</b></p>");
+                        for (String str : value) {
+                            warningMessage.append("<p><b>" + str + "</b></p>");
+                        }
+                    }
+                    warningMessage.append("</body></html>");
+
+
+                }
+                if (warningMessage != null &&
+                    !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
+                    confirmPopup != null) {
+                    warnText.setValue(warningMessage.toString());
+                    RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                    confirmPopup.show(hints);
+                }
+            }
+
+            //confirmPopup.hide();
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         }
     }
@@ -705,52 +723,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         V93kQuote v93 =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         ADFUtils.setSessionScopeValue("inputNodeValueMap", inputNodeValueMap);
-        if (v93 != null && v93.getExceptionMap() != null) {
-            TreeMap<String, ArrayList<String>> warnings =
-                v93.getExceptionMap().getWarningList();
-            TreeMap<String, ArrayList<String>> notifications =
-                v93.getExceptionMap().getNotificationList();
-            StringBuilder warningMessage = new StringBuilder("<html><body>");
-            if (warnings != null && warnings.size() > 0) {
+        continueWithInput();
 
-
-                for (Map.Entry<String, ArrayList<String>> entry :
-                     warnings.entrySet()) {
-                    String key = entry.getKey();
-                    //iterate for each key
-                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
-                    ArrayList<String> value = entry.getValue();
-                    for (String str : value) {
-                        warningMessage.append("<p><b>" + str + "</b></p>");
-                    }
-                }
-                warningMessage.append("</body></html>");
-            }
-            if (notifications != null && notifications.size() > 0) {
-                for (Map.Entry<String, ArrayList<String>> entry :
-                     notifications.entrySet()) {
-                    String key = entry.getKey();
-                    ArrayList<String> value = entry.getValue();
-                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
-                    for (String str : value) {
-                        warningMessage.append("<p><b>" + str + "</b></p>");
-                    }
-                }
-                warningMessage.append("</body></html>");
-
-
-            }
-            if (warningMessage != null &&
-                !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
-                confirmPopup != null) {
-                warnText.setValue(warningMessage.toString());
-                RichPopup.PopupHints hints = new RichPopup.PopupHints();
-                confirmPopup.show(hints);
-            } else {
-                //continueWithSelection();
-                continueWithInput();
-            }
-        }
     }
 
     public void setAddSwToolsSdiCollection(List<ShowDetailItemCollection> addSwToolsSdiCollection) {
@@ -844,7 +818,53 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             v93k = callServlet(v93k);
             buildConfiguratorUI(v93k);
             ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
-            confirmPopup.hide();
+            if (v93k != null && v93k.getExceptionMap() != null) {
+                TreeMap<String, ArrayList<String>> warnings =
+                    v93k.getExceptionMap().getWarningList();
+                TreeMap<String, ArrayList<String>> notifications =
+                    v93k.getExceptionMap().getNotificationList();
+                StringBuilder warningMessage =
+                    new StringBuilder("<html><body>");
+                if (warnings != null && warnings.size() > 0) {
+
+
+                    for (Map.Entry<String, ArrayList<String>> entry :
+                         warnings.entrySet()) {
+                        String key = entry.getKey();
+                        //iterate for each key
+                        warningMessage.append("<p><b>" + key + " : " +
+                                              "</b></p>");
+                        ArrayList<String> value = entry.getValue();
+                        for (String str : value) {
+                            warningMessage.append("<p><b>" + str + "</b></p>");
+                        }
+                    }
+                    warningMessage.append("</body></html>");
+                }
+                if (notifications != null && notifications.size() > 0) {
+                    for (Map.Entry<String, ArrayList<String>> entry :
+                         notifications.entrySet()) {
+                        String key = entry.getKey();
+                        ArrayList<String> value = entry.getValue();
+                        warningMessage.append("<p><b>" + key + " : " +
+                                              "</b></p>");
+                        for (String str : value) {
+                            warningMessage.append("<p><b>" + str + "</b></p>");
+                        }
+                    }
+                    warningMessage.append("</body></html>");
+
+
+                }
+                if (warningMessage != null &&
+                    !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
+                    confirmPopup != null) {
+                    warnText.setValue(warningMessage.toString());
+                    RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                    confirmPopup.show(hints);
+                }
+            }
+            //confirmPopup.hide();
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         }
 
@@ -853,6 +873,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void cancelUIAction() {
         ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
         ADFUtils.setSessionScopeValue("selectedNodeValueMap", null);
+        ADFUtils.setSessionScopeValue("inputLOVMap", null);
     }
 
     public void rulesetChanged(ValueChangeEvent valueChangeEvent) {
@@ -998,8 +1019,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public void handleDisclosure(String listViewId) {
-        if(listViewId!=null){
-            if(listViewId.equals("sysLv")){ //Except system infra , collapse all others
+        if (listViewId != null) {
+            if (listViewId.equals("sysLv")) { //Except system infra , collapse all others
                 //sysInfraListView.getGroupDisclosedRowKeys().clear();
                 warrantyListView.getGroupDisclosedRowKeys().clear();
                 sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
@@ -1013,7 +1034,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
             }
-            if(listViewId.equals("wtylv1")){
+            if (listViewId.equals("wtylv1")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
                 //warrantyListView.getGroupDisclosedRowKeys().clear();
                 sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
@@ -1027,7 +1048,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
             }
-            if(listViewId.equals("syscntlv2")){
+            if (listViewId.equals("syscntlv2")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
                 warrantyListView.getGroupDisclosedRowKeys().clear();
                 //sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
@@ -1041,7 +1062,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
             }
-            if(listViewId.equals("addSwToolLv")){
+            if (listViewId.equals("addSwToolLv")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
                 warrantyListView.getGroupDisclosedRowKeys().clear();
                 sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
@@ -1055,7 +1076,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
             }
-            if(listViewId.equals("diagCalLv")){
+            if (listViewId.equals("diagCalLv")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
                 warrantyListView.getGroupDisclosedRowKeys().clear();
                 sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
@@ -1069,7 +1090,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
             }
-            if(listViewId.equals("digilv3")){
+            if (listViewId.equals("digilv3")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
                 warrantyListView.getGroupDisclosedRowKeys().clear();
                 sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
@@ -1084,8 +1105,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
             }
         }
-        
-      
+
+
     }
 
     public void setDigitalListBinding(RichListView digitalListBinding) {
@@ -1110,5 +1131,174 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public RichListView getAddSwListBinding() {
         return addSwListBinding;
+    }
+
+    public void setCountryLOVBinding(RichSelectOneChoice countryLOVBinding) {
+        this.countryLOVBinding = countryLOVBinding;
+    }
+
+    public RichSelectOneChoice getCountryLOVBinding() {
+        return countryLOVBinding;
+    }
+
+    public void setCountryList(List<SelectItem> countryList) {
+        this.countryList = countryList;
+    }
+
+    public List<SelectItem> getCountryList() {
+        return countryList;
+    }
+
+    public void handleLOVInput(ValueChangeEvent valueChangeEvent) throws IOException,
+                                                                         JsonGenerationException,
+                                                                         JsonMappingException {
+        
+        String newVal = (String)valueChangeEvent.getNewValue();
+        String czNodeName = null;
+        String uiNodeName = null;
+        String identifier = null;
+        if(newVal!=null){
+            String[] lovNodeArray = newVal.split("-");
+            if(lovNodeArray[0]!=null)
+            czNodeName = lovNodeArray[0];
+            if(lovNodeArray[1]!=null)
+            uiNodeName = lovNodeArray[1];
+            if(lovNodeArray[2]!=null)
+            identifier = lovNodeArray[2];
+        }
+        UIComponent component = valueChangeEvent.getComponent();
+        UIComponent parent = component.getParent();
+        List<UIComponent> children = parent.getChildren();
+
+        
+        HashMap<String, String> inputLOVMap = new HashMap<String, String>();
+        String uiSubGrpName = (String)ADFUtils.evaluateEL("#{node.nodeName}");
+        inputLOVMap.put("uiSubGrpName", uiSubGrpName);
+        inputLOVMap.put("inputValue", uiNodeName);
+        String parentGroupName = null;
+        for (UIComponent comp : children) {
+            if (comp instanceof RichInputText) {
+                RichInputText rf = (RichInputText)comp;
+                if (rf != null) {
+                    parentGroupName = rf.getPlaceholder();
+                    inputLOVMap.put("parentGroupName", parentGroupName);
+                   
+                    inputLOVMap.put("czNodeName", czNodeName);
+                }
+            }
+        }
+
+        ADFUtils.setSessionScopeValue("inputLOVMap", inputLOVMap);
+        continueWithLOVInput();
+    }
+    
+    public void continueWithLOVInput() throws IOException,
+                                           JsonGenerationException,
+                                           JsonMappingException {
+        String uniqueSessionId =
+            (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93k == null) {
+            v93k = new V93kQuote();
+        }
+        HashMap inputLOVMap =
+            (HashMap)ADFUtils.getSessionScopeValue("inputLOVMap");
+        if (v93k != null && inputLOVMap != null &&
+            !inputLOVMap.isEmpty()) {
+            String uiSubGrpName =
+                (String)inputLOVMap.get("uiSubGrpName");
+            String inputValue = (String)inputLOVMap.get("inputValue");
+            String parentGroupName =
+                (String)inputLOVMap.get("parentGroupName");
+            String czNodeName = (String)inputLOVMap.get("czNodeName");
+            String identifier = (String)inputLOVMap.get("identifier");
+            UiSelection uiSelection = new UiSelection();
+            uiSelection.setParentGroupName(parentGroupName);
+            uiSelection.setSubGroupName(uiSubGrpName);
+            uiSelection.setValueSelected(inputValue);
+            uiSelection.setUniqueSessionId(uniqueSessionId);
+            uiSelection.setCzNodeName(czNodeName);
+            uiSelection.setIdentifier(identifier);
+            //uiSelection.setSelectionState(selectionState);
+            v93k.setUiSelection(uiSelection);           
+            uiSelection.setUiType("4");
+            v93k.setUiSelection(uiSelection);
+            uiSelection.setUniqueSessionId(uniqueSessionId);
+            uiSelection.setCzNodeName(czNodeName);
+            uiSelection.setIdentifier(identifier);
+            SessionDetails sessionDetails = new SessionDetails();
+
+            InputParams inputParam = v93k.getInputParams();
+            if (inputParam == null) {
+                inputParam = new InputParams();
+            }
+            //Get Session details added to the POJO object
+            sessionDetails.setApplicationId((String)ADFUtils.getSessionScopeValue("ApplId") ==
+                                            null ? "880" :
+                                            (String)ADFUtils.getSessionScopeValue("ApplId"));
+            sessionDetails.setRespId((String)ADFUtils.getSessionScopeValue("RespId") ==
+                                     null ? "51156" :
+                                     (String)ADFUtils.getSessionScopeValue("RespId"));
+            sessionDetails.setUserId((String)ADFUtils.getSessionScopeValue("UserId") ==
+                                     null ? "0" :
+                                     (String)ADFUtils.getSessionScopeValue("UserId"));
+            inputParam.setImportSource("REFRESH_CONFIG_UI");
+            v93k.setSessionDetails(sessionDetails);
+            v93k.setInputParams(inputParam);
+            ADFUtils.setSessionScopeValue("parentObject", v93k);
+            v93k = callServlet(v93k);
+            buildConfiguratorUI(v93k);
+            ADFUtils.setSessionScopeValue("inputLOVMap", null);
+            if (v93k != null && v93k.getExceptionMap() != null) {
+                TreeMap<String, ArrayList<String>> warnings =
+                    v93k.getExceptionMap().getWarningList();
+                TreeMap<String, ArrayList<String>> notifications =
+                    v93k.getExceptionMap().getNotificationList();
+                StringBuilder warningMessage =
+                    new StringBuilder("<html><body>");
+                if (warnings != null && warnings.size() > 0) {
+
+
+                    for (Map.Entry<String, ArrayList<String>> entry :
+                         warnings.entrySet()) {
+                        String key = entry.getKey();
+                        //iterate for each key
+                        warningMessage.append("<p><b>" + key + " : " +
+                                              "</b></p>");
+                        ArrayList<String> value = entry.getValue();
+                        for (String str : value) {
+                            warningMessage.append("<p><b>" + str + "</b></p>");
+                        }
+                    }
+                    warningMessage.append("</body></html>");
+                }
+                if (notifications != null && notifications.size() > 0) {
+                    for (Map.Entry<String, ArrayList<String>> entry :
+                         notifications.entrySet()) {
+                        String key = entry.getKey();
+                        ArrayList<String> value = entry.getValue();
+                        warningMessage.append("<p><b>" + key + " : " +
+                                              "</b></p>");
+                        for (String str : value) {
+                            warningMessage.append("<p><b>" + str + "</b></p>");
+                        }
+                    }
+                    warningMessage.append("</body></html>");
+
+
+                }
+                if (warningMessage != null &&
+                    !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
+                    confirmPopup != null) {
+                    warnText.setValue(warningMessage.toString());
+                    RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                    confirmPopup.show(hints);
+                }
+            }
+            //confirmPopup.hide();
+            ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
+        }
+
     }
 }

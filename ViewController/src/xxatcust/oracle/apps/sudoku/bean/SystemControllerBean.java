@@ -30,6 +30,7 @@ public class SystemControllerBean {
                                                               ArrayList<UiField> uiFieldCollection) {
         //Based on a refresh condition,prepare the data model for testhead,dut etc.
         //For each ui subgroup,One UIField object is to be created
+        
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N";
@@ -44,6 +45,7 @@ public class SystemControllerBean {
             }
 
             //Iterate for all subgroups here and place them in a list
+            int index = 1;
             if (mapUiSubGrp != null && !mapUiSubGrp.isEmpty()) {
                 Iterator it = mapUiSubGrp.entrySet().iterator();
                 while (it.hasNext()) {
@@ -66,8 +68,8 @@ public class SystemControllerBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"System Controller",null);
-
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"System Controller",Integer.toString(index));
+                        index++;
                         uiFieldCollection.add(uiField);
                     }
                 }

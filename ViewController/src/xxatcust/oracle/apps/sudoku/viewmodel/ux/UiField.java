@@ -1,6 +1,9 @@
 package xxatcust.oracle.apps.sudoku.viewmodel.ux;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.model.SelectItem;
 
 import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 
@@ -118,7 +121,7 @@ public class UiField {
     private String requiredFlagSubGrp;
     private String uiGrpIndex;
     private String digitsEntered;
-
+    private List<SelectItem> listOfValueModel;
     public UiField() {
 
 
@@ -157,10 +160,24 @@ public class UiField {
         String czNodeNameUiField8 = null;
 
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
+            
             ConfiguratorUiNode node = null;
             if (listOfNodes.get(0) != null) {
                 if (listOfNodes.get(0).getConfigUiNodes() != null &&
                     listOfNodes.get(0).getConfigUiNodes().size() > 0) {
+                    //Implementing LIST oF values for country
+                    if(listOfNodes.get(0).getUiElementType()==4){
+                        listOfValueModel = new ArrayList<SelectItem>();
+                        List<ConfiguratorUiNode> list = listOfNodes.get(0).getConfigUiNodes();
+                        for(ConfiguratorUiNode uiNode :list){
+                            String czNodeName = uiNode.getCzNodeName()==null?"-1":uiNode.getCzNodeName();
+                            String uiNodeName = uiNode.getUiNodeName()==null?"-1":uiNode.getUiNodeName();
+                            String identifier = uiNode.getIdentifier()==null?"-1":uiNode.getIdentifier();
+                            SelectItem selectItem = new SelectItem((czNodeName.concat("-").concat(uiNodeName).concat("-").concat(identifier)),uiNode.getUiNodeName());
+                            selectItem.setDescription(uiNode.getCzNodeName());
+                            listOfValueModel.add(selectItem);
+                        }
+                    }
                     ConfiguratorUiNode firstNode =
                         listOfNodes.get(0).getConfigUiNodes().get(0);
                     uiField8_code = firstNode.getCzNodeName();
@@ -168,18 +185,14 @@ public class UiField {
                     int referenceQuantity = firstNode.getReferenceQuantiy();
                     if (referenceQuantity != -1) {
                         uiField9 = Integer.toString(referenceQuantity);
-                        System.out.println("Ref Qty "+referenceQuantity);
-
                     }
                     int targetQuantity = firstNode.getTargetQuantity();
                     if (targetQuantity != -1) {
                         uiField10 = Integer.toString(targetQuantity);
-                        System.out.println("Target Qty "+uiField10);
                     }
                     int inputDigit = firstNode.getQuantity();
                     if(inputDigit!=-1){
                         digitsEntered = Integer.toString(inputDigit);
-                        System.out.println("Quantity "+digitsEntered);
                     }
                 }
             }
@@ -207,7 +220,7 @@ public class UiField {
                         case 4:
                             uiField1_type = "LISTOFVALUES";
 
-                        }
+                        }                        
                         if (uiElementType == 1) {
                             uiField8_type = "NUMERIC";
                         }
@@ -1550,5 +1563,13 @@ public class UiField {
 
     public String getUiField10_qty() {
         return uiField10_qty;
+    }
+
+    public void setListOfValueModel(List<SelectItem> listOfValueModel) {
+        this.listOfValueModel = listOfValueModel;
+    }
+
+    public List<SelectItem> getListOfValueModel() {
+        return listOfValueModel;
     }
 }

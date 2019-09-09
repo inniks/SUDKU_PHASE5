@@ -872,14 +872,7 @@
                                 <af:panelBorderLayout id="syscon_BorderLayout2"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:group id="g1">
-                                      <af:panelGroupLayout id="pgl26">
-                                        <af:selectOneChoice label=" UI Group Id #{sysConIter.uiGrpIndex}"
-                                                            id="soc1">
-                                          <f:selectItems value="" id="si1"/>
-                                        </af:selectOneChoice>
-                                      </af:panelGroupLayout>
-                                    </af:group>
+                                    <af:group id="g1"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="syscon_BorderLayout3"
@@ -887,7 +880,8 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_panelGroupLayout1"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="left"
+                                                         rendered="#{sysConIter.uiGrpIndex ne '1'}">
                                       <af:commandLink id="syscon_commandLink1"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{sysConIter.uiField1_dis or sysConIter.uiField1_readOnly}"
@@ -908,23 +902,39 @@
                                 <af:panelBorderLayout id="syscon_panelBorderLayout4"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{sysConIter.uiField2_color};">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="syscon_panelGroupLayout2"
-                                                         layout="horizontal"
-                                                         halign="left">
-                                      <af:commandLink id="syscon_commandLink2"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{sysConIter.uiField2_dis or sysConIter.uiField2_readOnly}">
-                                        <af:outputFormatted id="syscon_outputFormatted3"
-                                                            value="#{sysConIter.uiField2}"
-                                                            inlineStyle="#{sysConIter.uiField2_bgColor}"/>
-                                        <af:inputText id="syscon_inputText2"
-                                                      visible="false"
-                                                      value="#{sysConIter.czNodeName2}"
-                                                      shortDesc="#{sysConIter.uiField2_identifier}"
-                                                      label="#{sysConIter.uiField2_color}"
+                                    <af:group id="g4">
+                                      <af:panelGroupLayout id="syscon_panelGroupLayout2"
+                                                           layout="horizontal"
+                                                           halign="left"
+                                                           rendered="#{sysConIter.uiGrpIndex ne '1'}">
+                                        <af:commandLink id="syscon_commandLink2"
+                                                        actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                        disabled="#{sysConIter.uiField2_dis or sysConIter.uiField2_readOnly}">
+                                          <af:outputFormatted id="syscon_outputFormatted3"
+                                                              value="#{sysConIter.uiField2}"
+                                                              inlineStyle="#{sysConIter.uiField2_bgColor}"/>
+                                          <af:inputText id="syscon_inputText2"
+                                                        visible="false"
+                                                        value="#{sysConIter.czNodeName2}"
+                                                        shortDesc="#{sysConIter.uiField2_identifier}"
+                                                        label="#{sysConIter.uiField2_color}"
+                                                        placeholder="#{sysConIter.parentGroupName}"/>
+                                        </af:commandLink>
+                                      </af:panelGroupLayout>
+                                      <af:panelGroupLayout id="pgl26"
+                                                           rendered="#{sysConIter.uiGrpIndex eq '1'}">
+                                        <af:selectOneChoice id="soc1"
+                                                            binding="#{ConfiguratorBean.countryLOVBinding}"
+                                                            contentStyle="width:200px;"
+                                                            valueChangeListener="#{ConfiguratorBean.handleLOVInput}"
+                                                            autoSubmit="true"
+                                                            valuePassThru="true">
+                                          <f:selectItems value="#{sysConIter.listOfValueModel}" id="si1"/>
+                                        </af:selectOneChoice>
+                                        <af:inputText label="Label 8" id="it4" visible="false"
                                                       placeholder="#{sysConIter.parentGroupName}"/>
-                                      </af:commandLink>
-                                    </af:panelGroupLayout>
+                                      </af:panelGroupLayout>
+                                    </af:group>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="syscon_panelBorderLayout5"
@@ -932,7 +942,8 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_panelGroupLayout3"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="left"
+                                                         rendered="#{sysConIter.uiGrpIndex ne '1'}">
                                       <af:commandLink id="syscon_commandLink3"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{sysConIter.uiField3_dis or sysConIter.uiField3_readOnly}">
