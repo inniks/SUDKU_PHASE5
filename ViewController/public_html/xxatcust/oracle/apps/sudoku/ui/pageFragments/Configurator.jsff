@@ -871,7 +871,16 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="syscon_BorderLayout2"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:group id="g1">
+                                      <af:panelGroupLayout id="pgl26">
+                                        <af:selectOneChoice label=" UI Group Id #{sysConIter.uiGrpIndex}"
+                                                            id="soc1">
+                                          <f:selectItems value="" id="si1"/>
+                                        </af:selectOneChoice>
+                                      </af:panelGroupLayout>
+                                    </af:group>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="syscon_BorderLayout3"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{sysConIter.uiField1_color};">
