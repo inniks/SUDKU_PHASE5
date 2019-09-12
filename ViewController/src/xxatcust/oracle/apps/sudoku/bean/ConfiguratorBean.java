@@ -96,6 +96,7 @@ public class ConfiguratorBean {
     private List<ShowDetailItemCollection> addSwToolsSdiCollection;
     private List<ShowDetailItemCollection> calDiagSdiCollection;
     private List<ShowDetailItemCollection> digitalSdiCollection;
+    private List<ShowDetailItemCollection> dockingSdiCollection;
     private ChildPropertyTreeModel addToolsTreeModel;
     private ChildPropertyTreeModel sysInfraTreeModel;
     private ChildPropertyTreeModel calDiagTreeModel;
@@ -106,6 +107,7 @@ public class ConfiguratorBean {
     private ArrayList<UxTreeNode> rootSysController;
     private ArrayList<UxTreeNode> rootAddSwTools;
     private ArrayList<UxTreeNode> rootDigital;
+    private ArrayList<UxTreeNode> rootDocking;
     private RichPanelGroupLayout theadPanelGrp;
     private RichOutputText pageInitText;
     private RichListView sysInfraListView;
@@ -121,12 +123,14 @@ public class ConfiguratorBean {
     private String groupDiscPolicy;
     private RichListView sysControllerListViewBinding;
     private ChildPropertyTreeModel sysControllerTreeModel;
+    private ChildPropertyTreeModel dockingTreeModel;
     private RichPopup resetConfigurationPopup;
     private RichListView digitalListBinding;
     private RichListView dianosticListBinding;
     private RichListView addSwListBinding;
     private RichSelectOneChoice countryLOVBinding;
     private List<SelectItem> countryList;
+    private RichListView dockingListViewBinding;
 
     public ConfiguratorBean() {
         super();
@@ -218,6 +222,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         addToolsTreeModel = null;
         calDiagTreeModel = null;
         digitalTreeModel = null;
+        dockingTreeModel = null;
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
@@ -322,11 +327,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public V93kQuote callServlet(V93kQuote v93k) throws IOException,
                                                         JsonGenerationException,
                                                         JsonMappingException {
-        //        String jsenId = null;
-        //        if (jsessionId != null) {
-        //            jsenId = (String)jsessionId.getValue();
-        //        }
-        //        ADFUtils.setSessionScopeValue("jsenid", jsenId);
 
         String jsonStr = JSONUtils.convertObjToJson(v93k);
         System.out.println("Json String build is" + jsonStr);
@@ -363,7 +363,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         sysControllerTreeModel = null;
         addToolsTreeModel = null;
         calDiagTreeModel = null;
-
+        digitalTreeModel = null;
+        dockingTreeModel = null;
         if (sysInfraTreeModel == null) {
             sysInfraTreeModel =
                     SystemInfraBean.populateSysInfraParentTreeModel(sysInfraTreeModel,
@@ -414,6 +415,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             digitalSdiCollection =
                     DigitalResourcesBean.populateDigitalResourcesSubGroups(v93k,
                                                                            digitalSdiCollection);
+        }
+
+        if (dockingTreeModel == null) {
+            dockingTreeModel =
+                    DockingBean.populateDockingParentModel(dockingTreeModel,
+                                                           rootDocking);
+            dockingSdiCollection =
+                    DockingBean.populateDockingSubGroups(v93k, dockingSdiCollection);
         }
 
         //ADFUtils.setSessionScopeValue("rebuildUI", null);
@@ -614,7 +623,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 }
             }
 
-            //confirmPopup.hide();
+           
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         }
     }
@@ -950,6 +959,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         addToolsTreeModel = null;
         calDiagTreeModel = null;
         digitalTreeModel = null;
+        dockingTreeModel = null;
         v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
             v93k = new V93kQuote();
@@ -1027,12 +1037,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 addSwListBinding.getGroupDisclosedRowKeys().clear();
                 dianosticListBinding.getGroupDisclosedRowKeys().clear();
                 digitalListBinding.getGroupDisclosedRowKeys().clear();
+                dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dockingListViewBinding);
             }
             if (listViewId.equals("wtylv1")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
@@ -1041,12 +1053,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 addSwListBinding.getGroupDisclosedRowKeys().clear();
                 dianosticListBinding.getGroupDisclosedRowKeys().clear();
                 digitalListBinding.getGroupDisclosedRowKeys().clear();
+                dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dockingListViewBinding);
             }
             if (listViewId.equals("syscntlv2")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
@@ -1055,12 +1069,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 addSwListBinding.getGroupDisclosedRowKeys().clear();
                 dianosticListBinding.getGroupDisclosedRowKeys().clear();
                 digitalListBinding.getGroupDisclosedRowKeys().clear();
+                dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dockingListViewBinding);
             }
             if (listViewId.equals("addSwToolLv")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
@@ -1069,12 +1085,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 //addSwListBinding.getGroupDisclosedRowKeys().clear();
                 dianosticListBinding.getGroupDisclosedRowKeys().clear();
                 digitalListBinding.getGroupDisclosedRowKeys().clear();
+                dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dockingListViewBinding);
             }
             if (listViewId.equals("diagCalLv")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
@@ -1083,12 +1101,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 addSwListBinding.getGroupDisclosedRowKeys().clear();
                 //dianosticListBinding.getGroupDisclosedRowKeys().clear();
                 digitalListBinding.getGroupDisclosedRowKeys().clear();
+                dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dockingListViewBinding);
             }
             if (listViewId.equals("digilv3")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
@@ -1096,13 +1116,32 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
                 addSwListBinding.getGroupDisclosedRowKeys().clear();
                 dianosticListBinding.getGroupDisclosedRowKeys().clear();
+                dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 //digitalListBinding.getGroupDisclosedRowKeys().clear();
+                dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dockingListViewBinding);
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+            }
+            if(listViewId.equals("dockLv")){
+                sysInfraListView.getGroupDisclosedRowKeys().clear();
+                warrantyListView.getGroupDisclosedRowKeys().clear();
+                sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
+                addSwListBinding.getGroupDisclosedRowKeys().clear();
+                dianosticListBinding.getGroupDisclosedRowKeys().clear();
+                digitalListBinding.getGroupDisclosedRowKeys().clear();
+                //dockingListViewBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+                //AdfFacesContext.getCurrentInstance().addPartialTarget(dockingListViewBinding);
             }
         }
 
@@ -1152,25 +1191,25 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void handleLOVInput(ValueChangeEvent valueChangeEvent) throws IOException,
                                                                          JsonGenerationException,
                                                                          JsonMappingException {
-        
+
         String newVal = (String)valueChangeEvent.getNewValue();
         String czNodeName = null;
         String uiNodeName = null;
         String identifier = null;
-        if(newVal!=null){
+        if (newVal != null) {
             String[] lovNodeArray = newVal.split("-");
-            if(lovNodeArray[0]!=null)
-            czNodeName = lovNodeArray[0];
-            if(lovNodeArray[1]!=null)
-            uiNodeName = lovNodeArray[1];
-            if(lovNodeArray[2]!=null)
-            identifier = lovNodeArray[2];
+            if (lovNodeArray[0] != null)
+                czNodeName = lovNodeArray[0];
+            if (lovNodeArray[1] != null)
+                uiNodeName = lovNodeArray[1];
+            if (lovNodeArray[2] != null)
+                identifier = lovNodeArray[2];
         }
         UIComponent component = valueChangeEvent.getComponent();
         UIComponent parent = component.getParent();
         List<UIComponent> children = parent.getChildren();
 
-        
+
         HashMap<String, String> inputLOVMap = new HashMap<String, String>();
         String uiSubGrpName = (String)ADFUtils.evaluateEL("#{node.nodeName}");
         inputLOVMap.put("uiSubGrpName", uiSubGrpName);
@@ -1182,7 +1221,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 if (rf != null) {
                     parentGroupName = rf.getPlaceholder();
                     inputLOVMap.put("parentGroupName", parentGroupName);
-                   
+
                     inputLOVMap.put("czNodeName", czNodeName);
                 }
             }
@@ -1191,10 +1230,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         ADFUtils.setSessionScopeValue("inputLOVMap", inputLOVMap);
         continueWithLOVInput();
     }
-    
+
     public void continueWithLOVInput() throws IOException,
-                                           JsonGenerationException,
-                                           JsonMappingException {
+                                              JsonGenerationException,
+                                              JsonMappingException {
         String uniqueSessionId =
             (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
         V93kQuote v93k =
@@ -1204,10 +1243,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         }
         HashMap inputLOVMap =
             (HashMap)ADFUtils.getSessionScopeValue("inputLOVMap");
-        if (v93k != null && inputLOVMap != null &&
-            !inputLOVMap.isEmpty()) {
-            String uiSubGrpName =
-                (String)inputLOVMap.get("uiSubGrpName");
+        if (v93k != null && inputLOVMap != null && !inputLOVMap.isEmpty()) {
+            String uiSubGrpName = (String)inputLOVMap.get("uiSubGrpName");
             String inputValue = (String)inputLOVMap.get("inputValue");
             String parentGroupName =
                 (String)inputLOVMap.get("parentGroupName");
@@ -1221,7 +1258,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             uiSelection.setCzNodeName(czNodeName);
             uiSelection.setIdentifier(identifier);
             //uiSelection.setSelectionState(selectionState);
-            v93k.setUiSelection(uiSelection);           
+            v93k.setUiSelection(uiSelection);
             uiSelection.setUiType("4");
             v93k.setUiSelection(uiSelection);
             uiSelection.setUniqueSessionId(uniqueSessionId);
@@ -1300,5 +1337,29 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         }
 
+    }
+
+    public void setDockingListViewBinding(RichListView dockingListViewBinding) {
+        this.dockingListViewBinding = dockingListViewBinding;
+    }
+
+    public RichListView getDockingListViewBinding() {
+        return dockingListViewBinding;
+    }
+
+    public void setDockingTreeModel(ChildPropertyTreeModel dockingTreeModel) {
+        this.dockingTreeModel = dockingTreeModel;
+    }
+
+    public ChildPropertyTreeModel getDockingTreeModel() {
+        return dockingTreeModel;
+    }
+
+    public void setDockingSdiCollection(List<ShowDetailItemCollection> dockingSdiCollection) {
+        this.dockingSdiCollection = dockingSdiCollection;
+    }
+
+    public List<ShowDetailItemCollection> getDockingSdiCollection() {
+        return dockingSdiCollection;
     }
 }
