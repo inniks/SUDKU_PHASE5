@@ -131,7 +131,6 @@ public class ConfiguratorBean {
     private RichSelectOneChoice countryLOVBinding;
     private List<SelectItem> countryList;
     private RichListView dockingListViewBinding;
-
     public ConfiguratorBean() {
         super();
     }
@@ -1362,4 +1361,5 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public List<ShowDetailItemCollection> getDockingSdiCollection() {
         return dockingSdiCollection;
     }
+
 }

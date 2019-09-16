@@ -86,6 +86,9 @@
   <ViewUsage
     Name="RuleSetVO"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.RuleSetVO"/>
+  <ViewUsage
+    Name="UIGroupsVO"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.UIGroupsVO"/>
   <ClientInterface>
     <Method
       Name="clearQuoteFields">
@@ -320,6 +323,11 @@
       Name="initRuleSetForRef">
       <Return
         Type="void"/>
+    </Method>
+    <Method
+      Name="getUiGrpMap">
+      <Return
+        Type="java.util.Hashtable"/>
     </Method>
   </ClientInterface>
 </AppModule>

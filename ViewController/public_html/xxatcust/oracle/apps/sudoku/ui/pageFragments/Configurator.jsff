@@ -1833,10 +1833,6 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs38_11"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
-                                </af:panelBorderLayout>
-                                <af:panelBorderLayout id="drs43_11"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl20_g"
                                                          layout="horizontal"
@@ -1845,6 +1841,12 @@
                                       <af:outputFormatted id="th_of7g"
                                                           value="#{theadIter.uiField4}"/>
                                     </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="drs43_11"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs47_11"
@@ -2017,9 +2019,26 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs38_11r"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField4_color};"
+                                                      rendered="#{topNode.index eq 1}">
                                   <f:facet name="innerLeft">
-                                    
+                                    <af:panelGroupLayout id="pgl2x0_f"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="cl8_f"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
+                                        <af:outputFormatted id="th_of8f"
+                                                            value="#{theadIter.uiField4}"
+                                                            inlineStyle="#{theadIter.uiField4_bgColor}"/>
+                                        <af:inputText id="ip7f_helperf"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName4}"
+                                                      shortDesc="#{theadIter.uiField4_identifier}"
+                                                      label="#{theadIter.uiField4_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs43_11r"
@@ -2673,7 +2692,8 @@
                               </f:facet>
                             </af:panelBorderLayout>
                           </af:panelGroupLayout>
-                          <af:showDetailHeader id="docksd1" text="#{node.nodeName}"
+                          <af:showDetailHeader id="docksd1"
+                                               text="#{node.nodeName}"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:iterator id="docki2"
                                          value="#{topNode.uiFieldCollection}"

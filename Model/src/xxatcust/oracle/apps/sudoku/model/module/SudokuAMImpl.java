@@ -2618,4 +2618,30 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
     public void initConfiguratorRuleSet() {
     }
+    
+    public Hashtable getUiGrpMap(){
+        Hashtable<String,String> uiGrpMap = new Hashtable<String, String>();
+        ViewObjectImpl uiGrpVO = this.getUIGroupsVO();
+        if(uiGrpVO!=null){
+            uiGrpVO.executeQuery();
+            RowSetIterator rsi = uiGrpVO.createRowSetIterator(null);
+            if(rsi!=null){
+                while(rsi.hasNext()){
+                    Row r = rsi.next();
+                    if(r!=null){
+                        uiGrpMap.put((String)r.getAttribute("UiIndex"), (String)r.getAttribute("AdfUiCategory"));
+                    }
+                }
+            }
+        }
+        return uiGrpMap;
+    }
+
+    /**
+     * Container's getter for UIGroupsVO1.
+     * @return UIGroupsVO1
+     */
+    public ViewObjectImpl getUIGroupsVO() {
+        return (ViewObjectImpl)findViewObject("UIGroupsVO");
+    }
 }

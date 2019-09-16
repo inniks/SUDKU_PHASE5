@@ -1,5 +1,7 @@
 package xxatcust.oracle.apps.sudoku.model.module.client;
 
+import java.util.Hashtable;
+
 import oracle.jbo.Row;
 import oracle.jbo.client.remote.ApplicationModuleImpl;
 
@@ -175,5 +177,10 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         Object _ret =
             this.riInvokeExportedMethod(this,"initRuleSetForRef",null,null);
         return;
+    }
+
+    public Hashtable getUiGrpMap() {
+        Object _ret = this.riInvokeExportedMethod(this,"getUiGrpMap",null,null);
+        return (Hashtable)_ret;
     }
 }

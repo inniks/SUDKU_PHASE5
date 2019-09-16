@@ -48,3 +48,13 @@ ViewController/classes/.data/00000000/000005df.jdb
 Model/classes/.data/Model.cdi_javac
 
 ViewController/classes/.data/00000000/00000604.jdb
+
+Model/classes/.data/00000000/00000039.jdb
+
+Model/classes/.data/00000000/0000003b.jdb
+
+Model/classes/xxatcust/oracle/apps/sudoku/model/module/SudokuAMImpl.class
+
+Model/classes/xxatcust/oracle/apps/sudoku/model/module/client/SudokuAMClient.class
+
+Model/classes/xxatcust/oracle/apps/sudoku/model/module/common/SudokuAM.class

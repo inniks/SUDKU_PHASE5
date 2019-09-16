@@ -1,5 +1,7 @@
 package xxatcust.oracle.apps.sudoku.model.module.common;
 
+import java.util.Hashtable;
+
 import oracle.jbo.ApplicationModule;
 import oracle.jbo.Row;
 // ---------------------------------------------------------------------
@@ -67,4 +69,6 @@ public interface SudokuAM extends ApplicationModule {
                                  int usrId);
 
     void initRuleSetForRef();
+
+    Hashtable getUiGrpMap();
 }

@@ -1,6 +1,7 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -175,29 +176,49 @@ public class DockingBean {
         ArrayList<ArrayList<UiField>> listofcollections =
             new ArrayList<ArrayList<UiField>>();
         ArrayList<UiField> uiFieldCollection = null;
+        LinkedHashMap testMap = new LinkedHashMap();
         if (listOfSubGrpNames != null && !listOfSubGrpNames.isEmpty()) {
             for (String key : listOfSubGrpNames) {
                 uiFieldCollection =
                         prepareDockingDataModel(v93k, key, uiFieldCollection);
                 //prepareSysInfraDataModel(v93k, key, uiFieldCollection);
                 listofcollections.add(uiFieldCollection);
+                testMap.put(key, uiFieldCollection);
 
             }
         }
         sdiCollection = new ArrayList<ShowDetailItemCollection>();
-        if (listofcollections != null && !listofcollections.isEmpty()) {
+        if(testMap!=null && !testMap.isEmpty()){
             int counter = 1;
-            for (int i = 0; i < listofcollections.size(); i++) {
-                if (listofcollections.get(i).size() > 0) {
-                    ShowDetailItemCollection sdi =
-                        new ShowDetailItemCollection(Integer.toString(counter),
-                                                     listofcollections.get(i),
-                                                     listofcollections.get(i).get(0).getSelectedValue());
-                    sdiCollection.add(sdi);
-                    counter++;
-                }
+            Iterator it = testMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                String key = (String)pair.getKey();
+                ArrayList<UiField> val = (ArrayList<UiField>)pair.getValue();
+                ShowDetailItemCollection sdi =
+                    new ShowDetailItemCollection(Integer.toString(counter),
+                                                 val,
+                                                 key);
+                sdiCollection.add(sdi);
+                counter++;
             }
         }
+        
+        
+//        if (listofcollections != null && !listofcollections.isEmpty()) {
+//            int counter = 1;
+//            for (int i = 0; i < listofcollections.size(); i++) {
+//                if (listofcollections.get(i).size() > 0) {
+//                    ShowDetailItemCollection sdi =
+//                        new ShowDetailItemCollection(Integer.toString(counter),
+//                                                     listofcollections.get(i),
+//                                                     listofcollections.get(i).get(0).getSelectedValue());
+//                    sdiCollection.add(sdi);
+//                    counter++;
+//                }
+//            }
+//        }
+        System.out.println();
         return (ArrayList<ShowDetailItemCollection>)sdiCollection;
     }
 }
