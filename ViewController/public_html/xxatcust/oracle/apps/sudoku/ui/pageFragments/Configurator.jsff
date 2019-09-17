@@ -3,7 +3,8 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:h="http://java.sun.com/jsf/html">
-  <af:panelHeader text=" " id="ph2">
+  <af:panelHeader text=" " id="config_Phd"
+                  binding="#{ConfiguratorBean.parentUiComp}">
     <f:facet name="context">
       <af:outputFormatted value="V93000 Configuration and Budgetary Quoting Tool"
                           id="of5"
@@ -52,7 +53,8 @@
     </f:facet>
     <af:spacer width="10" height="10" id="s12"/>
     <af:panelStretchLayout id="psl1" dimensionsFrom="children"
-                           styleClass="AFStretchWidth" topHeight="70px">
+                           styleClass="AFStretchWidth" topHeight="70px"
+                           rendered="#{!ConfiguratorBean.defaultViewOnLoad}">
       <f:facet name="center">
         <af:panelGroupLayout layout="scroll"
                              xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
@@ -70,13 +72,6 @@
                                     binding="#{ConfiguratorBean.warnText}"/>
               </af:panelGroupLayout>
             </af:dialog>
-          </af:popup>
-          <af:popup id="resetConfig"
-                    binding="#{ConfiguratorBean.resetConfigurationPopup}">
-            <af:dialog id="d2"
-                       title="Your existing configuration will be lost,Are you sure you want to continue?"
-                       type="yesNo"
-                       dialogListener="#{ConfiguratorBean.resetConfigurationAndCallServlet}"/>
           </af:popup>
           <af:listView id="sysLv" value="#{ConfiguratorBean.sysInfraTreeModel}"
                        var="node" binding="#{ConfiguratorBean.sysInfraListView}"
@@ -2940,5 +2935,48 @@
         </af:panelGroupLayout>
       </f:facet>
     </af:panelStretchLayout>
+    <af:panelStretchLayout id="conf_def_view"
+                           rendered="#{ConfiguratorBean.defaultViewOnLoad}">
+      <f:facet name="bottom"/>
+      <f:facet name="center">
+        <af:panelGroupLayout
+                             xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                             id="pgl24" styleClass="AFStretchWidth">
+          <af:table value="#{bindings.UIGroupsVO.collectionModel}" var="row"
+                    rows="#{bindings.UIGroupsVO.rangeSize}"
+                    emptyText="#{bindings.UIGroupsVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    fetchSize="#{bindings.UIGroupsVO.rangeSize}"
+                    rowBandingInterval="0" id="t2" rendered="false">
+            <af:column sortProperty="#{bindings.UIGroupsVO.hints.AdfUiCategory.name}"
+                       sortable="false"
+                       headerText="#{bindings.UIGroupsVO.hints.AdfUiCategory.label}"
+                       id="c1">
+              <af:outputText value="#{row.AdfUiCategory}" id="ot2"/>
+            </af:column>
+          </af:table>
+          <af:iterator id="i8" value="#{bindings.UIGroupsVO.collectionModel}"
+                       var="row">
+            <af:showDetailHeader text="#{row.AdfUiCategory}" disclosed="true"
+                                 id="sdh3" styleClass="AFStretchWidth">
+              <f:facet name="context"/>
+              <f:facet name="menuBar"/>
+              <f:facet name="toolbar"/>
+              <f:facet name="legend"/>
+              <f:facet name="info"/>
+            </af:showDetailHeader>
+          </af:iterator>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="start"/>
+      <f:facet name="end"/>
+      <f:facet name="top"/>
+    </af:panelStretchLayout>
+    <af:popup id="resetConfig"
+              binding="#{ConfiguratorBean.resetConfigurationPopup}">
+      <af:dialog id="d2"
+                 title="Your existing configuration will be lost,Are you sure you want to continue?"
+                 type="yesNo"
+                 dialogListener="#{ConfiguratorBean.resetConfigurationAndCallServlet}"/>
+    </af:popup>
   </af:panelHeader>
 </jsp:root>

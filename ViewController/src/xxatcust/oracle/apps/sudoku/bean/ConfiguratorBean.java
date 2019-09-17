@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,6 +37,9 @@ import javax.faces.model.SelectItem;
 
 import javax.servlet.ServletException;
 
+import oracle.adf.model.BindingContainer;
+import oracle.adf.model.BindingContext;
+import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.share.ADFContext;
 import oracle.adf.view.rich.component.rich.RichPopup;
@@ -45,6 +49,7 @@ import oracle.adf.view.rich.component.rich.input.RichSelectItem;
 import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
 import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
+import oracle.adf.view.rich.component.rich.layout.RichPanelHeader;
 import oracle.adf.view.rich.component.rich.layout.RichShowDetailHeader;
 import oracle.adf.view.rich.component.rich.layout.RichShowDetailItem;
 import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
@@ -131,6 +136,9 @@ public class ConfiguratorBean {
     private RichSelectOneChoice countryLOVBinding;
     private List<SelectItem> countryList;
     private RichListView dockingListViewBinding;
+    private Boolean defaultViewOnLoad = true;
+    private RichPanelHeader parentUiComp;
+
     public ConfiguratorBean() {
         super();
     }
@@ -178,7 +186,10 @@ public class ConfiguratorBean {
                                                    JsonGenerationException,
                                                    JsonMappingException {
         System.out.println("Initializing Page.....");
-
+//        DCIteratorBinding iter = ADFUtils.findIterator("getUiGrpMap");
+//        if(iter!=null){
+//            System.out.println("Iterator Found");
+//        }
         return pageInitText;
     }
 
@@ -424,7 +435,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     DockingBean.populateDockingSubGroups(v93k, dockingSdiCollection);
         }
 
-        //ADFUtils.setSessionScopeValue("rebuildUI", null);
+        defaultViewOnLoad = false ;
+        ADFUtils.addPartialTarget(parentUiComp);
 
     }
 
@@ -1362,4 +1374,19 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         return dockingSdiCollection;
     }
 
+    public void setDefaultViewOnLoad(Boolean defaultViewOnLoad) {
+        this.defaultViewOnLoad = defaultViewOnLoad;
+    }
+
+    public Boolean getDefaultViewOnLoad() {
+        return defaultViewOnLoad;
+    }
+
+    public void setParentUiComp(RichPanelHeader parentUiComp) {
+        this.parentUiComp = parentUiComp;
+    }
+
+    public RichPanelHeader getParentUiComp() {
+        return parentUiComp;
+    }
 }

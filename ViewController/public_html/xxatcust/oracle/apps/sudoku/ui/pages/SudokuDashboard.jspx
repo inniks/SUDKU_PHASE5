@@ -147,7 +147,7 @@
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'ref'}"
                                              icon="/Resources/images/imgs/View Ref.png"
                                              partialSubmit="true"
-                                             disabledIcon="/Resources/images/imgs/View Ref.png">
+                                             disabledIcon="/Resources/images/viewRef_dis.png">
                           <af:setPropertyListener from="viewRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
@@ -158,7 +158,8 @@
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'config' or viewScope.LoadDynamicRegionBean.disableCurrentButton eq null}"
                                              partialSubmit="true"
                                              icon="/Resources/images/imgs/Configurator.png"
-                                             disabledIcon="/Resources/images/imgs/Configurator.png">
+                                             disabledIcon="/Resources/images/imgs/Configurator.png"
+                                             depressedIcon="/Resources/images/config_dis.png">
                           <af:setPropertyListener from="configurator"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
@@ -175,7 +176,7 @@
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'quote'}"
                                              partialSubmit="true"
                                              icon="/Resources/images/imgs/Quote Header.png"
-                                             disabledIcon="/Resources/images/imgs/Quote Header.png">
+                                             disabledIcon="/Resources/images/qhdr_dis.png">
                           <af:setPropertyListener from="#{viewScope.LoadDynamicRegionBean.navString}"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
@@ -213,7 +214,7 @@
                         <af:commandImageLink id="ctb4"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToTargetConfig}"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'target'}"
-                                             icon="/Resources/images/imgs/View Target.png"
+                                             icon="/Resources/images/viewTargetEna.png"
                                              disabledIcon="/Resources/images/imgs/View Target.png"
                                              partialSubmit="true">
                           <af:setPropertyListener from="targetRef"

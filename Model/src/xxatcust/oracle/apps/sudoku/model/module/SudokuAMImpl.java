@@ -2634,6 +2634,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 }
             }
         }
+        ADFContext.getCurrent().getSessionScope().put("uiGrpMap", uiGrpMap);
         return uiGrpMap;
     }
 
