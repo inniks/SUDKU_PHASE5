@@ -24,6 +24,8 @@ public class UiField {
     private String uiField8;
     private String uiField9;
     private String uiField10;
+    private String uiField11;
+    private String uiField12;
     private String uiField1_color;
     private String uiField2_color;
     private String uiField3_color;
@@ -34,6 +36,8 @@ public class UiField {
     private String uiField8_color;
     private String uiField9_color;
     private String uiField10_color;
+    private String uiField11_color;
+    private String uiField12_color;
     private String uiField1_code;
     private String uiField2_code;
     private String uiField3_code;
@@ -44,6 +48,8 @@ public class UiField {
     private String uiField8_code;
     private String uiField9_code;
     private String uiField10_code;
+    private String uiField11_code;
+    private String uiField12_code;
     private String uiField1_type;
     private String uiField2_type;
     private String uiField3_type;
@@ -54,6 +60,8 @@ public class UiField {
     private String uiField8_type;
     private String uiField9_type;
     private String uiField10_type;
+    private String uiField11_type;
+    private String uiField12_type;
     private String czNodeName1;
     private String czNodeName2;
     private String czNodeName3;
@@ -64,6 +72,8 @@ public class UiField {
     private String czNodeName8;
     private String czNodeName9;
     private String czNodeName10;
+    private String czNodeName11;
+    private String czNodeName12;
     private String uiField1_qty;
     private String uiField2_qty;
     private String uiField3_qty;
@@ -74,6 +84,8 @@ public class UiField {
     private String uiField8_qty;
     private String uiField9_qty;
     private String uiField10_qty;
+    private String uiField11_qty;
+    private String uiField12_qty;
     private Boolean uiField1_dis;
     private Boolean uiField2_dis;
     private Boolean uiField3_dis;
@@ -84,6 +96,8 @@ public class UiField {
     private Boolean uiField8_dis;
     private Boolean uiField9_dis;
     private Boolean uiField10_dis;
+    private Boolean uiField11_dis;
+    private Boolean uiField12_dis;
     private Boolean uiField1_readOnly;
     private Boolean uiField2_readOnly;
     private Boolean uiField3_readOnly;
@@ -94,6 +108,8 @@ public class UiField {
     private Boolean uiField8_readOnly;
     private Boolean uiField9_readOnly;
     private Boolean uiField10_readOnly;
+    private Boolean uiField11_readOnly;
+    private Boolean uiField12_readOnly;
     private String uiField1_identifier;
     private String uiField2_identifier;
     private String uiField3_identifier;
@@ -104,6 +120,8 @@ public class UiField {
     private String uiField8_identifier;
     private String uiField9_identifier;
     private String uiField10_identifier;
+    private String uiField11_identifier;
+    private String uiField12_identifier;
     private String uiField1_bgColor;
     private String uiField2_bgColor;
     private String uiField3_bgColor;
@@ -114,6 +132,8 @@ public class UiField {
     private String uiField8_bgColor;
     private String uiField9_bgColor;
     private String uiField10_bgColor;
+    private String uiField11_bgColor;
+    private String uiField12_bgColor;
     private List<ConfiguratorUiElement> listOfNodes;
     private String inputValue;
     private String selectedValue;
@@ -122,6 +142,9 @@ public class UiField {
     private String uiGrpIndex;
     private String digitsEntered;
     private List<SelectItem> listOfValueModel;
+    private Boolean disableMultipleInputs=false;
+    private String sumReference;
+    private String sumTarget;
     public UiField() {
 
 
@@ -157,8 +180,7 @@ public class UiField {
         super();
         this.listOfNodes = listOfNodes;
         this.uiGrpIndex = uiGrpIndex ;
-        String czNodeNameUiField8 = null;
-
+        int sumLicenceInputs = 0,sumRef=0,sumTar=0;
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
             
             ConfiguratorUiNode node = null;
@@ -191,9 +213,9 @@ public class UiField {
                         uiField10 = Integer.toString(targetQuantity);
                     }
                     int inputDigit = firstNode.getQuantity();
-                    if(inputDigit!=-1){
-                        digitsEntered = Integer.toString(inputDigit);
-                    }
+//                    if(inputDigit!=-1){
+//                        digitsEntered = Integer.toString(inputDigit);
+//                    }
                 }
             }
             for (int i = 0; i < listOfNodes.size(); i++) {
@@ -205,9 +227,17 @@ public class UiField {
                         !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                         node = listOfNodes.get(i).getConfigUiNodes().get(0);
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
+                        
                         int qty = node.getQuantity();
                         if(qty!=-1){
                             uiField1_qty = Integer.toString(qty);
+                            sumLicenceInputs = sumLicenceInputs+node.getQuantity();
+                        }
+                        if(node.getReferenceQuantiy()!=-1){
+                            sumRef = sumRef+node.getReferenceQuantiy();
+                        }
+                        if(node.getTargetQuantity()!=-1){
+                            sumTar = sumTar+node.getTargetQuantity();
                         }
                         int uiElementType = uiElement.getUiElementType();
                         switch (uiElementType) {
@@ -221,8 +251,15 @@ public class UiField {
                             uiField1_type = "LISTOFVALUES";
 
                         }                        
-                        if (uiElementType == 1) {
+                        if (uiElementType == 1) { 
+                            //If an input is there ,disable other inputs
+                            
                             uiField8_type = "NUMERIC";
+                        }
+                        if(node.getQuantity()!=-1){
+                            //some value already exists
+                            
+                            disableMultipleInputs = true ;
                         }
                         uiField1 = node.getUiNodeName();
                         selectedValue = subGrpName;
@@ -275,9 +312,16 @@ public class UiField {
                         uiField2_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
+                        if(node.getReferenceQuantiy()!=-1){
+                            sumRef  = sumRef+node.getReferenceQuantiy();
+                        }
+                        if(node.getTargetQuantity()!=-1){
+                            sumTar = sumTar+node.getTargetQuantity();
+                        }
                         int qty = node.getQuantity();
                         if(qty!=-1){
                             uiField2_qty = Integer.toString(qty);
+                            sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
                         switch (uiElementType) {
                         case 1:
@@ -290,6 +334,12 @@ public class UiField {
                             uiField2_type = "LISTOFVALUES";
 
                         }
+                            //If an input is there ,disable other inputs
+                            if(node.getQuantity()!=-1){
+                                //some value already exists
+                                disableMultipleInputs = true ;
+                            }
+                        
                         if (uiField2_dis) {
                             uiField2_bgColor = "color:Silver;";
                         }
@@ -309,7 +359,12 @@ public class UiField {
                         listOfNodes.get(i).getConfigUiNodes() != null &&
                         !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                         node = listOfNodes.get(i).getConfigUiNodes().get(0);
-
+                        if(node.getReferenceQuantiy()!=-1){
+                            sumRef = sumRef+node.getReferenceQuantiy();
+                        }
+                        if(node.getTargetQuantity()!=-1){
+                            sumTar = sumTar+node.getTargetQuantity();
+                        }
                         uiField3 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         czNodeName3 = node.getCzNodeName();
@@ -326,6 +381,7 @@ public class UiField {
                         int qty = node.getQuantity();
                         if(qty!=-1){
                             uiField3_qty = Integer.toString(qty);
+                            sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
                         switch (uiElementType) {
                         case 1:
@@ -338,6 +394,12 @@ public class UiField {
                             uiField3_type = "LISTOFVALUES";
 
                         }
+                        
+                            //If an input is there ,disable other inputs
+                            if(node.getQuantity()!=-1){
+                                //some value already exists
+                                disableMultipleInputs = true ;
+                            }
                         if (uiField3_dis) {
                             uiField3_bgColor = "color:Silver;";
                         }
@@ -361,6 +423,12 @@ public class UiField {
                         selectedValue = subGrpName;
                         czNodeName4 = node.getCzNodeName();
                         uiField4_code = czNodeName4;
+                        if(node.getReferenceQuantiy()!=-1){
+                            sumRef = sumRef+node.getReferenceQuantiy();
+                        }
+                        if(node.getTargetQuantity()!=-1){
+                            sumTar = sumTar+node.getTargetQuantity();
+                        }
                         if (node.isDisplayReferenceColor())
                             uiField4_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -373,6 +441,7 @@ public class UiField {
                         int qty = node.getQuantity();
                         if(qty!=-1){
                             uiField4_qty = Integer.toString(qty);
+                            sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
                         switch (uiElementType) {
                         case 1:
@@ -385,6 +454,12 @@ public class UiField {
                             uiField4_type = "LISTOFVALUES";
 
                         }
+                            //If an input is there ,disable other inputs
+                            if(node.getQuantity()!=-1){
+                                //some value already exists
+                                sumLicenceInputs = sumLicenceInputs+node.getQuantity();
+                                disableMultipleInputs = true ;
+                            }
                         if (uiField4_dis) {
                             uiField4_bgColor = "color:Silver;";
                         }
@@ -408,6 +483,12 @@ public class UiField {
                         selectedValue = subGrpName;
                         czNodeName5 = node.getCzNodeName();
                         uiField5_code = czNodeName5;
+                        if(node.getReferenceQuantiy()!=-1){
+                            sumRef = sumRef+node.getReferenceQuantiy();
+                        }
+                        if(node.getTargetQuantity()!=-1){
+                            sumTar = sumTar+node.getTargetQuantity();
+                        }
                         if (node.isDisplayReferenceColor())
                             uiField5_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -420,6 +501,7 @@ public class UiField {
                         int qty = node.getQuantity();
                         if(qty!=-1){
                             uiField5_qty = Integer.toString(qty);
+                            sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
                         switch (uiElementType) {
                         case 1:
@@ -432,6 +514,11 @@ public class UiField {
                             uiField5_type = "LISTOFVALUES";
 
                         }
+                            //If an input is there ,disable other inputs
+                            if(node.getQuantity()!=-1){
+                                //some value already exists
+                                disableMultipleInputs = true ;
+                            }
                         if (uiField5_dis) {
                             uiField5_bgColor = "color:Silver;";
                         }
@@ -455,6 +542,12 @@ public class UiField {
                         selectedValue = subGrpName;
                         czNodeName6 = node.getCzNodeName();
                         uiField6_code = czNodeName6;
+                        if(node.getReferenceQuantiy()!=-1){
+                            sumRef = sumRef+node.getReferenceQuantiy();
+                        }
+                        if(node.getTargetQuantity()!=-1){
+                            sumTar  = sumTar+node.getTargetQuantity();
+                        }
                         if (node.isDisplayReferenceColor())
                             uiField6_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -467,6 +560,7 @@ public class UiField {
                         int qty = node.getQuantity();
                         if(qty!=-1){
                             uiField6_qty = Integer.toString(qty);
+                            sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
                         switch (uiElementType) {
                         case 1:
@@ -479,6 +573,11 @@ public class UiField {
                             uiField6_type = "LISTOFVALUES";
 
                         }
+                            //If an input is there ,disable other inputs
+                            if(node.getQuantity()!=-1){
+                                //some value already exists
+                                disableMultipleInputs = true ;
+                            }
                         if (uiField6_dis) {
                             uiField6_bgColor = "color:Silver;";
                         }
@@ -503,6 +602,12 @@ public class UiField {
                         selectedValue = subGrpName;
                         czNodeName7 = node.getCzNodeName();
                         uiField7_code = czNodeName7;
+                        if(node.getReferenceQuantiy()!=-1){
+                            sumRef = sumRef+node.getReferenceQuantiy();
+                        }
+                        if(node.getTargetQuantity()!=-1){
+                            sumTar = sumTar+node.getTargetQuantity();
+                        }
                         if (node.isDisplayReferenceColor())
                             uiField7_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -515,6 +620,7 @@ public class UiField {
                         int qty = node.getQuantity();
                         if(qty!=-1){
                             uiField7_qty = Integer.toString(qty);
+                            sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
                         switch (uiElementType) {
                         case 1:
@@ -527,6 +633,11 @@ public class UiField {
                             uiField7_type = "LISTOFVALUES";
 
                         }
+                            //If an input is there ,disable other inputs
+                            if(node.getQuantity()!=-1){
+                                //some value already exists
+                                disableMultipleInputs = true ;
+                            }
                         if (uiField7_dis) {
                             uiField7_bgColor = "color:Silver;";
                         }
@@ -551,6 +662,12 @@ public class UiField {
                         selectedValue = subGrpName;
                         czNodeName8 = node.getCzNodeName();
                         uiField8_code = czNodeName8;
+                        if(node.getReferenceQuantiy()!=-1){
+                            sumRef = sumRef+node.getReferenceQuantiy();
+                        }
+                        if(node.getTargetQuantity()!=-1){
+                            sumTar = sumTar+node.getTargetQuantity();
+                        }
                         if (node.isDisplayReferenceColor())
                             uiField8_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -563,9 +680,8 @@ public class UiField {
                         int qty = node.getQuantity();
                         if(qty!=-1){
                             uiField8_qty = Integer.toString(qty);
+                            sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
-                        System.out.println("Element Type for 8th field " +
-                                           uiElementType);
                         switch (uiElementType) {
                         case 1:
                             uiField8_type = "NUMERIC";
@@ -577,6 +693,11 @@ public class UiField {
                             uiField8_type = "LISTOFVALUES";
 
                         }
+                            //If an input is there ,disable other inputs
+                            if(node.getQuantity()!=-1){
+                                //some value already exists
+                                disableMultipleInputs = true ;
+                            }
                         if (uiField8_dis) {
                             uiField8_bgColor = "color:Silver;";
                         }
@@ -598,12 +719,16 @@ public class UiField {
                         !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                         node = listOfNodes.get(i).getConfigUiNodes().get(0);
                         //Ui field 9 is to show the reference quantity
-                        uiField9 =
-                                node.getReferenceQuantiy() == -1 ? null : Integer.toString(node.getReferenceQuantiy()); //node.getUiNodeName();
-                        System.out.println("UiField9 Value " + uiField9);
+                        uiField9 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         czNodeName9 = node.getCzNodeName();
                         uiField9_code = czNodeName9;
+                        if(node.getReferenceQuantiy()!=-1){
+                            sumRef = sumRef+node.getReferenceQuantiy();
+                        }
+                        if(node.getTargetQuantity()!=-1){
+                            sumTar = sumTar+node.getTargetQuantity();
+                        }
                         if (node.isDisplayReferenceColor())
                             uiField9_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -616,6 +741,7 @@ public class UiField {
                         int qty = node.getQuantity();
                         if(qty!=-1){
                             uiField9_qty = Integer.toString(qty);
+                            sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
                         switch (uiElementType) {
                         case 1:
@@ -628,6 +754,11 @@ public class UiField {
                             uiField9_type = "LISTOFVALUES";
 
                         }
+                            //If an input is there ,disable other inputs
+                            if(node.getQuantity()!=-1){
+                                //some value already exists
+                                disableMultipleInputs = true ;
+                            }
                         if (uiField9_dis) {
                             uiField9_bgColor = "color:Silver;";
                         }
@@ -647,12 +778,16 @@ public class UiField {
                         listOfNodes.get(i).getConfigUiNodes() != null &&
                         !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                         node = listOfNodes.get(i).getConfigUiNodes().get(0);
-                        uiField10 =
-                                node.getTargetQuantity() == -1 ? null : Integer.toString(node.getTargetQuantity()); //node.getUiNodeName();
-                        System.out.println("Field 10 value " + uiField10);
+                        uiField10 = node.getUiNodeName();
                         selectedValue = subGrpName;
                         czNodeName10 = node.getCzNodeName();
                         uiField10_code = czNodeName10;
+                        if(node.getReferenceQuantiy()!=-1){
+                            sumRef = sumRef+node.getReferenceQuantiy();
+                        }
+                        if(node.getTargetQuantity()!=-1){
+                            sumTar = sumTar+node.getTargetQuantity();
+                        }
                         if (node.isDisplayReferenceColor())
                             uiField10_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
@@ -665,6 +800,7 @@ public class UiField {
                         int qty = node.getQuantity();
                         if(qty!=-1){
                             uiField10_qty = Integer.toString(qty);
+                            sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
                         switch (uiElementType) {
                         case 1:
@@ -677,6 +813,11 @@ public class UiField {
                             uiField10_type = "LISTOFVALUES";
 
                         }
+                            //If an input is there ,disable other inputs
+                            if(node.getQuantity()!=-1){
+                                //some value already exists
+                                disableMultipleInputs = true ;
+                            }
                         if (uiField10_dis) {
                             uiField10_bgColor = "color:Silver;";
                         }
@@ -691,9 +832,139 @@ public class UiField {
                         }
                     }
                     break;
+                
+                    case 10:
+                        if (listOfNodes.get(i) != null &&
+                            listOfNodes.get(i).getConfigUiNodes() != null &&
+                            !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
+                            node = listOfNodes.get(i).getConfigUiNodes().get(0);
+                            uiField11 = node.getUiNodeName();
+                            selectedValue = subGrpName;
+                            czNodeName11 = node.getCzNodeName();
+                            uiField11_code = czNodeName11;
+                            if(node.getReferenceQuantiy()!=-1){
+                                sumRef = sumRef+node.getReferenceQuantiy();
+                            }
+                            if(node.getTargetQuantity()!=-1){
+                                sumTar = sumTar+node.getTargetQuantity();
+                            }
+                            if (node.isDisplayReferenceColor())
+                                uiField11_color = SudokuUtils.REFERENCE_COLOR;
+                            else if (node.isDisplayTargetColor())
+                                uiField11_color = SudokuUtils.TARGET_COLOR;
+                            uiField11_dis = node.isDisableNode();
+                            uiField11_readOnly = node.isReadOnly();
+                            uiField11_identifier = node.getIdentifier();
+                            ConfiguratorUiElement uiElement = listOfNodes.get(i);
+                            int uiElementType = uiElement.getUiElementType();
+                            int qty = node.getQuantity();
+                            if(qty!=-1){
+                                uiField11_qty = Integer.toString(qty);
+                                sumLicenceInputs = sumLicenceInputs+node.getQuantity();
+                            }
+                            switch (uiElementType) {
+                            case 1:
+                                uiField11_type = "NUMERIC";
+                            case 2:
+                                uiField11_type = "TEXT";
+                            case 3:
+                                uiField11_type = "OPTION";
+                            case 4:
+                                uiField11_type = "LISTOFVALUES";
+
+                            }
+                                //If an input is there ,disable other inputs
+                                if(node.getQuantity()!=-1){
+                                    //some value already exists
+                                    disableMultipleInputs = true ;
+                                }
+                            if (uiField11_dis) {
+                                uiField11_bgColor = "color:Silver;";
+                            }
+                            if (uiField11_readOnly) {
+                                uiField11_bgColor = "color:#d9b3ff;";
+                            }
+                            if (uiField11_color != null) {
+                                uiField11_bgColor = "color:InfoBackground";
+                            }
+                            if (uiField11_dis) {
+                                uiField11_color = "Yellow";
+                            }
+                        }
+                        break;
+                
+                    case 11:
+                        if (listOfNodes.get(i) != null &&
+                            listOfNodes.get(i).getConfigUiNodes() != null &&
+                            !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
+                            node = listOfNodes.get(i).getConfigUiNodes().get(0);
+                            uiField12 = node.getUiNodeName();
+                            System.out.println("Field 12 value " + uiField12);
+                            selectedValue = subGrpName;
+                            czNodeName12 = node.getCzNodeName();
+                            uiField12_code = czNodeName12;
+                            if(node.getReferenceQuantiy()!=-1){
+                                sumRef = sumRef+node.getReferenceQuantiy();
+                            }
+                            if(node.getTargetQuantity()!=-1){
+                                sumTar = sumTar+node.getTargetQuantity();
+                            }
+                            if (node.isDisplayReferenceColor())
+                                uiField12_color = SudokuUtils.REFERENCE_COLOR;
+                            else if (node.isDisplayTargetColor())
+                                uiField12_color = SudokuUtils.TARGET_COLOR;
+                            uiField12_dis = node.isDisableNode();
+                            uiField12_readOnly = node.isReadOnly();
+                            uiField12_identifier = node.getIdentifier();
+                            ConfiguratorUiElement uiElement = listOfNodes.get(i);
+                            int uiElementType = uiElement.getUiElementType();
+                            int qty = node.getQuantity();
+                            if(qty!=-1){
+                                uiField12_qty = Integer.toString(qty);
+                                sumLicenceInputs = sumLicenceInputs+node.getQuantity();
+                            }
+                            switch (uiElementType) {
+                            case 1:
+                                uiField12_type = "NUMERIC";
+                            case 2:
+                                uiField12_type = "TEXT";
+                            case 3:
+                                uiField12_type = "OPTION";
+                            case 4:
+                                uiField12_type = "LISTOFVALUES";
+
+                            }
+                                //If an input is there ,disable other inputs
+                                if(node.getQuantity()!=-1){
+                                    //some value already exists
+                                    disableMultipleInputs = true ;
+                                }
+                            if (uiField12_dis) {
+                                uiField12_bgColor = "color:Silver;";
+                            }
+                            if (uiField12_readOnly) {
+                                uiField12_bgColor = "color:#d9b3ff;";
+                            }
+                            if (uiField12_color != null) {
+                                uiField12_bgColor = "color:InfoBackground";
+                            }
+                            if (uiField12_dis) {
+                                uiField12_color = "Yellow";
+                            }
+                        }
+                        break;
 
                 }
             }
+        }
+        if(sumLicenceInputs!=0){
+            digitsEntered = Integer.toString(sumLicenceInputs);
+        }
+        if(sumTar!=0){
+            sumTarget = Integer.toString(sumTar);
+        }
+        if(sumRef!=0){
+            sumReference = Integer.toString(sumRef);
         }
     }
 
@@ -1571,5 +1842,189 @@ public class UiField {
 
     public List<SelectItem> getListOfValueModel() {
         return listOfValueModel;
+    }
+
+    public void setUiField11(String uiField11) {
+        this.uiField11 = uiField11;
+    }
+
+    public String getUiField11() {
+        return uiField11;
+    }
+
+    public void setUiField12(String uiField12) {
+        this.uiField12 = uiField12;
+    }
+
+    public String getUiField12() {
+        return uiField12;
+    }
+
+    public void setUiField11_color(String uiField11_color) {
+        this.uiField11_color = uiField11_color;
+    }
+
+    public String getUiField11_color() {
+        return uiField11_color;
+    }
+
+    public void setUiField12_color(String uiField12_color) {
+        this.uiField12_color = uiField12_color;
+    }
+
+    public String getUiField12_color() {
+        return uiField12_color;
+    }
+
+    public void setUiField11_code(String uiField11_code) {
+        this.uiField11_code = uiField11_code;
+    }
+
+    public String getUiField11_code() {
+        return uiField11_code;
+    }
+
+    public void setUiField12_code(String uiField12_code) {
+        this.uiField12_code = uiField12_code;
+    }
+
+    public String getUiField12_code() {
+        return uiField12_code;
+    }
+
+    public void setUiField11_type(String uiField11_type) {
+        this.uiField11_type = uiField11_type;
+    }
+
+    public String getUiField11_type() {
+        return uiField11_type;
+    }
+
+    public void setUiField12_type(String uiField12_type) {
+        this.uiField12_type = uiField12_type;
+    }
+
+    public String getUiField12_type() {
+        return uiField12_type;
+    }
+
+    public void setCzNodeName11(String czNodeName11) {
+        this.czNodeName11 = czNodeName11;
+    }
+
+    public String getCzNodeName11() {
+        return czNodeName11;
+    }
+
+    public void setCzNodeName12(String czNodeName12) {
+        this.czNodeName12 = czNodeName12;
+    }
+
+    public String getCzNodeName12() {
+        return czNodeName12;
+    }
+
+    public void setUiField11_qty(String uiField11_qty) {
+        this.uiField11_qty = uiField11_qty;
+    }
+
+    public String getUiField11_qty() {
+        return uiField11_qty;
+    }
+
+    public void setUiField12_qty(String uiField12_qty) {
+        this.uiField12_qty = uiField12_qty;
+    }
+
+    public String getUiField12_qty() {
+        return uiField12_qty;
+    }
+
+    public void setUiField11_dis(Boolean uiField11_dis) {
+        this.uiField11_dis = uiField11_dis;
+    }
+
+    public Boolean getUiField11_dis() {
+        return uiField11_dis;
+    }
+
+    public void setUiField12_dis(Boolean uiField12_dis) {
+        this.uiField12_dis = uiField12_dis;
+    }
+
+    public Boolean getUiField12_dis() {
+        return uiField12_dis;
+    }
+
+    public void setUiField11_readOnly(Boolean uiField11_readOnly) {
+        this.uiField11_readOnly = uiField11_readOnly;
+    }
+
+    public Boolean getUiField11_readOnly() {
+        return uiField11_readOnly;
+    }
+
+    public void setUiField12_readOnly(Boolean uiField12_readOnly) {
+        this.uiField12_readOnly = uiField12_readOnly;
+    }
+
+    public Boolean getUiField12_readOnly() {
+        return uiField12_readOnly;
+    }
+
+    public void setUiField11_identifier(String uiField11_identifier) {
+        this.uiField11_identifier = uiField11_identifier;
+    }
+
+    public String getUiField11_identifier() {
+        return uiField11_identifier;
+    }
+
+    public void setUiField12_identifier(String uiField12_identifier) {
+        this.uiField12_identifier = uiField12_identifier;
+    }
+
+    public String getUiField12_identifier() {
+        return uiField12_identifier;
+    }
+
+    public void setUiField11_bgColor(String uiField11_bgColor) {
+        this.uiField11_bgColor = uiField11_bgColor;
+    }
+
+    public String getUiField11_bgColor() {
+        return uiField11_bgColor;
+    }
+
+    public void setUiField12_bgColor(String uiField12_bgColor) {
+        this.uiField12_bgColor = uiField12_bgColor;
+    }
+
+    public String getUiField12_bgColor() {
+        return uiField12_bgColor;
+    }
+
+    public void setDisableMultipleInputs(Boolean disableMultipleInputs) {
+        this.disableMultipleInputs = disableMultipleInputs;
+    }
+
+    public Boolean getDisableMultipleInputs() {
+        return disableMultipleInputs;
+    }
+
+    public void setSumReference(String sumReference) {
+        this.sumReference = sumReference;
+    }
+
+    public String getSumReference() {
+        return sumReference;
+    }
+
+    public void setSumTarget(String sumTarget) {
+        this.sumTarget = sumTarget;
+    }
+
+    public String getSumTarget() {
+        return sumTarget;
     }
 }

@@ -73,6 +73,16 @@
               </af:panelGroupLayout>
             </af:dialog>
           </af:popup>
+          <af:popup id="p1" binding="#{ConfiguratorBean.errorPopup}">
+                <af:dialog id="d3" title="Error(s) occurred :"
+                           contentWidth="450" contentHeight="200" type="cancel"
+                           inlineStyle="color:Red;">
+                  <af:panelGroupLayout id="pgl11" layout="scroll">
+                    <af:outputFormatted id="ot15" inlineStyle="color:Red;"
+                                        binding="#{ConfiguratorBean.errMessage}"/>
+                  </af:panelGroupLayout>
+                </af:dialog>
+              </af:popup>
           <af:listView id="sysLv" value="#{ConfiguratorBean.sysInfraTreeModel}"
                        var="node" binding="#{ConfiguratorBean.sysInfraListView}"
                        groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
@@ -911,9 +921,11 @@
                                                             valueChangeListener="#{ConfiguratorBean.handleLOVInput}"
                                                             autoSubmit="true"
                                                             valuePassThru="true">
-                                          <f:selectItems value="#{sysConIter.listOfValueModel}" id="si1"/>
+                                          <f:selectItems value="#{sysConIter.listOfValueModel}"
+                                                         id="si1"/>
                                         </af:selectOneChoice>
-                                        <af:inputText label="Label 8" id="it4" visible="false"
+                                        <af:inputText label="Label 8" id="it4"
+                                                      visible="false"
                                                       placeholder="#{sysConIter.parentGroupName}"/>
                                       </af:panelGroupLayout>
                                     </af:group>
@@ -1840,9 +1852,7 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs43_11"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
-                                  <f:facet name="innerLeft">
-                                    
-                                  </f:facet>
+                                  <f:facet name="innerLeft"></f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs47_11"
                                                       inlineStyle="height:25px; width:130px; border-style:none;">
@@ -1882,9 +1892,7 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs62_11"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
-                                  <f:facet name="innerLeft">
-                                    
-                                  </f:facet>
+                                  <f:facet name="innerLeft"></f:facet>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
                               <af:panelGroupLayout id="drs12_11r"
@@ -1950,7 +1958,7 @@
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs_pgl19r">
-                                      <af:outputFormatted value="#{theadIter.uiField9}"
+                                      <af:outputFormatted value="#{theadIter.sumReference}"
                                                           id="drs_of13r"
                                                           inlineStyle="color:Maroon; font-weight:bold;"/>
                                     </af:panelGroupLayout>
@@ -1962,7 +1970,7 @@
                                                       inlineStyle="height:25px; width:10px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs_pgl21r">
-                                      <af:outputFormatted value="#{theadIter.uiField10}"
+                                      <af:outputFormatted value="#{theadIter.sumTarget}"
                                                           id="drs_of14r"
                                                           inlineStyle="color:Teal; font-weight:bold;"/>
                                     </af:panelGroupLayout>
@@ -1983,9 +1991,7 @@
                                            id="drs28_11r"/>
                                 <af:panelBorderLayout id="drs31_11r"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft">
-                                    
-                                  </f:facet>
+                                  <f:facet name="innerLeft"></f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs32_11r"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
@@ -2085,7 +2091,8 @@
                                     <af:panelGroupLayout id="drs342ir1"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:inputText id="drs372ir1" visible="true"
+                                      <af:inputText id="drs372ir1"
+                                                    visible="true"
                                                     disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}"
                                                     columns="5"
                                                     autoSubmit="true"
@@ -2189,7 +2196,7 @@
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl22">
-                                      <af:outputFormatted value="#{theadIter.uiField9}"
+                                      <af:outputFormatted value="#{theadIter.sumReference}"
                                                           id="drs_of13x"
                                                           inlineStyle="color:Maroon; font-weight:bold;"/>
                                     </af:panelGroupLayout>
@@ -2201,7 +2208,7 @@
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl23">
-                                      <af:outputFormatted value="#{theadIter.uiField10}"
+                                      <af:outputFormatted value="#{theadIter.sumTarget}"
                                                           id="drs_of14x"
                                                           inlineStyle="color:Teal; font-weight:bold;"/>
                                     </af:panelGroupLayout>
@@ -2222,15 +2229,11 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs31_21"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft">
-                                    
-                                  </f:facet>
+                                  <f:facet name="innerLeft"></f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs32_21"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft">
-                                    
-                                  </f:facet>
+                                  <f:facet name="innerLeft"></f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs33_21"
                                                       inlineStyle="height:25px; width:130px; border-style:none;">
@@ -2394,7 +2397,7 @@
                                                     valueChangeListener="#{sessionScope.ConfiguratorBean.handleInput}"
                                                     value="#{theadIter.digitsEntered}"
                                                     rows="1"
-                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}">
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly or theadIter.disableMultipleInputs}">
                                         <af:validateRegExp pattern="[0-9]{1,10}"
                                                            messageDetailNoMatch="Only Numbers allowed.."/>
                                       </af:inputText>
@@ -2421,7 +2424,7 @@
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs23">
-                                      <af:outputFormatted value="#{theadIter.uiField9}"
+                                      <af:outputFormatted value="#{theadIter.sumReference}"
                                                           id="drs24"
                                                           inlineStyle="color:Maroon; font-weight:bold;"/>
                                     </af:panelGroupLayout>
@@ -2432,7 +2435,7 @@
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs26">
-                                      <af:outputFormatted value="#{theadIter.uiField10}"
+                                      <af:outputFormatted value="#{theadIter.sumTarget}"
                                                           id="drs27"
                                                           inlineStyle="color:Teal; font-weight:bold;"/>
                                     </af:panelGroupLayout>
@@ -2618,9 +2621,9 @@
               </af:panelGridLayout>
             </af:listItem>
           </af:listView>
-<af:listView id="dockLv" value="#{ConfiguratorBean.dockingTreeModel}"
+          <af:listView id="dockLv" value="#{ConfiguratorBean.dockingTreeModel}"
                        var="node"
-             binding="#{ConfiguratorBean.dockingListViewBinding}"
+                       binding="#{ConfiguratorBean.dockingListViewBinding}"
                        groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
                        emptyText=" ">
             <f:facet name="groupHeaderStamp">
@@ -2630,14 +2633,16 @@
                                         inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
                                         rendered="#{node.nodeRefColor ne null}">
                     <f:facet name="start">
-                      <af:outputFormatted id="dockof1" value="." rendered="false"/>
+                      <af:outputFormatted id="dockof1" value="."
+                                          rendered="false"/>
                     </f:facet>
                   </af:panelBorderLayout>
                   <af:panelBorderLayout id="dockpbl2"
                                         inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
                                         rendered="#{node.nodeTargetColor ne null}">
                     <f:facet name="start">
-                      <af:outputFormatted value="." id="odockf2" rendered="false"/>
+                      <af:outputFormatted value="." id="odockf2"
+                                          rendered="false"/>
                     </f:facet>
                   </af:panelBorderLayout>
                   <af:panelBorderLayout id="dockpbl3"
@@ -2694,7 +2699,8 @@
                                          value="#{topNode.uiFieldCollection}"
                                          var="theadIter">
                               <af:panelGroupLayout id="docktheadPgl"
-                                                   layout="horizontal">
+                                                   layout="horizontal"
+                                                   rendered="#{ topNode.index ne '3'}">
                                 <af:spacer width="50" height="10" id="docks1"/>
                                 <af:panelBorderLayout id="dockpbl11"
                                                       inlineStyle="height:25px; width:30px; border-style:groove;">
@@ -2922,6 +2928,420 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
+                              <af:panelGroupLayout id="docktheadPglx"
+                                                   layout="horizontal"
+                                                   rendered="#{ topNode.index eq '3'}">
+                                <af:spacer width="50" height="10" id="docks1x"/>
+                                <af:panelBorderLayout id="dockpbl11x"
+                                                      inlineStyle="height:25px; width:30px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="docks2x"/>
+                                <af:panelBorderLayout id="dockpb_l3x"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dockpgl12x"
+                                                         halign="left"
+                                                         layout="horizontal">
+                                      <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                          id="dockof4x"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dockpbl12x"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="docks3x"/>
+                                <af:panelBorderLayout id="dockpbl13x"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10"
+                                           id="docks11x"/>
+                                <af:panelBorderLayout id="dockpbl8x"
+                                                      inlineStyle="height:25px; width:10px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted value="*" id="dockof9x"
+                                                        inlineStyle="font-size:x-large; color:Red;"
+                                                        rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dockpbl9x"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dockpb20x"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                  <af:panelGroupLayout id="pgl25">
+                                    <af:panelDashboard id="pd1" columns="5"
+                                                       rowHeight="50px">
+                                      <af:panelBox text="PanelBox1" id="pb8"
+                                                   visible="false"
+                                                   showHeader="never"/>
+                                      <af:panelBox text="PanelBox2" id="pb9"
+                                                   showHeader="never"
+                                                   showDisclosure="false">
+                                        <af:panelBorderLayout id="dockpb1x"
+                                                              inlineStyle="height:60px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="dockpgl7x"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="dockcl1x"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                              partialSubmit="false">
+                                                <af:outputFormatted id="dockth_of1x"
+                                                                    value="#{theadIter.uiField1}"
+                                                                    inlineStyle="#{theadIter.uiField1_bgColor}"/>
+                                                <af:inputText id="dockip1_helperx"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName1}"
+                                                              shortDesc="#{theadIter.uiField1_identifier}"
+                                                              label="#{theadIter.uiField1_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox3" id="pb10"
+                                                showHeader="never"   showDisclosure="false">
+                                        <af:panelBorderLayout id="dockpb2x"
+                                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="dockpgl_7x"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="dockcl2x"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
+                                                <af:outputFormatted id="dockth_of2x"
+                                                                    value="#{theadIter.uiField2}"
+                                                                    inlineStyle="#{theadIter.uiField2_bgColor}"/>
+                                                <af:inputText id="dockip2_helperx"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName2}"
+                                                              shortDesc="#{theadIter.uiField2_identifier}"
+                                                              label="#{theadIter.uiField2_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox4" id="pb11"
+                                                   showDisclosure="false"
+                                                   showHeader="never">
+                                        <af:panelBorderLayout id="dockpb3x"
+                                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="dockpgl_71x"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="dockcl3x"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
+                                                <af:outputFormatted id="tdockh_of3x"
+                                                                    value="#{theadIter.uiField3}"
+                                                                    inlineStyle="#{theadIter.uiField3_bgColor}"/>
+                                                <af:inputText id="dockip3_helperx"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName3}"
+                                                              shortDesc="#{theadIter.uiField3_identifier}"
+                                                              label="#{theadIter.uiField3_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox5" id="pb12"
+                                                   visible="false"
+                                                   showHeader="never"/>
+                                      <af:panelBox text="PanelBox6" id="pb13"
+                                                   showDisclosure="false"
+                                                   showHeader="never">
+                                        <af:panelBorderLayout id="panelBorderLayout1"
+                                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField12_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="panelGroupLayout8"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="commandLink8"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField12_dis or theadIter.uiField12_readOnly}">
+                                                <af:outputFormatted id="outputFormatted9"
+                                                                    value="#{theadIter.uiField12}"
+                                                                    inlineStyle="#{theadIter.uiField12_bgColor}"/>
+                                                <af:inputText id="inputText8"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName12}"
+                                                              shortDesc="#{theadIter.uiField12_identifier}"
+                                                              label="#{theadIter.uiField12_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox7" id="pb14"
+                                                   showDisclosure="false"
+                                                   visible="false"
+                                                   showHeader="never"/>
+                                      <af:panelBox text="PanelBox8" id="pb15"
+                                                   visible="false"
+                                                   showHeader="never"/>
+                                      <af:panelBox text="PanelBox9" id="pb16"
+                                                   visible="false"
+                                                   showHeader="never"/>
+                                      <af:panelBox text="PanelBox10" id="pb17"
+                                                   showDisclosure="false"
+                                                   showHeader="never">
+                                        <af:panelBorderLayout id="dockpb4x"
+                                                              inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="dockpgl_17x"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="dockcl4x"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
+                                                <af:outputFormatted id="dockth_of4x"
+                                                                    value="#{theadIter.uiField4}"
+                                                                    inlineStyle="#{theadIter.uiField4_bgColor}"/>
+                                                <af:inputText id="dockip4_helperx"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName4}"
+                                                              shortDesc="#{theadIter.uiField4_identifier}"
+                                                              label="#{theadIter.uiField4_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox11" id="pb17x"
+                                                   showDisclosure="false"
+                                                   showHeader="never">
+                                        <af:panelBorderLayout id="panelBorderLayoutjh1"
+                                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField11_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="panelGroupLayoutg8"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="commandLingk8"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField10_dis or theadIter.uiField11_readOnly}">
+                                                <af:outputFormatted id="outputFormattged9"
+                                                                    value="#{theadIter.uiField11}"
+                                                                    inlineStyle="#{theadIter.uiField11_bgColor}"/>
+                                                <af:inputText id="inputgText8"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName11}"
+                                                              shortDesc="#{theadIter.uiField11_identifier}"
+                                                              label="#{theadIter.uiField11_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox12" id="pb19"
+                                                   visible="false"
+                                                   showDisclosure="false"
+                                                   showHeader="never"/>
+                                      <af:panelBox text="PanelBox13" id="pb29"
+                                                   visible="false"
+                                                   showDisclosure="false"
+                                                   showHeader="never"/>
+                                      <af:panelBox text="PanelBox14" id="pb21"
+                                                   visible="false"
+                                                   showDisclosure="false"
+                                                   showHeader="never"/>
+                                      <af:panelBox text="PanelBox15" id="pb22"
+                                                   showDisclosure="false"
+                                                   showHeader="never">
+                                        <af:panelBorderLayout id="dockpb5x"
+                                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="dockpgl9x"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="dockcl5x"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
+                                                <af:outputFormatted id="dockth_of5x"
+                                                                    value="#{theadIter.uiField5}"
+                                                                    inlineStyle="#{theadIter.uiField5_bgColor}"/>
+                                                <af:inputText id="dockip5_helperx"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName5}"
+                                                              shortDesc="#{theadIter.uiField5_identifier}"
+                                                              label="#{theadIter.uiField5_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox16" id="pb16x"
+                                                   showDisclosure="false"
+                                                   showHeader="never">
+                                        <af:panelBorderLayout id="panelBorderfLayout1"
+                                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField10_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="panelfGroupLayout8"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="comfmandLink8"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField10_dis or theadIter.uiField10_readOnly}">
+                                                <af:outputFormatted id="outputFormvatted9"
+                                                                    value="#{theadIter.uiField10}"
+                                                                    inlineStyle="#{theadIter.uiField10_bgColor}"/>
+                                                <af:inputText id="ifnputText8"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName10}"
+                                                              shortDesc="#{theadIter.uiField10_identifier}"
+                                                              label="#{theadIter.uiField10_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox17" id="pb1bx"
+                                                   showDisclosure="false"
+                                                   visible="false"
+                                                   showHeader="never"></af:panelBox>
+                                      <af:panelBox text="PanelBox18" id="pb1v7x"
+                                                   visible="false"
+                                                   showDisclosure="false"
+                                                   showHeader="never"></af:panelBox>
+                                      <af:panelBox text="PanelBox19" id="pb17rx"
+                                                   visible="false"
+                                                   showDisclosure="false"
+                                                   showHeader="never"></af:panelBox>
+                                      <af:panelBox text="PanelBox20" id="pb1b7x"
+                                                   showDisclosure="false"
+                                                   visible="true"
+                                                   showHeader="never">
+                                        <af:panelBorderLayout id="dockpb6x"
+                                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="dockpgl10x"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="dockcl6x"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
+                                                <af:outputFormatted id="dockth_of6x"
+                                                                    value="#{theadIter.uiField6}"
+                                                                    inlineStyle="#{theadIter.uiField6_bgColor}"/>
+                                                <af:inputText id="dockip6_helperx"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName6}"
+                                                              shortDesc="#{theadIter.uiField6_identifier}"
+                                                              label="#{theadIter.uiField6_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox21" id="pbc17x"
+                                                   showDisclosure="false"
+                                                   visible="false"
+                                                   showHeader="never"></af:panelBox>
+                                      <af:panelBox text="PanelBox22" id="pb1f7x"
+                                                   showDisclosure="false"
+                                                   showHeader="never">
+                                        <af:panelBorderLayout id="dockpb7x"
+                                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField9_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="dockpgl20x"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="dockcl7x"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField9_dis or theadIter.uiField9_readOnly}">
+                                                <af:outputFormatted id="dockth_of7x"
+                                                                    value="#{theadIter.uiField9}"
+                                                                    inlineStyle="#{theadIter.uiField9_bgColor}"/>
+                                                <af:inputText id="dockip7_helperx"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName9}"
+                                                              shortDesc="#{theadIter.uiField9_identifier}"
+                                                              label="#{theadIter.uiField9_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox23" id="pbf17x"
+                                                   showDisclosure="false"
+                                                   showHeader="never">
+                                        <af:panelBorderLayout id="panelBorderLayout2"
+                                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField8_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="panelGroupLayout9"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="commandLink9"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField8_dis or theadIter.uiField8_readOnly}">
+                                                <af:outputFormatted id="outputFormatted10"
+                                                                    value="#{theadIter.uiField8}"
+                                                                    inlineStyle="#{theadIter.uiField8_bgColor}"/>
+                                                <af:inputText id="inputText9"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName8}"
+                                                              shortDesc="#{theadIter.uiField8_identifier}"
+                                                              label="#{theadIter.uiField8_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox24" id="pb1h7x"
+                                                   showDisclosure="false"
+                                                   showHeader="never">
+                                        <af:panelBorderLayout id="panxelBorderLayout1"
+                                                              inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                          <f:facet name="innerLeft">
+                                            <af:panelGroupLayout id="pxanelGroupLayout8"
+                                                                 layout="horizontal"
+                                                                 halign="center">
+                                              <af:commandLink id="coxmmandLink8"
+                                                              actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                              disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
+                                                <af:outputFormatted id="outputFormattved9"
+                                                                    value="#{theadIter.uiField7}"
+                                                                    inlineStyle="#{theadIter.uiField7_bgColor}"/>
+                                                <af:inputText id="inxputText8"
+                                                              visible="false"
+                                                              value="#{theadIter.czNodeName7}"
+                                                              shortDesc="#{theadIter.uiField7_identifier}"
+                                                              label="#{theadIter.uiField7_color}"
+                                                              placeholder="#{theadIter.parentGroupName}"/>
+                                              </af:commandLink>
+                                            </af:panelGroupLayout>
+                                          </f:facet>
+                                        </af:panelBorderLayout>
+                                      </af:panelBox>
+                                      <af:panelBox text="PanelBox25" id="phb17x"
+                                                   showDisclosure="false"
+                                                   visible="false"
+                                                   showHeader="never"></af:panelBox>
+                                    </af:panelDashboard>
+                                  </af:panelGroupLayout>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
                             </af:iterator>
                           </af:showDetailHeader>
                         </af:panelGroupLayout>
@@ -2936,40 +3356,19 @@
       </f:facet>
     </af:panelStretchLayout>
     <af:panelStretchLayout id="conf_def_view"
-                           rendered="#{ConfiguratorBean.defaultViewOnLoad}">
-      <f:facet name="bottom"/>
+                           rendered="#{ConfiguratorBean.defaultViewOnLoad}"
+                           topHeight="70px" styleClass="AFStretchWidth">
       <f:facet name="center">
-        <af:panelGroupLayout
-                             xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                              id="pgl24" styleClass="AFStretchWidth">
-          <af:table value="#{bindings.UIGroupsVO.collectionModel}" var="row"
-                    rows="#{bindings.UIGroupsVO.rangeSize}"
-                    emptyText="#{bindings.UIGroupsVO.viewable ? 'No data to display.' : 'Access Denied.'}"
-                    fetchSize="#{bindings.UIGroupsVO.rangeSize}"
-                    rowBandingInterval="0" id="t2" rendered="false">
-            <af:column sortProperty="#{bindings.UIGroupsVO.hints.AdfUiCategory.name}"
-                       sortable="false"
-                       headerText="#{bindings.UIGroupsVO.hints.AdfUiCategory.label}"
-                       id="c1">
-              <af:outputText value="#{row.AdfUiCategory}" id="ot2"/>
-            </af:column>
-          </af:table>
           <af:iterator id="i8" value="#{bindings.UIGroupsVO.collectionModel}"
                        var="row">
             <af:showDetailHeader text="#{row.AdfUiCategory}" disclosed="true"
-                                 id="sdh3" styleClass="AFStretchWidth">
-              <f:facet name="context"/>
-              <f:facet name="menuBar"/>
-              <f:facet name="toolbar"/>
-              <f:facet name="legend"/>
-              <f:facet name="info"/>
-            </af:showDetailHeader>
+                                 id="sdh3" styleClass="AFStretchWidth"
+                                 inlineStyle="font-size:medium; font-weight:bolder;"/>
           </af:iterator>
         </af:panelGroupLayout>
       </f:facet>
-      <f:facet name="start"/>
-      <f:facet name="end"/>
-      <f:facet name="top"/>
     </af:panelStretchLayout>
     <af:popup id="resetConfig"
               binding="#{ConfiguratorBean.resetConfigurationPopup}">

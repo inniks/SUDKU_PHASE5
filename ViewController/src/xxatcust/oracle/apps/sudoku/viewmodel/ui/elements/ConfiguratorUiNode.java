@@ -78,6 +78,10 @@ public class ConfiguratorUiNode {
     }
 
     public void setCzNodeName(String czNodeName) {
+        
+        if(czNodeName !=null && czNodeName.contains("\"")) {
+            czNodeName = czNodeName.replace("\"","\\\"");
+        }
         this.czNodeName = czNodeName;
     }
 

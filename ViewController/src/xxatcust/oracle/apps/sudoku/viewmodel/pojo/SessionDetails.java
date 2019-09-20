@@ -2,6 +2,9 @@ package xxatcust.oracle.apps.sudoku.viewmodel.pojo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+
+import xxatcust.oracle.apps.sudoku.viewmodel.ui.elements.ConfiguratorUiNode;
 
 public class SessionDetails {
     private String userId;
@@ -30,6 +33,17 @@ public class SessionDetails {
     boolean createNewQuote = false;
     String sourceQuoteNumber;
     String targetQuoteNumber;
+    
+    boolean upgradeOnSourceConfiguration = false;
+    boolean upgradefromScratch = false;
+    boolean systemConfigurationFromUI = false;
+    boolean systemConfigurationFromImport = false;
+    
+    // Non bom items from the source configuration before doing upgrade 
+    HashSet<ConfiguratorUiNode> sourceConfigNonBomItems = new HashSet<ConfiguratorUiNode>();
+
+    // Bom items from the source configuration before doing upgrade 
+    HashSet<String> sourceConfigBomItems = new HashSet<String>();
     
     public SessionDetails() {
         super();
@@ -237,5 +251,53 @@ public class SessionDetails {
 
     public String getTargetQuoteNumber() {
         return targetQuoteNumber;
+    }
+
+    public void setUpgradeOnSourceConfiguration(boolean upgradeOnSourceConfiguration) {
+        this.upgradeOnSourceConfiguration = upgradeOnSourceConfiguration;
+    }
+
+    public boolean isUpgradeOnSourceConfiguration() {
+        return upgradeOnSourceConfiguration;
+    }
+
+    public void setUpgradefromScratch(boolean upgradefromScratch) {
+        this.upgradefromScratch = upgradefromScratch;
+    }
+
+    public boolean isUpgradefromScratch() {
+        return upgradefromScratch;
+    }
+
+    public void setSystemConfigurationFromUI(boolean systemConfigurationFromUI) {
+        this.systemConfigurationFromUI = systemConfigurationFromUI;
+    }
+
+    public boolean isSystemConfigurationFromUI() {
+        return systemConfigurationFromUI;
+    }
+
+    public void setSystemConfigurationFromImport(boolean systemConfigurationFromImport) {
+        this.systemConfigurationFromImport = systemConfigurationFromImport;
+    }
+
+    public boolean isSystemConfigurationFromImport() {
+        return systemConfigurationFromImport;
+    }
+
+    public void setSourceConfigNonBomItems(HashSet<ConfiguratorUiNode> sourceConfigNonBomItems) {
+        this.sourceConfigNonBomItems = sourceConfigNonBomItems;
+    }
+
+    public HashSet<ConfiguratorUiNode> getSourceConfigNonBomItems() {
+        return sourceConfigNonBomItems;
+    }
+
+    public void setSourceConfigBomItems(HashSet<String> sourceConfigBomItems) {
+        this.sourceConfigBomItems = sourceConfigBomItems;
+    }
+
+    public HashSet<String> getSourceConfigBomItems() {
+        return sourceConfigBomItems;
     }
 }

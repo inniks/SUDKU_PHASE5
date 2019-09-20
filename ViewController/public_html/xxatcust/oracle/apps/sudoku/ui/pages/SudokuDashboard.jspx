@@ -136,56 +136,65 @@
                       <f:facet name="footer"/>
                       <af:panelGroupLayout id="pgl_4" partialTriggers="ct2b1"
                                            layout="horizontal">
-                        <af:commandImageLink id="ct2b1" partialSubmit="true"
-                                             icon="/Resources/images/imgs/Import ref Config.png">
-                          <af:showPopupBehavior popupId="imSrcP1"
-                                                triggerType="click"/>
-                        </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s6"/>
-                        <af:commandImageLink id="ctb1_vre"
-                                             actionListener="#{viewScope.LoadDynamicRegionBean.navToViewRef}"
-                                             disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'ref'}"
-                                             icon="/Resources/images/imgs/View Ref.png"
-                                             partialSubmit="true"
-                                             disabledIcon="/Resources/images/viewRef_dis.png">
-                          <af:setPropertyListener from="viewRef"
-                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
-                                                  type="action"/>
-                        </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s7"/>
                         <af:commandImageLink id="ctb3"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToConfigurator}"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'config' or viewScope.LoadDynamicRegionBean.disableCurrentButton eq null}"
                                              partialSubmit="true"
                                              icon="/Resources/images/imgs/Configurator.png"
-                                             disabledIcon="/Resources/images/imgs/Configurator.png"
-                                             depressedIcon="/Resources/images/config_dis.png">
+                                             depressedIcon="/Resources/images/config_dis.png"
+                                             disabledIcon="/Resources/images/imgs/Configurator_dis.png">
                           <af:setPropertyListener from="configurator"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                           <af:setActionListener from="#{viewScope.LoadDynamicRegionBean.refreshToken}"
                                                 to="#{sessionScope.refreshFlag}"/>
                         </af:commandImageLink>
+                        <af:spacer width="5" height="10" id="s6"/>
+                        <af:commandImageLink id="ct2b1" partialSubmit="true"
+                                             icon="/Resources/images/imgs/Import ref Config.png">
+                          <af:showPopupBehavior popupId="imSrcP1"
+                                                triggerType="click"/>
+                        </af:commandImageLink>
+                        <af:spacer width="5" height="10" id="s7"/>
+                        <af:commandImageLink id="ctb1_vre"
+                                             actionListener="#{viewScope.LoadDynamicRegionBean.navToViewRef}"
+                                             disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'ref'}"
+                                             icon="/Resources/images/imgs/View Ref.png"
+                                             partialSubmit="true"
+                                             disabledIcon="/Resources/images/imgs/viewRef_dis.png">
+                          <af:setPropertyListener from="viewRef"
+                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
+                                                  type="action"/>
+                        </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s8"/>
-                        <af:commandImageLink id="ctb7" disabled="true"
-                                             disabledIcon="/Resources/images/imgs/Load preferences.png"
-                                             icon="/Resources/images/imgs/Load preferences.png"/>
-                        <af:spacer width="5" height="10" id="s9"/>
                         <af:commandImageLink id="ctb_qhdr" rendered="true"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToQuote}"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'quote'}"
                                              partialSubmit="true"
                                              icon="/Resources/images/imgs/Quote Header.png"
-                                             disabledIcon="/Resources/images/qhdr_dis.png">
+                                             disabledIcon="/Resources/images/imgs/qhdr_dis.png">
                           <af:setPropertyListener from="#{viewScope.LoadDynamicRegionBean.navString}"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandImageLink>
-                        <af:spacer width="4" height="10" id="s10"/>
+                        <af:spacer width="5" height="10" id="s9"/>
                         <af:commandImageLink id="ctb6"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.saveQuoteFromSysToOrcl}"
                                              icon="/Resources/images/imgs/Save To Orcl.png"
                                              partialSubmit="true"/>
+                        <af:spacer width="4" height="10" id="s10"/>
+                        <af:commandImageLink id="ctb19" disabled="true"
+                                             partialSubmit="true"
+                                             icon="/Resources/images/imgs/printQuote.png"
+                                             disabledIcon="/Resources/images/imgs/printQuote.png"/>
+                        <af:spacer width="5" height="5" id="s16"/>
+                        <af:commandImageLink id="ctb12" rendered="true"
+                                             disabled="false"
+                                             icon="/Resources/images/imgs/Cancel.png"
+                                             partialSubmit="true">
+                          <af:showPopupBehavior popupId="can_all"
+                                                triggerType="action"/>
+                        </af:commandImageLink>
                         <af:popup id="p2"
                                   binding="#{viewScope.LoadDynamicRegionBean.bindpopupDebug}"
                                   rendered="false">
@@ -196,49 +205,39 @@
                             </af:panelGroupLayout>
                           </af:dialog>
                         </af:popup>
-                        <af:spacer width="5" height="5" id="s16"/>
-                        <af:commandImageLink id="ctb12" rendered="true"
-                                             disabled="false"
-                                             icon="/Resources/images/imgs/Cancel.png"
-                                             partialSubmit="true">
-                          <af:showPopupBehavior popupId="can_all"
-                                                triggerType="action"/>
-                        </af:commandImageLink>
                       </af:panelGroupLayout>
                       <af:panelGroupLayout id="pgl5" layout="horizontal">
+                        <af:commandImageLink id="ctb7" disabled="true"
+                                             disabledIcon="/Resources/images/imgs/Load preferences.png"
+                                             icon="/Resources/images/imgs/Load preferences.png"/>
+                        <af:spacer width="5" height="10" id="s11"/>
                         <af:commandImageLink id="ctb5"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.exportTargetConfig}"
                                              icon="/Resources/images/imgs/Export Target Config.png"
                                              partialSubmit="true"/>
-                        <af:spacer width="5" height="10" id="s11"/>
+                        <af:spacer width="5" height="10" id="s12"/>
                         <af:commandImageLink id="ctb4"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToTargetConfig}"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'target'}"
                                              icon="/Resources/images/viewTargetEna.png"
-                                             disabledIcon="/Resources/images/imgs/View Target.png"
+                                             disabledIcon="/Resources/images/View Target_dis.png"
                                              partialSubmit="true">
                           <af:setPropertyListener from="targetRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s12"/>
+                        <af:spacer width="5" height="10" id="s13"/>
                         <af:commandImageLink id="ctb16" disabled="true"
                                              icon="/Resources/images/imgs/View PMF.png"
                                              partialSubmit="true"/>
-                        <af:spacer width="5" height="10" id="s13"/>
+                        <af:spacer width="5" height="10" id="s14"/>
                         <af:commandImageLink id="ctb17" disabled="true"
                                              icon="/Resources/images/imgs/View DUT.png"
                                              partialSubmit="true"/>
-                        <af:spacer width="5" height="10" id="s14"/>
+                        <af:spacer width="5" height="10" id="s15"/>
                         <af:commandImageLink id="ctb18" disabled="true"
                                              icon="/Resources/images/imgs/View Model File.png"
                                              partialSubmit="true"/>
-                        <af:spacer width="5" height="10" id="s15"/>
-                        <af:commandImageLink id="ctb19"
-                                             disabled="true"
-                                             partialSubmit="true"
-                                             icon="/Resources/images/imgs/printQuote.png"
-                                             disabledIcon="/Resources/images/imgs/printQuote.png"/>
                         <af:spacer width="5" height="10" id="s17"/>
                         <af:commandImageLink
                                              id="cil1"
