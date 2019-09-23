@@ -106,10 +106,12 @@ public class ConfiguratorBean {
     private List<ShowDetailItemCollection> calDiagSdiCollection;
     private List<ShowDetailItemCollection> digitalSdiCollection;
     private List<ShowDetailItemCollection> dockingSdiCollection;
+    private List<ShowDetailItemCollection> dpsSdiCollection;
     private ChildPropertyTreeModel addToolsTreeModel;
     private ChildPropertyTreeModel sysInfraTreeModel;
     private ChildPropertyTreeModel calDiagTreeModel;
     private ChildPropertyTreeModel digitalTreeModel;
+    private ChildPropertyTreeModel dpsTreeModel;
     private ArrayList<UxTreeNode> sysInfraroot;
     private ArrayList<UxTreeNode> rootWarranty;
     private ArrayList<UxTreeNode> rootCalDiag;
@@ -117,6 +119,7 @@ public class ConfiguratorBean {
     private ArrayList<UxTreeNode> rootAddSwTools;
     private ArrayList<UxTreeNode> rootDigital;
     private ArrayList<UxTreeNode> rootDocking;
+    private ArrayList<UxTreeNode> rootDps;
     private RichPanelGroupLayout theadPanelGrp;
     private RichOutputText pageInitText;
     private RichListView sysInfraListView;
@@ -145,6 +148,7 @@ public class ConfiguratorBean {
     private RichPopup errorPopup;
     private RichOutputFormatted errMessage;
     private Boolean disableMultipleEntries;
+    private RichListView dpsListViewBinding;
 
     public ConfiguratorBean() {
         super();
@@ -240,6 +244,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         calDiagTreeModel = null;
         digitalTreeModel = null;
         dockingTreeModel = null;
+        dpsTreeModel = null;
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
@@ -382,6 +387,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         calDiagTreeModel = null;
         digitalTreeModel = null;
         dockingTreeModel = null;
+        dpsTreeModel = null;
         if (sysInfraTreeModel == null) {
             sysInfraTreeModel =
                     SystemInfraBean.populateSysInfraParentTreeModel(sysInfraTreeModel,
@@ -440,6 +446,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                            rootDocking);
             dockingSdiCollection =
                     DockingBean.populateDockingSubGroups(v93k, dockingSdiCollection);
+        }
+        if (dpsTreeModel == null) {
+            dpsTreeModel =
+                    DpsDCScaleBean.populateDpsParentModel(dpsTreeModel,
+                                                           rootDps);
+            dpsSdiCollection =
+                    DpsDCScaleBean.populateDpsSubGroups(v93k, dpsSdiCollection);
         }
 
         defaultViewOnLoad = false;
@@ -825,7 +838,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
 
             SessionDetails sessionDetails = v93k.getSessionDetails();
-            if (sessionDetails != null) {
+            if (sessionDetails == null) {
                 sessionDetails = new SessionDetails();
             }
 
@@ -849,56 +862,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             ADFUtils.setSessionScopeValue("parentObject", v93k);
             v93k = callServlet(v93k);
             buildConfiguratorUI(v93k);
-            ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
-            //            if (v93k != null && v93k.getExceptionMap() != null) {
-            //                TreeMap<String, ArrayList<String>> warnings =
-            //                    v93k.getExceptionMap().getWarningList();
-            //                TreeMap<String, ArrayList<String>> notifications =
-            //                    v93k.getExceptionMap().getNotificationList();
-            //                StringBuilder warningMessage =
-            //                    new StringBuilder("<html><body>");
-            //                if (warnings != null && warnings.size() > 0) {
-            //
-            //
-            //                    for (Map.Entry<String, ArrayList<String>> entry :
-            //                         warnings.entrySet()) {
-            //                        String key = entry.getKey();
-            //                        //iterate for each key
-            //                        warningMessage.append("<p><b>" + key + " : " +
-            //                                              "</b></p>");
-            //                        ArrayList<String> value = entry.getValue();
-            //                        for (String str : value) {
-            //                            warningMessage.append("<p><b>" + str + "</b></p>");
-            //                        }
-            //                    }
-            //                    warningMessage.append("</body></html>");
-            //                }
-            //                if (notifications != null && notifications.size() > 0) {
-            //                    for (Map.Entry<String, ArrayList<String>> entry :
-            //                         notifications.entrySet()) {
-            //                        String key = entry.getKey();
-            //                        ArrayList<String> value = entry.getValue();
-            //                        warningMessage.append("<p><b>" + key + " : " +
-            //                                              "</b></p>");
-            //                        for (String str : value) {
-            //                            warningMessage.append("<p><b>" + str + "</b></p>");
-            //                        }
-            //                    }
-            //                    warningMessage.append("</body></html>");
-            //
-            //
-            //                }
-            //                if (warningMessage != null &&
-            //                    !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
-            //                    confirmPopup != null) {
-            //                    warnText.setValue(warningMessage.toString());
-            //                    RichPopup.PopupHints hints = new RichPopup.PopupHints();
-            //                    confirmPopup.show(hints);
-            //                }
-            //            }
-
+            ADFUtils.setSessionScopeValue("inputNodeValueMap", null);            
             displayConfigWarnAndErrors();
-            //confirmPopup.hide();
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         }
 
@@ -1578,5 +1543,29 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public Boolean getDisableMultipleEntries() {
         return disableMultipleEntries;
+    }
+
+    public void setDpsSdiCollection(List<ShowDetailItemCollection> dpsSdiCollection) {
+        this.dpsSdiCollection = dpsSdiCollection;
+    }
+
+    public List<ShowDetailItemCollection> getDpsSdiCollection() {
+        return dpsSdiCollection;
+    }
+
+    public void setDpsTreeModel(ChildPropertyTreeModel dpsTreeModel) {
+        this.dpsTreeModel = dpsTreeModel;
+    }
+
+    public ChildPropertyTreeModel getDpsTreeModel() {
+        return dpsTreeModel;
+    }
+
+    public void setDpsListViewBinding(RichListView dpsListViewBinding) {
+        this.dpsListViewBinding = dpsListViewBinding;
+    }
+
+    public RichListView getDpsListViewBinding() {
+        return dpsListViewBinding;
     }
 }

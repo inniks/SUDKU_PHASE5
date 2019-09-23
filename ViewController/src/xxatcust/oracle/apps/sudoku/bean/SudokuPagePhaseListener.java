@@ -53,6 +53,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
     }
 
     public void manageAttributes(SudokuAMImpl amClient) {
+        ADFUtils.setSessionScopeValue("parentObject", null);
         FacesContext fctx = FacesContext.getCurrentInstance();
         Session session = amClient.getAppsSession();
         //   Map ebsAttribs = session.getInfo();
@@ -70,7 +71,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
        
-          validateEBSSession(pagePhaseEvent);
+          //validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {

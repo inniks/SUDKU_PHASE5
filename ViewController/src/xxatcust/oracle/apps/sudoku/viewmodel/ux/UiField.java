@@ -181,6 +181,7 @@ public class UiField {
         this.listOfNodes = listOfNodes;
         this.uiGrpIndex = uiGrpIndex ;
         int sumLicenceInputs = 0,sumRef=0,sumTar=0;
+        int countLicensesEntered = 0;
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
             
             ConfiguratorUiNode node = null;
@@ -258,8 +259,8 @@ public class UiField {
                         }
                         if(node.getQuantity()!=-1){
                             //some value already exists
-                            
-                            disableMultipleInputs = true ;
+                            countLicensesEntered++;
+                            //disableMultipleInputs = true ;
                         }
                         uiField1 = node.getUiNodeName();
                         selectedValue = subGrpName;
@@ -337,7 +338,8 @@ public class UiField {
                             //If an input is there ,disable other inputs
                             if(node.getQuantity()!=-1){
                                 //some value already exists
-                                disableMultipleInputs = true ;
+                                countLicensesEntered++;
+                                //disableMultipleInputs = true ;
                             }
                         
                         if (uiField2_dis) {
@@ -398,7 +400,8 @@ public class UiField {
                             //If an input is there ,disable other inputs
                             if(node.getQuantity()!=-1){
                                 //some value already exists
-                                disableMultipleInputs = true ;
+                                countLicensesEntered++;
+                                //disableMultipleInputs = true ;
                             }
                         if (uiField3_dis) {
                             uiField3_bgColor = "color:Silver;";
@@ -458,7 +461,8 @@ public class UiField {
                             if(node.getQuantity()!=-1){
                                 //some value already exists
                                 sumLicenceInputs = sumLicenceInputs+node.getQuantity();
-                                disableMultipleInputs = true ;
+                                countLicensesEntered++;
+                                //disableMultipleInputs = true ;
                             }
                         if (uiField4_dis) {
                             uiField4_bgColor = "color:Silver;";
@@ -517,7 +521,8 @@ public class UiField {
                             //If an input is there ,disable other inputs
                             if(node.getQuantity()!=-1){
                                 //some value already exists
-                                disableMultipleInputs = true ;
+                                countLicensesEntered++;
+                                //disableMultipleInputs = true ;
                             }
                         if (uiField5_dis) {
                             uiField5_bgColor = "color:Silver;";
@@ -576,7 +581,8 @@ public class UiField {
                             //If an input is there ,disable other inputs
                             if(node.getQuantity()!=-1){
                                 //some value already exists
-                                disableMultipleInputs = true ;
+                                countLicensesEntered++;
+                                //disableMultipleInputs = true ;
                             }
                         if (uiField6_dis) {
                             uiField6_bgColor = "color:Silver;";
@@ -636,7 +642,8 @@ public class UiField {
                             //If an input is there ,disable other inputs
                             if(node.getQuantity()!=-1){
                                 //some value already exists
-                                disableMultipleInputs = true ;
+                                countLicensesEntered++;
+                                //disableMultipleInputs = true ;
                             }
                         if (uiField7_dis) {
                             uiField7_bgColor = "color:Silver;";
@@ -696,7 +703,8 @@ public class UiField {
                             //If an input is there ,disable other inputs
                             if(node.getQuantity()!=-1){
                                 //some value already exists
-                                disableMultipleInputs = true ;
+                                countLicensesEntered++;
+                                //disableMultipleInputs = true ;
                             }
                         if (uiField8_dis) {
                             uiField8_bgColor = "color:Silver;";
@@ -757,7 +765,8 @@ public class UiField {
                             //If an input is there ,disable other inputs
                             if(node.getQuantity()!=-1){
                                 //some value already exists
-                                disableMultipleInputs = true ;
+                                countLicensesEntered++;
+                                //disableMultipleInputs = true ;
                             }
                         if (uiField9_dis) {
                             uiField9_bgColor = "color:Silver;";
@@ -816,7 +825,8 @@ public class UiField {
                             //If an input is there ,disable other inputs
                             if(node.getQuantity()!=-1){
                                 //some value already exists
-                                disableMultipleInputs = true ;
+                                countLicensesEntered++;
+                                //disableMultipleInputs = true ;
                             }
                         if (uiField10_dis) {
                             uiField10_bgColor = "color:Silver;";
@@ -876,7 +886,8 @@ public class UiField {
                                 //If an input is there ,disable other inputs
                                 if(node.getQuantity()!=-1){
                                     //some value already exists
-                                    disableMultipleInputs = true ;
+                                    countLicensesEntered++;
+                                    //disableMultipleInputs = true ;
                                 }
                             if (uiField11_dis) {
                                 uiField11_bgColor = "color:Silver;";
@@ -937,7 +948,8 @@ public class UiField {
                                 //If an input is there ,disable other inputs
                                 if(node.getQuantity()!=-1){
                                     //some value already exists
-                                    disableMultipleInputs = true ;
+                                    countLicensesEntered++;
+                                    //disableMultipleInputs = true ;
                                 }
                             if (uiField12_dis) {
                                 uiField12_bgColor = "color:Silver;";
@@ -965,6 +977,9 @@ public class UiField {
         }
         if(sumRef!=0){
             sumReference = Integer.toString(sumRef);
+        }
+        if(countLicensesEntered>=2){
+            disableMultipleInputs=true;
         }
     }
 
