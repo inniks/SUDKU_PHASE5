@@ -1,5 +1,13 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -39,6 +47,12 @@ import oracle.jbo.server.DBTransaction;
 
 import xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl;
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
+import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
+import xxatcust.oracle.apps.sudoku.util.JSONUtils;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.InputParams;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.SessionDetails;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
+import xxatcust.oracle.apps.sudoku.viewmodel.ui.UiSelection;
 
 
 public class SudokuPagePhaseListener implements PagePhaseListener {
@@ -70,8 +84,8 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
     }
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
-       
-          //validateEBSSession(pagePhaseEvent);
+
+        //validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {
@@ -185,7 +199,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void validateEBSSession(PagePhaseEvent pagePhaseEvent) {
         if (ADFLifecycle.INIT_CONTEXT_ID == pagePhaseEvent.getPhaseId()) {
-            if (ADFUtils.getSessionScopeValue("JSESSIONID")==null) {
+            if (ADFUtils.getSessionScopeValue("JSESSIONID") == null) {
                 EBiz INSTANCE = null;
                 Environment env = ADFContext.getCurrent().getEnvironment();
                 HttpServletRequest request =
@@ -197,6 +211,10 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                 String applServerID = null;
                 Connection EBSconn = null;
                 String jSession = (String)request.getAttribute("JSESSION");
+                String quoteNumber =
+                    (String)request.getAttribute("pQuoteNumber");
+                _logger.info("quoteNumbervalue from pQuoteNumber: " +
+                             quoteNumber);
                 Map map1 =
                     FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
                 if (jSession == null) {
@@ -206,6 +224,19 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                 sessionADF.setAttribute("JSESSIONID", jSession);
                 _logger.info("********JSSION********** " +
                              ADFUtils.getSessionScopeValue("JSESSIONID"));
+
+                if (quoteNumber == null) {
+                    quoteNumber =
+                            map1.get("pQuoteNumber") == null ? "" : map1.get("pQuoteNumber").toString();
+                    _logger.info("2nd quoteNumber: " + quoteNumber);
+                }
+                ADFUtils.setSessionScopeValue("targetQuoteNumber",
+                                              quoteNumber);
+                _logger.info("ValidateEBSSession:Quote value from session" +
+                             ADFUtils.getSessionScopeValue("targetQuoteNumber"));
+
+                //Test Code to call Servlet on page load from search quotes
+
 
                 try {
                     ApplicationModule am = getAppModule();
@@ -290,7 +321,11 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                             sessionADF.setAttribute("Language", language);
                             sessionADF.setAttribute("SecGrpId", secGrpId);
                             sessionADF.setAttribute("OrgId", orgId);
+                            if (quoteNumber != null &&
+                                !quoteNumber.equals("")) {
+                                callCIOServletOnLoad(quoteNumber);
 
+                            }
                             javax.servlet.http.Cookie cookie =
                                 wrappedRequest.getICXCookie();
                             String icxcookieName = cookie.getName();
@@ -337,6 +372,46 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
             return false;
         }
         return true;
+    }
+
+    public void callCIOServletOnLoad(String targetQuoteNum) throws IOException,
+                                                                   JsonGenerationException,
+                                                                   JsonMappingException {
+        SessionDetails sessionDetails = new SessionDetails();
+        String userId =
+            (String)ADFUtils.getSessionScopeValue("UserId") == null ? "0" :
+            (String)ADFUtils.getSessionScopeValue("UserId");
+        String timestamp = Long.toString(System.currentTimeMillis());
+        String uniqueSessionId = userId.concat(timestamp);
+        InputParams inputParam = new InputParams();
+        UiSelection uiSelection = new UiSelection();
+        uiSelection.setUniqueSessionId(uniqueSessionId);
+        ADFUtils.setSessionScopeValue("uniqueSessionId", uniqueSessionId);
+        //Get Session details added to the POJO object
+        sessionDetails.setApplicationId((String)ADFUtils.getSessionScopeValue("ApplId") ==
+                                        null ? "880" :
+                                        (String)ADFUtils.getSessionScopeValue("ApplId"));
+        sessionDetails.setRespId((String)ADFUtils.getSessionScopeValue("RespId") ==
+                                 null ? "51156" :
+                                 (String)ADFUtils.getSessionScopeValue("RespId"));
+        sessionDetails.setUserId((String)ADFUtils.getSessionScopeValue("UserId") ==
+                                 null ? "0" :
+                                 (String)ADFUtils.getSessionScopeValue("UserId"));
+        sessionDetails.setTargetQuoteNumber(targetQuoteNum);
+        //Add input params
+        inputParam.setCopyReferenceConfiguration(true); //Passing copy ref value as true
+        inputParam.setImportSource("LOAD_QUOTE_FROM_SEARCH");
+        V93kQuote v93k = new V93kQuote();
+        v93k.setInputParams(inputParam);
+        v93k.setSessionDetails(sessionDetails);
+        v93k.setUiSelection(uiSelection);
+        String jsonStr = JSONUtils.convertObjToJson(v93k);
+        ObjectMapper mapper = new ObjectMapper();
+        String responseJson =
+            (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        _logger.info("Response JSON " + responseJson);
+        v93k = mapper.readValue(responseJson, V93kQuote.class);
+        ADFUtils.setSessionScopeValue("parentObject", v93k);
     }
 
 }

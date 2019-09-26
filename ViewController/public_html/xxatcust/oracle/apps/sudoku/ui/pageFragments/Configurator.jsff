@@ -175,11 +175,12 @@
                                       <af:outputFormatted id="it3"
                                                           visible="false"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="#{theadIter.uiField8_code}"/>
+                                                          value="#{theadIter.uiField8_code}"
+                                                          styleClass="#{theadIter.uiField8_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="s2"/>
+                                <af:spacer width="40" height="10" id="s2"/>
                                 <af:panelBorderLayout id="pb_l3"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">
                                   <f:facet name="innerLeft">
@@ -389,11 +390,6 @@
                             <af:showDetailHeader text="Product Description, Specifications, Drawings and Pictures"
                                                  id="sdh1"
                                                  rendered="#{node.codeName eq topNode.index}">
-                              <f:facet name="context"/>
-                              <f:facet name="menuBar"/>
-                              <f:facet name="toolbar"/>
-                              <f:facet name="legend"/>
-                              <f:facet name="info"/>
                               <af:panelGroupLayout id="pgl8" layout="vertical">
                                 <af:commandLink text="Product Description"
                                                 id="cl8"/>
@@ -502,7 +498,8 @@
                                     <af:outputFormatted id="wty_it3"
                                                         visible="false"
                                                         shortDesc="#{wrntyIter.parentGroupName}"
-                                                        value="#{wrntyIter.uiField8_type}"/>
+                                                        value="#{wrntyIter.uiField8_type}"
+                                                        styleClass="#{wrntyIter.uiField8_identifier}"/>
                                   </af:panelGroupLayout>
                                 </f:facet>
                               </af:panelBorderLayout>
@@ -809,7 +806,8 @@
                                       <af:outputFormatted id="syscon_it3"
                                                           visible="false"
                                                           shortDesc="#{sysConIter.parentGroupName}"
-                                                          value="#{sysConIter.uiField8_code}"/>
+                                                          value="#{sysConIter.uiField8_code}"
+                                                          styleClass="#{sysConIter.uiField8_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1155,7 +1153,8 @@
                                       <af:outputFormatted id="addSwTool_it3"
                                                           visible="false"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="#{theadIter.uiField8_code}"/>
+                                                          value="#{theadIter.uiField8_code}"
+                                                          styleClass="#{theadIter.uiField8_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1477,7 +1476,8 @@
                                       <af:outputFormatted id="diagCal_it3"
                                                           visible="false"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="#{theadIter.uiField8_code}"/>
+                                                          value="#{theadIter.uiField8_code}"
+                                                          styleClass="#{theadIter.uiField8_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1958,7 +1958,7 @@
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs_pgl19r">
-                                      <af:outputFormatted value="#{theadIter.sumReference}"
+                                      <af:outputFormatted value="#{theadIter.sumInstaBaseRef}"
                                                           id="drs_of13r"
                                                           inlineStyle="color:Maroon; font-weight:bold;"/>
                                     </af:panelGroupLayout>
@@ -1970,7 +1970,7 @@
                                                       inlineStyle="height:25px; width:10px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs_pgl21r">
-                                      <af:outputFormatted value="#{theadIter.sumTarget}"
+                                      <af:outputFormatted value="#{theadIter.sumInstaBaseTar}"
                                                           id="drs_of14r"
                                                           inlineStyle="color:Teal; font-weight:bold;"/>
                                     </af:panelGroupLayout>
@@ -2059,7 +2059,8 @@
                                                           value="#{theadIter.uiField4_code}"
                                                           inlineStyle="#{theadIter.uiField4_bgColor}"
                                                           visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField4_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2080,7 +2081,8 @@
                                                           value="#{theadIter.czNodeName5}"
                                                           inlineStyle="#{theadIter.uiField5_bgColor}"
                                                           visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField5_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2102,7 +2104,8 @@
                                                           value="#{theadIter.uiField6_code}"
                                                           inlineStyle="#{theadIter.uiField6_bgColor}"
                                                           visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField6_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2123,7 +2126,8 @@
                                                           value="#{theadIter.uiField7_code}"
                                                           inlineStyle="#{theadIter.uiField7_bgColor}"
                                                           visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField7_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2156,7 +2160,8 @@
                                       <af:outputFormatted id="drs366k"
                                                           value="#{theadIter.uiField1_code}"
                                                           visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField1_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2175,7 +2180,8 @@
                                       <af:outputFormatted id="drs366l"
                                                           value="#{theadIter.uiField2_code}"
                                                           visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField2_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2404,7 +2410,8 @@
                                       <af:outputFormatted id="drs1003"
                                                           visible="false"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="#{theadIter.uiField1_code}"/>
+                                                          value="#{theadIter.uiField1_code}"
+                                                          styleClass="#{theadIter.uiField1_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2473,7 +2480,8 @@
                                       <af:outputFormatted id="drs36"
                                                           value="#{theadIter.uiField1_code}"
                                                           visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField1_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2512,7 +2520,8 @@
                                                           value="#{theadIter.uiField3_code}"
                                                           inlineStyle="#{theadIter.uiField3_bgColor}"
                                                           visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField3_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2531,7 +2540,8 @@
                                                         value="#{theadIter.uiField4_code}"
                                                         inlineStyle="#{theadIter.uiField4_bgColor}"
                                                         visible="false"
-                                                        shortDesc="#{theadIter.parentGroupName}"/>
+                                                        shortDesc="#{theadIter.parentGroupName}"
+                                                        styleClass="#{theadIter.uiField4_identifier}"/>
                                   </af:panelGroupLayout>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="drs52"
@@ -2549,7 +2559,8 @@
                                       <af:outputFormatted id="drs365"
                                                           value="#{theadIter.uiField5_code}"
                                                           visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField5_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2568,7 +2579,8 @@
                                       <af:outputFormatted id="drs366"
                                                           value="#{theadIter.uiField6_code}"
                                                           visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField6_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2718,11 +2730,12 @@
                                       <af:outputFormatted id="dockit3"
                                                           visible="false"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="#{theadIter.uiField8_code}"/>
+                                                          value="#{theadIter.uiField8_code}"
+                                                          styleClass="#{theadIter.uiField8_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="docks2"/>
+                                <af:spacer width="40" height="10" id="docks2"/>
                                 <af:panelBorderLayout id="dockpb_l3"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">
                                   <f:facet name="innerLeft">
@@ -2839,6 +2852,18 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dockpb8"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dockpgl211"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:image id="dockcl8"
+                                                source="/Resources/images/imgs/pogoTower.PNG"
+                                                rendered="#{ topNode.index eq '2' and theadIter.uiGrpIndex eq '11'}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dockpb4"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
                                   <f:facet name="innerLeft">
@@ -2948,29 +2973,6 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dockpbl12x"
-                                                      inlineStyle="height:25px; width:20px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
-                                </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="docks3x"/>
-                                <af:panelBorderLayout id="dockpbl13x"
-                                                      inlineStyle="height:25px; width:20px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
-                                </af:panelBorderLayout>
-                                <af:spacer width="20" height="10"
-                                           id="docks11x"/>
-                                <af:panelBorderLayout id="dockpbl8x"
-                                                      inlineStyle="height:25px; width:10px; border-style:none;">
-                                  <f:facet name="innerLeft">
-                                    <af:outputFormatted value="*" id="dockof9x"
-                                                        inlineStyle="font-size:x-large; color:Red;"
-                                                        rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
-                                  </f:facet>
-                                </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dockpbl9x"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
-                                </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dockpb20x"
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft"/>
@@ -3008,7 +3010,8 @@
                                         </af:panelBorderLayout>
                                       </af:panelBox>
                                       <af:panelBox text="PanelBox3" id="pb10"
-                                                showHeader="never"   showDisclosure="false">
+                                                   showHeader="never"
+                                                   showDisclosure="false">
                                         <af:panelBorderLayout id="dockpb2x"
                                                               inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
                                           <f:facet name="innerLeft">
@@ -3216,15 +3219,15 @@
                                       <af:panelBox text="PanelBox17" id="pb1bx"
                                                    showDisclosure="false"
                                                    visible="false"
-                                                   showHeader="never"></af:panelBox>
+                                                   showHeader="never"/>
                                       <af:panelBox text="PanelBox18" id="pb1v7x"
                                                    visible="false"
                                                    showDisclosure="false"
-                                                   showHeader="never"></af:panelBox>
+                                                   showHeader="never"/>
                                       <af:panelBox text="PanelBox19" id="pb17rx"
                                                    visible="false"
                                                    showDisclosure="false"
-                                                   showHeader="never"></af:panelBox>
+                                                   showHeader="never"/>
                                       <af:panelBox text="PanelBox20" id="pb1b7x"
                                                    showDisclosure="false"
                                                    visible="true"
@@ -3255,7 +3258,7 @@
                                       <af:panelBox text="PanelBox21" id="pbc17x"
                                                    showDisclosure="false"
                                                    visible="false"
-                                                   showHeader="never"></af:panelBox>
+                                                   showHeader="never"/>
                                       <af:panelBox text="PanelBox22" id="pb1f7x"
                                                    showDisclosure="false"
                                                    showHeader="never">
@@ -3337,9 +3340,32 @@
                                       <af:panelBox text="PanelBox25" id="phb17x"
                                                    showDisclosure="false"
                                                    visible="false"
-                                                   showHeader="never"></af:panelBox>
+                                                   showHeader="never"/>
                                     </af:panelDashboard>
                                   </af:panelGroupLayout>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dockpbl12x"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="docks3x"/>
+                                <af:panelBorderLayout id="dockpbl13x"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10"
+                                           id="docks11x"/>
+                                <af:panelBorderLayout id="dockpbl8x"
+                                                      inlineStyle="height:25px; width:10px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted value="*" id="dockof9x"
+                                                        inlineStyle="font-size:x-large; color:Red;"
+                                                        rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dockpbl9x"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
                             </af:iterator>
@@ -3446,7 +3472,8 @@
                                       <af:outputFormatted id="dps_it3"
                                                           visible="false"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="#{theadIter.uiField8_code}"/>
+                                                          value="#{theadIter.uiField8_code}"
+                                                          styleClass="#{theadIter.uiField8_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>

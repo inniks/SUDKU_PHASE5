@@ -1,6 +1,8 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -494,11 +496,6 @@ public class ImportSource {
         sessionDetails.setUserId((String)ADFUtils.getSessionScopeValue("UserId") ==
                                  null ? "0" :
                                  (String)ADFUtils.getSessionScopeValue("UserId"));
-        //3kQuote.getSessionDetails().getA
-        //sessionDetails.setApplicationId("880");
-        //sessionDetails.setRespId("51156");
-        //sessionDetails.setUserId("11639");
-        //Add Input parameters to POJO
         HashMap inputParamsMap =
             (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap");
         if (inputParamsMap != null && !inputParamsMap.isEmpty()) {
@@ -530,13 +527,8 @@ public class ImportSource {
             importSource.equalsIgnoreCase("XML_FILE")) {
             System.out.println("Input Stream is " + inputStream);
             File xsdFile = readXsdResource();
-            //XMLUtils.validateXMLSchema(xsdFile, inputStream) ;
             V93kQuote parent = null;
             parent = JaxbParser.jaxbXMLToObject(inputStream, xsdFile);
-
-            //Adding this in session temporarily
-            //ADFUtils.setSessionScopeValue("inputObject", parent);
-            //Add session and input params
             parent.setSessionDetails(sessionDetails);
             parent.setInputParams(inputParam);
             parent.setUiSelection(uiSelection);
@@ -556,39 +548,21 @@ public class ImportSource {
                 }
             }
             ADFUtils.setSessionScopeValue("quoteNumber", otherTemp);
-            System.out.println("From Quote Session " +
-                               ADFUtils.getSessionScopeValue("quoteNumber"));
-            _logger.info("Print parent  parseXMLToPojo" + parent);
-            /*^^^^^^^^^^^Comment this before deploying******************/
             String jsonStr = JSONUtils.convertObjToJson(parent);
-            System.out.println("Input JSON " + jsonStr);
-            //obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-            //ADFUtils.setSessionScopeValue("parentObject", obj);
-            /* &&&&&Uncomment this code before deploying$$$$$*/
             ObjectMapper mapper = new ObjectMapper();
-            _logger.info("Print mapper  parseXMLToPojo" + mapper);
-            //comment this to run locally
             String responseJson =
                 (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-            System.out.println("Configurator Response is " + responseJson);
             obj = mapper.readValue(responseJson, V93kQuote.class);
         } else if (importSource != null) {
             V93kQuote v93k = new V93kQuote();
             v93k.setInputParams(inputParam);
             v93k.setSessionDetails(sessionDetails);
+            v93k.setUiSelection(uiSelection);
             obj = v93k;
             String jsonStr = JSONUtils.convertObjToJson(obj);
-            System.out.println("Json I/p string " + jsonStr);
-            // obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-            //ADFUtils.setSessionScopeValue("parentObject", obj);
-
-            //Reading JSOn from File to POJO
             ObjectMapper mapper = new ObjectMapper();
-            _logger.info("Print mapper  parseXMLToPojo" + mapper);
-            //comment this to run locally
             String responseJson =
                 (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-            System.out.println("Response JSON " + responseJson);
             obj = mapper.readValue(responseJson, V93kQuote.class);
         }
         ADFUtils.setSessionScopeValue("parentObject", obj);

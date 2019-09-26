@@ -1,7 +1,9 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -351,14 +353,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                         JsonMappingException {
 
         String jsonStr = JSONUtils.convertObjToJson(v93k);
+        ObjectMapper mapper = new ObjectMapper();
+        //        mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
+        //        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
-
         String responseJson =
             ConfiguratorUtils.callConfiguratorServlet(jsonStr);
         System.out.println("Response Json from Configurator : " +
                            responseJson);
-        ObjectMapper mapper = new ObjectMapper();
         Object obj = mapper.readValue(responseJson, V93kQuote.class);
         v93k = (V93kQuote)obj;
 
@@ -449,14 +452,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         }
         if (dpsTreeModel == null) {
             dpsTreeModel =
-                    DpsDCScaleBean.populateDpsParentModel(dpsTreeModel,
-                                                           rootDps);
+                    DpsDCScaleBean.populateDpsParentModel(dpsTreeModel, rootDps);
             dpsSdiCollection =
                     DpsDCScaleBean.populateDpsSubGroups(v93k, dpsSdiCollection);
         }
-
         defaultViewOnLoad = false;
-        ADFUtils.addPartialTarget(parentUiComp);
+        displayConfigWarnAndErrors();
+        if (parentUiComp != null) {
+            ADFUtils.addPartialTarget(parentUiComp);
+        }
 
     }
 
@@ -607,54 +611,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             ADFUtils.setSessionScopeValue("selectedNodeValueMap",
                                           selectedNodeValueMap);
 
-            //            if (v93 != null && v93.getExceptionMap() != null) {
-            //                TreeMap<String, ArrayList<String>> warnings =
-            //                    v93.getExceptionMap().getWarningList();
-            //                TreeMap<String, ArrayList<String>> notifications =
-            //                    v93.getExceptionMap().getNotificationList();
-            //                StringBuilder warningMessage =
-            //                    new StringBuilder("<html><body>");
-            //                if (warnings != null && warnings.size() > 0) {
-            //
-            //
-            //                    for (Map.Entry<String, ArrayList<String>> entry :
-            //                         warnings.entrySet()) {
-            //                        String key = entry.getKey();
-            //                        //iterate for each key
-            //                        warningMessage.append("<p><b>" + key + " : " +
-            //                                              "</b></p>");
-            //                        ArrayList<String> value = entry.getValue();
-            //                        for (String str : value) {
-            //                            warningMessage.append("<p><b>" + str + "</b></p>");
-            //                        }
-            //                    }
-            //                    warningMessage.append("</body></html>");
-            //                }
-            //                if (notifications != null && notifications.size() > 0) {
-            //                    for (Map.Entry<String, ArrayList<String>> entry :
-            //                         notifications.entrySet()) {
-            //                        String key = entry.getKey();
-            //                        ArrayList<String> value = entry.getValue();
-            //                        warningMessage.append("<p><b>" + key + " : " +
-            //                                              "</b></p>");
-            //                        for (String str : value) {
-            //                            warningMessage.append("<p><b>" + str + "</b></p>");
-            //                        }
-            //                    }
-            //                    warningMessage.append("</body></html>");
-            //
-            //
-            //                }
-            //                if (warningMessage != null &&
-            //                    !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
-            //                    confirmPopup != null) {
-            //                    warnText.setValue(warningMessage.toString());
-            //                    RichPopup.PopupHints hints = new RichPopup.PopupHints();
-            //                    confirmPopup.show(hints);
-            //                }
-            //            }
-
-            displayConfigWarnAndErrors();
+            //displayConfigWarnAndErrors();
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         }
     }
@@ -749,6 +706,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         inputNodeValueMap.put("inputValue", inputValue);
         String parentGroupName = null;
         String czNodeName = null;
+        String identifier = null;
         for (UIComponent comp : children) {
             if (comp instanceof RichOutputFormatted) {
                 RichOutputFormatted rf = (RichOutputFormatted)comp;
@@ -757,6 +715,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     inputNodeValueMap.put("parentGroupName", parentGroupName);
                     czNodeName = (String)rf.getValue();
                     inputNodeValueMap.put("czNodeName", czNodeName);
+                    identifier = rf.getStyleClass();
+                    inputNodeValueMap.put("identifier", identifier);
                 }
             }
         }
@@ -827,6 +787,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputNodeValueMap.get("parentGroupName");
             String czNodeName = (String)inputNodeValueMap.get("czNodeName");
+            String identifier = (String)inputNodeValueMap.get("identifier");
             UiSelection uiSelection = new UiSelection();
             uiSelection.setParentGroupName(parentGroupName);
             uiSelection.setSubGroupName(uiSubGrpName);
@@ -835,7 +796,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             v93k.setUiSelection(uiSelection);
             uiSelection.setUniqueSessionId(uniqueSessionId);
             uiSelection.setCzNodeName(czNodeName);
-
+            uiSelection.setIdentifier(identifier);
 
             SessionDetails sessionDetails = v93k.getSessionDetails();
             if (sessionDetails == null) {
@@ -862,8 +823,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             ADFUtils.setSessionScopeValue("parentObject", v93k);
             v93k = callServlet(v93k);
             buildConfiguratorUI(v93k);
-            ADFUtils.setSessionScopeValue("inputNodeValueMap", null);            
-            displayConfigWarnAndErrors();
+            ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
+            //displayConfigWarnAndErrors();
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         }
 
@@ -929,54 +890,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                       (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"),
                                       rulesetTopLevelChoice,
                                       rulesetSecondLevelChoice);
-                //                V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-                //                if (v93k != null && v93k.getExceptionMap() != null) {
-                //                    TreeMap<String, ArrayList<String>> warnings =
-                //                        v93k.getExceptionMap().getWarningList();
-                //                    TreeMap<String, ArrayList<String>> notifications =
-                //                        v93k.getExceptionMap().getNotificationList();
-                //                    StringBuilder warningMessage =
-                //                        new StringBuilder("<html><body>");
-                //                    if (warnings != null && warnings.size() > 0) {
-                //
-                //
-                //                        for (Map.Entry<String, ArrayList<String>> entry :
-                //                             warnings.entrySet()) {
-                //                            String key = entry.getKey();
-                //                            //iterate for each key
-                //                            warningMessage.append("<p><b>" + key + " : " +
-                //                                                  "</b></p>");
-                //                            ArrayList<String> value = entry.getValue();
-                //                            for (String str : value) {
-                //                                warningMessage.append("<p><b>" + str + "</b></p>");
-                //                            }
-                //                        }
-                //                        warningMessage.append("</body></html>");
-                //                    }
-                //                    if (notifications != null && notifications.size() > 0) {
-                //                        for (Map.Entry<String, ArrayList<String>> entry :
-                //                             notifications.entrySet()) {
-                //                            String key = entry.getKey();
-                //                            ArrayList<String> value = entry.getValue();
-                //                            warningMessage.append("<p><b>" + key + " : " +
-                //                                                  "</b></p>");
-                //                            for (String str : value) {
-                //                                warningMessage.append("<p><b>" + str + "</b></p>");
-                //                            }
-                //                        }
-                //                        warningMessage.append("</body></html>");
-                //
-                //
-                //                    }
-                //                    if (warningMessage != null &&
-                //                        !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
-                //                        confirmPopup != null) {
-                //                        warnText.setValue(warningMessage.toString());
-                //                        RichPopup.PopupHints hints = new RichPopup.PopupHints();
-                //                        confirmPopup.show(hints);
-                //                    }
-                //                }
-                displayConfigWarnAndErrors();
+                //displayConfigWarnAndErrors();
             }
         }
         if (dialogEvent.getOutcome() == DialogEvent.Outcome.no) {
@@ -1325,54 +1239,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             v93k = callServlet(v93k);
             buildConfiguratorUI(v93k);
             ADFUtils.setSessionScopeValue("inputLOVMap", null);
-            //            if (v93k != null && v93k.getExceptionMap() != null) {
-            //                TreeMap<String, ArrayList<String>> warnings =
-            //                    v93k.getExceptionMap().getWarningList();
-            //                TreeMap<String, ArrayList<String>> notifications =
-            //                    v93k.getExceptionMap().getNotificationList();
-            //                StringBuilder warningMessage =
-            //                    new StringBuilder("<html><body>");
-            //                if (warnings != null && warnings.size() > 0) {
-            //
-            //
-            //                    for (Map.Entry<String, ArrayList<String>> entry :
-            //                         warnings.entrySet()) {
-            //                        String key = entry.getKey();
-            //                        //iterate for each key
-            //                        warningMessage.append("<p><b>" + key + " : " +
-            //                                              "</b></p>");
-            //                        ArrayList<String> value = entry.getValue();
-            //                        for (String str : value) {
-            //                            warningMessage.append("<p><b>" + str + "</b></p>");
-            //                        }
-            //                    }
-            //                    warningMessage.append("</body></html>");
-            //                }
-            //                if (notifications != null && notifications.size() > 0) {
-            //                    for (Map.Entry<String, ArrayList<String>> entry :
-            //                         notifications.entrySet()) {
-            //                        String key = entry.getKey();
-            //                        ArrayList<String> value = entry.getValue();
-            //                        warningMessage.append("<p><b>" + key + " : " +
-            //                                              "</b></p>");
-            //                        for (String str : value) {
-            //                            warningMessage.append("<p><b>" + str + "</b></p>");
-            //                        }
-            //                    }
-            //                    warningMessage.append("</body></html>");
-            //
-            //
-            //                }
-            //                if (warningMessage != null &&
-            //                    !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
-            //                    confirmPopup != null) {
-            //                    warnText.setValue(warningMessage.toString());
-            //                    RichPopup.PopupHints hints = new RichPopup.PopupHints();
-            //                    confirmPopup.show(hints);
-            //                }
-            //            }
-            displayConfigWarnAndErrors();
-            //confirmPopup.hide();
+            //displayConfigWarnAndErrors();
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         }
 

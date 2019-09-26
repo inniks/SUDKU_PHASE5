@@ -2,6 +2,8 @@ package xxatcust.oracle.apps.sudoku.bean;
 
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -149,6 +151,8 @@ public class XMLImportPageBean {
         Object obj = null;
         //Reading JSOn from File to POJO
         ObjectMapper mapper = new ObjectMapper();
+        //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
+        //mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         _logger.info("Print mapper  parseXMLToPojo" + mapper);
         //comment this to run locally
         String responseJson =

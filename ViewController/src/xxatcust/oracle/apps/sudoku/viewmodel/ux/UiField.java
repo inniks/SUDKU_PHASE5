@@ -145,6 +145,8 @@ public class UiField {
     private Boolean disableMultipleInputs=false;
     private String sumReference;
     private String sumTarget;
+    private String sumInstaBaseRef;
+    private String sumInstaBaseTar;
     public UiField() {
 
 
@@ -180,7 +182,7 @@ public class UiField {
         super();
         this.listOfNodes = listOfNodes;
         this.uiGrpIndex = uiGrpIndex ;
-        int sumLicenceInputs = 0,sumRef=0,sumTar=0;
+        int sumLicenceInputs = 0,sumRef=0,sumTar=0,sumInsRef=0,sumInsTar=0;
         int countLicensesEntered = 0;
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
             
@@ -235,9 +237,11 @@ public class UiField {
                             sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
                         if(node.getReferenceQuantiy()!=-1){
+                            sumInsRef = sumInsRef+node.getReferenceQuantiy();
                             sumRef = sumRef+node.getReferenceQuantiy();
                         }
                         if(node.getTargetQuantity()!=-1){
+                            sumInsTar = sumInsTar+node.getTargetQuantity();
                             sumTar = sumTar+node.getTargetQuantity();
                         }
                         int uiElementType = uiElement.getUiElementType();
@@ -284,9 +288,9 @@ public class UiField {
                             uiField1_bgColor = "color:#d9b3ff;";
                         }
 
-                        if (uiField1_dis) {
-                            uiField1_color = "Yellow";
-                        }
+//                        if (uiField1_dis) {
+//                            uiField1_color = "Yellow";
+//                        }
                         if (uiField1_color != null) {
                             uiField1_bgColor = "color:InfoBackground";
                         }
@@ -314,9 +318,11 @@ public class UiField {
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
                         if(node.getReferenceQuantiy()!=-1){
+                            sumInsRef = sumInsRef+node.getReferenceQuantiy();
                             sumRef  = sumRef+node.getReferenceQuantiy();
                         }
                         if(node.getTargetQuantity()!=-1){
+                            sumInsTar = sumInsTar+node.getTargetQuantity();
                             sumTar = sumTar+node.getTargetQuantity();
                         }
                         int qty = node.getQuantity();
@@ -351,9 +357,9 @@ public class UiField {
                         if (uiField2_color != null) {
                             uiField2_bgColor = "color:InfoBackground";
                         }
-                        if (uiField2_dis) {
-                            uiField2_color = "Yellow";
-                        }
+//                        if (uiField2_dis) {
+//                            uiField2_color = "Yellow";
+//                        }
                     }
                     break;
                 case 2:
@@ -412,9 +418,9 @@ public class UiField {
                         if (uiField3_color != null) {
                             uiField3_bgColor = "color:InfoBackground";
                         }
-                        if (uiField3_dis) {
-                            uiField3_color = "Yellow";
-                        }
+//                        if (uiField3_dis) {
+//                            uiField3_color = "Yellow";
+//                        }
                     }
                     break;
                 case 3:
@@ -473,9 +479,9 @@ public class UiField {
                         if (uiField4_color != null) {
                             uiField4_bgColor = "color:InfoBackground";
                         }
-                        if (uiField4_dis) {
-                            uiField4_color = "Yellow";
-                        }
+//                        if (uiField4_dis) {
+//                            uiField4_color = "Yellow";
+//                        }
                     }
                     break;
                 case 4:
@@ -533,9 +539,9 @@ public class UiField {
                         if (uiField5_color != null) {
                             uiField5_bgColor = "color:InfoBackground";
                         }
-                        if (uiField5_dis) {
-                            uiField5_color = "Yellow";
-                        }
+//                        if (uiField5_dis) {
+//                            uiField5_color = "Yellow";
+//                        }
                     }
                     break;
                 case 5:
@@ -593,9 +599,9 @@ public class UiField {
                         if (uiField6_color != null) {
                             uiField6_bgColor = "color:InfoBackground";
                         }
-                        if (uiField6_dis) {
-                            uiField6_color = "Yellow";
-                        }
+//                        if (uiField6_dis) {
+//                            uiField6_color = "Yellow";
+//                        }
                     }
                     break;
 
@@ -654,9 +660,9 @@ public class UiField {
                         if (uiField7_color != null) {
                             uiField7_bgColor = "color:InfoBackground";
                         }
-                        if (uiField7_dis) {
-                            uiField7_color = "Yellow";
-                        }
+//                        if (uiField7_dis) {
+//                            uiField7_color = "Yellow";
+//                        }
                     }
                     break;
                 case 7:
@@ -715,9 +721,9 @@ public class UiField {
                         if (uiField8_color != null) {
                             uiField8_bgColor = "color:InfoBackground";
                         }
-                        if (uiField8_dis) {
-                            uiField8_color = "Yellow";
-                        }
+//                        if (uiField8_dis) {
+//                            uiField8_color = "Yellow";
+//                        }
                     }
                     break;
 
@@ -777,9 +783,9 @@ public class UiField {
                         if (uiField9_color != null) {
                             uiField9_bgColor = "color:InfoBackground";
                         }
-                        if (uiField9_dis) {
-                            uiField9_color = "Yellow";
-                        }
+//                        if (uiField9_dis) {
+//                            uiField9_color = "Yellow";
+//                        }
                     }
                     break;
                 case 9:
@@ -837,9 +843,9 @@ public class UiField {
                         if (uiField10_color != null) {
                             uiField10_bgColor = "color:InfoBackground";
                         }
-                        if (uiField10_dis) {
-                            uiField10_color = "Yellow";
-                        }
+//                        if (uiField10_dis) {
+//                            uiField10_color = "Yellow";
+//                        }
                     }
                     break;
                 
@@ -898,9 +904,9 @@ public class UiField {
                             if (uiField11_color != null) {
                                 uiField11_bgColor = "color:InfoBackground";
                             }
-                            if (uiField11_dis) {
-                                uiField11_color = "Yellow";
-                            }
+//                            if (uiField11_dis) {
+//                                uiField11_color = "Yellow";
+//                            }
                         }
                         break;
                 
@@ -960,9 +966,9 @@ public class UiField {
                             if (uiField12_color != null) {
                                 uiField12_bgColor = "color:InfoBackground";
                             }
-                            if (uiField12_dis) {
-                                uiField12_color = "Yellow";
-                            }
+//                            if (uiField12_dis) {
+//                                uiField12_color = "Yellow";
+//                            }
                         }
                         break;
 
@@ -980,6 +986,12 @@ public class UiField {
         }
         if(countLicensesEntered>=2){
             disableMultipleInputs=true;
+        }
+        if(sumInsRef!=0){
+            sumInstaBaseRef = Integer.toString(sumInsRef);
+        }
+        if(sumInsTar!=0){
+            sumInstaBaseTar=Integer.toString(sumInsTar);
         }
     }
 
@@ -2041,5 +2053,21 @@ public class UiField {
 
     public String getSumTarget() {
         return sumTarget;
+    }
+
+    public void setSumInstaBaseRef(String sumInstaBaseRef) {
+        this.sumInstaBaseRef = sumInstaBaseRef;
+    }
+
+    public String getSumInstaBaseRef() {
+        return sumInstaBaseRef;
+    }
+
+    public void setSumInstaBaseTar(String sumInstaBaseTar) {
+        this.sumInstaBaseTar = sumInstaBaseTar;
+    }
+
+    public String getSumInstaBaseTar() {
+        return sumInstaBaseTar;
     }
 }

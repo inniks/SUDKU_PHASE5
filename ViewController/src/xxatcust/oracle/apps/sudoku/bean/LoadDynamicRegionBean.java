@@ -1,6 +1,8 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -337,6 +339,8 @@ public class LoadDynamicRegionBean {
             System.out.println("Response Json from Configurator : " +
                                responseJson);
             ObjectMapper mapper = new ObjectMapper();
+            //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
+            //mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
             Object obj = mapper.readValue(responseJson, V93kQuote.class);
             v93k = (V93kQuote)obj;
             ADFUtils.setSessionScopeValue("parentObject", v93k);
