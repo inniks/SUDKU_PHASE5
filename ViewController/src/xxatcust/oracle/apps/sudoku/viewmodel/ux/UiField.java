@@ -295,6 +295,10 @@ public class UiField {
                             uiField1_bgColor = "color:InfoBackground";
                         }
                     }
+                    
+                    if(uiField1_identifier!=null && uiField1_identifier.equalsIgnoreCase("OBSOLETE")){
+                        uiField1_color = "Red";
+                    }
 
 
                     break;

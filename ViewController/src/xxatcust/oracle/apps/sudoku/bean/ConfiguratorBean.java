@@ -98,6 +98,7 @@ import xxatcust.oracle.apps.sudoku.viewmodel.pojo.NodeCategory;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.SessionDetails;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.SystemInfraGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.UiSelection;
+import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.MixedSignalGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.WtyTrainingSAndSGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ux.ShowDetailItemCollection;
 
@@ -109,11 +110,13 @@ public class ConfiguratorBean {
     private List<ShowDetailItemCollection> digitalSdiCollection;
     private List<ShowDetailItemCollection> dockingSdiCollection;
     private List<ShowDetailItemCollection> dpsSdiCollection;
+    private List<ShowDetailItemCollection> mixSignalSdiCollection;
     private ChildPropertyTreeModel addToolsTreeModel;
     private ChildPropertyTreeModel sysInfraTreeModel;
     private ChildPropertyTreeModel calDiagTreeModel;
     private ChildPropertyTreeModel digitalTreeModel;
     private ChildPropertyTreeModel dpsTreeModel;
+    private ChildPropertyTreeModel mixSignalTreeModel;
     private ArrayList<UxTreeNode> sysInfraroot;
     private ArrayList<UxTreeNode> rootWarranty;
     private ArrayList<UxTreeNode> rootCalDiag;
@@ -122,6 +125,7 @@ public class ConfiguratorBean {
     private ArrayList<UxTreeNode> rootDigital;
     private ArrayList<UxTreeNode> rootDocking;
     private ArrayList<UxTreeNode> rootDps;
+    private ArrayList<UxTreeNode> rootMixSignal;
     private RichPanelGroupLayout theadPanelGrp;
     private RichOutputText pageInitText;
     private RichListView sysInfraListView;
@@ -151,6 +155,7 @@ public class ConfiguratorBean {
     private RichOutputFormatted errMessage;
     private Boolean disableMultipleEntries;
     private RichListView dpsListViewBinding;
+    private RichListView mixSigListBinding;
 
     public ConfiguratorBean() {
         super();
@@ -247,6 +252,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         digitalTreeModel = null;
         dockingTreeModel = null;
         dpsTreeModel = null;
+        mixSignalTreeModel = null;
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
@@ -456,6 +462,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             dpsSdiCollection =
                     DpsDCScaleBean.populateDpsSubGroups(v93k, dpsSdiCollection);
         }
+        if (mixSignalTreeModel == null) {
+            mixSignalTreeModel =
+                    MixSignalBean.populateMixSignalParentModel(mixSignalTreeModel, rootMixSignal);
+            mixSignalSdiCollection =
+                    MixSignalBean.populateMixSignalSubGroups(v93k, mixSignalSdiCollection);
+        }
+        
         defaultViewOnLoad = false;
         displayConfigWarnAndErrors();
         if (parentUiComp != null) {
@@ -912,6 +925,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         calDiagTreeModel = null;
         digitalTreeModel = null;
         dockingTreeModel = null;
+        dpsTreeModel = null;
+        mixSignalTreeModel = null;
         v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
             v93k = new V93kQuote();
@@ -1434,5 +1449,29 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public RichListView getDpsListViewBinding() {
         return dpsListViewBinding;
+    }
+
+    public void setMixSigListBinding(RichListView mixSigListBinding) {
+        this.mixSigListBinding = mixSigListBinding;
+    }
+
+    public RichListView getMixSigListBinding() {
+        return mixSigListBinding;
+    }
+
+    public void setMixSignalSdiCollection(List<ShowDetailItemCollection> mixSignalSdiCollection) {
+        this.mixSignalSdiCollection = mixSignalSdiCollection;
+    }
+
+    public List<ShowDetailItemCollection> getMixSignalSdiCollection() {
+        return mixSignalSdiCollection;
+    }
+
+    public void setMixSignalTreeModel(ChildPropertyTreeModel mixSignalTreeModel) {
+        this.mixSignalTreeModel = mixSignalTreeModel;
+    }
+
+    public ChildPropertyTreeModel getMixSignalTreeModel() {
+        return mixSignalTreeModel;
     }
 }
