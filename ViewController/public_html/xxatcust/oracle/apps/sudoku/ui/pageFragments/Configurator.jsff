@@ -1770,16 +1770,14 @@
                                                       inlineStyle="height:25px; width:130px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted id="outputFormatted12"
-                                                        value="#{theadIter.uiField2}"
-                                                        inlineStyle="#{theadIter.uiField2_bgColor}"/>
+                                                        value="#{theadIter.uiField2}"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb2"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted id="outputFormatted13"
-                                                        value="#{theadIter.uiField3}"
-                                                        inlineStyle="#{theadIter.uiField3_bgColor}"/>
+                                                        value="#{theadIter.uiField3}"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb3"
@@ -1805,7 +1803,7 @@
                               </af:panelGroupLayout>
                               <af:panelGroupLayout id="mix1_theadPgl"
                                                    layout="horizontal"
-                                                   rendered="#{topNode.index eq '1' and ( theadIter.uiGrpIndex eq '2' or theadIter.uiGrpIndex eq '3' or theadIter.uiGrpIndex eq '4')}">
+                                                   rendered="#{ (topNode.index eq '1' and ( theadIter.uiGrpIndex eq '2' or theadIter.uiGrpIndex eq '3' or theadIter.uiGrpIndex eq '4'))  or  (topNode.index eq '4' and (theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2'))}">
                                 <af:spacer width="50" height="10" id="mix1_s1"/>
                                 <af:panelBorderLayout id="mix1_pbl11"
                                                       inlineStyle="height:25px; width:30px; border-style:groove;">
@@ -1934,12 +1932,16 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix1_pb7"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted
+                                                        id="of12"
+                                                        value="Indexes : #{topNode.index}  ---- #{theadIter.uiGrpIndex}"/>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
                               <af:panelGroupLayout id="mix_s_12"
                                                    layout="horizontal"
-                                                   rendered="#{topNode.index eq '1' and  theadIter.uiGrpIndex eq '4'} ">
+                                                   rendered="#{ (topNode.index eq '1' and theadIter.uiGrpIndex eq '4') or (topNode.index eq '4' and theadIter.uiGrpIndex eq '3')}">
                                 <af:spacer width="50" height="10"
                                            id="mix_s_13"/>
                                 <af:panelBorderLayout id="mix_s_14"
@@ -2076,26 +2078,16 @@
                                     <af:panelGroupLayout id="mix_s_63"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:commandLink id="mix_s_64"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
-                                        <af:outputFormatted id="mix_s_65m"
-                                                            value="#{theadIter.uiField7}"
-                                                            inlineStyle="#{theadIter.uiField7_bgColor}"/>
-                                        <af:inputText id="mix_s_s66"
-                                                      visible="false"
-                                                      value="#{theadIter.czNodeName7}"
-                                                      shortDesc="#{theadIter.uiField7_identifier}"
-                                                      label="#{theadIter.uiField7_color}"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
-                                      </af:commandLink>
+                                       <af:outputFormatted
+                                                        id="of1des2"
+                                                        value="Indexes : #{topNode.index}  ---- #{theadIter.uiGrpIndex}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
                               <af:panelGroupLayout id="mix_s_123"
                                                    layout="horizontal"
-                                                   rendered="#{topNode.index eq '1'  and ( theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2' and theadIter.uiGrpIndex ne '3')}">
+                                                   rendered="#{ (topNode.index eq '1'  and ( theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2' and theadIter.uiGrpIndex ne '3')) or (topNode.index eq '4' and ( theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2'))}">
                                 <af:spacer width="50" height="10"
                                            id="mix_s_133"/>
                                 <af:panelBorderLayout id="mix_s_134"
@@ -2303,19 +2295,9 @@
                                     <af:panelGroupLayout id="mi3x_s_63"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:commandLink id="mi3x_s_64"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
-                                        <af:outputFormatted id="mix3_s_65m"
-                                                            value="#{theadIter.uiField7}"
-                                                            inlineStyle="#{theadIter.uiField7_bgColor}"/>
-                                        <af:inputText id="m3ix_s_s66"
-                                                      visible="false"
-                                                      value="#{theadIter.czNodeName7}"
-                                                      shortDesc="#{theadIter.uiField7_identifier}"
-                                                      label="#{theadIter.uiField7_color}"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
-                                      </af:commandLink>
+                                      <af:outputFormatted
+                                                        id="of1dedss2"
+                                                        value="Indexes : #{topNode.index}  ---- #{theadIter.uiGrpIndex}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
