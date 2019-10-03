@@ -364,15 +364,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         //        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
-        String responseJson =
-            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        System.out.println("Response Json from Configurator : " +
-                           responseJson);
-        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-        v93k = (V93kQuote)obj;
+//        String responseJson =
+//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+//        System.out.println("Response Json from Configurator : " +
+//                           responseJson);
+//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+//        v93k = (V93kQuote)obj;
 
         //else use this
-        //v93k = (V93kQuote)convertJsonToObject(null);
+        v93k = (V93kQuote)convertJsonToObject(null);
         if (v93k.getInputParams() != null) {
             Map ruleSetMap = new HashMap();
             ruleSetMap.put("topLevelCode",

@@ -43,7 +43,7 @@ public class SessionDetails {
     HashSet<ConfiguratorUiNode> sourceConfigNonBomItems = new HashSet<ConfiguratorUiNode>();
 
     // Bom items from the source configuration before doing upgrade 
-    HashSet<String> sourceConfigBomItems = new HashSet<String>();
+    HashMap<String, Integer> sourceConfigBomItems = new HashMap<String, Integer>();
     
     public SessionDetails() {
         super();
@@ -293,11 +293,11 @@ public class SessionDetails {
         return sourceConfigNonBomItems;
     }
 
-    public void setSourceConfigBomItems(HashSet<String> sourceConfigBomItems) {
+    public void setSourceConfigBomItems(HashMap<String, Integer> sourceConfigBomItems) {
         this.sourceConfigBomItems = sourceConfigBomItems;
     }
 
-    public HashSet<String> getSourceConfigBomItems() {
+    public HashMap<String, Integer> getSourceConfigBomItems() {
         return sourceConfigBomItems;
     }
 }

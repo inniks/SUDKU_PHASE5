@@ -98,10 +98,11 @@ public class MixSignalBean {
                 String tarColor =
                     mixSignalGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
                     null;
+                String requiredFlag = mixSignalGrp.isRequired() ? "Y":"N";
                 UxTreeNode firstLevel =
                     new UxTreeNode("mixsignal", "Mixed Signal Test Resources  (Wave Scale MX or (MB )AV8(+)",
                                    "Zero", null, null, refColor, tarColor,
-                                   null); //For top level color, code later
+                                   requiredFlag); //For top level color, code later
                 rootMixSignal.add(firstLevel);
                 uiGroupMap = mixSignalGrp.getUiGroupMap();
                 Iterator it = uiGroupMap.entrySet().iterator();
@@ -114,19 +115,24 @@ public class MixSignalBean {
                         (ConfiguratorUiGroup)pair.getValue();
                     Boolean isReferenceColor = uiGrp.isDisplayReferenceColor();
                     Boolean isTargetColor = uiGrp.isDisplayTargetColor();
+                    Boolean isRequired = uiGrp.isRequired();
                     String nodeRefColor = null;
                     String nodeTargetColor = null;
+                    String requiredGrpFlag = null ;
                     if (isReferenceColor != null && isReferenceColor) {
                         nodeRefColor = SudokuUtils.REFERENCE_COLOR;
                     }
                     if (isTargetColor != null && isTargetColor) {
                         nodeTargetColor = SudokuUtils.TARGET_COLOR;
                     }
+                    if(isRequired!=null && isRequired){
+                        requiredGrpFlag = "Y";
+                    }
                     if (uiGrpName != null) {
                         UxTreeNode childrenOfMixSignal =
                             new UxTreeNode(Integer.toString(index), uiGrpName,
                                            "First", null, null, nodeRefColor,
-                                           nodeTargetColor, null);
+                                           nodeTargetColor, requiredGrpFlag);
                         firstLevel.addNodes(childrenOfMixSignal);
                         index = index + 1;
                     }

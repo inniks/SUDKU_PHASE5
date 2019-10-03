@@ -1740,7 +1740,7 @@
                                 </af:panelBorderLayout>
                                 <af:spacer width="10" height="10" id="mix_s2"/>
                                 <af:panelBorderLayout id="mix_pb_l3"
-                                                      inlineStyle="height:25px; width:1600px; border-style:none;">
+                                                      inlineStyle="height:25px; width:160px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pbl12"
@@ -1770,7 +1770,8 @@
                                                       inlineStyle="height:25px; width:130px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted id="outputFormatted12"
-                                                        value="#{theadIter.uiField2}"/>
+                                                        value="#{theadIter.uiField2}"
+                                                        visible="true"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb2"
@@ -1782,11 +1783,17 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb3"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                   <af:outputFormatted id="outputFocrmatted12"
+                                                        value="#{theadIter.uiField4}"/>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb4"
                                                       inlineStyle="height:25px; width:130px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                   <af:outputFormatted id="outpxutFocrmatted12"
+                                                        value="#{theadIter.uiField5}"/>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb5"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
@@ -1794,35 +1801,39 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb6"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                   <af:outputFormatted id="outputFocrcmatted12"
+                                                        value="#{theadIter.uiField6}"/>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb7"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                   <af:outputFormatted id="outputFocrmnatted12"
+                                                        value="#{theadIter.uiField7}"/>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
                               <af:panelGroupLayout id="mix1_theadPgl"
                                                    layout="horizontal"
-                                                   rendered="#{ (topNode.index eq '1' and ( theadIter.uiGrpIndex eq '2' or theadIter.uiGrpIndex eq '3' or theadIter.uiGrpIndex eq '4'))  or  (topNode.index eq '4' and (theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2'))}">
+                                                   rendered="#{ (topNode.index eq '1' and ( theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2' or theadIter.uiGrpIndex eq '3')) or (topNode.index eq '2' and ( theadIter.uiGrpIndex eq '1')) or  (topNode.index eq '3' and ( theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2'))    or   (topNode.index eq '5' and ( theadIter.uiGrpIndex eq '1')) or  (topNode.index eq '4' and (theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2'))}">
                                 <af:spacer width="50" height="10" id="mix1_s1"/>
                                 <af:panelBorderLayout id="mix1_pbl11"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:90px; border-style:groove;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_pgl18"
                                                          layout="horizontal">
-                                      <af:inputText id="mix_it2" columns="5"
-                                                    rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
-                                                    autoSubmit="true"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                    value="#{theadIter.digitsEntered}">
-                                        <af:validateRegExp pattern="[0-9]{1,10}"
-                                                           messageDetailNoMatch="Only Numbers allowed.."/>
-                                      </af:inputText>
-                                      <af:outputFormatted id="mix_it3"
-                                                          shortDesc="#{theadIter.parentGroupName}"
-                                                          value="#{theadIter.uiField8_code}"
-                                                          styleClass="#{theadIter.uiField8_identifier}"
-                                                          rendered="false"/>
+                                       <af:inputText id="mx3712r"
+                                                      visible="true"
+                                                      disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                      columns="5"
+                                                      autoSubmit="true"
+                                                      value="#{theadIter.uiField1_qty}"
+                                                      valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                        <af:outputFormatted id="mix_s3612"
+                                                            value="#{theadIter.czNodeName1}"
+                                                            visible="false"
+                                                            shortDesc="#{theadIter.parentGroupName}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1870,7 +1881,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix1_pbl9"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:120px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix1_pb20"
@@ -1880,37 +1891,36 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:inputText id="mix1376" visible="true"
-                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
-                                                    columns="5"
-                                                    autoSubmit="true"
-                                                    value="#{theadIter.uiField1_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
-                                      <af:outputFormatted id="mix1366"
-                                                          value="#{theadIter.uiField1_code}"
-                                                          visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"
-                                                          styleClass="#{theadIter.uiField1_identifier}"/>
-                                    </af:panelGroupLayout>
-                                  </f:facet>
-                                </af:panelBorderLayout>
-                                <af:spacer width="50" height="10" id="s14"/>
-                                <af:panelBorderLayout id="mix1_pb2"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
-                                  <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="mix2346"
-                                                         layout="horizontal"
-                                                         halign="left">
-                                      <af:inputText id="mix2376" visible="true"
                                                     disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}"
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField2_qty}"
                                                     valueChangeListener="#{ConfiguratorBean.handleInput}"/>
-                                      <af:outputFormatted id="mix2366"
+                                      <af:outputFormatted id="mix1366"
                                                           value="#{theadIter.uiField2_code}"
                                                           visible="false"
                                                           shortDesc="#{theadIter.parentGroupName}"
                                                           styleClass="#{theadIter.uiField2_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="mix1_pb2"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="mix2346"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="mix2376" visible="true"
+                                                    disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField3_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="mix2366"
+                                                          value="#{theadIter.uiField3_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField3_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1932,16 +1942,12 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix1_pb7"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
-                                  <f:facet name="innerLeft">
-                                    <af:outputFormatted
-                                                        id="of12"
-                                                        value="Indexes : #{topNode.index}  ---- #{theadIter.uiGrpIndex}"/>
-                                  </f:facet>
+                                  <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
                               <af:panelGroupLayout id="mix_s_12"
                                                    layout="horizontal"
-                                                   rendered="#{ (topNode.index eq '1' and theadIter.uiGrpIndex eq '4') or (topNode.index eq '4' and theadIter.uiGrpIndex eq '3')}">
+                                                   rendered="#{ (topNode.index eq '1' and theadIter.uiGrpIndex eq '4') or   (topNode.index eq '2' and theadIter.uiGrpIndex eq '2') or (topNode.index eq '3' and theadIter.uiGrpIndex eq '3') or  (topNode.index eq '5' and theadIter.uiGrpIndex eq '2') or (topNode.index eq '4' and theadIter.uiGrpIndex eq '3')}">
                                 <af:spacer width="50" height="10"
                                            id="mix_s_13"/>
                                 <af:panelBorderLayout id="mix_s_14"
@@ -1969,9 +1975,7 @@
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_23">
-                                      <af:outputFormatted value="#{theadIter.sumReference}"
-                                                          id="mix_s_24"
-                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                     
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1981,16 +1985,14 @@
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_26">
-                                      <af:outputFormatted value="#{theadIter.sumTarget}"
-                                                          id="mix_s_27"
-                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                      
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:spacer width="20" height="10"
                                            id="mix_s_28"/>
                                 <af:panelBorderLayout id="mix_s_29mmmnm"
-                                                      inlineStyle="height:25px; width:10px; border-style:none;">
+                                                      inlineStyle="height:25px; width:35px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_31"
@@ -2002,7 +2004,7 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_s33"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dmix_s_34"
                                                          layout="horizontal"
@@ -2014,7 +2016,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dmix_s_38"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_341"
                                                          layout="horizontal"
@@ -2027,7 +2029,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_43"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_342"
                                                          layout="horizontal"
@@ -2039,7 +2041,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_47"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <af:panelGroupLayout id="mix_s_343mn"
                                                        layout="horizontal"
                                                        halign="left">
@@ -2049,7 +2051,7 @@
                                   </af:panelGroupLayout>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_52"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_345"
                                                          layout="horizontal"
@@ -2061,7 +2063,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_57"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_346"
                                                          layout="horizontal"
@@ -2073,21 +2075,17 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dmix_s_s62"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_63"
                                                          layout="horizontal"
-                                                         halign="left">
-                                       <af:outputFormatted
-                                                        id="of1des2"
-                                                        value="Indexes : #{topNode.index}  ---- #{theadIter.uiGrpIndex}"/>
-                                    </af:panelGroupLayout>
+                                                         halign="left"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
                               <af:panelGroupLayout id="mix_s_123"
                                                    layout="horizontal"
-                                                   rendered="#{ (topNode.index eq '1'  and ( theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2' and theadIter.uiGrpIndex ne '3')) or (topNode.index eq '4' and ( theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2'))}">
+                                                   rendered="#{ (topNode.index eq '1'  and ( theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2' and theadIter.uiGrpIndex ne '3')) or  (topNode.index eq '2'  and ( theadIter.uiGrpIndex ne '1' ))  or (topNode.index eq '3'  and ( theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2' ))  or (topNode.index eq '5'  and ( theadIter.uiGrpIndex ne '1' )) or  (topNode.index eq '4' and ( theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2'))}">
                                 <af:spacer width="50" height="10"
                                            id="mix_s_133"/>
                                 <af:panelBorderLayout id="mix_s_134"
@@ -2150,7 +2148,7 @@
                                 <af:spacer width="20" height="10"
                                            id="mi3x_s_28"/>
                                 <af:panelBorderLayout id="m3ix_s_29mmmnm"
-                                                      inlineStyle="height:25px; width:10px; border-style:none;">
+                                                      inlineStyle="height:25px; width:35px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted value="*" id="m3ix_s_30"
                                                         inlineStyle="font-size:x-large; color:Red;"
@@ -2166,7 +2164,7 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="m3ix_s_s33"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dm3ix_s_34"
                                                          layout="horizontal"
@@ -2187,7 +2185,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dmi3x_s_38"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mi3x_s_341"
                                                          layout="horizontal"
@@ -2207,7 +2205,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mi3x_s_43"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mi3x_s_342"
                                                          layout="horizontal"
@@ -2229,7 +2227,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mi3x_s_47"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <af:panelGroupLayout id="mi3x_s_343mn"
                                                        layout="horizontal"
                                                        halign="left">
@@ -2248,7 +2246,7 @@
                                   </af:panelGroupLayout>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mi3x_s_52"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="m3ix_s_345"
                                                          layout="horizontal"
@@ -2269,7 +2267,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="m3ix_s_57"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mi3x_s_346"
                                                          layout="horizontal"
@@ -2290,15 +2288,11 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dm3ix_s_s62"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mi3x_s_63"
                                                          layout="horizontal"
-                                                         halign="left">
-                                      <af:outputFormatted
-                                                        id="of1dedss2"
-                                                        value="Indexes : #{topNode.index}  ---- #{theadIter.uiGrpIndex}"/>
-                                    </af:panelGroupLayout>
+                                                         halign="left"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
