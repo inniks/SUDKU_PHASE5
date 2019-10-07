@@ -111,12 +111,14 @@ public class ConfiguratorBean {
     private List<ShowDetailItemCollection> dockingSdiCollection;
     private List<ShowDetailItemCollection> dpsSdiCollection;
     private List<ShowDetailItemCollection> mixSignalSdiCollection;
+    private List<ShowDetailItemCollection> rfResourcesSdiCollection;
     private ChildPropertyTreeModel addToolsTreeModel;
     private ChildPropertyTreeModel sysInfraTreeModel;
     private ChildPropertyTreeModel calDiagTreeModel;
     private ChildPropertyTreeModel digitalTreeModel;
     private ChildPropertyTreeModel dpsTreeModel;
     private ChildPropertyTreeModel mixSignalTreeModel;
+    private ChildPropertyTreeModel rfResourcesTreeModel;
     private ArrayList<UxTreeNode> sysInfraroot;
     private ArrayList<UxTreeNode> rootWarranty;
     private ArrayList<UxTreeNode> rootCalDiag;
@@ -126,6 +128,7 @@ public class ConfiguratorBean {
     private ArrayList<UxTreeNode> rootDocking;
     private ArrayList<UxTreeNode> rootDps;
     private ArrayList<UxTreeNode> rootMixSignal;
+    private ArrayList<UxTreeNode> rootRfResources;
     private RichPanelGroupLayout theadPanelGrp;
     private RichOutputText pageInitText;
     private RichListView sysInfraListView;
@@ -156,6 +159,7 @@ public class ConfiguratorBean {
     private Boolean disableMultipleEntries;
     private RichListView dpsListViewBinding;
     private RichListView mixSigListBinding;
+    private RichListView rfResourceListViewBinding;
 
     public ConfiguratorBean() {
         super();
@@ -468,7 +472,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             mixSignalSdiCollection =
                     MixSignalBean.populateMixSignalSubGroups(v93k, mixSignalSdiCollection);
         }
-        
+        if (rfResourcesTreeModel == null) {
+            rfResourcesTreeModel =
+                    RfResourcesBean.populateRfResourcesParentModel(rfResourcesTreeModel, rootRfResources);
+            rfResourcesSdiCollection =
+                    RfResourcesBean.populateRfResourceSubGroups(v93k, rfResourcesSdiCollection);
+        }
         defaultViewOnLoad = false;
         displayConfigWarnAndErrors();
         if (parentUiComp != null) {
@@ -927,6 +936,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         dockingTreeModel = null;
         dpsTreeModel = null;
         mixSignalTreeModel = null;
+        rfResourcesTreeModel = null;
         v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
             v93k = new V93kQuote();
@@ -1473,5 +1483,29 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public ChildPropertyTreeModel getMixSignalTreeModel() {
         return mixSignalTreeModel;
+    }
+
+    public void setRfResourcesSdiCollection(List<ShowDetailItemCollection> rfResourcesSdiCollection) {
+        this.rfResourcesSdiCollection = rfResourcesSdiCollection;
+    }
+
+    public List<ShowDetailItemCollection> getRfResourcesSdiCollection() {
+        return rfResourcesSdiCollection;
+    }
+
+    public void setRfResourcesTreeModel(ChildPropertyTreeModel rfResourcesTreeModel) {
+        this.rfResourcesTreeModel = rfResourcesTreeModel;
+    }
+
+    public ChildPropertyTreeModel getRfResourcesTreeModel() {
+        return rfResourcesTreeModel;
+    }
+
+    public void setRfResourceListViewBinding(RichListView rfResourceListViewBinding) {
+        this.rfResourceListViewBinding = rfResourceListViewBinding;
+    }
+
+    public RichListView getRfResourceListViewBinding() {
+        return rfResourceListViewBinding;
     }
 }

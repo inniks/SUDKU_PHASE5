@@ -14,16 +14,17 @@ import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.elements.ConfiguratorUiElement;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.elements.ConfiguratorUiGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.elements.ConfiguratorUiSubGroup;
-import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.MixedSignalGroup;
+import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.RFResoucesGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ux.ShowDetailItemCollection;
 import xxatcust.oracle.apps.sudoku.viewmodel.ux.UiField;
 import xxatcust.oracle.apps.sudoku.viewmodel.ux.UxTreeNode;
 
-public class MixSignalBean {
-    public MixSignalBean() {
+public class RfResourcesBean {
+    public RfResourcesBean() {
         super();
     }
-    public static ArrayList<UiField> prepareMixSignalDataModel(V93kQuote v93k,
+    
+    public static ArrayList<UiField> prepareRfResourcesDataModel(V93kQuote v93k,
                                                              String uiGrpName,
                                                              ArrayList<UiField> uiFieldCollection) {
         //Based on a refresh condition,prepare the data model for testhead,dut etc.
@@ -34,9 +35,9 @@ public class MixSignalBean {
         String requiredFlag = "N";
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
-            v93k.getUiRoot().getMixedSignalGroup() != null) {
+            v93k.getUiRoot().getRFResoucesGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
-                v93k.getUiRoot().getMixedSignalGroup().getUiGroupMap();
+                v93k.getUiRoot().getRFResoucesGroup().getUiGroupMap();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
@@ -68,7 +69,7 @@ public class MixSignalBean {
                         !listUiNodesBySubGrp.isEmpty()) {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
-                                            "Mixed Signal Test Resources  (Wave Scale MX or (MB )AV8(+)",
+                                            "RF Resources?(Wave Scale RF or Port Scale RF)",
                                             Integer.toString(index));
                         index++;
                         uiFieldCollection.add(uiField);
@@ -82,29 +83,29 @@ public class MixSignalBean {
         return uiFieldCollection;
     }
 
-    public static ChildPropertyTreeModel populateMixSignalParentModel(ChildPropertyTreeModel mixSignalTreeModel,
-                                                                    ArrayList<UxTreeNode> rootMixSignal) {
+    public static ChildPropertyTreeModel populateRfResourcesParentModel(ChildPropertyTreeModel rfTreeModel,
+                                                                    ArrayList<UxTreeNode> rootRfRes) {
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        rootMixSignal = new ArrayList<UxTreeNode>();
+        rootRfRes = new ArrayList<UxTreeNode>();
         LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getDCScaleDPSGroup() != null) {
-            MixedSignalGroup mixSignalGrp = v93k.getUiRoot().getMixedSignalGroup();
-            if (mixSignalGrp != null) {
+            RFResoucesGroup rfResGrp = v93k.getUiRoot().getRFResoucesGroup();
+            if (rfResGrp != null) {
                 String refColor =
-                    mixSignalGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
+                    rfResGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                     null;
                 String tarColor =
-                    mixSignalGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
+                    rfResGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
                     null;
-                String requiredFlag = mixSignalGrp.isRequired() ? "Y":"N";
+                String requiredFlag = rfResGrp.isRequired() ? "Y":"N";
                 UxTreeNode firstLevel =
-                    new UxTreeNode("mixsignal", "Mixed Signal Test Resources  (Wave Scale MX or (MB )AV8(+)",
+                    new UxTreeNode("rfResources", "RF Resources?(Wave Scale RF or Port Scale RF)",
                                    "Zero", null, null, refColor, tarColor,
                                    requiredFlag); //For top level color, code later
-                rootMixSignal.add(firstLevel);
-                uiGroupMap = mixSignalGrp.getUiGroupMap();
+                rootRfRes.add(firstLevel);
+                uiGroupMap = rfResGrp.getUiGroupMap();
                 Iterator it = uiGroupMap.entrySet().iterator();
                 int index = 1;
                 while (it.hasNext()) {
@@ -139,21 +140,21 @@ public class MixSignalBean {
                 }
             }
         }
-        mixSignalTreeModel =
-                new ChildPropertyTreeModel(rootMixSignal, "childNodeList");
-        return mixSignalTreeModel;
+        rfTreeModel =
+                new ChildPropertyTreeModel(rootRfRes, "childNodeList");
+        return rfTreeModel;
     }
 
-    public static ArrayList<ShowDetailItemCollection> populateMixSignalSubGroups(V93kQuote v93k,
+    public static ArrayList<ShowDetailItemCollection> populateRfResourceSubGroups(V93kQuote v93k,
                                                                                List<ShowDetailItemCollection> sdiCollection) {
         LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = null;
         LinkedHashMap<String, ConfiguratorUiGroup> mapUiGrp =
             new LinkedHashMap<String, ConfiguratorUiGroup>();
         List<String> listOfSubGrpNames = new ArrayList<String>();
         if (v93k != null && v93k.getUiRoot() != null &&
-            v93k.getUiRoot().getMixedSignalGroup() != null) {
+            v93k.getUiRoot().getRFResoucesGroup() != null) {
 
-            uiGroupMap = v93k.getUiRoot().getMixedSignalGroup().getUiGroupMap();
+            uiGroupMap = v93k.getUiRoot().getRFResoucesGroup().getUiGroupMap();
 
 
         }
@@ -184,7 +185,7 @@ public class MixSignalBean {
         if (listOfSubGrpNames != null && !listOfSubGrpNames.isEmpty()) {
             for (String key : listOfSubGrpNames) {
                 uiFieldCollection =
-                        prepareMixSignalDataModel(v93k, key, uiFieldCollection);
+                        prepareRfResourcesDataModel(v93k, key, uiFieldCollection);
                 //prepareSysInfraDataModel(v93k, key, uiFieldCollection);
                 listofcollections.add(uiFieldCollection);
                 testMap.put(key, uiFieldCollection);
