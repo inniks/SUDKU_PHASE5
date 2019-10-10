@@ -33,12 +33,14 @@ public class RfResourcesBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N";
+        String groupName = null;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getRFResoucesGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getRFResoucesGroup().getUiGroupMap();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
+            groupName = v93k.getUiRoot().getRFResoucesGroup().getGroupDisplayName() ;
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
             }
@@ -69,7 +71,7 @@ public class RfResourcesBean {
                         !listUiNodesBySubGrp.isEmpty()) {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
-                                            "RF Resources?(Wave Scale RF or Port Scale RF)",
+                                            groupName,
                                             Integer.toString(index));
                         index++;
                         uiFieldCollection.add(uiField);
@@ -93,6 +95,7 @@ public class RfResourcesBean {
             v93k.getUiRoot().getDCScaleDPSGroup() != null) {
             RFResoucesGroup rfResGrp = v93k.getUiRoot().getRFResoucesGroup();
             if (rfResGrp != null) {
+                String groupName = rfResGrp.getGroupDisplayName() ;
                 String refColor =
                     rfResGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                     null;
@@ -101,7 +104,7 @@ public class RfResourcesBean {
                     null;
                 String requiredFlag = rfResGrp.isRequired() ? "Y":"N";
                 UxTreeNode firstLevel =
-                    new UxTreeNode("rfResources", "RF Resources?(Wave Scale RF or Port Scale RF)",
+                    new UxTreeNode("rfResources", groupName,
                                    "Zero", null, null, refColor, tarColor,
                                    requiredFlag); //For top level color, code later
                 rootRfRes.add(firstLevel);

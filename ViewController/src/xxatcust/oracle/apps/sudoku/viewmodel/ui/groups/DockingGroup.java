@@ -19,6 +19,8 @@ public class DockingGroup {
 
     boolean required = false;
 
+    String groupDisplayName = null;
+
     public void addUiGroup(String uiGroupName, ConfiguratorUiGroup uiGroup) {
         this.uiGroupMap.put(uiGroupName, uiGroup);
     }
@@ -53,5 +55,13 @@ public class DockingGroup {
 
     public boolean isRequired() {
         return required;
+    }
+
+    public void setGroupDisplayName(String groupDisplayName) {
+        this.groupDisplayName = groupDisplayName;
+    }
+
+    public String getGroupDisplayName() {
+        return groupDisplayName;
     }
 }

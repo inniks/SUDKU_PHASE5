@@ -32,13 +32,14 @@ public class SystemInfraBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N" ;
-        
+        String groupName = null;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getSystemInfraGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getSystemInfraGroup().getUiGroupMap();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
+            groupName = v93k.getUiRoot().getSystemInfraGroup().getGroupDisplayName();
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
             }
@@ -67,7 +68,7 @@ public class SystemInfraBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"System Infrastructure",null);
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,null);
 
                         uiFieldCollection.add(uiField);
                     }
@@ -89,6 +90,7 @@ public class SystemInfraBean {
             v93k.getUiRoot().getSystemInfraGroup() != null) {
             SystemInfraGroup systemInfraGrp =
                 v93k.getUiRoot().getSystemInfraGroup();
+            String groupName = systemInfraGrp.getGroupDisplayName();
             String refColor =
                 systemInfraGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                 null;
@@ -97,7 +99,7 @@ public class SystemInfraBean {
                 null;
             String grpRequiredFlag = systemInfraGrp.isRequired() ? "Y" : "N" ;
             UxTreeNode firstLevel =
-                new UxTreeNode("sysInfra", "System Infrastructure", "Zero",
+                new UxTreeNode("sysInfra", groupName, "Zero",
                                null, null, refColor,
                                tarColor,grpRequiredFlag); //For top level color, code later
             sysInfraroot.add(firstLevel);

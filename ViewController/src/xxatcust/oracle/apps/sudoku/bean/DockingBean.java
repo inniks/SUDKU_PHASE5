@@ -34,12 +34,14 @@ public class DockingBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N";
+        String groupName = null ;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getDockingGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getDockingGroup().getUiGroupMap();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
+            groupName = v93k.getUiRoot().getDockingGroup().getGroupDisplayName() ;
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
             }
@@ -70,7 +72,7 @@ public class DockingBean {
                         !listUiNodesBySubGrp.isEmpty()) {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
-                                            "Docking, DUT Board, and Probe Card Accessories",
+                                            groupName,
                                             Integer.toString(index));
                         index++;
                         uiFieldCollection.add(uiField);
@@ -94,6 +96,7 @@ public class DockingBean {
             v93k.getUiRoot().getDockingGroup() != null) {
             DockingGroup dockingGrp = v93k.getUiRoot().getDockingGroup();
             if (dockingGrp != null) {
+                String groupName = dockingGrp.getGroupDisplayName() ;
                 String refColor =
                     dockingGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                     null;
@@ -101,7 +104,7 @@ public class DockingBean {
                     dockingGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
                     null;
                 UxTreeNode firstLevel =
-                    new UxTreeNode("docking", "Docking, DUT Board, and Probe Card Accessories",
+                    new UxTreeNode("docking", groupName,
                                    "Zero", null, null, refColor, tarColor,
                                    null); //For top level color, code later
                 rootDocking.add(firstLevel);

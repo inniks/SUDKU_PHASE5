@@ -4,13 +4,17 @@ public class UiSelection {
     private String uniqueSessionId;
     private String parentGroupName;
     private String subGroupName ;
+    private String uiComponent = "";
+    private String uiNodeName = "";
     private String valueSelected;
     private String uiType;
     private String czNodeName;
     private String identifier;
+    private int quantity;
     private int referenceQuantity;
     private int targetQuantity;
     private String selectionState;// TRUE if value is selected, FALSE if value is de-selected.
+    String czModelName = null;
     
     public UiSelection() {
         super();
@@ -94,5 +98,37 @@ public class UiSelection {
 
     public String getSelectionState() {
         return selectionState;
+    }
+
+    public void setUiComponent(String uiComponent) {
+        this.uiComponent = uiComponent;
+    }
+
+    public String getUiComponent() {
+        return uiComponent;
+    }
+
+    public void setUiNodeName(String uiNodeName) {
+        this.uiNodeName = uiNodeName;
+    }
+
+    public String getUiNodeName() {
+        return uiNodeName;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setCzModelName(String czModelName) {
+        this.czModelName = czModelName;
+    }
+
+    public String getCzModelName() {
+        return czModelName;
     }
 }

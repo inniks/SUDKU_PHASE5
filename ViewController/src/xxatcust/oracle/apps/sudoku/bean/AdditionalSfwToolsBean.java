@@ -31,12 +31,13 @@ public class AdditionalSfwToolsBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N" ;
-        
+        String groupName = null ;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getAdditionalSoftToolsGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getAdditionalSoftToolsGroup().getUiGroupMap();
+            groupName = v93k.getUiRoot().getAdditionalSoftToolsGroup().getGroupDisplayName();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
@@ -65,7 +66,7 @@ public class AdditionalSfwToolsBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Additional Software Tools",null);
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,null);
 
                         uiFieldCollection.add(uiField);
                     }
@@ -87,6 +88,7 @@ public class AdditionalSfwToolsBean {
             v93k.getUiRoot().getAdditionalSoftToolsGroup() != null) {
             AdditionalSoftToolsGroup addSwToolsGrp =
                 v93k.getUiRoot().getAdditionalSoftToolsGroup();
+            String groupName = addSwToolsGrp.getGroupDisplayName();
             String refColor =
                 addSwToolsGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                 null;
@@ -95,7 +97,7 @@ public class AdditionalSfwToolsBean {
                 null;
             String grpRequiredFlag = addSwToolsGrp.isRequired() ? "Y" : "N" ;
             UxTreeNode firstLevel =
-                new UxTreeNode("addSwTools", "Additional Software Tools", "Zero",
+                new UxTreeNode("addSwTools",groupName, "Zero",
                                null, null, refColor,
                                tarColor,grpRequiredFlag); //For top level color, code later
             addSwToolsRoot.add(firstLevel);

@@ -32,12 +32,14 @@ public class MixSignalBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N";
+        String groupName = null ;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getMixedSignalGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getMixedSignalGroup().getUiGroupMap();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
+            groupName = v93k.getUiRoot().getMixedSignalGroup().getGroupDisplayName();
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
             }
@@ -68,7 +70,7 @@ public class MixSignalBean {
                         !listUiNodesBySubGrp.isEmpty()) {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
-                                            "Mixed Signal Test Resources  (Wave Scale MX or (MB )AV8(+)",
+                                            groupName,
                                             Integer.toString(index));
                         index++;
                         uiFieldCollection.add(uiField);
@@ -92,6 +94,7 @@ public class MixSignalBean {
             v93k.getUiRoot().getDCScaleDPSGroup() != null) {
             MixedSignalGroup mixSignalGrp = v93k.getUiRoot().getMixedSignalGroup();
             if (mixSignalGrp != null) {
+                String groupName = mixSignalGrp.getGroupDisplayName() ;
                 String refColor =
                     mixSignalGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                     null;
@@ -100,7 +103,7 @@ public class MixSignalBean {
                     null;
                 String requiredFlag = mixSignalGrp.isRequired() ? "Y":"N";
                 UxTreeNode firstLevel =
-                    new UxTreeNode("mixsignal", "Mixed Signal Test Resources  (Wave Scale MX or (MB )AV8(+)",
+                    new UxTreeNode("mixsignal", groupName,
                                    "Zero", null, null, refColor, tarColor,
                                    requiredFlag); //For top level color, code later
                 rootMixSignal.add(firstLevel);

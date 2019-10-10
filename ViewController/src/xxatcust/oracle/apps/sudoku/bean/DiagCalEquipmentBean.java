@@ -32,10 +32,11 @@ public class DiagCalEquipmentBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N" ;
-        
+        String groupName = null;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getDiagAndCalibEquipmentGroup() != null) {
+          groupName=  v93k.getUiRoot().getDiagAndCalibEquipmentGroup().getGroupDisplayName();
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getDiagAndCalibEquipmentGroup().getUiGroupMap();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
@@ -66,7 +67,7 @@ public class DiagCalEquipmentBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Diagnostics and Calibration Equipment",null);
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,null);
 
                         uiFieldCollection.add(uiField);
                     }
@@ -88,6 +89,7 @@ public class DiagCalEquipmentBean {
             v93k.getUiRoot().getDiagAndCalibEquipmentGroup() != null) {
             DiagAndCalibEquipmentGroup calDiagGrp =
                 v93k.getUiRoot().getDiagAndCalibEquipmentGroup();
+            String groupName = calDiagGrp.getGroupDisplayName();
             String refColor =
                 calDiagGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                 null;
@@ -96,7 +98,7 @@ public class DiagCalEquipmentBean {
                 null;
             String grpRequiredFlag = calDiagGrp.isRequired() ? "Y" : "N" ;
             UxTreeNode firstLevel =
-                new UxTreeNode("sysInfra", "Diagnostics and Calibration Equipment", "Zero",
+                new UxTreeNode("sysInfra", groupName, "Zero",
                                null, null, refColor,
                                tarColor,grpRequiredFlag); //For top level color, code later
             rootCalDiag.add(firstLevel);
@@ -148,7 +150,7 @@ public class DiagCalEquipmentBean {
         List<String> listOfSubGrpNames = new ArrayList<String>();
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getDiagAndCalibEquipmentGroup() != null) {
-
+            
             uiGroupMap =
                     v93k.getUiRoot().getDiagAndCalibEquipmentGroup().getUiGroupMap();
 

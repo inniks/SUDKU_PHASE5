@@ -17,6 +17,12 @@ public class DiagAndCalibEquipmentGroup {
 
     boolean required = false;
 
+    String groupDisplayName = null;
+
+    public void addUiGroup(String uiGroupName, ConfiguratorUiGroup uiGroup) {
+        this.uiGroupMap.put(uiGroupName, uiGroup);
+    }
+
     public void setUiGroupMap(LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap) {
         this.uiGroupMap = uiGroupMap;
     }
@@ -47,5 +53,13 @@ public class DiagAndCalibEquipmentGroup {
 
     public boolean isRequired() {
         return required;
+    }
+
+    public void setGroupDisplayName(String groupDisplayName) {
+        this.groupDisplayName = groupDisplayName;
+    }
+
+    public String getGroupDisplayName() {
+        return groupDisplayName;
     }
 }

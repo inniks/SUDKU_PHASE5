@@ -31,11 +31,13 @@ public class WtyTrainingAndSupportBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N";
+        String groupName = null;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getWtyTrainingSAndSGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getWtyTrainingSAndSGroup().getUiGroupMap();
+            groupName = v93k.getUiRoot().getWtyTrainingSAndSGroup().getGroupDisplayName() ;
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
@@ -64,7 +66,7 @@ public class WtyTrainingAndSupportBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Warranty, Training, Service and Support",null);
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,null);
 
                         uiFieldCollection.add(uiField);
                     }
@@ -88,6 +90,7 @@ public class WtyTrainingAndSupportBean {
             WtyTrainingSAndSGroup warrantyGrp =
                 v93k.getUiRoot().getWtyTrainingSAndSGroup();
             if (warrantyGrp != null) {
+                String groupName = warrantyGrp.getGroupDisplayName();
                 String refColor =
                     warrantyGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                     null;
@@ -95,7 +98,7 @@ public class WtyTrainingAndSupportBean {
                     warrantyGrp.isDisplayReferenceColor() ? SudokuUtils.TARGET_COLOR :
                     null;
                 UxTreeNode firstLevel =
-                    new UxTreeNode("warranty", "Warranty, Training, Service and Support",
+                    new UxTreeNode("warranty", groupName,
                                    "Zero", null, null, refColor,
                                    tarColor,null); //For top level color, code later
                 rootWarranty.add(firstLevel);

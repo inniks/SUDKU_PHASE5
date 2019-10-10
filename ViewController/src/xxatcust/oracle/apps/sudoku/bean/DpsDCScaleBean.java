@@ -33,12 +33,14 @@ public class DpsDCScaleBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N";
+        String groupName  = null;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getDCScaleDPSGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getDCScaleDPSGroup().getUiGroupMap();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
+            groupName =  v93k.getUiRoot().getDCScaleDPSGroup().getGroupDisplayName() ;
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
             }
@@ -69,7 +71,7 @@ public class DpsDCScaleBean {
                         !listUiNodesBySubGrp.isEmpty()) {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
-                                            "DC Scale DPS and VI Sources",
+                                           groupName,
                                             Integer.toString(index));
                         index++;
                         uiFieldCollection.add(uiField);
@@ -93,6 +95,7 @@ public class DpsDCScaleBean {
             v93k.getUiRoot().getDCScaleDPSGroup() != null) {
             DCScaleDPSGroup dpsGrp = v93k.getUiRoot().getDCScaleDPSGroup();
             if (dpsGrp != null) {
+                String groupName = dpsGrp.getGroupDisplayName() ;
                 String refColor =
                     dpsGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                     null;
@@ -100,7 +103,7 @@ public class DpsDCScaleBean {
                     dpsGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
                     null;
                 UxTreeNode firstLevel =
-                    new UxTreeNode("dps", "DC Scale DPS and VI Sources",
+                    new UxTreeNode("dps", groupName,
                                    "Zero", null, null, refColor, tarColor,
                                    null); //For top level color, code later
                 rootDps.add(firstLevel);

@@ -34,12 +34,14 @@ public class SystemControllerBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N";
+        String groupName = null;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getSystemControllerGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getSystemControllerGroup().getUiGroupMap();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
+            groupName = v93k.getUiRoot().getSystemControllerGroup().getGroupDisplayName() ;
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
             }
@@ -68,7 +70,7 @@ public class SystemControllerBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"System Controller",Integer.toString(index));
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,Integer.toString(index));
                         index++;
                         uiFieldCollection.add(uiField);
                     }
@@ -92,6 +94,7 @@ public class SystemControllerBean {
             SystemControllerGroup sysControllerGrp =
                 v93k.getUiRoot().getSystemControllerGroup();
             if (sysControllerGrp != null) {
+                String groupName = sysControllerGrp.getGroupDisplayName();
                 String refColor =
                     sysControllerGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                     null;
@@ -100,7 +103,7 @@ public class SystemControllerBean {
                     null;
                 String requiredFlag = sysControllerGrp.isRequired() ? "Y":"N";
                 UxTreeNode firstLevel =
-                    new UxTreeNode("syscon", "System Controller",
+                    new UxTreeNode("syscon",groupName,
                                    "Zero", null, null, refColor,
                                    tarColor,requiredFlag); //For top level color, code later
                 rootSysController.add(firstLevel);

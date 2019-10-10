@@ -32,12 +32,13 @@ public class DigitalResourcesBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N" ;
-        
+        String groupName = null ;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getDigitalResourceGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getDigitalResourceGroup().getUiGroupMap();
+            groupName = v93k.getUiRoot().getDigitalResourceGroup().getGroupDisplayName();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
@@ -67,7 +68,7 @@ public class DigitalResourcesBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,"Digital Resources",Integer.toString(index));
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,Integer.toString(index));
                         index++;
                         uiFieldCollection.add(uiField);
                     }
@@ -89,6 +90,7 @@ public class DigitalResourcesBean {
             v93k.getUiRoot().getDigitalResourceGroup() != null) {
             DigitalResourceGroup digitalGrp =
                 v93k.getUiRoot().getDigitalResourceGroup();
+            String groupName = digitalGrp.getGroupDisplayName();
             String refColor =
                 digitalGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                 null;
@@ -97,7 +99,7 @@ public class DigitalResourcesBean {
                 null;
             String grpRequiredFlag = digitalGrp.isRequired() ? "Y" : "N" ;
             UxTreeNode firstLevel =
-                new UxTreeNode("addSwTools", "Digital Resources", "Zero",
+                new UxTreeNode("addSwTools", groupName, "Zero",
                                null, null, refColor,
                                tarColor,grpRequiredFlag); //For top level color, code later
             rootDigital.add(firstLevel);
