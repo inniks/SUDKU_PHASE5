@@ -365,8 +365,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
         String jsonStr = JSONUtils.convertObjToJson(v93k);
         ObjectMapper mapper = new ObjectMapper();
-        //        mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
-        //        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+                mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
+                mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
         String responseJson =
