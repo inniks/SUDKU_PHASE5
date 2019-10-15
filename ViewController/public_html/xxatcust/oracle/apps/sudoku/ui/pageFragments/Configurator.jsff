@@ -1441,6 +1441,27 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps1_pbl11"
+                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps1_pgl18"
+                                                         layout="horizontal">
+                                      <af:inputText id="dps1_it2" columns="5"
+                                                    rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
+                                                    value="#{theadIter.digitsEntered}">
+                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                      </af:inputText>
+                                      <af:outputFormatted id="dps1_it3"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          value="#{theadIter.uiField8_code}"
+                                                          styleClass="#{theadIter.uiField8_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
                                 <af:spacer width="10" height="10" id="dps_s2"/>
                                 <af:panelBorderLayout id="dps_pb_l3"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">

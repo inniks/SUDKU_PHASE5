@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,16 +15,27 @@ import java.io.OutputStream;
 
 import java.net.MalformedURLException;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+
 import java.util.HashMap;
 
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import oracle.adf.controller.TaskFlowId;
 import oracle.adf.model.BindingContext;
+import oracle.adf.model.binding.DCDataControl;
 import oracle.adf.share.ADFContext;
 import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
@@ -35,10 +47,19 @@ import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.context.AdfFacesContext;
 
 
+import oracle.apps.fnd.ext.common.AppsRequestWrapper;
+import oracle.apps.fnd.ext.common.AppsSessionHelper;
+import oracle.apps.fnd.ext.common.EBiz;
+import oracle.apps.fnd.ext.common.Session;
+
 import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
 
+import oracle.jbo.ApplicationModule;
+import oracle.jbo.JboException;
 import oracle.jbo.Row;
+
+import oracle.jbo.server.DBTransaction;
 
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
@@ -1110,5 +1131,297 @@ public class LoadDynamicRegionBean {
 
     public String getInfoFromPopup() {
         return infoFromPopup;
+    }
+
+    public void logoutEBS(ActionEvent actionEvent) {
+        _logger.info("Logging out the user from EBS");
+        //  ADFUtils.setSessionScopeValue("parentObject", null);
+        FacesContext fctx = FacesContext.getCurrentInstance();
+        HttpServletRequest request =
+            (HttpServletRequest)fctx.getExternalContext().getRequest();
+        HttpServletResponse response =
+            (HttpServletResponse)fctx.getExternalContext().getResponse();
+        //invalidate ICX session & HTTP session
+        AppsRequestWrapper wrappedRequest = null;
+        String logoutEbsUrl = null;
+        try {
+            //    ApplicationModule am = getAppModule();
+
+            //  _logger.info("am==>" + am);
+            javax.naming.Context initialContext =
+                new javax.naming.InitialContext();
+            javax.sql.DataSource dataSource =
+                (javax.sql.DataSource)initialContext.lookup("jdbc/myDS1");
+
+            Connection EBSconn = dataSource.getConnection();
+
+            //Connection EBSconn = getConnFromDS((ApplicationModuleImpl)am);
+            ServletContext servContext =
+                (ServletContext)ADFContext.getCurrent().getEnvironment().getContext();
+
+
+            String applServerID =
+                servContext.getInitParameter("APPL_SERVER_ID");
+            _logger.info("applServerID==>" + applServerID);
+            EBiz instance = new EBiz(EBSconn, applServerID);
+            wrappedRequest =
+                    new AppsRequestWrapper(request, response, EBSconn, instance);
+
+            logoutEbsUrl =
+                    wrappedRequest.getEbizInstance().getAppsServletAgent();
+            logoutEbsUrl = logoutEbsUrl + "OALogout.jsp?menu=Y";
+            _logger.info("logoutEbsUrl = " + logoutEbsUrl);
+            Session sessionEBS = wrappedRequest.getAppsSession();
+
+            //logout only if it is present
+            if (sessionEBS != null) {
+                AppsSessionHelper helper =
+                    new AppsSessionHelper(wrappedRequest.getEbizInstance());
+                helper.destroyAppsSession(wrappedRequest.getAppsSession(),
+                                          wrappedRequest, response);
+
+
+            }
+            ExternalContext ectx =
+                FacesContext.getCurrentInstance().getExternalContext();
+            HttpSession sessionHttp = (HttpSession)ectx.getSession(false);
+            if (sessionHttp != null) {
+                try {
+                    sessionHttp.invalidate();
+                } catch (IllegalStateException ex) {
+                    _logger.severe("Error - HttpSession already invalidated,",
+                                   ex);
+                }
+            }
+            response.sendRedirect(logoutEbsUrl);
+            fctx.responseComplete();
+        } catch (Exception ex) {
+            _logger.severe("Error , ", ex);
+            throw (new JboException(ex));
+        }
+    }
+
+
+    public void homeEBS(ActionEvent actionEvent) {
+        _logger.info("home out the user from EBS");
+        //  ADFUtils.setSessionScopeValue("parentObject", null);
+        FacesContext fctx = FacesContext.getCurrentInstance();
+        HttpServletRequest request =
+            (HttpServletRequest)fctx.getExternalContext().getRequest();
+        HttpServletResponse response =
+            (HttpServletResponse)fctx.getExternalContext().getResponse();
+        //invalidate ICX session & HTTP session
+        AppsRequestWrapper wrappedRequest = null;
+        String homeUrl = null;
+        try {
+            ApplicationModule am = getAppModule();
+
+            BindingContext bctx = BindingContext.getCurrent();
+            DCDataControl dc = bctx.findDataControl("SudokuAMDataControl");
+            dc.rollbackTransaction();
+
+            //  _logger.info("am==>" + am);
+            javax.naming.Context initialContext =
+                new javax.naming.InitialContext();
+            javax.sql.DataSource dataSource =
+                (javax.sql.DataSource)initialContext.lookup("jdbc/myDS1");
+
+            Connection EBSconn = dataSource.getConnection();
+
+            //Connection EBSconn = getConnFromDS((ApplicationModuleImpl)am);
+            ServletContext servContext =
+                (ServletContext)ADFContext.getCurrent().getEnvironment().getContext();
+
+
+            String applServerID =
+                servContext.getInitParameter("APPL_SERVER_ID");
+            _logger.info("applServerID==>" + applServerID);
+            EBiz instance = new EBiz(EBSconn, applServerID);
+            wrappedRequest =
+                    new AppsRequestWrapper(request, response, EBSconn, instance);
+
+            homeUrl = wrappedRequest.getEbizInstance().getAppsServletAgent();
+            homeUrl =
+                    homeUrl + "OA.jsp?page=/oracle/apps/fnd/framework/navigate/webui/HomePG&homePage=Y";
+
+            //            OA.jsp?OAFunc=OAHOMEPAGE
+            //
+            //            _home_url = currentUrlName + "OA.jsp?OAFunc=OAHOMEPAGE#";
+            //            _logout_url = currentUrlName + "OALogout.jsp?menu=Y";
+
+            _logger.info("homeUrl = " + homeUrl);
+            Session sessionEBS = wrappedRequest.getAppsSession();
+
+            //logout only if it is present
+            /*if (sessionEBS != null) {
+                AppsSessionHelper helper =
+                    new AppsSessionHelper(wrappedRequest.getEbizInstance());
+                helper.destroyAppsSession(wrappedRequest.getAppsSession(),
+                                          wrappedRequest, response);
+
+
+            }*/
+            ExternalContext ectx =
+                FacesContext.getCurrentInstance().getExternalContext();
+            HttpSession sessionHttp = (HttpSession)ectx.getSession(false);
+            if (sessionHttp != null) {
+                try {
+                    sessionHttp.invalidate();
+                } catch (IllegalStateException ex) {
+                    _logger.severe("Error - HttpSession already invalidated,",
+                                   ex);
+                }
+            }
+            _logger.info("before redirect homeurl " + homeUrl);
+            response.sendRedirect(homeUrl);
+            _logger.info("after redirect homeurl " + homeUrl);
+            fctx.responseComplete();
+            _logger.info("after response complete " + homeUrl);
+        } catch (Exception ex) {
+            _logger.severe("Error , ", ex);
+            throw (new JboException(ex));
+        }
+    }
+
+    public static ApplicationModule getAppModule() {
+        BindingContext bctx = BindingContext.getCurrent();
+        DCDataControl dc = bctx.findDataControl("SudokuAMDataControl");
+        ApplicationModule am = (ApplicationModule)dc.getDataProvider();
+
+        return am;
+    }
+
+    public void processPDFOutput(FacesContext facesContext,
+                                 OutputStream outputStream) {
+//        try {
+//            _logger.info("print report call start ");
+//            //initializeAppsContext("0", "51157", "880");
+//            int respid =
+//                Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
+//                                 null ? "51156" :
+//                                 (String)ADFUtils.getSessionScopeValue("RespId"));
+//            int usrId =
+//                Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
+//                                 null ? "0" :
+//                                 (String)ADFUtils.getSessionScopeValue("UserId"));
+//            String quoteNum = (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+//            initializeAppsContext(respid, usrId, "880");
+//            _logger.info("print after apps intilization in bean ");
+//            String template =
+//                "XXATREP_PMF"; //"XXATRPT_PMF_V4_Y_mux_FRAMES_PDF";
+//            String pconfighid = null;
+//            String pconfigrevnum = null;
+//            String porderhid = null;
+//            String quotehid = "97416";
+//            String ponumber = null;
+//            //QUOTE HEADER ID -- 97416
+//
+//            ApplicationModule am = getAppModule();
+//            DBTransaction dbTrans = (DBTransaction)am.getTransaction();
+//            Connection conn =
+//                dbTrans.createCallableStatement("select 1 from dual",
+//                                                1).getConnection();
+//            _logger.info("print connection " + conn);
+//            DataProcessor dataProcessor = new DataProcessor();
+//            //dataProcessor.setDataTemplate("C:\\Users\\vthommandru\\Downloads\\PMF_REPORT_pmux_frames_PDF.xml"); //local
+//            _logger.info("print dataProcessor " + dataProcessor);
+//            dataProcessor.setDataTemplate("/u01/app/oracle/Middleware/user_projects/domains/bifoundation_domain/servers/AdminServer/upload/ReportTemplates/PMF_REPORT_pmux_frames_PDF.xml"); //server
+//            _logger.info("print dataProcessor location " + dataProcessor);
+//            dataProcessor.setConnection(conn);
+//            _logger.info("print dataProcessor set connection ");
+//            Hashtable parameters = new Hashtable();
+//            if (pconfighid != null) {
+//                parameters.put("P_CONFIG_HEADER_ID", pconfighid);
+//            }
+//            if (pconfigrevnum != null) {
+//                parameters.put("P_CONFIG_REV_NBR", pconfigrevnum);
+//            }
+//            if (porderhid != null) {
+//                parameters.put("P_ORDER_HEADER_ID", porderhid);
+//            }
+//            if (quotehid != null) {
+//                parameters.put("P_QUOTE_HEADER_ID", quotehid);
+//            }
+//
+//            if (ponumber != null) {
+//                parameters.put("P_PO_NUMBER", ponumber);
+//            }
+//            _logger.info("print quotehid " + quotehid);
+//            dataProcessor.setParameters(parameters);
+//            _logger.info("data processor set parameters");
+//            ByteArrayOutputStream out = new ByteArrayOutputStream();
+//            _logger.info("ByteArrayOutputStream" + out);
+//            dataProcessor.setOutput(out);
+//            _logger.info("dataProcessor setoutput");
+//            dataProcessor.processData();
+//            _logger.info("dataProcessor.processData");
+//            byte[] data = out.toByteArray();
+//            _logger.info("byte " + data);
+//            ByteArrayInputStream istream = new ByteArrayInputStream(data);
+//            System.out.println("Done data template");
+//
+//            _logger.info("Done data template");
+//
+//            //            RTFProcessor rtf =
+//            //                new RTFProcessor("C:\\Users\\vthommandru\\Downloads\\XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf"); // local
+//
+//
+//            RTFProcessor rtf =
+//                new RTFProcessor("/u01/app/oracle/Middleware/user_projects/domains/bifoundation_domain/servers/AdminServer/upload/ReportTemplates/XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf"); // server
+//
+//            _logger.info("print rtf directory " + rtf);
+//            ByteArrayOutputStream outXslFo = new ByteArrayOutputStream();
+//            _logger.info("outXslFo" + outXslFo);
+//            rtf.setOutput(outXslFo);
+//            _logger.info("outXslFo set output");
+//            rtf.process();
+//            _logger.info("set rtf process");
+//            byte[] dataXslFo = outXslFo.toByteArray();
+//            _logger.info("print" + dataXslFo);
+//            ByteArrayInputStream inXslFo = new ByteArrayInputStream(dataXslFo);
+//            _logger.info("print inXslFo" + inXslFo);
+//            FOProcessor processor = new FOProcessor();
+//            _logger.info("print processor" + processor);
+//            processor.setData(istream);
+//            _logger.info("processor.setData");
+//            processor.setTemplate(inXslFo);
+//            _logger.info("processor.setTemplate");
+//            processor.setOutput(outputStream);
+//            _logger.info("processor.setOutput");
+//            processor.setOutputFormat(FOProcessor.FORMAT_PDF);
+//            _logger.info("processorsetOutputFormat PDF" +
+//                         FOProcessor.FORMAT_PDF);
+//            processor.generate();
+//            _logger.info("Done power point");
+//            System.out.println("Done power point");
+//            outputStream.flush();
+//            _logger.info("Done flush");
+//
+//
+//        } catch (Exception e) {
+//            System.out.println("error::: " + e.getMessage());
+//            _logger.info("error::: " + e.getMessage());
+//        }
+    }
+
+    private void initializeAppsContext(String respId, String userId,
+                                       String applicationId) {
+        ApplicationModule am = getAppModule();
+        DBTransaction txn = (DBTransaction)am.getTransaction();
+        CallableStatement st = null;
+        try {
+
+            st =
+ txn.createCallableStatement("BEGIN fnd_global.apps_initialize(:1, :2, :3); END;",
+                             0);
+            st.setString(1, userId);
+            st.setString(2, respId);
+            st.setString(3, applicationId);
+            st.execute();
+            st.close();
+
+        } catch (Exception e) {
+            _logger.info("Main Exception2===>" + e.getMessage());
+        }
     }
 }

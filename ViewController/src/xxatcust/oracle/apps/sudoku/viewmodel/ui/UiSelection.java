@@ -1,5 +1,7 @@
 package xxatcust.oracle.apps.sudoku.viewmodel.ui;
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
+
 public class UiSelection {
     private String uniqueSessionId;
     private String parentGroupName;
@@ -8,6 +10,7 @@ public class UiSelection {
     private String uiNodeName = "";
     private String valueSelected;
     private String uiType;
+    @JsonRawValue
     private String czNodeName;
     private String identifier;
     private int quantity;
@@ -65,6 +68,9 @@ public class UiSelection {
     }
 
     public String getCzNodeName() {
+        if(czNodeName!=null && czNodeName.equalsIgnoreCase("\"")){
+            System.out.println("CZNODE NAME SELECTED IS "+czNodeName);
+        }
         return czNodeName;
     }
 
@@ -129,6 +135,7 @@ public class UiSelection {
     }
 
     public String getCzModelName() {
+        
         return czModelName;
     }
 }

@@ -229,7 +229,9 @@
                         <af:spacer width="5" height="10" id="s13"/>
                         <af:commandImageLink id="ctb16" disabled="true"
                                              icon="/Resources/images/imgs/View PMF.png"
-                                             partialSubmit="true"/>
+                                             partialSubmit="true">
+                          <af:fileDownloadActionListener contentType="application/pdf"/>
+                        </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s14"/>
                         <af:commandImageLink id="ctb17" disabled="true"
                                              icon="/Resources/images/imgs/View DUT.png"
@@ -249,18 +251,20 @@
                   </af:panelGroupLayout>
                   <af:panelGroupLayout id="pt_pgl11" layout="horizontal"
                                        halign="right" valign="baseline">
-                    <af:goImageLink id="pt_cil1"
+                    <af:commandImageLink id="pt_cil1"
                                     icon="/Resources/images/icons8-home-page-32.png"
                                     shortDesc="Redirect to EBS Home.."
                                     rendered="true"
-                                    destination="#{sessionScope._home_url  }"
-                                    iconPosition="trailing"/>
+                                    
+                                    iconPosition="trailing"
+                                         actionListener="#{viewScope.LoadDynamicRegionBean.homeEBS}"/>
                     <af:spacer width="10" height="10" id="pt_s2"/>
-                    <af:goImageLink id="pt_cil2"
+                    <af:commandImageLink id="pt_cil2"
                                     icon="/Resources/images/icons8-shutdown-32.png"
                                     shortDesc="Logout.."
-                                    destination="#{sessionScope._logout_url} "
-                                    iconPosition="trailing"/>
+                                    
+                                    iconPosition="trailing"
+                                         actionListener="#{viewScope.LoadDynamicRegionBean.logoutEBS}"/>
                   </af:panelGroupLayout>
                 </af:panelGroupLayout>
               </af:panelGroupLayout>

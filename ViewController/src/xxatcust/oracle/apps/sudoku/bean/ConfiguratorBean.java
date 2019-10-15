@@ -364,9 +364,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                         JsonMappingException {
 
         String jsonStr = JSONUtils.convertObjToJson(v93k);
+        
         ObjectMapper mapper = new ObjectMapper();
-                mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
-                mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+                //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
+               // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
         String responseJson =
@@ -574,6 +575,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String selectedValue =
                 (String)selectedNodeValueMap.get("selectedValue");
             String czNodeName = (String)selectedNodeValueMap.get("czNodeName");
+           
+//            if(czNodeName!=null && czNodeName.contains("\"")){
+//                System.out.println("Cz Node name has special characters : "+czNodeName);
+//                czNodeName = "\""+czNodeName+"\"";
+//            }
+            if(czNodeName!=null){
+                czNodeName = "\""+czNodeName+"\"";
+            }
             String identifier = (String)selectedNodeValueMap.get("identifier");
             String nodeColor = (String)selectedNodeValueMap.get("nodeColor");
             String parentGroupName =
@@ -812,6 +821,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputNodeValueMap.get("parentGroupName");
             String czNodeName = (String)inputNodeValueMap.get("czNodeName");
+            if(czNodeName!=null && czNodeName.contains("\"")){
+                System.out.println("Cz Node name has special characters : "+czNodeName);
+                czNodeName = "\""+czNodeName+"\"";
+            }
             String identifier = (String)inputNodeValueMap.get("identifier");
             UiSelection uiSelection = new UiSelection();
             uiSelection.setParentGroupName(parentGroupName);
@@ -1336,6 +1349,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputLOVMap.get("parentGroupName");
             String czNodeName = (String)inputLOVMap.get("czNodeName");
+            if(czNodeName!=null && czNodeName.contains("\"")){
+                System.out.println("Cz Node name has special characters : "+czNodeName);
+                czNodeName = "\""+czNodeName+"\"";
+            }
             String identifier = (String)inputLOVMap.get("identifier");
             UiSelection uiSelection = new UiSelection();
             uiSelection.setParentGroupName(parentGroupName);

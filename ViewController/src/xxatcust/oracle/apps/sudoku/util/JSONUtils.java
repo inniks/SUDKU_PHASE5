@@ -42,8 +42,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                              JsonGenerationException,
                                                              JsonMappingException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
-        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+        //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
+        //mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         String jsonInString = mapper.writeValueAsString(obj);
         return jsonInString;
     }
