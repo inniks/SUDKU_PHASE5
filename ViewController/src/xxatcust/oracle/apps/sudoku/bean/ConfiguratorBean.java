@@ -821,8 +821,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputNodeValueMap.get("parentGroupName");
             String czNodeName = (String)inputNodeValueMap.get("czNodeName");
-            if(czNodeName!=null && czNodeName.contains("\"")){
-                System.out.println("Cz Node name has special characters : "+czNodeName);
+            if(czNodeName!=null){
                 czNodeName = "\""+czNodeName+"\"";
             }
             String identifier = (String)inputNodeValueMap.get("identifier");
@@ -1349,7 +1348,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputLOVMap.get("parentGroupName");
             String czNodeName = (String)inputLOVMap.get("czNodeName");
-            if(czNodeName!=null && czNodeName.contains("\"")){
+            if(czNodeName!=null){
                 System.out.println("Cz Node name has special characters : "+czNodeName);
                 czNodeName = "\""+czNodeName+"\"";
             }

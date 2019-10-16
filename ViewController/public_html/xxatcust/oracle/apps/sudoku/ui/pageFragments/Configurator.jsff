@@ -1417,248 +1417,983 @@
                             <af:iterator id="dps_i2"
                                          value="#{topNode.uiFieldCollection}"
                                          var="theadIter">
-                              <af:panelGroupLayout id="dps_theadPgl"
-                                                   layout="horizontal">
-                                <af:spacer width="50" height="10" id="dps_s1"/>
-                                <af:panelBorderLayout id="dps_pbl11"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                         <af:panelGroupLayout id="dps12_11"
+                                                   layout="horizontal"
+                                                   rendered="#{theadIter.uiGrpIndex eq '1'}">
+                                <af:spacer width="10" height="10"
+                                           id="dps_13_11"/>
+                                <af:panelBorderLayout id="dps19_21"
+                                                      inlineStyle="height:25px; width:40px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl18"
-                                                         layout="horizontal">
-                                      <af:inputText id="dps_it2" columns="5"
-                                                    rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
-                                                    autoSubmit="true"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                    value="#{theadIter.digitsEntered}">
-                                        <af:validateRegExp pattern="[0-9]{1,10}"
-                                                           messageDetailNoMatch="Only Numbers allowed.."/>
-                                      </af:inputText>
-                                      <af:outputFormatted id="dps_it3"
-                                                          visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"
-                                                          value="#{theadIter.uiField8_code}"
-                                                          styleClass="#{theadIter.uiField8_identifier}"/>
+                                    <af:group id="dpsg3">
+                                      <af:panelGroupLayout id="dps3412"
+                                                           layout="horizontal"
+                                                           halign="left">
+                                        <af:outputFormatted id="dps3712"
+                                                            visible="true"
+                                                            value="#{theadIter.uiField1}"/>
+                                      </af:panelGroupLayout>
+                                    </af:group>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10" id="dpss13"/>
+                                <af:panelBorderLayout id="dps19_121"
+                                                      inlineStyle="height:25px; width:40px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps3422"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="dps3722"
+                                                          visible="true"
+                                                          value="Base Card"
+                                                          rendered="#{topNode.index ne '4'}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps1_pbl11"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                <af:spacer width="10" height="10"
+                                           id="dps18_11"/>
+                                <af:panelBorderLayout id="dps19_11"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps22_11"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="dps3_11"/>
+                                <af:panelBorderLayout id="dps25_11"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10"
+                                           id="ddps28_11"/>
+                                <af:panelBorderLayout id="dps9_11"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps1_pgl18"
-                                                         layout="horizontal">
-                                      <af:inputText id="dps1_it2" columns="5"
-                                                    rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
-                                                    autoSubmit="true"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                    value="#{theadIter.digitsEntered}">
-                                        <af:validateRegExp pattern="[0-9]{1,10}"
-                                                           messageDetailNoMatch="Only Numbers allowed.."/>
-                                      </af:inputText>
-                                      <af:outputFormatted id="dps1_it3"
-                                                          visible="false"
-                                                          shortDesc="#{theadIter.parentGroupName}"
-                                                          value="#{theadIter.uiField8_code}"
-                                                          styleClass="#{theadIter.uiField8_identifier}"/>
+                                    
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps31_11"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="#{topNode.index eq '1'}">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="pgl30">
+                                      <af:outputFormatted value="#{theadIter.uiField2}"
+                                                          id="of15"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="dps_s2"/>
-                                <af:panelBorderLayout id="dps_pb_l3"
+                                <af:panelBorderLayout id="dps32_11"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="pgl29">
+                                      <af:outputFormatted value="#{theadIter.uiField3}"
+                                                          id="of12"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps33_11"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="pgdpsl29">
+                                      <af:outputFormatted value="#{theadIter.uiField4}"
+                                                          id="dps_gof12"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps38_11"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dpspgl20_g"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="dpsth_of7g"
+                                                          value="#{theadIter.uiField5}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps47_11"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps342h"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="dps372h"
+                                                          visible="true"
+                                                          value="#{theadIter.uiField6}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps52_11"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps342i"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="dps372i"
+                                                          visible="true"
+                                                          value="#{theadIter.uiField7}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps57_11"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps342j"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="dps372j"
+                                                          visible="true"
+                                                          value="#{theadIter.uiField8}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps62_11"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="dps12_11r"
+                                                   layout="horizontal"
+                                                   rendered="#{ topNode.index eq '1' and (  theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2' or theadIter.uiGrpIndex eq '3' or theadIter.uiGrpIndex eq '4' or theadIter.uiGrpIndex eq '5' or theadIter.uiGrpIndex eq '6' or theadIter.uiGrpIndex eq '7' or theadIter.uiGrpIndex eq '8') }">
+                                <af:spacer width="10" height="10"
+                                           id="dps_13_11r"/>
+                                <af:panelBorderLayout id="dps19_21r"
+                                                      inlineStyle="height:25px; width:40px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:group id="dpsg3r">
+                                      <af:panelGroupLayout id="dps3412r"
+                                                           layout="horizontal"
+                                                           halign="left">
+                                        <af:inputText id="dps3712r"
+                                                      visible="true"
+                                                      disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                      columns="5"
+                                                      autoSubmit="true"
+                                                      value="#{theadIter.uiField1_qty}"
+                                                      valueChangeListener="#{ConfiguratorBean.handleInput}"
+                                                      rendered="#{theadIter.uiGrpIndex eq '1'  or theadIter.uiGrpIndex eq '3' or theadIter.uiGrpIndex eq '5' or theadIter.uiGrpIndex eq '7'}"/>
+                                        <af:outputFormatted id="dps3612"
+                                                            value="#{theadIter.czNodeName1}"
+                                                            visible="false"
+                                                            shortDesc="#{theadIter.parentGroupName}"/>
+                                      </af:panelGroupLayout>
+                                    </af:group>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps19_121r"
+                                                      inlineStyle="height:25px; width:40px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps3422r"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="dps3722r" visible="true"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField2_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField2_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
+                                                    rendered="#{theadIter.uiGrpIndex eq '2'  or theadIter.uiGrpIndex eq '4' or theadIter.uiGrpIndex eq '6' or theadIter.uiGrpIndex eq '8'}"/>
+                                      <af:outputFormatted id="dps3622"
+                                                          value="#{theadIter.czNodeName2}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="dps18_11r"/>
+                                <af:panelBorderLayout id="dps19_11r"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl12"
+                                    <af:panelGroupLayout id="dps20_11"
                                                          halign="left"
                                                          layout="horizontal">
                                       <af:outputFormatted value="#{theadIter.selectedValue}"
-                                                          id="dps_of4"/>
+                                                          id="dpsof19"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps_pbl12"
+                                <af:panelBorderLayout id="dps22_11r"
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl19">
-                                      <af:outputFormatted value="#{theadIter.uiField9}"
-                                                          id="dps_of13"
+                                    <af:panelGroupLayout id="dps_pgl19r">
+                                      <af:outputFormatted value="#{theadIter.sumInstaBaseRef}"
+                                                          id="dps_of13r"
                                                           inlineStyle="color:Maroon; font-weight:bold;"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="dps_s3"/>
-                                <af:panelBorderLayout id="dps_pbl13"
-                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                <af:spacer width="10" height="10"
+                                           id="dps3_11r"/>
+                                <af:panelBorderLayout id="dps29_11r"
+                                                      inlineStyle="height:25px; width:10px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl21">
-                                      <af:outputFormatted value="#{theadIter.uiField10}"
-                                                          id="dps_of14"
+                                    <af:panelGroupLayout id="dps_pgl21r">
+                                      <af:outputFormatted value="#{theadIter.sumInstaBaseTar}"
+                                                          id="dps_of14r"
                                                           inlineStyle="color:Teal; font-weight:bold;"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="20" height="10" id="dps_s11"/>
-                                <af:panelBorderLayout id="dps_pbl8"
+                                <af:panelBorderLayout id="dps25_11r"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps26_11r">
+                                      <af:outputFormatted value="*"
+                                                          id="dps_of9r"
+                                                          inlineStyle="font-size:x-large; color:Red;"
+                                                          rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10"
+                                           id="dps28_11r"/>
+                                <af:panelBorderLayout id="dps31_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps32_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps342ir1"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="dps372ir1"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField2_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps362i1"
+                                                          value="#{theadIter.uiField2_code}"
+                                                          inlineStyle="#{theadIter.uiField2_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField2_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps33_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps342cxir1"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="dps372cxir1"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField3_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps362cxi1"
+                                                          value="#{theadIter.uiField3_code}"
+                                                          inlineStyle="#{theadIter.uiField3_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField3_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dpsdrs38_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      >
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps_1342cxir1"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="dps_1372cxir1"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField4_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps_1362cxi1"
+                                                          value="#{theadIter.uiField4_code}"
+                                                          inlineStyle="#{theadIter.uiField4_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField4_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps43_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps342ir"
+                                                         layout="horizontal"
+                                                         halign="left"
+                                                         >
+                                      <af:inputText id="dps372ir" visible="true"
+                                                    disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField5_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps362i"
+                                                          value="#{theadIter.uiField5_code}"
+                                                          inlineStyle="#{theadIter.uiField5_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField5_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps47_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      >
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps342hr"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="dps372hr" visible="true"
+                                                    disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField6_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps362h"
+                                                          value="#{theadIter.czNodeName6}"
+                                                          inlineStyle="#{theadIter.uiField6_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField6_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps52_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      >
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps_i342ir1"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="dps_q372ir1"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField7_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps_b362i1"
+                                                          value="#{theadIter.uiField7_code}"
+                                                          inlineStyle="#{theadIter.uiField7_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField7_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps57_1r1"
+                                                      inlineStyle="height:25px; width:90px; border-style:none"
+                                                      >
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps342jr"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="dps372jr" visible="true"
+                                                    disabled="#{theadIter.uiField8_dis or theadIter.uiField8_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField8_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps362j"
+                                                          value="#{theadIter.uiField8_code}"
+                                                          inlineStyle="#{theadIter.uiField8_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField8_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps62_1r1"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps63_1r1"
+                                                         layout="horizontal"
+                                                         halign="left"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="dps13_11r"
+                                                   layout="horizontal"
+                                                   rendered="#{(topNode.index eq '2'  and theadIter.uiGrpIndex eq '1') or (topNode.index eq '3' and theadIter.uiGrpIndex eq '1') or (topNode.index eq '4' and theadIter.uiGrpIndex eq '1')}">
+                                <af:spacer width="10" height="10"
+                                           id="dps_113_11r"/>
+                                <af:panelBorderLayout id="dps119_21r"
+                                                      inlineStyle="height:25px; width:40px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:group id="dps1g3r">
+                                      <af:panelGroupLayout id="dps13412r"
+                                                           layout="horizontal"
+                                                           halign="left">
+                                        <af:inputText id="dps13712r"
+                                                      visible="true"
+                                                      disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                      columns="5"
+                                                      autoSubmit="true"
+                                                      value="#{theadIter.uiField1_qty}"
+                                                      valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                        <af:outputFormatted id="d1ps3612"
+                                                            value="#{theadIter.czNodeName1}"
+                                                            visible="false"
+                                                            shortDesc="#{theadIter.parentGroupName}"/>
+                                      </af:panelGroupLayout>
+                                    </af:group>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps119_121r"
+                                                      inlineStyle="height:25px; width:40px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dp1s3422r"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="dps13722r" visible="true"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField2_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField2_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
+                                                    rendered="#{topNode.index ne '4'}"/>
+                                      <af:outputFormatted id="d1ps3622"
+                                                          value="#{theadIter.czNodeName2}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="dps118_11r"/>
+                                <af:panelBorderLayout id="dp1s19_11r"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="d1ps20_11"
+                                                         halign="left"
+                                                         layout="horizontal">
+                                      <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                          id="d1psof19"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dp1s22_11r"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dp1s_pgl19r">
+                                      <af:outputFormatted value="#{theadIter.sumInstaBaseRef}"
+                                                          id="d1ps_of13r"
+                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="d1ps3_11r"/>
+                                <af:panelBorderLayout id="d1ps29_11r"
                                                       inlineStyle="height:25px; width:10px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:outputFormatted value="*" id="dps_of9"
-                                                        inlineStyle="font-size:x-large; color:Maroon;"
+                                    <af:panelGroupLayout id="d1ps_pgl21r">
+                                      <af:outputFormatted value="#{theadIter.sumInstaBaseTar}"
+                                                          id="d1ps_of14r"
+                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="d1ps25_11r"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="d1ps26_11r">
+                                      <af:outputFormatted value="*"
+                                                          id="d1ps_of9r"
+                                                          inlineStyle="font-size:x-large; color:Red;"
+                                                          rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10"
+                                           id="d1ps28_11r"/>
+                                <af:panelBorderLayout id="d1ps31_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="d1ps32_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="false">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dp1s342ir1"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="d1ps372ir1"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField2_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dp1s362i1"
+                                                          value="#{theadIter.uiField2_code}"
+                                                          inlineStyle="#{theadIter.uiField2_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField2_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="d1ps33_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="false">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="d1ps342cxir1"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="d1ps372cxir1"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField3_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dp1s362cxi1"
+                                                          value="#{theadIter.uiField3_code}"
+                                                          inlineStyle="#{theadIter.uiField3_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField3_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="d1psdrs38_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="false">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dp1s_1342cxir1"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="d1ps_1372cxir1"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField4_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="d1ps_1362cxi1"
+                                                          value="#{theadIter.uiField4_code}"
+                                                          inlineStyle="#{theadIter.uiField4_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField4_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="d1ps43_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="false">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="d1ps342ir"
+                                                         layout="horizontal"
+                                                         halign="left"
+                                                         >
+                                      <af:inputText id="d1ps372ir" visible="true"
+                                                    disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField5_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="d1ps362i"
+                                                          value="#{theadIter.uiField5_code}"
+                                                          inlineStyle="#{theadIter.uiField5_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField5_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="d1ps47_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="false">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="d1ps342hr"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="d1ps372hr" visible="true"
+                                                    disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField6_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="d1ps362h"
+                                                          value="#{theadIter.czNodeName6}"
+                                                          inlineStyle="#{theadIter.uiField6_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField6_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="d1ps52_11r"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="false">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="d1ps_i342ir1"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="dp1s_q372ir1"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField7_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="d1ps_b362i1"
+                                                          value="#{theadIter.uiField7_code}"
+                                                          inlineStyle="#{theadIter.uiField7_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField7_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dp1s57_1r1"
+                                                      inlineStyle="height:25px; width:90px; border-style:none"
+                                                      rendered="false">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="d1ps342jr"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="d1ps372jr" visible="true"
+                                                    disabled="#{theadIter.uiField8_dis or theadIter.uiField8_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField8_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="d1ps362j"
+                                                          value="#{theadIter.uiField8_code}"
+                                                          inlineStyle="#{theadIter.uiField8_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField8_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="d1ps62_1r1"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};"
+                                                      rendered="false">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="d1ps63_1r1"
+                                                         layout="horizontal"
+                                                         halign="left"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="dps12m"
+                                                   layout="horizontal"
+                                                   rendered="#{(topNode.index eq '1'  and theadIter.uiGrpIndex eq '9') or (topNode.index eq '2' and theadIter.uiGrpIndex eq '2') or (topNode.index eq '3' and theadIter.uiGrpIndex eq '2') or (topNode.index eq '4' and theadIter.uiGrpIndex eq '2')}">
+                                <af:spacer width="10" height="10" id="dps13m"/>
+                                <af:panelBorderLayout id="dps14m"
+                                                      inlineStyle="height:25px; width:100px; border-style:groove;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps1001m"
+                                                         layout="horizontal">
+                                      <af:outputFormatted id="dps1003m"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          value="Licenced Features"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10" id="dps18m"/>
+                                <af:panelBorderLayout id="dps19m"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps22m"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="dpss3m"/>
+                                <af:panelBorderLayout id="dps25m"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10" id="dps28m"/>
+                                <af:panelBorderLayout id="dps29"
+                                                      inlineStyle="height:25px; width:10px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps31m"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps33m"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps34m"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="dps36m"
+                                                          value="#{theadIter.uiField1}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps38m"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps341m"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="dps361m"
+                                                          value="#{theadIter.uiField2}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps43m"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps342m"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="dps362m"
+                                                          value="#{theadIter.uiField3}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps47m"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <af:panelGroupLayout id="dps343"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:outputFormatted id="dps363m"
+                                                        value="#{theadIter.uiField4}"/>
+                                  </af:panelGroupLayout>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps52m"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps345m"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="dps365m"
+                                                          value="#{theadIter.uiField5}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps57m"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps346m"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="dps366m"
+                                                          value="#{theadIter.uiField6}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="dps12"
+                                                   layout="horizontal"
+                                                   rendered="#{(topNode.index eq '1'  and (theadIter.uiGrpIndex eq '9' or theadIter.uiGrpIndex eq '10')) or (topNode.index eq '2' and theadIter.uiGrpIndex eq '2') or (topNode.index eq '3' and theadIter.uiGrpIndex ne '1') or (topNode.index eq '4' and theadIter.uiGrpIndex ne '1')  }">
+                                <af:spacer width="10" height="10" id="dps13"/>
+                                <af:panelBorderLayout id="dps14"
+                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps1001"
+                                                         layout="horizontal">
+                                      <af:inputText id="dps1002" columns="12"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{sessionScope.ConfiguratorBean.handleInput}"
+                                                    value="#{theadIter.digitsEntered}"
+                                                    rows="1"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly or theadIter.disableMultipleInputs}">
+                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                      </af:inputText>
+                                      <af:outputFormatted id="dps1003"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          value="#{theadIter.uiField1_code}"
+                                                          styleClass="#{theadIter.uiField1_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="dps18"/>
+                                <af:panelBorderLayout id="dps19"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps20"
+                                                         halign="left"
+                                                         layout="horizontal">
+                                      <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                          id="dps21"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps22"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps23">
+                                      <af:outputFormatted value="#{theadIter.sumReference}"
+                                                          id="dps24"
+                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="dpss3"/>
+                                <af:panelBorderLayout id="dps25"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="dps26">
+                                      <af:outputFormatted value="#{theadIter.sumTarget}"
+                                                          id="dps27"
+                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10" id="dps28"/>
+                                <af:panelBorderLayout id="dps29mmmnm"
+                                                      inlineStyle="height:25px; width:10px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted value="*" id="dps30"
+                                                        inlineStyle="font-size:x-large; color:Red;"
                                                         rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps_pbl9"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                <af:panelBorderLayout id="dps31"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps_pb20"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
-                                </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps_pb1"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                <af:panelBorderLayout id="dps33"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl7"
+                                    <af:panelGroupLayout id="dps34"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:commandLink id="dps_cl1"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
-                                                      partialSubmit="false">
-                                        <af:outputFormatted id="dps_th_of1"
-                                                            value="#{theadIter.uiField1}"
-                                                            inlineStyle="#{theadIter.uiField1_bgColor}"/>
-                                        <af:inputText id="dps_ip1_helper"
-                                                      visible="false"
-                                                      value="#{theadIter.czNodeName1}"
-                                                      shortDesc="#{theadIter.uiField1_identifier}"
-                                                      label="#{theadIter.uiField1_color}"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
-                                      </af:commandLink>
+                                      <af:inputText id="dps37" visible="true"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField1_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps36"
+                                                          value="#{theadIter.uiField1_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField1_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps_pb2"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
+                                <af:panelBorderLayout id="dps38"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl_7"
+                                    <af:panelGroupLayout id="dps341"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:commandLink id="dps_cl2"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
-                                        <af:outputFormatted id="dps_th_of2"
-                                                            value="#{theadIter.uiField2}"
-                                                            inlineStyle="#{theadIter.uiField2_bgColor}"/>
-                                        <af:inputText id="dps_ip2_helper"
-                                                      visible="false"
-                                                      value="#{theadIter.czNodeName2}"
-                                                      shortDesc="#{theadIter.uiField2_identifier}"
-                                                      label="#{theadIter.uiField2_color}"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
-                                      </af:commandLink>
+                                      <af:inputText id="dps371" visible="true"
+                                                    disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}"
+                                                    columns="5"
+                                                    value="#{theadIter.uiField2_qty}"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps361"
+                                                          value="#{theadIter.uiField2_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps_pb3"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                <af:panelBorderLayout id="dps43"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl_71"
+                                    <af:panelGroupLayout id="dps342"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:commandLink id="dps_cl3"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
-                                        <af:outputFormatted id="dps_th_of3"
-                                                            value="#{theadIter.uiField3}"
-                                                            inlineStyle="#{theadIter.uiField3_bgColor}"/>
-                                        <af:inputText id="dps_ip3_helper"
-                                                      visible="false"
-                                                      value="#{theadIter.czNodeName3}"
-                                                      shortDesc="#{theadIter.uiField3_identifier}"
-                                                      label="#{theadIter.uiField3_color}"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
-                                      </af:commandLink>
+                                      <af:inputText id="dps372" visible="true"
+                                                    disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField3_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps362"
+                                                          value="#{theadIter.uiField3_code}"
+                                                          inlineStyle="#{theadIter.uiField3_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField3_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps_pb4"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                <af:panelBorderLayout id="dps47"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <af:panelGroupLayout id="dps343mn"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:inputText id="dps373" visible="true"
+                                                  disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}"
+                                                  columns="5"
+                                                  value="#{theadIter.uiField4_qty}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                    <af:outputFormatted id="dps363"
+                                                        value="#{theadIter.uiField4_code}"
+                                                        inlineStyle="#{theadIter.uiField4_bgColor}"
+                                                        visible="false"
+                                                        shortDesc="#{theadIter.parentGroupName}"
+                                                        styleClass="#{theadIter.uiField4_identifier}"/>
+                                  </af:panelGroupLayout>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="dps52"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl_17"
+                                    <af:panelGroupLayout id="dps345"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:commandLink id="dps_cl4"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
-                                        <af:outputFormatted id="dps_th_of4"
-                                                            value="#{theadIter.uiField4}"
-                                                            inlineStyle="#{theadIter.uiField4_bgColor}"/>
-                                        <af:inputText id="dps_ip4_helper"
-                                                      visible="false"
-                                                      value="#{theadIter.czNodeName4}"
-                                                      shortDesc="#{theadIter.uiField4_identifier}"
-                                                      label="#{theadIter.uiField4_color}"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
-                                      </af:commandLink>
+                                      <af:inputText id="dps375" visible="true"
+                                                    disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField5_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps365"
+                                                          value="#{theadIter.uiField5_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField5_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps_pb5"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                                <af:panelBorderLayout id="dps57"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl9"
+                                    <af:panelGroupLayout id="dps346"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:commandLink id="dps_cl5"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
-                                        <af:outputFormatted id="dps_th_of5"
-                                                            value="#{theadIter.uiField5}"
-                                                            inlineStyle="#{theadIter.uiField5_bgColor}"/>
-                                        <af:inputText id="dps_ip5_helper"
-                                                      visible="false"
-                                                      value="#{theadIter.czNodeName5}"
-                                                      shortDesc="#{theadIter.uiField5_identifier}"
-                                                      label="#{theadIter.uiField5_color}"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
-                                      </af:commandLink>
+                                      <af:inputText id="dps376" visible="true"
+                                                    disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField6_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="dps366"
+                                                          value="#{theadIter.uiField6_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField6_identifier}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps_pb6"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                <af:panelBorderLayout id="dps62"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl10"
+                                    <af:panelGroupLayout id="dps63"
                                                          layout="horizontal"
                                                          halign="left">
-                                      <af:commandLink id="dps_cl6"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
-                                        <af:outputFormatted id="dps_th_of6"
-                                                            value="#{theadIter.uiField6}"
-                                                            inlineStyle="#{theadIter.uiField6_bgColor}"/>
-                                        <af:inputText id="dps_ip6_helper"
-                                                      visible="false"
-                                                      value="#{theadIter.czNodeName6}"
-                                                      shortDesc="#{theadIter.uiField6_identifier}"
-                                                      label="#{theadIter.uiField6_color}"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
-                                      </af:commandLink>
-                                    </af:panelGroupLayout>
-                                  </f:facet>
-                                </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps_pb7"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
-                                  <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="dps_pgl20"
-                                                         layout="horizontal"
-                                                         halign="left">
-                                      <af:commandLink id="dps_cl7"
+                                      <af:commandLink id="dps64"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
-                                        <af:outputFormatted id="dps_th_of7"
+                                        <af:outputFormatted id="dps65m"
                                                             value="#{theadIter.uiField7}"
                                                             inlineStyle="#{theadIter.uiField7_bgColor}"/>
-                                        <af:inputText id="dps_ip7_helper"
-                                                      visible="false"
+                                        <af:inputText id="dps66" visible="false"
                                                       value="#{theadIter.czNodeName7}"
                                                       shortDesc="#{theadIter.uiField7_identifier}"
                                                       label="#{theadIter.uiField7_color}"
@@ -1668,7 +2403,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
-                            </af:iterator>
+                                         </af:iterator>
                           </af:showDetailHeader>
                         </af:panelGroupLayout>
                       </af:panelGroupLayout>
