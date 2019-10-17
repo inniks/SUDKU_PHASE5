@@ -58,3 +58,5 @@ Model/classes/xxatcust/oracle/apps/sudoku/model/module/SudokuAMImpl.class
 Model/classes/xxatcust/oracle/apps/sudoku/model/module/client/SudokuAMClient.class
 
 Model/classes/xxatcust/oracle/apps/sudoku/model/module/common/SudokuAM.class
+
+ViewController/classes/.data/00000000/00000897.jdb
