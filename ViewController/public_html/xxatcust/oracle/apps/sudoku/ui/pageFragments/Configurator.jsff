@@ -2523,15 +2523,16 @@
                                 </af:panelBorderLayout>
                                 <af:spacer width="30" height="10" id="s15"/>
                                 <af:panelBorderLayout id="mix_pb1"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;">
+                                                      inlineStyle="height:25px; width:120px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted id="outputFormatted12"
                                                         value="#{theadIter.uiField2}"
                                                         visible="true"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s14"/>
                                 <af:panelBorderLayout id="mix_pb2"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:120px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted id="outputFormatted13"
                                                         value="#{theadIter.uiField3}"/>
@@ -2553,13 +2554,15 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb5"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted
+                                                        id="of16"/>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb6"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
-                                    <af:outputFormatted id="outputFocrcmatted12"
-                                                        value="#{theadIter.uiField6}"/>
+                                    <af:outputFormatted id="outputFocrcmatted12"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_pb7"
@@ -2592,7 +2595,6 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="mix1_s2"/>
                                 <af:panelBorderLayout id="mix1_pb_l3"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">
                                   <f:facet name="innerLeft">
@@ -2614,7 +2616,7 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10" id="mix1_s3"/>
+                                <af:spacer width="20" height="10" id="mix1_s3"/>
                                 <af:panelBorderLayout id="mix1_pbl13"
                                                       inlineStyle="height:25px; width:20px; border-style:none;">
                                   <f:facet name="innerLeft">
@@ -2640,7 +2642,7 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix1_pb20"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix1346"
                                                          layout="horizontal"
@@ -2660,7 +2662,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix1_pb2"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix2346"
                                                          layout="horizontal"
@@ -2755,7 +2757,7 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_s33"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dmix_s_34"
                                                          layout="horizontal"
@@ -2767,7 +2769,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dmix_s_38"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_341"
                                                          layout="horizontal"
@@ -2780,7 +2782,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_43"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_342"
                                                          layout="horizontal"
@@ -2792,7 +2794,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_47"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <af:panelGroupLayout id="mix_s_343mn"
                                                        layout="horizontal"
                                                        halign="left">
@@ -2802,7 +2804,7 @@
                                   </af:panelGroupLayout>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_52"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_345"
                                                          layout="horizontal"
@@ -2814,7 +2816,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix_s_57"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_346"
                                                          layout="horizontal"
@@ -2861,7 +2863,7 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="10" height="10"
+                                <af:spacer width="30" height="10"
                                            id="mix_3s_18"/>
                                 <af:panelBorderLayout id="mix_s3_19"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">
@@ -2915,7 +2917,7 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="m3ix_s_s33"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dm3ix_s_34"
                                                          layout="horizontal"
@@ -2936,7 +2938,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dmi3x_s_38"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mi3x_s_341"
                                                          layout="horizontal"
@@ -2956,7 +2958,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mi3x_s_43"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mi3x_s_342"
                                                          layout="horizontal"
@@ -2978,7 +2980,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mi3x_s_47"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <af:panelGroupLayout id="mi3x_s_343mn"
                                                        layout="horizontal"
                                                        halign="left">
@@ -2997,7 +2999,7 @@
                                   </af:panelGroupLayout>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mi3x_s_52"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="m3ix_s_345"
                                                          layout="horizontal"
@@ -3018,7 +3020,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="m3ix_s_57"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mi3x_s_346"
                                                          layout="horizontal"
@@ -3451,7 +3453,7 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf4_s33"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drf4_34"
                                                          layout="horizontal"
@@ -3463,7 +3465,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf4_38"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf4_341"
                                                          layout="horizontal"
@@ -3476,7 +3478,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf4_43"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf4_342"
                                                          layout="horizontal"
@@ -3488,7 +3490,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf4_47"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <af:panelGroupLayout id="rf4_343mn"
                                                        layout="horizontal"
                                                        halign="left">
@@ -3498,7 +3500,7 @@
                                   </af:panelGroupLayout>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf4_52"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf4_345"
                                                          layout="horizontal"
@@ -3510,7 +3512,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf4_57"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf4_346"
                                                          layout="horizontal"
@@ -3522,7 +3524,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf4_s62"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf4_63"
                                                          layout="horizontal"
@@ -3607,7 +3609,7 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf3x_s_s33"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf3_34"
                                                          layout="horizontal"
@@ -3627,7 +3629,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf3_s_38"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf3_s_341"
                                                          layout="horizontal"
@@ -3647,7 +3649,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf3_s_43"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf3_s_342"
                                                          layout="horizontal"
@@ -3668,7 +3670,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf3_47"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <af:panelGroupLayout id="rf3_343mn"
                                                        layout="horizontal"
                                                        halign="left">
@@ -3687,7 +3689,7 @@
                                   </af:panelGroupLayout>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf3s_52"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf3_s_345"
                                                          layout="horizontal"
@@ -3707,7 +3709,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf3_s_57"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf3_s_346"
                                                          layout="horizontal"

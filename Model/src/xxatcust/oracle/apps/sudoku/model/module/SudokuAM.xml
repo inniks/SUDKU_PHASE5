@@ -89,6 +89,12 @@
   <ViewUsage
     Name="UIGroupsVO"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.UIGroupsVO"/>
+  <ViewUsage
+    Name="CFDReportVO1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CFDReportVO"/>
+  <ViewUsage
+    Name="XXATGlobalDirRVO1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.XXATGlobalDirRVO"/>
   <ClientInterface>
     <Method
       Name="clearQuoteFields">
@@ -328,6 +334,79 @@
       Name="getUiGrpMap">
       <Return
         Type="java.util.Hashtable"/>
+    </Method>
+    <Method
+      Name="getPath">
+      <Return
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="getQuoteHdrID">
+      <Return
+        Type="java.lang.String"/>
+      <Parameter
+        Name="pquoteNo"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="callDUTReport">
+      <Return
+        Type="int"/>
+      <Parameter
+        Name="confighid"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="configrevno"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="orderhid"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="quoteno"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="ponum"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="respId"
+        Type="int"/>
+      <Parameter
+        Name="usrId"
+        Type="int"/>
+    </Method>
+    <Method
+      Name="callMOFReport">
+      <Return
+        Type="java.lang.String"/>
+      <Parameter
+        Name="confighid"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="configrevno"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="orderhid"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="quoteno"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="ponum"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="callCFDReport">
+      <Return
+        Type="java.lang.String"/>
+      <Parameter
+        Name="quoteNum"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="respId"
+        Type="int"/>
+      <Parameter
+        Name="usrId"
+        Type="int"/>
     </Method>
   </ClientInterface>
 </AppModule>

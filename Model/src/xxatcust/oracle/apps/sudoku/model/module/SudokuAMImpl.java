@@ -37,7 +37,9 @@ import oracle.jbo.server.DBTransaction;
 import oracle.jbo.server.ViewObjectImpl;
 
 import xxatcust.oracle.apps.sudoku.model.module.common.SudokuAM;
+import xxatcust.oracle.apps.sudoku.model.readonlyvo.CFDReportVOImpl;
 import xxatcust.oracle.apps.sudoku.model.readonlyvo.RuleSetVORowImpl;
+import xxatcust.oracle.apps.sudoku.model.readonlyvo.XXATGlobalDirRVOImpl;
 import xxatcust.oracle.apps.sudoku.model.util.SudokuUtils;
 
 
@@ -99,6 +101,201 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
         }
         return currentUrlName;
 
+    }
+    
+    public String getPath() {
+        
+        ViewObjectImpl vo=getXXATGlobalDirRVO1();
+        
+        Row row=vo.first();
+        
+        String path=row.getAttribute("Description").toString();
+        
+        return path;
+        
+        
+    }
+    
+    public String getQuoteHdrID(String pquoteNo) 
+    {
+        DBTransaction trans=this.getDBTransaction();
+      
+        String QuoteHid=null;
+                try {
+                    
+                   
+                    String sql="Select QUOTE_HEADER_ID from ASO_QUOTE_HEADERS_ALL where QUOTE_NUMBER="+pquoteNo;
+                    
+                    PreparedStatement ps=trans.createPreparedStatement(sql, 0);
+                    ResultSet rs=ps.executeQuery();
+                    rs.next();
+                    
+                    
+                  
+                    
+                    QuoteHid=rs.getString(1);
+                   
+                    
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+                
+    
+        
+        
+        return QuoteHid;
+    }
+    public int callDUTReport(String confighid,String configrevno,String orderhid,String quoteno,String ponum,int respId, int usrId) 
+    {
+        CallableStatement cs = null;
+        String stmt =
+            "XXAT_DUT_REP(:1,:2,:3,:4,:5,:6,:7,:8)";
+        StringBuilder errorMsg = new StringBuilder("<html><body>");
+        int reqid=0;
+        try {
+            
+            cs =
+            this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",0);
+             
+           
+                                           
+            cs.setString(1, confighid);
+            cs.setString(2, configrevno);
+            cs.setString(3, orderhid);
+            cs.setString(4, quoteno);
+            cs.setString(5, ponum);
+            cs.setInt(6, respId);
+            cs.setInt(7, usrId);
+            cs.registerOutParameter(8, Types.INTEGER);
+            System.out.println("print before execute the procedure");
+            
+            
+            cs.executeUpdate();
+            reqid =cs.getInt(8);
+            
+            System.out.println("print after execute the procedure");
+            
+            System.out.println("print reqid"+reqid);
+        }
+        catch (Exception e) {
+                    errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
+                    System.out.println("print error found in package execution"+e.getMessage());
+                    //                e.printStackTrace();
+                } finally {
+                    try {
+                        if (cs != null)
+                            cs.close();
+                    } catch (SQLException s) {
+                        errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
+                        //                    s.printStackTrace();
+                        System.out.println("print error found in package execution1"+s.getMessage());  
+                    }
+                }
+        
+        return reqid;
+    }
+    
+    public String callMOFReport(String confighid,String configrevno,String orderhid,String quoteno,String ponum) 
+    {
+        CallableStatement cs = null;
+        String stmt =
+            "XXAT_ASO_QUOTE_PKG.XXAT_MOF_REPORT_PRINT(:1,:2,:3,:4,:5,:6)";
+        StringBuilder errorMsg = new StringBuilder("<html><body>");
+        String output=null;
+        try {
+            
+            cs =
+            this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",0);
+             
+           
+                                           
+            cs.setString(1, confighid);
+            cs.setString(2, configrevno);
+            cs.setString(3, orderhid);
+            cs.setString(4, quoteno);
+            cs.setString(5, ponum);
+    //            cs.setInt(6, respId);
+    //            cs.setInt(7, usrId);
+            cs.registerOutParameter(6, Types.VARCHAR);
+            System.out.println("print before execute the procedure");
+            
+            
+            cs.executeUpdate();
+            output =cs.getString(6);
+            
+            System.out.println("print after execute the procedure");
+            
+            System.out.println("print output"+output);
+        }
+        catch (Exception e) {
+                    errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
+                    System.out.println("print error found in package execution"+e.getMessage());
+                    //                e.printStackTrace();
+                } finally {
+                    try {
+                        if (cs != null)
+                            cs.close();
+                    } catch (SQLException s) {
+                        errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
+                        //                    s.printStackTrace();
+                        System.out.println("print error found in package execution1"+s.getMessage());  
+                    }
+                }
+        
+        return output;
+    }
+    
+    public String callCFDReport(String quoteNum, 
+                                        int respId, int usrId) {
+
+        CallableStatement cs = null;
+        String returnval = null;
+        StringBuilder errorMsg = new StringBuilder("<html><body>");
+        String reqstid = "";
+        String returnStatus = "";
+        String stmt =
+            "   XXAT_CFD_REPT(:1,:2,:3,:4)";
+        try {
+            cs =
+    this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
+                                                 0);
+            if (quoteNum != null) {
+                quoteNum = quoteNum.trim();
+                cs.setString(1, quoteNum);
+            } else
+                errorMsg.append("<p><b> Quote Number is Missing.</b></p>");
+            
+
+            cs.setInt(2, respId);
+            cs.setInt(3, usrId);
+            cs.registerOutParameter(4, Types.VARCHAR);
+            
+           
+            errorMsg.append("</body></html>");
+            cs.executeUpdate();
+            reqstid=cs.getString(4);
+          //  String output =cs.getString(5);
+            System.out.println("print req id"+reqstid);
+    //            if ("<html><body></body></html>".equalsIgnoreCase(errorMsg.toString())) {
+    //                cs.executeUpdate();
+    //                returnStatus = cs.getString(5);
+    //                returnMessage = cs.getString(6);
+    //            }
+        } catch (Exception e) {
+            errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
+            //                e.printStackTrace();
+        } finally {
+            try {
+                if (cs != null)
+                    cs.close();
+            } catch (SQLException s) {
+                errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
+                //                    s.printStackTrace();
+            }
+        }
+        
+        return reqstid;
     }
 
     public String getWrappedRequestAgent() {
@@ -2644,5 +2841,22 @@ this.getDBTransaction().createPreparedStatement(query, 0);
      */
     public ViewObjectImpl getUIGroupsVO() {
         return (ViewObjectImpl)findViewObject("UIGroupsVO");
+    }
+
+
+    /**
+     * Container's getter for CFDReportVO1.
+     * @return CFDReportVO1
+     */
+    public CFDReportVOImpl getCFDReportVO1() {
+        return (CFDReportVOImpl)findViewObject("CFDReportVO1");
+    }
+
+    /**
+     * Container's getter for XXATGlobalDirRVO1.
+     * @return XXATGlobalDirRVO1
+     */
+    public XXATGlobalDirRVOImpl getXXATGlobalDirRVO1() {
+        return (XXATGlobalDirRVOImpl)findViewObject("XXATGlobalDirRVO1");
     }
 }

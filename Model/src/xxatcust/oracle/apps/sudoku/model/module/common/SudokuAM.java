@@ -71,4 +71,16 @@ public interface SudokuAM extends ApplicationModule {
     void initRuleSetForRef();
 
     Hashtable getUiGrpMap();
+
+    String getPath();
+
+    String getQuoteHdrID(String pquoteNo);
+
+    int callDUTReport(String confighid, String configrevno, String orderhid,
+                      String quoteno, String ponum, int respId, int usrId);
+
+    String callMOFReport(String confighid, String configrevno, String orderhid,
+                         String quoteno, String ponum);
+
+    String callCFDReport(String quoteNum, int respId, int usrId);
 }

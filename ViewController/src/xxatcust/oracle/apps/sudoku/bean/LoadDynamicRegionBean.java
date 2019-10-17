@@ -6,7 +6,11 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.sun.java.util.collections.Hashtable;
+
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,11 +22,18 @@ import java.net.MalformedURLException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 
+import java.sql.SQLException;
+
 import java.util.HashMap;
 
-import java.util.Hashtable;
+//import java.util.Hashtable;
 import java.util.List;
 
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.el.ValueExpression;
+
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -36,6 +47,7 @@ import javax.servlet.http.HttpSession;
 import oracle.adf.controller.TaskFlowId;
 import oracle.adf.model.BindingContext;
 import oracle.adf.model.binding.DCDataControl;
+import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.share.ADFContext;
 import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
@@ -47,10 +59,16 @@ import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.context.AdfFacesContext;
 
 
+import oracle.adf.view.rich.event.PopupFetchEvent;
+
 import oracle.apps.fnd.ext.common.AppsRequestWrapper;
 import oracle.apps.fnd.ext.common.AppsSessionHelper;
 import oracle.apps.fnd.ext.common.EBiz;
 import oracle.apps.fnd.ext.common.Session;
+
+import oracle.apps.xdo.dataengine.DataProcessor;
+import oracle.apps.xdo.template.FOProcessor;
+import oracle.apps.xdo.template.RTFProcessor;
 
 import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
@@ -59,8 +77,11 @@ import oracle.jbo.ApplicationModule;
 import oracle.jbo.JboException;
 import oracle.jbo.Row;
 
+import oracle.jbo.ViewObject;
+import oracle.jbo.domain.BlobDomain;
 import oracle.jbo.server.DBTransaction;
 
+import xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl;
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
 import xxatcust.oracle.apps.sudoku.util.DOMParser;
@@ -100,6 +121,7 @@ public class LoadDynamicRegionBean {
     private RichPopup bindSaveToOrclPopup;
     private String errorFromPopup;
     private String infoFromPopup;
+    private RichOutputFormatted setMOFop;
 
     public LoadDynamicRegionBean() {
     }
@@ -1291,137 +1313,504 @@ public class LoadDynamicRegionBean {
         return am;
     }
 
+    public SudokuAMImpl getSudokuAMImpl() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Application app = facesContext.getApplication();
+        ExpressionFactory elFactory = app.getExpressionFactory();
+        ELContext elContext = facesContext.getELContext();
+        ValueExpression valueExp =
+            elFactory.createValueExpression(elContext, "#{data.SudokuAMDataControl.dataProvider}",
+                                            Object.class);
+
+        return (SudokuAMImpl)valueExp.getValue(elContext);
+    }
+
     public void processPDFOutput(FacesContext facesContext,
                                  OutputStream outputStream) {
-//        try {
-//            _logger.info("print report call start ");
-//            //initializeAppsContext("0", "51157", "880");
-//            int respid =
-//                Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
-//                                 null ? "51156" :
-//                                 (String)ADFUtils.getSessionScopeValue("RespId"));
-//            int usrId =
-//                Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
-//                                 null ? "0" :
-//                                 (String)ADFUtils.getSessionScopeValue("UserId"));
-//            String quoteNum = (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
-//            initializeAppsContext(respid, usrId, "880");
-//            _logger.info("print after apps intilization in bean ");
-//            String template =
-//                "XXATREP_PMF"; //"XXATRPT_PMF_V4_Y_mux_FRAMES_PDF";
-//            String pconfighid = null;
-//            String pconfigrevnum = null;
-//            String porderhid = null;
-//            String quotehid = "97416";
-//            String ponumber = null;
-//            //QUOTE HEADER ID -- 97416
-//
-//            ApplicationModule am = getAppModule();
-//            DBTransaction dbTrans = (DBTransaction)am.getTransaction();
-//            Connection conn =
-//                dbTrans.createCallableStatement("select 1 from dual",
-//                                                1).getConnection();
-//            _logger.info("print connection " + conn);
-//            DataProcessor dataProcessor = new DataProcessor();
-//            //dataProcessor.setDataTemplate("C:\\Users\\vthommandru\\Downloads\\PMF_REPORT_pmux_frames_PDF.xml"); //local
-//            _logger.info("print dataProcessor " + dataProcessor);
-//            dataProcessor.setDataTemplate("/u01/app/oracle/Middleware/user_projects/domains/bifoundation_domain/servers/AdminServer/upload/ReportTemplates/PMF_REPORT_pmux_frames_PDF.xml"); //server
-//            _logger.info("print dataProcessor location " + dataProcessor);
-//            dataProcessor.setConnection(conn);
-//            _logger.info("print dataProcessor set connection ");
-//            Hashtable parameters = new Hashtable();
-//            if (pconfighid != null) {
-//                parameters.put("P_CONFIG_HEADER_ID", pconfighid);
-//            }
-//            if (pconfigrevnum != null) {
-//                parameters.put("P_CONFIG_REV_NBR", pconfigrevnum);
-//            }
-//            if (porderhid != null) {
-//                parameters.put("P_ORDER_HEADER_ID", porderhid);
-//            }
-//            if (quotehid != null) {
-//                parameters.put("P_QUOTE_HEADER_ID", quotehid);
-//            }
-//
-//            if (ponumber != null) {
-//                parameters.put("P_PO_NUMBER", ponumber);
-//            }
-//            _logger.info("print quotehid " + quotehid);
-//            dataProcessor.setParameters(parameters);
-//            _logger.info("data processor set parameters");
-//            ByteArrayOutputStream out = new ByteArrayOutputStream();
-//            _logger.info("ByteArrayOutputStream" + out);
-//            dataProcessor.setOutput(out);
-//            _logger.info("dataProcessor setoutput");
-//            dataProcessor.processData();
-//            _logger.info("dataProcessor.processData");
-//            byte[] data = out.toByteArray();
-//            _logger.info("byte " + data);
-//            ByteArrayInputStream istream = new ByteArrayInputStream(data);
-//            System.out.println("Done data template");
-//
-//            _logger.info("Done data template");
-//
-//            //            RTFProcessor rtf =
-//            //                new RTFProcessor("C:\\Users\\vthommandru\\Downloads\\XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf"); // local
-//
-//
-//            RTFProcessor rtf =
-//                new RTFProcessor("/u01/app/oracle/Middleware/user_projects/domains/bifoundation_domain/servers/AdminServer/upload/ReportTemplates/XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf"); // server
-//
-//            _logger.info("print rtf directory " + rtf);
-//            ByteArrayOutputStream outXslFo = new ByteArrayOutputStream();
-//            _logger.info("outXslFo" + outXslFo);
-//            rtf.setOutput(outXslFo);
-//            _logger.info("outXslFo set output");
-//            rtf.process();
-//            _logger.info("set rtf process");
-//            byte[] dataXslFo = outXslFo.toByteArray();
-//            _logger.info("print" + dataXslFo);
-//            ByteArrayInputStream inXslFo = new ByteArrayInputStream(dataXslFo);
-//            _logger.info("print inXslFo" + inXslFo);
-//            FOProcessor processor = new FOProcessor();
-//            _logger.info("print processor" + processor);
-//            processor.setData(istream);
-//            _logger.info("processor.setData");
-//            processor.setTemplate(inXslFo);
-//            _logger.info("processor.setTemplate");
-//            processor.setOutput(outputStream);
-//            _logger.info("processor.setOutput");
-//            processor.setOutputFormat(FOProcessor.FORMAT_PDF);
-//            _logger.info("processorsetOutputFormat PDF" +
-//                         FOProcessor.FORMAT_PDF);
-//            processor.generate();
-//            _logger.info("Done power point");
-//            System.out.println("Done power point");
-//            outputStream.flush();
-//            _logger.info("Done flush");
-//
-//
-//        } catch (Exception e) {
-//            System.out.println("error::: " + e.getMessage());
-//            _logger.info("error::: " + e.getMessage());
-//        }
+        try {
+            _logger.info("print report call start ");
+            int respid =
+                Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
+                                 null ? "51156" :
+                                 (String)ADFUtils.getSessionScopeValue("RespId"));
+
+            int usrId =
+                Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
+                                 null ? "0" :
+                                 (String)ADFUtils.getSessionScopeValue("UserId"));
+            String srespid = String.valueOf(respid);
+            String susrId = String.valueOf(usrId);
+
+
+            initializeAppsContext(susrId, srespid, "880");
+            _logger.info("print after apps intilization in bean ");
+            String template =
+                "XXATREP_PMF"; //"XXATRPT_PMF_V4_Y_mux_FRAMES_PDF";
+            String pconfighid = null;
+            String pconfigrevnum = null;
+            String porderhid = null;
+            //    String quotehid = "97416";
+            String ponumber = null;
+
+            SudokuAMImpl am = this.getSudokuAMImpl();
+            Connection conn =
+                am.getDBTransaction().createCallableStatement("select 1 from dual",
+                                                              1).getConnection();
+            _logger.info("print connection " + conn);
+            DataProcessor dataProcessor = new DataProcessor();
+
+            //String kpath = "C:\\Users\\vthommandru\\Downloads\\";
+
+          //  dataProcessor.setDataTemplate("" + spath +
+                                 //         "PMF_REPORT_pmux_frames_PDF.xml"); //local
+            _logger.info("print dataProcessor " + dataProcessor);
+            Object path = null;
+            OperationBinding ob = getBindings().getOperationBinding("getPath");
+            if (ob != null) {
+                path = ob.execute();
+            }
+
+            String spath = String.valueOf(path);
+            System.out.println("print serverpath" + spath);
+            String quoteNum =  "81779" ;
+               // (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            Object quotehid = null;
+            OperationBinding ob1 =
+                getBindings().getOperationBinding("getQuoteHdrID");
+            ob1.getParamsMap().put("pquoteNo", quoteNum);
+            if (ob1 != null) {
+
+                quotehid = ob1.execute();
+            }
+
+            String squotehid = String.valueOf(quotehid);
+            System.out.println("print quotehid" + squotehid);
+
+
+            dataProcessor.setDataTemplate("" + spath +
+                                          "PMF_REPORT_pmux_frames_PDF.xml"); //server
+
+            _logger.info("print dataProcessor location " + dataProcessor);
+
+
+            //  dataProcessor.setDataTemplate("/public_html/xmlreports/PMF_REPORT_pmux_frames_PDF.xml");
+
+            // dataProcessor.setDataTemplate("/tmp/PMF_REPORT_pmux_frames_PDF.xml");  //server
+
+            dataProcessor.setConnection(conn);
+            _logger.info("print dataProcessor set connection ");
+            Hashtable parameters = new Hashtable();
+            if (pconfighid != null) {
+                parameters.put("P_CONFIG_HEADER_ID", pconfighid);
+            }
+            if (pconfigrevnum != null) {
+                parameters.put("P_CONFIG_REV_NBR", pconfigrevnum);
+            }
+            if (porderhid != null) {
+                parameters.put("P_ORDER_HEADER_ID", porderhid);
+            }
+            if (quotehid != null) {
+                parameters.put("P_QUOTE_HEADER_ID", squotehid);
+            }
+
+            if (ponumber != null) {
+                parameters.put("P_PO_NUMBER", ponumber);
+            }
+            _logger.info("print quotehid " + quotehid);
+            dataProcessor.setParameters(parameters);
+            _logger.info("data processor set parameters");
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            _logger.info("ByteArrayOutputStream" + out);
+            dataProcessor.setOutput(out);
+            _logger.info("dataProcessor setoutput");
+            dataProcessor.processData();
+            _logger.info("dataProcessor.processData");
+            byte[] data = out.toByteArray();
+            _logger.info("byte " + data);
+            ByteArrayInputStream istream = new ByteArrayInputStream(data);
+            System.out.println("Done data template");
+
+            _logger.info("Done data template");
+
+            //  RTFProcessor rtf = new RTFProcessor("C:\\Users\\vthommandru\\Downloads\\XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf");  // local
+
+
+            RTFProcessor rtf =
+                new RTFProcessor("" + spath + "XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf"); // server
+
+            _logger.info("print rtf directory " + rtf);
+            //   RTFProcessor rtf = new RTFProcessor("/public_html/xmlreports/XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf");
+            //  RTFProcessor rtf = new RTFProcessor("/tmp/XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf");  // xml
+            ///    /u01/app/apnac03r12/PRajkumar
+            ByteArrayOutputStream outXslFo = new ByteArrayOutputStream();
+            _logger.info("outXslFo" + outXslFo);
+            rtf.setOutput(outXslFo);
+            _logger.info("outXslFo set output");
+            rtf.process();
+            _logger.info("set rtf process");
+            byte[] dataXslFo = outXslFo.toByteArray();
+            _logger.info("print" + dataXslFo);
+            ByteArrayInputStream inXslFo = new ByteArrayInputStream(dataXslFo);
+            _logger.info("print inXslFo" + inXslFo);
+            FOProcessor processor = new FOProcessor();
+            _logger.info("print processor" + processor);
+            processor.setData(istream);
+            _logger.info("processor.setData");
+            processor.setTemplate(inXslFo);
+            _logger.info("processor.setTemplate");
+            processor.setOutput(outputStream);
+            _logger.info("processor.setOutput");
+            processor.setOutputFormat(FOProcessor.FORMAT_PDF);
+            _logger.info("processorsetOutputFormat PDF" +
+                         FOProcessor.FORMAT_PDF);
+            processor.generate();
+            _logger.info("Done power point");
+            System.out.println("Done power point");
+            outputStream.flush();
+            _logger.info("Done flush");
+
+
+        } catch (Exception e) {
+            System.out.println("error::: " + e.getMessage());
+            _logger.info("error::: " + e.getMessage());
+        }
     }
 
     private void initializeAppsContext(String respId, String userId,
                                        String applicationId) {
-        ApplicationModule am = getAppModule();
+
+        SudokuAMImpl am = this.getSudokuAMImpl();
         DBTransaction txn = (DBTransaction)am.getTransaction();
         CallableStatement st = null;
         try {
 
             st =
- txn.createCallableStatement("BEGIN fnd_global.apps_initialize(:1, :2, :3); END;",
+ txn.createCallableStatement("BEGIN fnd_global.apps_initialize(:1, :2, :3); mo_global.set_policy_context ('S', 144); END;",
                              0);
             st.setString(1, userId);
             st.setString(2, respId);
             st.setString(3, applicationId);
+            _logger.info("print  before apps intialize execute ");
             st.execute();
-            st.close();
+            _logger.info("print  after apps intialize execute successfully ");
+            //            st.close();
 
         } catch (Exception e) {
-            _logger.info("Main Exception2===>" + e.getMessage());
+            _logger.info("Error in apps intialization and orgcontext" +
+                         e.getMessage());
+        } finally {
+            if (st != null) {
+                try {
+                    st.close();
+                } catch (SQLException sqle) {
+                    // TODO: Add catch code
+                    _logger.info("Error in apps intialization and orgcontext1" +
+                                 sqle.getMessage());
+                    sqle.printStackTrace();
+
+                }
+            }
+        }
+    }
+
+    public void processExcelOutput(FacesContext facesContext,
+                                   OutputStream outputStream) {
+        try {
+
+            Object reqid = null;
+            _logger.info("print excelreport call start ");
+            int respid =
+                Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
+                                 null ? "51156" :
+                                 (String)ADFUtils.getSessionScopeValue("RespId"));
+
+            int usrId =
+                Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
+                                 null ? "0" :
+                                 (String)ADFUtils.getSessionScopeValue("UserId"));
+            String srespid = String.valueOf(respid);
+            String susrId = String.valueOf(usrId);
+            String quoteNum =  "81779" ;
+                //(String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+
+            initializeAppsContext(susrId, srespid, "880");
+            _logger.info("print after apps intilization in bean ");
+
+            OperationBinding ob =
+                getBindings().getOperationBinding("callDUTReport");
+            ob.getParamsMap().put("confighid", null);
+
+            ob.getParamsMap().put("configrevno", null);
+            ob.getParamsMap().put("orderhid", null);
+            ob.getParamsMap().put("quoteno", quoteNum);
+            ob.getParamsMap().put("ponum", null);
+            ob.getParamsMap().put("respId", respid);
+            ob.getParamsMap().put("usrId", usrId);
+
+            if (ob != null) {
+                System.out.println("print operation binding start to execute");
+                reqid = ob.execute();
+                //   System.out.println("print req id"+reqid);
+                System.out.println("print operation binding end to execute" +
+                                   reqid);
+            }
+
+
+            Object path = null;
+            OperationBinding ob1 =
+                getBindings().getOperationBinding("getPath");
+            if (ob1 != null) {
+                path = ob1.execute();
+            }
+
+            String spath = String.valueOf(path);
+
+
+            SudokuAMImpl am = this.getSudokuAMImpl();
+            Connection conn =
+                am.getDBTransaction().createCallableStatement("select 1 from dual",
+                                                              1).getConnection();
+            _logger.info("print connection " + conn);
+            DataProcessor dataProcessor = new DataProcessor();
+            //  dataProcessor.setDataTemplate("C:\\Users\\vthommandru\\Desktop\\reportswork\\XXAT_RDV_REP_OUTPUT.xml"); //local
+
+            _logger.info("print dataProcessor " + dataProcessor);
+            dataProcessor.setDataTemplate("" + spath +
+                                          "XXAT_RDV_REP_OUTPUT.xml"); //server
+
+            _logger.info("print dataProcessor location " + dataProcessor);
+
+
+            dataProcessor.setConnection(conn);
+            _logger.info("print dataProcessor set connection ");
+            //  com.sun.java.util.collections.Hashtable parameters = new com.sun.java.util.collections.Hashtable();
+            Hashtable parameters = new Hashtable();
+            if (reqid != null) {
+                parameters.put("P_REQUEST_ID", reqid);
+            }
+
+            dataProcessor.setParameters(parameters);
+            _logger.info("data processor set parameters");
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            _logger.info("ByteArrayOutputStream" + out);
+            dataProcessor.setOutput(out);
+            _logger.info("dataProcessor setoutput");
+            dataProcessor.processData();
+            _logger.info("dataProcessor.processData");
+            byte[] data = out.toByteArray();
+            _logger.info("byte " + data);
+            ByteArrayInputStream istream = new ByteArrayInputStream(data);
+            System.out.println("Done data template");
+
+            _logger.info("Done data template");
+
+            //  RTFProcessor rtf = new RTFProcessor("C:\\Users\\vthommandru\\Desktop\\reportswork\\XXAT_RDV_REP_CTH_OUT.rtf");  // local
+
+
+            RTFProcessor rtf =
+                new RTFProcessor("" + spath + "XXAT_RDV_REP_CTH_OUT.rtf"); // server
+
+            _logger.info("print rtf directory " + rtf);
+
+            ByteArrayOutputStream outXslFo = new ByteArrayOutputStream();
+            _logger.info("outXslFo" + outXslFo);
+            rtf.setOutput(outXslFo);
+            _logger.info("outXslFo set output");
+            rtf.process();
+            _logger.info("set rtf process");
+            byte[] dataXslFo = outXslFo.toByteArray();
+            _logger.info("print" + dataXslFo);
+            ByteArrayInputStream inXslFo = new ByteArrayInputStream(dataXslFo);
+            _logger.info("print inXslFo" + inXslFo);
+            FOProcessor processor = new FOProcessor();
+            _logger.info("print processor" + processor);
+            processor.setData(istream);
+            _logger.info("processor.setData");
+            processor.setTemplate(inXslFo);
+            _logger.info("processor.setTemplate");
+            processor.setOutput(outputStream);
+            _logger.info("processor.setOutput");
+            processor.setOutputFormat(FOProcessor.FORMAT_EXCEL);
+            _logger.info("processorsetOutputFormat PDF" +
+                         FOProcessor.FORMAT_EXCEL);
+
+            processor.generate();
+            _logger.info("Done power point");
+            System.out.println("Done power point");
+            outputStream.flush();
+            _logger.info("Done flush");
+
+
+        } catch (Exception e) {
+            System.out.println("error::: " + e.getMessage());
+            _logger.info("error::: " + e.getMessage());
+        }
+
+    }
+
+    public void onMOFreportFetch(PopupFetchEvent popupFetchEvent) {
+        try {
+            Object output = null;
+            _logger.info("print MOF call start ");
+            initializeAppsContext("0", "51157", "880");
+            _logger.info("print after apps intilization in bean ");
+
+            String quoteNum =  "81779" ;
+             //   (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            Object quotehid = null;
+            OperationBinding ob1 =
+                getBindings().getOperationBinding("getQuoteHdrID");
+            ob1.getParamsMap().put("pquoteNo", quoteNum);
+            if (ob1 != null) {
+
+                quotehid = ob1.execute();
+            }
+
+            String squotehid = String.valueOf(quotehid);
+            System.out.println("print quotehid" + squotehid);
+
+            OperationBinding ob =
+                getBindings().getOperationBinding("callMOFReport");
+
+
+            ob.getParamsMap().put("confighid", null);
+
+            ob.getParamsMap().put("configrevno", null);
+            ob.getParamsMap().put("orderhid", null);
+            ob.getParamsMap().put("quoteno", squotehid);
+            ob.getParamsMap().put("ponum", null);
+            //                        ob.getParamsMap().put("respId", 51157);
+            //                        ob.getParamsMap().put("usrId", 0);
+
+            if (ob != null) {
+                System.out.println("print operation binding start to execute");
+                output = ob.execute();
+                //   System.out.println("print req id"+reqid);
+                System.out.println("print operation binding end to execute" +
+                                   output);
+                setMOFop.setValue(output);
+                //         if(output!=null)
+                //      setResponse(output.toString());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setSetMOFop(RichOutputFormatted setMOFop) {
+        this.setMOFop = setMOFop;
+    }
+
+    public RichOutputFormatted getSetMOFop() {
+        return setMOFop;
+    }
+
+    public void printCFDReport(FacesContext facesContext,
+                               OutputStream outputStream) {
+        BindingContainer bc =
+            BindingContext.getCurrent().getCurrentBindingsEntry();
+        DCIteratorBinding iter =
+            (DCIteratorBinding)bc.get("CFDReportVO1Iterator");
+        ViewObject vo = iter.getViewObject();
+        int respid =
+            Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
+                             null ? "51156" :
+                             (String)ADFUtils.getSessionScopeValue("RespId"));
+
+        int usrId =
+            Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
+                             null ? "0" :
+                             (String)ADFUtils.getSessionScopeValue("UserId"));
+
+        SudokuAMImpl am = this.getSudokuAMImpl();
+        DBTransaction txn = (DBTransaction)am.getTransaction();
+        String query1 = "";
+        query1 = "DELETE FROM  xxat_file_details";
+
+
+        CallableStatement cst = null;
+        try {
+            //Creating sql statement
+
+
+            cst = am.getDBTransaction().createCallableStatement(query1, 0);
+
+            System.out.println("Query ::: " + query1);
+            cst.executeUpdate();
+            am.getDBTransaction().commit();
+            //Finally get returned value
+        } catch (SQLException e) {
+            System.out.println("SQL Exception ::: " + e.getMessage());
+        } finally {
+            if (cst != null) {
+                try {
+                    cst.close();
+                } catch (SQLException e) {
+                    System.out.println("Exception ::: " + e.getMessage());
+                }
+            }
+        }
+        if (vo != null) {
+            vo.clearCache();
+            vo.executeEmptyRowSet();
+            System.out.println("Row  Count:" + vo.getEstimatedRowCount());
+
+        }
+
+
+        try {
+            String reqid = null;
+            _logger.info("print excelreport call start ");
+            //  initializeAppsContext("0", "51157", "880");
+            _logger.info("print after apps intilization in bean ");
+            String quoteNum =  "81779" ;
+              //  (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            OperationBinding ob =
+                getBindings().getOperationBinding("callCFDReport");
+            ob.getParamsMap().put("quoteNum", quoteNum);
+
+
+            ob.getParamsMap().put("respId", respid);
+            ob.getParamsMap().put("usrId", usrId);
+
+            if (ob != null) {
+                System.out.println("print operation binding start to execute");
+                reqid = (String)ob.execute();
+                //   System.out.println("print req id"+reqid);
+                System.out.println("print operation binding end to execute" +
+                                   reqid);
+            }
+
+
+            // Row row=vo.getCurrentRow();
+
+            BlobDomain blobDomain = null;
+            // String requestId="255665340";
+            if (vo != null) {
+
+                String x = "REQUEST_ID=" + reqid;
+                vo.setWhereClause(x);
+                vo.executeQuery();
+                //     vo.clearCache();
+
+                Row row = vo.getCurrentRow();
+
+
+                blobDomain = (BlobDomain)row.getAttribute("FileData");
+                System.out.println("blobDomain ::: " + blobDomain);
+                BufferedInputStream bin =
+                    new BufferedInputStream(blobDomain.getBinaryStream());
+
+                int b;
+                byte[] buffer = new byte[10240];
+                while ((b = bin.read(buffer, 0, 10240)) != -1) {
+                    outputStream.write(buffer, 0, b);
+                }
+                outputStream.close();
+            }
+        } catch (Exception e) {
+            System.out.println("exception ::: " + e.getMessage());
         }
     }
 }

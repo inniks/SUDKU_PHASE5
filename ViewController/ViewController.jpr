@@ -458,11 +458,19 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="Javax.xml-1.3.4.jar"/>
+            <value n="id" v="Suncollections.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="Suncollections.jar"/>
+            <value n="id" v="I18nAPI_v3.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Collections.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Xdocore.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
@@ -543,20 +551,38 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url path="../../../../Cz_jars/javax.xml-1.3.4.jar" jar-entry=""/>
-               </list>
-               <value n="deployedByDefault" v="true"/>
-               <value n="description" v="Javax.xml-1.3.4.jar"/>
-               <value n="id" v="Javax.xml-1.3.4.jar"/>
-               <value n="locked" v="true"/>
-            </hash>
-            <hash>
-               <list n="classPath">
                   <url path="../../../../Cz_jars/suncollections.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Suncollections.jar"/>
                <value n="id" v="Suncollections.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url protocol="jar" path="file:/C:/Users/nsrivastava/Desktop/FromVamshi/reportjars/reportjars/i18nAPI_v3.jar!/"/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="I18nAPI_v3.jar"/>
+               <value n="id" v="I18nAPI_v3.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url protocol="jar" path="file:/C:/Users/nsrivastava/Desktop/FromVamshi/reportjars/reportjars/collections.jar!/"/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Collections.jar"/>
+               <value n="id" v="Collections.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url protocol="jar" path="file:/C:/Users/nsrivastava/Desktop/FromVamshi/reportjars/reportjars/xdocore.jar!/"/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Xdocore.jar"/>
+               <value n="id" v="Xdocore.jar"/>
                <value n="locked" v="true"/>
             </hash>
          </list>
@@ -679,11 +705,19 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="Javax.xml-1.3.4.jar"/>
+            <value n="id" v="Suncollections.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="Suncollections.jar"/>
+            <value n="id" v="I18nAPI_v3.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Collections.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Xdocore.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
          <hash>

@@ -183,10 +183,14 @@
                                              icon="/Resources/images/imgs/Save To Orcl.png"
                                              partialSubmit="true"/>
                         <af:spacer width="4" height="10" id="s10"/>
-                        <af:commandImageLink id="ctb19" disabled="true"
+                        <af:commandImageLink id="ctb19" disabled="false"
                                              partialSubmit="true"
                                              icon="/Resources/images/imgs/printQuote.png"
-                                             disabledIcon="/Resources/images/imgs/printQuote.png"/>
+                                             disabledIcon="/Resources/images/imgs/printQuote.png">
+                          <af:fileDownloadActionListener filename="#{bindings.FileName.inputValue}"
+                                                         method="#{viewScope.LoadDynamicRegionBean.printCFDReport}"
+                                                         contentType="application/pdf"/>
+                        </af:commandImageLink>
                         <af:spacer width="5" height="5" id="s16"/>
                         <af:commandImageLink id="ctb12" rendered="true"
                                              disabled="false"
@@ -227,43 +231,48 @@
                                                   type="action"/>
                         </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s13"/>
-                        <af:commandImageLink id="ctb16" disabled="true"
+                        <af:commandImageLink id="ctb16" disabled="false"
                                              icon="/Resources/images/imgs/View PMF.png"
                                              partialSubmit="true">
-                          <af:fileDownloadActionListener contentType="application/pdf"/>
+                          <af:fileDownloadActionListener contentType="application/pdf"
+                                                         method="#{viewScope.LoadDynamicRegionBean.processPDFOutput}"
+                                                         filename="XXATREPT_Report_for_PMF.pdf"/>
                         </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s14"/>
-                        <af:commandImageLink id="ctb17" disabled="true"
+                        <af:commandImageLink id="ctb17" disabled="false"
                                              icon="/Resources/images/imgs/View DUT.png"
-                                             partialSubmit="true"/>
+                                             partialSubmit="true">
+                          <af:fileDownloadActionListener filename="XXATREPT_RDV_Report___Real_DUT.xls"
+                                                         contentType="application/excel"
+                                                         method="#{viewScope.LoadDynamicRegionBean.processExcelOutput}"/>
+                        </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s15"/>
-                        <af:commandImageLink id="ctb18" disabled="true"
+                        <af:commandImageLink id="ctb18" disabled="false"
                                              icon="/Resources/images/imgs/View Model File.png"
-                                             partialSubmit="true"/>
+                                             partialSubmit="true">
+                          <af:showPopupBehavior popupId="MOFPopup"
+                                                triggerType="action"/>
+                        </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s17"/>
-                        <af:commandImageLink
-                                             id="cil1"
+                        <af:commandImageLink id="cil1"
                                              icon="/Resources/images/imgs/Print Page.png"
                                              disabledIcon="/Resources/images/imgs/Print Page.png"
-                                             disabled="true"/>
+                                             disabled="false"></af:commandImageLink>
                       </af:panelGroupLayout>
                     </af:panelFormLayout>
                   </af:panelGroupLayout>
                   <af:panelGroupLayout id="pt_pgl11" layout="horizontal"
                                        halign="right" valign="baseline">
                     <af:commandImageLink id="pt_cil1"
-                                    icon="/Resources/images/icons8-home-page-32.png"
-                                    shortDesc="Redirect to EBS Home.."
-                                    rendered="true"
-                                    
-                                    iconPosition="trailing"
+                                         icon="/Resources/images/icons8-home-page-32.png"
+                                         shortDesc="Redirect to EBS Home.."
+                                         rendered="true" iconPosition="trailing"
                                          actionListener="#{viewScope.LoadDynamicRegionBean.homeEBS}"/>
                     <af:spacer width="10" height="10" id="pt_s2"/>
                     <af:commandImageLink id="pt_cil2"
-                                    icon="/Resources/images/icons8-shutdown-32.png"
-                                    shortDesc="Logout.."
-                                    
-                                    iconPosition="trailing"
+                                         icon="/Resources/images/icons8-shutdown-32.png"
+                                         shortDesc="Logout.."
+                                         iconPosition="trailing"
                                          actionListener="#{viewScope.LoadDynamicRegionBean.logoutEBS}"/>
                   </af:panelGroupLayout>
                 </af:panelGroupLayout>
@@ -276,29 +285,36 @@
             </af:panelGroupLayout>
           </f:facet>
         </af:panelStretchLayout>
-       <af:popup id="p3"
-                        binding="#{viewScope.LoadDynamicRegionBean.bindSaveToOrclPopup}"
-                        partialTriggers="ctb6">
-                <af:dialog id="d6" type="ok" title="Below Are the results for This Action"
-                           contentWidth="450" contentHeight="200">
-                  <af:panelGroupLayout id="pgl8" layout="scroll">
-                    <af:outputLabel value="Notification(s):" id="ol1"
-                                    rendered="#{viewScope.LoadDynamicRegionBean.infoFromPopup ne null and viewScope.LoadDynamicRegionBean.infoFromPopup ne &quot;&quot; }"
-                                    inlineStyle="font-weight:bold;"
-                                    partialTriggers="ctb6"/>
-                    <af:outputFormatted id="of3"
-                                        binding="#{viewScope.LoadDynamicRegionBean.successMsgOnSaveToOrcl}"/>
-                    <af:outputLabel value="Error(s):" id="ol2"
-                                    rendered="#{viewScope.LoadDynamicRegionBean.errorFromPopup ne null and viewScope.LoadDynamicRegionBean.errorFromPopup ne &quot;&quot; }"
-                                    partialTriggers="ctb6"/>
-                    <af:outputFormatted id="of4"
-                                        binding="#{viewScope.LoadDynamicRegionBean.errorMsgOnSaveToOrcl}"
-                                        inlineStyle="color:Red;"/>
-                  </af:panelGroupLayout>
-                </af:dialog>
-              </af:popup>
-
-
+        <af:popup id="p3"
+                  binding="#{viewScope.LoadDynamicRegionBean.bindSaveToOrclPopup}"
+                  partialTriggers="ctb6">
+          <af:dialog id="d6" type="ok"
+                     title="Below Are the results for This Action"
+                     contentWidth="450" contentHeight="200">
+            <af:panelGroupLayout id="pgl8" layout="scroll">
+              <af:outputLabel value="Notification(s):" id="ol1"
+                              rendered='#{viewScope.LoadDynamicRegionBean.infoFromPopup ne null and viewScope.LoadDynamicRegionBean.infoFromPopup ne "" }'
+                              inlineStyle="font-weight:bold;"
+                              partialTriggers="ctb6"/>
+              <af:outputFormatted id="of3"
+                                  binding="#{viewScope.LoadDynamicRegionBean.successMsgOnSaveToOrcl}"/>
+              <af:outputLabel value="Error(s):" id="ol2"
+                              rendered='#{viewScope.LoadDynamicRegionBean.errorFromPopup ne null and viewScope.LoadDynamicRegionBean.errorFromPopup ne "" }'
+                              partialTriggers="ctb6"/>
+              <af:outputFormatted id="of4"
+                                  binding="#{viewScope.LoadDynamicRegionBean.errorMsgOnSaveToOrcl}"
+                                  inlineStyle="color:Red;"/>
+            </af:panelGroupLayout>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="MOFPopup"
+                  popupFetchListener="#{viewScope.LoadDynamicRegionBean.onMOFreportFetch}">
+          <af:dialog id="d7" type="cancel" contentWidth="400" contentHeight="400"
+                     title="Model File Report">
+            <af:outputFormatted id="of5"
+                                binding="#{viewScope.LoadDynamicRegionBean.setMOFop}"/>
+          </af:dialog>
+        </af:popup>
       </af:form>
     </af:document>
   </f:view>

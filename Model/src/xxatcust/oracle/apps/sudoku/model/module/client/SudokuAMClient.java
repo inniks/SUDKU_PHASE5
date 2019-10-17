@@ -183,4 +183,37 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         Object _ret = this.riInvokeExportedMethod(this,"getUiGrpMap",null,null);
         return (Hashtable)_ret;
     }
+
+    public String getPath() {
+        Object _ret = this.riInvokeExportedMethod(this,"getPath",null,null);
+        return (String)_ret;
+    }
+
+    public String getQuoteHdrID(String pquoteNo) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getQuoteHdrID",new String [] {"java.lang.String"},new Object[] {pquoteNo});
+        return (String)_ret;
+    }
+
+    public int callDUTReport(String confighid, String configrevno,
+                             String orderhid, String quoteno, String ponum,
+                             int respId, int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"callDUTReport",new String [] {"java.lang.String","java.lang.String","java.lang.String","java.lang.String","java.lang.String","int","int"},new Object[] {confighid, configrevno, orderhid, quoteno, ponum, new Integer(respId), new Integer(usrId)});
+        return ((Integer)_ret).intValue();
+    }
+
+    public String callMOFReport(String confighid, String configrevno,
+                                String orderhid, String quoteno,
+                                String ponum) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"callMOFReport",new String [] {"java.lang.String","java.lang.String","java.lang.String","java.lang.String","java.lang.String"},new Object[] {confighid, configrevno, orderhid, quoteno, ponum});
+        return (String)_ret;
+    }
+
+    public String callCFDReport(String quoteNum, int respId, int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"callCFDReport",new String [] {"java.lang.String","int","int"},new Object[] {quoteNum, new Integer(respId), new Integer(usrId)});
+        return (String)_ret;
+    }
 }
