@@ -376,7 +376,17 @@ public class LoadDynamicRegionBean {
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k != null && v93k.getInputParams() != null) {
             v93k.getInputParams().setImportSource("SAVE_CONFIG_TO_QUOTE");
+            String selectedCzNode = null;
+            if(v93k.getUiSelection()!=null){
+                selectedCzNode = v93k.getUiSelection().getCzNodeName();
+                if(selectedCzNode!=null){
+                    selectedCzNode = "\""+selectedCzNode+"\"";
+                    v93k.getUiSelection().setCzNodeName(selectedCzNode);
+                }
+            }
+             
             String jsonStr = JSONUtils.convertObjToJson(v93k);
+            System.out.println("Json being sent "+jsonStr);
             String responseJson =
                 ConfiguratorUtils.callConfiguratorServlet(jsonStr);
             System.out.println("Response Json from Configurator : " +
@@ -507,6 +517,8 @@ public class LoadDynamicRegionBean {
                                                                  resMsg[1] +
                                                                  "</b></p>");
                                             }
+                                            
+                                            //Save to oracle success , set param here
                                         } else if (createMsg.contains("E-")) {
                                             String[] resMsg =
                                                 createMsg.split("-", 2);
@@ -634,6 +646,7 @@ public class LoadDynamicRegionBean {
                                                                  resMsg[1] +
                                                                  "</b></p>");
                                             }
+                                            //save too oracle success
                                         } else if (createMsg.contains("E-")) {
                                             String[] resMsg =
                                                 createMsg.split("-", 2);
@@ -748,6 +761,7 @@ public class LoadDynamicRegionBean {
                                                                  resMsg[1] +
                                                                  "</b></p>");
                                             }
+                                            //save to oracle success
                                         } else if (updateMsg.contains("E-")) {
                                             String[] resMsg =
                                                 updateMsg.split("-", 2);
@@ -1372,8 +1386,8 @@ public class LoadDynamicRegionBean {
 
             String spath = String.valueOf(path);
             System.out.println("print serverpath" + spath);
-            String quoteNum =  "81779" ;
-               // (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            String quoteNum = // "81779" ;
+                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
             Object quotehid = null;
             OperationBinding ob1 =
                 getBindings().getOperationBinding("getQuoteHdrID");
@@ -1530,8 +1544,8 @@ public class LoadDynamicRegionBean {
                                  (String)ADFUtils.getSessionScopeValue("UserId"));
             String srespid = String.valueOf(respid);
             String susrId = String.valueOf(usrId);
-            String quoteNum =  "81779" ;
-                //(String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            String quoteNum = // "81779" ;
+                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
 
             initializeAppsContext(susrId, srespid, "880");
             _logger.info("print after apps intilization in bean ");
@@ -1655,8 +1669,8 @@ public class LoadDynamicRegionBean {
             initializeAppsContext("0", "51157", "880");
             _logger.info("print after apps intilization in bean ");
 
-            String quoteNum =  "81779" ;
-             //   (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            String quoteNum = // "81779" ;
+                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
             Object quotehid = null;
             OperationBinding ob1 =
                 getBindings().getOperationBinding("getQuoteHdrID");
@@ -1764,8 +1778,8 @@ public class LoadDynamicRegionBean {
             _logger.info("print excelreport call start ");
             //  initializeAppsContext("0", "51157", "880");
             _logger.info("print after apps intilization in bean ");
-            String quoteNum =  "81779" ;
-              //  (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            String quoteNum = // "81779" ;
+                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
             OperationBinding ob =
                 getBindings().getOperationBinding("callCFDReport");
             ob.getParamsMap().put("quoteNum", quoteNum);

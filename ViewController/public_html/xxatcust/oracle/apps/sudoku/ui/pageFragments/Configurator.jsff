@@ -160,7 +160,7 @@
                                                    layout="horizontal">
                                 <af:spacer width="50" height="10" id="s1"/>
                                 <af:panelBorderLayout id="pbl11"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:60px; border-style:groove;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl18"
                                                          layout="horizontal">
@@ -180,7 +180,12 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:spacer width="40" height="10" id="s2"/>
+                                <af:panelBorderLayout id="pbl14"
+                                                      styleClass="height:25px; width:40px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:spacer width="30" height="10" id="s2"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
                                 <af:panelBorderLayout id="pb_l3"
                                                       inlineStyle="height:25px; width:200px; border-style:none;">
                                   <f:facet name="innerLeft">
@@ -999,7 +1004,7 @@
                                                          layout="horizontal">
                                       <af:outputFormatted id="drs1003m"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="Licenced Features"/>
+                                                          value="Licensed Features"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2098,7 +2103,7 @@
                                                          layout="horizontal">
                                       <af:outputFormatted id="dps1003m"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="Licenced Features"/>
+                                                          value="Licensed Features"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2714,7 +2719,7 @@
                                                          layout="horizontal">
                                       <af:outputFormatted id="mix_s_1003"
                                                           visible="true"
-                                                          value="Licenced Features"/>
+                                                          value="Licensed Features"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -3225,7 +3230,7 @@
                                                    rendered="#{ (topNode.index eq '1' and ( theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2' ))}">
                                 <af:spacer width="50" height="10" id="rf2_s1"/>
                                 <af:panelBorderLayout id="rf2_pbl11"
-                                                      inlineStyle="height:25px; width:90px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:60px; border-style:groove;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf2_pgl18"
                                                          layout="horizontal">
@@ -3333,11 +3338,11 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf2_pb3"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf2_pb4"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};"
+                                                      inlineStyle="height:25px; width:130px; border-style:none;"
                                                       rendered="#{theadIter.uiGrpIndex eq '1'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf2_pgl27"
@@ -3357,11 +3362,11 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf2_pb5"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf2_pb6"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl27"
                                                          rendered="#{theadIter.uiGrpIndex eq '2'}">
@@ -3380,7 +3385,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf2_pb7"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:group id="g6">
                                       <af:panelGroupLayout id="pgl28"
@@ -3413,7 +3418,7 @@
                                                          layout="horizontal">
                                       <af:outputFormatted id="rf4_1003"
                                                           visible="true"
-                                                          value="Licenced Features"/>
+                                                          value="Licensed Features"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -3842,7 +3847,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="sysconp332"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;"
+                                                      inlineStyle="height:25px; width:60px; border-style:groove;"
                                                       rendered="#{sysConIter.uiField13_type eq 'DISPLAYONLY'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="sysconpgxl18"
@@ -4825,8 +4830,7 @@
                                                    rendered="#{ topNode.index ne '3'}">
                                 <af:spacer width="50" height="10" id="docks1"/>
                                 <af:panelBorderLayout id="dockpbl11"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;"
-                                                      rendered="#{theadIter.uiField8_type eq 'NUMERIC'}">
+                                                      inlineStyle="height:25px; width:60px; border-style:groove;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl18"
                                                          layout="horizontal">
@@ -5803,6 +5807,321 @@
                                 </f:facet>
                               </af:panelBorderLayout>
                             </af:panelGroupLayout>
+                          </af:showDetailHeader>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </af:iterator>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:listItem>
+          </af:listView>
+          <af:listView id="misUpgLv"
+                       value="#{ConfiguratorBean.miscUpgTreeModel}"
+                       var="node"
+                       binding="#{ConfiguratorBean.miscUpgrListBinding}"
+                       groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
+                       emptyText=" ">
+            <f:facet name="groupHeaderStamp">
+              <af:listItem id="misUpgli1" styleClass="ABHeader" rendered="true">
+                <af:panelGroupLayout id="misUpgpgl3" layout="horizontal">
+                  <af:panelBorderLayout id="misUpgpbl1"
+                                        inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
+                                        rendered="#{node.nodeRefColor ne null}">
+                    <f:facet name="start">
+                      <af:outputFormatted id="misUpgof1" value="." rendered="false"/>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <af:panelBorderLayout id="misUpgpbl2"
+                                        inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
+                                        rendered="#{node.nodeTargetColor ne null}">
+                    <f:facet name="start">
+                      <af:outputFormatted value="." id="misUpgof2" rendered="false"/>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <af:panelBorderLayout id="misUpgpbl3"
+                                        inlineStyle="height:25px;width:10px;"
+                                        rendered="#{node.requiredFlag eq 'Y'}">
+                    <f:facet name="innerLeft">
+                      <af:outputFormatted value="*" id="misUpgof11"
+                                          inlineStyle="color:Maroon; font-size:x-large;"/>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <af:outputFormatted value="#{node.nodeName}" id="misUpgof3"
+                                      styleClass="ABHeader"
+                                      inlineStyle="font-size:medium; font-weight:bolder;"/>
+                </af:panelGroupLayout>
+              </af:listItem>
+            </f:facet>
+            <af:listItem id="misUpgli2">
+              <af:panelGridLayout id="misUpgpgl2" styleClass="AFStretchWidth"
+                                  dimensionsFrom="children">
+                <af:gridRow marginTop="5px" height="auto" id="misUpggr1">
+                  <af:gridCell marginStart="5px" width="50%" id="misUpggc3"
+                               styleClass="AFStretchWidth">
+                    <af:iterator var="topNode"
+                                 value="#{ConfiguratorBean.miscUpgSdiCollection}"
+                                 id="misUpgi7">
+                      <af:panelGroupLayout id="misUpgpgl4" layout="vertical">
+                        <af:panelGroupLayout id="misUpgpgl11vf" layout="horizontal">
+                          <af:panelGroupLayout id="misUpgpgl5" layout="horizontal"
+                                               rendered="#{node.codeName eq topNode.index}">
+                            <af:panelBorderLayout id="misUpgpbl4"
+                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                              <f:facet name="innerLeft"/>
+                            </af:panelBorderLayout>
+                            <af:panelBorderLayout id="misUpgpbl5"
+                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                              <f:facet name="start"/>
+                              <f:facet name="bottom"/>
+                              <f:facet name="end"/>
+                              <f:facet name="top"/>
+                            </af:panelBorderLayout>
+                            <af:panelBorderLayout id="misUpgpbl6"
+                                                  inlineStyle="height:15px; width:10px; border-style:none;">
+                              <f:facet name="innerLeft">
+                                <af:outputFormatted value="*" id="misUpgof6"
+                                                    inlineStyle="color:Maroon; font-size:x-large;"
+                                                    rendered="#{node.requiredFlag eq 'Y'}"/>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                          </af:panelGroupLayout>
+                          <af:showDetailHeader id="misUpgsd1" text="#{node.nodeName}"
+                                               rendered="#{node.codeName eq topNode.index}">
+                            <af:iterator id="misUpgi2"
+                                         value="#{topNode.uiFieldCollection}"
+                                         var="theadIter">
+                              <af:panelGroupLayout id="misUpgtheadPgl"
+                                                   layout="horizontal">
+                                <af:spacer width="50" height="10" id="misUpgs1"/>
+                                <af:panelBorderLayout id="misUpgpbl11"
+                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl18"
+                                                         layout="horizontal">
+                                      <af:inputText id="misUpgit2" columns="5"
+                                                    rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
+                                                    value="#{theadIter.digitsEntered}">
+                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                      </af:inputText>
+                                      <af:outputFormatted id="misUpgit3"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          value="#{theadIter.uiField8_code}"
+                                                          styleClass="#{theadIter.uiField8_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="40" height="10" id="misUpgs2"/>
+                                <af:panelBorderLayout id="misUpgpb_l3"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl12"
+                                                         halign="left"
+                                                         layout="horizontal">
+                                      <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                          id="misUpgof4"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgpbl12"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl19">
+                                      <af:outputFormatted value="#{theadIter.uiField9}"
+                                                          id="misUpgof13"
+                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="misUpgs3"/>
+                                <af:panelBorderLayout id="misUpgpbl13"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl21">
+                                      <af:outputFormatted value="#{theadIter.uiField10}"
+                                                          id="misUpgof14"
+                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10" id="misUpgs11"/>
+                                <af:panelBorderLayout id="misUpgpbl8"
+                                                      inlineStyle="height:25px; width:10px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted value="*" id="misUpgof9"
+                                                        inlineStyle="font-size:x-large; color:Maroon;"
+                                                        rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgpbl9"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgpb20"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgpb1"
+                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl7"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="misUpgcl1"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                      partialSubmit="false">
+                                        <af:outputFormatted id="misUpgth_of1"
+                                                            value="#{theadIter.uiField1}"
+                                                            inlineStyle="#{theadIter.uiField1_bgColor}"/>
+                                        <af:inputText id="misUpgip1_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName1}"
+                                                      shortDesc="#{theadIter.uiField1_identifier}"
+                                                      label="#{theadIter.uiField1_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgpb2"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl_7"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="misUpgcl2"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
+                                        <af:outputFormatted id="misUpgth_of2"
+                                                            value="#{theadIter.uiField2}"
+                                                            inlineStyle="#{theadIter.uiField2_bgColor}"/>
+                                        <af:inputText id="misUpgmisUpgip2_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName2}"
+                                                      shortDesc="#{theadIter.uiField2_identifier}"
+                                                      label="#{theadIter.uiField2_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgpb3"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl_71"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="misUpgcl3"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
+                                        <af:outputFormatted id="misUpgth_of3"
+                                                            value="#{theadIter.uiField3}"
+                                                            inlineStyle="#{theadIter.uiField3_bgColor}"/>
+                                        <af:inputText id="misUpgip3_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName3}"
+                                                      shortDesc="#{theadIter.uiField3_identifier}"
+                                                      label="#{theadIter.uiField3_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgpb4"
+                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl_17"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="misUpgcl4"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
+                                        <af:outputFormatted id="misUpgth_of4"
+                                                            value="#{theadIter.uiField4}"
+                                                            inlineStyle="#{theadIter.uiField4_bgColor}"/>
+                                        <af:inputText id="misUpgip4_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName4}"
+                                                      shortDesc="#{theadIter.uiField4_identifier}"
+                                                      label="#{theadIter.uiField4_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgpb5"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl9"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="misUpgcl5"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
+                                        <af:outputFormatted id="misUpgth_of5"
+                                                            value="#{theadIter.uiField5}"
+                                                            inlineStyle="#{theadIter.uiField5_bgColor}"/>
+                                        <af:inputText id="misUpgip5_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName5}"
+                                                      shortDesc="#{theadIter.uiField5_identifier}"
+                                                      label="#{theadIter.uiField5_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgpb6"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl10"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="misUpgcl6"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
+                                        <af:outputFormatted id="misUpgth_of6"
+                                                            value="#{theadIter.uiField6}"
+                                                            inlineStyle="#{theadIter.uiField6_bgColor}"/>
+                                        <af:inputText id="misUpgip6_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName6}"
+                                                      shortDesc="#{theadIter.uiField6_identifier}"
+                                                      label="#{theadIter.uiField6_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgpb7"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgpgl20"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="misUpgcl7"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
+                                        <af:outputFormatted id="misUpgth_of7"
+                                                            value="#{theadIter.uiField7}"
+                                                            inlineStyle="#{theadIter.uiField7_bgColor}"/>
+                                        <af:inputText id="misUpgip7_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName7}"
+                                                      shortDesc="#{theadIter.uiField7_identifier}"
+                                                      label="#{theadIter.uiField7_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
+                            </af:iterator>
                           </af:showDetailHeader>
                         </af:panelGroupLayout>
                       </af:panelGroupLayout>

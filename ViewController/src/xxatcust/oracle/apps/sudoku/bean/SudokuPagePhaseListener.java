@@ -12,6 +12,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
@@ -85,7 +86,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
 
-        validateEBSSession(pagePhaseEvent);
+        //validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {
@@ -234,7 +235,15 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                                               quoteNumber);
                 _logger.info("ValidateEBSSession:Quote value from session" +
                              ADFUtils.getSessionScopeValue("targetQuoteNumber"));
-
+                if(quoteNumber!=null && !quoteNumber.equals("")){
+                    _logger.info("Setting input map params......**");
+                    HashMap inputMapParams = (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap");
+                    if(inputMapParams==null){
+                        inputMapParams = new HashMap();
+                    }
+                    inputMapParams.put("importSource", "quoteFromSearch");
+                    ADFUtils.setSessionScopeValue("inputParamsMap", inputMapParams);
+                }
                 //Test Code to call Servlet on page load from search quotes
 
 

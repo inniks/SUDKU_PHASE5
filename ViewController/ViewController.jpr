@@ -462,18 +462,6 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="I18nAPI_v3.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Collections.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Xdocore.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
             <value n="id" v="Oracle XML Parser v2"/>
             <value n="isJDK" v="false"/>
          </hash>
@@ -499,6 +487,18 @@
          </hash>
          <hash>
             <value n="id" v="Connection Manager"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Collections.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="I18nAPI_v3.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Xdocore.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>
@@ -560,16 +560,7 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url protocol="jar" path="file:/C:/Users/nsrivastava/Desktop/FromVamshi/reportjars/reportjars/i18nAPI_v3.jar!/"/>
-               </list>
-               <value n="deployedByDefault" v="true"/>
-               <value n="description" v="I18nAPI_v3.jar"/>
-               <value n="id" v="I18nAPI_v3.jar"/>
-               <value n="locked" v="true"/>
-            </hash>
-            <hash>
-               <list n="classPath">
-                  <url protocol="jar" path="file:/C:/Users/nsrivastava/Desktop/FromVamshi/reportjars/reportjars/collections.jar!/"/>
+                  <url protocol="jar" path="file:/C:/Users/nsrivastava/Desktop/Jars/reportjars/collections.jar!/"/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Collections.jar"/>
@@ -578,7 +569,16 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url protocol="jar" path="file:/C:/Users/nsrivastava/Desktop/FromVamshi/reportjars/reportjars/xdocore.jar!/"/>
+                  <url protocol="jar" path="file:/C:/Users/nsrivastava/Desktop/Jars/reportjars/i18nAPI_v3.jar!/"/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="I18nAPI_v3.jar"/>
+               <value n="id" v="I18nAPI_v3.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url protocol="jar" path="file:/C:/Users/nsrivastava/Desktop/Jars/reportjars/xdocore.jar!/"/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Xdocore.jar"/>
@@ -709,18 +709,6 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="I18nAPI_v3.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Collections.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Xdocore.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
             <value n="id" v="Oracle XML Parser v2"/>
             <value n="isJDK" v="false"/>
          </hash>
@@ -746,6 +734,18 @@
          </hash>
          <hash>
             <value n="id" v="Connection Manager"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Collections.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="I18nAPI_v3.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Xdocore.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>

@@ -9,6 +9,8 @@ public class ConfiguratorUiSubGroup {
     
     String subGroupName = null;
     
+    String subGroupIdentifier = null;
+    
     boolean required = false;
     
     ArrayList<ConfiguratorUiElement> uiElements = new ArrayList<ConfiguratorUiElement>();
@@ -39,5 +41,13 @@ public class ConfiguratorUiSubGroup {
 
     public boolean isRequired() {
         return required;
+    }
+
+    public void setSubGroupIdentifier(String subGroupIdentifier) {
+        this.subGroupIdentifier = subGroupIdentifier;
+    }
+
+    public String getSubGroupIdentifier() {
+        return subGroupIdentifier;
     }
 }

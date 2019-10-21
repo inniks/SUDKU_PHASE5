@@ -254,12 +254,18 @@ public class UiField {
                             uiField1_qty = Integer.toString(qty);
                             sumLicenceInputs = sumLicenceInputs+node.getQuantity();
                         }
-                        if(node.getReferenceQuantiy()!=-1){
+                        if(node.getReferenceQuantiy()!=-1 && node.getUiNodeName()!=null && (node.getUiNodeName().contains("Inst") || node.getUiNodeName().contains("Base"))){
                             sumInsRef = sumInsRef+node.getReferenceQuantiy();
+                            
+                        }
+                        if(node.getReferenceQuantiy()!=-1){
                             sumRef = sumRef+node.getReferenceQuantiy();
                         }
-                        if(node.getTargetQuantity()!=-1){
+                        if(node.getTargetQuantity()!=-1 && node.getUiNodeName()!=null && (node.getUiNodeName().contains("Inst") || node.getUiNodeName().contains("Base"))){
                             sumInsTar = sumInsTar+node.getTargetQuantity();
+                            
+                        }
+                        if(node.getTargetQuantity()!=-1){
                             sumTar = sumTar+node.getTargetQuantity();
                         }
                         int uiElementType = uiElement.getUiElementType();
@@ -348,12 +354,18 @@ public class UiField {
                         uiField2_identifier = node.getIdentifier();
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
-                        if(node.getReferenceQuantiy()!=-1){
+                        if(node.getReferenceQuantiy()!=-1 && node.getUiNodeName()!=null && (node.getUiNodeName().contains("Inst") || node.getUiNodeName().contains("Base"))){
                             sumInsRef = sumInsRef+node.getReferenceQuantiy();
+                            
+                        }
+                        if(node.getReferenceQuantiy()!=-1){
                             sumRef  = sumRef+node.getReferenceQuantiy();
                         }
-                        if(node.getTargetQuantity()!=-1){
+                        if(node.getTargetQuantity()!=-1 && node.getUiNodeName()!=null && (node.getUiNodeName().contains("Inst") || node.getUiNodeName().contains("Base"))){
                             sumInsTar = sumInsTar+node.getTargetQuantity();
+                            
+                        }
+                        if(node.getTargetQuantity()!=-1){
                             sumTar = sumTar+node.getTargetQuantity();
                         }
                         int qty = node.getQuantity();

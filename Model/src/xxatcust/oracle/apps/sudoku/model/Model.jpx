@@ -12,8 +12,6 @@
       <Attr Name="_jprName" Value="../../../../../../Model.jpr"/>
       <Attr Name="_appModuleNames0"
          Value="xxatcust.oracle.apps.sudoku.model.module.SudokuAM"/>
-      <Attr Name="_jbo.TypeMapEntries" Value="Java"/>
-      <Attr Name="_NamedConnection" Value="SPT2"/>
    </DesignTime>
    <Containee
       Name="module"
@@ -34,9 +32,5 @@
    <Containee
       Name="views"
       PackageName="xxatcust.oracle.apps.sudoku.model.views"
-      ObjectType="JboPackage">
-      <DesignTime>
-         <Attr Name="_VO" Value="true"/>
-      </DesignTime>
-   </Containee>
+      ObjectType="JboPackage"/>
 </JboProject>
