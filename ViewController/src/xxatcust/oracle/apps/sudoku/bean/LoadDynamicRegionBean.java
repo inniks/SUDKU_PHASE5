@@ -1352,11 +1352,12 @@ public class LoadDynamicRegionBean {
                 Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
                                  null ? "0" :
                                  (String)ADFUtils.getSessionScopeValue("UserId"));
+            int orgId = Integer.parseInt(ADFUtils.getSessionScopeValue("OrgId")==null?"144":(String)ADFUtils.getSessionScopeValue("OrgId"));
             String srespid = String.valueOf(respid);
             String susrId = String.valueOf(usrId);
+            String orgIdStr = String.valueOf(orgId);
 
-
-            initializeAppsContext(susrId, srespid, "880");
+            initializeAppsContext(susrId, srespid, "880",orgIdStr);
             _logger.info("print after apps intilization in bean ");
             String template =
                 "XXATREP_PMF"; //"XXATRPT_PMF_V4_Y_mux_FRAMES_PDF";
@@ -1491,7 +1492,7 @@ public class LoadDynamicRegionBean {
     }
 
     private void initializeAppsContext(String respId, String userId,
-                                       String applicationId) {
+                                       String applicationId,String orgId) {
 
         SudokuAMImpl am = this.getSudokuAMImpl();
         DBTransaction txn = (DBTransaction)am.getTransaction();
@@ -1499,11 +1500,12 @@ public class LoadDynamicRegionBean {
         try {
 
             st =
- txn.createCallableStatement("BEGIN fnd_global.apps_initialize(:1, :2, :3); mo_global.set_policy_context ('S', 144); END;",
+ txn.createCallableStatement("BEGIN fnd_global.apps_initialize(:1, :2, :3); mo_global.set_policy_context ('S', :4); END;",
                              0);
             st.setString(1, userId);
             st.setString(2, respId);
             st.setString(3, applicationId);
+            st.setString(4, orgId );
             _logger.info("print  before apps intialize execute ");
             st.execute();
             _logger.info("print  after apps intialize execute successfully ");
@@ -1544,10 +1546,14 @@ public class LoadDynamicRegionBean {
                                  (String)ADFUtils.getSessionScopeValue("UserId"));
             String srespid = String.valueOf(respid);
             String susrId = String.valueOf(usrId);
+          
+            int orgId = Integer.parseInt(ADFUtils.getSessionScopeValue("OrgId")==null?"144":(String)ADFUtils.getSessionScopeValue("OrgId"));
+            
+            String orgIdStr = String.valueOf(orgId);
             String quoteNum = // "81779" ;
                 (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
 
-            initializeAppsContext(susrId, srespid, "880");
+            initializeAppsContext(susrId, srespid, "880",orgIdStr);
             _logger.info("print after apps intilization in bean ");
 
             OperationBinding ob =
@@ -1664,9 +1670,22 @@ public class LoadDynamicRegionBean {
 
     public void onMOFreportFetch(PopupFetchEvent popupFetchEvent) {
         try {
+            int respid =
+                Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
+                                 null ? "51156" :
+                                 (String)ADFUtils.getSessionScopeValue("RespId"));
+
+            int usrId =
+                Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
+                                 null ? "0" :
+                                 (String)ADFUtils.getSessionScopeValue("UserId"));
+            int orgId = Integer.parseInt(ADFUtils.getSessionScopeValue("OrgId")==null?"144":(String)ADFUtils.getSessionScopeValue("OrgId"));
+            String srespid = String.valueOf(respid);
+            String susrId = String.valueOf(usrId);
+            String orgIdStr = String.valueOf(orgId);
             Object output = null;
             _logger.info("print MOF call start ");
-            initializeAppsContext("0", "51157", "880");
+            initializeAppsContext(srespid, susrId, "880",orgIdStr);
             _logger.info("print after apps intilization in bean ");
 
             String quoteNum = // "81779" ;

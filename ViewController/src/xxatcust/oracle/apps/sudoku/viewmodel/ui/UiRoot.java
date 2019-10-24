@@ -5,6 +5,7 @@ import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.DCScaleDPSGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.DiagAndCalibEquipmentGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.DigitalResourceGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.DockingGroup;
+import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.InfraUpgradeGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.MiscUpgradeGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.MixedSignalGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.RFResoucesGroup;
@@ -38,6 +39,8 @@ public class UiRoot {
     RFResoucesGroup rFResoucesGroup = null;
     
     MiscUpgradeGroup miscUpgradeGroup = null;
+    
+    InfraUpgradeGroup infraUpgradeGroup = null;
         
     public void setSystemInfraGroup(SystemInfraGroup systemInfraGroup) {
         this.systemInfraGroup = systemInfraGroup;
@@ -125,5 +128,13 @@ public class UiRoot {
 
     public MiscUpgradeGroup getMiscUpgradeGroup() {
         return miscUpgradeGroup;
+    }
+
+    public void setInfraUpgradeGroup(InfraUpgradeGroup infraUpgradeGroup) {
+        this.infraUpgradeGroup = infraUpgradeGroup;
+    }
+
+    public InfraUpgradeGroup getInfraUpgradeGroup() {
+        return infraUpgradeGroup;
     }
 }

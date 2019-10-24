@@ -100,6 +100,7 @@ import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.SystemInfraGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.UiSelection;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.MixedSignalGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.WtyTrainingSAndSGroup;
+import xxatcust.oracle.apps.sudoku.viewmodel.ux.SdiCollectionMiscUpgradeModel;
 import xxatcust.oracle.apps.sudoku.viewmodel.ux.ShowDetailItemCollection;
 
 public class ConfiguratorBean {
@@ -112,7 +113,8 @@ public class ConfiguratorBean {
     private List<ShowDetailItemCollection> dpsSdiCollection;
     private List<ShowDetailItemCollection> mixSignalSdiCollection;
     private List<ShowDetailItemCollection> rfResourcesSdiCollection;
-    private List<ShowDetailItemCollection> miscUpgSdiCollection;
+    //private List<ShowDetailItemCollection> miscUpgSdiCollection;
+    private ArrayList<SdiCollectionMiscUpgradeModel> miscUpgSdiList; 
     private ChildPropertyTreeModel addToolsTreeModel;
     private ChildPropertyTreeModel sysInfraTreeModel;
     private ChildPropertyTreeModel calDiagTreeModel;
@@ -490,8 +492,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         if (miscUpgTreeModel == null) {
             miscUpgTreeModel =
                     MiscUpgradesBean.populateMiscUpgradesParentModel(miscUpgTreeModel, rootMiscUpg);
-            miscUpgSdiCollection =
-                    MiscUpgradesBean.populateMiscUpgradesSubGroups(v93k, miscUpgSdiCollection);
+            miscUpgSdiList = MiscUpgradesBean.populateMiscUpgradesSubGroups(v93k, miscUpgSdiList);
+//            miscUpgSdiCollection =
+//                    MiscUpgradesBean.populateMiscUpgradesSubGroups(v93k, miscUpgSdiCollection);
         }
         defaultViewOnLoad = false;
         displayConfigWarnAndErrors();
@@ -1700,13 +1703,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         return miscUpgrListBinding;
     }
 
-    public void setMiscUpgSdiCollection(List<ShowDetailItemCollection> miscUpgSdiCollection) {
-        this.miscUpgSdiCollection = miscUpgSdiCollection;
-    }
-
-    public List<ShowDetailItemCollection> getMiscUpgSdiCollection() {
-        return miscUpgSdiCollection;
-    }
+//    public void setMiscUpgSdiCollection(List<ShowDetailItemCollection> miscUpgSdiCollection) {
+//        this.miscUpgSdiCollection = miscUpgSdiCollection;
+//    }
+//
+//    public List<ShowDetailItemCollection> getMiscUpgSdiCollection() {
+//        return miscUpgSdiCollection;
+//    }
 
     public void setMiscUpgTreeModel(ChildPropertyTreeModel miscUpgTreeModel) {
         this.miscUpgTreeModel = miscUpgTreeModel;
@@ -1714,5 +1717,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public ChildPropertyTreeModel getMiscUpgTreeModel() {
         return miscUpgTreeModel;
+    }
+
+    public void setMiscUpgSdiList(ArrayList<SdiCollectionMiscUpgradeModel> miscUpgSdiList) {
+        this.miscUpgSdiList = miscUpgSdiList;
+    }
+
+    public ArrayList<SdiCollectionMiscUpgradeModel> getMiscUpgSdiList() {
+        return miscUpgSdiList;
     }
 }
