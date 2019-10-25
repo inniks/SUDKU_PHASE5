@@ -127,14 +127,6 @@
       <NamedData NDName="quoteno" NDType="java.lang.String"/>
       <NamedData NDName="ponum" NDType="java.lang.String"/>
     </methodAction>
-    <methodAction id="getQuoteHdrID"
-                  InstanceName="SudokuAMDataControl.dataProvider"
-                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
-                  Action="invokeMethod" MethodName="getQuoteHdrID"
-                  IsViewObjectMethod="false"
-                  ReturnName="data.SudokuAMDataControl.methodResults.getQuoteHdrID_SudokuAMDataControl_dataProvider_getQuoteHdrID_result">
-      <NamedData NDName="pquoteNo" NDType="java.lang.String"/>
-    </methodAction>
     <methodAction id="getPath" InstanceName="SudokuAMDataControl.dataProvider"
                   DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
                   Action="invokeMethod" MethodName="getPath"
@@ -145,5 +137,13 @@
         <Item Value="FileName"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="getQuoteHdrOrgID"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getQuoteHdrOrgID"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getQuoteHdrOrgID_SudokuAMDataControl_dataProvider_getQuoteHdrOrgID_result">
+      <NamedData NDName="pquoteNo" NDType="java.lang.String"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

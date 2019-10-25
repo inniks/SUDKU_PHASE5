@@ -161,7 +161,7 @@ public class MiscUpgradesBean {
     }
 
     public static ArrayList<SdiCollectionMiscUpgradeModel> populateMiscUpgradesSubGroups(V93kQuote v93k,
-        ArrayList<SdiCollectionMiscUpgradeModel> sdiCollection) {
+                                                                                         ArrayList<SdiCollectionMiscUpgradeModel> sdiCollection) {
         sdiCollection = new ArrayList<SdiCollectionMiscUpgradeModel>();
         LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = null;
         LinkedHashMap<String, ConfiguratorUiGroup> mapUiGrp =
@@ -245,17 +245,17 @@ public class MiscUpgradesBean {
 
             }
         }
-        LinkedHashMap<String,List> testMap = new LinkedHashMap();
+        LinkedHashMap<String, List> testMap = new LinkedHashMap();
         for (String uiSubGrpName : allSuperSubGroupList) {
-            
+
             LinkedHashMap<String, ConfiguratorUiSubGroup> subGroup =
                 uiGroup.getSubGroups();
             ArrayList<ArrayList<UiField>> listofcollections =
                 new ArrayList<ArrayList<UiField>>();
-           ArrayList testList = new ArrayList();
+            ArrayList testList = new ArrayList();
             Iterator sgIter = subGroup.entrySet().iterator();
             int index = 1;
-           
+
             while (sgIter.hasNext()) {
                 Map.Entry subGrppair = (Map.Entry)sgIter.next();
                 ConfiguratorUiSubGroup subGrp =
@@ -263,7 +263,7 @@ public class MiscUpgradesBean {
 
                 if (subGrp != null && subGrp.getSubGroupIdentifier() != null &&
                     subGrp.getSubGroupIdentifier().equalsIgnoreCase(uiSubGrpName)) {
-                   
+
                     //for ex:PS1600
                     ArrayList<UiField> uiFieldCollection = null;
                     uiFieldCollection =
@@ -273,37 +273,46 @@ public class MiscUpgradesBean {
                     listofcollections.add(uiFieldCollection);
                     testList.add(uiFieldCollection);
 
-                    
+
                 }
             }
             testMap.put(uiSubGrpName, testList);
         }
         ArrayList<ShowDetailItemCollection> sdiList =
             new ArrayList<ShowDetailItemCollection>();
-            if (testMap != null && !testMap.isEmpty()) {      
-                int counter = 1;
-                Iterator it = testMap.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    String key = (String)pair.getKey();
-                    System.out.println("Key is "+key);
-                    ArrayList<ArrayList<UiField>> val = (ArrayList<ArrayList<UiField>>)pair.getValue();
-                    if(val!=null && val.size()>0){
-                       // for(int i=0;i<val.size();i++){
-                        ShowDetailItemCollection showDetItem = new ShowDetailItemCollection(Integer.toString(counter),null,key,val);
-//                                                new ShowDetailItemCollection(Integer.toString(counter),
-//                                                                             val, key);
-                           sdiList.add(showDetItem);
-                            counter++;
-                       // }
-                        miscUpgSdi =
-                                new SdiCollectionMiscUpgradeModel(Integer.toString(indexer),
-                                                                  sdiList, key);
+        LinkedHashMap<String,ShowDetailItemCollection> sdiMap = new LinkedHashMap<String, ShowDetailItemCollection>();
+        String subGrpName = null;
+        if (testMap != null && !testMap.isEmpty()) {
+            int counter = 1;
+            Iterator it = testMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                String key = (String)pair.getKey();
+                subGrpName = key ;
+                System.out.println("Key is " + subGrpName);
+                ArrayList<ArrayList<UiField>> val =
+                    (ArrayList<ArrayList<UiField>>)pair.getValue();
+                ArrayList<UiField> test1 = new ArrayList<UiField>();
+                if (val != null && val.size() > 0) {
+                    for (int i = 0; i < val.size(); i++) {
+                        test1.add(val.get(i).get(0));
                     }
-                   
+                    ShowDetailItemCollection showDetItem =
+                        new ShowDetailItemCollection(Integer.toString(counter),
+                                                     test1, key, key);
+
+                    sdiList.add(showDetItem);
+                    sdiMap.put(key, showDetItem);
+                    counter++;
+                  
                 }
+
             }
-            
+            miscUpgSdi =
+                    new SdiCollectionMiscUpgradeModel(Integer.toString(indexer),
+                                                      sdiList, "X");
+        }
+
         return miscUpgSdi;
     }
 

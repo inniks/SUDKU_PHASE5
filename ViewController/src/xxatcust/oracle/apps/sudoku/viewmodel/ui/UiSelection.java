@@ -2,6 +2,7 @@ package xxatcust.oracle.apps.sudoku.viewmodel.ui;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
+
 public class UiSelection {
     private String uniqueSessionId;
     private String parentGroupName;
@@ -18,6 +19,8 @@ public class UiSelection {
     private int targetQuantity;
     private String selectionState;// TRUE if value is selected, FALSE if value is de-selected.
     String czModelName = null;
+    
+//    private String userConfirmation = null; // YES or NO for the conflict message
     
     public UiSelection() {
         super();
@@ -64,13 +67,16 @@ public class UiSelection {
     }
 
     public void setCzNodeName(String czNodeName) {
+//        if(czNodeName!=null){
+//               czNodeName = "\""+czNodeName+"\"";
+//        }
         this.czNodeName = czNodeName;
     }
 
     public String getCzNodeName() {
-        if(czNodeName!=null && czNodeName.equalsIgnoreCase("\"")){
-            System.out.println("CZNODE NAME SELECTED IS "+czNodeName);
-        }
+//        if(czNodeName !=null && czNodeName.startsWith("\"")) {
+//            czNodeName = czNodeName.substring(1, czNodeName.length()-1);
+//        }
         return czNodeName;
     }
 
@@ -135,7 +141,17 @@ public class UiSelection {
     }
 
     public String getCzModelName() {
-        
+//        if(czNodeName!=null){
+//               czNodeName = "\""+czNodeName+"\"";
+//        }
         return czModelName;
     }
+
+//    public void setUserConfirmation(String userConfirmation) {
+//        this.userConfirmation = userConfirmation;
+//    }
+//
+//    public String getUserConfirmation() {
+//        return userConfirmation;
+//    }
 }

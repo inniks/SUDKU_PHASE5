@@ -6,6 +6,7 @@ public class ShowDetailItemCollection {
     private String index;
     private ArrayList<UiField> uiFieldCollection ;
     private String subGrpName ;
+    private String superSubGrpName;
     private ArrayList<ArrayList<UiField>> blockOfGrps ;
     public ShowDetailItemCollection() {
         super();
@@ -28,6 +29,17 @@ public class ShowDetailItemCollection {
         this.uiFieldCollection = uiFieldCollection;
         this.subGrpName = subGrpName;
         this.blockOfGrps = blockOfGrps;
+    }
+
+    public ShowDetailItemCollection(String index,
+                                    ArrayList<UiField> uiFieldCollection,
+                                    String subGrpName,
+                                    String superSubGrpName) {
+        super();
+        this.index = index;
+        this.uiFieldCollection = uiFieldCollection;
+        this.subGrpName = subGrpName;
+        this.superSubGrpName = superSubGrpName;
     }
 
 
@@ -61,5 +73,13 @@ public class ShowDetailItemCollection {
 
     public ArrayList<ArrayList<UiField>> getBlockOfGrps() {
         return blockOfGrps;
+    }
+
+    public void setSuperSubGrpName(String superSubGrpName) {
+        this.superSubGrpName = superSubGrpName;
+    }
+
+    public String getSuperSubGrpName() {
+        return superSubGrpName;
     }
 }

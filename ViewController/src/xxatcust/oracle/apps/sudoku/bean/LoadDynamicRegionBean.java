@@ -29,6 +29,8 @@ import java.util.HashMap;
 //import java.util.Hashtable;
 import java.util.List;
 
+import java.util.Map;
+
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
@@ -1343,21 +1345,45 @@ public class LoadDynamicRegionBean {
                                  OutputStream outputStream) {
         try {
             _logger.info("print report call start ");
+            
+            String quoteNum =  (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            Object quotehid = null;
+            String orgId=null;
+            OperationBinding ob1 =
+                getBindings().getOperationBinding("getQuoteHdrOrgID");
+            ob1.getParamsMap().put("pquoteNo", quoteNum);
+            if (ob1 != null) {
+    
+             //   quotehid = ob1.execute();
+                
+                Map quoteDetailsMap = (Map)ob1.execute();
+                
+                quotehid=quoteDetailsMap.get("vQuoteHid");
+                _logger.info("print quotehid"+quotehid);
+                orgId=(String)quoteDetailsMap.get("vOrgId");
+                _logger.info("print orgId"+orgId);
+            }
+    
+            String squotehid = String.valueOf(quotehid);
+            System.out.println("print quotehid" + squotehid);
+            
             int respid =
                 Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
                                  null ? "51156" :
                                  (String)ADFUtils.getSessionScopeValue("RespId"));
-
+    
             int usrId =
                 Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
                                  null ? "0" :
                                  (String)ADFUtils.getSessionScopeValue("UserId"));
-            int orgId = Integer.parseInt(ADFUtils.getSessionScopeValue("OrgId")==null?"144":(String)ADFUtils.getSessionScopeValue("OrgId"));
+           
+            
+            
             String srespid = String.valueOf(respid);
             String susrId = String.valueOf(usrId);
-            String orgIdStr = String.valueOf(orgId);
-
-            initializeAppsContext(susrId, srespid, "880",orgIdStr);
+           
+    
+            initializeAppsContext(susrId, srespid, "880",orgId);
             _logger.info("print after apps intilization in bean ");
             String template =
                 "XXATREP_PMF"; //"XXATRPT_PMF_V4_Y_mux_FRAMES_PDF";
@@ -1366,16 +1392,16 @@ public class LoadDynamicRegionBean {
             String porderhid = null;
             //    String quotehid = "97416";
             String ponumber = null;
-
+    
             SudokuAMImpl am = this.getSudokuAMImpl();
             Connection conn =
                 am.getDBTransaction().createCallableStatement("select 1 from dual",
                                                               1).getConnection();
             _logger.info("print connection " + conn);
             DataProcessor dataProcessor = new DataProcessor();
-
-            //String kpath = "C:\\Users\\vthommandru\\Downloads\\";
-
+    
+         //   String kpath = "C:\\Users\\vthommandru\\Downloads\\";
+    
           //  dataProcessor.setDataTemplate("" + spath +
                                  //         "PMF_REPORT_pmux_frames_PDF.xml"); //local
             _logger.info("print dataProcessor " + dataProcessor);
@@ -1384,34 +1410,22 @@ public class LoadDynamicRegionBean {
             if (ob != null) {
                 path = ob.execute();
             }
-
+    
             String spath = String.valueOf(path);
             System.out.println("print serverpath" + spath);
-            String quoteNum = // "81779" ;
-                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
-            Object quotehid = null;
-            OperationBinding ob1 =
-                getBindings().getOperationBinding("getQuoteHdrID");
-            ob1.getParamsMap().put("pquoteNo", quoteNum);
-            if (ob1 != null) {
-
-                quotehid = ob1.execute();
-            }
-
-            String squotehid = String.valueOf(quotehid);
-            System.out.println("print quotehid" + squotehid);
-
-
+           
+    
+    
             dataProcessor.setDataTemplate("" + spath +
                                           "PMF_REPORT_pmux_frames_PDF.xml"); //server
-
+    
             _logger.info("print dataProcessor location " + dataProcessor);
-
-
+    
+    
             //  dataProcessor.setDataTemplate("/public_html/xmlreports/PMF_REPORT_pmux_frames_PDF.xml");
-
+    
             // dataProcessor.setDataTemplate("/tmp/PMF_REPORT_pmux_frames_PDF.xml");  //server
-
+    
             dataProcessor.setConnection(conn);
             _logger.info("print dataProcessor set connection ");
             Hashtable parameters = new Hashtable();
@@ -1427,7 +1441,7 @@ public class LoadDynamicRegionBean {
             if (quotehid != null) {
                 parameters.put("P_QUOTE_HEADER_ID", squotehid);
             }
-
+    
             if (ponumber != null) {
                 parameters.put("P_PO_NUMBER", ponumber);
             }
@@ -1444,15 +1458,15 @@ public class LoadDynamicRegionBean {
             _logger.info("byte " + data);
             ByteArrayInputStream istream = new ByteArrayInputStream(data);
             System.out.println("Done data template");
-
+    
             _logger.info("Done data template");
-
+    
             //  RTFProcessor rtf = new RTFProcessor("C:\\Users\\vthommandru\\Downloads\\XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf");  // local
-
-
+    
+    
             RTFProcessor rtf =
                 new RTFProcessor("" + spath + "XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf"); // server
-
+    
             _logger.info("print rtf directory " + rtf);
             //   RTFProcessor rtf = new RTFProcessor("/public_html/xmlreports/XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf");
             //  RTFProcessor rtf = new RTFProcessor("/tmp/XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf");  // xml
@@ -1483,24 +1497,24 @@ public class LoadDynamicRegionBean {
             System.out.println("Done power point");
             outputStream.flush();
             _logger.info("Done flush");
-
-
+    
+    
         } catch (Exception e) {
             System.out.println("error::: " + e.getMessage());
             _logger.info("error::: " + e.getMessage());
         }
     }
-
+    
     private void initializeAppsContext(String respId, String userId,
                                        String applicationId,String orgId) {
-
+    
         SudokuAMImpl am = this.getSudokuAMImpl();
         DBTransaction txn = (DBTransaction)am.getTransaction();
         CallableStatement st = null;
         try {
-
+    
             st =
- txn.createCallableStatement("BEGIN fnd_global.apps_initialize(:1, :2, :3); mo_global.set_policy_context ('S', :4); END;",
+    txn.createCallableStatement("BEGIN fnd_global.apps_initialize(:1, :2, :3); mo_global.set_policy_context ('S', :4); END;",
                              0);
             st.setString(1, userId);
             st.setString(2, respId);
@@ -1510,7 +1524,7 @@ public class LoadDynamicRegionBean {
             st.execute();
             _logger.info("print  after apps intialize execute successfully ");
             //            st.close();
-
+    
         } catch (Exception e) {
             _logger.info("Error in apps intialization and orgcontext" +
                          e.getMessage());
@@ -1523,23 +1537,40 @@ public class LoadDynamicRegionBean {
                     _logger.info("Error in apps intialization and orgcontext1" +
                                  sqle.getMessage());
                     sqle.printStackTrace();
-
+    
                 }
             }
         }
     }
-
+    
     public void processExcelOutput(FacesContext facesContext,
                                    OutputStream outputStream) {
         try {
-
-            Object reqid = null;
             _logger.info("print excelreport call start ");
+            String quoteNum = // "81779" ;
+                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+          
+            String orgId=null;
+            OperationBinding ob2 =getBindings().getOperationBinding("getQuoteHdrOrgID");
+            ob2.getParamsMap().put("pquoteNo", quoteNum);
+            if (ob2 != null) {
+    
+             //   quotehid = ob1.execute();
+                
+                Map quoteDetailsMap = (Map)ob2.execute();
+                
+             
+                orgId=(String)quoteDetailsMap.get("vOrgId");
+                _logger.info("print excelreport  orgId"+orgId); 
+            }
+    
+            Object reqid = null;
+          
             int respid =
                 Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
                                  null ? "51156" :
                                  (String)ADFUtils.getSessionScopeValue("RespId"));
-
+    
             int usrId =
                 Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
                                  null ? "0" :
@@ -1547,26 +1578,25 @@ public class LoadDynamicRegionBean {
             String srespid = String.valueOf(respid);
             String susrId = String.valueOf(usrId);
           
-            int orgId = Integer.parseInt(ADFUtils.getSessionScopeValue("OrgId")==null?"144":(String)ADFUtils.getSessionScopeValue("OrgId"));
+          
             
-            String orgIdStr = String.valueOf(orgId);
-            String quoteNum = // "81779" ;
-                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
-
-            initializeAppsContext(susrId, srespid, "880",orgIdStr);
+          
+          
+    
+            initializeAppsContext(susrId, srespid, "880",orgId);
             _logger.info("print after apps intilization in bean ");
-
+    
             OperationBinding ob =
                 getBindings().getOperationBinding("callDUTReport");
             ob.getParamsMap().put("confighid", null);
-
+    
             ob.getParamsMap().put("configrevno", null);
             ob.getParamsMap().put("orderhid", null);
             ob.getParamsMap().put("quoteno", quoteNum);
             ob.getParamsMap().put("ponum", null);
             ob.getParamsMap().put("respId", respid);
             ob.getParamsMap().put("usrId", usrId);
-
+    
             if (ob != null) {
                 System.out.println("print operation binding start to execute");
                 reqid = ob.execute();
@@ -1574,18 +1604,18 @@ public class LoadDynamicRegionBean {
                 System.out.println("print operation binding end to execute" +
                                    reqid);
             }
-
-
+    
+    
             Object path = null;
             OperationBinding ob1 =
                 getBindings().getOperationBinding("getPath");
             if (ob1 != null) {
                 path = ob1.execute();
             }
-
+    
             String spath = String.valueOf(path);
-
-
+    
+    
             SudokuAMImpl am = this.getSudokuAMImpl();
             Connection conn =
                 am.getDBTransaction().createCallableStatement("select 1 from dual",
@@ -1593,14 +1623,14 @@ public class LoadDynamicRegionBean {
             _logger.info("print connection " + conn);
             DataProcessor dataProcessor = new DataProcessor();
             //  dataProcessor.setDataTemplate("C:\\Users\\vthommandru\\Desktop\\reportswork\\XXAT_RDV_REP_OUTPUT.xml"); //local
-
+    
             _logger.info("print dataProcessor " + dataProcessor);
             dataProcessor.setDataTemplate("" + spath +
                                           "XXAT_RDV_REP_OUTPUT.xml"); //server
-
+    
             _logger.info("print dataProcessor location " + dataProcessor);
-
-
+    
+    
             dataProcessor.setConnection(conn);
             _logger.info("print dataProcessor set connection ");
             //  com.sun.java.util.collections.Hashtable parameters = new com.sun.java.util.collections.Hashtable();
@@ -1608,7 +1638,7 @@ public class LoadDynamicRegionBean {
             if (reqid != null) {
                 parameters.put("P_REQUEST_ID", reqid);
             }
-
+    
             dataProcessor.setParameters(parameters);
             _logger.info("data processor set parameters");
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -1621,17 +1651,17 @@ public class LoadDynamicRegionBean {
             _logger.info("byte " + data);
             ByteArrayInputStream istream = new ByteArrayInputStream(data);
             System.out.println("Done data template");
-
+    
             _logger.info("Done data template");
-
+    
             //  RTFProcessor rtf = new RTFProcessor("C:\\Users\\vthommandru\\Desktop\\reportswork\\XXAT_RDV_REP_CTH_OUT.rtf");  // local
-
-
+    
+    
             RTFProcessor rtf =
                 new RTFProcessor("" + spath + "XXAT_RDV_REP_CTH_OUT.rtf"); // server
-
+    
             _logger.info("print rtf directory " + rtf);
-
+    
             ByteArrayOutputStream outXslFo = new ByteArrayOutputStream();
             _logger.info("outXslFo" + outXslFo);
             rtf.setOutput(outXslFo);
@@ -1653,68 +1683,78 @@ public class LoadDynamicRegionBean {
             processor.setOutputFormat(FOProcessor.FORMAT_EXCEL);
             _logger.info("processorsetOutputFormat PDF" +
                          FOProcessor.FORMAT_EXCEL);
-
+    
             processor.generate();
             _logger.info("Done power point");
             System.out.println("Done power point");
             outputStream.flush();
             _logger.info("Done flush");
-
-
+    
+    
         } catch (Exception e) {
             System.out.println("error::: " + e.getMessage());
             _logger.info("error::: " + e.getMessage());
         }
-
+    
     }
-
+    
     public void onMOFreportFetch(PopupFetchEvent popupFetchEvent) {
         try {
+            
+            
+            String quoteNum = // "81779" ;
+                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            Object quotehid = null;
+            String orgId=null;
+            OperationBinding ob1 =
+                getBindings().getOperationBinding("getQuoteHdrOrgID");
+            ob1.getParamsMap().put("pquoteNo", quoteNum);
+            if (ob1 != null) {
+    
+             //   quotehid = ob1.execute();
+                
+                Map quoteDetailsMap = (Map)ob1.execute();
+                
+                quotehid=(String)quoteDetailsMap.get("vQuoteHid");
+                orgId=(String)quoteDetailsMap.get("vOrgId");
+            }
+    
+            String squotehid = String.valueOf(quotehid);
+            System.out.println("print quotehid" + squotehid);
+            
             int respid =
                 Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
                                  null ? "51156" :
                                  (String)ADFUtils.getSessionScopeValue("RespId"));
-
+    
             int usrId =
                 Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
                                  null ? "0" :
                                  (String)ADFUtils.getSessionScopeValue("UserId"));
-            int orgId = Integer.parseInt(ADFUtils.getSessionScopeValue("OrgId")==null?"144":(String)ADFUtils.getSessionScopeValue("OrgId"));
+         
             String srespid = String.valueOf(respid);
             String susrId = String.valueOf(usrId);
-            String orgIdStr = String.valueOf(orgId);
+            
             Object output = null;
             _logger.info("print MOF call start ");
-            initializeAppsContext(srespid, susrId, "880",orgIdStr);
+            initializeAppsContext(srespid, susrId, "880",orgId);
             _logger.info("print after apps intilization in bean ");
-
-            String quoteNum = // "81779" ;
-                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
-            Object quotehid = null;
-            OperationBinding ob1 =
-                getBindings().getOperationBinding("getQuoteHdrID");
-            ob1.getParamsMap().put("pquoteNo", quoteNum);
-            if (ob1 != null) {
-
-                quotehid = ob1.execute();
-            }
-
-            String squotehid = String.valueOf(quotehid);
-            System.out.println("print quotehid" + squotehid);
-
+    
+           
+    
             OperationBinding ob =
                 getBindings().getOperationBinding("callMOFReport");
-
-
+    
+    
             ob.getParamsMap().put("confighid", null);
-
+    
             ob.getParamsMap().put("configrevno", null);
             ob.getParamsMap().put("orderhid", null);
             ob.getParamsMap().put("quoteno", squotehid);
             ob.getParamsMap().put("ponum", null);
             //                        ob.getParamsMap().put("respId", 51157);
             //                        ob.getParamsMap().put("usrId", 0);
-
+    
             if (ob != null) {
                 System.out.println("print operation binding start to execute");
                 output = ob.execute();
@@ -1725,20 +1765,20 @@ public class LoadDynamicRegionBean {
                 //         if(output!=null)
                 //      setResponse(output.toString());
             }
-
+    
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    
     public void setSetMOFop(RichOutputFormatted setMOFop) {
         this.setMOFop = setMOFop;
     }
-
+    
     public RichOutputFormatted getSetMOFop() {
         return setMOFop;
     }
-
+    
     public void printCFDReport(FacesContext facesContext,
                                OutputStream outputStream) {
         BindingContainer bc =
@@ -1750,25 +1790,25 @@ public class LoadDynamicRegionBean {
             Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
                              null ? "51156" :
                              (String)ADFUtils.getSessionScopeValue("RespId"));
-
+    
         int usrId =
             Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
                              null ? "0" :
                              (String)ADFUtils.getSessionScopeValue("UserId"));
-
+    
         SudokuAMImpl am = this.getSudokuAMImpl();
         DBTransaction txn = (DBTransaction)am.getTransaction();
         String query1 = "";
         query1 = "DELETE FROM  xxat_file_details";
-
-
+    
+    
         CallableStatement cst = null;
         try {
             //Creating sql statement
-
-
+    
+    
             cst = am.getDBTransaction().createCallableStatement(query1, 0);
-
+    
             System.out.println("Query ::: " + query1);
             cst.executeUpdate();
             am.getDBTransaction().commit();
@@ -1788,10 +1828,10 @@ public class LoadDynamicRegionBean {
             vo.clearCache();
             vo.executeEmptyRowSet();
             System.out.println("Row  Count:" + vo.getEstimatedRowCount());
-
+    
         }
-
-
+    
+    
         try {
             String reqid = null;
             _logger.info("print excelreport call start ");
@@ -1802,11 +1842,11 @@ public class LoadDynamicRegionBean {
             OperationBinding ob =
                 getBindings().getOperationBinding("callCFDReport");
             ob.getParamsMap().put("quoteNum", quoteNum);
-
-
+    
+    
             ob.getParamsMap().put("respId", respid);
             ob.getParamsMap().put("usrId", usrId);
-
+    
             if (ob != null) {
                 System.out.println("print operation binding start to execute");
                 reqid = (String)ob.execute();
@@ -1814,27 +1854,27 @@ public class LoadDynamicRegionBean {
                 System.out.println("print operation binding end to execute" +
                                    reqid);
             }
-
-
+    
+    
             // Row row=vo.getCurrentRow();
-
+    
             BlobDomain blobDomain = null;
             // String requestId="255665340";
             if (vo != null) {
-
+    
                 String x = "REQUEST_ID=" + reqid;
                 vo.setWhereClause(x);
                 vo.executeQuery();
                 //     vo.clearCache();
-
+    
                 Row row = vo.getCurrentRow();
-
-
+    
+    
                 blobDomain = (BlobDomain)row.getAttribute("FileData");
                 System.out.println("blobDomain ::: " + blobDomain);
                 BufferedInputStream bin =
                     new BufferedInputStream(blobDomain.getBinaryStream());
-
+    
                 int b;
                 byte[] buffer = new byte[10240];
                 while ((b = bin.read(buffer, 0, 10240)) != -1) {
@@ -1846,4 +1886,5 @@ public class LoadDynamicRegionBean {
             System.out.println("exception ::: " + e.getMessage());
         }
     }
+
 }

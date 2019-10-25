@@ -341,14 +341,6 @@
         Type="java.lang.String"/>
     </Method>
     <Method
-      Name="getQuoteHdrID">
-      <Return
-        Type="java.lang.String"/>
-      <Parameter
-        Name="pquoteNo"
-        Type="java.lang.String"/>
-    </Method>
-    <Method
       Name="callDUTReport">
       <Return
         Type="int"/>
@@ -407,6 +399,15 @@
       <Parameter
         Name="usrId"
         Type="int"/>
+    </Method>
+    <Method
+      Name="getQuoteHdrOrgID">
+      <Return
+        Type="java.util.Map"
+        IsGeneric="true"/>
+      <Parameter
+        Name="pquoteNo"
+        Type="java.lang.String"/>
     </Method>
   </ClientInterface>
 </AppModule>

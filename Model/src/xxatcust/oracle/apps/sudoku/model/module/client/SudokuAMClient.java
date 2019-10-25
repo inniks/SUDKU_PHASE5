@@ -2,6 +2,8 @@ package xxatcust.oracle.apps.sudoku.model.module.client;
 
 import java.util.Hashtable;
 
+import java.util.Map;
+
 import oracle.jbo.Row;
 import oracle.jbo.client.remote.ApplicationModuleImpl;
 
@@ -189,12 +191,6 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         return (String)_ret;
     }
 
-    public String getQuoteHdrID(String pquoteNo) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"getQuoteHdrID",new String [] {"java.lang.String"},new Object[] {pquoteNo});
-        return (String)_ret;
-    }
-
     public int callDUTReport(String confighid, String configrevno,
                              String orderhid, String quoteno, String ponum,
                              int respId, int usrId) {
@@ -215,5 +211,11 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         Object _ret =
             this.riInvokeExportedMethod(this,"callCFDReport",new String [] {"java.lang.String","int","int"},new Object[] {quoteNum, new Integer(respId), new Integer(usrId)});
         return (String)_ret;
+    }
+
+    public Map getQuoteHdrOrgID(String pquoteNo) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getQuoteHdrOrgID",new String [] {"java.lang.String"},new Object[] {pquoteNo});
+        return (Map)_ret;
     }
 }

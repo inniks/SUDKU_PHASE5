@@ -102,64 +102,33 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
         return currentUrlName;
 
     }
-    
+
     public String getPath() {
-        
-        ViewObjectImpl vo=getXXATGlobalDirRVO1();
-        
-        Row row=vo.first();
-        
-        String path=row.getAttribute("Description").toString();
-        
+
+        ViewObjectImpl vo = getXXATGlobalDirRVO1();
+
+        Row row = vo.first();
+
+        String path = row.getAttribute("Description").toString();
+
         return path;
-        
-        
+
+
     }
-    
-    public String getQuoteHdrID(String pquoteNo) 
-    {
-        DBTransaction trans=this.getDBTransaction();
-      
-        String QuoteHid=null;
-                try {
-                    
-                   
-                    String sql="Select QUOTE_HEADER_ID from ASO_QUOTE_HEADERS_ALL where QUOTE_NUMBER="+pquoteNo;
-                    
-                    PreparedStatement ps=trans.createPreparedStatement(sql, 0);
-                    ResultSet rs=ps.executeQuery();
-                    rs.next();
-                    
-                    
-                  
-                    
-                    QuoteHid=rs.getString(1);
-                   
-                    
-                }
-                catch(Exception e) {
-                    e.printStackTrace();
-                }
-                
-    
-        
-        
-        return QuoteHid;
-    }
-    public int callDUTReport(String confighid,String configrevno,String orderhid,String quoteno,String ponum,int respId, int usrId) 
-    {
+    public int callDUTReport(String confighid, String configrevno,
+                             String orderhid, String quoteno, String ponum,
+                             int respId, int usrId) {
         CallableStatement cs = null;
-        String stmt =
-            "XXAT_DUT_REP(:1,:2,:3,:4,:5,:6,:7,:8)";
+        String stmt = "XXAT_DUT_REP(:1,:2,:3,:4,:5,:6,:7,:8)";
         StringBuilder errorMsg = new StringBuilder("<html><body>");
-        int reqid=0;
+        int reqid = 0;
         try {
-            
+
             cs =
-            this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",0);
-             
-           
-                                           
+ this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
+                                                 0);
+
+
             cs.setString(1, confighid);
             cs.setString(2, configrevno);
             cs.setString(3, orderhid);
@@ -169,119 +138,120 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             cs.setInt(7, usrId);
             cs.registerOutParameter(8, Types.INTEGER);
             System.out.println("print before execute the procedure");
-            
-            
+
+
             cs.executeUpdate();
-            reqid =cs.getInt(8);
-            
+            reqid = cs.getInt(8);
+
             System.out.println("print after execute the procedure");
-            
-            System.out.println("print reqid"+reqid);
+
+            System.out.println("print reqid" + reqid);
+        } catch (Exception e) {
+            errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
+            System.out.println("print error found in package execution" +
+                               e.getMessage());
+            //                e.printStackTrace();
+        } finally {
+            try {
+                if (cs != null)
+                    cs.close();
+            } catch (SQLException s) {
+                errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
+                //                    s.printStackTrace();
+                System.out.println("print error found in package execution1" +
+                                   s.getMessage());
+            }
         }
-        catch (Exception e) {
-                    errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
-                    System.out.println("print error found in package execution"+e.getMessage());
-                    //                e.printStackTrace();
-                } finally {
-                    try {
-                        if (cs != null)
-                            cs.close();
-                    } catch (SQLException s) {
-                        errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
-                        //                    s.printStackTrace();
-                        System.out.println("print error found in package execution1"+s.getMessage());  
-                    }
-                }
-        
+
         return reqid;
     }
-    
-    public String callMOFReport(String confighid,String configrevno,String orderhid,String quoteno,String ponum) 
-    {
+
+    public String callMOFReport(String confighid, String configrevno,
+                                String orderhid, String quoteno,
+                                String ponum) {
         CallableStatement cs = null;
         String stmt =
             "XXAT_ASO_QUOTE_PKG.XXAT_MOF_REPORT_PRINT(:1,:2,:3,:4,:5,:6)";
         StringBuilder errorMsg = new StringBuilder("<html><body>");
-        String output=null;
+        String output = null;
         try {
-            
+
             cs =
-            this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",0);
-             
-           
-                                           
+ this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
+                                                 0);
+
+
             cs.setString(1, confighid);
             cs.setString(2, configrevno);
             cs.setString(3, orderhid);
             cs.setString(4, quoteno);
             cs.setString(5, ponum);
-    //            cs.setInt(6, respId);
-    //            cs.setInt(7, usrId);
+            //            cs.setInt(6, respId);
+            //            cs.setInt(7, usrId);
             cs.registerOutParameter(6, Types.VARCHAR);
             System.out.println("print before execute the procedure");
-            
-            
+
+
             cs.executeUpdate();
-            output =cs.getString(6);
-            
+            output = cs.getString(6);
+
             System.out.println("print after execute the procedure");
-            
-            System.out.println("print output"+output);
+
+            System.out.println("print output" + output);
+        } catch (Exception e) {
+            errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
+            System.out.println("print error found in package execution" +
+                               e.getMessage());
+            //                e.printStackTrace();
+        } finally {
+            try {
+                if (cs != null)
+                    cs.close();
+            } catch (SQLException s) {
+                errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
+                //                    s.printStackTrace();
+                System.out.println("print error found in package execution1" +
+                                   s.getMessage());
+            }
         }
-        catch (Exception e) {
-                    errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
-                    System.out.println("print error found in package execution"+e.getMessage());
-                    //                e.printStackTrace();
-                } finally {
-                    try {
-                        if (cs != null)
-                            cs.close();
-                    } catch (SQLException s) {
-                        errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
-                        //                    s.printStackTrace();
-                        System.out.println("print error found in package execution1"+s.getMessage());  
-                    }
-                }
-        
+
         return output;
     }
-    
-    public String callCFDReport(String quoteNum, 
-                                        int respId, int usrId) {
+
+    public String callCFDReport(String quoteNum, int respId, int usrId) {
 
         CallableStatement cs = null;
         String returnval = null;
         StringBuilder errorMsg = new StringBuilder("<html><body>");
         String reqstid = "";
         String returnStatus = "";
-        String stmt =
-            "   XXAT_CFD_REPT(:1,:2,:3,:4)";
+        String stmt = "   XXAT_CFD_REPT(:1,:2,:3,:4)";
         try {
             cs =
-    this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
+ this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
                                                  0);
             if (quoteNum != null) {
                 quoteNum = quoteNum.trim();
                 cs.setString(1, quoteNum);
             } else
                 errorMsg.append("<p><b> Quote Number is Missing.</b></p>");
-            
+
 
             cs.setInt(2, respId);
             cs.setInt(3, usrId);
             cs.registerOutParameter(4, Types.VARCHAR);
-            
-           
+
+
             errorMsg.append("</body></html>");
             cs.executeUpdate();
-            reqstid=cs.getString(4);
-          //  String output =cs.getString(5);
-            System.out.println("print req id"+reqstid);
-    //            if ("<html><body></body></html>".equalsIgnoreCase(errorMsg.toString())) {
-    //                cs.executeUpdate();
-    //                returnStatus = cs.getString(5);
-    //                returnMessage = cs.getString(6);
-    //            }
+            reqstid = cs.getString(4);
+            //  String output =cs.getString(5);
+            System.out.println("print req id" + reqstid);
+            //            if ("<html><body></body></html>".equalsIgnoreCase(errorMsg.toString())) {
+            //                cs.executeUpdate();
+            //                returnStatus = cs.getString(5);
+            //                returnMessage = cs.getString(6);
+            //            }
         } catch (Exception e) {
             errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
             //                e.printStackTrace();
@@ -294,7 +264,7 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                 //                    s.printStackTrace();
             }
         }
-        
+
         return reqstid;
     }
 
@@ -2815,18 +2785,19 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
     public void initConfiguratorRuleSet() {
     }
-    
-    public Hashtable getUiGrpMap(){
-        Hashtable<String,String> uiGrpMap = new Hashtable<String, String>();
+
+    public Hashtable getUiGrpMap() {
+        Hashtable<String, String> uiGrpMap = new Hashtable<String, String>();
         ViewObjectImpl uiGrpVO = this.getUIGroupsVO();
-        if(uiGrpVO!=null){
+        if (uiGrpVO != null) {
             uiGrpVO.executeQuery();
             RowSetIterator rsi = uiGrpVO.createRowSetIterator(null);
-            if(rsi!=null){
-                while(rsi.hasNext()){
+            if (rsi != null) {
+                while (rsi.hasNext()) {
                     Row r = rsi.next();
-                    if(r!=null){
-                        uiGrpMap.put((String)r.getAttribute("UiIndex"), (String)r.getAttribute("AdfUiCategory"));
+                    if (r != null) {
+                        uiGrpMap.put((String)r.getAttribute("UiIndex"),
+                                     (String)r.getAttribute("AdfUiCategory"));
                     }
                 }
             }
@@ -2834,6 +2805,40 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         ADFContext.getCurrent().getSessionScope().put("uiGrpMap", uiGrpMap);
         return uiGrpMap;
     }
+
+    public Map<String, String> getQuoteHdrOrgID(String pquoteNo) {
+        DBTransaction trans = this.getDBTransaction();
+
+        String QuoteHid = null;
+        String OrgId = null;
+        HashMap<String, String> QuoteHdrOrgMap = new HashMap<String, String>();
+        try {
+
+
+            String sql =
+                "Select QUOTE_HEADER_ID,ORG_ID from ASO_QUOTE_HEADERS_ALL where QUOTE_NUMBER=" +
+                pquoteNo;
+
+            PreparedStatement ps = trans.createPreparedStatement(sql, 0);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+
+            QuoteHid = rs.getString(1);
+            OrgId = rs.getString(2);
+            _logger.info("print OrgId in AM" + OrgId);
+            QuoteHdrOrgMap.put("vQuoteHid", QuoteHid);
+            QuoteHdrOrgMap.put("vOrgId", OrgId);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return QuoteHdrOrgMap;
+    }
+
 
     /**
      * Container's getter for UIGroupsVO1.

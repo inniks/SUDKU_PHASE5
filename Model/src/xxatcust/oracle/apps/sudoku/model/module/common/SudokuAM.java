@@ -2,6 +2,8 @@ package xxatcust.oracle.apps.sudoku.model.module.common;
 
 import java.util.Hashtable;
 
+import java.util.Map;
+
 import oracle.jbo.ApplicationModule;
 import oracle.jbo.Row;
 // ---------------------------------------------------------------------
@@ -74,7 +76,6 @@ public interface SudokuAM extends ApplicationModule {
 
     String getPath();
 
-    String getQuoteHdrID(String pquoteNo);
 
     int callDUTReport(String confighid, String configrevno, String orderhid,
                       String quoteno, String ponum, int respId, int usrId);
@@ -83,4 +84,6 @@ public interface SudokuAM extends ApplicationModule {
                          String quoteno, String ponum);
 
     String callCFDReport(String quoteNum, int respId, int usrId);
+
+    Map<String, String> getQuoteHdrOrgID(String pquoteNo);
 }

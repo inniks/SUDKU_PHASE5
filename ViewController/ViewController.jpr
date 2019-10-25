@@ -462,6 +462,18 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
+            <value n="id" v="Collections.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="I18nAPI_v3.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Xdocore.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
             <value n="id" v="Oracle XML Parser v2"/>
             <value n="isJDK" v="false"/>
          </hash>
@@ -487,18 +499,6 @@
          </hash>
          <hash>
             <value n="id" v="Connection Manager"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Collections.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="I18nAPI_v3.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Xdocore.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>
@@ -709,6 +709,18 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
+            <value n="id" v="Collections.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="I18nAPI_v3.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Xdocore.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
             <value n="id" v="Oracle XML Parser v2"/>
             <value n="isJDK" v="false"/>
          </hash>
@@ -734,18 +746,6 @@
          </hash>
          <hash>
             <value n="id" v="Connection Manager"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Collections.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="I18nAPI_v3.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Xdocore.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>

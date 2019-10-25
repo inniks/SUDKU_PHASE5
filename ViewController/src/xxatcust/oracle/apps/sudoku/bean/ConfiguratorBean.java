@@ -114,7 +114,7 @@ public class ConfiguratorBean {
     private List<ShowDetailItemCollection> mixSignalSdiCollection;
     private List<ShowDetailItemCollection> rfResourcesSdiCollection;
     //private List<ShowDetailItemCollection> miscUpgSdiCollection;
-    private ArrayList<SdiCollectionMiscUpgradeModel> miscUpgSdiList; 
+    private ArrayList<SdiCollectionMiscUpgradeModel> miscUpgSdiList;
     private ChildPropertyTreeModel addToolsTreeModel;
     private ChildPropertyTreeModel sysInfraTreeModel;
     private ChildPropertyTreeModel calDiagTreeModel;
@@ -369,11 +369,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                         JsonGenerationException,
                                                         JsonMappingException {
 
+
         String jsonStr = JSONUtils.convertObjToJson(v93k);
-        
+
         ObjectMapper mapper = new ObjectMapper();
-                //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
-               // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+        //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
+        // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
 //        String responseJson =
@@ -384,7 +385,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 //        v93k = (V93kQuote)obj;
 
         //else use this
-        v93k = (V93kQuote)convertJsonToObject(null);
+         v93k = (V93kQuote)convertJsonToObject(null);
         if (v93k.getInputParams() != null) {
             Map ruleSetMap = new HashMap();
             ruleSetMap.put("topLevelCode",
@@ -479,22 +480,29 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         }
         if (mixSignalTreeModel == null) {
             mixSignalTreeModel =
-                    MixSignalBean.populateMixSignalParentModel(mixSignalTreeModel, rootMixSignal);
+                    MixSignalBean.populateMixSignalParentModel(mixSignalTreeModel,
+                                                               rootMixSignal);
             mixSignalSdiCollection =
-                    MixSignalBean.populateMixSignalSubGroups(v93k, mixSignalSdiCollection);
+                    MixSignalBean.populateMixSignalSubGroups(v93k,
+                                                             mixSignalSdiCollection);
         }
         if (rfResourcesTreeModel == null) {
             rfResourcesTreeModel =
-                    RfResourcesBean.populateRfResourcesParentModel(rfResourcesTreeModel, rootRfResources);
+                    RfResourcesBean.populateRfResourcesParentModel(rfResourcesTreeModel,
+                                                                   rootRfResources);
             rfResourcesSdiCollection =
-                    RfResourcesBean.populateRfResourceSubGroups(v93k, rfResourcesSdiCollection);
+                    RfResourcesBean.populateRfResourceSubGroups(v93k,
+                                                                rfResourcesSdiCollection);
         }
         if (miscUpgTreeModel == null) {
             miscUpgTreeModel =
-                    MiscUpgradesBean.populateMiscUpgradesParentModel(miscUpgTreeModel, rootMiscUpg);
-            miscUpgSdiList = MiscUpgradesBean.populateMiscUpgradesSubGroups(v93k, miscUpgSdiList);
-//            miscUpgSdiCollection =
-//                    MiscUpgradesBean.populateMiscUpgradesSubGroups(v93k, miscUpgSdiCollection);
+                    MiscUpgradesBean.populateMiscUpgradesParentModel(miscUpgTreeModel,
+                                                                     rootMiscUpg);
+            miscUpgSdiList =
+                    MiscUpgradesBean.populateMiscUpgradesSubGroups(v93k,
+                                                                   miscUpgSdiList);
+            //            miscUpgSdiCollection =
+            //                    MiscUpgradesBean.populateMiscUpgradesSubGroups(v93k, miscUpgSdiCollection);
         }
         defaultViewOnLoad = false;
         displayConfigWarnAndErrors();
@@ -589,13 +597,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String selectedValue =
                 (String)selectedNodeValueMap.get("selectedValue");
             String czNodeName = (String)selectedNodeValueMap.get("czNodeName");
-           
-//            if(czNodeName!=null && czNodeName.contains("\"")){
-//                System.out.println("Cz Node name has special characters : "+czNodeName);
-//                czNodeName = "\""+czNodeName+"\"";
-//            }
-            if(czNodeName!=null){
-                czNodeName = "\""+czNodeName+"\"";
+
+            //            if(czNodeName!=null && czNodeName.contains("\"")){
+            //                System.out.println("Cz Node name has special characters : "+czNodeName);
+            //                czNodeName = "\""+czNodeName+"\"";
+            //            }
+            if (czNodeName != null) {
+                czNodeName = "\"" + czNodeName + "\"";
             }
             String identifier = (String)selectedNodeValueMap.get("identifier");
             String nodeColor = (String)selectedNodeValueMap.get("nodeColor");
@@ -835,8 +843,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputNodeValueMap.get("parentGroupName");
             String czNodeName = (String)inputNodeValueMap.get("czNodeName");
-            if(czNodeName!=null){
-                czNodeName = "\""+czNodeName+"\"";
+            if (czNodeName != null) {
+                czNodeName = "\"" + czNodeName + "\"";
             }
             String identifier = (String)inputNodeValueMap.get("identifier");
             UiSelection uiSelection = new UiSelection();
@@ -1163,7 +1171,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
                 addSwListBinding.getGroupDisclosedRowKeys().clear();
                 dianosticListBinding.getGroupDisclosedRowKeys().clear();
-               // digitalListBinding.getGroupDisclosedRowKeys().clear();
+                // digitalListBinding.getGroupDisclosedRowKeys().clear();
                 dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 mixSigListBinding.getGroupDisclosedRowKeys().clear();
@@ -1238,7 +1246,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 digitalListBinding.getGroupDisclosedRowKeys().clear();
                 dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
-               // mixSigListBinding.getGroupDisclosedRowKeys().clear();
+                // mixSigListBinding.getGroupDisclosedRowKeys().clear();
                 rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
                 dpsListViewBinding.getGroupDisclosedRowKeys().clear();
                 miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
@@ -1250,7 +1258,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dockingListViewBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(rfResourceListViewBinding);
-               // AdfFacesContext.getCurrentInstance().addPartialTarget(mixSigListBinding);
+                // AdfFacesContext.getCurrentInstance().addPartialTarget(mixSigListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dpsListViewBinding);
             }
             if (listViewId.equals("rfLv")) {
@@ -1277,7 +1285,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 AdfFacesContext.getCurrentInstance().addPartialTarget(mixSigListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dpsListViewBinding);
             }
-            
+
             if (listViewId.equals("misUpgLv")) {
                 sysInfraListView.getGroupDisclosedRowKeys().clear();
                 warrantyListView.getGroupDisclosedRowKeys().clear();
@@ -1288,7 +1296,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 mixSigListBinding.getGroupDisclosedRowKeys().clear();
-                rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();                
+                rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
                 dpsListViewBinding.getGroupDisclosedRowKeys().clear();
                 //miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(miscUpgrListBinding);
@@ -1408,12 +1416,16 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputLOVMap.get("parentGroupName");
             String czNodeName = (String)inputLOVMap.get("czNodeName");
-            if(czNodeName!=null){
-                System.out.println("Cz Node name has special characters : "+czNodeName);
-                czNodeName = "\""+czNodeName+"\"";
+            if (czNodeName != null) {
+                System.out.println("Cz Node name has special characters : " +
+                                   czNodeName);
+                czNodeName = "\"" + czNodeName + "\"";
             }
             String identifier = (String)inputLOVMap.get("identifier");
-            UiSelection uiSelection = new UiSelection();
+            UiSelection uiSelection = v93k.getUiSelection();
+            if (uiSelection == null) {
+                uiSelection = new UiSelection();
+            }
             uiSelection.setParentGroupName(parentGroupName);
             uiSelection.setSubGroupName(uiSubGrpName);
             uiSelection.setValueSelected(inputValue);
@@ -1423,16 +1435,21 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             //uiSelection.setSelectionState(selectionState);
             v93k.setUiSelection(uiSelection);
             uiSelection.setUiType("4");
-            v93k.setUiSelection(uiSelection);
+
             uiSelection.setUniqueSessionId(uniqueSessionId);
             uiSelection.setCzNodeName(czNodeName);
             uiSelection.setIdentifier(identifier);
-            SessionDetails sessionDetails = new SessionDetails();
+
+            SessionDetails sessionDetails = v93k.getSessionDetails();
+            if (v93k.getSessionDetails() == null) {
+                sessionDetails = new SessionDetails();
+            }
 
             InputParams inputParam = v93k.getInputParams();
             if (inputParam == null) {
                 inputParam = new InputParams();
             }
+
             //Get Session details added to the POJO object
             sessionDetails.setApplicationId((String)ADFUtils.getSessionScopeValue("ApplId") ==
                                             null ? "880" :
@@ -1446,6 +1463,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             inputParam.setImportSource("REFRESH_CONFIG_UI");
             v93k.setSessionDetails(sessionDetails);
             v93k.setInputParams(inputParam);
+            v93k.setUiSelection(uiSelection);
             ADFUtils.setSessionScopeValue("parentObject", v93k);
             v93k = callServlet(v93k);
             buildConfiguratorUI(v93k);
@@ -1703,13 +1721,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         return miscUpgrListBinding;
     }
 
-//    public void setMiscUpgSdiCollection(List<ShowDetailItemCollection> miscUpgSdiCollection) {
-//        this.miscUpgSdiCollection = miscUpgSdiCollection;
-//    }
-//
-//    public List<ShowDetailItemCollection> getMiscUpgSdiCollection() {
-//        return miscUpgSdiCollection;
-//    }
+    //    public void setMiscUpgSdiCollection(List<ShowDetailItemCollection> miscUpgSdiCollection) {
+    //        this.miscUpgSdiCollection = miscUpgSdiCollection;
+    //    }
+    //
+    //    public List<ShowDetailItemCollection> getMiscUpgSdiCollection() {
+    //        return miscUpgSdiCollection;
+    //    }
 
     public void setMiscUpgTreeModel(ChildPropertyTreeModel miscUpgTreeModel) {
         this.miscUpgTreeModel = miscUpgTreeModel;
