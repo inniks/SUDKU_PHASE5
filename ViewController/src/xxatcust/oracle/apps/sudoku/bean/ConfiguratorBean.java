@@ -113,6 +113,7 @@ public class ConfiguratorBean {
     private List<ShowDetailItemCollection> dpsSdiCollection;
     private List<ShowDetailItemCollection> mixSignalSdiCollection;
     private List<ShowDetailItemCollection> rfResourcesSdiCollection;
+    private List<ShowDetailItemCollection> infraUpgSdiCollection;
     //private List<ShowDetailItemCollection> miscUpgSdiCollection;
     private ArrayList<SdiCollectionMiscUpgradeModel> miscUpgSdiList;
     private ChildPropertyTreeModel addToolsTreeModel;
@@ -123,6 +124,7 @@ public class ConfiguratorBean {
     private ChildPropertyTreeModel mixSignalTreeModel;
     private ChildPropertyTreeModel rfResourcesTreeModel;
     private ChildPropertyTreeModel miscUpgTreeModel;
+    private ChildPropertyTreeModel infraUpgTreeModel;
     private ArrayList<UxTreeNode> sysInfraroot;
     private ArrayList<UxTreeNode> rootWarranty;
     private ArrayList<UxTreeNode> rootCalDiag;
@@ -133,6 +135,7 @@ public class ConfiguratorBean {
     private ArrayList<UxTreeNode> rootDps;
     private ArrayList<UxTreeNode> rootMixSignal;
     private ArrayList<UxTreeNode> rootMiscUpg;
+    private ArrayList<UxTreeNode> rootInfraUpg;
     private ArrayList<UxTreeNode> rootRfResources;
     private RichPanelGroupLayout theadPanelGrp;
     private RichOutputText pageInitText;
@@ -166,6 +169,7 @@ public class ConfiguratorBean {
     private RichListView mixSigListBinding;
     private RichListView rfResourceListViewBinding;
     private RichListView miscUpgrListBinding;
+    private RichListView infraUpgListBinding;
 
     public ConfiguratorBean() {
         super();
@@ -377,15 +381,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
-//        String responseJson =
-//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-//        System.out.println("Response Json from Configurator : " +
-//                           responseJson);
-//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-//        v93k = (V93kQuote)obj;
+        String responseJson =
+            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        System.out.println("Response Json from Configurator : " +
+                           responseJson);
+        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        v93k = (V93kQuote)obj;
 
-        //else use this
-         v93k = (V93kQuote)convertJsonToObject(null);
+       // else use this
+        //v93k = (V93kQuote)convertJsonToObject(null);
         if (v93k.getInputParams() != null) {
             Map ruleSetMap = new HashMap();
             ruleSetMap.put("topLevelCode",
@@ -413,6 +417,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         mixSignalTreeModel = null;
         rfResourcesTreeModel = null;
         miscUpgTreeModel = null;
+        infraUpgTreeModel = null ;
         if (sysInfraTreeModel == null) {
             sysInfraTreeModel =
                     SystemInfraBean.populateSysInfraParentTreeModel(sysInfraTreeModel,
@@ -504,7 +509,16 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             //            miscUpgSdiCollection =
             //                    MiscUpgradesBean.populateMiscUpgradesSubGroups(v93k, miscUpgSdiCollection);
         }
+        if (infraUpgTreeModel == null) {
+            infraUpgTreeModel =
+                    InfraUpgradesBean.populateInfraUpgParentModel(infraUpgTreeModel,
+                                                                     rootInfraUpg);
+            infraUpgSdiCollection =
+                    InfraUpgradesBean.populateInfraUpgSubGroups(v93k,
+                                                                   infraUpgSdiCollection);
+        }
         defaultViewOnLoad = false;
+        ADFUtils.setSessionScopeValue("cancelAll", null);
         displayConfigWarnAndErrors();
         if (parentUiComp != null) {
             ADFUtils.addPartialTarget(parentUiComp);
@@ -975,6 +989,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         mixSignalTreeModel = null;
         rfResourcesTreeModel = null;
         miscUpgTreeModel = null;
+        infraUpgTreeModel = null;
         v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
             v93k = new V93kQuote();
@@ -1054,6 +1069,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 digitalListBinding.getGroupDisclosedRowKeys().clear();
                 dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 mixSigListBinding.getGroupDisclosedRowKeys().clear();
                 rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
@@ -1082,6 +1099,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
                 dpsListViewBinding.getGroupDisclosedRowKeys().clear();
                 miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(miscUpgrListBinding);
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
@@ -1107,6 +1126,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 dpsListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(miscUpgrListBinding);
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
@@ -1130,6 +1151,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
                 dpsListViewBinding.getGroupDisclosedRowKeys().clear();
                 miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(miscUpgrListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
@@ -1153,7 +1176,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 mixSigListBinding.getGroupDisclosedRowKeys().clear();
                 rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
                 dpsListViewBinding.getGroupDisclosedRowKeys().clear();
-                miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(infraUpgListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(miscUpgrListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
@@ -1177,7 +1202,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 mixSigListBinding.getGroupDisclosedRowKeys().clear();
                 rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
                 dpsListViewBinding.getGroupDisclosedRowKeys().clear();
-                miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(infraUpgListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(miscUpgrListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
@@ -1196,6 +1223,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 addSwListBinding.getGroupDisclosedRowKeys().clear();
                 dianosticListBinding.getGroupDisclosedRowKeys().clear();
                 digitalListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(infraUpgListBinding);
                 //dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 mixSigListBinding.getGroupDisclosedRowKeys().clear();
@@ -1224,6 +1253,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 mixSigListBinding.getGroupDisclosedRowKeys().clear();
                 rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(infraUpgListBinding);
                 //dpsListViewBinding.getGroupDisclosedRowKeys().clear();
                 miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(miscUpgrListBinding);
@@ -1246,6 +1277,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 digitalListBinding.getGroupDisclosedRowKeys().clear();
                 dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(infraUpgListBinding);
                 // mixSigListBinding.getGroupDisclosedRowKeys().clear();
                 rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
                 dpsListViewBinding.getGroupDisclosedRowKeys().clear();
@@ -1271,6 +1304,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 dockingListViewBinding.getGroupDisclosedRowKeys().clear();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
                 mixSigListBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(infraUpgListBinding);
                 //rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
                 dpsListViewBinding.getGroupDisclosedRowKeys().clear();
                 miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
@@ -1298,6 +1333,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 mixSigListBinding.getGroupDisclosedRowKeys().clear();
                 rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
                 dpsListViewBinding.getGroupDisclosedRowKeys().clear();
+                infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(infraUpgListBinding);
+                
                 //miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
                 //AdfFacesContext.getCurrentInstance().addPartialTarget(miscUpgrListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
@@ -1307,6 +1345,30 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dockingListViewBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(rfResourceListViewBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(mixSigListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dpsListViewBinding);
+            }
+            if (listViewId.equals("infupgLv")) {
+                sysInfraListView.getGroupDisclosedRowKeys().clear();
+                warrantyListView.getGroupDisclosedRowKeys().clear();
+                sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
+                addSwListBinding.getGroupDisclosedRowKeys().clear();
+                dianosticListBinding.getGroupDisclosedRowKeys().clear();
+                digitalListBinding.getGroupDisclosedRowKeys().clear();
+                dockingListViewBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysInfraListView);
+                mixSigListBinding.getGroupDisclosedRowKeys().clear();
+                rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
+                dpsListViewBinding.getGroupDisclosedRowKeys().clear();
+                miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
+                AdfFacesContext.getCurrentInstance().addPartialTarget(miscUpgrListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(warrantyListView);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(sysControllerListViewBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(addSwListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dianosticListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(digitalListBinding);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dockingListViewBinding);
+                //AdfFacesContext.getCurrentInstance().addPartialTarget(rfResourceListViewBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(mixSigListBinding);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dpsListViewBinding);
             }
@@ -1503,6 +1565,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public Boolean getDefaultViewOnLoad() {
+        String configCancelled = (String)ADFUtils.getSessionScopeValue("cancelAll");
+        if(configCancelled!=null && configCancelled.equalsIgnoreCase("Y")){
+            defaultViewOnLoad = true;
+        }
         return defaultViewOnLoad;
     }
 
@@ -1743,5 +1809,29 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public ArrayList<SdiCollectionMiscUpgradeModel> getMiscUpgSdiList() {
         return miscUpgSdiList;
+    }
+
+    public void setInfraUpgTreeModel(ChildPropertyTreeModel infraUpgTreeModel) {
+        this.infraUpgTreeModel = infraUpgTreeModel;
+    }
+
+    public ChildPropertyTreeModel getInfraUpgTreeModel() {
+        return infraUpgTreeModel;
+    }
+
+    public void setInfraUpgListBinding(RichListView infraUpgListBinding) {
+        this.infraUpgListBinding = infraUpgListBinding;
+    }
+
+    public RichListView getInfraUpgListBinding() {
+        return infraUpgListBinding;
+    }
+
+    public void setInfraUpgSdiCollection(List<ShowDetailItemCollection> infraUpgSdiCollection) {
+        this.infraUpgSdiCollection = infraUpgSdiCollection;
+    }
+
+    public List<ShowDetailItemCollection> getInfraUpgSdiCollection() {
+        return infraUpgSdiCollection;
     }
 }

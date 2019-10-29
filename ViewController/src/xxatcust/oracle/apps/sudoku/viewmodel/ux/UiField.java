@@ -157,6 +157,7 @@ public class UiField {
     private String sumTarget;
     private String sumInstaBaseRef;
     private String sumInstaBaseTar;
+    private String identifyLicenceRow;
     public UiField() {
 
 
@@ -231,7 +232,15 @@ public class UiField {
 
                 }
             }
+            if(listOfNodes!=null && listOfNodes.size()>1){
+                //this identifies a license row
+                identifyLicenceRow = "Y";
+            }
+            if(listOfNodes!=null && listOfNodes.size()==1){
+                identifyLicenceRow = "N" ;
+            }
             for (int i = 0; i < listOfNodes.size(); i++) {
+                
                 this.lineNum = Integer.toString(i);
                 switch (i) {
                 case 0:
@@ -2265,5 +2274,13 @@ public class UiField {
 
     public String getUiField13_bgColor() {
         return uiField13_bgColor;
+    }
+
+    public void setIdentifyLicenceRow(String identifyLicenceRow) {
+        this.identifyLicenceRow = identifyLicenceRow;
+    }
+
+    public String getIdentifyLicenceRow() {
+        return identifyLicenceRow;
     }
 }

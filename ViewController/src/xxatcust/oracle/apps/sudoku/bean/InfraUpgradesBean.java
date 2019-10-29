@@ -3,8 +3,10 @@ package xxatcust.oracle.apps.sudoku.bean;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
 
@@ -14,17 +16,17 @@ import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.elements.ConfiguratorUiElement;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.elements.ConfiguratorUiGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ui.elements.ConfiguratorUiSubGroup;
-import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.DCScaleDPSGroup;
-import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.DockingGroup;
+import xxatcust.oracle.apps.sudoku.viewmodel.ui.groups.InfraUpgradeGroup;
 import xxatcust.oracle.apps.sudoku.viewmodel.ux.ShowDetailItemCollection;
 import xxatcust.oracle.apps.sudoku.viewmodel.ux.UiField;
 import xxatcust.oracle.apps.sudoku.viewmodel.ux.UxTreeNode;
 
-public class DpsDCScaleBean {
-    public DpsDCScaleBean() {
+public class InfraUpgradesBean {
+    public InfraUpgradesBean() {
         super();
     }
-    public static ArrayList<UiField> prepareDpsDataModel(V93kQuote v93k,
+    
+    public static ArrayList<UiField> prepareInfraUpgDataModel(V93kQuote v93k,
                                                              String uiGrpName,
                                                              ArrayList<UiField> uiFieldCollection) {
         //Based on a refresh condition,prepare the data model for testhead,dut etc.
@@ -38,9 +40,9 @@ public class DpsDCScaleBean {
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getDCScaleDPSGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
-                v93k.getUiRoot().getDCScaleDPSGroup().getUiGroupMap();
+                v93k.getUiRoot().getInfraUpgradeGroup().getUiGroupMap();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
-            groupName =  v93k.getUiRoot().getDCScaleDPSGroup().getGroupDisplayName() ;
+            groupName =  v93k.getUiRoot().getInfraUpgradeGroup().getGroupDisplayName() ;
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
             }
@@ -85,29 +87,29 @@ public class DpsDCScaleBean {
         return uiFieldCollection;
     }
 
-    public static ChildPropertyTreeModel populateDpsParentModel(ChildPropertyTreeModel dpsTreeModel,
-                                                                    ArrayList<UxTreeNode> rootDps) {
+    public static ChildPropertyTreeModel populateInfraUpgParentModel(ChildPropertyTreeModel infraUpgTreeModel,
+                                                                    ArrayList<UxTreeNode> rootInfraUpg) {
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        rootDps = new ArrayList<UxTreeNode>();
+        rootInfraUpg = new ArrayList<UxTreeNode>();
         LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = null;
         if (v93k != null && v93k.getUiRoot() != null &&
-            v93k.getUiRoot().getDCScaleDPSGroup() != null) {
-            DCScaleDPSGroup dpsGrp = v93k.getUiRoot().getDCScaleDPSGroup();
-            if (dpsGrp != null) {
-                String groupName = dpsGrp.getGroupDisplayName() ;
+            v93k.getUiRoot().getInfraUpgradeGroup() != null) {
+            InfraUpgradeGroup infraUpgGrp = v93k.getUiRoot().getInfraUpgradeGroup();
+            if (infraUpgGrp != null) {
+                String groupName = infraUpgGrp.getGroupDisplayName() ;
                 String refColor =
-                    dpsGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
+                    infraUpgGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
                     null;
                 String tarColor =
-                    dpsGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
+                    infraUpgGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
                     null;
                 UxTreeNode firstLevel =
                     new UxTreeNode("dps", groupName,
                                    "Zero", null, null, refColor, tarColor,
                                    null); //For top level color, code later
-                rootDps.add(firstLevel);
-                uiGroupMap = dpsGrp.getUiGroupMap();
+                rootInfraUpg.add(firstLevel);
+                uiGroupMap = infraUpgGrp.getUiGroupMap();
                 Iterator it = uiGroupMap.entrySet().iterator();
                 int index = 1;
                 while (it.hasNext()) {
@@ -137,21 +139,21 @@ public class DpsDCScaleBean {
                 }
             }
         }
-        dpsTreeModel =
-                new ChildPropertyTreeModel(rootDps, "childNodeList");
-        return dpsTreeModel;
+        infraUpgTreeModel =
+                new ChildPropertyTreeModel(rootInfraUpg, "childNodeList");
+        return infraUpgTreeModel;
     }
 
-    public static ArrayList<ShowDetailItemCollection> populateDpsSubGroups(V93kQuote v93k,
+    public static ArrayList<ShowDetailItemCollection> populateInfraUpgSubGroups(V93kQuote v93k,
                                                                                List<ShowDetailItemCollection> sdiCollection) {
         LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = null;
         LinkedHashMap<String, ConfiguratorUiGroup> mapUiGrp =
             new LinkedHashMap<String, ConfiguratorUiGroup>();
         List<String> listOfSubGrpNames = new ArrayList<String>();
         if (v93k != null && v93k.getUiRoot() != null &&
-            v93k.getUiRoot().getDCScaleDPSGroup() != null) {
+            v93k.getUiRoot().getInfraUpgradeGroup() != null) {
 
-            uiGroupMap = v93k.getUiRoot().getDCScaleDPSGroup().getUiGroupMap();
+            uiGroupMap = v93k.getUiRoot().getInfraUpgradeGroup().getUiGroupMap();
 
 
         }
@@ -182,7 +184,7 @@ public class DpsDCScaleBean {
         if (listOfSubGrpNames != null && !listOfSubGrpNames.isEmpty()) {
             for (String key : listOfSubGrpNames) {
                 uiFieldCollection =
-                        prepareDpsDataModel(v93k, key, uiFieldCollection);
+                        prepareInfraUpgDataModel(v93k, key, uiFieldCollection);
                 //prepareSysInfraDataModel(v93k, key, uiFieldCollection);
                 listofcollections.add(uiFieldCollection);
                 testMap.put(key, uiFieldCollection);
@@ -205,22 +207,8 @@ public class DpsDCScaleBean {
                 counter++;
             }
         }
-        
-        
-    //        if (listofcollections != null && !listofcollections.isEmpty()) {
-    //            int counter = 1;
-    //            for (int i = 0; i < listofcollections.size(); i++) {
-    //                if (listofcollections.get(i).size() > 0) {
-    //                    ShowDetailItemCollection sdi =
-    //                        new ShowDetailItemCollection(Integer.toString(counter),
-    //                                                     listofcollections.get(i),
-    //                                                     listofcollections.get(i).get(0).getSelectedValue());
-    //                    sdiCollection.add(sdi);
-    //                    counter++;
-    //                }
-    //            }
-    //        }
         System.out.println();
         return (ArrayList<ShowDetailItemCollection>)sdiCollection;
     }
+
 }

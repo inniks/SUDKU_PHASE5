@@ -3912,7 +3912,8 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="syscon_BorderLayout3"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{sysConIter.uiField1_color};">
+                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{sysConIter.uiField1_color};"
+                                                      rendered="#{sysConIter.uiField8_type ne 'NUMERIC'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_panelGroupLayout1"
                                                          layout="horizontal"
@@ -4258,7 +4259,8 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="addSwTool_pb1"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};"
+                                                      rendered="#{theadIter.uiField8_type ne 'NUMERIC'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="addSwTool_pgl7"
                                                          layout="horizontal"
@@ -4583,7 +4585,8 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="diagCal_pb1"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};"
+                                                      rendered="#{theadIter.uiField8_type ne 'NUMERIC'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="diagCal_pgl7"
                                                          layout="horizontal"
@@ -4913,7 +4916,7 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dockpb1"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};"
-                                                      rendered="#{theadIter.uiGrpIndex ne '11'}">
+                                                      rendered="#{theadIter.uiGrpIndex ne '11' and theadIter.uiField8_type ne 'NUMERIC'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl7"
                                                          layout="horizontal"
@@ -5505,317 +5508,6 @@
               </af:panelGridLayout>
             </af:listItem>
           </af:listView>
-          <af:listView id="wtylv1"
-                       binding="#{ConfiguratorBean.warrantyListView}"
-                       value="#{ConfiguratorBean.warrantyTreeModel}" var="node"
-                       groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}">
-            <f:facet name="groupHeaderStamp">
-              <af:listItem id="li3" styleClass="ABHeader">
-                <af:panelGroupLayout id="Wty_pgl3" layout="horizontal">
-                  <af:panelBorderLayout id="wty_pbl1"
-                                        inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
-                                        rendered="#{node.nodeRefColor ne null}">
-                    <f:facet name="start">
-                      <af:outputFormatted id="wty_of1" value="."
-                                          rendered="false"/>
-                    </f:facet>
-                  </af:panelBorderLayout>
-                  <af:panelBorderLayout id="wty_pbl2"
-                                        inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
-                                        rendered="#{node.nodeTargetColor ne null}">
-                    <f:facet name="start">
-                      <af:outputFormatted value="." id="wty_of2"
-                                          rendered="false"/>
-                    </f:facet>
-                  </af:panelBorderLayout>
-                  <af:panelBorderLayout id="wty_pbl3"
-                                        inlineStyle="height:25px;width:10px;"
-                                        rendered="#{node.requiredFlag eq 'Y'}">
-                    <f:facet name="innerLeft">
-                      <af:outputFormatted value="*" id="wty_of11"
-                                          inlineStyle="color:Red; font-size:x-large;"/>
-                    </f:facet>
-                  </af:panelBorderLayout>
-                  <af:outputFormatted value="#{node.nodeName}" id="wty_of3"
-                                      styleClass="ABHeader"
-                                      inlineStyle="font-size:medium; font-weight:bolder;"/>
-                </af:panelGroupLayout>
-              </af:listItem>
-            </f:facet>
-            <af:listItem id="li4">
-              <af:panelGridLayout id="pgl14">
-                <af:gridRow marginTop="5px" height="auto" id="gr3">
-                  <af:gridCell marginStart="5px" width="50%" id="gc5">
-                    <af:iterator id="i1" var="wrntyIter"
-                                 value="#{ConfiguratorBean.warrantyUiCollection}">
-                      <af:panelGroupLayout id="pgl15" layout="vertical">
-                        <af:panelGroupLayout id="pgl16" layout="horizontal">
-                          <af:panelGroupLayout id="wrnty_pgl5"
-                                               layout="horizontal">
-                            <af:panelBorderLayout id="wrnty_pbl4"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;">
-                              <f:facet name="innerBottom">
-                                <af:outputFormatted value="*" id="of7"
-                                                    inlineStyle="color:Maroon; font-size:large;"
-                                                    rendered="#{node.requiredFlag eq 'Y'}"/>
-                              </f:facet>
-                            </af:panelBorderLayout>
-                            <af:panelBorderLayout id="wrnty_pbl5"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;">
-                              <f:facet name="start"/>
-                              <f:facet name="bottom"/>
-                              <f:facet name="end"/>
-                              <f:facet name="top"/>
-                            </af:panelBorderLayout>
-                            <af:panelBorderLayout id="pbl7"
-                                                  inlineStyle="height:15px; width:10px; border-style:none;">
-                              <f:facet name="innerLeft">
-                                <af:outputFormatted value="*" id="of8"
-                                                    rendered="#{node.requiredFlag eq 'Y'}"/>
-                              </f:facet>
-                            </af:panelBorderLayout>
-                          </af:panelGroupLayout>
-                          <af:showDetailHeader text="#{node.nodeName}"
-                                               disclosed="false" id="sdh2">
-                            <af:panelGroupLayout id="wrntyPgl"
-                                                 layout="horizontal">
-                              <af:spacer width="50" height="10" id="wrntys1"/>
-                              <af:panelBorderLayout id="wty_pbl11"
-                                                    inlineStyle="height:25px; width:30px; border-style:groove;">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="wty_pgl18"
-                                                       layout="horizontal">
-                                    <af:inputText id="wty_it2" columns="5"
-                                                  rendered="#{wrntyIter.uiField8_type eq 'NUMERIC'}"
-                                                  autoSubmit="true"
-                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                  value="#{wrntyIter.digitsEntered}">
-                                      <af:validateRegExp pattern="[0-9]{1,10}"
-                                                         messageDetailNoMatch="Only Numbers allowed.."/>
-                                    </af:inputText>
-                                    <af:outputFormatted id="wty_it3"
-                                                        visible="false"
-                                                        shortDesc="#{wrntyIter.parentGroupName}"
-                                                        value="#{wrntyIter.uiField8_type}"
-                                                        styleClass="#{wrntyIter.uiField8_identifier}"/>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:spacer width="10" height="10" id="s4"/>
-                              <af:panelBorderLayout id="wrntypbl3"
-                                                    inlineStyle="height:25px; width:200px; border-style:none;">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="wrntypgl12"
-                                                       halign="left"
-                                                       layout="horizontal">
-                                    <af:outputFormatted value="#{wrntyIter.selectedValue}"
-                                                        id="outputFormatted1"/>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="wty_pbl12"
-                                                    inlineStyle="height:25px; width:20px; border-style:none;">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="wty_pgl19">
-                                    <af:outputFormatted value="#{wrntyIter.uiField9}"
-                                                        id="wty_of13"
-                                                        inlineStyle="color:Maroon; font-weight:bold;"/>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:spacer width="10" height="10" id="s5"/>
-                              <af:panelBorderLayout id="wty_pbl13"
-                                                    inlineStyle="height:25px; width:20px; border-style:none;">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="wty_pgl21">
-                                    <af:outputFormatted id="wty_of14"
-                                                        value="#{wrntyIter.uiField10}"
-                                                        inlineStyle="color:Teal; font-weight:bolder;"/>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:spacer width="20" height="10" id="s10"/>
-                              <af:panelBorderLayout id="pbl10"
-                                                    inlineStyle="height:25px; width:10px; border-style:none;">
-                                <f:facet name="innerLeft">
-                                  <af:outputFormatted value="*" id="of10"
-                                                      inlineStyle="font-size:x-large; color:Red;"
-                                                      rendered="#{wrntyIter.requiredFlagSubGrp eq 'Y'}"/>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="wrntypanelBorderLayout1"
-                                                    inlineStyle="height:25px; width:60px; border-style:none;">
-                                <f:facet name="innerLeft"/>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="wrntypanelBorderLayout2"
-                                                    inlineStyle="height:25px; width:60px; border-style:none;">
-                                <f:facet name="innerLeft"/>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="wrntypanelBorderLayout3"
-                                                    inlineStyle="height:25px; width:130px; border-style:none;background-color:#{wrntyIter.uiField1_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout1"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink1"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField1_dis or wrntyIter.uiField1_readOnly}"
-                                                    partialSubmit="false">
-                                      <af:outputFormatted id="outputFormatted2"
-                                                          value="#{wrntyIter.uiField1}"
-                                                          inlineStyle="#{wrntyIter.uiField1_bgColor}"/>
-                                      <af:inputText id="inputText1"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName1}"
-                                                    shortDesc="#{wrntyIter.uiField1_identifier}"
-                                                    label="#{wrntyIter.uiField1_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout4"
-                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField2_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout2"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink2"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField2_dis or wrntyIter.uiField2_readOnly}">
-                                      <af:outputFormatted id="outputFormatted3"
-                                                          value="#{wrntyIter.uiField2}"
-                                                          inlineStyle="#{wrntyIter.uiField2_bgColor}"/>
-                                      <af:inputText id="inputText2"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName2}"
-                                                    shortDesc="#{wrntyIter.uiField2_identifier}"
-                                                    label="#{wrntyIter.uiField2_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout5"
-                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField3_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout3"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink3"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField3_dis or wrntyIter.uiField3_readOnly}">
-                                      <af:outputFormatted id="outputFormatted4"
-                                                          value="#{wrntyIter.uiField3}"
-                                                          inlineStyle="#{wrntyIter.uiField3_bgColor}"/>
-                                      <af:inputText id="inputText3"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName3}"
-                                                    shortDesc="#{wrntyIter.uiField3_identifier}"
-                                                    label="#{wrntyIter.uiField3_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout6"
-                                                    inlineStyle="height:25px; width:130px; border-style:none;background-color:#{wrntyIter.uiField4_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout4"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink4"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField4_dis or wrntyIter.uiField4_readOnly}">
-                                      <af:outputFormatted id="outputFormatted5"
-                                                          value="#{wrntyIter.uiField4}"
-                                                          inlineStyle="#{wrntyIter.uiField4_bgColor}"/>
-                                      <af:inputText id="inputText4"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName4}"
-                                                    shortDesc="#{wrntyIter.uiField4_identifier}"
-                                                    label="#{wrntyIter.uiField4_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout7"
-                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField5_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout5"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink5"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField5_dis or wrntyIter.uiField5_readOnly}">
-                                      <af:outputFormatted id="outputFormatted6"
-                                                          value="#{wrntyIter.uiField5}"
-                                                          inlineStyle="#{wrntyIter.uiField5_bgColor}"/>
-                                      <af:inputText id="inputText5"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName5}"
-                                                    shortDesc="#{wrntyIter.uiField5_identifier}"
-                                                    label="#{wrntyIter.uiField5_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout8"
-                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField6_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout6"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink6"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField6_dis or wrntyIter.uiField6_readOnly}">
-                                      <af:outputFormatted id="outputFormatted7"
-                                                          value="#{wrntyIter.uiField6}"
-                                                          inlineStyle="#{wrntyIter.uiField6_bgColor}"/>
-                                      <af:inputText id="inputText6"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName6}"
-                                                    shortDesc="#{wrntyIter.uiField6_identifier}"
-                                                    label="#{wrntyIter.uiField6_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout9"
-                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField7_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout7"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink7"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField7_dis or wrntyIter.uiField7_readOnly}">
-                                      <af:outputFormatted id="outputFormatted8"
-                                                          value="#{wrntyIter.uiField7}"
-                                                          inlineStyle="#{wrntyIter.uiField7_bgColor}"/>
-                                      <af:inputText id="inputText7"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName7}"
-                                                    shortDesc="#{wrntyIter.uiField7_identifier}"
-                                                    label="#{wrntyIter.uiField7_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                            </af:panelGroupLayout>
-                          </af:showDetailHeader>
-                        </af:panelGroupLayout>
-                      </af:panelGroupLayout>
-                    </af:iterator>
-                  </af:gridCell>
-                </af:gridRow>
-              </af:panelGridLayout>
-            </af:listItem>
-          </af:listView>
           <af:listView id="misUpgLv"
                        value="#{ConfiguratorBean.miscUpgTreeModel}"
                        var="node"
@@ -5897,9 +5589,8 @@
                                              value="#{var.uiFieldCollection}"
                                              var="theadIter">
                                   <af:panelGroupLayout id="misUpgtheadPgl"
-                                                       layout="horizontal">
-                                    <af:spacer width="50" height="10"
-                                               id="misUpgs1"/>
+                                                       layout="horizontal"
+                                                       rendered="#{theadIter.identifyLicenceRow eq 'N'}">
                                     <af:panelBorderLayout id="misUpgpbl11"
                                                           inlineStyle="height:25px; width:30px; border-style:groove;">
                                       <f:facet name="innerLeft">
@@ -5907,7 +5598,7 @@
                                                              layout="horizontal">
                                           <af:inputText id="misUpgit2"
                                                         columns="5"
-                                                        rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
+                                                        disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
                                                         autoSubmit="true"
                                                         valueChangeListener="#{ConfiguratorBean.handleInput}"
                                                         value="#{theadIter.digitsEntered}">
@@ -5917,15 +5608,15 @@
                                           <af:outputFormatted id="misUpgit3"
                                                               visible="false"
                                                               shortDesc="#{theadIter.parentGroupName}"
-                                                              value="#{theadIter.uiField8_code}"
-                                                              styleClass="#{theadIter.uiField8_identifier}"/>
+                                                              value="#{theadIter.uiField1_code}"
+                                                              styleClass="#{theadIter.uiField1_identifier}"/>
                                         </af:panelGroupLayout>
                                       </f:facet>
                                     </af:panelBorderLayout>
                                     <af:spacer width="40" height="10"
                                                id="misUpgs2"/>
                                     <af:panelBorderLayout id="misUpgpb_l3"
-                                                          inlineStyle="height:25px; width:200px; border-style:none;">
+                                                          inlineStyle="height:25px; width:250px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgpgl12"
                                                              halign="left"
@@ -6132,9 +5823,1363 @@
                                       </f:facet>
                                     </af:panelBorderLayout>
                                   </af:panelGroupLayout>
+                                <af:panelGroupLayout id="misUpgc_s_12"
+                                                   layout="horizontal"
+                                                     rendered="false">
+                                <af:spacer width="50" height="10"
+                                           id="misUpgc_s_13"/>
+                                <af:panelBorderLayout id="misUpgc_s_14"
+                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_1001"
+                                                         layout="horizontal">
+                                      <af:outputFormatted id="misUpgc_s_1003"
+                                                          visible="true"
+                                                          value="Licensed Features"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="misUpgc_s_18"/>
+                                <af:panelBorderLayout id="misUpgc_s_19"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_20"
+                                                         halign="left"
+                                                         layout="horizontal"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s_22"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_23"></af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="misUpgc_s_s3"/>
+                                <af:panelBorderLayout id="misUpgc_s_25"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_26"></af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10"
+                                           id="misUpgc_s_28"/>
+                                <af:panelBorderLayout id="misUpgc_s_29mmmnm"
+                                                      inlineStyle="height:25px; width:35px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s_31"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s_32"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s_s33"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_34"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="misUpgc_s_36"
+                                                          value="#{theadIter.uiField1}"
+                                                          visible="true"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s_38"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_341"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="misUpgc_s_361"
+                                                          value="#{theadIter.uiField2}"
+                                                          visible="true"
+                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s_43"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_342"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="misUpgc_s_362"
+                                                          value="#{theadIter.uiField3}"
+                                                          visible="true"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s_47"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <af:panelGroupLayout id="misUpgc_s_343mn"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:outputFormatted id="misUpgc_s_363"
+                                                        value="#{theadIter.uiField4}"
+                                                        visible="true"/>
+                                  </af:panelGroupLayout>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s_52"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_345"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="misUpgc_s_365"
+                                                          value="#{theadIter.uiField5}"
+                                                          visible="true"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s_57"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_346"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="misUpgc_s_366"
+                                                          value="#{theadIter.uiField6}"
+                                                          visible="true"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s_s62"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_63"
+                                                         layout="horizontal"
+                                                         halign="left"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="misUpgc_s_123"
+                                                   layout="horizontal"
+                                                   rendered="#{theadIter.identifyLicenceRow eq 'Y'}">
+                                <af:panelBorderLayout id="misUpgc_s_134"
+                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_10301"
+                                                         layout="horizontal">
+                                      <af:inputText id="misUpgc_s_10302" columns="5"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{sessionScope.ConfiguratorBean.handleInput}"
+                                                    value="#{theadIter.digitsEntered}"
+                                                    rows="1"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly or theadIter.disableMultipleInputs}">
+                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                      </af:inputText>
+                                      <af:outputFormatted id="misUpgc_s_31003"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          value="#{theadIter.uiField1_code}"
+                                                          styleClass="#{theadIter.uiField1_identifier}"
+                                                          visible="false"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="30" height="10"
+                                           id="misUpgc_3s_18"/>
+                                <af:panelBorderLayout id="misUpgc_s3_19"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_3s_20"
+                                                         halign="left"
+                                                         layout="horizontal">
+                                      <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                          id="misUpgc_s3_21"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgc_s3_22"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_323">
+                                      <af:outputFormatted value="#{theadIter.sumReference}"
+                                                          id="misUpgc_3s_24"
+                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="misUpgc_3s_s3"/>
+                                <af:panelBorderLayout id="misUpgc_3_25"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgc_s_326">
+                                      <af:outputFormatted value="#{theadIter.sumTarget}"
+                                                          id="misUpgc_s_327"
+                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10"
+                                           id="misUpgcx_s_28"/>
+                                <af:panelBorderLayout id="misUpgcx_s_29mmmnm"
+                                                      inlineStyle="height:25px; width:35px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted value="*" id="misUpgc_s_30"
+                                                        inlineStyle="font-size:x-large; color:Red;"
+                                                        rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgcx_s_31"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpvgc_s_32"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgvc_s_s33"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUvpgc_s_34"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="misUpgc_s_37"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField1_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="misUpgcx_s_36"
+                                                          value="#{theadIter.uiField1_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField1_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgcx_s_38"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgcx_s_341"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="misUpgcx_s_s3371"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}"
+                                                    columns="5"
+                                                    value="#{theadIter.uiField2_qty}"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="misUpgcx1_s_361"
+                                                          value="#{theadIter.uiField2_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgcx_s_43"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgcx_s_342"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="misUpgcx_s_372"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField3_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="misUpgcx_s_362"
+                                                          value="#{theadIter.uiField3_code}"
+                                                          inlineStyle="#{theadIter.uiField3_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField3_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgcx_s_47"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <af:panelGroupLayout id="misUpgcx_s_343mn"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:inputText id="misUpgcx_s_373" visible="true"
+                                                  disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}"
+                                                  columns="5"
+                                                  value="#{theadIter.uiField4_qty}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                    <af:outputFormatted id="misUpgcx_s_363"
+                                                        value="#{theadIter.uiField4_code}"
+                                                        inlineStyle="#{theadIter.uiField4_bgColor}"
+                                                        visible="false"
+                                                        shortDesc="#{theadIter.parentGroupName}"
+                                                        styleClass="#{theadIter.uiField4_identifier}"/>
+                                  </af:panelGroupLayout>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgcx_s_52"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgcx_s_345"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="misUpgcx_s_375"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField5_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="misUpgcx_s_365"
+                                                          value="#{theadIter.uiField5_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField5_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgcx_s_57"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgcx_s_346"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="misUpgc3x_s_376"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField6_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="misUpgcx_s_366"
+                                                          value="#{theadIter.uiField6_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField6_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="misUpgcx1_s_s62"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="misUpgcx1_s_346"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="misUpgc3x1_s_376"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField7_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="misUpgcx1_s_366"
+                                                          value="#{theadIter.uiField7_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField7_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
                                 </af:iterator>
                               </af:showDetailHeader>
                             </af:iterator>
+                          </af:showDetailHeader>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </af:iterator>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:listItem>
+          </af:listView>
+          <af:listView id="infupgLv"
+                       value="#{ConfiguratorBean.infraUpgTreeModel}"
+                       var="node"
+                       binding="#{ConfiguratorBean.infraUpgListBinding}"
+                       groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
+                       emptyText=" ">
+            <f:facet name="groupHeaderStamp">
+              <af:listItem id="infupgli1" styleClass="ABHeader" rendered="true">
+                <af:panelGroupLayout id="infupgpgl3" layout="horizontal">
+                  <af:panelBorderLayout id="infupgpbl1"
+                                        inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
+                                        rendered="#{node.nodeRefColor ne null}">
+                    <f:facet name="start">
+                      <af:outputFormatted id="infupgof1" value="." rendered="false"/>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <af:panelBorderLayout id="infupgpbl2"
+                                        inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
+                                        rendered="#{node.nodeTargetColor ne null}">
+                    <f:facet name="start">
+                      <af:outputFormatted value="." id="infupgof2" rendered="false"/>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <af:panelBorderLayout id="infupgpbl3"
+                                        inlineStyle="height:25px;width:10px;"
+                                        rendered="#{node.requiredFlag eq 'Y'}">
+                    <f:facet name="innerLeft">
+                      <af:outputFormatted value="*" id="infupgof11"
+                                          inlineStyle="color:Maroon; font-size:x-large;"/>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <af:outputFormatted value="#{node.nodeName}" id="infupgof3"
+                                      styleClass="ABHeader"
+                                      inlineStyle="font-size:medium; font-weight:bolder;"/>
+                </af:panelGroupLayout>
+              </af:listItem>
+            </f:facet>
+            <af:listItem id="infupgli2">
+              <af:panelGridLayout id="infupgpgl2" styleClass="AFStretchWidth"
+                                  dimensionsFrom="children">
+                <af:gridRow marginTop="5px" height="auto" id="infupggr1">
+                  <af:gridCell marginStart="5px" width="50%" id="infupgggc3"
+                               styleClass="AFStretchWidth">
+                    <af:iterator var="topNode"
+                                 value="#{ConfiguratorBean.infraUpgSdiCollection}"
+                                 id="infupgi7">
+                      <af:panelGroupLayout id="infupgpgl4" layout="vertical">
+                        <af:panelGroupLayout id="infupggl11vf" layout="horizontal">
+                          <af:panelGroupLayout id="infupgpgl5" layout="horizontal"
+                                               rendered="#{node.codeName eq topNode.index}">
+                            <af:panelBorderLayout id="infupgpbl4"
+                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                              <f:facet name="innerLeft"/>
+                            </af:panelBorderLayout>
+                            <af:panelBorderLayout id="infupgpbl5"
+                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                              <f:facet name="start"/>
+                              <f:facet name="bottom"/>
+                              <f:facet name="end"/>
+                              <f:facet name="top"/>
+                            </af:panelBorderLayout>
+                            <af:panelBorderLayout id="infupgpbl6"
+                                                  inlineStyle="height:15px; width:10px; border-style:none;">
+                              <f:facet name="innerLeft">
+                                <af:outputFormatted value="*" id="infupgof6"
+                                                    inlineStyle="color:Maroon; font-size:x-large;"
+                                                    rendered="#{node.requiredFlag eq 'Y'}"/>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                          </af:panelGroupLayout>
+                          <af:showDetailHeader id="infupgsd1" text="#{node.nodeName}"
+                                               rendered="#{node.codeName eq topNode.index}">
+                            <af:iterator id="i10"
+                                         value="#{topNode.uiFieldCollection}"
+                                         var="theadIter">
+                              <af:panelGroupLayout id="infupgtheadPgl"
+                                                   layout="horizontal"
+                                                   rendered="#{theadIter.identifyLicenceRow eq 'N'}">
+                                <af:panelBorderLayout id="infupgpbl11"
+                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl18"
+                                                         layout="horizontal">
+                                      <af:inputText id="infupgit2" columns="5"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
+                                                    value="#{theadIter.digitsEntered}">
+                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                      </af:inputText>
+                                      <af:outputFormatted id="infupgit3"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          value="#{theadIter.uiField1_code}"
+                                                          styleClass="#{theadIter.uiField1_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="40" height="10"
+                                           id="infupgs2"/>
+                                <af:panelBorderLayout id="infupgpb_l3"
+                                                      inlineStyle="height:25px; width:250px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl12"
+                                                         halign="left"
+                                                         layout="horizontal">
+                                      <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                          id="infupgof4"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgpbl12"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl19">
+                                      <af:outputFormatted value="#{theadIter.uiField9}"
+                                                          id="infupgof13"
+                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="infupgs3"/>
+                                <af:panelBorderLayout id="infupgpbl13"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl21">
+                                      <af:outputFormatted value="#{theadIter.uiField10}"
+                                                          id="infupgof14"
+                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10"
+                                           id="infupgs11"/>
+                                <af:panelBorderLayout id="infupgpbl8"
+                                                      inlineStyle="height:25px; width:10px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted value="*" id="infupgof9"
+                                                        inlineStyle="font-size:x-large; color:Maroon;"
+                                                        rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgpbl9"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgpb20"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgpb1"
+                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl7"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="infupgcl1"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                      partialSubmit="false">
+                                        <af:outputFormatted id="infupgth_of1"
+                                                            value="#{theadIter.uiField1}"
+                                                            inlineStyle="#{theadIter.uiField1_bgColor}"/>
+                                        <af:inputText id="infupgip1_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName1}"
+                                                      shortDesc="#{theadIter.uiField1_identifier}"
+                                                      label="#{theadIter.uiField1_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgpb2"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl_7"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="infupgcl2"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
+                                        <af:outputFormatted id="infupgth_of2"
+                                                            value="#{theadIter.uiField2}"
+                                                            inlineStyle="#{theadIter.uiField2_bgColor}"/>
+                                        <af:inputText id="infupggip2_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName2}"
+                                                      shortDesc="#{theadIter.uiField2_identifier}"
+                                                      label="#{theadIter.uiField2_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgpb3"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl_71"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="infupgcl3"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
+                                        <af:outputFormatted id="infupgth_of3"
+                                                            value="#{theadIter.uiField3}"
+                                                            inlineStyle="#{theadIter.uiField3_bgColor}"/>
+                                        <af:inputText id="infupgp3_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName3}"
+                                                      shortDesc="#{theadIter.uiField3_identifier}"
+                                                      label="#{theadIter.uiField3_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgpb4"
+                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl_17"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="infupgcl4"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
+                                        <af:outputFormatted id="infupgth_of4"
+                                                            value="#{theadIter.uiField4}"
+                                                            inlineStyle="#{theadIter.uiField4_bgColor}"/>
+                                        <af:inputText id="infupgip4_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName4}"
+                                                      shortDesc="#{theadIter.uiField4_identifier}"
+                                                      label="#{theadIter.uiField4_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgpb5"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl9"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="infupgcl5"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
+                                        <af:outputFormatted id="infupgth_of5"
+                                                            value="#{theadIter.uiField5}"
+                                                            inlineStyle="#{theadIter.uiField5_bgColor}"/>
+                                        <af:inputText id="infupgip5_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName5}"
+                                                      shortDesc="#{theadIter.uiField5_identifier}"
+                                                      label="#{theadIter.uiField5_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgpb6"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl10"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="infupgcl6"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
+                                        <af:outputFormatted id="misUpgth_x_of6"
+                                                            value="#{theadIter.uiField6}"
+                                                            inlineStyle="#{theadIter.uiField6_bgColor}"/>
+                                        <af:inputText id="infupgip6_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName6}"
+                                                      shortDesc="#{theadIter.uiField6_identifier}"
+                                                      label="#{theadIter.uiField6_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgpb7"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgl20"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="infupgcl7"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
+                                        <af:outputFormatted id="infupgth_of7"
+                                                            value="#{theadIter.uiField7}"
+                                                            inlineStyle="#{theadIter.uiField7_bgColor}"/>
+                                        <af:inputText id="infupgip7_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName7}"
+                                                      shortDesc="#{theadIter.uiField7_identifier}"
+                                                      label="#{theadIter.uiField7_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="infupggc_s_12"
+                                                   layout="horizontal"
+                                                   rendered="#{topNode.index eq '1' and theadIter.uiGrpIndex eq '4'}">
+                                <af:panelBorderLayout id="infupgc_s_14"
+                                                      inlineStyle="height:25px; width:80px; border-style:groove;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_1001"
+                                                         layout="horizontal">
+                                      <af:outputFormatted id="infupgc_s_1003"
+                                                          visible="true"
+                                                          value="Licensed Features"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="infupggc_s_18"/>
+                                <af:panelBorderLayout id="infupgc_s_19"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_20"
+                                                         halign="left"
+                                                         layout="horizontal"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgc_s_22"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_23"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="infupgc_s_s3"/>
+                                <af:panelBorderLayout id="infupgc_s_25"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_26"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10"
+                                           id="infupgc_s_28"/>
+                                <af:panelBorderLayout id="infupgc_s_29mmmnm"
+                                                      inlineStyle="height:25px; width:35px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgc_s_31"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgc_s_32"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgc_s_s33"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_34"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="infupgc_s_36"
+                                                          value="#{theadIter.uiField1}"
+                                                          visible="true"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgc_s_38"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_341"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="infupgc_s_361"
+                                                          value="#{theadIter.uiField2}"
+                                                          visible="true"
+                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupggc_s_43"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_342"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="infupgc_s_362"
+                                                          value="#{theadIter.uiField3}"
+                                                          visible="true"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgc_s_47"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <af:panelGroupLayout id="infupgc_s_343mn"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:outputFormatted id="infupgc_s_363"
+                                                        value="#{theadIter.uiField4}"
+                                                        visible="true"/>
+                                  </af:panelGroupLayout>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupggc_s_52"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_345"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="infupgc_s_365"
+                                                          value="#{theadIter.uiField5}"
+                                                          visible="true"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgc_s_57"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_346"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:outputFormatted id="infupgc_s_366"
+                                                          value="#{theadIter.uiField6}"
+                                                          visible="true"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgc_s_s62"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_63"
+                                                         layout="horizontal"
+                                                         halign="left"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="infupgc_s_123"
+                                                   layout="horizontal"
+                                                   rendered="#{theadIter.identifyLicenceRow eq 'Y'}">
+                                <af:panelBorderLayout id="infupgc_s_134"
+                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_10301"
+                                                         layout="horizontal">
+                                      <af:inputText id="infupgc_s_10302"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{sessionScope.ConfiguratorBean.handleInput}"
+                                                    value="#{theadIter.digitsEntered}"
+                                                    rows="1"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly or theadIter.disableMultipleInputs}">
+                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                      </af:inputText>
+                                      <af:outputFormatted id="infupgc_s_31003"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          value="#{theadIter.uiField1_code}"
+                                                          styleClass="#{theadIter.uiField1_identifier}"
+                                                          visible="false"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="40" height="10"
+                                           id="infupgc_3s_18"/>
+                                <af:panelBorderLayout id="infupgc_s3_19"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_3s_20"
+                                                         halign="left"
+                                                         layout="horizontal">
+                                      <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                          id="infupgc_s3_21"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgc_s3_22"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_323">
+                                      <af:outputFormatted value="#{theadIter.sumReference}"
+                                                          id="infupgc_3s_24"
+                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10"
+                                           id="infupgc_3s_s3"/>
+                                <af:panelBorderLayout id="infupgc_3_25"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgc_s_326">
+                                      <af:outputFormatted value="#{theadIter.sumTarget}"
+                                                          id="infupgc_s_327"
+                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10"
+                                           id="infupgcx_s_28"/>
+                                <af:panelBorderLayout id="infupgcx_s_29mmmnm"
+                                                      inlineStyle="height:25px; width:35px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted value="*"
+                                                        id="infupgc_s_30"
+                                                        inlineStyle="font-size:x-large; color:Red;"
+                                                        rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgcx_s_31"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgvgc_s_32"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgvc_s_s33"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="#{theadIter.uiField1 ne null}">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgpgc_s_34"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="infupgc_s_37"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField1_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="infupgcx_s_36"
+                                                          value="#{theadIter.uiField1_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField1_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgcx_s_38"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="#{theadIter.uiField2 ne null}">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgcx_s_341"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="infupgcx_s_s3371"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}"
+                                                    columns="5"
+                                                    value="#{theadIter.uiField2_qty}"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="infupgcx1_s_361"
+                                                          value="#{theadIter.uiField2_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgcx_s_43"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="#{theadIter.uiField3 ne null}">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgcx_s_342"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="infupgcx_s_372"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField3_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="infupgcx_s_362"
+                                                          value="#{theadIter.uiField3_code}"
+                                                          inlineStyle="#{theadIter.uiField3_bgColor}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField3_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgcx_s_47"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="#{theadIter.uiField4 ne null}">
+                                  <af:panelGroupLayout id="infupgcx_s_343mn"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:inputText id="infupgcx_s_373"
+                                                  visible="true"
+                                                  disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}"
+                                                  columns="5"
+                                                  value="#{theadIter.uiField4_qty}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                    <af:outputFormatted id="infupgcx_s_363"
+                                                        value="#{theadIter.uiField4_code}"
+                                                        inlineStyle="#{theadIter.uiField4_bgColor}"
+                                                        visible="false"
+                                                        shortDesc="#{theadIter.parentGroupName}"
+                                                        styleClass="#{theadIter.uiField4_identifier}"/>
+                                  </af:panelGroupLayout>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgcx_s_52"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="#{theadIter.uiField5 ne null}">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgcx_s_345"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="infupgcx_s_375"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField5_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="infupgcx_s_365"
+                                                          value="#{theadIter.uiField5_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField5_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgcx_s_57"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="#{theadIter.uiField6 ne null}">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgcx_s_346"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="infupgc3x_s_376"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField6_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="infupgcx_s_366"
+                                                          value="#{theadIter.uiField6_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField6_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="infupgcx1_s_s62"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;"
+                                                      rendered="#{theadIter.uiField7 ne null}">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="infupgcx1_s_346"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:inputText id="infupgc3x1_s_376"
+                                                    visible="true"
+                                                    disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}"
+                                                    columns="5"
+                                                    autoSubmit="true"
+                                                    value="#{theadIter.uiField7_qty}"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                      <af:outputFormatted id="infupgcx1_s_366"
+                                                          value="#{theadIter.uiField7_code}"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          styleClass="#{theadIter.uiField7_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
+                            </af:iterator>
+                          </af:showDetailHeader>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </af:iterator>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:listItem>
+          </af:listView>
+          <af:listView id="wtylv1"
+                       binding="#{ConfiguratorBean.warrantyListView}"
+                       value="#{ConfiguratorBean.warrantyTreeModel}" var="node"
+                       groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}">
+            <f:facet name="groupHeaderStamp">
+              <af:listItem id="li3" styleClass="ABHeader">
+                <af:panelGroupLayout id="Wty_pgl3" layout="horizontal">
+                  <af:panelBorderLayout id="wty_pbl1"
+                                        inlineStyle="height:25px;width:25px;background-color:#{node.nodeRefColor};"
+                                        rendered="#{node.nodeRefColor ne null}">
+                    <f:facet name="start">
+                      <af:outputFormatted id="wty_of1" value="."
+                                          rendered="false"/>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <af:panelBorderLayout id="wty_pbl2"
+                                        inlineStyle="height:25px;width:25px;background-color:#{node.nodeTargetColor};"
+                                        rendered="#{node.nodeTargetColor ne null}">
+                    <f:facet name="start">
+                      <af:outputFormatted value="." id="wty_of2"
+                                          rendered="false"/>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <af:panelBorderLayout id="wty_pbl3"
+                                        inlineStyle="height:25px;width:10px;"
+                                        rendered="#{node.requiredFlag eq 'Y'}">
+                    <f:facet name="innerLeft">
+                      <af:outputFormatted value="*" id="wty_of11"
+                                          inlineStyle="color:Red; font-size:x-large;"/>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <af:outputFormatted value="#{node.nodeName}" id="wty_of3"
+                                      styleClass="ABHeader"
+                                      inlineStyle="font-size:medium; font-weight:bolder;"/>
+                </af:panelGroupLayout>
+              </af:listItem>
+            </f:facet>
+            <af:listItem id="li4">
+              <af:panelGridLayout id="pgl14">
+                <af:gridRow marginTop="5px" height="auto" id="gr3">
+                  <af:gridCell marginStart="5px" width="50%" id="gc5">
+                    <af:iterator id="i1" var="wrntyIter"
+                                 value="#{ConfiguratorBean.warrantyUiCollection}">
+                      <af:panelGroupLayout id="pgl15" layout="vertical">
+                        <af:panelGroupLayout id="pgl16" layout="horizontal">
+                          <af:panelGroupLayout id="wrnty_pgl5"
+                                               layout="horizontal">
+                            <af:panelBorderLayout id="wrnty_pbl4"
+                                                  inlineStyle="height:15px; width:25px; border-style:groove;">
+                              <f:facet name="innerBottom">
+                                <af:outputFormatted value="*" id="of7"
+                                                    inlineStyle="color:Maroon; font-size:large;"
+                                                    rendered="#{node.requiredFlag eq 'Y'}"/>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                            <af:panelBorderLayout id="wrnty_pbl5"
+                                                  inlineStyle="height:15px; width:25px; border-style:groove;">
+                              <f:facet name="start"/>
+                              <f:facet name="bottom"/>
+                              <f:facet name="end"/>
+                              <f:facet name="top"/>
+                            </af:panelBorderLayout>
+                            <af:panelBorderLayout id="pbl7"
+                                                  inlineStyle="height:15px; width:10px; border-style:none;">
+                              <f:facet name="innerLeft">
+                                <af:outputFormatted value="*" id="of8"
+                                                    rendered="#{node.requiredFlag eq 'Y'}"/>
+                              </f:facet>
+                            </af:panelBorderLayout>
+                          </af:panelGroupLayout>
+                          <af:showDetailHeader text="#{node.nodeName}"
+                                               disclosed="false" id="sdh2">
+                            <af:panelGroupLayout id="wrntyPgl"
+                                                 layout="horizontal">
+                              <af:spacer width="50" height="10" id="wrntys1"/>
+                              <af:panelBorderLayout id="wty_pbl11"
+                                                    inlineStyle="height:25px; width:30px; border-style:groove;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="wty_pgl18"
+                                                       layout="horizontal">
+                                    <af:inputText id="wty_it2" columns="5"
+                                                  rendered="#{wrntyIter.uiField8_type eq 'NUMERIC'}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"
+                                                  value="#{wrntyIter.digitsEntered}">
+                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                         messageDetailNoMatch="Only Numbers allowed.."/>
+                                    </af:inputText>
+                                    <af:outputFormatted id="wty_it3"
+                                                        visible="false"
+                                                        shortDesc="#{wrntyIter.parentGroupName}"
+                                                        value="#{wrntyIter.uiField8_type}"
+                                                        styleClass="#{wrntyIter.uiField8_identifier}"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:spacer width="10" height="10" id="s4"/>
+                              <af:panelBorderLayout id="wrntypbl3"
+                                                    inlineStyle="height:25px; width:200px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="wrntypgl12"
+                                                       halign="left"
+                                                       layout="horizontal">
+                                    <af:outputFormatted value="#{wrntyIter.selectedValue}"
+                                                        id="outputFormatted1"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="wty_pbl12"
+                                                    inlineStyle="height:25px; width:20px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="wty_pgl19">
+                                    <af:outputFormatted value="#{wrntyIter.uiField9}"
+                                                        id="wty_of13"
+                                                        inlineStyle="color:Maroon; font-weight:bold;"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:spacer width="10" height="10" id="s5"/>
+                              <af:panelBorderLayout id="wty_pbl13"
+                                                    inlineStyle="height:25px; width:20px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="wty_pgl21">
+                                    <af:outputFormatted id="wty_of14"
+                                                        value="#{wrntyIter.uiField10}"
+                                                        inlineStyle="color:Teal; font-weight:bolder;"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:spacer width="20" height="10" id="s10"/>
+                              <af:panelBorderLayout id="pbl10"
+                                                    inlineStyle="height:25px; width:10px; border-style:none;">
+                                <f:facet name="innerLeft">
+                                  <af:outputFormatted value="*" id="of10"
+                                                      inlineStyle="font-size:x-large; color:Red;"
+                                                      rendered="#{wrntyIter.requiredFlagSubGrp eq 'Y'}"/>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="wrntypanelBorderLayout1"
+                                                    inlineStyle="height:25px; width:60px; border-style:none;">
+                                <f:facet name="innerLeft"/>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="wrntypanelBorderLayout2"
+                                                    inlineStyle="height:25px; width:60px; border-style:none;">
+                                <f:facet name="innerLeft"/>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="wrntypanelBorderLayout3"
+                                                    inlineStyle="height:25px; width:130px; border-style:none;background-color:#{wrntyIter.uiField1_color};"
+                                                    rendered="#{wrntyIter.uiField8_type ne 'NUMERIC'}">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="panelGroupLayout1"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="commandLink1"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{wrntyIter.uiField1_dis or wrntyIter.uiField1_readOnly}"
+                                                    partialSubmit="false">
+                                      <af:outputFormatted id="outputFormatted2"
+                                                          value="#{wrntyIter.uiField1}"
+                                                          inlineStyle="#{wrntyIter.uiField1_bgColor}"/>
+                                      <af:inputText id="inputText1"
+                                                    visible="false"
+                                                    value="#{wrntyIter.czNodeName1}"
+                                                    shortDesc="#{wrntyIter.uiField1_identifier}"
+                                                    label="#{wrntyIter.uiField1_color}"
+                                                    placeholder="#{wrntyIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="panelBorderLayout4"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField2_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="panelGroupLayout2"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="commandLink2"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{wrntyIter.uiField2_dis or wrntyIter.uiField2_readOnly}">
+                                      <af:outputFormatted id="outputFormatted3"
+                                                          value="#{wrntyIter.uiField2}"
+                                                          inlineStyle="#{wrntyIter.uiField2_bgColor}"/>
+                                      <af:inputText id="inputText2"
+                                                    visible="false"
+                                                    value="#{wrntyIter.czNodeName2}"
+                                                    shortDesc="#{wrntyIter.uiField2_identifier}"
+                                                    label="#{wrntyIter.uiField2_color}"
+                                                    placeholder="#{wrntyIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="panelBorderLayout5"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField3_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="panelGroupLayout3"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="commandLink3"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{wrntyIter.uiField3_dis or wrntyIter.uiField3_readOnly}">
+                                      <af:outputFormatted id="outputFormatted4"
+                                                          value="#{wrntyIter.uiField3}"
+                                                          inlineStyle="#{wrntyIter.uiField3_bgColor}"/>
+                                      <af:inputText id="inputText3"
+                                                    visible="false"
+                                                    value="#{wrntyIter.czNodeName3}"
+                                                    shortDesc="#{wrntyIter.uiField3_identifier}"
+                                                    label="#{wrntyIter.uiField3_color}"
+                                                    placeholder="#{wrntyIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="panelBorderLayout6"
+                                                    inlineStyle="height:25px; width:130px; border-style:none;background-color:#{wrntyIter.uiField4_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="panelGroupLayout4"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="commandLink4"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{wrntyIter.uiField4_dis or wrntyIter.uiField4_readOnly}">
+                                      <af:outputFormatted id="outputFormatted5"
+                                                          value="#{wrntyIter.uiField4}"
+                                                          inlineStyle="#{wrntyIter.uiField4_bgColor}"/>
+                                      <af:inputText id="inputText4"
+                                                    visible="false"
+                                                    value="#{wrntyIter.czNodeName4}"
+                                                    shortDesc="#{wrntyIter.uiField4_identifier}"
+                                                    label="#{wrntyIter.uiField4_color}"
+                                                    placeholder="#{wrntyIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="panelBorderLayout7"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField5_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="panelGroupLayout5"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="commandLink5"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{wrntyIter.uiField5_dis or wrntyIter.uiField5_readOnly}">
+                                      <af:outputFormatted id="outputFormatted6"
+                                                          value="#{wrntyIter.uiField5}"
+                                                          inlineStyle="#{wrntyIter.uiField5_bgColor}"/>
+                                      <af:inputText id="inputText5"
+                                                    visible="false"
+                                                    value="#{wrntyIter.czNodeName5}"
+                                                    shortDesc="#{wrntyIter.uiField5_identifier}"
+                                                    label="#{wrntyIter.uiField5_color}"
+                                                    placeholder="#{wrntyIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="panelBorderLayout8"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField6_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="panelGroupLayout6"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="commandLink6"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{wrntyIter.uiField6_dis or wrntyIter.uiField6_readOnly}">
+                                      <af:outputFormatted id="outputFormatted7"
+                                                          value="#{wrntyIter.uiField6}"
+                                                          inlineStyle="#{wrntyIter.uiField6_bgColor}"/>
+                                      <af:inputText id="inputText6"
+                                                    visible="false"
+                                                    value="#{wrntyIter.czNodeName6}"
+                                                    shortDesc="#{wrntyIter.uiField6_identifier}"
+                                                    label="#{wrntyIter.uiField6_color}"
+                                                    placeholder="#{wrntyIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                              <af:panelBorderLayout id="panelBorderLayout9"
+                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField7_color};">
+                                <f:facet name="innerLeft">
+                                  <af:panelGroupLayout id="panelGroupLayout7"
+                                                       layout="horizontal"
+                                                       halign="left">
+                                    <af:commandLink id="commandLink7"
+                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                    disabled="#{wrntyIter.uiField7_dis or wrntyIter.uiField7_readOnly}">
+                                      <af:outputFormatted id="outputFormatted8"
+                                                          value="#{wrntyIter.uiField7}"
+                                                          inlineStyle="#{wrntyIter.uiField7_bgColor}"/>
+                                      <af:inputText id="inputText7"
+                                                    visible="false"
+                                                    value="#{wrntyIter.czNodeName7}"
+                                                    shortDesc="#{wrntyIter.uiField7_identifier}"
+                                                    label="#{wrntyIter.uiField7_color}"
+                                                    placeholder="#{wrntyIter.parentGroupName}"/>
+                                    </af:commandLink>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                              </af:panelBorderLayout>
+                            </af:panelGroupLayout>
                           </af:showDetailHeader>
                         </af:panelGroupLayout>
                       </af:panelGroupLayout>

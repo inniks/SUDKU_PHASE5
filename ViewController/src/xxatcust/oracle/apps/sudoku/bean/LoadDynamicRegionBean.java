@@ -1044,6 +1044,31 @@ public class LoadDynamicRegionBean {
     public void cancelAllConfigurations(ActionEvent actionEvent) throws IOException,
                                                                         JsonGenerationException,
                                                                         JsonMappingException {
+        
+        //Call the CIO servlet with unique identifier , before setting all session values to null
+        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(v93k!=null){
+            InputParams inputParams = v93k.getInputParams();
+            if(inputParams==null){
+                inputParams = new InputParams();
+            }
+            inputParams.setImportSource("CANCEL_CONFIG");
+            v93k.setInputParams(inputParams);
+            String jsonStr = JSONUtils.convertObjToJson(v93k);
+            ObjectMapper mapper = new ObjectMapper();
+            String responseJson =
+                ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+            System.out.println("Response Json from Configurator : " +
+                               responseJson);
+            Object obj = mapper.readValue(responseJson, V93kQuote.class);
+            v93k = (V93kQuote)obj;
+            ADFUtils.setSessionScopeValue("parentObject", v93k);
+        }
+        
+       
+        ADFUtils.setSessionScopeValue("cancelAll", "Y");
+       
+        ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("config_Phd"));
         //This is to cancel all configs and reset all session variables
         ADFUtils.setSessionScopeValue("parentObject", null);
         ADFUtils.setSessionScopeValue("refreshImport", null);
@@ -1059,16 +1084,19 @@ public class LoadDynamicRegionBean {
         ADFUtils.setSessionScopeValue("inputParamsMap", null);
         ADFUtils.setSessionScopeValue("ruleSetMap", null);
         ADFUtils.setSessionScopeValue("qheaderValidMap", null);
-        //Set one session scope for cancelled
+//        
+//        
+//        //Set one session scope for cancelled
         ADFUtils.setSessionScopeValue("cancelAll", "Y");
+        ADFUtils.setSessionScopeValue("uniqueSessionId", null);
+        ADFUtils.setSessionScopeValue("selectedNodeValueMap", null);
+        ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
+        ADFUtils.setSessionScopeValue("inputLOVMap", null);
+        //ADFUtils.setSessionScopeValue("currView", "config");
         RichCommandImageLink button =
             (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to view reference page
         ActionEvent acEvent = new ActionEvent(button);
         acEvent.queue();
-        //Refresh the view
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("pt_pgl1"));
-
-        //Close the popup
         cancelPop.cancel();
     }
 
