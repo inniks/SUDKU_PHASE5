@@ -1093,10 +1093,10 @@ public class LoadDynamicRegionBean {
         ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
         ADFUtils.setSessionScopeValue("inputLOVMap", null);
         //ADFUtils.setSessionScopeValue("currView", "config");
-        RichCommandImageLink button =
-            (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to view reference page
-        ActionEvent acEvent = new ActionEvent(button);
-        acEvent.queue();
+//        RichCommandImageLink button =
+//            (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to view reference page
+//        ActionEvent acEvent = new ActionEvent(button);
+//        acEvent.queue();
         cancelPop.cancel();
     }
 

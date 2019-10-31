@@ -339,6 +339,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         String nodeColor = null;
         String identifier = null;
         String parentGroupName = null;
+        String refQty = null;
+        String targetQty = null;
+        String czModelName = null;
+        String uiNodeName = null;
         //(V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         for (UIComponent comp : children) {
             if (comp instanceof RichOutputFormatted) {
@@ -354,11 +358,20 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     czNodeName = (String)it.getValue();
                     nodeColor = it.getLabel();
                     parentGroupName = it.getPlaceholder();
+                    refQty = it.getChangedDesc();
+                    targetQty = it.getHelpTopicId();
+                    czModelName = it.getRequiredMessageDetail();
+                    uiNodeName = it.getContentStyle();
                     selectedNodeValueMap.put("identifier", identifier);
                     selectedNodeValueMap.put("czNodeName", czNodeName);
                     selectedNodeValueMap.put("nodeColor", nodeColor);
                     selectedNodeValueMap.put("parentGroupName",
                                              parentGroupName);
+                    selectedNodeValueMap.put("refQty", refQty);
+                    selectedNodeValueMap.put("targetQty", targetQty);
+                    selectedNodeValueMap.put("czModelName", czModelName);
+                    selectedNodeValueMap.put("uiNodeName", uiNodeName);
+                    
                 }
             }
         }
@@ -381,15 +394,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
-        String responseJson =
-            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        System.out.println("Response Json from Configurator : " +
-                           responseJson);
-        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-        v93k = (V93kQuote)obj;
+//        String responseJson =
+//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+//        System.out.println("Response Json from Configurator : " +
+//                           responseJson);
+//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+//        v93k = (V93kQuote)obj;
 
        // else use this
-        //v93k = (V93kQuote)convertJsonToObject(null);
+        v93k = (V93kQuote)convertJsonToObject(null);
         if (v93k.getInputParams() != null) {
             Map ruleSetMap = new HashMap();
             ruleSetMap.put("topLevelCode",
@@ -623,6 +636,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String nodeColor = (String)selectedNodeValueMap.get("nodeColor");
             String parentGroupName =
                 (String)selectedNodeValueMap.get("parentGroupName");
+            String refQty =
+            (String)selectedNodeValueMap.get("refQty")==null?"-1":(String)selectedNodeValueMap.get("refQty");
+            String targetQty = (String)selectedNodeValueMap.get("targetQty")==null?"-1":(String)selectedNodeValueMap.get("targetQty");
+            String czModelName = (String)selectedNodeValueMap.get("czModelName");
+            String uiNodeName = (String)selectedNodeValueMap.get("uiNodeName");
             String selectionState = null;
             if (nodeColor != null &&
                 nodeColor.equalsIgnoreCase(SudokuUtils.TARGET_COLOR)) {
@@ -648,8 +666,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             uiSelection.setCzNodeName(czNodeName);
             uiSelection.setIdentifier(identifier);
             uiSelection.setSelectionState(selectionState);
+            uiSelection.setCzModelName(czModelName);
+            uiSelection.setUiNodeName(uiNodeName);
+            uiSelection.setReferenceQuantity(Integer.parseInt(refQty));
+            uiSelection.setTargetQuantity(Integer.parseInt(targetQty));
+            uiSelection.setUiType("3");
             v93k.setUiSelection(uiSelection);
-
+            
             SessionDetails sessionDetails = v93k.getSessionDetails();
             if (sessionDetails == null) {
                 sessionDetails = new SessionDetails();
@@ -777,6 +800,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         String parentGroupName = null;
         String czNodeName = null;
         String identifier = null;
+        String refQty = null ;
+        String targetQty = null;
+        String quantity = null;
+        String czModelName = null;
+        String uiNodeName = null;
+        
         for (UIComponent comp : children) {
             if (comp instanceof RichOutputFormatted) {
                 RichOutputFormatted rf = (RichOutputFormatted)comp;
@@ -788,6 +817,17 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     identifier = rf.getStyleClass();
                     inputNodeValueMap.put("identifier", identifier);
                 }
+            }
+            if(comp instanceof RichInputText){
+                RichInputText inpText = (RichInputText)comp;
+                refQty = inpText.getRequiredMessageDetail();
+                targetQty = inpText.getHelpTopicId();
+                uiNodeName = inpText.getShortDesc();
+                czModelName = inpText.getChangedDesc();
+                inputNodeValueMap.put("refQty", refQty);
+                inputNodeValueMap.put("targetQty", targetQty);
+                inputNodeValueMap.put("uiNodeName", uiNodeName);
+                inputNodeValueMap.put("czModelName", czModelName);
             }
         }
         V93kQuote v93 =
@@ -860,17 +900,25 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             if (czNodeName != null) {
                 czNodeName = "\"" + czNodeName + "\"";
             }
+            String refQty = (String)inputNodeValueMap.get("refQty");
+            String targetQty =(String) inputNodeValueMap.get("targetQty");
+            String uiNodeName = (String)inputNodeValueMap.get("uiNodeName");
+            String czModelName = (String)inputNodeValueMap.get("czModelName");
             String identifier = (String)inputNodeValueMap.get("identifier");
             UiSelection uiSelection = new UiSelection();
             uiSelection.setParentGroupName(parentGroupName);
             uiSelection.setSubGroupName(uiSubGrpName);
-            uiSelection.setTargetQuantity(Integer.parseInt(inputValue));
+            uiSelection.setUiNodeName(uiNodeName);
+            uiSelection.setTargetQuantity(Integer.parseInt(targetQty));
             uiSelection.setUiType("1");
-            v93k.setUiSelection(uiSelection);
+            uiSelection.setCzModelName(czModelName);
+            uiSelection.setReferenceQuantity(Integer.parseInt(refQty));
+            uiSelection.setQuantity(Integer.parseInt(inputValue));
             uiSelection.setUniqueSessionId(uniqueSessionId);
             uiSelection.setCzNodeName(czNodeName);
             uiSelection.setIdentifier(identifier);
-
+            
+            v93k.setUiSelection(uiSelection);
             SessionDetails sessionDetails = v93k.getSessionDetails();
             if (sessionDetails == null) {
                 sessionDetails = new SessionDetails();
@@ -1614,11 +1662,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     obj.getExceptionMap().getDebugMessageList();
                 List<String> debugMessages =
                     obj.getExceptionMap().getDebugMessages();
-
-
+                TreeMap<String, ArrayList<String>> confictWarnings = obj.getExceptionMap().getConflictMessages();
+                
                 //Check for warnings from configurator
                 StringBuilder warningMessage =
                     new StringBuilder("<html><body>");
+                
                 if (warnings != null && warnings.size() > 0) {
 
 

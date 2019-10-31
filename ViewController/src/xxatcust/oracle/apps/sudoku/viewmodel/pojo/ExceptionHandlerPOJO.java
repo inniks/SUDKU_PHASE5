@@ -7,10 +7,12 @@ import java.util.TreeMap;
 public class ExceptionHandlerPOJO  {
     private TreeMap<String,ArrayList<String>> errorList ;
     private ArrayList<String> errorsMessages ;
-    private TreeMap<String, ArrayList<String>> notificationList;
+    private TreeMap<String, ArrayList<String>> conflictMessages;
     private TreeMap<String, ArrayList<String>> warningList;
     private ArrayList<String> debugMessages;
     private TreeMap<String, ArrayList<String>> debugMessageList;
+
+    private TreeMap<String, ArrayList<String>> notificationList;
 
     public ExceptionHandlerPOJO() {
         super();
@@ -24,12 +26,12 @@ public class ExceptionHandlerPOJO  {
         return errorList;
     }
 
-    public void setNotificationList(TreeMap<String, ArrayList<String>> notifications) {
-        this.notificationList = notifications;
+    public void setConflictMessages(TreeMap<String, ArrayList<String>> notifications) {
+        this.conflictMessages = notifications;
     }
 
-    public TreeMap<String, ArrayList<String>> getNotificationList() {
-        return notificationList;
+    public TreeMap<String, ArrayList<String>> getConflictMessages() {
+        return conflictMessages;
     }
 
     public void setWarningList(TreeMap<String, ArrayList<String>> warnings) {
@@ -62,5 +64,13 @@ public class ExceptionHandlerPOJO  {
 
     public ArrayList<String> getErrorsMessages() {
         return errorsMessages;
+    }
+
+    public void setNotificationList(TreeMap<String, ArrayList<String>> notificationList) {
+        this.notificationList = notificationList;
+    }
+
+    public TreeMap<String, ArrayList<String>> getNotificationList() {
+        return notificationList;
     }
 }

@@ -218,6 +218,13 @@ public class MiscUpgradesBean {
     public static SdiCollectionMiscUpgradeModel createSuperSubGroups(V93kQuote v93k,
                                                                      ConfiguratorUiGroup uiGroup,
                                                                      int indexer) {
+
+        String groupName = null;
+        if (v93k != null && v93k.getUiRoot() != null &&
+            v93k.getUiRoot().getMiscUpgradeGroup() != null) {
+            groupName =
+                    v93k.getUiRoot().getMiscUpgradeGroup().getGroupDisplayName();
+        }
         SdiCollectionMiscUpgradeModel miscUpgSdi = null;
         List<String> allSuperSubGroupList = new ArrayList<String>();
         Set setOfSuperSubGrpNames = new LinkedHashSet();
@@ -267,7 +274,7 @@ public class MiscUpgradesBean {
                     //for ex:PS1600
                     ArrayList<UiField> uiFieldCollection = null;
                     uiFieldCollection =
-                            prepareMiscUpgradesSubGrpDataModel(subGrp, null,
+                            prepareMiscUpgradesSubGrpDataModel(subGrp, groupName,
                                                                uiFieldCollection,
                                                                index);
                     listofcollections.add(uiFieldCollection);
@@ -280,7 +287,8 @@ public class MiscUpgradesBean {
         }
         ArrayList<ShowDetailItemCollection> sdiList =
             new ArrayList<ShowDetailItemCollection>();
-        LinkedHashMap<String,ShowDetailItemCollection> sdiMap = new LinkedHashMap<String, ShowDetailItemCollection>();
+        LinkedHashMap<String, ShowDetailItemCollection> sdiMap =
+            new LinkedHashMap<String, ShowDetailItemCollection>();
         String subGrpName = null;
         if (testMap != null && !testMap.isEmpty()) {
             int counter = 1;
@@ -288,7 +296,7 @@ public class MiscUpgradesBean {
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 String key = (String)pair.getKey();
-                subGrpName = key ;
+                subGrpName = key;
                 System.out.println("Key is " + subGrpName);
                 ArrayList<ArrayList<UiField>> val =
                     (ArrayList<ArrayList<UiField>>)pair.getValue();
@@ -304,7 +312,7 @@ public class MiscUpgradesBean {
                     sdiList.add(showDetItem);
                     sdiMap.put(key, showDetItem);
                     counter++;
-                  
+
                 }
 
             }
@@ -326,7 +334,8 @@ public class MiscUpgradesBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N";
-        String groupName = null;
+        
+
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (uiSbGrp != null) {
             //Iterate for all subgroups here and place them in a list
@@ -347,7 +356,7 @@ public class MiscUpgradesBean {
                 !listUiNodesBySubGrp.isEmpty()) {
                 uiField =
                         new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
-                                    groupName, Integer.toString(index));
+                                    uiGrpName, Integer.toString(index));
                 index++;
                 uiFieldCollection.add(uiField);
             }

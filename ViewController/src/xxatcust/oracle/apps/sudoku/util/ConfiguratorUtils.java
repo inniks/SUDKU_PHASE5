@@ -57,9 +57,11 @@ public class ConfiguratorUtils {
         
         _logger.info("Input JSON to coonfigurator "+jsonStr);
         if(jsessionId!=null){
+            if(listOfCookies!=null && listOfCookies.length!=0){
             for(Cookie cookie :listOfCookies){
                 if(cookie.getName().equalsIgnoreCase("SPT2")){
                     str1 = cookie.getName()+"="+cookie.getValue()+";";
+                }
                 }
             }
            

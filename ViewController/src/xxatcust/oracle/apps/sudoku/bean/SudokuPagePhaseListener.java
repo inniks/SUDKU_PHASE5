@@ -86,7 +86,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
 
-        validateEBSSession(pagePhaseEvent);
+        //validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {
@@ -235,14 +235,16 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                                               quoteNumber);
                 _logger.info("ValidateEBSSession:Quote value from session" +
                              ADFUtils.getSessionScopeValue("targetQuoteNumber"));
-                if(quoteNumber!=null && !quoteNumber.equals("")){
+                if (quoteNumber != null && !quoteNumber.equals("")) {
                     _logger.info("Setting input map params......**");
-                    HashMap inputMapParams = (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap");
-                    if(inputMapParams==null){
+                    HashMap inputMapParams =
+                        (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap");
+                    if (inputMapParams == null) {
                         inputMapParams = new HashMap();
                     }
                     inputMapParams.put("importSource", "quoteFromSearch");
-                    ADFUtils.setSessionScopeValue("inputParamsMap", inputMapParams);
+                    ADFUtils.setSessionScopeValue("inputParamsMap",
+                                                  inputMapParams);
                 }
                 //Test Code to call Servlet on page load from search quotes
 
@@ -410,6 +412,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
         //Add input params
         inputParam.setCopyReferenceConfiguration(true); //Passing copy ref value as true
         inputParam.setImportSource("LOAD_QUOTE_FROM_SEARCH");
+        inputParam.setReuseQuote(true);
         V93kQuote v93k = new V93kQuote();
         v93k.setInputParams(inputParam);
         v93k.setSessionDetails(sessionDetails);
@@ -420,6 +423,14 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
             (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
         _logger.info("Response JSON " + responseJson);
         v93k = mapper.readValue(responseJson, V93kQuote.class);
+        HashMap ruleSetMap = new HashMap();
+        if (v93k.getInputParams() != null) {
+            ruleSetMap.put("topLevelCode",
+                           v93k.getInputParams().getRuleSetTopLevelChoice());
+            ruleSetMap.put("secondLevelCode",
+                           v93k.getInputParams().getRuleSetSecondLevelChoice());
+            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+        }
         ADFUtils.setSessionScopeValue("parentObject", v93k);
     }
 

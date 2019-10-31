@@ -44,6 +44,9 @@ public class SessionDetails {
 
     // Bom items from the source configuration before doing upgrade 
     HashMap<String, Integer> sourceConfigBomItems = new HashMap<String, Integer>();
+
+    HashMap<String, HashMap<String,Integer>> miscUpgradeItems = new HashMap<String, HashMap<String,Integer>>();
+    HashMap<String, HashMap<String,Integer>> infraStructureUpgradeItems = new HashMap<String, HashMap<String,Integer>>();
     
     public SessionDetails() {
         super();
@@ -299,5 +302,21 @@ public class SessionDetails {
 
     public HashMap<String, Integer> getSourceConfigBomItems() {
         return sourceConfigBomItems;
+    }
+
+    public void setMiscUpgradeItems(HashMap<String, HashMap<String, Integer>> miscUpgradeItems) {
+        this.miscUpgradeItems = miscUpgradeItems;
+    }
+
+    public HashMap<String, HashMap<String, Integer>> getMiscUpgradeItems() {
+        return miscUpgradeItems;
+    }
+
+    public void setInfraStructureUpgradeItems(HashMap<String, HashMap<String, Integer>> infraStructureUpgradeItems) {
+        this.infraStructureUpgradeItems = infraStructureUpgradeItems;
+    }
+
+    public HashMap<String, HashMap<String, Integer>> getInfraStructureUpgradeItems() {
+        return infraStructureUpgradeItems;
     }
 }
