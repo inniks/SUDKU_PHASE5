@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -184,18 +186,19 @@ public class TargetConfiguration {
                                 new ArrayList<String>();
                             List<ConfiguratorNodePOJO> allNodesList =
                                 getAllNodes(i);
-                            HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
-                                new HashMap<String, List<ConfiguratorNodePOJO>>();
+                            LinkedHashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
+                                new LinkedHashMap<String, List<ConfiguratorNodePOJO>>();
                             if (allNodesList != null &&
                                 !allNodesList.isEmpty()) {
                                 for (ConfiguratorNodePOJO node :
                                      allNodesList) {
                                     if (node.getPrintGroupLevel() != null &&
-                                        node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+                                        (node.getPrintGroupLevel().equalsIgnoreCase("1")||node.getPrintGroupLevel().equalsIgnoreCase("2")||node.getPrintGroupLevel().equalsIgnoreCase("3")||node.getPrintGroupLevel().equalsIgnoreCase("4"))) {
                                         if (node.getExtendedPrice() != null) {
                                             Double b =
                                                 new Double(node.getExtendedPrice());
                                             sumQuoteTotal = sumQuoteTotal + b;
+                                            System.out.println("Sum Total "+sumQuoteTotal);
                                         }
                                     }
                                     if (node.getNodeCategory() != null &&
@@ -209,9 +212,7 @@ public class TargetConfiguration {
                                     }
                                 }
                             }
-                            if (quoteTotal != null) {
-                                quoteTotal.setValue(sumQuoteTotal);
-                            }
+                           
                             //quoteTotal.setValue(sumQuoteTotal);
                             distinctList = removeDuplicatesFromList(catList);
                             for (String distinctCategory : distinctList) {
@@ -254,8 +255,10 @@ public class TargetConfiguration {
                                     String nodeDesig = null ;
                                      if(node.getPrintGroupLevel()!=null && node.getPrintGroupLevel().equalsIgnoreCase("1")){
                                          nodeDesig = "header" ;
-                                         System.out.println("Setting node Designation");
                                      }
+                                    if(node.getNodeCategory()!=null && (node.getNodeCategory().equalsIgnoreCase("3")||node.getNodeCategory().equalsIgnoreCase("2"))){
+                                        node.setPrintGroupLevel("1000");
+                                    }
                                     NodeCategory secondLevel =
                                         new NodeCategory(category,
                                                          node.getNodeName(),
@@ -279,6 +282,9 @@ public class TargetConfiguration {
                             ADFUtils.setSessionScopeValue("categoryTree",
                                                           categoryTree);
                             listOfTrees.add(categoryTree);
+                        }
+                        if (quoteTotal != null) {
+                            quoteTotal.setValue(sumQuoteTotal);
                         }
                     }
                 } else {
@@ -345,7 +351,7 @@ public class TargetConfiguration {
 
 
     private List<String> removeDuplicatesFromList(List<String> inputList) {
-        Set<String> set = new HashSet<String>(inputList);
+        Set<String> set = new LinkedHashSet<String>(inputList);
         List<String> outputList = new ArrayList<String>();
         outputList.clear();
         outputList.addAll(set);

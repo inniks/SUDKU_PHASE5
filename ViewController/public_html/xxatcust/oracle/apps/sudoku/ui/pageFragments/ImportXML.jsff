@@ -34,7 +34,7 @@
             </af:panelGroupLayout>
             <f:facet name="context">
               <af:group id="g1">
-                <af:outputFormatted value="Imported Reference Configuration" id="of2"
+                <af:outputFormatted value="Imported Source Configuration" id="of2"
                                     inlineStyle="font-size:large; color:Maroon;"/>
                 <af:spacer width="15" height="10" id="s6"/>
                 <af:panelGroupLayout id="pgl14" halign="left">

@@ -147,7 +147,7 @@ public class ConfiguratorBean {
     private RichShowDetailHeader shwDetHdrBind;
     private RichListView warrantyListView;
     private ChildPropertyTreeModel warrantyTreeModel;
-    private ArrayList<UiField> warrantyUiCollection;
+    private ArrayList<ShowDetailItemCollection> warrantySdiCollection;
     private ArrayList<UiField> sysControllerUiCollection;
     private String groupDiscPolicy;
     private RichListView sysControllerListViewBinding;
@@ -170,6 +170,8 @@ public class ConfiguratorBean {
     private RichListView rfResourceListViewBinding;
     private RichListView miscUpgrListBinding;
     private RichListView infraUpgListBinding;
+    private RichPopup conflictPopup;
+    private RichOutputFormatted conflictText;
 
     public ConfiguratorBean() {
         super();
@@ -268,6 +270,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         dpsTreeModel = null;
         mixSignalTreeModel = null;
         rfResourcesTreeModel = null;
+        miscUpgTreeModel = null;
+        infraUpgTreeModel = null;
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
@@ -285,14 +289,17 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                      null ? "0" :
                                      (String)ADFUtils.getSessionScopeValue("UserId"));
             inputParam.setImportSource("LOAD_CONFIG_UI");
+            String uniqueSessionId = (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
+            String inactiveSessionId = uniqueSessionId;
             String userId =
                 (String)ADFUtils.getSessionScopeValue("UserId") == null ? "0" :
                 (String)ADFUtils.getSessionScopeValue("UserId");
             String timestamp = Long.toString(System.currentTimeMillis());
-            String uniqueSessionId = userId.concat(timestamp);
+            uniqueSessionId = userId.concat(timestamp);
             ADFUtils.setSessionScopeValue("uniqueSessionId", uniqueSessionId);
             UiSelection uiSelection = new UiSelection();
             uiSelection.setUniqueSessionId(uniqueSessionId);
+            uiSelection.setInActiveUniqueSessionId(inactiveSessionId);
             v93k.setSessionDetails(sessionDetails);
             v93k.setUiSelection(uiSelection);
             v93k.setInputParams(inputParam);
@@ -403,7 +410,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
        // else use this
         v93k = (V93kQuote)convertJsonToObject(null);
-        if (v93k.getInputParams() != null) {
+        if (v93k!=null && v93k.getInputParams() != null) {
             Map ruleSetMap = new HashMap();
             ruleSetMap.put("topLevelCode",
                            v93k.getInputParams().getRuleSetTopLevelChoice());
@@ -442,9 +449,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             warrantyTreeModel =
                     WtyTrainingAndSupportBean.populateWarrantyParentModel(warrantyTreeModel,
                                                                           rootWarranty);
-            warrantyUiCollection =
-                    WtyTrainingAndSupportBean.populateWarrantySubGrps(v93k,
-                                                                      warrantyUiCollection);
+            warrantySdiCollection =
+                    WtyTrainingAndSupportBean.populateWarrantySubGroups(v93k,
+                                                                      warrantySdiCollection);
         }
         if (sysControllerTreeModel == null) {
             sysControllerTreeModel =
@@ -532,11 +539,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         }
         defaultViewOnLoad = false;
         ADFUtils.setSessionScopeValue("cancelAll", null);
-        displayConfigWarnAndErrors();
+        
         if (parentUiComp != null) {
             ADFUtils.addPartialTarget(parentUiComp);
         }
-
+        displayConfigWarnAndErrors(v93k);
     }
 
     public void setJsessionId(RichInputText jsessionId) {
@@ -582,19 +589,36 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             (HashMap)ADFUtils.getSessionScopeValue("selectedNodeValueMap");
         HashMap inputNodeValueMap =
             (HashMap)ADFUtils.getSessionScopeValue("inputNodeValueMap");
-
+        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (dialogEvent.getOutcome() == DialogEvent.Outcome.ok) {
-            if (selectedNodeValueMap != null &&
-                !selectedNodeValueMap.isEmpty()) {
-                //continueWithSelection();
-                confirmPopup.cancel();
-                cancelUIAction();
+            if(v93k!=null){
+                UiSelection uiSelection = v93k.getUiSelection();
+                if(uiSelection!=null){
+                    String czNodeName = uiSelection.getCzNodeName();
+                    if(czNodeName!=null){
+                        czNodeName = "\"" + czNodeName + "\"";
+                        uiSelection.setCzNodeName(czNodeName);
+                    }
+                    uiSelection.setUserConfirmation(true);
+                    v93k.setUiSelection(uiSelection);
+                    ADFUtils.setSessionScopeValue("parentObject", v93k);
+                }
             }
-            if (inputNodeValueMap != null && !inputNodeValueMap.isEmpty()) {
-                confirmPopup.cancel();
-                cancelUIAction();
-                //continueWithInput();
-            }
+            v93k = callServlet(v93k);
+            buildConfiguratorUI(v93k);
+            confirmPopup.cancel();
+//            if (selectedNodeValueMap != null &&
+//                !selectedNodeValueMap.isEmpty()) {
+//
+//                continueWithSelection();
+//                conflictPopup.cancel();
+//                //cancelUIAction();
+//            }
+//            if (inputNodeValueMap != null && !inputNodeValueMap.isEmpty()) {
+//                conflictPopup.cancel();
+//                //cancelUIAction();
+//                continueWithInput();
+//            }
         }
 
         if (dialogEvent.getOutcome() == DialogEvent.Outcome.cancel) {
@@ -733,13 +757,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         return warrantyTreeModel;
     }
 
-    public void setWarrantyUiCollection(ArrayList<UiField> warrantyUiCollection) {
-        this.warrantyUiCollection = warrantyUiCollection;
-    }
-
-    public ArrayList<UiField> getWarrantyUiCollection() {
-        return warrantyUiCollection;
-    }
+ 
 
     public void setGroupDiscPolicy(String groupDiscPolicy) {
         this.groupDiscPolicy = groupDiscPolicy;
@@ -1060,10 +1078,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 (String)ADFUtils.getSessionScopeValue("UserId") == null ? "0" :
                 (String)ADFUtils.getSessionScopeValue("UserId");
             String timestamp = Long.toString(System.currentTimeMillis());
-            String uniqueSessionId = userId.concat(timestamp);
+            String uniqueSessionId = (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
+             String inactiveSessionId = uniqueSessionId ;   
+            uniqueSessionId =    userId.concat(timestamp);
             ADFUtils.setSessionScopeValue("uniqueSessionId", uniqueSessionId);
             UiSelection uiSelection = new UiSelection();
             uiSelection.setUniqueSessionId(uniqueSessionId);
+            uiSelection.setInActiveUniqueSessionId(inactiveSessionId);
             v93k.setSessionDetails(sessionDetails);
             v93k.setUiSelection(uiSelection);
             v93k.setInputParams(inputParam);
@@ -1546,7 +1567,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             v93k.setUiSelection(uiSelection);
             uiSelection.setUiType("4");
 
-            uiSelection.setUniqueSessionId(uniqueSessionId);
             uiSelection.setCzNodeName(czNodeName);
             uiSelection.setIdentifier(identifier);
 
@@ -1644,10 +1664,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         return errMessage;
     }
 
-    public void displayConfigWarnAndErrors() {
+    public void displayConfigWarnAndErrors(V93kQuote parentObj) {
         StringBuilder errorMessage = new StringBuilder("ERROR");
-        V93kQuote parentObj =
-            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        boolean isConflict = false;
+        boolean isError = false ;
+        boolean isWarning = false;
+//        V93kQuote parentObj =
+//            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (parentObj != null) {
             V93kQuote obj = (V93kQuote)parentObj;
             //Check if no exceptions from configurator
@@ -1662,15 +1685,31 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     obj.getExceptionMap().getDebugMessageList();
                 List<String> debugMessages =
                     obj.getExceptionMap().getDebugMessages();
+                StringBuilder conflictMessage = new StringBuilder("<html><body>");
                 TreeMap<String, ArrayList<String>> confictWarnings = obj.getExceptionMap().getConflictMessages();
-                
+                if(confictWarnings!=null && !confictWarnings.isEmpty()){
+                    isConflict = true;
+                   
+                    for (Map.Entry<String, ArrayList<String>> entry :
+                         confictWarnings.entrySet()) {
+                        String key = entry.getKey();
+                        //iterate for each key
+                        conflictMessage.append("<p><b>" + key + " : " +
+                                              "</b></p>");
+                        ArrayList<String> value = entry.getValue();
+                        for (String str : value) {
+                            conflictMessage.append("<p><b>" + str + "</b></p>");
+                        }
+                    }
+                    conflictMessage.append("</body></html>");
+                }
                 //Check for warnings from configurator
                 StringBuilder warningMessage =
                     new StringBuilder("<html><body>");
                 
                 if (warnings != null && warnings.size() > 0) {
 
-
+                    isWarning = true;
                     for (Map.Entry<String, ArrayList<String>> entry :
                          warnings.entrySet()) {
                         String key = entry.getKey();
@@ -1701,19 +1740,19 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
                     // debugMsgBind.setValue(debugStr.toString());
                 }
-                if (warningMessage != null &&
-                    !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
-                    confirmPopup != null) {
-                    warnText.setValue(warningMessage.toString());
-                    RichPopup.PopupHints hints = new RichPopup.PopupHints();
-                    confirmPopup.show(hints);
-                }
+//                if (warningMessage != null &&
+//                    !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
+//                    confirmPopup != null) {
+//                    warnText.setValue(warningMessage.toString());
+//                    RichPopup.PopupHints hints = new RichPopup.PopupHints();
+//                    confirmPopup.show(hints);
+//                }
                 List<String> errorMessages =
                     obj.getExceptionMap().getErrorsMessages();
                 StringBuilder formattedErrStr =
                     new StringBuilder("<html><body>");
                 if (exceptionMap != null && exceptionMap.size() > 0) {
-
+                    isError = true ;
                     for (Map.Entry<String, ArrayList<String>> entry :
                          exceptionMap.entrySet()) {
                         String key = entry.getKey();
@@ -1726,6 +1765,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     }
                 }
                 if (errorMessages != null && errorMessages.size() > 0) {
+                    isError = true;
                     for (String str : errorMessages) {
                         errorMessage.append(str);
                         formattedErrStr.append("<p><b>" + str + "</b></p>");
@@ -1733,7 +1773,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 }
                 formattedErrStr.append("<body><html>");
 
-                if (errMessage != null) {
+                if (errMessage != null && errorPopup!=null) {
                     String errTemp = null;
                     if (errorMessage != null &&
                         !errorMessage.toString().equals("ERROR")) {
@@ -1743,6 +1783,18 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                         errMessage.setValue(formattedErrStr);
                         errorPopup.show(hints);
                     }
+                }
+                if(!isError && isConflict && conflictText!=null && conflictPopup!=null){
+                    conflictText.setValue(conflictMessage);
+                    RichPopup.PopupHints hints =
+                        new RichPopup.PopupHints();
+                    conflictPopup.show(hints);
+                }
+                
+                if(!isError && !isConflict && isWarning && confirmPopup!=null){
+                    warnText.setValue(warningMessage.toString());
+                    RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                    confirmPopup.show(hints);
                 }
             }
         }
@@ -1882,5 +1934,29 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public List<ShowDetailItemCollection> getInfraUpgSdiCollection() {
         return infraUpgSdiCollection;
+    }
+
+    public void setConflictPopup(RichPopup conflictPopup) {
+        this.conflictPopup = conflictPopup;
+    }
+
+    public RichPopup getConflictPopup() {
+        return conflictPopup;
+    }
+
+    public void setConflictText(RichOutputFormatted conflictText) {
+        this.conflictText = conflictText;
+    }
+
+    public RichOutputFormatted getConflictText() {
+        return conflictText;
+    }
+
+    public void setWarrantySdiCollection(ArrayList<ShowDetailItemCollection> warrantySdiCollection) {
+        this.warrantySdiCollection = warrantySdiCollection;
+    }
+
+    public ArrayList<ShowDetailItemCollection> getWarrantySdiCollection() {
+        return warrantySdiCollection;
     }
 }

@@ -240,6 +240,9 @@ public class MiscUpgradesBean {
                     Map.Entry subGrppair = (Map.Entry)sgIter.next();
                     ConfiguratorUiSubGroup subGrp =
                         (ConfiguratorUiSubGroup)subGrppair.getValue();
+                    if(subGrp!=null && subGrp.getSubGroupIdentifier()==null){
+                        subGrp.setSubGroupIdentifier("TEST");
+                    }
                     if (subGrp != null &&
                         subGrp.getSubGroupIdentifier() != null &&
                         !subGrp.getSubGroupIdentifier().equals("")) {

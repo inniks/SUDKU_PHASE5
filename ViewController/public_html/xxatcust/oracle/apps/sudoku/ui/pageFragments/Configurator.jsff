@@ -66,7 +66,7 @@
                     binding="#{ConfiguratorBean.confirmPopup}">
             <af:dialog id="d1" title="Configuration has below warning(s)"
                        contentWidth="450" contentHeight="200"
-                       dialogListener="#{ConfiguratorBean.warnPopupDialogListener}">
+                       type="cancel">
               <af:panelGroupLayout id="pg12l4" layout="scroll">
                 <af:outputFormatted id="ofpop4"
                                     binding="#{ConfiguratorBean.warnText}"/>
@@ -80,6 +80,18 @@
               <af:panelGroupLayout id="pgl11" layout="scroll">
                 <af:outputFormatted id="ot15" inlineStyle="color:Red;"
                                     binding="#{ConfiguratorBean.errMessage}"/>
+              </af:panelGroupLayout>
+            </af:dialog>
+          </af:popup>
+           <af:popup id="conflictPop" autoCancel="disabled"
+                    binding="#{ConfiguratorBean.conflictPopup}">
+            <af:dialog id="conflict_d1" title="Configuration has below conflict(s)"
+                       contentWidth="450" contentHeight="200"
+                       type="okCancel"
+                       dialogListener="#{ConfiguratorBean.warnPopupDialogListener}">
+              <af:panelGroupLayout id="conflictpg12l4" layout="scroll">
+                <af:outputFormatted id="conflictofpop4"
+                                    binding="#{ConfiguratorBean.conflictText}"/>
               </af:panelGroupLayout>
             </af:dialog>
           </af:popup>
@@ -132,11 +144,11 @@
                           <af:panelGroupLayout id="pgl5" layout="horizontal"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:panelBorderLayout id="pbl4"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="pbl5"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
@@ -160,7 +172,7 @@
                                                    layout="horizontal">
                                 <af:spacer width="50" height="10" id="s1"/>
                                 <af:panelBorderLayout id="pbl11"
-                                                      inlineStyle="height:25px; width:60px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl18"
                                                          layout="horizontal">
@@ -491,11 +503,11 @@
                           <af:panelGroupLayout id="drs5" layout="horizontal"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:panelBorderLayout id="drs6"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="drs7"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
@@ -1071,7 +1083,7 @@
                                                    rendered="#{theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2' and theadIter.uiGrpIndex eq '3'}">
                                 <af:spacer width="10" height="10" id="drs13m"/>
                                 <af:panelBorderLayout id="drs14m"
-                                                      inlineStyle="height:25px; width:100px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:100px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs1001m"
                                                          layout="horizontal">
@@ -1178,7 +1190,7 @@
                                                    rendered="#{theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2'}">
                                 <af:spacer width="10" height="10" id="drs13"/>
                                 <af:panelBorderLayout id="drs14"
-                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:45px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="drs1001"
                                                          layout="horizontal">
@@ -1502,11 +1514,11 @@
                           <af:panelGroupLayout id="dps_pgl5" layout="horizontal"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:panelBorderLayout id="dps_pbl4"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="dps_pbl5"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
@@ -2269,7 +2281,7 @@
                                                    rendered="#{(topNode.index eq '1'  and theadIter.uiGrpIndex eq '9') or (topNode.index eq '2' and theadIter.uiGrpIndex eq '2') or (topNode.index eq '3' and theadIter.uiGrpIndex eq '2') or (topNode.index eq '4' and theadIter.uiGrpIndex eq '2')}">
                                 <af:spacer width="10" height="10" id="dps13m"/>
                                 <af:panelBorderLayout id="dps14m"
-                                                      inlineStyle="height:25px; width:100px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:100px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dps1001m"
                                                          layout="horizontal">
@@ -2372,7 +2384,7 @@
                                                    rendered="#{(topNode.index eq '1'  and (theadIter.uiGrpIndex eq '9' or theadIter.uiGrpIndex eq '10')) or (topNode.index eq '2' and theadIter.uiGrpIndex eq '2') or (topNode.index eq '3' and theadIter.uiGrpIndex ne '1') or (topNode.index eq '4' and theadIter.uiGrpIndex ne '1')  }">
                                 <af:spacer width="10" height="10" id="dps13"/>
                                 <af:panelBorderLayout id="dps14"
-                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:45px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dps1001"
                                                          layout="horizontal">
@@ -2667,11 +2679,11 @@
                           <af:panelGroupLayout id="mix5" layout="horizontal"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:panelBorderLayout id="mix6"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="mix7"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
@@ -2697,7 +2709,7 @@
                                                    rendered="#{theadIter.uiGrpIndex eq '1'}">
                                 <af:spacer width="50" height="10" id="mix_s1"/>
                                 <af:panelBorderLayout id="mix_pbl11"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:30px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted id="outputFormatted11"
                                                         value="#{theadIter.uiField1} "/>
@@ -2786,7 +2798,7 @@
                                                    rendered="#{ (topNode.index eq '1' and ( theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2' or theadIter.uiGrpIndex eq '3')) or (topNode.index eq '2' and ( theadIter.uiGrpIndex eq '1')) or  (topNode.index eq '3' and ( theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2'))    or   (topNode.index eq '5' and ( theadIter.uiGrpIndex eq '1')) or  (topNode.index eq '4' and (theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2'))}">
                                 <af:spacer width="50" height="10" id="mix1_s1"/>
                                 <af:panelBorderLayout id="mix1_pbl11"
-                                                      inlineStyle="height:25px; width:90px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_pgl18"
                                                          layout="horizontal">
@@ -2854,7 +2866,8 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix1_pb20"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="#{topNode.index ne '5'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix1346"
                                                          layout="horizontal"
@@ -2878,7 +2891,8 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="mix1_pb2"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:90px; border-style:none;"
+                                                      rendered="#{topNode.index ne '5'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix2346"
                                                          layout="horizontal"
@@ -2928,7 +2942,7 @@
                                 <af:spacer width="50" height="10"
                                            id="mix_s_13"/>
                                 <af:panelBorderLayout id="mix_s_14"
-                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:45px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_1001"
                                                          layout="horizontal">
@@ -3062,7 +3076,7 @@
                                 <af:spacer width="50" height="10"
                                            id="mix_s_133"/>
                                 <af:panelBorderLayout id="mix_s_134"
-                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:45px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="mix_s_10301"
                                                          layout="horizontal">
@@ -3361,11 +3375,11 @@
                           <af:panelGroupLayout id="rf_pgl5" layout="horizontal"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:panelBorderLayout id="rf_pbl4"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="rf_pbl5"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
@@ -3391,7 +3405,7 @@
                                                    rendered="#{theadIter.uiGrpIndex eq '1'}">
                                 <af:spacer width="50" height="10" id="rf1_s1"/>
                                 <af:panelBorderLayout id="rf1_pbl11"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:30px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted id="rf1outputFormatted11"
                                                         value="#{theadIter.uiField1} "/>
@@ -3424,7 +3438,7 @@
                                                       inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
-                                <af:spacer width="90" height="10" id="rf1s15"/>
+                                <af:spacer width="80" height="10" id="rf1s15"/>
                                 <af:panelBorderLayout id="rf1_pb1"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
@@ -3434,7 +3448,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf1_pb2"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:70px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted id="rf1outputFormatted13"
                                                         value="#{theadIter.uiField3}"/>
@@ -3449,13 +3463,16 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf1_pb5"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted value="Combined Pogo Cable"
+                                                        id="of7"/>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf1_pb6"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted id="rf1outputFocrcmatted12"
-                                                        value="#{theadIter.uiField6}"/>
+                                                        value="WSPS Direct Pogo Cable"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="rf1_pb7"
@@ -3473,7 +3490,7 @@
                                                    rendered="#{ (topNode.index eq '1' and ( theadIter.uiGrpIndex eq '1' or theadIter.uiGrpIndex eq '2' ))}">
                                 <af:spacer width="50" height="10" id="rf2_s1"/>
                                 <af:panelBorderLayout id="rf2_pbl11"
-                                                      inlineStyle="height:25px; width:60px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf2_pgl18"
                                                          layout="horizontal">
@@ -3679,7 +3696,7 @@
                                                    rendered="#{ (topNode.index eq '1' and theadIter.uiGrpIndex eq '3')}">
                                 <af:spacer width="50" height="10" id="rf4_13"/>
                                 <af:panelBorderLayout id="rf4_14"
-                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:45px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf4_1001"
                                                          layout="horizontal">
@@ -3809,7 +3826,7 @@
                                                    rendered="#{ (topNode.index eq '1'  and ( theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2' ))}">
                                 <af:spacer width="50" height="10" id="rf3_133"/>
                                 <af:panelBorderLayout id="rf3_134"
-                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:45px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="rf3_10301"
                                                          layout="horizontal">
@@ -4095,11 +4112,11 @@
                                                layout="horizontal"
                                                rendered="#{node.codeName eq iter.index}">
                             <af:panelBorderLayout id="syscon_pbl4"
-                                                  inlineStyle="height:15px;width:25px;background-color:#{node.nodeRefColor}; border-style:groove;">
+                                                  inlineStyle="height:15px;width:25px;background-color:#{node.nodeRefColor}; border-style:none;">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="syscon_pbl5"
-                                                  inlineStyle="height:15px;width:25px;background-color:#{node.nodeTargetColor}; border-style:groove;">
+                                                  inlineStyle="height:15px;width:25px;background-color:#{node.nodeTargetColor}; border-style:none;">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="syscon_pbl7"
@@ -4121,7 +4138,7 @@
                                                    layout="horizontal">
                                 <af:spacer width="10" height="10" id="s6"/>
                                 <af:panelBorderLayout id="syscon_pbl11"
-                                                      inlineStyle="height:25px; width:60px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_pgl18"
                                                          layout="horizontal">
@@ -4146,7 +4163,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="sysconp332"
-                                                      inlineStyle="height:25px; width:60px; border-style:groove;"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;"
                                                       rendered="#{sysConIter.uiField13_type eq 'DISPLAYONLY'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="sysconpgxl18"
@@ -4212,7 +4229,7 @@
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="syscon_BorderLayout3"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{sysConIter.uiField1_color};"
-                                                      rendered="#{sysConIter.uiField8_type ne 'NUMERIC'}">
+                                                      rendered="#{sysConIter.uiField8_type ne 'NUMERIC' and sysConIter.uiGrpIndex ne '1'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_panelGroupLayout1"
                                                          layout="horizontal"
@@ -4272,7 +4289,8 @@
                                                             contentStyle="width:200px;"
                                                             valueChangeListener="#{ConfiguratorBean.handleLOVInput}"
                                                             autoSubmit="true"
-                                                            valuePassThru="true">
+                                                            valuePassThru="true"
+                                                            value="#{sysConIter.selectedLovValue}">
                                           <f:selectItems value="#{sysConIter.listOfValueModel}"
                                                          id="si1"/>
                                         </af:selectOneChoice>
@@ -4481,11 +4499,11 @@
                                                layout="horizontal"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:panelBorderLayout id="addSwTool_pbl4"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="addSwTool_pbl5"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
@@ -4511,7 +4529,7 @@
                                 <af:spacer width="50" height="10"
                                            id="addSwTool_s1"/>
                                 <af:panelBorderLayout id="addSwTool_pbl11"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:30px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="addSwTool_pgl18"
                                                          layout="horizontal">
@@ -4838,11 +4856,11 @@
                                                layout="horizontal"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:panelBorderLayout id="diagCal_pbl4"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="diagCal_pbl5"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
@@ -4868,7 +4886,7 @@
                                 <af:spacer width="50" height="10"
                                            id="diagCal_s1"/>
                                 <af:panelBorderLayout id="diagCal_pbl11"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:30px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="diagCal_pgl18"
                                                          layout="horizontal">
@@ -5194,11 +5212,11 @@
                           <af:panelGroupLayout id="dockpgl5" layout="horizontal"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:panelBorderLayout id="dockpbl4"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="dockpbl5"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
@@ -5224,7 +5242,7 @@
                                                    rendered="#{ topNode.index ne '3'}">
                                 <af:spacer width="50" height="10" id="docks1"/>
                                 <af:panelBorderLayout id="dockpbl11"
-                                                      inlineStyle="height:25px; width:60px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl18"
                                                          layout="horizontal">
@@ -5249,7 +5267,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dockp332"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;"
+                                                      inlineStyle="height:25px; width:30px; border-style:none;"
                                                       rendered="#{theadIter.uiField13_type eq 'DISPLAYONLY'}">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgxl18"
@@ -6033,11 +6051,11 @@
                                                layout="horizontal"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:panelBorderLayout id="misUpgpbl4"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="misUpgpbl5"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
@@ -6066,7 +6084,7 @@
                                                        layout="horizontal"
                                                        rendered="#{theadIter.identifyLicenceRow eq 'N'}">
                                     <af:panelBorderLayout id="misUpgpbl11"
-                                                          inlineStyle="height:25px; width:30px; border-style:groove;">
+                                                          inlineStyle="height:25px; width:30px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgpgl18"
                                                              layout="horizontal">
@@ -6167,7 +6185,7 @@
                                     <af:spacer width="50" height="10"
                                                id="misUpgc_s_13"/>
                                     <af:panelBorderLayout id="misUpgc_s_14"
-                                                          inlineStyle="height:25px; width:45px; border-style:groove;">
+                                                          inlineStyle="height:25px; width:45px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgc_s_1001"
                                                              layout="horizontal">
@@ -6299,7 +6317,7 @@
                                                        layout="horizontal"
                                                        rendered="#{theadIter.identifyLicenceRow eq 'Y'}">
                                     <af:panelBorderLayout id="misUpgc_s_134"
-                                                          inlineStyle="height:25px; width:45px; border-style:groove;">
+                                                          inlineStyle="height:25px; width:45px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgc_s_10301"
                                                              layout="horizontal">
@@ -6627,11 +6645,11 @@
                                                layout="horizontal"
                                                rendered="#{node.codeName eq topNode.index}">
                             <af:panelBorderLayout id="infupgpbl4"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeRefColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
                               <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
                             <af:panelBorderLayout id="infupgpbl5"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;background-color:#{node.nodeTargetColor};">
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
@@ -6656,7 +6674,7 @@
                                                    layout="horizontal"
                                                    rendered="#{theadIter.identifyLicenceRow eq 'N'}">
                                 <af:panelBorderLayout id="infupgpbl11"
-                                                      inlineStyle="height:25px; width:30px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:30px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="infupgpgl18"
                                                          layout="horizontal">
@@ -6893,7 +6911,7 @@
                                                    layout="horizontal"
                                                    rendered="#{topNode.index eq '1' and theadIter.uiGrpIndex eq '4'}">
                                 <af:panelBorderLayout id="infupgc_s_14"
-                                                      inlineStyle="height:25px; width:80px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:80px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="infupgc_s_1001"
                                                          layout="horizontal">
@@ -7025,7 +7043,7 @@
                                                    layout="horizontal"
                                                    rendered="#{theadIter.identifyLicenceRow eq 'Y'}">
                                 <af:panelBorderLayout id="infupgc_s_134"
-                                                      inlineStyle="height:25px; width:45px; border-style:groove;">
+                                                      inlineStyle="height:25px; width:45px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="infupgc_s_10301"
                                                          layout="horizontal">
@@ -7338,300 +7356,406 @@
               <af:panelGridLayout id="pgl14">
                 <af:gridRow marginTop="5px" height="auto" id="gr3">
                   <af:gridCell marginStart="5px" width="50%" id="gc5">
-                    <af:iterator id="i1" var="wrntyIter"
-                                 value="#{ConfiguratorBean.warrantyUiCollection}">
-                      <af:panelGroupLayout id="pgl15" layout="vertical">
-                        <af:panelGroupLayout id="pgl16" layout="horizontal">
-                          <af:panelGroupLayout id="wrnty_pgl5"
-                                               layout="horizontal">
-                            <af:panelBorderLayout id="wrnty_pbl4"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;">
-                              <f:facet name="innerBottom">
-                                <af:outputFormatted value="*" id="of7"
-                                                    inlineStyle="color:Maroon; font-size:large;"
-                                                    rendered="#{node.requiredFlag eq 'Y'}"/>
-                              </f:facet>
+                    <af:iterator id="i1" var="topNode"
+                                 value="#{ConfiguratorBean.warrantySdiCollection}">
+                      <af:panelGroupLayout id="wty_pgl4" layout="vertical">
+                        <af:panelGroupLayout id="wty_pgl11vf" layout="horizontal">
+                          <af:panelGroupLayout id="wty_pgl5" layout="horizontal"
+                                               rendered="#{node.codeName eq topNode.index}">
+                            <af:panelBorderLayout id="wty_pbl4"
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeRefColor};">
+                              <f:facet name="innerLeft"/>
                             </af:panelBorderLayout>
-                            <af:panelBorderLayout id="wrnty_pbl5"
-                                                  inlineStyle="height:15px; width:25px; border-style:groove;">
+                            <af:panelBorderLayout id="wty_pbl5"
+                                                  inlineStyle="height:15px; width:25px; border-style:none;background-color:#{node.nodeTargetColor};">
                               <f:facet name="start"/>
                               <f:facet name="bottom"/>
                               <f:facet name="end"/>
                               <f:facet name="top"/>
                             </af:panelBorderLayout>
-                            <af:panelBorderLayout id="pbl7"
+                            <af:panelBorderLayout id="wty_pbl6"
                                                   inlineStyle="height:15px; width:10px; border-style:none;">
                               <f:facet name="innerLeft">
-                                <af:outputFormatted value="*" id="of8"
+                                <af:outputFormatted value="*" id="wty_of6"
+                                                    inlineStyle="color:Maroon; font-size:x-large;"
                                                     rendered="#{node.requiredFlag eq 'Y'}"/>
                               </f:facet>
                             </af:panelBorderLayout>
                           </af:panelGroupLayout>
-                          <af:showDetailHeader text="#{node.nodeName}"
-                                               disclosed="false" id="sdh2">
-                            <af:panelGroupLayout id="wrntyPgl"
-                                                 layout="horizontal">
-                              <af:spacer width="50" height="10" id="wrntys1"/>
-                              <af:panelBorderLayout id="wty_pbl11"
-                                                    inlineStyle="height:25px; width:30px; border-style:groove;">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="wty_pgl18"
-                                                       layout="horizontal">
-                                    <af:inputText id="wty_it2" columns="5"
-                                                  rendered="#{wrntyIter.uiField8_type eq 'NUMERIC'}"
-                                                  autoSubmit="true"
-                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                  requiredMessageDetail="#{wrntyIter.uiField8_refQty}"
-                                                  helpTopicId="#{wrntyIter.uiField8_tarQty}"
-                                                  changedDesc="#{wrntyIter.uiField8_czModelName}"
-                                                  shortDesc="#{wrntyIter.uiField8_uiNodeName}"
-                                                  value="#{wrntyIter.digitsEntered}">
-                                      <af:validateRegExp pattern="[0-9]{1,10}"
-                                                         messageDetailNoMatch="Only Numbers allowed.."/>
-                                    </af:inputText>
-                                    <af:outputFormatted id="wty_it3"
-                                                        visible="false"
-                                                        shortDesc="#{wrntyIter.parentGroupName}"
-                                                        value="#{wrntyIter.uiField8_type}"
-                                                        styleClass="#{wrntyIter.uiField8_identifier}"/>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:spacer width="10" height="10" id="s4"/>
-                              <af:panelBorderLayout id="wrntypbl3"
-                                                    inlineStyle="height:25px; width:200px; border-style:none;">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="wrntypgl12"
-                                                       halign="left"
-                                                       layout="horizontal">
-                                    <af:outputFormatted value="#{wrntyIter.selectedValue}"
-                                                        id="outputFormatted1"/>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="wty_pbl12"
-                                                    inlineStyle="height:25px; width:20px; border-style:none;">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="wty_pgl19">
-                                    <af:outputFormatted value="#{wrntyIter.uiField9}"
-                                                        id="wty_of13"
-                                                        inlineStyle="color:Maroon; font-weight:bold;"/>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:spacer width="10" height="10" id="s5"/>
-                              <af:panelBorderLayout id="wty_pbl13"
-                                                    inlineStyle="height:25px; width:20px; border-style:none;">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="wty_pgl21">
-                                    <af:outputFormatted id="wty_of14"
-                                                        value="#{wrntyIter.uiField10}"
-                                                        inlineStyle="color:Teal; font-weight:bolder;"/>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:spacer width="20" height="10" id="s10"/>
-                              <af:panelBorderLayout id="pbl10"
-                                                    inlineStyle="height:25px; width:10px; border-style:none;">
-                                <f:facet name="innerLeft">
-                                  <af:outputFormatted value="*" id="of10"
-                                                      inlineStyle="font-size:x-large; color:Red;"
-                                                      rendered="#{wrntyIter.requiredFlagSubGrp eq 'Y'}"/>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="wrntypanelBorderLayout1"
-                                                    inlineStyle="height:25px; width:60px; border-style:none;">
-                                <f:facet name="innerLeft"/>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="wrntypanelBorderLayout2"
-                                                    inlineStyle="height:25px; width:60px; border-style:none;">
-                                <f:facet name="innerLeft"/>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="wrntypanelBorderLayout3"
-                                                    inlineStyle="height:25px; width:130px; border-style:none;background-color:#{wrntyIter.uiField1_color};"
-                                                    rendered="#{wrntyIter.uiField8_type ne 'NUMERIC'}">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout1"
+                          <af:showDetailHeader id="wty_sd1" text="#{node.nodeName}"
+                                               rendered="#{node.codeName eq topNode.index}">
+                            <af:iterator id="wty_i2"
+                                         value="#{topNode.uiFieldCollection}"
+                                         var="theadIter">
+                              <af:panelGroupLayout id="wty_theadPgl"
+                                                   layout="horizontal"
+                                                   rendered="#{topNode.index eq '1'}">
+                                <af:spacer width="50" height="10" id="wty1_s1"/>
+                                <af:panelBorderLayout id="wty_pbl11"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wty_pgl18"
+                                                         layout="horizontal">
+                                      <af:inputText id="wty_it2" columns="5"
+                                                    rendered="#{theadIter.uiField8_type eq 'NUMERIC'}"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"
+                                                    value="#{theadIter.digitsEntered}"
+                                                    requiredMessageDetail="#{theadIter.uiField8_refQty}"
+                                                    helpTopicId="#{theadIter.uiField8_tarQty}"
+                                                    changedDesc="#{theadIter.uiField8_czModelName}"
+                                                    shortDesc="#{theadIter.uiField8_uiNodeName}">
+                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                      </af:inputText>
+                                      <af:outputFormatted id="wty_it3"
+                                                          visible="false"
+                                                          shortDesc="#{theadIter.parentGroupName}"
+                                                          value="#{theadIter.uiField8_code}"
+                                                          styleClass="#{theadIter.uiField8_identifier}"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pbl14"
+                                                      styleClass="height:25px; width:40px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:spacer width="30" height="10" id="wty_s2"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pb_l3"
+                                                      inlineStyle="height:25px; width:200px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wty_pgl12"
+                                                         halign="left"
+                                                         layout="horizontal">
+                                      <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                          id="wty_of4"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pbl12"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wty_pgl19">
+                                      <af:outputFormatted value="#{theadIter.uiField9}"
+                                                          id="wty_of13"
+                                                          inlineStyle="color:Maroon; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="wty_s3"/>
+                                <af:panelBorderLayout id="wty_pbl13"
+                                                      inlineStyle="height:25px; width:20px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wty_pgl21">
+                                      <af:outputFormatted value="#{theadIter.uiField10}"
+                                                          id="wty1_of14"
+                                                          inlineStyle="color:Teal; font-weight:bold;"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:spacer width="20" height="10" id="wty_s11"/>
+                                <af:panelBorderLayout id="wty_pbl8"
+                                                      inlineStyle="height:25px; width:10px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:outputFormatted value="*" id="wty_of9"
+                                                        inlineStyle="font-size:x-large; color:Maroon;"
+                                                        rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pbl9"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pb20"
+                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                  <f:facet name="innerLeft"/>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pb1"
+                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wty_pgl7"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="wty_cl1"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                      partialSubmit="false">
+                                        <af:outputFormatted id="wty_th_of1"
+                                                            value="#{theadIter.uiField1}"
+                                                            inlineStyle="#{theadIter.uiField1_bgColor}"/>
+                                        <af:inputText id="wty_ip1_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName1}"
+                                                      shortDesc="#{theadIter.uiField1_identifier}"
+                                                      label="#{theadIter.uiField1_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"
+                                                      changedDesc="#{theadIter.uiField1_refQty}"
+                                                      rows="1"
+                                                      helpTopicId="#{theadIter.uiField1_tarQty}"
+                                                      requiredMessageDetail="#{theadIter.uiField1_czModelName}"
+                                                      contentStyle="#{theadIter.uiField1_uiNodeName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pb2"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wty_pgl_7"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="wty_cl2"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
+                                        <af:outputFormatted id="wty_th_of2"
+                                                            value="#{theadIter.uiField2}"
+                                                            inlineStyle="#{theadIter.uiField2_bgColor}"/>
+                                        <af:inputText id="wty_ip2_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName2}"
+                                                      shortDesc="#{theadIter.uiField2_identifier}"
+                                                      label="#{theadIter.uiField2_color}"
+                                                      changedDesc="#{theadIter.uiField2_refQty}"
+                                                      helpTopicId="#{theadIter.uiField2_tarQty}"
+                                                      requiredMessageDetail="#{theadIter.uiField2_czModelName}"
+                                                      contentStyle="#{theadIter.uiField2_uiNodeName}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty1_pb3"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wtupgl_71"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="wty_cl3wty_"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
+                                        <af:outputFormatted id="wty_th_of3"
+                                                            value="#{theadIter.uiField3}"
+                                                            inlineStyle="#{theadIter.uiField3_bgColor}"/>
+                                        <af:inputText id="wty_ip3_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName3}"
+                                                      changedDesc="#{theadIter.uiField3_refQty}"
+                                                      helpTopicId="#{theadIter.uiField3_tarQty}"
+                                                      requiredMessageDetail="#{theadIter.uiField3_czModelName}"
+                                                      contentStyle="#{theadIter.uiField3_uiNodeName}"
+                                                      shortDesc="#{theadIter.uiField3_identifier}"
+                                                      label="#{theadIter.uiField3_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pb4"
+                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wty_pgl_17"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="wty_cl4"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
+                                        <af:outputFormatted id="wty_th_of4"
+                                                            value="#{theadIter.uiField4}"
+                                                            inlineStyle="#{theadIter.uiField4_bgColor}"/>
+                                        <af:inputText id="wty_ip4_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName4}"
+                                                      changedDesc="#{theadIter.uiField4_refQty}"
+                                                      helpTopicId="#{theadIter.uiField4_tarQty}"
+                                                      requiredMessageDetail="#{theadIter.uiField4_czModelName}"
+                                                      contentStyle="#{theadIter.uiField4_uiNodeName}"
+                                                      shortDesc="#{theadIter.uiField4_identifier}"
+                                                      label="#{theadIter.uiField4_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pb5"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wty_pgl9"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="wty_cl5"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
+                                        <af:outputFormatted id="wty_th_of5"
+                                                            value="#{theadIter.uiField5}"
+                                                            inlineStyle="#{theadIter.uiField5_bgColor}"/>
+                                        <af:inputText id="wty_ip5_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName5}"
+                                                      changedDesc="#{theadIter.uiField5_refQty}"
+                                                      helpTopicId="#{theadIter.uiField5_tarQty}"
+                                                      requiredMessageDetail="#{theadIter.uiField5_czModelName}"
+                                                      contentStyle="#{theadIter.uiField5_uiNodeName}"
+                                                      shortDesc="#{theadIter.uiField5_identifier}"
+                                                      label="#{theadIter.uiField5_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pb6"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wty_pgl10"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="wty_cl6"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
+                                        <af:outputFormatted id="wty_th_of6"
+                                                            value="#{theadIter.uiField6}"
+                                                            inlineStyle="#{theadIter.uiField6_bgColor}"/>
+                                        <af:inputText id="wty_ip6_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName6}"
+                                                      changedDesc="#{theadIter.uiField6_refQty}"
+                                                      helpTopicId="#{theadIter.uiField6_tarQty}"
+                                                      requiredMessageDetail="#{theadIter.uiField6_czModelName}"
+                                                      contentStyle="#{theadIter.uiField6_uiNodeName}"
+                                                      shortDesc="#{theadIter.uiField6_identifier}"
+                                                      label="#{theadIter.uiField6_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                                <af:panelBorderLayout id="wty_pb7"
+                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                  <f:facet name="innerLeft">
+                                    <af:panelGroupLayout id="wty_pgl20"
+                                                         layout="horizontal"
+                                                         halign="left">
+                                      <af:commandLink id="wty_cl7"
+                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                      disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
+                                        <af:outputFormatted id="wty_th_of7"
+                                                            value="#{theadIter.uiField7}"
+                                                            inlineStyle="#{theadIter.uiField7_bgColor}"/>
+                                        <af:inputText id="wty_ip7_helper"
+                                                      visible="false"
+                                                      value="#{theadIter.czNodeName7}"
+                                                      changedDesc="#{theadIter.uiField7_refQty}"
+                                                      helpTopicId="#{theadIter.uiField7_tarQty}"
+                                                      requiredMessageDetail="#{theadIter.uiField7_czModelName}"
+                                                      contentStyle="#{theadIter.uiField7_uiNodeName}"
+                                                      shortDesc="#{theadIter.uiField7_identifier}"
+                                                      label="#{theadIter.uiField7_color}"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:commandLink>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:panelBorderLayout>
+                              </af:panelGroupLayout>
+                             <af:panelGroupLayout id="wty1_Pgl"
                                                        layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink1"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField1_dis or wrntyIter.uiField1_readOnly}"
-                                                    partialSubmit="false">
-                                      <af:outputFormatted id="outputFormatted2"
-                                                          value="#{wrntyIter.uiField1}"
-                                                          inlineStyle="#{wrntyIter.uiField1_bgColor}"/>
-                                      <af:inputText id="inputText1"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName1}"
-                                                    shortDesc="#{wrntyIter.uiField1_identifier}"
-                                                    changedDesc="#{wrntyIter.uiField1_refQty}"
-                                                    helpTopicId="#{wrntyIter.uiField1_tarQty}"
-                                                    requiredMessageDetail="#{wrntyIter.uiField1_czModelName}"
-                                                    contentStyle="#{wrntyIter.uiField1_uiNodeName}"
-                                                    label="#{wrntyIter.uiField1_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
+                                                  rendered="#{topNode.index ne '1'}">
+                                    <af:panelBorderLayout id="wty1_l11"
+                                                          inlineStyle="height:25px; width:30px; border-style:none;">
+                                      <f:facet name="innerLeft">
+                                        <af:panelGroupLayout id="wty1_l18"
+                                                             layout="horizontal">
+                                          <af:inputText id="wty1_it2"
+                                                        columns="5"
+                                                        disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
+                                                        autoSubmit="true"
+                                                        requiredMessageDetail="#{theadIter.uiField1_refQty}"
+                                                        helpTopicId="#{theadIter.uiField1_tarQty}"
+                                                        
+                                                        shortDesc="#{theadIter.uiField1_uiNodeName}"
+                                                        valueChangeListener="#{ConfiguratorBean.handleInput}"
+                                                        value="#{theadIter.uiField1_qty}"
+                                                        changedDesc="#{theadIter.uiField1_czModelName}">
+                                            <af:validateRegExp pattern="[0-9]{1,10}"
+                                                               messageDetailNoMatch="Only Numbers allowed.."/>
+                                          </af:inputText>
+                                          <af:outputFormatted id="wty1_it3"
+                                                              visible="false"
+                                                              shortDesc="#{theadIter.parentGroupName}"
+                                                              value="#{theadIter.uiField1_code}"
+                                                              styleClass="#{theadIter.uiField1_identifier}"
+                                                              rendered="false"
+                                                              inlineStyle="#{theadIter.uiField1_czModelName}"/>
+                                        </af:panelGroupLayout>
+                                      </f:facet>
+                                    </af:panelBorderLayout>
+                                    <af:spacer width="40" height="10"
+                                               id="wty1_s2"/>
+                                    <af:panelBorderLayout id="wty1__l3"
+                                                          inlineStyle="height:25px; width:250px; border-style:none;">
+                                      <f:facet name="innerLeft">
+                                        <af:panelGroupLayout id="wty1_l12"
+                                                             halign="left"
+                                                             layout="horizontal">
+                                          <af:outputFormatted value="#{theadIter.selectedValue}"
+                                                              id="wty1_of4"/>
+                                        </af:panelGroupLayout>
+                                      </f:facet>
+                                    </af:panelBorderLayout>
+                                    <af:panelBorderLayout id="wty1_pbl12"
+                                                          inlineStyle="height:25px; width:20px; border-style:none;">
+                                      <f:facet name="innerLeft">
+                                        <af:panelGroupLayout id="wty1_gpgl19">
+                                          <af:outputFormatted value="#{theadIter.uiField9}"
+                                                              id="wty1_gof13"
+                                                              inlineStyle="color:Maroon; font-weight:bold;"/>
+                                        </af:panelGroupLayout>
+                                      </f:facet>
+                                    </af:panelBorderLayout>
+                                    <af:spacer width="10" height="10"
+                                               id="wty1_gs3"/>
+                                    <af:panelBorderLayout id="wty1_pbl13"
+                                                          inlineStyle="height:25px; width:20px; border-style:none;">
+                                      <f:facet name="innerLeft">
+                                        <af:panelGroupLayout id="wty1_gpgl21">
+                                          <af:outputFormatted value="#{theadIter.uiField10}"
+                                                              id="wty1_gof14"
+                                                              inlineStyle="color:Teal; font-weight:bold;"/>
+                                        </af:panelGroupLayout>
+                                      </f:facet>
+                                    </af:panelBorderLayout>
+                                    <af:spacer width="20" height="10"
+                                               id="wty1_gs11"/>
+                                    <af:panelBorderLayout id="wty1_pgpbl8"
+                                                          inlineStyle="height:25px; width:10px; border-style:none;">
+                                      <f:facet name="innerLeft">
+                                        <af:outputFormatted value="*"
+                                                            id="wty1_pgof9"
+                                                            inlineStyle="font-size:x-large; color:Maroon;"
+                                                            rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
+                                      </f:facet>
+                                    </af:panelBorderLayout>
+                                    <af:panelBorderLayout id="wty1_pgpbl9"
+                                                          inlineStyle="height:25px; width:60px; border-style:none;">
+                                      <f:facet name="innerLeft"/>
+                                    </af:panelBorderLayout>
+                                    <af:panelBorderLayout id="wty1_Upgpb20"
+                                                          inlineStyle="height:25px; width:60px; border-style:none;">
+                                      <f:facet name="innerLeft"/>
+                                    </af:panelBorderLayout>
+                                    <af:panelBorderLayout id="wty1_pgpb1"
+                                                          inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                      <f:facet name="innerLeft">
+                                        <af:panelGroupLayout id="wty1_pgpgl7"
+                                                             layout="horizontal"
+                                                             halign="left">
+                                          <af:outputFormatted id="wty1_gth_of1"
+                                                              value="#{theadIter.uiField1}"
+                                                              inlineStyle="#{theadIter.uiField1_bgColor}"/>
+                                        </af:panelGroupLayout>
+                                      </f:facet>
+                                    </af:panelBorderLayout>
                                   </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout4"
-                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField2_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout2"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink2"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField2_dis or wrntyIter.uiField2_readOnly}">
-                                      <af:outputFormatted id="outputFormatted3"
-                                                          value="#{wrntyIter.uiField2}"
-                                                          inlineStyle="#{wrntyIter.uiField2_bgColor}"/>
-                                      <af:inputText id="inputText2"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName2}"
-                                                    shortDesc="#{wrntyIter.uiField2_identifier}"
-                                                    label="#{wrntyIter.uiField2_color}"
-                                                    changedDesc="#{wrntyIter.uiField2_refQty}"
-                                                    helpTopicId="#{wrntyIter.uiField2_tarQty}"
-                                                    requiredMessageDetail="#{wrntyIter.uiField2_czModelName}"
-                                                    contentStyle="#{wrntyIter.uiField2_uiNodeName}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout5"
-                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField3_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout3"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink3"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField3_dis or wrntyIter.uiField3_readOnly}">
-                                      <af:outputFormatted id="outputFormatted4"
-                                                          value="#{wrntyIter.uiField3}"
-                                                          inlineStyle="#{wrntyIter.uiField3_bgColor}"/>
-                                      <af:inputText id="inputText3"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName3}"
-                                                    shortDesc="#{wrntyIter.uiField3_identifier}"
-                                                    changedDesc="#{wrntyIter.uiField3_refQty}"
-                                                    helpTopicId="#{wrntyIter.uiField3_tarQty}"
-                                                    requiredMessageDetail="#{wrntyIter.uiField3_czModelName}"
-                                                    contentStyle="#{wrntyIter.uiField3_uiNodeName}"
-                                                    label="#{wrntyIter.uiField3_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout6"
-                                                    inlineStyle="height:25px; width:130px; border-style:none;background-color:#{wrntyIter.uiField4_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout4"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink4"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField4_dis or wrntyIter.uiField4_readOnly}">
-                                      <af:outputFormatted id="outputFormatted5"
-                                                          value="#{wrntyIter.uiField4}"
-                                                          inlineStyle="#{wrntyIter.uiField4_bgColor}"/>
-                                      <af:inputText id="inputText4"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName4}"
-                                                    shortDesc="#{wrntyIter.uiField4_identifier}"
-                                                    label="#{wrntyIter.uiField4_color}"
-                                                    changedDesc="#{wrntyIter.uiField4_refQty}"
-                                                    helpTopicId="#{wrntyIter.uiField4_tarQty}"
-                                                    requiredMessageDetail="#{wrntyIter.uiField4_czModelName}"
-                                                    contentStyle="#{wrntyIter.uiField4_uiNodeName}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout7"
-                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField5_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout5"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink5"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField5_dis or wrntyIter.uiField5_readOnly}">
-                                      <af:outputFormatted id="outputFormatted6"
-                                                          value="#{wrntyIter.uiField5}"
-                                                          inlineStyle="#{wrntyIter.uiField5_bgColor}"/>
-                                      <af:inputText id="inputText5"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName5}"
-                                                    shortDesc="#{wrntyIter.uiField5_identifier}"
-                                                    changedDesc="#{wrntyIter.uiField5_refQty}"
-                                                    helpTopicId="#{wrntyIter.uiField5_tarQty}"
-                                                    requiredMessageDetail="#{wrntyIter.uiField5_czModelName}"
-                                                    contentStyle="#{wrntyIter.uiField5_uiNodeName}"
-                                                    label="#{wrntyIter.uiField5_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout8"
-                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField6_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout6"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink6"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField6_dis or wrntyIter.uiField6_readOnly}">
-                                      <af:outputFormatted id="outputFormatted7"
-                                                          value="#{wrntyIter.uiField6}"
-                                                          inlineStyle="#{wrntyIter.uiField6_bgColor}"/>
-                                      <af:inputText id="inputText6"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName6}"
-                                                    shortDesc="#{wrntyIter.uiField6_identifier}"
-                                                    changedDesc="#{wrntyIter.uiField6_refQty}"
-                                                    helpTopicId="#{wrntyIter.uiField6_tarQty}"
-                                                    requiredMessageDetail="#{wrntyIter.uiField6_czModelName}"
-                                                    contentStyle="#{wrntyIter.uiField6_uiNodeName}"
-                                                    label="#{wrntyIter.uiField6_color}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                              <af:panelBorderLayout id="panelBorderLayout9"
-                                                    inlineStyle="height:25px; width:90px; border-style:none;background-color:#{wrntyIter.uiField7_color};">
-                                <f:facet name="innerLeft">
-                                  <af:panelGroupLayout id="panelGroupLayout7"
-                                                       layout="horizontal"
-                                                       halign="left">
-                                    <af:commandLink id="commandLink7"
-                                                    actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                    disabled="#{wrntyIter.uiField7_dis or wrntyIter.uiField7_readOnly}">
-                                      <af:outputFormatted id="outputFormatted8"
-                                                          value="#{wrntyIter.uiField7}"
-                                                          inlineStyle="#{wrntyIter.uiField7_bgColor}"/>
-                                      <af:inputText id="inputText7"
-                                                    visible="false"
-                                                    value="#{wrntyIter.czNodeName7}"
-                                                    shortDesc="#{wrntyIter.uiField7_identifier}"
-                                                    label="#{wrntyIter.uiField7_color}"
-                                                    changedDesc="#{wrntyIter.uiField7_refQty}"
-                                                    helpTopicId="#{wrntyIter.uiField7_tarQty}"
-                                                    requiredMessageDetail="#{wrntyIter.uiField7_czModelName}"
-                                                    contentStyle="#{wrntyIter.uiField7_uiNodeName}"
-                                                    placeholder="#{wrntyIter.parentGroupName}"/>
-                                    </af:commandLink>
-                                  </af:panelGroupLayout>
-                                </f:facet>
-                              </af:panelBorderLayout>
-                            </af:panelGroupLayout>
+                            </af:iterator>
                           </af:showDetailHeader>
                         </af:panelGroupLayout>
                       </af:panelGroupLayout>

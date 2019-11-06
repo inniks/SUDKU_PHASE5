@@ -2,7 +2,6 @@ package xxatcust.oracle.apps.sudoku.viewmodel.ui;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
-
 public class UiSelection {
     private String uniqueSessionId;
     private String parentGroupName;
@@ -20,7 +19,9 @@ public class UiSelection {
     private String selectionState;// TRUE if value is selected, FALSE if value is de-selected.
     String czModelName = null;
     
-//    private String userConfirmation = null; // YES or NO for the conflict message
+    private String inActiveUniqueSessionId;
+    
+    private boolean userConfirmation = false; // True or False for the conflict message
     
     public UiSelection() {
         super();
@@ -74,8 +75,8 @@ public class UiSelection {
     }
 
     public String getCzNodeName() {
-//        if(czNodeName !=null && czNodeName.startsWith("\"")) {
-//            czNodeName = czNodeName.substring(1, czNodeName.length()-1);
+//        if(czNodeName!=null){
+//               czNodeName = "\""+czNodeName+"\"";
 //        }
         return czNodeName;
     }
@@ -147,11 +148,20 @@ public class UiSelection {
         return czModelName;
     }
 
-//    public void setUserConfirmation(String userConfirmation) {
-//        this.userConfirmation = userConfirmation;
-//    }
-//
-//    public String getUserConfirmation() {
-//        return userConfirmation;
-//    }
+
+    public void setInActiveUniqueSessionId(String inActiveUniqueSessionId) {
+        this.inActiveUniqueSessionId = inActiveUniqueSessionId;
+    }
+
+    public String getInActiveUniqueSessionId() {
+        return inActiveUniqueSessionId;
+    }
+
+    public void setUserConfirmation(boolean userConfirmation) {
+        this.userConfirmation = userConfirmation;
+    }
+
+    public boolean isUserConfirmation() {
+        return userConfirmation;
+    }
 }

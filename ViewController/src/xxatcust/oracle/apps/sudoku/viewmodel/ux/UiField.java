@@ -215,7 +215,7 @@ public class UiField {
     private String sumInstaBaseRef;
     private String sumInstaBaseTar;
     private String identifyLicenceRow;
-
+    private String selectedLovValue;
     public UiField() {
 
 
@@ -270,6 +270,19 @@ public class UiField {
                         List<ConfiguratorUiNode> list =
                             listOfNodes.get(0).getConfigUiNodes();
                         for (ConfiguratorUiNode uiNode : list) {
+                            if(uiNode!=null && uiNode.isIsSelected()){
+                                String czNodeName =
+                                    uiNode.getCzNodeName() == null ? "-1" :
+                                    uiNode.getCzNodeName();
+                                String uiNodeName =
+                                    uiNode.getUiNodeName() == null ? "-1" :
+                                    uiNode.getUiNodeName();
+                                String identifier =
+                                    uiNode.getIdentifier() == null ? "-1" :
+                                    uiNode.getIdentifier();
+                                selectedLovValue = czNodeName.concat("-").concat(uiNodeName).concat("-").concat(identifier);
+                                System.out.println("Selected LOV Value is "+selectedLovValue);
+                            }
                             String czNodeName =
                                 uiNode.getCzNodeName() == null ? "-1" :
                                 uiNode.getCzNodeName();
@@ -2906,5 +2919,13 @@ public class UiField {
 
     public String getUiField13_czModelName() {
         return uiField13_czModelName;
+    }
+
+    public void setSelectedLovValue(String selectedLovValue) {
+        this.selectedLovValue = selectedLovValue;
+    }
+
+    public String getSelectedLovValue() {
+        return selectedLovValue;
     }
 }

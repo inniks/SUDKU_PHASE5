@@ -481,10 +481,13 @@ public class ImportSource {
             (String)ADFUtils.getSessionScopeValue("UserId") == null ? "0" :
             (String)ADFUtils.getSessionScopeValue("UserId");
         String timestamp = Long.toString(System.currentTimeMillis());
-        String uniqueSessionId = userId.concat(timestamp);
+        String uniqueSessionId = (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
+        String inactiveSessionId = uniqueSessionId;
+         uniqueSessionId =   userId.concat(timestamp);
         InputParams inputParam = new InputParams();
         UiSelection uiSelection = new UiSelection();
         uiSelection.setUniqueSessionId(uniqueSessionId);
+        uiSelection.setInActiveUniqueSessionId(inactiveSessionId);
         ADFUtils.setSessionScopeValue("uniqueSessionId", uniqueSessionId);
         //Get Session details added to the POJO object
         sessionDetails.setApplicationId((String)ADFUtils.getSessionScopeValue("ApplId") ==
