@@ -24,21 +24,24 @@ public class DigitalResourcesBean {
     public DigitalResourcesBean() {
         super();
     }
+
     public static ArrayList<UiField> prepareDigitalResourcesModel(V93kQuote v93k,
-                                               String uiGrpName,
-                                               ArrayList<UiField> uiFieldCollection) {
+                                                                  String uiGrpName,
+                                                                  ArrayList<UiField> uiFieldCollection) {
         //Based on a refresh condition,prepare the data model for testhead,dut etc.
         //For each ui subgroup,One UIField object is to be created
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
-        String requiredFlag = "N" ;
-        String groupName = null ;
+        String requiredFlag = "N";
+        String groupName = null;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getDigitalResourceGroup() != null) {
             LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap =
                 v93k.getUiRoot().getDigitalResourceGroup().getUiGroupMap();
-            groupName = v93k.getUiRoot().getDigitalResourceGroup().getGroupDisplayName();
+            
+            groupName =
+                    v93k.getUiRoot().getDigitalResourceGroup().getGroupDisplayName();
             ConfiguratorUiGroup uiGroup = uiGroupMap.get(uiGrpName);
             if (uiGroup != null) {
                 mapUiSubGrp = uiGroup.getSubGroups();
@@ -52,10 +55,11 @@ public class DigitalResourcesBean {
                     Map.Entry pair = (Map.Entry)it.next();
                     ConfiguratorUiSubGroup subGroup =
                         (ConfiguratorUiSubGroup)pair.getValue();
+                   
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
-                    requiredFlag = subGroup.isRequired()? "Y" :"N" ;
+                    requiredFlag = subGroup.isRequired() ? "Y" : "N";
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();
                     if (listOfElements != null && !listOfElements.isEmpty()) {
@@ -68,7 +72,10 @@ public class DigitalResourcesBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,Integer.toString(index));
+                        uiField =
+                                new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
+                                            groupName,
+                                            Integer.toString(index));
                         index++;
                         uiFieldCollection.add(uiField);
                     }
@@ -80,16 +87,19 @@ public class DigitalResourcesBean {
 
         return uiFieldCollection;
     }
-    
-    public static ChildPropertyTreeModel populateDigitalResParentTreeModel(ChildPropertyTreeModel digitalChildModel,ArrayList<UxTreeNode> rootDigital) {
+
+    public static ChildPropertyTreeModel populateDigitalResParentTreeModel(ChildPropertyTreeModel digitalChildModel,
+                                                                           ArrayList<UxTreeNode> rootDigital) {
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         rootDigital = new ArrayList<UxTreeNode>();
         LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getDigitalResourceGroup() != null) {
+            
             DigitalResourceGroup digitalGrp =
                 v93k.getUiRoot().getDigitalResourceGroup();
+           
             String groupName = digitalGrp.getGroupDisplayName();
             String refColor =
                 digitalGrp.isDisplayReferenceColor() ? SudokuUtils.REFERENCE_COLOR :
@@ -97,11 +107,11 @@ public class DigitalResourcesBean {
             String tarColor =
                 digitalGrp.isDisplayTargetColor() ? SudokuUtils.TARGET_COLOR :
                 null;
-            String grpRequiredFlag = digitalGrp.isRequired() ? "Y" : "N" ;
+            String grpRequiredFlag = digitalGrp.isRequired() ? "Y" : "N";
             UxTreeNode firstLevel =
-                new UxTreeNode("addSwTools", groupName, "Zero",
-                               null, null, refColor,
-                               tarColor,grpRequiredFlag); //For top level color, code later
+                new UxTreeNode("addSwTools", groupName, "Zero", null, null,
+                               refColor, tarColor,
+                               grpRequiredFlag); //For top level color, code later
             rootDigital.add(firstLevel);
 
             uiGroupMap =
@@ -119,21 +129,21 @@ public class DigitalResourcesBean {
                 Boolean isRequired = uiGrp.isRequired();
                 String nodeRefColor = null;
                 String nodeTargetColor = null;
-                String requiredFlag = "N" ;
+                String requiredFlag = "N";
                 if (isReferenceColor != null && isReferenceColor) {
                     nodeRefColor = SudokuUtils.REFERENCE_COLOR;
                 }
                 if (isTargetColor != null && isTargetColor) {
                     nodeTargetColor = SudokuUtils.TARGET_COLOR;
                 }
-                if(isRequired!=null && isRequired){
+                if (isRequired != null && isRequired) {
                     requiredFlag = "Y";
                 }
                 if (uiGrpName != null) {
                     UxTreeNode childrenOfDigital =
                         new UxTreeNode(Integer.toString(index), uiGrpName,
                                        "First", null, null, nodeRefColor,
-                                       nodeTargetColor,requiredFlag);
+                                       nodeTargetColor, requiredFlag);
                     firstLevel.addNodes(childrenOfDigital);
 
                     index = index + 1;
@@ -141,10 +151,14 @@ public class DigitalResourcesBean {
             }
 
         }
-        digitalChildModel = new ChildPropertyTreeModel(rootDigital, "childNodeList");
+        digitalChildModel =
+                new ChildPropertyTreeModel(rootDigital, "childNodeList");
         return digitalChildModel;
     }
-    public static ArrayList<ShowDetailItemCollection> populateDigitalResourcesSubGroups(V93kQuote v93k,List<ShowDetailItemCollection> sdiCollection) {
+
+    public static ArrayList<ShowDetailItemCollection> populateDigitalResourcesSubGroups(V93kQuote v93k,
+                                                                                        List<ShowDetailItemCollection> sdiCollection) {
+        int licenseRowIndex = 0;
         LinkedHashMap<String, ConfiguratorUiGroup> uiGroupMap = null;
         LinkedHashMap<String, ConfiguratorUiGroup> mapUiGrp =
             new LinkedHashMap<String, ConfiguratorUiGroup>();
@@ -165,6 +179,8 @@ public class DigitalResourcesBean {
                 Map.Entry pair = (Map.Entry)it.next();
                 mapUiGrp.put((String)pair.getKey(),
                              (ConfiguratorUiGroup)pair.getValue());
+                licenseRowIndex = findLicenceRowIndex((ConfiguratorUiGroup)pair.getValue());
+                System.out.println("License Row Index for "+pair.getKey()+" Is "+licenseRowIndex);
             }
         }
         if (mapUiGrp != null && !mapUiGrp.isEmpty()) {
@@ -202,5 +218,28 @@ public class DigitalResourcesBean {
             }
         }
         return (ArrayList<ShowDetailItemCollection>)sdiCollection;
+    }
+
+    private static int findLicenceRowIndex(ConfiguratorUiGroup uiGroup) {
+        int licenseRowIndex=0;
+        if (uiGroup != null) {
+            LinkedHashMap<String, ConfiguratorUiSubGroup> subGrpMap =
+                uiGroup.getSubGroups();
+            if(subGrpMap!=null && !subGrpMap.isEmpty()){
+                Iterator it = subGrpMap.entrySet().iterator();
+                int index = 1;
+                while (it.hasNext()) {
+                    index++;
+                    Map.Entry pair = (Map.Entry)it.next();
+                    String uiGrpName = (String)pair.getKey();
+                    ConfiguratorUiSubGroup uiSubGroup = (ConfiguratorUiSubGroup)pair.getValue();
+                    if(uiSubGroup!=null && uiSubGroup.getSubGroupIdentifier()!=null && uiSubGroup.getSubGroupIdentifier().equalsIgnoreCase("Licensed Features")){
+                        licenseRowIndex = index ;
+                        break;
+                    }
+                }
+            }
+        }
+        return licenseRowIndex;
     }
 }

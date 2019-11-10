@@ -216,6 +216,7 @@ public class UiField {
     private String sumInstaBaseTar;
     private String identifyLicenceRow;
     private String selectedLovValue;
+    private String licenceRowIndex;
     public UiField() {
 
 
@@ -256,8 +257,7 @@ public class UiField {
             0, sumInsTar = 0;
         int numOfSelections = 0;
         int countLicensesEntered = 0;
-        boolean displayOnlyLogic = false;
-
+        boolean displayOnlyLogic = false;       
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
 
             ConfiguratorUiNode node = null;
@@ -2927,5 +2927,13 @@ public class UiField {
 
     public String getSelectedLovValue() {
         return selectedLovValue;
+    }
+
+    public void setLicenceRowIndex(String licenceRowIndex) {
+        this.licenceRowIndex = licenceRowIndex;
+    }
+
+    public String getLicenceRowIndex() {
+        return licenceRowIndex;
     }
 }

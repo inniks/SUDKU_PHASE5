@@ -319,7 +319,8 @@ public class ImportSource {
 
                 ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
             }
-            if (v93kQuote != null) {
+            boolean configHasErrors = configHasErrors(v93kQuote);
+            if (v93kQuote != null && !configHasErrors) {
                 ADFUtils.setSessionScopeValue("isDuplicateQuote",
                                               v93kQuote.getSessionDetails().isDuplicateQuote());
                 ADFUtils.setSessionScopeValue("isUpdateQuote",
@@ -656,6 +657,27 @@ public class ImportSource {
             System.out.println("Value changed in popup");
             ADFUtils.setSessionScopeValue("ImpSrcChanged", "Y");
         }
+    }
+    
+    public boolean configHasErrors(V93kQuote v93k) {
+        boolean hasErrors = false;
+        if (v93k != null) {
+            //Check if no exceptions from configurator
+            if (v93k.getExceptionMap() != null) {
+                TreeMap<String, ArrayList<String>> exceptionMap =
+                    v93k.getExceptionMap().getErrorList();
+                List<String> errorMessages =
+                    v93k.getExceptionMap().getErrorsMessages();
+                if (exceptionMap != null && exceptionMap.size() > 0) {
+                    hasErrors = true;
+                }
+                if (errorMessages != null && errorMessages.size() > 0) {
+                    hasErrors = true;
+                }
+            }
+           
+        }
+        return hasErrors;
     }
 
     public void setV93kQuote(V93kQuote v93kQuote) {

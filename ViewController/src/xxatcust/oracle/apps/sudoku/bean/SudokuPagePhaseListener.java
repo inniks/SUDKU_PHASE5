@@ -214,6 +214,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                 String jSession = (String)request.getAttribute("JSESSION");
                 String quoteNumber =
                     (String)request.getAttribute("pQuoteNumber");
+                String callFromSearchQuote = (String)request.getAttribute("Search");
                 _logger.info("quoteNumbervalue from pQuoteNumber: " +
                              quoteNumber);
                 Map map1 =
@@ -230,6 +231,10 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                     quoteNumber =
                             map1.get("pQuoteNumber") == null ? "" : map1.get("pQuoteNumber").toString();
                     _logger.info("2nd quoteNumber: " + quoteNumber);
+                }
+                if(callFromSearchQuote==null){
+                    callFromSearchQuote = map1.get("Search") == null ? "" : map1.get("Search").toString();
+                    _logger.info("CallFromSearchQuote: " + callFromSearchQuote);
                 }
                 ADFUtils.setSessionScopeValue("targetQuoteNumber",
                                               quoteNumber);
@@ -334,7 +339,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                             sessionADF.setAttribute("OrgId", orgId);
                             if (quoteNumber != null &&
                                 !quoteNumber.equals("")) {
-                                callCIOServletOnLoad(quoteNumber);
+                                callCIOServletOnLoad(quoteNumber,callFromSearchQuote);
 
                             }
                            
@@ -386,7 +391,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
         return true;
     }
 
-    public void callCIOServletOnLoad(String targetQuoteNum) throws IOException,
+    public void callCIOServletOnLoad(String targetQuoteNum,String fromQuote) throws IOException,
                                                                    JsonGenerationException,
                                                                    JsonMappingException {
         SessionDetails sessionDetails = new SessionDetails();

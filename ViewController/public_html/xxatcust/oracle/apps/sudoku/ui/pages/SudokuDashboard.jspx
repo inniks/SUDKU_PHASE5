@@ -318,6 +318,17 @@
                                 binding="#{viewScope.LoadDynamicRegionBean.setMOFop}"/>
           </af:dialog>
         </af:popup>
+                  <af:popup id="errPopup"
+                            binding="#{viewScope.LoadDynamicRegionBean.errorPopupBinding}">
+            <af:dialog id="errorD3" title="Error(s) occurred :" contentWidth="450"
+                       contentHeight="200" type="cancel"
+                       inlineStyle="color:Red;">
+              <af:panelGroupLayout id="pgl11" layout="scroll">
+                <af:outputFormatted id="ot15" inlineStyle="color:Red;"
+                                    binding="#{viewScope.LoadDynamicRegionBean.errMsgFromConfig}"/>
+              </af:panelGroupLayout>
+            </af:dialog>
+          </af:popup>
       </af:form>
     </af:document>
   </f:view>

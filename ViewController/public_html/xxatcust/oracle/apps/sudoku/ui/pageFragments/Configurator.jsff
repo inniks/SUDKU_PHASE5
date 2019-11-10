@@ -4918,9 +4918,9 @@
                                     <af:panelGroupLayout id="diagCal_pgl12"
                                                          halign="left"
                                                          layout="horizontal">
-                                      <af:outputFormatted value="#{theadIter.selectedValue}  #{theadIter.uiField1_identifier}"
+                                      <af:outputFormatted value="#{theadIter.selectedValue}"
                                                           id="diagCal_of4"
-                                                          inlineStyle="color:#{theadIter.uiField1_color};"/>
+                                                          inlineStyle="color:#{theadIter.uiField1_color eq &quot;Red&quot; ? &quot;Red&quot; : null};"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -7770,7 +7770,8 @@
     </af:panelStretchLayout>
     <af:panelStretchLayout id="conf_def_view"
                            rendered="#{ConfiguratorBean.defaultViewOnLoad}"
-                           topHeight="70px" styleClass="AFStretchWidth">
+                           topHeight="70px" styleClass="AFStretchWidth"
+                           dimensionsFrom="children">
       <f:facet name="center">
         <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                              id="pgl24" styleClass="AFStretchWidth">

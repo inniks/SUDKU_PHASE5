@@ -64,7 +64,7 @@ public class TargetConfiguration {
     public void setPageInitText(RichOutputText pageInitText) {
         this.pageInitText = pageInitText;
     }
-    
+
     public void refreshView(ActionEvent actionEvent) {
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         //Trying to clear previous values here
@@ -72,7 +72,7 @@ public class TargetConfiguration {
         categoryTree = null;
         allNodes = null;
         listViewCollection = null;
-        if(expertMode!=null){
+        if (expertMode != null) {
             expertMode.setValue(null);
         }
     }
@@ -84,8 +84,9 @@ public class TargetConfiguration {
         exportDownload(null);
         UIComponent ui = ADFUtils.findComponentInRoot("psexconfig");
         if (ui != null) {
-            String cancelAll = (String)ADFUtils.getSessionScopeValue("cancelAll");
-            if(cancelAll!=null && cancelAll.equalsIgnoreCase("Y")){
+            String cancelAll =
+                (String)ADFUtils.getSessionScopeValue("cancelAll");
+            if (cancelAll != null && cancelAll.equalsIgnoreCase("Y")) {
                 quoteTotal.setValue(null);
             }
             AdfFacesContext.getCurrentInstance().addPartialTarget(ui);
@@ -93,7 +94,7 @@ public class TargetConfiguration {
         //ADFUtils.refreshPage();
         return pageInitText;
     }
-    
+
     public void exportDownload(ActionEvent actionEvent) {
         UIComponent ui = ADFUtils.findComponentInRoot("psexconfig");
         if (ui != null) {
@@ -123,7 +124,9 @@ public class TargetConfiguration {
     }
 
 
-    private List<ChildPropertyTreeModel> createChildrenTrees() {
+    private HashMap<ChildPropertyTreeModel, Double> createChildrenTrees() {
+        HashMap<ChildPropertyTreeModel, Double> mapOfChildren =
+            new HashMap<ChildPropertyTreeModel, Double>();
         List<ChildPropertyTreeModel> listOfTrees =
             new ArrayList<ChildPropertyTreeModel>();
         try {
@@ -172,7 +175,7 @@ public class TargetConfiguration {
                         expertMode.setValue(null);
                     }
                 }
-                
+
                 if (errMessage != null) {
                     Double sumQuoteTotal = new Double(0);
 
@@ -180,6 +183,7 @@ public class TargetConfiguration {
                     List targetLines = obj.getTargetConfigurationLines();
                     if (targetLines != null && !targetLines.isEmpty()) {
                         //in a loop call the getAllNodes
+                        double lineQuoteAmount = new Double(0);
                         for (int i = 0; i < targetLines.size(); i++) {
                             List<String> catList = new ArrayList<String>();
                             List<String> distinctList =
@@ -193,12 +197,16 @@ public class TargetConfiguration {
                                 for (ConfiguratorNodePOJO node :
                                      allNodesList) {
                                     if (node.getPrintGroupLevel() != null &&
-                                        (node.getPrintGroupLevel().equalsIgnoreCase("1")||node.getPrintGroupLevel().equalsIgnoreCase("2")||node.getPrintGroupLevel().equalsIgnoreCase("3")||node.getPrintGroupLevel().equalsIgnoreCase("4"))) {
+                                        (node.getPrintGroupLevel().equalsIgnoreCase("1") ||
+                                         node.getPrintGroupLevel().equalsIgnoreCase("2") ||
+                                         node.getPrintGroupLevel().equalsIgnoreCase("3") ||
+                                         node.getPrintGroupLevel().equalsIgnoreCase("4"))) {
                                         if (node.getExtendedPrice() != null) {
-                                            Double b =
+                                            lineQuoteAmount =
                                                 new Double(node.getExtendedPrice());
-                                            sumQuoteTotal = sumQuoteTotal + b;
-                                            System.out.println("Sum Total "+sumQuoteTotal);
+                                            //                                            sumQuoteTotal = sumQuoteTotal + b;
+                                            //                                            lineQuoteAmount = new Double( node.getExtendedPrice());
+                                            //                                            System.out.println("Sum Total "+sumQuoteTotal);
                                         }
                                     }
                                     if (node.getNodeCategory() != null &&
@@ -212,7 +220,7 @@ public class TargetConfiguration {
                                     }
                                 }
                             }
-                           
+
                             //quoteTotal.setValue(sumQuoteTotal);
                             distinctList = removeDuplicatesFromList(catList);
                             for (String distinctCategory : distinctList) {
@@ -247,16 +255,19 @@ public class TargetConfiguration {
                                         new NodeCategory(category, null, null,
                                                          null, null, null,
                                                          null, null,
-                                                         printGrpLevel,null);
+                                                         printGrpLevel, null);
                                 root.add(firstLevel);
                                 List<ConfiguratorNodePOJO> childList =
                                     (List<ConfiguratorNodePOJO>)pair.getValue();
                                 for (ConfiguratorNodePOJO node : childList) {
-                                    String nodeDesig = null ;
-                                     if(node.getPrintGroupLevel()!=null && node.getPrintGroupLevel().equalsIgnoreCase("1")){
-                                         nodeDesig = "header" ;
-                                     }
-                                    if(node.getNodeCategory()!=null && (node.getNodeCategory().equalsIgnoreCase("3")||node.getNodeCategory().equalsIgnoreCase("2"))){
+                                    String nodeDesig = null;
+                                    if (node.getPrintGroupLevel() != null &&
+                                        node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+                                        nodeDesig = "header";
+                                    }
+                                    if (node.getNodeCategory() != null &&
+                                        (node.getNodeCategory().equalsIgnoreCase("3") ||
+                                         node.getNodeCategory().equalsIgnoreCase("2"))) {
                                         node.setPrintGroupLevel("1000");
                                     }
                                     NodeCategory secondLevel =
@@ -268,7 +279,8 @@ public class TargetConfiguration {
                                                          node.getUnitPrice(),
                                                          node.getExtendedPrice(),
                                                          node.getNodeColor(),
-                                                         node.getPrintGroupLevel(),nodeDesig);
+                                                         node.getPrintGroupLevel(),
+                                                         nodeDesig);
                                     firstLevel.addNodes(secondLevel);
                                 }
 
@@ -281,11 +293,12 @@ public class TargetConfiguration {
                                     new ChildPropertyTreeModel(root, "childNodes");
                             ADFUtils.setSessionScopeValue("categoryTree",
                                                           categoryTree);
+                            mapOfChildren.put(categoryTree, lineQuoteAmount);
                             listOfTrees.add(categoryTree);
                         }
-                        if (quoteTotal != null) {
-                            quoteTotal.setValue(sumQuoteTotal);
-                        }
+                        //                        if (quoteTotal != null) {
+                        //                            quoteTotal.setValue(sumQuoteTotal);
+                        //                        }
                     }
                 } else {
                     ADFUtils.setSessionScopeValue("quoteNumber",
@@ -303,7 +316,7 @@ public class TargetConfiguration {
             e.printStackTrace();
         } finally {
         }
-        return listOfTrees;
+        return mapOfChildren;
     }
 
 
@@ -400,12 +413,31 @@ public class TargetConfiguration {
     }
 
     public ArrayList<ListViewModel> getListViewCollection() {
+        Double netQuoteTotal = new Double(0);
         String refreshImport =
             (String)ADFUtils.getSessionScopeValue("refreshImport");
         if (listViewCollection == null && refreshImport != null &&
             refreshImport.equalsIgnoreCase("Y")) {
             listViewCollection = new ArrayList<ListViewModel>();
-            List<ChildPropertyTreeModel> listOftrees = createChildrenTrees();
+            HashMap<ChildPropertyTreeModel, Double> mapOfTrees =
+                createChildrenTrees();
+            List<ChildPropertyTreeModel> listOftrees =
+                new ArrayList<ChildPropertyTreeModel>();
+            if (mapOfTrees != null && !mapOfTrees.isEmpty()) {
+                Iterator it = mapOfTrees.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    ChildPropertyTreeModel child =
+                        (ChildPropertyTreeModel)pair.getKey();
+                    Double lineTotal = (Double)pair.getValue();
+                    System.out.println("Line total "+lineTotal);
+                    listOftrees.add(child);
+                    netQuoteTotal = netQuoteTotal + lineTotal;
+                }
+            }
+            if (quoteTotal != null) {
+                quoteTotal.setValue(netQuoteTotal);
+            }
             if (listOftrees != null && !listOftrees.isEmpty()) {
                 for (int i = 0; i < listOftrees.size(); i++) {
                     ListViewModel listViewObj =

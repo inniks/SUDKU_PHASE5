@@ -24,12 +24,15 @@ import java.sql.Connection;
 
 import java.sql.SQLException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 //import java.util.Hashtable;
 import java.util.List;
 
 import java.util.Map;
+
+import java.util.TreeMap;
 
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -124,6 +127,8 @@ public class LoadDynamicRegionBean {
     private String errorFromPopup;
     private String infoFromPopup;
     private RichOutputFormatted setMOFop;
+    private RichPopup errorPopupBinding;
+    private RichOutputFormatted errMsgFromConfig;
 
     public LoadDynamicRegionBean() {
     }
@@ -376,15 +381,17 @@ public class LoadDynamicRegionBean {
         //Before calling all the API's,Pass import source as "SAVE_CONFIG_TO_QUOTE"
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        //Do not call configurator if there is an error from Save Config to quote
         if (v93k != null && v93k.getInputParams() != null) {
             v93k.getInputParams().setImportSource("SAVE_CONFIG_TO_QUOTE");
-            String selectedCzNode = null;
+            String czNodeName = null;
             if (v93k.getUiSelection() != null) {
-                selectedCzNode = v93k.getUiSelection().getCzNodeName();
-                if (selectedCzNode != null) {
-                    selectedCzNode = "\"" + selectedCzNode + "\"";
-                    v93k.getUiSelection().setCzNodeName(selectedCzNode);
-                }
+                czNodeName = v93k.getUiSelection().getCzNodeName();
+//                if (czNodeName != null) {
+//                    //czNodeName = "\"" + czNodeName + "\"";
+//                    czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
+//                    v93k.getUiSelection().setCzNodeName(czNodeName);
+//                }
             }
 
             String jsonStr = JSONUtils.convertObjToJson(v93k);
@@ -394,146 +401,496 @@ public class LoadDynamicRegionBean {
             System.out.println("Response Json from Configurator : " +
                                responseJson);
             ObjectMapper mapper = new ObjectMapper();
-            //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
-            //mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
             Object obj = mapper.readValue(responseJson, V93kQuote.class);
             v93k = (V93kQuote)obj;
             ADFUtils.setSessionScopeValue("parentObject", v93k);
         }
+        boolean configHasErrors = configHasErrors(v93k);
+        if (!configHasErrors) {
+            String createQtMsg = getFndMessages(SudokuUtils.createQteMsg);
+            String discount = null;
+            int respid =
+                Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
+                                 null ? "51156" :
+                                 (String)ADFUtils.getSessionScopeValue("RespId"));
+            int usrId =
+                Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
+                                 null ? "0" :
+                                 (String)ADFUtils.getSessionScopeValue("UserId"));
 
-
-        String createQtMsg = getFndMessages(SudokuUtils.createQteMsg);
-        String discount = null;
-        int respid =
-            Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
-                             null ? "51156" :
-                             (String)ADFUtils.getSessionScopeValue("RespId"));
-        int usrId =
-            Integer.parseInt((String)ADFUtils.getSessionScopeValue("UserId") ==
-                             null ? "0" :
-                             (String)ADFUtils.getSessionScopeValue("UserId"));
-
-        //        FacesContext fc = FacesContext.getCurrentInstance();
-        BindingContainer bindings = getBindings();
-        StringBuilder resultMsg = new StringBuilder("<html><body>");
-        StringBuilder resultErrMsg = new StringBuilder("<html><body>");
-        if (v93k != null) {
-            if (v93k.getQheaderObject() != null) {
-                if (v93k.getQheaderObject().getDealObject() != null) {
-                    discount =
-                            (String)v93k.getQheaderObject().getDealObject().getDdiscount();
+            //        FacesContext fc = FacesContext.getCurrentInstance();
+            BindingContainer bindings = getBindings();
+            StringBuilder resultMsg = new StringBuilder("<html><body>");
+            StringBuilder resultErrMsg = new StringBuilder("<html><body>");
+            if (v93k != null) {
+                if (v93k.getQheaderObject() != null) {
+                    if (v93k.getQheaderObject().getDealObject() != null) {
+                        discount =
+                                (String)v93k.getQheaderObject().getDealObject().getDdiscount();
+                    }
                 }
-            }
-            if (v93k.getSessionDetails() != null) {
-                if (v93k.getSessionDetails().isCreateNewQuote()) {
-                    if (v93k.getSessionDetails().getTargetQuoteNumber() !=
-                        null) {
-                        for (QuoteLinePOJO list :
-                             v93k.getTargetConfigurationLines()) {
-                            if (list != null) {
-                                String operationMode = list.getOperationCode();
-                                if (operationMode != null &&
-                                    operationMode.equalsIgnoreCase("CREATE")) {
-                                    OperationBinding createOb =
-                                        bindings.getOperationBinding("callConfigLineToAddQuoteAPI");
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....QUOTE NUM " +
-                                                 v93k.getSessionDetails().getTargetQuoteNumber());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....OPERATION CODE " +
-                                                 list.getOperationCode());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigHdrId " +
-                                                 list.getConfigHrdId());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigRevNum  " +
-                                                 list.getConfigRevNum());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ITEM NUM " +
-                                                 list.getItemName());
-                                    createOb.getParamsMap().put("quoteNum",
-                                                                v93k.getSessionDetails().getTargetQuoteNumber());
+                if (v93k.getSessionDetails() != null) {
+                    if (v93k.getSessionDetails().isCreateNewQuote()) {
+                        if (v93k.getSessionDetails().getTargetQuoteNumber() !=
+                            null) {
+                            for (QuoteLinePOJO list :
+                                 v93k.getTargetConfigurationLines()) {
+                                if (list != null) {
+                                    String operationMode =
+                                        list.getOperationCode();
+                                    if (operationMode != null &&
+                                        operationMode.equalsIgnoreCase("CREATE")) {
+                                        OperationBinding createOb =
+                                            bindings.getOperationBinding("callConfigLineToAddQuoteAPI");
+                                        _logger.info("Calling callConfigLineToAddQuoteAPI....QUOTE NUM " +
+                                                     v93k.getSessionDetails().getTargetQuoteNumber());
+                                        _logger.info("Calling callConfigLineToAddQuoteAPI....OPERATION CODE " +
+                                                     list.getOperationCode());
+                                        _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigHdrId " +
+                                                     list.getConfigHrdId());
+                                        _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigRevNum  " +
+                                                     list.getConfigRevNum());
+                                        _logger.info("Calling callConfigLineToAddQuoteAPI....ITEM NUM " +
+                                                     list.getItemName());
+                                        createOb.getParamsMap().put("quoteNum",
+                                                                    v93k.getSessionDetails().getTargetQuoteNumber());
 
-                                    createOb.getParamsMap().put("itemNumber",
-                                                                list.getItemName());
-                                    createOb.getParamsMap().put("itemQty", 1);
-                                    createOb.getParamsMap().put("orgNum",
-                                                                list.getOperationCode() ==
-                                                                null ? "GDO" :
-                                                                list.getOperationCode());
-                                    createOb.getParamsMap().put("ConfighdrId",
-                                                                list.getConfigHrdId());
-                                    createOb.getParamsMap().put("configRevNum",
-                                                                list.getConfigRevNum());
-                                    createOb.getParamsMap().put("respId",
-                                                                respid);
-                                    createOb.getParamsMap().put("usrId",
-                                                                usrId);
-                                    String createMsg =
-                                        (String)createOb.execute();
-                                    if (createMsg != null) {
-                                        if (createMsg.contains("<html><body>")) {
-                                            resultErrMsg.append("<p><b>" +
-                                                                createMsg +
-                                                                "</b></p>");
-                                        } else if (createMsg.contains("S-")) {
-
-
-                                            if (discount != null) {
-                                                String discountMsg =
-                                                    updateDiscount(v93k.getSessionDetails().getTargetQuoteNumber(),
-                                                                   discount,
-                                                                   respid,
-                                                                   usrId);
-
-                                                if (discountMsg != null) {
-                                                    if (discountMsg.contains("<html><body>")) {
-                                                        resultErrMsg.append("<p><b>" +
-                                                                            discountMsg +
-                                                                            "</b></p>");
-                                                    } else if (discountMsg.contains("S-")) {
-                                                        String[] resMsg =
-                                                            discountMsg.split("-",
-                                                                              2);
-                                                        if (resMsg[1] !=
-                                                            null) {
-                                                            resultMsg.append("<p><b>" +
-                                                                             resMsg[1] +
-                                                                             "</b></p>");
-                                                        }
-                                                    } else if (discountMsg.contains("E-")) {
-                                                        String[] resMsg =
-                                                            discountMsg.split("-",
-                                                                              2);
-                                                        if (resMsg[1] !=
-                                                            null) {
-                                                            resultErrMsg.append("<p><b>" +
-                                                                                resMsg[1] +
-                                                                                "</b></p>");
-                                                        }
-                                                    } else
-                                                        resultErrMsg.append(discountMsg.toString());
-                                                }
-                                            }
-
-
-                                            String[] resMsg =
-                                                createMsg.split("-", 2);
-                                            if (resMsg[1] != null) {
-                                                resultMsg.append("<p><b>" +
-                                                                 resMsg[1] +
-                                                                 "</b></p>");
-                                            }
-
-                                            //Save to oracle success , set param here
-                                        } else if (createMsg.contains("E-")) {
-                                            String[] resMsg =
-                                                createMsg.split("-", 2);
-                                            if (resMsg[1] != null) {
+                                        createOb.getParamsMap().put("itemNumber",
+                                                                    list.getItemName());
+                                        createOb.getParamsMap().put("itemQty",
+                                                                    1);
+                                        createOb.getParamsMap().put("orgNum",
+                                                                    list.getOperationCode() ==
+                                                                    null ?
+                                                                    "GDO" :
+                                                                    list.getOperationCode());
+                                        createOb.getParamsMap().put("ConfighdrId",
+                                                                    list.getConfigHrdId());
+                                        createOb.getParamsMap().put("configRevNum",
+                                                                    list.getConfigRevNum());
+                                        createOb.getParamsMap().put("respId",
+                                                                    respid);
+                                        createOb.getParamsMap().put("usrId",
+                                                                    usrId);
+                                        String createMsg =
+                                            (String)createOb.execute();
+                                        if (createMsg != null) {
+                                            if (createMsg.contains("<html><body>")) {
                                                 resultErrMsg.append("<p><b>" +
-                                                                    resMsg[1] +
+                                                                    createMsg +
                                                                     "</b></p>");
-                                            }
-                                        } else
-                                            resultErrMsg.append(createMsg.toString());
+                                            } else if (createMsg.contains("S-")) {
+
+
+                                                if (discount != null) {
+                                                    String discountMsg =
+                                                        updateDiscount(v93k.getSessionDetails().getTargetQuoteNumber(),
+                                                                       discount,
+                                                                       respid,
+                                                                       usrId);
+
+                                                    if (discountMsg != null) {
+                                                        if (discountMsg.contains("<html><body>")) {
+                                                            resultErrMsg.append("<p><b>" +
+                                                                                discountMsg +
+                                                                                "</b></p>");
+                                                        } else if (discountMsg.contains("S-")) {
+                                                            String[] resMsg =
+                                                                discountMsg.split("-",
+                                                                                  2);
+                                                            if (resMsg[1] !=
+                                                                null) {
+                                                                resultMsg.append("<p><b>" +
+                                                                                 resMsg[1] +
+                                                                                 "</b></p>");
+                                                            }
+                                                        } else if (discountMsg.contains("E-")) {
+                                                            String[] resMsg =
+                                                                discountMsg.split("-",
+                                                                                  2);
+                                                            if (resMsg[1] !=
+                                                                null) {
+                                                                resultErrMsg.append("<p><b>" +
+                                                                                    resMsg[1] +
+                                                                                    "</b></p>");
+                                                            }
+                                                        } else
+                                                            resultErrMsg.append(discountMsg.toString());
+                                                    }
+                                                }
+
+
+                                                String[] resMsg =
+                                                    createMsg.split("-", 2);
+                                                if (resMsg[1] != null) {
+                                                    resultMsg.append("<p><b>" +
+                                                                     resMsg[1] +
+                                                                     "</b></p>");
+                                                }
+
+                                                //Save to oracle success , set param here
+                                            } else if (createMsg.contains("E-")) {
+                                                String[] resMsg =
+                                                    createMsg.split("-", 2);
+                                                if (resMsg[1] != null) {
+                                                    resultErrMsg.append("<p><b>" +
+                                                                        resMsg[1] +
+                                                                        "</b></p>");
+                                                }
+                                            } else
+                                                resultErrMsg.append(createMsg.toString());
+                                        }
                                     }
                                 }
                             }
+                        } else {
+                            if (createQtMsg != null)
+                                resultErrMsg.append("<p><b>" + createQtMsg +
+                                                    "</b></p>");
+                            else
+                                resultErrMsg.append("<p><b>" +
+                                                    SudokuUtils.createQteMsg +
+                                                    "</b></p>");
+
+                            //                        resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
+                            //                        resultMsg.append("\n");
+                            System.out.println("Please create Quote before save");
+                        }
+                    } else if (v93k.getSessionDetails().isDuplicateQuote()) {
+                        if (v93k.getSessionDetails().getTargetQuoteNumber() !=
+                            null) {
+                            ADFContext.getCurrent().getSessionScope().put("targetQuoteNumber",
+                                                                          v93k.getSessionDetails().getTargetQuoteNumber());
+                            String targetQuote =
+                                v93k.getSessionDetails().getTargetQuoteNumber().toString();
+                            for (QuoteLinePOJO list :
+                                 v93k.getTargetConfigurationLines()) {
+                                if (list != null) {
+                                    String operationMode =
+                                        list.getOperationCode();
+                                    if (operationMode != null &&
+                                        operationMode.equalsIgnoreCase("CREATE")) {
+                                        OperationBinding dCreateOb =
+                                            bindings.getOperationBinding("callConfigLineToAddQuoteAPI");
+                                        _logger.info("Calling callConfigLineToAddQuoteAPI....QUOTE NUM " +
+                                                     v93k.getSessionDetails().getTargetQuoteNumber());
+                                        _logger.info("Calling callConfigLineToAddQuoteAPI....OPERATION CODE " +
+                                                     list.getOperationCode());
+                                        _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigHdrId " +
+                                                     list.getConfigHrdId());
+                                        _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigRevNum  " +
+                                                     list.getConfigRevNum());
+                                        _logger.info("Calling callConfigLineToAddQuoteAPI....ITEM NUM " +
+                                                     list.getItemName());
+                                        dCreateOb.getParamsMap().put("quoteNum",
+                                                                     targetQuote);
+                                        dCreateOb.getParamsMap().put("itemNumber",
+                                                                     list.getItemName());
+                                        //                        ob.getParamsMap().put("itemQty",list.getItems().size());
+                                        dCreateOb.getParamsMap().put("itemQty",
+                                                                     1);
+                                        //                                    dCreateOb.getParamsMap().put("OrgNum",
+                                        //                                                                 list.getOperationCode());
+                                        dCreateOb.getParamsMap().put("orgNum",
+                                                                     list.getOperationCode() ==
+                                                                     null ?
+                                                                     "GDO" :
+                                                                     list.getOperationCode());
+                                        dCreateOb.getParamsMap().put("ConfighdrId",
+                                                                     list.getConfigHrdId());
+                                        dCreateOb.getParamsMap().put("configRevNum",
+                                                                     list.getConfigRevNum());
+                                        dCreateOb.getParamsMap().put("respId",
+                                                                     respid);
+                                        dCreateOb.getParamsMap().put("usrId",
+                                                                     usrId);
+                                        String createMsg =
+                                            (String)dCreateOb.execute();
+                                        if (createMsg != null) {
+                                            if (createMsg.contains("<html><body>")) {
+                                                resultErrMsg.append("<p><b>" +
+                                                                    createMsg +
+                                                                    "</b></p>");
+                                            } else if (createMsg.contains("S-")) {
+
+
+                                                if (discount != null) {
+                                                    String discountMsg =
+                                                        updateDiscount(targetQuote,
+                                                                       discount,
+                                                                       respid,
+                                                                       usrId);
+
+                                                    if (discountMsg != null) {
+                                                        if (discountMsg.contains("<html><body>")) {
+                                                            resultErrMsg.append("<p><b>" +
+                                                                                discountMsg +
+                                                                                "</b></p>");
+                                                        } else if (discountMsg.contains("S-")) {
+                                                            String[] resMsg =
+                                                                discountMsg.split("-",
+                                                                                  2);
+                                                            if (resMsg[1] !=
+                                                                null) {
+                                                                resultMsg.append("<p><b>" +
+                                                                                 resMsg[1] +
+                                                                                 "</b></p>");
+                                                            }
+                                                        } else if (discountMsg.contains("E-")) {
+                                                            String[] resMsg =
+                                                                discountMsg.split("-",
+                                                                                  2);
+                                                            if (resMsg[1] !=
+                                                                null) {
+                                                                resultErrMsg.append("<p><b>" +
+                                                                                    resMsg[1] +
+                                                                                    "</b></p>");
+                                                            }
+                                                        } else
+                                                            resultErrMsg.append(discountMsg.toString());
+                                                    }
+                                                }
+
+
+                                                String[] resMsg =
+                                                    createMsg.split("-", 2);
+                                                if (resMsg[1] != null) {
+                                                    resultMsg.append("<p><b>" +
+                                                                     resMsg[1] +
+                                                                     "</b></p>");
+                                                }
+                                                //save too oracle success
+                                            } else if (createMsg.contains("E-")) {
+                                                String[] resMsg =
+                                                    createMsg.split("-", 2);
+                                                if (resMsg[1] != null) {
+                                                    resultErrMsg.append("<p><b>" +
+                                                                        resMsg[1] +
+                                                                        "</b></p>");
+                                                }
+                                            } else
+                                                resultErrMsg.append(createMsg.toString());
+                                        }
+
+                                    }
+                                }
+                            }
+                        } else {
+                            if (createQtMsg != null)
+                                resultErrMsg.append("<p><b>" + createQtMsg +
+                                                    "</b></p>");
+                            else
+                                resultErrMsg.append("<p><b>" +
+                                                    SudokuUtils.createQteMsg +
+                                                    "</b></p>");
+                            //                        resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
+                            //                        resultMsg.append("\n");
+                            System.out.println("Please craete Quote before Save");
+                        }
+                    } else if (v93k.getSessionDetails().isUpdateQuote()) {
+                        if (v93k.getSessionDetails().getSourceQuoteNumber() !=
+                            null) {
+                            for (QuoteLinePOJO list :
+                                 v93k.getTargetConfigurationLines()) {
+                                if (list != null) {
+                                    String operationMode =
+                                        list.getOperationCode();
+                                    if (operationMode != null &&
+                                        operationMode.equalsIgnoreCase("UPDATE")) {
+                                        OperationBinding ob =
+                                            bindings.getOperationBinding("callConfigLineToUpdateQuoteAPI");
+                                        _logger.info("Calling callConfigLineToUpdateQuoteAPI....QUOTE NUM " +
+                                                     v93k.getSessionDetails().getSourceQuoteNumber());
+                                        _logger.info("Calling callConfigLineToUpdateQuoteAPI....OPERATION CODE " +
+                                                     list.getOperationCode());
+                                        _logger.info("Calling callConfigLineToUpdateQuoteAPI....ConfigHdrId " +
+                                                     list.getConfigHrdId());
+                                        _logger.info("Calling callConfigLineToUpdateQuoteAPI....ConfigRevNum  " +
+                                                     list.getConfigRevNum());
+                                        _logger.info("Calling callConfigLineToUpdateQuoteAPI....ITEM NUM " +
+                                                     list.getItemName());
+                                        _logger.info("Calling callConfigLineToUpdateQuoteAPI....QUOTE LINE NUM " +
+                                                     list.getQuoteLineId());
+                                        ob.getParamsMap().put("quoteNum",
+                                                              v93k.getSessionDetails().getSourceQuoteNumber());
+                                        ob.getParamsMap().put("quoteLineNum",
+                                                              list.getQuoteLineId());
+                                        ob.getParamsMap().put("itemQty", 1);
+                                        ob.getParamsMap().put("ConfighdrId",
+                                                              list.getConfigHrdId());
+                                        ob.getParamsMap().put("configRevNum",
+                                                              list.getConfigRevNum());
+                                        ob.getParamsMap().put("respId",
+                                                              respid);
+                                        ob.getParamsMap().put("usrId", usrId);
+                                        String updateMsg =
+                                            (String)ob.execute();
+                                        if (updateMsg != null) {
+                                            if (updateMsg.contains("<html><body>")) {
+                                                resultErrMsg.append("<p><b>" +
+                                                                    updateMsg +
+                                                                    "</b></p>");
+                                            } else if (updateMsg.contains("S-")) {
+
+                                                if (discount != null) {
+                                                    String discountMsg =
+                                                        updateDiscount(v93k.getSessionDetails().getSourceQuoteNumber(),
+                                                                       discount,
+                                                                       respid,
+                                                                       usrId);
+
+                                                    if (discountMsg != null) {
+                                                        if (discountMsg.contains("<html><body>")) {
+                                                            resultErrMsg.append("<p><b>" +
+                                                                                discountMsg +
+                                                                                "</b></p>");
+                                                        } else if (discountMsg.contains("S-")) {
+                                                            String[] resMsg =
+                                                                discountMsg.split("-",
+                                                                                  2);
+                                                            if (resMsg[1] !=
+                                                                null) {
+                                                                resultMsg.append("<p><b>" +
+                                                                                 resMsg[1] +
+                                                                                 "</b></p>");
+                                                            }
+                                                        } else if (discountMsg.contains("E-")) {
+                                                            String[] resMsg =
+                                                                discountMsg.split("-",
+                                                                                  2);
+                                                            if (resMsg[1] !=
+                                                                null) {
+                                                                resultErrMsg.append("<p><b>" +
+                                                                                    resMsg[1] +
+                                                                                    "</b></p>");
+                                                            }
+                                                        } else
+                                                            resultErrMsg.append(discountMsg.toString());
+                                                    }
+                                                }
+
+
+                                                String[] resMsg =
+                                                    updateMsg.split("-", 2);
+                                                if (resMsg[1] != null) {
+                                                    resultMsg.append("<p><b>" +
+                                                                     resMsg[1] +
+                                                                     "</b></p>");
+                                                }
+                                                //save to oracle success
+                                            } else if (updateMsg.contains("E-")) {
+                                                String[] resMsg =
+                                                    updateMsg.split("-", 2);
+                                                if (resMsg[1] != null) {
+                                                    resultErrMsg.append("<p><b>" +
+                                                                        resMsg[1] +
+                                                                        "</b></p>");
+                                                }
+                                            } else
+                                                resultErrMsg.append(updateMsg.toString());
+                                        }
+                                    } else if (operationMode != null &&
+                                               operationMode.equalsIgnoreCase("CREATE")) {
+                                        OperationBinding ob =
+                                            bindings.getOperationBinding("callConfigLineToAddQuoteAPI");
+                                        ob.getParamsMap().put("quoteNum",
+                                                              v93k.getSessionDetails().getSourceQuoteNumber().toString());
+                                        ob.getParamsMap().put("itemNumber",
+                                                              list.getItemName());
+                                        ob.getParamsMap().put("itemQty", 1);
+                                        ob.getParamsMap().put("orgNum",
+                                                              list.getOperationCode() ==
+                                                              null ? "GDO" :
+                                                              list.getOperationCode());
+                                        ob.getParamsMap().put("ConfighdrId",
+                                                              list.getConfigHrdId());
+                                        ob.getParamsMap().put("configRevNum",
+                                                              list.getConfigRevNum());
+                                        ob.getParamsMap().put("respId",
+                                                              respid);
+                                        ob.getParamsMap().put("usrId", usrId);
+                                        String createMsg =
+                                            (String)ob.execute();
+                                        if (createMsg != null) {
+                                            if (createMsg.contains("<html><body>")) {
+                                                resultErrMsg.append("<p><b>" +
+                                                                    createMsg +
+                                                                    "</b></p>");
+                                            } else if (createMsg.contains("S-")) {
+
+
+                                                if (discount != null) {
+                                                    String discountMsg =
+                                                        updateDiscount(v93k.getSessionDetails().getSourceQuoteNumber(),
+                                                                       discount,
+                                                                       respid,
+                                                                       usrId);
+
+                                                    if (discountMsg != null) {
+                                                        if (discountMsg.contains("<html><body>")) {
+                                                            resultErrMsg.append("<p><b>" +
+                                                                                discountMsg +
+                                                                                "</b></p>");
+                                                        } else if (discountMsg.contains("S-")) {
+                                                            String[] resMsg =
+                                                                discountMsg.split("-",
+                                                                                  2);
+                                                            if (resMsg[1] !=
+                                                                null) {
+                                                                resultMsg.append("<p><b>" +
+                                                                                 resMsg[1] +
+                                                                                 "</b></p>");
+                                                            }
+                                                        } else if (discountMsg.contains("E-")) {
+                                                            String[] resMsg =
+                                                                discountMsg.split("-",
+                                                                                  2);
+                                                            if (resMsg[1] !=
+                                                                null) {
+                                                                resultErrMsg.append("<p><b>" +
+                                                                                    resMsg[1] +
+                                                                                    "</b></p>");
+                                                            }
+                                                        } else
+                                                            resultErrMsg.append(discountMsg.toString());
+                                                    }
+                                                }
+
+
+                                                String[] resMsg =
+                                                    createMsg.split("-", 2);
+                                                if (resMsg[1] != null) {
+                                                    resultMsg.append("<p><b>" +
+                                                                     resMsg[1] +
+                                                                     "</b></p>");
+                                                }
+                                            } else if (createMsg.contains("E-")) {
+                                                String[] resMsg =
+                                                    createMsg.split("-", 2);
+                                                if (resMsg[1] != null) {
+                                                    resultErrMsg.append("<p><b>" +
+                                                                        resMsg[1] +
+                                                                        "</b></p>");
+                                                }
+                                            } else
+                                                resultErrMsg.append(createMsg.toString());
+                                        }
+                                    } else {
+                                    }
+                                }
+
+                            }
+                        } else {
+                            if (createQtMsg != null)
+                                resultErrMsg.append("<p><b>" + createQtMsg +
+                                                    "</b></p>");
+                            else
+                                resultErrMsg.append("<p><b>" +
+                                                    SudokuUtils.createQteMsg +
+                                                    "</b></p>");
+                            //                        resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
+                            //                        resultMsg.append("\n");
+                            System.out.println("Please create Quote before Save");
                         }
                     } else {
                         if (createQtMsg != null)
@@ -543,338 +900,73 @@ public class LoadDynamicRegionBean {
                             resultErrMsg.append("<p><b>" +
                                                 SudokuUtils.createQteMsg +
                                                 "</b></p>");
-
-                        //                        resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
-                        //                        resultMsg.append("\n");
-                        System.out.println("Please create Quote before save");
+                        //                    resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
+                        //                    resultMsg.append("\n");
                     }
-                } else if (v93k.getSessionDetails().isDuplicateQuote()) {
-                    if (v93k.getSessionDetails().getTargetQuoteNumber() !=
-                        null) {
-                        ADFContext.getCurrent().getSessionScope().put("targetQuoteNumber",
-                                                                      v93k.getSessionDetails().getTargetQuoteNumber());
-                        String targetQuote =
-                            v93k.getSessionDetails().getTargetQuoteNumber().toString();
-                        for (QuoteLinePOJO list :
-                             v93k.getTargetConfigurationLines()) {
-                            if (list != null) {
-                                String operationMode = list.getOperationCode();
-                                if (operationMode != null &&
-                                    operationMode.equalsIgnoreCase("CREATE")) {
-                                    OperationBinding dCreateOb =
-                                        bindings.getOperationBinding("callConfigLineToAddQuoteAPI");
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....QUOTE NUM " +
-                                                 v93k.getSessionDetails().getTargetQuoteNumber());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....OPERATION CODE " +
-                                                 list.getOperationCode());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigHdrId " +
-                                                 list.getConfigHrdId());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ConfigRevNum  " +
-                                                 list.getConfigRevNum());
-                                    _logger.info("Calling callConfigLineToAddQuoteAPI....ITEM NUM " +
-                                                 list.getItemName());
-                                    dCreateOb.getParamsMap().put("quoteNum",
-                                                                 targetQuote);
-                                    dCreateOb.getParamsMap().put("itemNumber",
-                                                                 list.getItemName());
-                                    //                        ob.getParamsMap().put("itemQty",list.getItems().size());
-                                    dCreateOb.getParamsMap().put("itemQty", 1);
-                                    //                                    dCreateOb.getParamsMap().put("OrgNum",
-                                    //                                                                 list.getOperationCode());
-                                    dCreateOb.getParamsMap().put("orgNum",
-                                                                 list.getOperationCode() ==
-                                                                 null ? "GDO" :
-                                                                 list.getOperationCode());
-                                    dCreateOb.getParamsMap().put("ConfighdrId",
-                                                                 list.getConfigHrdId());
-                                    dCreateOb.getParamsMap().put("configRevNum",
-                                                                 list.getConfigRevNum());
-                                    dCreateOb.getParamsMap().put("respId",
-                                                                 respid);
-                                    dCreateOb.getParamsMap().put("usrId",
-                                                                 usrId);
-                                    String createMsg =
-                                        (String)dCreateOb.execute();
-                                    if (createMsg != null) {
-                                        if (createMsg.contains("<html><body>")) {
-                                            resultErrMsg.append("<p><b>" +
-                                                                createMsg +
-                                                                "</b></p>");
-                                        } else if (createMsg.contains("S-")) {
 
 
-                                            if (discount != null) {
-                                                String discountMsg =
-                                                    updateDiscount(targetQuote,
-                                                                   discount,
-                                                                   respid,
-                                                                   usrId);
-
-                                                if (discountMsg != null) {
-                                                    if (discountMsg.contains("<html><body>")) {
-                                                        resultErrMsg.append("<p><b>" +
-                                                                            discountMsg +
-                                                                            "</b></p>");
-                                                    } else if (discountMsg.contains("S-")) {
-                                                        String[] resMsg =
-                                                            discountMsg.split("-",
-                                                                              2);
-                                                        if (resMsg[1] !=
-                                                            null) {
-                                                            resultMsg.append("<p><b>" +
-                                                                             resMsg[1] +
-                                                                             "</b></p>");
-                                                        }
-                                                    } else if (discountMsg.contains("E-")) {
-                                                        String[] resMsg =
-                                                            discountMsg.split("-",
-                                                                              2);
-                                                        if (resMsg[1] !=
-                                                            null) {
-                                                            resultErrMsg.append("<p><b>" +
-                                                                                resMsg[1] +
-                                                                                "</b></p>");
-                                                        }
-                                                    } else
-                                                        resultErrMsg.append(discountMsg.toString());
-                                                }
-                                            }
-
-
-                                            String[] resMsg =
-                                                createMsg.split("-", 2);
-                                            if (resMsg[1] != null) {
-                                                resultMsg.append("<p><b>" +
-                                                                 resMsg[1] +
-                                                                 "</b></p>");
-                                            }
-                                            //save too oracle success
-                                        } else if (createMsg.contains("E-")) {
-                                            String[] resMsg =
-                                                createMsg.split("-", 2);
-                                            if (resMsg[1] != null) {
-                                                resultErrMsg.append("<p><b>" +
-                                                                    resMsg[1] +
-                                                                    "</b></p>");
-                                            }
-                                        } else
-                                            resultErrMsg.append(createMsg.toString());
-                                    }
-
-                                }
-                            }
-                        }
-                    } else {
-                        if (createQtMsg != null)
-                            resultErrMsg.append("<p><b>" + createQtMsg +
-                                                "</b></p>");
-                        else
-                            resultErrMsg.append("<p><b>" +
-                                                SudokuUtils.createQteMsg +
-                                                "</b></p>");
-                        //                        resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
-                        //                        resultMsg.append("\n");
-                        System.out.println("Please craete Quote before Save");
-                    }
-                } else if (v93k.getSessionDetails().isUpdateQuote()) {
                     if (v93k.getSessionDetails().getSourceQuoteNumber() !=
+                        null ||
+                        v93k.getSessionDetails().getTargetQuoteNumber() !=
                         null) {
-                        for (QuoteLinePOJO list :
-                             v93k.getTargetConfigurationLines()) {
-                            if (list != null) {
-                                String operationMode = list.getOperationCode();
-                                if (operationMode != null &&
-                                    operationMode.equalsIgnoreCase("UPDATE")) {
-                                    OperationBinding ob =
-                                        bindings.getOperationBinding("callConfigLineToUpdateQuoteAPI");
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....QUOTE NUM " +
-                                                 v93k.getSessionDetails().getSourceQuoteNumber());
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....OPERATION CODE " +
-                                                 list.getOperationCode());
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ConfigHdrId " +
-                                                 list.getConfigHrdId());
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ConfigRevNum  " +
-                                                 list.getConfigRevNum());
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....ITEM NUM " +
-                                                 list.getItemName());
-                                    _logger.info("Calling callConfigLineToUpdateQuoteAPI....QUOTE LINE NUM " +
-                                                 list.getQuoteLineId());
-                                    ob.getParamsMap().put("quoteNum",
+                        OperationBinding warrantyOb =
+                            getBindings().getOperationBinding("callWarrentyAPI");
+                        String quoteForWarranty = null;
+                        if (v93k.getSessionDetails().isDuplicateQuote() ||
+                            v93k.getSessionDetails().isCreateNewQuote()) {
+                            quoteForWarranty =
+                                    v93k.getSessionDetails().getTargetQuoteNumber();
+                        } else if (quoteForWarranty == null &&
+                                   v93k.getSessionDetails().isUpdateQuote()) {
+                            warrantyOb.getParamsMap().put("quoteNum",
                                                           v93k.getSessionDetails().getSourceQuoteNumber());
-                                    ob.getParamsMap().put("quoteLineNum",
-                                                          list.getQuoteLineId());
-                                    ob.getParamsMap().put("itemQty", 1);
-                                    ob.getParamsMap().put("ConfighdrId",
-                                                          list.getConfigHrdId());
-                                    ob.getParamsMap().put("configRevNum",
-                                                          list.getConfigRevNum());
-                                    ob.getParamsMap().put("respId", respid);
-                                    ob.getParamsMap().put("usrId", usrId);
-                                    String updateMsg = (String)ob.execute();
-                                    if (updateMsg != null) {
-                                        if (updateMsg.contains("<html><body>")) {
-                                            resultErrMsg.append("<p><b>" +
-                                                                updateMsg +
-                                                                "</b></p>");
-                                        } else if (updateMsg.contains("S-")) {
-
-                                            if (discount != null) {
-                                                String discountMsg =
-                                                    updateDiscount(v93k.getSessionDetails().getSourceQuoteNumber(),
-                                                                   discount,
-                                                                   respid,
-                                                                   usrId);
-
-                                                if (discountMsg != null) {
-                                                    if (discountMsg.contains("<html><body>")) {
-                                                        resultErrMsg.append("<p><b>" +
-                                                                            discountMsg +
-                                                                            "</b></p>");
-                                                    } else if (discountMsg.contains("S-")) {
-                                                        String[] resMsg =
-                                                            discountMsg.split("-",
-                                                                              2);
-                                                        if (resMsg[1] !=
-                                                            null) {
-                                                            resultMsg.append("<p><b>" +
-                                                                             resMsg[1] +
-                                                                             "</b></p>");
-                                                        }
-                                                    } else if (discountMsg.contains("E-")) {
-                                                        String[] resMsg =
-                                                            discountMsg.split("-",
-                                                                              2);
-                                                        if (resMsg[1] !=
-                                                            null) {
-                                                            resultErrMsg.append("<p><b>" +
-                                                                                resMsg[1] +
-                                                                                "</b></p>");
-                                                        }
-                                                    } else
-                                                        resultErrMsg.append(discountMsg.toString());
+                            quoteForWarranty =
+                                    v93k.getSessionDetails().getSourceQuoteNumber();
+                        }
+                        if (v93k.getTargetConfigurationLines() != null &&
+                            !v93k.getTargetConfigurationLines().isEmpty()) {
+                            for (QuoteLinePOJO list :
+                                 v93k.getTargetConfigurationLines()) {
+                                List<ConfiguratorNodePOJO> warrantyList =
+                                    list.getWarrantyItems();
+                                if (warrantyList != null &&
+                                    !warrantyList.isEmpty()) {
+                                    for (ConfiguratorNodePOJO node :
+                                         warrantyList) {
+                                        //call the warranty api
+                                        String item = node.getNodeName();
+                                        warrantyOb.getParamsMap().put("quoteNum",
+                                                                      quoteForWarranty);
+                                        warrantyOb.getParamsMap().put("prodName",
+                                                                      item);
+                                        warrantyOb.getParamsMap().put("respId",
+                                                                      respid);
+                                        warrantyOb.getParamsMap().put("usrId",
+                                                                      usrId);
+                                        String retMsg = null;
+                                        if (warrantyOb != null) {
+                                            retMsg =
+                                                    (String)warrantyOb.execute();
+                                            if (retMsg != null) {
+                                                if (retMsg.contains("<html><body>")) {
+                                                    resultErrMsg.append(retMsg.toString());
+                                                } else if (retMsg.contains("S-")) {
+                                                    String[] resMsg =
+                                                        retMsg.split("-", 2);
+                                                    retMsg = resMsg[1];
+                                                    resultMsg.append(retMsg);
+                                                } else if (retMsg.contains("E-")) {
+                                                    String[] resMsg =
+                                                        retMsg.split("-", 2);
+                                                    retMsg = resMsg[1];
+                                                    resultErrMsg.append(retMsg);
                                                 }
                                             }
-
-
-                                            String[] resMsg =
-                                                updateMsg.split("-", 2);
-                                            if (resMsg[1] != null) {
-                                                resultMsg.append("<p><b>" +
-                                                                 resMsg[1] +
-                                                                 "</b></p>");
-                                            }
-                                            //save to oracle success
-                                        } else if (updateMsg.contains("E-")) {
-                                            String[] resMsg =
-                                                updateMsg.split("-", 2);
-                                            if (resMsg[1] != null) {
-                                                resultErrMsg.append("<p><b>" +
-                                                                    resMsg[1] +
-                                                                    "</b></p>");
-                                            }
-                                        } else
-                                            resultErrMsg.append(updateMsg.toString());
+                                        }
                                     }
-                                } else if (operationMode != null &&
-                                           operationMode.equalsIgnoreCase("CREATE")) {
-                                    OperationBinding ob =
-                                        bindings.getOperationBinding("callConfigLineToAddQuoteAPI");
-                                    ob.getParamsMap().put("quoteNum",
-                                                          v93k.getSessionDetails().getSourceQuoteNumber().toString());
-                                    ob.getParamsMap().put("itemNumber",
-                                                          list.getItemName());
-                                    ob.getParamsMap().put("itemQty", 1);
-                                    ob.getParamsMap().put("orgNum",
-                                                          list.getOperationCode() ==
-                                                          null ? "GDO" :
-                                                          list.getOperationCode());
-                                    ob.getParamsMap().put("ConfighdrId",
-                                                          list.getConfigHrdId());
-                                    ob.getParamsMap().put("configRevNum",
-                                                          list.getConfigRevNum());
-                                    ob.getParamsMap().put("respId", respid);
-                                    ob.getParamsMap().put("usrId", usrId);
-                                    String createMsg = (String)ob.execute();
-                                    if (createMsg != null) {
-                                        if (createMsg.contains("<html><body>")) {
-                                            resultErrMsg.append("<p><b>" +
-                                                                createMsg +
-                                                                "</b></p>");
-                                        } else if (createMsg.contains("S-")) {
-
-
-                                            if (discount != null) {
-                                                String discountMsg =
-                                                    updateDiscount(v93k.getSessionDetails().getSourceQuoteNumber(),
-                                                                   discount,
-                                                                   respid,
-                                                                   usrId);
-
-                                                if (discountMsg != null) {
-                                                    if (discountMsg.contains("<html><body>")) {
-                                                        resultErrMsg.append("<p><b>" +
-                                                                            discountMsg +
-                                                                            "</b></p>");
-                                                    } else if (discountMsg.contains("S-")) {
-                                                        String[] resMsg =
-                                                            discountMsg.split("-",
-                                                                              2);
-                                                        if (resMsg[1] !=
-                                                            null) {
-                                                            resultMsg.append("<p><b>" +
-                                                                             resMsg[1] +
-                                                                             "</b></p>");
-                                                        }
-                                                    } else if (discountMsg.contains("E-")) {
-                                                        String[] resMsg =
-                                                            discountMsg.split("-",
-                                                                              2);
-                                                        if (resMsg[1] !=
-                                                            null) {
-                                                            resultErrMsg.append("<p><b>" +
-                                                                                resMsg[1] +
-                                                                                "</b></p>");
-                                                        }
-                                                    } else
-                                                        resultErrMsg.append(discountMsg.toString());
-                                                }
-                                            }
-
-
-                                            String[] resMsg =
-                                                createMsg.split("-", 2);
-                                            if (resMsg[1] != null) {
-                                                resultMsg.append("<p><b>" +
-                                                                 resMsg[1] +
-                                                                 "</b></p>");
-                                            }
-                                        } else if (createMsg.contains("E-")) {
-                                            String[] resMsg =
-                                                createMsg.split("-", 2);
-                                            if (resMsg[1] != null) {
-                                                resultErrMsg.append("<p><b>" +
-                                                                    resMsg[1] +
-                                                                    "</b></p>");
-                                            }
-                                        } else
-                                            resultErrMsg.append(createMsg.toString());
-                                    }
-                                } else {
                                 }
                             }
-
                         }
-                    } else {
-                        if (createQtMsg != null)
-                            resultErrMsg.append("<p><b>" + createQtMsg +
-                                                "</b></p>");
-                        else
-                            resultErrMsg.append("<p><b>" +
-                                                SudokuUtils.createQteMsg +
-                                                "</b></p>");
-                        //                        resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
-                        //                        resultMsg.append("\n");
-                        System.out.println("Please create Quote before Save");
                     }
                 } else {
                     if (createQtMsg != null)
@@ -884,70 +976,8 @@ public class LoadDynamicRegionBean {
                         resultErrMsg.append("<p><b>" +
                                             SudokuUtils.createQteMsg +
                                             "</b></p>");
-                    //                    resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
-                    //                    resultMsg.append("\n");
-                }
-
-
-                if (v93k.getSessionDetails().getSourceQuoteNumber() != null ||
-                    v93k.getSessionDetails().getTargetQuoteNumber() != null) {
-                    OperationBinding warrantyOb =
-                        getBindings().getOperationBinding("callWarrentyAPI");
-                    String quoteForWarranty = null;
-                    if (v93k.getSessionDetails().isDuplicateQuote() ||
-                        v93k.getSessionDetails().isCreateNewQuote()) {
-                        quoteForWarranty =
-                                v93k.getSessionDetails().getTargetQuoteNumber();
-                    } else if (quoteForWarranty == null &&
-                               v93k.getSessionDetails().isUpdateQuote()) {
-                        warrantyOb.getParamsMap().put("quoteNum",
-                                                      v93k.getSessionDetails().getSourceQuoteNumber());
-                        quoteForWarranty =
-                                v93k.getSessionDetails().getSourceQuoteNumber();
-                    }
-                    if (v93k.getTargetConfigurationLines() != null &&
-                        !v93k.getTargetConfigurationLines().isEmpty()) {
-                        for (QuoteLinePOJO list :
-                             v93k.getTargetConfigurationLines()) {
-                            List<ConfiguratorNodePOJO> warrantyList =
-                                list.getWarrantyItems();
-                            if (warrantyList != null &&
-                                !warrantyList.isEmpty()) {
-                                for (ConfiguratorNodePOJO node :
-                                     warrantyList) {
-                                    //call the warranty api
-                                    String item = node.getNodeName();
-                                    warrantyOb.getParamsMap().put("quoteNum",
-                                                                  quoteForWarranty);
-                                    warrantyOb.getParamsMap().put("prodName",
-                                                                  item);
-                                    warrantyOb.getParamsMap().put("respId",
-                                                                  respid);
-                                    warrantyOb.getParamsMap().put("usrId",
-                                                                  usrId);
-                                    String retMsg = null;
-                                    if (warrantyOb != null) {
-                                        retMsg = (String)warrantyOb.execute();
-                                        if (retMsg != null) {
-                                            if (retMsg.contains("<html><body>")) {
-                                                resultErrMsg.append(retMsg.toString());
-                                            } else if (retMsg.contains("S-")) {
-                                                String[] resMsg =
-                                                    retMsg.split("-", 2);
-                                                retMsg = resMsg[1];
-                                                resultMsg.append(retMsg);
-                                            } else if (retMsg.contains("E-")) {
-                                                String[] resMsg =
-                                                    retMsg.split("-", 2);
-                                                retMsg = resMsg[1];
-                                                resultErrMsg.append(retMsg);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //                resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
+                    //                resultMsg.append("\n");
                 }
             } else {
                 if (createQtMsg != null)
@@ -955,38 +985,32 @@ public class LoadDynamicRegionBean {
                 else
                     resultErrMsg.append("<p><b>" + SudokuUtils.createQteMsg +
                                         "</b></p>");
-                //                resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
-                //                resultMsg.append("\n");
+                //            resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
+                //            resultMsg.append("\n");
+            }
+            String msg = resultMsg.append("</body></html>").toString();
+            String errMsg = resultErrMsg.append("</body></html>").toString();
+            if (msg != null || errMsg != null) {
+                RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                if (msg != null &&
+                    !"<html><body></body></html>".equalsIgnoreCase(msg)) {
+                    this.setInfoFromPopup(msg);
+                } else
+                    this.setInfoFromPopup(null);
+                if (errMsg != null &&
+                    !"<html><body></body></html>".equalsIgnoreCase(errMsg))
+                    this.setErrorFromPopup(errMsg);
+                else
+                    this.setErrorFromPopup(null);
+
+                successMsgOnSaveToOrcl.setValue(msg);
+                errorMsgOnSaveToOrcl.setValue(errMsg);
+                this.getBindSaveToOrclPopup().show(hints);
+                //                bindSaveToOrclPopup.show(hints);
+                //                bindPopup1.show(hints);
             }
         } else {
-            if (createQtMsg != null)
-                resultErrMsg.append("<p><b>" + createQtMsg + "</b></p>");
-            else
-                resultErrMsg.append("<p><b>" + SudokuUtils.createQteMsg +
-                                    "</b></p>");
-            //            resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
-            //            resultMsg.append("\n");
-        }
-        String msg = resultMsg.append("</body></html>").toString();
-        String errMsg = resultErrMsg.append("</body></html>").toString();
-        if (msg != null || errMsg != null) {
-            RichPopup.PopupHints hints = new RichPopup.PopupHints();
-            if (msg != null &&
-                !"<html><body></body></html>".equalsIgnoreCase(msg)) {
-                this.setInfoFromPopup(msg);
-            } else
-                this.setInfoFromPopup(null);
-            if (errMsg != null &&
-                !"<html><body></body></html>".equalsIgnoreCase(errMsg))
-                this.setErrorFromPopup(errMsg);
-            else
-                this.setErrorFromPopup(null);
-
-            successMsgOnSaveToOrcl.setValue(msg);
-            errorMsgOnSaveToOrcl.setValue(errMsg);
-            this.getBindSaveToOrclPopup().show(hints);
-            //                bindSaveToOrclPopup.show(hints);
-            //                bindPopup1.show(hints);
+            displayConfigErrors(v93k);
         }
     }
 
@@ -1084,10 +1108,11 @@ public class LoadDynamicRegionBean {
         ADFUtils.setSessionScopeValue("isDuplicateQuote", null);
         ADFUtils.setSessionScopeValue("quoteNumber", null);
         ADFUtils.setSessionScopeValue("ImpSrcChanged", null);
-        ADFUtils.setSessionScopeValue("currView", null);
+        //ADFUtils.setSessionScopeValue("currView", null);
         ADFUtils.setSessionScopeValue("inputParamsMap", null);
         ADFUtils.setSessionScopeValue("ruleSetMap", null);
         ADFUtils.setSessionScopeValue("qheaderValidMap", null);
+        ADFUtils.setSessionScopeValue("ruleSetMap", null);
         //
         //
         //        //Set one session scope for cancelled
@@ -1914,4 +1939,93 @@ public class LoadDynamicRegionBean {
         }
     }
 
+    public void displayConfigErrors(V93kQuote parentObj) {
+        StringBuilder errorMessage = new StringBuilder("ERROR");
+        boolean isError = false;
+        //        V93kQuote parentObj =
+        //            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (parentObj != null) {
+            V93kQuote obj = (V93kQuote)parentObj;
+            //Check if no exceptions from configurator
+            if (obj.getExceptionMap() != null) {
+                TreeMap<String, ArrayList<String>> exceptionMap =
+                    obj.getExceptionMap().getErrorList();
+
+                List<String> errorMessages =
+                    obj.getExceptionMap().getErrorsMessages();
+                StringBuilder formattedErrStr =
+                    new StringBuilder("<html><body>");
+                if (exceptionMap != null && exceptionMap.size() > 0) {
+                    isError = true;
+                    for (Map.Entry<String, ArrayList<String>> entry :
+                         exceptionMap.entrySet()) {
+                        String key = entry.getKey();
+                        ArrayList<String> value = entry.getValue();
+                        for (String str : value) {
+                            errorMessage.append(str);
+                            formattedErrStr.append("<p><b>" + str +
+                                                   "</b></p>");
+                        }
+                    }
+                }
+                if (errorMessages != null && errorMessages.size() > 0) {
+                    isError = true;
+                    for (String str : errorMessages) {
+                        errorMessage.append(str);
+                        formattedErrStr.append("<p><b>" + str + "</b></p>");
+                    }
+                }
+                formattedErrStr.append("<body><html>");
+                String errTemp = null;
+                if (errMsgFromConfig != null && errorPopupBinding != null) {
+
+                    if (errorMessage != null &&
+                        !errorMessage.toString().equals("ERROR")) {
+                        errTemp = errorMessage.toString().substring(5);
+                        RichPopup.PopupHints hints =
+                            new RichPopup.PopupHints();
+                        errMsgFromConfig.setValue(formattedErrStr);
+                        errorPopupBinding.show(hints);
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean configHasErrors(V93kQuote v93k) {
+        boolean hasErrors = false;
+        if (v93k != null) {
+            //Check if no exceptions from configurator
+            if (v93k.getExceptionMap() != null) {
+                TreeMap<String, ArrayList<String>> exceptionMap =
+                    v93k.getExceptionMap().getErrorList();
+                List<String> errorMessages =
+                    v93k.getExceptionMap().getErrorsMessages();
+                if (exceptionMap != null && exceptionMap.size() > 0) {
+                    hasErrors = true;
+                }
+                if (errorMessages != null && errorMessages.size() > 0) {
+                    hasErrors = true;
+                }
+            }
+           
+        }
+        return hasErrors;
+    }
+
+    public void setErrorPopupBinding(RichPopup errorPopupBinding) {
+        this.errorPopupBinding = errorPopupBinding;
+    }
+
+    public RichPopup getErrorPopupBinding() {
+        return errorPopupBinding;
+    }
+
+    public void setErrMsgFromConfig(RichOutputFormatted errMsgFromConfig) {
+        this.errMsgFromConfig = errMsgFromConfig;
+    }
+
+    public RichOutputFormatted getErrMsgFromConfig() {
+        return errMsgFromConfig;
+    }
 }

@@ -128,6 +128,13 @@ public class ConfiguratorUtils {
 
         return null;
     }
-
+    
+    public static String returnFormattedNode(String czNodeName){
+        if(czNodeName !=null && !czNodeName.startsWith("\""))
+            {
+              czNodeName = "\""+czNodeName+"\"";
+            }
+        return czNodeName;
+    }
 
 }
