@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -86,7 +87,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
 
-        //validateEBSSession(pagePhaseEvent);
+        validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {
@@ -284,6 +285,9 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                             return;
                         } else {
                             String userId = sessionEBS.getUserId();
+                            if(userId==null){
+                                ADFUtils.showFacesMessage("Could not establish session between EBS and ADF,Please contact IT Support", FacesMessage.SEVERITY_ERROR);
+                            }
                             _logger.info("UserId : " + userId);
                             String userName = sessionEBS.getUserName();
                             _logger.info("userName : " + userName);
@@ -341,6 +345,11 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                                 !quoteNumber.equals("")) {
                                 callCIOServletOnLoad(quoteNumber,callFromSearchQuote);
 
+                            }
+                            if(callFromSearchQuote!=null && callFromSearchQuote.equalsIgnoreCase("Y")){
+                                if(quoteNumber==null || quoteNumber.equals("")){
+                                    ADFUtils.showFacesMessage("Quote Number is null,Please contact IT Support", FacesMessage.SEVERITY_ERROR);
+                                }
                             }
                            
                             javax.servlet.http.Cookie cookie =
@@ -441,6 +450,14 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
             ruleSetMap.put("secondLevelCode",
                            v93k.getInputParams().getRuleSetSecondLevelChoice());
             ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+        }
+            if(v93k.getInputParams()==null){
+            ruleSetMap.put("topLevelCode",
+                           v93k.getInputParams().getRuleSetTopLevelChoice());
+            ruleSetMap.put("secondLevelCode",
+                           v93k.getInputParams().getRuleSetSecondLevelChoice());
+                ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+            
         }
         ADFUtils.setSessionScopeValue("parentObject", v93k);
     }

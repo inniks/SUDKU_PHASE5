@@ -124,9 +124,9 @@ public class TargetConfiguration {
     }
 
 
-    private HashMap<ChildPropertyTreeModel, Double> createChildrenTrees() {
-        HashMap<ChildPropertyTreeModel, Double> mapOfChildren =
-            new HashMap<ChildPropertyTreeModel, Double>();
+    private LinkedHashMap<ChildPropertyTreeModel, Double> createChildrenTrees() {
+        LinkedHashMap<ChildPropertyTreeModel, Double> mapOfChildren =
+            new LinkedHashMap<ChildPropertyTreeModel, Double>();
         List<ChildPropertyTreeModel> listOfTrees =
             new ArrayList<ChildPropertyTreeModel>();
         try {
@@ -194,8 +194,10 @@ public class TargetConfiguration {
                                 new LinkedHashMap<String, List<ConfiguratorNodePOJO>>();
                             if (allNodesList != null &&
                                 !allNodesList.isEmpty()) {
+                                int index=0;
                                 for (ConfiguratorNodePOJO node :
                                      allNodesList) {
+                                   
                                     if (node.getPrintGroupLevel() != null &&
                                         (node.getPrintGroupLevel().equalsIgnoreCase("1") ||
                                          node.getPrintGroupLevel().equalsIgnoreCase("2") ||
@@ -245,6 +247,7 @@ public class TargetConfiguration {
                             Iterator it =
                                 allNodesByCategoriesMap.entrySet().iterator();
                             NodeCategory firstLevel = null;
+                            int index = 0;
                             while (it.hasNext()) {
                                 Map.Entry pair = (Map.Entry)it.next();
                                 String Key = (String)pair.getKey();
@@ -256,20 +259,27 @@ public class TargetConfiguration {
                                                          null, null, null,
                                                          null, null,
                                                          printGrpLevel, null);
+                               
                                 root.add(firstLevel);
                                 List<ConfiguratorNodePOJO> childList =
                                     (List<ConfiguratorNodePOJO>)pair.getValue();
+                               
                                 for (ConfiguratorNodePOJO node : childList) {
                                     String nodeDesig = null;
+                                    if(i==0 && index==0){
+                                        System.out.println("Setting node designation for "+node.getNodeName());
+                                        nodeDesig = "header";
+                                    }
+                                    
                                     if (node.getPrintGroupLevel() != null &&
                                         node.getPrintGroupLevel().equalsIgnoreCase("1")) {
                                         nodeDesig = "header";
                                     }
-                                    if (node.getNodeCategory() != null &&
-                                        (node.getNodeCategory().equalsIgnoreCase("3") ||
-                                         node.getNodeCategory().equalsIgnoreCase("2"))) {
-                                        node.setPrintGroupLevel("1000");
+                                    if(node.getNodeCategory()!=null && (node.getNodeCategory().equalsIgnoreCase("1")||node.getNodeCategory().equalsIgnoreCase("2")||node.getNodeCategory().equalsIgnoreCase("3")||node.getNodeCategory().equalsIgnoreCase("4")||node.getNodeCategory().equalsIgnoreCase("5"))){
+                                        node.setPrintGroupLevel("0");
                                     }
+                                    //if(node.getPrintGroupLevel()!=null && node.getPrintGroupLevel().eq)
+                                    
                                     NodeCategory secondLevel =
                                         new NodeCategory(category,
                                                          node.getNodeName(),
@@ -283,7 +293,7 @@ public class TargetConfiguration {
                                                          nodeDesig);
                                     firstLevel.addNodes(secondLevel);
                                 }
-
+                                index++;
                             }
                             //Trying to sort root
                             NodeComparator comparator = new NodeComparator();
@@ -419,8 +429,9 @@ public class TargetConfiguration {
         if (listViewCollection == null && refreshImport != null &&
             refreshImport.equalsIgnoreCase("Y")) {
             listViewCollection = new ArrayList<ListViewModel>();
-            HashMap<ChildPropertyTreeModel, Double> mapOfTrees =
+            LinkedHashMap<ChildPropertyTreeModel, Double> mapOfTrees =
                 createChildrenTrees();
+            
             List<ChildPropertyTreeModel> listOftrees =
                 new ArrayList<ChildPropertyTreeModel>();
             if (mapOfTrees != null && !mapOfTrees.isEmpty()) {

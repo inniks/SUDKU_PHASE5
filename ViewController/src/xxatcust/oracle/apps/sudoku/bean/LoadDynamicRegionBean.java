@@ -382,7 +382,7 @@ public class LoadDynamicRegionBean {
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         //Do not call configurator if there is an error from Save Config to quote
-        if (v93k != null && v93k.getInputParams() != null) {
+        if (v93k != null && v93k.getInputParams() != null && v93k.getSessionDetails()!=null && v93k.getSessionDetails().getTargetQuoteNumber()!=null) {
             v93k.getInputParams().setImportSource("SAVE_CONFIG_TO_QUOTE");
             String czNodeName = null;
             if (v93k.getUiSelection() != null) {

@@ -36,8 +36,10 @@ import javax.xml.bind.JAXBException;
 import oracle.adf.controller.ControllerContext;
 import oracle.adf.controller.ViewPortContext;
 import oracle.adf.model.BindingContext;
+
 import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
+
 import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
@@ -500,23 +502,8 @@ public class XMLImportPageBean {
 
     public void initUploadXml() {
         System.out.println("Init Upload XML");
-        if (warningPopup != null && quoteTotal != null) {
+        if (quoteTotal != null && errorPopup != null) {
             getPageInitText();
-//            HashMap inputParamsMap =
-//                (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap"); 
-//            if(inputParamsMap!=null){
-//                if(inputParamsMap.get("importSource").toString()!=null){
-//                    OperationBinding ob = getBindings().getOperationBinding("initRuleSet");
-//                        if(ob!=null)
-//                    ob.execute();
-//                    }
-//                }
-//            else{
-//                    OperationBinding ob = getBindings().getOperationBinding("initRuleSetForRef");
-//                if(ob!=null && ob.getErrors().size()==0)
-//                    ob.execute();
-//                }
-            
         }
     }
 
@@ -569,11 +556,13 @@ public class XMLImportPageBean {
             String cancelAll =
                 (String)ADFUtils.getSessionScopeValue("cancelAll");
             if (cancelAll != null && cancelAll.equalsIgnoreCase("Y")) {
-                quoteTotal.setValue(null);
+                if (quoteTotal != null) {
+                    quoteTotal.setValue(null);
+                }
             }
             AdfFacesContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("pb2lim"));
         }
-        
+
         return pageInitText;
     }
 

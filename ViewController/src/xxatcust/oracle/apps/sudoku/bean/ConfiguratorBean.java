@@ -172,7 +172,8 @@ public class ConfiguratorBean {
     private RichListView infraUpgListBinding;
     private RichPopup conflictPopup;
     private RichOutputFormatted conflictText;
-
+    private RichInputText otsDisplay;
+    private String oneTimeSpecial;
     public ConfiguratorBean() {
         super();
     }
@@ -208,9 +209,10 @@ public class ConfiguratorBean {
                                           JsonMappingException {
         //The refresh should happen only if there is a v93k object available
         System.out.println("Init Configurator..");
-
-        V93kQuote v93k =
-            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+//       V93kQuote v93k = (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
+//       ADFUtils.setSessionScopeValue("parentObject", v93k);//Comment for server run
+        V93kQuote v93k = 
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
         if (v93k != null && v93k.getInputParams() != null &&
             v93k.getInputParams().getImportSource() != null) {
 
@@ -270,6 +272,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         rfResourcesTreeModel = null;
         miscUpgTreeModel = null;
         infraUpgTreeModel = null;
+        oneTimeSpecial = null;
+        if(otsDisplay!=null){
+            otsDisplay.setValue(null);
+        }
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
@@ -400,15 +406,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
-//        String responseJson =
-//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-//        System.out.println("Response Json from Configurator : " +
-//                           responseJson);
-//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-//        v93k = (V93kQuote)obj;
+        String responseJson =
+            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        System.out.println("Response Json from Configurator : " +
+                           responseJson);
+        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        v93k = (V93kQuote)obj;
 
         // else use this
-        v93k = (V93kQuote)convertJsonToObject(null);
+        //v93k = (V93kQuote)convertJsonToObject(null);
         if (v93k != null && v93k.getInputParams() != null) {
             Map ruleSetMap = new HashMap();
             ruleSetMap.put("topLevelCode",
@@ -437,6 +443,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         rfResourcesTreeModel = null;
         miscUpgTreeModel = null;
         infraUpgTreeModel = null;
+        oneTimeSpecial = null;
+        if(otsDisplay!=null){
+            otsDisplay.setValue(null);
+        }
         if (sysInfraTreeModel == null) {
             sysInfraTreeModel =
                     SystemInfraBean.populateSysInfraParentTreeModel(sysInfraTreeModel,
@@ -609,18 +619,20 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             //Add logic : After conflict confirmation from user, 
             //check if ruleset is changes, if rule set changes to OTS, 
             //then update rule set second level choice and disable it for selection
-//            if(v93k!=null && v93k.getInputParams()!=null){
-//                InputParams inputParams = v93k.getInputParams();
-//                
-//                String ruleSetSecondLevel = inputParams.getRuleSetSecondLevelChoice();
-//                if(ruleSetSecondLevel!=null && ruleSetSecondLevel.equalsIgnoreCase("OTS")){
-//                    HashMap ruleSetMap = (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
-//                    if(ruleSetMap!=null && ruleSetMap.isEmpty()){
-//                        ruleSetMap.put("secondLevelCode", ruleSetSecondLevel);
-//                        ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-//                    }
-//                }
-//            }
+            if(v93k!=null && v93k.getInputParams()!=null){
+                InputParams inputParams = v93k.getInputParams();
+                
+                String ruleSetSecondLevel = inputParams.getRuleSetSecondLevelChoice();
+                if(ruleSetSecondLevel!=null && ruleSetSecondLevel.equalsIgnoreCase("OTS")){
+                    HashMap ruleSetMap = (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
+                    if(ruleSetMap!=null && ruleSetMap.isEmpty()){
+                        ruleSetMap.put("secondLevelCode", ruleSetSecondLevel);
+                        ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+                        otsDisplay.setValue("OTS");
+                        
+                    }
+                }
+            }
             buildConfiguratorUI(v93k);
             confirmPopup.cancel();
             //            if (selectedNodeValueMap != null &&
@@ -1809,7 +1821,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                         errorPopup.show(hints);
                     }
                 } else if (errorPopup == null && formattedErrStr != null &&
-                           !formattedErrStr.toString().equals("<html><body>")) {
+                           !formattedErrStr.toString().equals("<html><body><body><html>")) {
                     ADFUtils.showFacesMessage(formattedErrStr.toString(),
                                               FacesMessage.SEVERITY_ERROR);
                 }
@@ -1992,5 +2004,22 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public ArrayList<ShowDetailItemCollection> getWarrantySdiCollection() {
         return warrantySdiCollection;
+    }
+
+    public void setOtsDisplay(RichInputText otsDisplay) {
+        this.otsDisplay = otsDisplay;
+    }
+
+    public RichInputText getOtsDisplay() {
+        return otsDisplay;
+    }
+
+    public void setOneTimeSpecial(String oneTimeSpecial) {
+        this.oneTimeSpecial = oneTimeSpecial;
+    }
+
+    public String getOneTimeSpecial() {
+        
+        return oneTimeSpecial;
     }
 }

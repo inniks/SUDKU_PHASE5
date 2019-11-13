@@ -399,7 +399,9 @@ public class UiField {
                             uiField1_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField1_color = SudokuUtils.TARGET_COLOR;
-
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField1_color = SudokuUtils.TARGET_COLOR;
+                        }
 
                         uiField1_dis = node.isDisableNode();
                         uiField1_readOnly = node.isReadOnly();
@@ -466,6 +468,9 @@ public class UiField {
                             uiField2_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField2_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField2_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField2_dis = node.isDisableNode();
                         uiField2_readOnly = node.isReadOnly();
                         uiField2_identifier = node.getIdentifier();
@@ -566,6 +571,9 @@ public class UiField {
                             uiField3_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField3_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField3_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField3_dis = node.isDisableNode();
                         uiField3_readOnly = node.isReadOnly();
                         uiField3_identifier = node.getIdentifier();
@@ -646,6 +654,9 @@ public class UiField {
                             uiField4_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField4_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField4_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField4_dis = node.isDisableNode();
                         uiField4_readOnly = node.isReadOnly();
                         uiField4_identifier = node.getIdentifier();
@@ -727,6 +738,9 @@ public class UiField {
                             uiField5_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField5_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField5_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField5_dis = node.isDisableNode();
                         uiField5_readOnly = node.isReadOnly();
                         uiField5_identifier = node.getIdentifier();
@@ -796,6 +810,9 @@ public class UiField {
                             uiField6_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField6_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField6_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField6_dis = node.isDisableNode();
                         uiField6_readOnly = node.isReadOnly();
                         uiField6_identifier = node.getIdentifier();
@@ -886,6 +903,9 @@ public class UiField {
                             uiField7_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField7_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField7_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField7_dis = node.isDisableNode();
                         uiField7_readOnly = node.isReadOnly();
                         uiField7_identifier = node.getIdentifier();
@@ -966,6 +986,9 @@ public class UiField {
                             uiField8_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField8_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField8_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField8_dis = node.isDisableNode();
                         uiField8_readOnly = node.isReadOnly();
                         uiField8_identifier = node.getIdentifier();
@@ -1047,6 +1070,9 @@ public class UiField {
                             uiField9_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField9_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField9_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField9_dis = node.isDisableNode();
                         uiField9_readOnly = node.isReadOnly();
                         uiField9_identifier = node.getIdentifier();
@@ -1117,6 +1143,9 @@ public class UiField {
                             uiField10_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField10_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField10_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField10_dis = node.isDisableNode();
                         uiField10_readOnly = node.isReadOnly();
                         uiField10_identifier = node.getIdentifier();
@@ -1188,6 +1217,9 @@ public class UiField {
                             uiField11_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField11_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField11_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField11_dis = node.isDisableNode();
                         uiField11_readOnly = node.isReadOnly();
                         uiField11_identifier = node.getIdentifier();
@@ -1260,6 +1292,9 @@ public class UiField {
                             uiField12_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField12_color = SudokuUtils.TARGET_COLOR;
+                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                            uiField12_color = SudokuUtils.TARGET_COLOR;
+                        }
                         uiField12_dis = node.isDisableNode();
                         uiField12_readOnly = node.isReadOnly();
                         uiField12_identifier = node.getIdentifier();
