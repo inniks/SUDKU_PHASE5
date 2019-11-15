@@ -113,6 +113,8 @@ public class LoadDynamicRegionBean {
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UploadXMLFlow.xml#UploadXMLFlow";
     private String targetRefTF =
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/TargetConfigFlow.xml#TargetConfigFlow";
+    private String loadPref =
+           "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UserPreferencesFlow.xml#UserPreferencesFlow";
     private String currentTF = "configurator";
     private RichPopup expConfigPopup;
     private RichInputText fileNameBinding;
@@ -138,19 +140,21 @@ public class LoadDynamicRegionBean {
     }
 
     public TaskFlowId getDynamicTaskFlowId() {
-        if (this.getCurrentTF().equalsIgnoreCase("configurator")) {
-            return TaskFlowId.parse(taskFlowId);
-        } else if (this.getCurrentTF().equalsIgnoreCase("viewRef")) {
-            return TaskFlowId.parse(viewReferenceTFId);
-        } else if (this.getCurrentTF().equalsIgnoreCase("quoteUpdate")) {
-            return TaskFlowId.parse(quoteTFUpdateId);
-        } else if (this.getCurrentTF().equalsIgnoreCase("targetRef")) {
-            return TaskFlowId.parse(targetRefTF);
-        } else {
-            return TaskFlowId.parse(quoteTFId);
-        }
-
-    }
+           if (this.getCurrentTF().equalsIgnoreCase("configurator")) {
+               return TaskFlowId.parse(taskFlowId);
+           } else if (this.getCurrentTF().equalsIgnoreCase("viewRef")) {
+               return TaskFlowId.parse(viewReferenceTFId);
+           } else if (this.getCurrentTF().equalsIgnoreCase("quoteUpdate")) {
+               return TaskFlowId.parse(quoteTFUpdateId);
+           } else if (this.getCurrentTF().equalsIgnoreCase("targetRef")) {
+               return TaskFlowId.parse(targetRefTF);
+           }else if (this.getCurrentTF().equalsIgnoreCase("loadPref")) {
+               return TaskFlowId.parse(loadPref);  
+           }  
+           else {
+               return TaskFlowId.parse(quoteTFId);
+           }
+       }
 
     public void setTaskFlowId(String taskFlowId) {
         this.taskFlowId = taskFlowId;
@@ -382,7 +386,7 @@ public class LoadDynamicRegionBean {
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         //Do not call configurator if there is an error from Save Config to quote
-        if (v93k != null && v93k.getInputParams() != null && v93k.getSessionDetails()!=null && v93k.getSessionDetails().getTargetQuoteNumber()!=null) {
+        if (v93k != null && v93k.getInputParams() != null && v93k.getSessionDetails()!=null && v93k.getSessionDetails().getTargetQuoteNumber()!=null){
             v93k.getInputParams().setImportSource("SAVE_CONFIG_TO_QUOTE");
             String czNodeName = null;
             if (v93k.getUiSelection() != null) {
@@ -1165,6 +1169,10 @@ public class LoadDynamicRegionBean {
         }
         return disableString;
     }
+    
+    public void navToLoadPref(ActionEvent actionEvent) {
+            ADFUtils.setSessionScopeValue("currView", "loadPref");
+        }
 
     public void exportTargetConfig(ActionEvent actionEvent) {
         //Check if target lines exist , If yes open the popup or show error
@@ -2027,5 +2035,13 @@ public class LoadDynamicRegionBean {
 
     public RichOutputFormatted getErrMsgFromConfig() {
         return errMsgFromConfig;
+    }
+
+    public void setLoadPref(String loadPref) {
+        this.loadPref = loadPref;
+    }
+
+    public String getLoadPref() {
+        return loadPref;
     }
 }

@@ -211,6 +211,14 @@ public class ConfiguratorBean {
         System.out.println("Init Configurator..");
 //       V93kQuote v93k = (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
 //       ADFUtils.setSessionScopeValue("parentObject", v93k);//Comment for server run
+//       HashMap ruleSetMap = new HashMap();
+//       if (v93k.getInputParams() != null) {
+//           ruleSetMap.put("topLevelCode",
+//                          v93k.getInputParams().getRuleSetTopLevelChoice());
+//           ruleSetMap.put("secondLevelCode",
+//                          v93k.getInputParams().getRuleSetSecondLevelChoice());
+//           ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);            
+//       }
         V93kQuote v93k = 
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
         if (v93k != null && v93k.getInputParams() != null &&
@@ -423,6 +431,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                            v93k.getInputParams().getRuleSetSecondLevelChoice());
             ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
         }
+        refreshRuleSets();//Refresh the ruleset list of values
         ADFUtils.setSessionScopeValue("parentObject", v93k);
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         return v93k;
@@ -616,23 +625,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 }
             }
             v93k = callServlet(v93k);
-            //Add logic : After conflict confirmation from user, 
-            //check if ruleset is changes, if rule set changes to OTS, 
-            //then update rule set second level choice and disable it for selection
-            if(v93k!=null && v93k.getInputParams()!=null){
-                InputParams inputParams = v93k.getInputParams();
-                
-                String ruleSetSecondLevel = inputParams.getRuleSetSecondLevelChoice();
-                if(ruleSetSecondLevel!=null && ruleSetSecondLevel.equalsIgnoreCase("OTS")){
-                    HashMap ruleSetMap = (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
-                    if(ruleSetMap!=null && ruleSetMap.isEmpty()){
-                        ruleSetMap.put("secondLevelCode", ruleSetSecondLevel);
-                        ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-                        otsDisplay.setValue("OTS");
-                        
-                    }
-                }
-            }
+           
             buildConfiguratorUI(v93k);
             confirmPopup.cancel();
             //            if (selectedNodeValueMap != null &&
@@ -2021,5 +2014,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public String getOneTimeSpecial() {
         
         return oneTimeSpecial;
+    }
+    
+    public void refreshRuleSets(){
+        OperationBinding initRuleSetForRef = ADFUtils.findOperation("initRuleSetForRef");
+        if(initRuleSetForRef!=null){
+            initRuleSetForRef.execute();
+        }
     }
 }

@@ -1,6 +1,8 @@
 package xxatcust.oracle.apps.sudoku.model.module.common;
 
-import java.util.Hashtable;
+import java.math.BigDecimal;
+
+import java.util.List;
 
 import java.util.Map;
 
@@ -62,7 +64,6 @@ public interface SudokuAM extends ApplicationModule {
     String callWarrentyAPI(String quoteNum, String prodName, int respId,
                            int usrId);
 
-    String callUpdateQuoteAPI(int respid, int usrId);
 
     String callDuplicateQuoteAPI(String quoteFromSesion, int respId,
                                  int usrId);
@@ -72,10 +73,83 @@ public interface SudokuAM extends ApplicationModule {
 
     void initRuleSetForRef();
 
-    Hashtable getUiGrpMap();
+    void initUserPreference();
+
+    void filterOrderTypeRecords(int usrId);
+
+
+    void getViewAccessors(int usrId);
+
+
+    void validatePrefStaticValues(int usrId);
+
+
+    String validateOUValues(int usrId, List ouValues);
+
+
+    void initUserPref();
+
+
+    List getSelectedCurrencyValues(int usrId);
+
+
+    List getSelectedCSRValues(int usrId);
+
+
+    List getSelectedIncoTermValues(int usrId);
+
+
+    String validateCsrValues(int usrId, List csrValues, String csr);
+
+    String validateCurrencyValues(int usrId, List currencyValues,
+                                  String defaultName);
+
+    String validateIncoTermValues(int usrId, List incoTermValues,
+                                  String dafaultVal);
+
+    String validatePaymentTermValues(int usrId, String defaultVal);
+
+
+    List getSelectedBusinessAgreementForSC(int usrId, String salesChannel);
+
+    List getSelectedCurrencyValuesForSC(int usrId, String salesChannel);
+
+
+    List getSelectedIncoTermValuesForSC(int usrId, String salesChannel);
+
+    List getSelectedPaymentTermValuesForSC(int usrId, String salesChannel);
+
+    String validateBAForSC(int usrId, List baValues, String defaultVal,
+                           String salesChannel);
+
+    String validateCurrencyValuesForSC(int usrId, List currencyValues,
+                                       String defaultVal, String salesChannel);
+
+    String validatePaymentTermValuesforSC(int usrId, List PaymentTermValues,
+                                          String defaultVal,
+                                          String salesChannel);
+
+    String validateIncoTermValuesForSC(int usrId, List incoTermValues,
+                                       String defaultVal, String salesChannel);
+
+
+    String validateSalesChannelForSC(int usrId, List salesChannel);
+
+    List getSelectedSalesChannelValues(int usrId);
+
+
+    void initQuoteBasedOnUserPref(boolean isUserDefault);
+
+
+    boolean commitEntities();
+
+
+    void getSalesChannelBasedUserPref(String salesChannel);
+
+    boolean getSalesChannelBasedUserPrefForUpdateQuote(String salesChannel);
+
 
     String getPath();
-
 
     int callDUTReport(String confighid, String configrevno, String orderhid,
                       String quoteno, String ponum, int respId, int usrId);
@@ -85,5 +159,37 @@ public interface SudokuAM extends ApplicationModule {
 
     String callCFDReport(String quoteNum, int respId, int usrId);
 
-    Map<String, String> getQuoteHdrOrgID(String pquoteNo);
+
+    Map defaultVals(int usrId, String orgId);
+
+    Map defaultValsForSC(int usrId, String salesChannel, List customerNums,
+                         String orgId);
+
+    List getAllCustNumValues(BigDecimal orgId);
+
+    List getAllSalesRepValues(String orgId);
+
+    List getSelectedCustNumValues(int usrId, String orgId);
+
+    List getSelectedCustomerNameValues(int usrId, String salesChannel,
+                                       String orgId);
+
+    List getSelectedOrderTypeValues(int usrId, String orgId);
+
+    List getSelectedSalesRepValues(int usrId, String orgId);
+
+    String validateCustValues(int usrId, List custValues,
+                              String custDefaultVal, String orgId);
+
+    String validateCustValuesForSC(int usrId, List custValues,
+                                   String custDefaultVal, String salesChannel,
+                                   String orgId);
+
+    String validateOrderTypeValues(int usrId, List orderTypeValues,
+                                   String orderTypeDefaultval, String orgId);
+
+    String validateSalesRepValues(int usrId, List salesRepVals,
+                                  String defaultVal, String orgId);
+
+    String callUpdateQuoteAPI(int respid, int usrId, boolean isCustEditable);
 }

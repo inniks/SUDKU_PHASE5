@@ -37,7 +37,8 @@
                                   shortDesc="#{bindings.SecondLevelMeaning.hints.tooltip}"
                                   partialTriggers="topLevelMeaningId"
                                   autoSubmit="true"
-                                  valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}">
+                                  valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}"
+                                  disabled="#{bindings.SecondLevelCode eq 'OTS'}">
               <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
             </af:inputListOfValues>
             <af:inputText label="Label 13" id="it5"
@@ -1690,7 +1691,7 @@
                                                            halign="left">
                                         <af:inputText id="dps3712r"
                                                       visible="true"
-                                                      disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly or theadIter.disableMultipleInputs}"
+                                                      disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly or theadIter.disableEFCol}"
                                                       columns="5"
                                                       autoSubmit="true"
                                                       value="#{theadIter.uiField1_qty}"
@@ -1715,7 +1716,7 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:inputText id="dps3722r" visible="true"
-                                                    disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly or theadIter.disableMultipleInputs}"
+                                                    disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly or theadIter.disableEFCol}"
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField2_qty}"
@@ -2806,7 +2807,7 @@
                                     <af:panelGroupLayout id="mix_pgl18"
                                                          layout="horizontal">
                                       <af:inputText id="mx3712r" visible="true"
-                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly or theadIter.disableMultipleInputs}"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly or theadIter.disableEFCol}"
                                                     requiredMessageDetail="#{theadIter.uiField1_refQty}"
                                                     helpTopicId="#{theadIter.uiField1_tarQty}"
                                                     changedDesc="#{theadIter.uiField1_czModelName}"
@@ -3499,7 +3500,7 @@
                                                          layout="horizontal">
                                       <af:inputText id="rf2mx3712r"
                                                     visible="true"
-                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly or theadIter.disableMultipleInputs}"
+                                                    disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly or theadIter.disableEFCol}"
                                                     columns="5"
                                                     autoSubmit="true"
                                                     requiredMessageDetail="#{theadIter.uiField1_refQty}"

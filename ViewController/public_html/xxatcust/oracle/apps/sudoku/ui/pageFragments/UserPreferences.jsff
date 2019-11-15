@@ -1,0 +1,394 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelGroupLayout id="pgl5" layout="vertical">
+    <af:panelBox text="User Preferences" id="pb1" showDisclosure="false"
+                 background="medium" disclosed="false" showHeader="never">
+      <af:outputLabel value="User Preferences" id="ol1"
+                      inlineStyle="font-weight:bold; font-size:small; color:Purple;"
+                      styleClass="AFStretchWidth"/>
+      <af:panelGroupLayout id="pgl4" layout="horizontal"
+                           styleClass="AFStretchWidth" valign="top">
+        <af:selectOneChoice value="#{bindings.OperatingUnit.inputValue}"
+                            label="Operating Unit"
+                            required="#{bindings.OperatingUnit.hints.mandatory}"
+                            valueChangeListener="#{pageFlowScope.UserPrefBean.ouVCE}"
+                            shortDesc="#{bindings.OperatingUnit.hints.tooltip}"
+                            id="soc2" autoSubmit="true"
+                            binding="#{pageFlowScope.UserPrefBean.bindOU}">
+          <f:selectItems value="#{bindings.OperatingUnit.items}" id="si9"/>
+        </af:selectOneChoice>
+        <af:selectManyShuttle value="#{pageFlowScope.UserPrefBean.selectedOUValues}"
+                              id="sms2" label=" " rendered="false"
+                              leadingHeader="Operating Unit values"
+                              trailingHeader="Selected Units"
+                            valueChangeListener="#{pageFlowScope.UserPrefBean.ouVCE}"
+                              autoSubmit="true" layout="horizontal"
+                              contentStyle="width:300px;height:160px;">
+          <f:selectItems value="#{pageFlowScope.UserPrefBean.ouValues}"
+                         id="si10"/>
+        </af:selectManyShuttle>
+        
+        <af:panelGroupLayout id="pgl6" layout="vertical" halign="start"
+                             valign="baseline">
+          <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.salesChannel}"
+                              label="Sales Channel" autoSubmit="true" id="soc16"
+                              valueChangeListener="#{pageFlowScope.UserPrefBean.salesChannelForDefaultVCE}"
+                              contentStyle="width:140.0px"
+                              binding="#{pageFlowScope.UserPrefBean.bindSalesChannel}">
+            <f:selectItems value="#{pageFlowScope.UserPrefBean.salesChannelSC}"
+                           id="si28"/>
+          </af:selectOneChoice>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+    </af:panelBox>
+    <af:panelGroupLayout id="pgl7" layout="horizontal"
+                         halign="end" valign="baseline"
+                         styleClass="AFStretchWidth">
+      <af:commandButton text="Save Global Choice" id="cb1"
+                        actionListener="#{pageFlowScope.UserPrefBean.onCommit}"
+                        partialSubmit="true"/>
+      <af:spacer width="10" height="10" id="s1"/>
+      <af:commandButton text="Save Sales Channel Details" id="cb4"
+                        actionListener="#{pageFlowScope.UserPrefBean.onCommitSalesChannel}"/>
+      <af:spacer width="10" height="10" id="s16"/>
+    </af:panelGroupLayout>
+    <af:separator id="s20"/>
+    <af:panelGroupLayout id="pgl2" layout="vertical"
+                         styleClass="AFStretchWidth"
+                         partialTriggers="sms2 soc16">
+      <af:showDetailHeader text="Global Choice List" id="sdh1"
+                           disclosureListener="#{pageFlowScope.UserPrefBean.getGlobalChoiceDetails}"
+                           styleClass="AFStretchWidth"
+                           binding="#{pageFlowScope.UserPrefBean.bindGlobalChoiceShowDetail}"
+                           partialTriggers="sdh2 soc2">
+        <af:panelSplitter id="ps1" styleClass="AFStretchWidth"
+                          splitterPosition="230" inlineStyle="height:1100.0px;"
+                          orientation="vertical">
+          <f:facet name="first">
+            <af:panelGroupLayout
+                                 xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                 id="pgl1">
+              <af:panelFormLayout id="pfl1" maxColumns="3" rows="3">
+                <af:inputText label="Primary Sales Person" id="it1" columns="20"
+                              value="#{pageFlowScope.UserPrefBean.userName}"
+                              disabled="true"/>
+                <af:spacer width="10" height="10" id="s2"/>
+                <af:selectOneChoice label="Prmary Order Type Values" id="soc5"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.OrderTypeForChoiceVCE}"
+                                    autoSubmit="true"
+                                    value="#{pageFlowScope.UserPrefBean.orderType}"
+                                    contentStyle="width:140.0px">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.orderTypeValues}"
+                                 id="si114"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s3"/>
+                <af:selectOneChoice label="Primary Customer Number"
+                                    autoSubmit="true"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.custNumForDefaultVCE}"
+                                    id="soc6"
+                                    value="#{pageFlowScope.UserPrefBean.custNum}"
+                                    contentStyle="width:140.0px">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.custNumbers}"
+                                 id="si15"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s6"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.currency}"
+                                    label="Primay Currency" autoSubmit="true"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.currencyForGlobalChoiceVCE}"
+                                    id="soc13" contentStyle="width:140.0px">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.currencyValues}"
+                                 id="si212"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s7"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.incoTerm}"
+                                    label="Primay Inco Term" autoSubmit="true"
+                                    id="soc3" contentStyle="width:140.0px"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.incoTermForGlobalChoiceVCE}">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.incoTermValues}"
+                                 id="si12"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s8"/>
+                <af:selectOneChoice label="Business Center CSR" id="soc7"
+                                    value="#{pageFlowScope.UserPrefBean.csr}"
+                                    autoSubmit="true"
+                                    contentStyle="width:140.0px"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.csrForGlobalChoiceVCE}">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.businessCenterCSR}"
+                                 id="si18"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s9"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.paymentTerm}"
+                                    autoSubmit="true"
+                                    label="Primary Payment Term" id="soc4"
+                                    contentStyle="width:140.0px"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.paymentTermForGlobalChoiceVCE}">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.paymentTermValues}"
+                                 id="si13"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s11"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.salesRep}"
+                                    autoSubmit="true"
+                                    label="Primary Sales Representative"
+                                    id="soc14"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.salesRepForDefaultVCE}"
+                                    contentStyle="width:140.0px">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.salesRepValues}"
+                                 id="si213"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s12"/>
+                <af:selectOneChoice value="#{bindings.NumberFormat.inputValue}"
+                                    label="Number Format"
+                                    required="#{bindings.NumberFormat.hints.mandatory}"
+                                    shortDesc="#{bindings.NumberFormat.hints.tooltip}"
+                                    id="soc1" autoSubmit="true"
+                                    binding="#{pageFlowScope.UserPrefBean.bindNumFormat}"
+                                    contentStyle="width:140.0px">
+                  <f:selectItems value="#{bindings.NumberFormat.items}"
+                                 id="si4"/>
+                </af:selectOneChoice>
+                <af:commandButton text="Save GC" id="cb2"
+                                  actionListener="#{pageFlowScope.UserPrefBean.onCommit}"
+                                  rendered="false"/>
+              </af:panelFormLayout>
+              <af:panelFormLayout id="pfl2"
+                                  maxColumns="2" rows="2">
+                <af:selectOneRadio value="#{bindings.PrdNumRefConfig.inputValue}"
+                                   label="Product Number Reference Configuration"
+                                   required="#{bindings.PrdNumRefConfig.hints.mandatory}"
+                                   shortDesc="#{bindings.PrdNumRefConfig.hints.tooltip}"
+                                   id="sor3" autoSubmit="true"
+                                   layout="horizontal"
+                                   binding="#{pageFlowScope.UserPrefBean.bindPrdNumRefConf}">
+                  <f:selectItems value="#{bindings.PrdNumRefConfig.items}"
+                                 id="si6"/>
+                </af:selectOneRadio>
+                <af:spacer width="10" height="10" id="s13"/>
+                <af:selectOneRadio value="#{bindings.PrdNumTargetConfig.inputValue}"
+                                   label="Product Number Target Config"
+                                   required="#{bindings.PrdNumTargetConfig.hints.mandatory}"
+                                   shortDesc="#{bindings.PrdNumTargetConfig.hints.tooltip}"
+                                   id="sor2" autoSubmit="true"
+                                   layout="horizontal"
+                                   binding="#{pageFlowScope.UserPrefBean.bindPrdNumTConf}">
+                  <f:selectItems value="#{bindings.PrdNumTargetConfig.items}"
+                                 id="si5"/>
+                </af:selectOneRadio>
+                <af:spacer width="10" height="10" id="s14"/>
+                <af:selectOneRadio value="#{bindings.RefPriceRegConfig.inputValue}"
+                                   label="Reference Price Reference Config Page"
+                                   required="#{bindings.RefPriceRegConfig.hints.mandatory}"
+                                   shortDesc="#{bindings.RefPriceRegConfig.hints.tooltip}"
+                                   id="sor4" autoSubmit="true"
+                                   layout="horizontal"
+                                   binding="#{pageFlowScope.UserPrefBean.bindRefPriceRefConf}">
+                  <f:selectItems value="#{bindings.RefPriceRegConfig.items}"
+                                 id="si7"/>
+                </af:selectOneRadio>
+                <af:spacer width="10" height="10" id="s15"/>
+                <af:selectOneRadio value="#{bindings.RefPriceTargetConfig.inputValue}"
+                                   label="Reference Price Target Config"
+                                   required="#{bindings.RefPriceTargetConfig.hints.mandatory}"
+                                   shortDesc="#{bindings.RefPriceTargetConfig.hints.tooltip}"
+                                   id="sor1" autoSubmit="true"
+                                   layout="horizontal"
+                                   valueChangeListener="#{pageFlowScope.UserPrefBean.booleanVCE}"
+                                   binding="#{pageFlowScope.UserPrefBean.bindRefPriceTConfig}">
+                  <f:selectItems value="#{bindings.RefPriceTargetConfig.items}"
+                                 id="si8"/>
+                </af:selectOneRadio>
+              </af:panelFormLayout>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="second">
+            <af:panelFormLayout id="pfl3" rows="2" maxColumns="2">
+              <af:selectManyShuttle value="#{pageFlowScope.UserPrefBean.selectedOrderTypeValues}"
+                                    label=" " id="sms1"
+                                    leadingHeader="Order Type Available"
+                                    trailingHeader="Selected vaues"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.orderTypeVCE}"
+                                    autoSubmit="true"
+                                    contentStyle="width:280px;">
+                <f:selectItems value="#{pageFlowScope.UserPrefBean.orderTypeValues}"
+                               id="si1"/>
+              </af:selectManyShuttle>
+              <af:selectManyShuttle id="sms4" autoSubmit="true" label=" "
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.custNumVCE}"
+                                    value="#{pageFlowScope.UserPrefBean.selectedCustNumValues}"
+                                    leadingHeader="Customer Numbers"
+                                    trailingHeader="Selected Values"
+                                    contentStyle="width:280px;">
+                <f:selectItems value="#{pageFlowScope.UserPrefBean.custNumbers}"
+                               id="si14"/>
+              </af:selectManyShuttle>
+              <af:selectManyShuttle label=" " id="currency"
+                                    leadingHeader="Currency Values"
+                                    trailingHeader="Selected Values"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.currencyVCE}"
+                                    value="#{pageFlowScope.UserPrefBean.selectedCurrencyValues}"
+                                    autoSubmit="true"
+                                    contentStyle="width:280px;">
+                <f:selectItems id="si2"
+                               value="#{pageFlowScope.UserPrefBean.currencyValues}"/>
+              </af:selectManyShuttle>
+              <af:selectManyShuttle label=" " id="incoTerms"
+                                    value="#{pageFlowScope.UserPrefBean.selectedIncoTermValues}"
+                                    leadingHeader="IncoTerm values"
+                                    autoSubmit="true"
+                                    trailingHeader="Selected Values"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.incoTermVCE}"
+                                    contentStyle="width:280px;">
+                <f:selectItems id="si3"
+                               value="#{pageFlowScope.UserPrefBean.incoTermValues}"/>
+              </af:selectManyShuttle>
+              <af:selectManyShuttle id="sms5" label=" "
+                                    leadingHeader="Business Center CSR values"
+                                    trailingHeader="Selected Values"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.businessCenterCSRVCE}"
+                                    value="#{pageFlowScope.UserPrefBean.selectedCSRValues}"
+                                    autoSubmit="true"
+                                    contentStyle="width:280px;">
+                <f:selectItems value="#{pageFlowScope.UserPrefBean.businessCenterCSR}"
+                               id="si16"/>
+              </af:selectManyShuttle>
+              <af:selectManyShuttle leadingHeader="Sales rep values"
+                                    trailingHeader="Selected Values"
+                                    autoSubmit="true" label=" "
+                                    value="#{pageFlowScope.UserPrefBean.selectedSalesRepValues}"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.salesRepVCE}"
+                                    id="sms6" contentStyle="width:280px;">
+                <f:selectItems value="#{pageFlowScope.UserPrefBean.salesRepValues}"
+                               id="si17"/>
+              </af:selectManyShuttle>
+              <af:selectManyShuttle value="#{pageFlowScope.UserPrefBean.selectedSalesChannel}"
+                                    id="sms_31" autoSubmit="true" label=" "
+                                    leadingHeader="SalesChannel Values"
+                                    trailingHeader="Selected Values"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.salesChannelVCE}"
+                                    contentStyle="width:300px;">
+                <f:selectItems value="#{pageFlowScope.UserPrefBean.salesChannelSC}"
+                               id="si1_1"/>
+              </af:selectManyShuttle>
+            </af:panelFormLayout>
+          </f:facet>
+        </af:panelSplitter>
+      </af:showDetailHeader>
+      <af:separator id="s21"/>
+      <af:showDetailHeader text="Sales Channel" id="sdh2"
+                           disclosureListener="#{pageFlowScope.UserPrefBean.getSalesChannelDetails}"
+                           binding="#{pageFlowScope.UserPrefBean.bindSalesChannelShowDetail}"
+                           partialTriggers="sdh1 soc16 soc2">
+        <af:panelSplitter id="ps2" splitterPosition="110"
+                          styleClass="AFStretchWidth"
+                          inlineStyle="height:780.0px;" orientation="vertical">
+          <f:facet name="first">
+            <af:panelGroupLayout layout="scroll"
+                                 xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                 id="pgl3">
+              <af:panelFormLayout id="pfl6" rows="3" fieldWidth="3">
+                <af:spacer width="10" height="10" id="s4"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.custNameForSC}"
+                                    label="Customer Name" autoSubmit="true"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.custNameForSCDefaultVCE}"
+                                    id="soc20" contentStyle="width:140.0px">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.custNames}"
+                                 id="si29"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s5"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.currencyForSC}"
+                                    label="Currency"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.currencyForSCDefaultVCE}"
+                                    id="soc17" contentStyle="width:140.0px">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.allCurrencyValues}"
+                                 id="si30"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s10"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.baForSC}"
+                                    label="Business Agreement"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.baForSCDefaultVCE}"
+                                    id="soc18" contentStyle="width:140.0px">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.allBAgreement}"
+                                 id="si32"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s23"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.incoTermForSC}"
+                                    label="IncoTerm"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.incoTermForSCDefaultVCE}"
+                                    id="soc19" contentStyle="width:140.0px">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.allIncoTermValues}"
+                                 id="si27"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s24"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.paymentTemForSC}"
+                                    label="PaymentTerm"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.paymentTErmForSCDefaultVCE}"
+                                    id="soc15" contentStyle="width:140.0px">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.allPaymentTermValues}"
+                                 id="si31"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s17"/>
+                <af:commandButton text="Save SalesChannel Details" id="cb3"
+                                  actionListener="#{pageFlowScope.UserPrefBean.onCommitSalesChannel}"
+                                  rendered="false"/>
+              </af:panelFormLayout>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="second">
+            <af:panelFormLayout id="pfl5" rows="2" maxColumns="2">
+              <af:selectManyShuttle value="#{pageFlowScope.UserPrefBean.selectedCustNameValues}"
+                                    id="sms3" autoSubmit="true" label=" "
+                                    leadingHeader="Customer Name"
+                                    trailingHeader="Selected Customers"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.custNameForSCVCE}"
+                                    contentStyle="width:300px;">
+                <f:selectItems value="#{pageFlowScope.UserPrefBean.custNames}"
+                               id="si11"/>
+              </af:selectManyShuttle>
+              <af:selectManyShuttle autoSubmit="true"
+                                    value="#{pageFlowScope.UserPrefBean.selectedCurrencyValsSC}"
+                                    id="sms7" label=" "
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.currencySCVCE}"
+                                    contentStyle="width:300px;"
+                                    leadingHeader="Currency Values"
+                                    trailingHeader="Selected Values">
+                <f:selectItems value="#{pageFlowScope.UserPrefBean.currencyValues}"
+                               id="si19"/>
+              </af:selectManyShuttle>
+              <af:selectManyShuttle id="sms8"
+                                    value="#{pageFlowScope.UserPrefBean.selectedIncoTermSC}"
+                                    leadingHeader="IncoTerm values" label=" "
+                                    autoSubmit="true"
+                                    trailingHeader="Selected Values"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.incoTermForSCVCE}"
+                                    contentStyle="width:300px;">
+                <f:selectItems value="#{pageFlowScope.UserPrefBean.allIncoTermValues}"
+                               id="si20"/>
+              </af:selectManyShuttle>
+              <af:selectManyShuttle id="sms9"
+                                    value="#{pageFlowScope.UserPrefBean.selectedPaymentTermSC}"
+                                    leadingHeader="PaymentTerm values"
+                                    autoSubmit="true" label=" "
+                                    trailingHeader="Selected Values"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.paymentTermVCE}"
+                                    contentStyle="width:300px;">
+                <f:selectItems value="#{pageFlowScope.UserPrefBean.paymentTermValues}"
+                               id="si21"/>
+              </af:selectManyShuttle>
+              <af:selectManyShuttle value="#{pageFlowScope.UserPrefBean.selectedBusinessAgreementValues}"
+                                    id="sms_3"
+                                    leadingHeader="Business Agreement" label=" "
+                                    autoSubmit="true"
+                                    trailingHeader="Selected Values"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.businessAgreementVCE}"
+                                    contentStyle="width:300px;">
+                <f:selectItems value="#{pageFlowScope.UserPrefBean.businessAgreemnt}"
+                               id="si_11"/>
+              </af:selectManyShuttle>
+            </af:panelFormLayout>
+          </f:facet>
+        </af:panelSplitter>
+      </af:showDetailHeader>
+    </af:panelGroupLayout>
+  </af:panelGroupLayout>
+</jsp:root>

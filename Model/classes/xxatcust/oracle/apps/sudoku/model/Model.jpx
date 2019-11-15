@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='windows-1252' ?>
 <!DOCTYPE JboProject SYSTEM "jbo_03_01.dtd">
+<!---->
 
 <JboProject
    xmlns="http://xmlns.oracle.com/bc4j"
@@ -11,6 +12,14 @@
       <Attr Name="_jprName" Value="../../../../../../Model.jpr" />
       <Attr Name="_appModuleNames0" Value="xxatcust.oracle.apps.sudoku.model.module.SudokuAM" />
    </DesignTime>
+   <Containee
+      Name="entity"
+      PackageName="xxatcust.oracle.apps.sudoku.model.entity"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_EO" Value="true"/>
+      </DesignTime>
+   </Containee>
    <Containee
       Name="module"
       ObjectType="JboPackage"
@@ -28,8 +37,15 @@
       </DesignTime>
    </Containee>
    <Containee
+      Name="staticView"
+      PackageName="xxatcust.oracle.apps.sudoku.model.staticView"
+      ObjectType="JboPackage"/>
+   <Containee
       Name="views"
       ObjectType="JboPackage"
       PackageName="xxatcust.oracle.apps.sudoku.model.views" >
+      <DesignTime>
+         <Attr Name="_VO" Value="true"/>
+      </DesignTime>
    </Containee>
 </JboProject>

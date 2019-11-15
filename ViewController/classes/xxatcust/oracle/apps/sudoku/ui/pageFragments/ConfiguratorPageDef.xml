@@ -34,5 +34,15 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
+    <attributeValues IterBinding="RuleSetVO1Iterator" id="SecondLevelCode">
+      <AttrNames>
+        <Item Value="SecondLevelCode"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="initRuleSetForRef"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="initRuleSetForRef"
+                  IsViewObjectMethod="false"/>
   </bindings>
 </pageDefinition>

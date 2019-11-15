@@ -217,6 +217,7 @@ public class UiField {
     private String identifyLicenceRow;
     private String selectedLovValue;
     private String licenceRowIndex;
+    private Boolean disableEFCol;
     public UiField() {
 
 
@@ -257,6 +258,7 @@ public class UiField {
             0, sumInsTar = 0;
         int numOfSelections = 0;
         int countLicensesEntered = 0;
+        int countOfEFEntries = 0;
         boolean displayOnlyLogic = false;       
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
 
@@ -584,6 +586,7 @@ public class UiField {
                             uiField3_qty = Integer.toString(qty);
                             sumLicenceInputs =
                                     sumLicenceInputs + node.getQuantity();
+                            countOfEFEntries++;
                         }
                         switch (uiElementType) {
                         case 1:
@@ -685,6 +688,7 @@ public class UiField {
                             sumLicenceInputs =
                                     sumLicenceInputs + node.getQuantity();
                             countLicensesEntered++;
+                            countOfEFEntries++;
                             //disableMultipleInputs = true ;
                         }
                         if (uiField4_dis) {
@@ -767,6 +771,7 @@ public class UiField {
                         if (node.getQuantity() != -1) {
                             //some value already exists
                             countLicensesEntered++;
+                            countOfEFEntries++;
                             //disableMultipleInputs = true ;
                         }
                         if (uiField5_dis) {
@@ -849,6 +854,7 @@ public class UiField {
                         if (node.getQuantity() != -1) {
                             //some value already exists
                             countLicensesEntered++;
+                            countOfEFEntries++;
                             //disableMultipleInputs = true ;
                         }
                         if (uiField6_dis) {
@@ -932,6 +938,7 @@ public class UiField {
                         if (node.getQuantity() != -1) {
                             //some value already exists
                             countLicensesEntered++;
+                            countOfEFEntries++;
                             //disableMultipleInputs = true ;
                         }
                         if (uiField7_dis) {
@@ -1015,6 +1022,7 @@ public class UiField {
                         if (node.getQuantity() != -1) {
                             //some value already exists
                             countLicensesEntered++;
+                            countOfEFEntries++;
                             //disableMultipleInputs = true ;
                         }
                         if (uiField8_dis) {
@@ -1099,6 +1107,7 @@ public class UiField {
                         if (node.getQuantity() != -1) {
                             //some value already exists
                             countLicensesEntered++;
+                            countOfEFEntries++;
                             //disableMultipleInputs = true ;
                         }
                         if (uiField9_dis) {
@@ -1172,6 +1181,7 @@ public class UiField {
                         if (node.getQuantity() != -1) {
                             //some value already exists
                             countLicensesEntered++;
+                            countOfEFEntries++;
                             //disableMultipleInputs = true ;
                         }
                         if (uiField10_dis) {
@@ -1246,6 +1256,7 @@ public class UiField {
                         if (node.getQuantity() != -1) {
                             //some value already exists
                             countLicensesEntered++;
+                            countOfEFEntries++;
                             //disableMultipleInputs = true ;
                         }
                         if (uiField11_dis) {
@@ -1321,6 +1332,7 @@ public class UiField {
                         if (node.getQuantity() != -1) {
                             //some value already exists
                             countLicensesEntered++;
+                            countOfEFEntries++;
                             //disableMultipleInputs = true ;
                         }
                         if (uiField12_dis) {
@@ -1374,6 +1386,10 @@ public class UiField {
         if (sumInsTar != 0) {
             sumInstaBaseTar = Integer.toString(sumInsTar);
         }
+        if(countOfEFEntries>=2){
+            disableEFCol = true;
+        }
+        
     }
 
 
@@ -2970,5 +2986,13 @@ public class UiField {
 
     public String getLicenceRowIndex() {
         return licenceRowIndex;
+    }
+
+    public void setDisableEFCol(Boolean disableEFCol) {
+        this.disableEFCol = disableEFCol;
+    }
+
+    public Boolean getDisableEFCol() {
+        return disableEFCol;
     }
 }

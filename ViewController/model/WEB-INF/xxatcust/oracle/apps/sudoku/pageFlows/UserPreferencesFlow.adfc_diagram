@@ -1,0 +1,52 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1">
+      <property
+         name="y">266.5</property>
+      <property
+         name="x">91.5</property>
+   </OverallProperties>
+   <MethodCall
+      id="MethodCall2">
+      <property
+         name="activityId">inituserPreference</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>inituserPreference&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">98.79883</property>
+      <property
+         name="x">91.5</property>
+   </MethodCall>
+   <View
+      id="View3">
+      <property
+         name="activityId">UserPreferences</property>
+      <property
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pageFragments/UserPreferences.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>UserPreferences&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">91.149414</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">268.01758</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="MethodCall2"
+      to="View3">
+      <property
+         name="fromOutcome">toUserPref</property>
+      <property
+         name="sdm:polyPoints">R50,132.5,98.44824,227.01758,90.79883,L50</property>
+   </ControlFlowCase>
+</SDM>

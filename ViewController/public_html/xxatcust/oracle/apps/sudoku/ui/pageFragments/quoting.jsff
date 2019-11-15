@@ -3,7 +3,7 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:h="http://java.sun.com/jsf/html">
-  <af:panelStretchLayout id="psl1" startWidth="158px" topHeight="69px"
+  <af:panelStretchLayout id="psl1" startWidth="159px" topHeight="69px"
                          dimensionsFrom="children">
     <f:facet name="bottom"/>
     <f:facet name="center">
@@ -29,7 +29,7 @@
       </af:inputText>-->
         <af:panelSplitter id="ps1" splitterPosition="445"
                           styleClass="AFStretchWidth"
-                          inlineStyle="height:17cm;">
+                          inlineStyle="height:19cm;">
           <f:facet name="first">
             <af:panelGroupLayout layout="scroll"
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
@@ -37,7 +37,7 @@
               <af:panelGroupLayout id="pgl8" layout="horizontal">
                 <af:spacer width="30" height="10" id="s24"/>
                 <af:panelFormLayout id="pfl1"
-                                    partialTriggers="organizationUnitId">
+                                    partialTriggers="organizationUnitId soc3">
                   <af:inputListOfValues id="organizationUnitId"
                                         popupTitle="Search and Select: #{bindings.OrganizationUnit.hints.label}"
                                         value="#{bindings.OrganizationUnit.inputValue}"
@@ -46,7 +46,7 @@
                                         columns="#{bindings.OrganizationUnit.hints.displayWidth}"
                                         shortDesc="#{bindings.OrganizationUnit.hints.tooltip}"
                                         autoSubmit="true"
-                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
+                                        launchPopupListener="#{pageFlowScope.QuotingBean.callOT}"
                                         requiredMessageDetail="Please Enter organization Unit"
                                         returnPopupListener="#{pageFlowScope.QuotingBean.OURPE}"
                                         valueChangeListener="#{pageFlowScope.QuotingBean.ouVCE}"
@@ -64,11 +64,12 @@
                   </af:inputText>
                   <af:spacer width="10" height="10" id="s2"/>
                   <af:selectOneChoice value="#{bindings.SalesChannel.inputValue}"
-                                      label="Sales Channel"
+                                      label="Sales Channel" autoSubmit="true"
                                       shortDesc="#{bindings.SalesChannel.hints.tooltip}"
                                       id="soc3" contentStyle="width:138.0px"
                                       required="false"
-                                      requiredMessageDetail="Please Enter Sales Channel">
+                                      requiredMessageDetail="Please Enter Sales Channel"
+                                      valueChangeListener="#{pageFlowScope.QuotingBean.salesChannelVCE}">
                     <f:selectItems value="#{bindings.SalesChannel.items}"
                                    id="si1"/>
                   </af:selectOneChoice>
@@ -99,24 +100,41 @@
                     <f:validator binding="#{bindings.CustomerSupportRepresent.validator}"/>
                   </af:inputListOfValues>
                   <af:spacer width="10" height="10" id="s3"/>
-                  <af:inputListOfValues id="customerNumberId"
+                  <!--<af:inputListOfValues id="customerNumberId"
                                         popupTitle="Search and Select: #{bindings.CustomerNumber.hints.label}"
                                         value="#{bindings.CustomerNumber.inputValue}"
                                         label="Customer Number"
                                         model="#{bindings.CustomerNumber.listOfValuesModel}"
                                         columns="#{bindings.CustomerNumber.hints.displayWidth}"
                                         shortDesc="#{bindings.CustomerNumber.hints.tooltip}"
-                                        partialTriggers="organizationUnitId customerNameId"
+                                        partialTriggers="organizationUnitId customerNameId soc3"
                                         requiredMessageDetail="Please Enter Customer Number"
-                                        returnPopupListener="#{pageFlowScope.QuotingBean.custNameRPL}"
                                         valueChangeListener="#{pageFlowScope.QuotingBean.custNameVCE}"
                                         showRequired="true"
                                         binding="#{pageFlowScope.QuotingBean.bindCustNumber}"
                                         autoSubmit="true"
-                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                         disabled="#{pageFlowScope.QuotingBean.isCustEnable eq false}">
                     <f:validator binding="#{bindings.CustomerNumber.validator}"/>
+                  </af:inputListOfValues>-->
+                  <af:inputListOfValues id="customerNumberId"
+                                        popupTitle="Search and Select: #{bindings.CustNum.hints.label}"
+                                        value="#{bindings.CustNum.inputValue}"
+                                        label="Customer Number"
+                                        model="#{bindings.CustNum.listOfValuesModel}"
+                                        columns="#{bindings.CustNum.hints.displayWidth}"
+                                        shortDesc="#{bindings.CustNum.hints.tooltip}"
+                                        partialTriggers="organizationUnitId customerNameId soc3"
+                                        requiredMessageDetail="Please Enter Customer Number"
+                                        valueChangeListener="#{pageFlowScope.QuotingBean.custNameVCE}"
+                                        showRequired="true"
+                                        binding="#{pageFlowScope.QuotingBean.bindCustNumber}"
+                                        autoSubmit="true"
+                                        disabled="#{pageFlowScope.QuotingBean.isCustEnable eq false}">
+                    <f:validator binding="#{bindings.CustNum.validator}"/>
                   </af:inputListOfValues>
+                  
+                  
+                  
                   <af:inputListOfValues id="customerNameId"
                                         popupTitle="Search and Select: #{bindings.CustomerName.hints.label}"
                                         value="#{bindings.CustomerName.inputValue}"
@@ -128,19 +146,35 @@
                                         requiredMessageDetail="Please Enter Customer Name"
                                         valueChangeListener="#{pageFlowScope.QuotingBean.custNameVCE}"
                                         showRequired="true"
-                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                         binding="#{pageFlowScope.QuotingBean.bindCustomerName}"
                                         disabled="#{pageFlowScope.QuotingBean.isCustEnable eq false}"
-                                        partialTriggers="organizationUnitId customerNumberId">
+                                        partialTriggers="organizationUnitId customerNumberId soc3">
                     <f:validator binding="#{bindings.CustomerName.validator}"/>
                   </af:inputListOfValues>
                   <af:spacer width="10" height="10" id="s1"/>
+                   <af:inputListOfValues id="custNameId"
+                                        popupTitle="Search and Select: #{bindings.CustName.hints.label}"
+                                        value="#{bindings.CustName.inputValue}"
+                                        label="Customer Name"
+                                        model="#{bindings.CustName.listOfValuesModel}"
+                                        columns="#{bindings.CustName.hints.displayWidth}"
+                                        shortDesc="#{bindings.CustName.hints.tooltip}"
+                                        autoSubmit="true"
+                                        requiredMessageDetail="Please Enter Customer Name"
+                                        showRequired="true"
+                                        disabled="#{pageFlowScope.QuotingBean.isCustEnable eq false}"
+                                        partialTriggers="organizationUnitId customerNumberId soc3"
+                                         rendered="false">
+                    <f:validator binding="#{bindings.CustName.validator}"/>
+                  </af:inputListOfValues>
+                  
                 </af:panelFormLayout>
               </af:panelGroupLayout>
               <af:separator id="s32"
                             inlineStyle="color:Black; font-size:large; font-weight:bolder;"/>
               <af:spacer width="10" height="20" id="s14"/>
-              <af:panelGroupLayout id="pgl9" layout="horizontal">
+              <af:panelGroupLayout id="pgl9" layout="horizontal"
+                                   partialTriggers="soc3">
                 <af:spacer width="30" height="10" id="s12"/>
                 <af:panelGroupLayout id="pgl26" layout="vertical"
                                      partialTriggers="customerNameId customerNumberId">
@@ -157,7 +191,7 @@
               <af:panelGroupLayout id="pgl21" layout="vertical">
                 <af:panelGroupLayout id="pgl20" valign="middle" halign="left"
                                      layout="horizontal">
-                  <af:spacer width="38" height="10" id="s34"/>
+                  <af:spacer width="40" height="10" id="s34"/>
                   <af:outputLabel value="Attention To/Department" id="ol6"
                                   inlineStyle="color:Black; font-weight:bold;"/>
                   <af:panelLabelAndMessage label="Attention To/Department"
@@ -173,7 +207,7 @@
                   </af:inputText>
                 </af:panelGroupLayout>
                 <af:panelGroupLayout id="pgl22" layout="horizontal">
-                  <af:spacer width="80" height="10" id="s20"/>
+                  <af:spacer width="71" height="10" id="s20"/>
                   <af:inputText label="Telephone No/Fax No" id="it12"
                                 columns="20"
                                 value="#{bindings.CustPhoneFax.inputValue}"
@@ -249,7 +283,7 @@
                                   rendered="false"/>
               </af:panelGroupLayout>
               <af:panelFormLayout id="pfl3" labelAlignment="start"
-                                  partialTriggers="cb2">
+                                  partialTriggers="cb2 soc3">
                 <af:inputText value="#{bindings.DealId.inputValue}"
                               label="CRM Deal ID"
                               columns="#{bindings.DealId.hints.displayWidth}"
@@ -269,7 +303,6 @@
                                       partialTriggers="organizationUnitId"
                                       requiredMessageDetail="Please Enter order Type"
                                       showRequired="true"
-                                      launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                       binding="#{pageFlowScope.QuotingBean.bindOrderType}"
                                       autoSubmit="true">
                   <f:validator binding="#{bindings.OrderType.validator}"/>
@@ -292,8 +325,7 @@
                                     required="#{bindings.BusinessAgreement.hints.mandatory}"
                                     shortDesc="#{bindings.BusinessAgreement.hints.tooltip}"
                                     id="soc5"
-                                    disabled="#{pageFlowScope.QuotingBean.businessAgrement eq false}"
-                                    partialTriggers="customerNameId customerNumberId"
+                                    partialTriggers="customerNumberId customerNameId soc3"
                                     contentStyle="width:138.0px">
                   <f:selectItems value="#{bindings.BusinessAgreement.items}"
                                  id="si5"/>
@@ -313,7 +345,8 @@
               <af:separator id="s33"
                             inlineStyle="font-weight:bold; color:Black;"/>
               <af:panelBox id="pb2" showDisclosure="false"
-                           inlineStyle="width:788px; border-width:medium; border-color:Black;">
+                           inlineStyle="width:788px; border-width:medium; border-color:Black;"
+                           partialTriggers="soc3">
                 <af:panelGroupLayout id="pgl16" layout="horizontal"
                                      halign="center">
                   <af:outputLabel value="Budgetary Quote" id="ol5"
@@ -384,16 +417,18 @@
                   </af:panelGroupLayout>
                 </af:panelGroupLayout>
                 <af:separator id="s30"/>
-                <af:panelGroupLayout id="pgl14" layout="vertical">    
+                <af:panelGroupLayout id="pgl14" layout="vertical"
+                                     partialTriggers="organizationUnitId">    
                     <af:outputLabel value="Payment Terms" id="ol8"
                                     showRequired="true"/>
                     <af:selectOneChoice value="#{bindings.PaymentTerms.inputValue}"
-                                        label=" "
+                                        label=" " autoSubmit="true"
                                         shortDesc="#{bindings.PaymentTerms.hints.tooltip}"
                                         id="soc2"
                                         requiredMessageDetail="Please Enter Payment Terms"
                                         contentStyle="width:419px"
-                                        inlineStyle="border-color:White; background-color:White;">
+                                        inlineStyle="border-color:White; background-color:White;"
+                                        partialTriggers="soc3">
                       <f:selectItems value="#{bindings.PaymentTerms.items}"
                                      id="si3"/>
                     </af:selectOneChoice>
@@ -401,16 +436,18 @@
                </af:panelGroupLayout>  
                 <af:separator id="s31"/>
                 <af:panelGroupLayout id="pgl4" layout="horizontal">
-                  <af:panelGroupLayout id="pgl24" layout="vertical">
+                  <af:panelGroupLayout id="pgl24" layout="vertical"
+                                       partialTriggers="soc3 organizationUnitId">
                     <af:outputLabel value="Incoterm" id="ol9"
                                     showRequired="true"/>
                     <af:selectOneChoice value="#{bindings.IncoTerms.inputValue}"
-                                        label=" "
+                                        label=" " autoSubmit="true"
                                         shortDesc="#{bindings.IncoTerms.hints.tooltip}"
                                         id="soc1"
                                         requiredMessageDetail="Please Enter Inco Terms"
                                         contentStyle="width:170px"
-                                        inlineStyle="background-color:White;">
+                                        inlineStyle="background-color:White;"
+                                        partialTriggers="soc3 organizationUnitId">
                       <f:selectItems value="#{bindings.IncoTerms.items}"
                                      id="si2"/>
                     </af:selectOneChoice>
@@ -419,15 +456,17 @@
                   <af:separator id="s13"
                                 inlineStyle="vertical-align:10.0in; font-size:large; font-weight:bolder;"/>
                   <af:panelGroupLayout id="pgl28" layout="vertical"
-                                       inlineStyle="border-color:Black;">
+                                       inlineStyle="border-color:Black;"
+                                       partialTriggers="soc3 organizationUnitId">
                     <af:outputLabel value="#{bindings.Currency.label}" id="ol10"
                                     showRequired="true"/>
                     <af:selectOneChoice value="#{bindings.Currency.inputValue}"
                                         shortDesc="#{bindings.Currency.hints.tooltip}"
-                                        id="soc4"
+                                        id="soc4" autoSubmit="true"
                                         requiredMessageDetail="Please Enter Currecny type"
                                         contentStyle="width:170px"
-                                        inlineStyle="background-color:White;">
+                                        inlineStyle="background-color:White;"
+                                        partialTriggers="soc3 organizationUnitId">
                       <f:selectItems value="#{bindings.Currency.items}"
                                      id="si4"/>
                     </af:selectOneChoice>
@@ -442,7 +481,7 @@
               </af:panelBox>
               <af:spacer width="10" height="10" id="s6"/>
               <af:panelGroupLayout id="pgl27" layout="vertical"
-                                   partialTriggers="customerNameId customerNumberId">
+                                   partialTriggers="customerNameId customerNumberId soc3">
                 <af:outputLabel value="Ship To" id="ol2"
                                 inlineStyle="font-weight:bold; color:Black;"/>
                 <af:spacer width="10" height="5" id="s19"/>

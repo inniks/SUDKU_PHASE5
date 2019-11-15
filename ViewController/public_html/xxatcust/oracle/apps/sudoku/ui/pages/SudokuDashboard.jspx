@@ -169,7 +169,6 @@
                         <af:spacer width="5" height="10" id="s8"/>
                         <af:commandImageLink id="ctb_qhdr" rendered="true"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToQuote}"
-                                             disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'quote'}"
                                              partialSubmit="true"
                                              icon="/Resources/images/imgs/Quote Header.png"
                                              disabledIcon="/Resources/images/imgs/qhdr_dis.png">
@@ -211,9 +210,15 @@
                         </af:popup>
                       </af:panelGroupLayout>
                       <af:panelGroupLayout id="pgl5" layout="horizontal">
-                        <af:commandImageLink id="ctb7" disabled="true"
+                       <af:commandImageLink id="ctb7" 
+                                             actionListener="#{viewScope.LoadDynamicRegionBean.navToLoadPref}"
+                                             partialSubmit="true"
                                              disabledIcon="/Resources/images/imgs/Load preferences.png"
-                                             icon="/Resources/images/imgs/Load preferences.png"/>
+                                             icon="/Resources/images/imgs/Load preferences.png">
+                          <af:setPropertyListener from="loadPref"
+                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
+                                                  type="action"/>
+                        </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s11"/>
                         <af:commandImageLink id="ctb5"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.exportTargetConfig}"

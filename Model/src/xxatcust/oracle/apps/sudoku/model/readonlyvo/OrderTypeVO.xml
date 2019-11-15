@@ -151,10 +151,18 @@ AND otta.org_id = :p_orgId]]>
         Value=":bindName"
         IsBindVarValue="true"
         Required="Optional"/>
+      <ViewCriteriaItem
+        Name="OrderTypeVOCriteria_vcrow4_OrgId"
+        ViewAttribute="OrgId"
+        Operator="="
+        Conjunction="AND"
+        Value=":p_orgId"
+        IsBindVarValue="true"
+        Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
   <AttrArray Name="KeyAttributes">
-    <Item Value="Name"/>
+    <Item Value="TransactionTypeId"/>
     <Item Value="OrgId"/>
   </AttrArray>
   <ResourceBundle>

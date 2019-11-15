@@ -1,6 +1,8 @@
 package xxatcust.oracle.apps.sudoku.model.module.client;
 
-import java.util.Hashtable;
+import java.math.BigDecimal;
+
+import java.util.List;
 
 import java.util.Map;
 
@@ -51,6 +53,35 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
     public String callQuoteAPI() {
         Object _ret = this.riInvokeExportedMethod(this,"callQuoteAPI",null,null);
         return (String)_ret;
+    }
+
+
+   
+    public List<String> getSelectedCustomerNameValues(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedCustomerNameValues",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return (List<String>)_ret;
+    }
+
+   
+    public List<String> getSelectedPaymentTermValues(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedPaymentTermValues",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return (List<String>)_ret;
+    }
+
+
+    public Map getQuoteHdrOrgID(String pquoteNo) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getQuoteHdrOrgID",new String [] {"java.lang.String"},new Object[] {pquoteNo});
+        return (Map)_ret;
+    }
+
+
+    public Map getSelectedOUValues(int usrId, List ouList) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedOUValues",new String [] {"int","java.util.List"},new Object[] {new Integer(usrId), ouList});
+        return (Map)_ret;
     }
 
 
@@ -155,12 +186,6 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         return (String)_ret;
     }
 
-    public String callUpdateQuoteAPI(int respid, int usrId) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"callUpdateQuoteAPI",new String [] {"int","int"},new Object[] {new Integer(respid), new Integer(usrId)});
-        return (String)_ret;
-    }
-
     public String callDuplicateQuoteAPI(String quoteFromSesion, int respId,
                                         int usrId) {
         Object _ret =
@@ -181,9 +206,178 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         return;
     }
 
-    public Hashtable getUiGrpMap() {
-        Object _ret = this.riInvokeExportedMethod(this,"getUiGrpMap",null,null);
-        return (Hashtable)_ret;
+    public void initUserPreference() {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"initUserPreference",null,null);
+        return;
+    }
+
+    public void filterOrderTypeRecords(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"filterOrderTypeRecords",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return;
+    }
+
+    public void getViewAccessors(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getViewAccessors",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return;
+    }
+
+    public void validatePrefStaticValues(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validatePrefStaticValues",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return;
+    }
+
+    public String validateOUValues(int usrId, List ouValues) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateOUValues",new String [] {"int","java.util.List"},new Object[] {new Integer(usrId), ouValues});
+        return (String)_ret;
+    }
+
+    public void initUserPref() {
+        Object _ret = this.riInvokeExportedMethod(this,"initUserPref",null,null);
+        return;
+    }
+
+    public List getSelectedCurrencyValues(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedCurrencyValues",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return (List)_ret;
+    }
+
+    public List getSelectedCSRValues(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedCSRValues",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return (List)_ret;
+    }
+
+    public List getSelectedIncoTermValues(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedIncoTermValues",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return (List)_ret;
+    }
+
+    public String validateCsrValues(int usrId, List csrValues, String csr) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateCsrValues",new String [] {"int","java.util.List","java.lang.String"},new Object[] {new Integer(usrId), csrValues, csr});
+        return (String)_ret;
+    }
+
+    public String validateCurrencyValues(int usrId, List currencyValues,
+                                         String defaultName) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateCurrencyValues",new String [] {"int","java.util.List","java.lang.String"},new Object[] {new Integer(usrId), currencyValues, defaultName});
+        return (String)_ret;
+    }
+
+    public String validateIncoTermValues(int usrId, List incoTermValues,
+                                         String dafaultVal) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateIncoTermValues",new String [] {"int","java.util.List","java.lang.String"},new Object[] {new Integer(usrId), incoTermValues, dafaultVal});
+        return (String)_ret;
+    }
+
+    public String validatePaymentTermValues(int usrId, String defaultVal) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validatePaymentTermValues",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), defaultVal});
+        return (String)_ret;
+    }
+
+    public List getSelectedBusinessAgreementForSC(int usrId,
+                                                  String salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedBusinessAgreementForSC",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), salesChannel});
+        return (List)_ret;
+    }
+
+    public List getSelectedCurrencyValuesForSC(int usrId,
+                                               String salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedCurrencyValuesForSC",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), salesChannel});
+        return (List)_ret;
+    }
+
+    public List getSelectedIncoTermValuesForSC(int usrId,
+                                               String salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedIncoTermValuesForSC",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), salesChannel});
+        return (List)_ret;
+    }
+
+    public List getSelectedPaymentTermValuesForSC(int usrId,
+                                                  String salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedPaymentTermValuesForSC",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), salesChannel});
+        return (List)_ret;
+    }
+
+    public String validateBAForSC(int usrId, List baValues, String defaultVal,
+                                  String salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateBAForSC",new String [] {"int","java.util.List","java.lang.String","java.lang.String"},new Object[] {new Integer(usrId), baValues, defaultVal, salesChannel});
+        return (String)_ret;
+    }
+
+    public String validateCurrencyValuesForSC(int usrId, List currencyValues,
+                                              String defaultVal,
+                                              String salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateCurrencyValuesForSC",new String [] {"int","java.util.List","java.lang.String","java.lang.String"},new Object[] {new Integer(usrId), currencyValues, defaultVal, salesChannel});
+        return (String)_ret;
+    }
+
+    public String validatePaymentTermValuesforSC(int usrId,
+                                                 List PaymentTermValues,
+                                                 String defaultVal,
+                                                 String salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validatePaymentTermValuesforSC",new String [] {"int","java.util.List","java.lang.String","java.lang.String"},new Object[] {new Integer(usrId), PaymentTermValues, defaultVal, salesChannel});
+        return (String)_ret;
+    }
+
+    public String validateIncoTermValuesForSC(int usrId, List incoTermValues,
+                                              String defaultVal,
+                                              String salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateIncoTermValuesForSC",new String [] {"int","java.util.List","java.lang.String","java.lang.String"},new Object[] {new Integer(usrId), incoTermValues, defaultVal, salesChannel});
+        return (String)_ret;
+    }
+
+    public String validateSalesChannelForSC(int usrId, List salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateSalesChannelForSC",new String [] {"int","java.util.List"},new Object[] {new Integer(usrId), salesChannel});
+        return (String)_ret;
+    }
+
+    public List getSelectedSalesChannelValues(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedSalesChannelValues",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return (List)_ret;
+    }
+
+    public void initQuoteBasedOnUserPref(boolean isUserDefault) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"initQuoteBasedOnUserPref",new String [] {"boolean"},new Object[] {new Boolean(isUserDefault)});
+        return;
+    }
+
+    public boolean commitEntities() {
+        Object _ret = this.riInvokeExportedMethod(this,"commitEntities",null,null);
+        return ((Boolean)_ret).booleanValue();
+    }
+
+    public void getSalesChannelBasedUserPref(String salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSalesChannelBasedUserPref",new String [] {"java.lang.String"},new Object[] {salesChannel});
+        return;
+    }
+
+    public boolean getSalesChannelBasedUserPrefForUpdateQuote(String salesChannel) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSalesChannelBasedUserPrefForUpdateQuote",new String [] {"java.lang.String"},new Object[] {salesChannel});
+        return ((Boolean)_ret).booleanValue();
     }
 
     public String getPath() {
@@ -213,9 +407,90 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         return (String)_ret;
     }
 
-    public Map getQuoteHdrOrgID(String pquoteNo) {
+    public Map defaultVals(int usrId, String orgId) {
         Object _ret =
-            this.riInvokeExportedMethod(this,"getQuoteHdrOrgID",new String [] {"java.lang.String"},new Object[] {pquoteNo});
+            this.riInvokeExportedMethod(this,"defaultVals",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), orgId});
         return (Map)_ret;
+    }
+
+    public Map defaultValsForSC(int usrId, String salesChannel,
+                                List customerNums, String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"defaultValsForSC",new String [] {"int","java.lang.String","java.util.List","java.lang.String"},new Object[] {new Integer(usrId), salesChannel, customerNums, orgId});
+        return (Map)_ret;
+    }
+
+    public List getAllCustNumValues(BigDecimal orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getAllCustNumValues",new String [] {"java.math.BigDecimal"},new Object[] {orgId});
+        return (List)_ret;
+    }
+
+    public List getAllSalesRepValues(String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getAllSalesRepValues",new String [] {"java.lang.String"},new Object[] {orgId});
+        return (List)_ret;
+    }
+
+    public List getSelectedCustNumValues(int usrId, String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedCustNumValues",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), orgId});
+        return (List)_ret;
+    }
+
+    public List getSelectedCustomerNameValues(int usrId, String salesChannel,
+                                              String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedCustomerNameValues",new String [] {"int","java.lang.String","java.lang.String"},new Object[] {new Integer(usrId), salesChannel, orgId});
+        return (List)_ret;
+    }
+
+    public List getSelectedOrderTypeValues(int usrId, String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedOrderTypeValues",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), orgId});
+        return (List)_ret;
+    }
+
+    public List getSelectedSalesRepValues(int usrId, String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getSelectedSalesRepValues",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), orgId});
+        return (List)_ret;
+    }
+
+    public String validateCustValues(int usrId, List custValues,
+                                     String custDefaultVal, String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateCustValues",new String [] {"int","java.util.List","java.lang.String","java.lang.String"},new Object[] {new Integer(usrId), custValues, custDefaultVal, orgId});
+        return (String)_ret;
+    }
+
+    public String validateCustValuesForSC(int usrId, List custValues,
+                                          String custDefaultVal,
+                                          String salesChannel, String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateCustValuesForSC",new String [] {"int","java.util.List","java.lang.String","java.lang.String","java.lang.String"},new Object[] {new Integer(usrId), custValues, custDefaultVal, salesChannel, orgId});
+        return (String)_ret;
+    }
+
+    public String validateOrderTypeValues(int usrId, List orderTypeValues,
+                                          String orderTypeDefaultval,
+                                          String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateOrderTypeValues",new String [] {"int","java.util.List","java.lang.String","java.lang.String"},new Object[] {new Integer(usrId), orderTypeValues, orderTypeDefaultval, orgId});
+        return (String)_ret;
+    }
+
+    public String validateSalesRepValues(int usrId, List salesRepVals,
+                                         String defaultVal, String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validateSalesRepValues",new String [] {"int","java.util.List","java.lang.String","java.lang.String"},new Object[] {new Integer(usrId), salesRepVals, defaultVal, orgId});
+        return (String)_ret;
+    }
+
+    public String callUpdateQuoteAPI(int respid, int usrId,
+                                     boolean isCustEditable) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"callUpdateQuoteAPI",new String [] {"int","int","boolean"},new Object[] {new Integer(respid), new Integer(usrId), new Boolean(isCustEditable)});
+        return (String)_ret;
     }
 }

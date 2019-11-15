@@ -9,9 +9,12 @@
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  RowClass="xxatcust.oracle.apps.sudoku.model.views.QuoteUpdateVORowImpl">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
   </DesignTime>
   <Properties>
     <SchemaBasedProperties>
@@ -74,6 +77,9 @@
   <ViewAccessor
     Name="CustomerNameVO"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNameVO">
+    <ViewCriteriaUsage
+      Name="CustomerNameVOCriteria"
+      FullName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNameVO.CustomerNameVOCriteria"/>
     <ParameterMap>
       <PIMap Variable="p_orgId">
         <TransientExpression><![CDATA[OrgId]]></TransientExpression>
@@ -109,6 +115,14 @@
       Name="PriceListVOCriteria"
       FullName="xxatcust.oracle.apps.sudoku.model.readonlyvo.PriceListVO.PriceListVOCriteria"/>
   </ViewAccessor>
+  <ViewAccessor
+    Name="userPrefEntityVA"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.views.userPrefEntityVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="userPrefSCVA"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.views.userPrefSCVO"
+    RowLevelBinds="true"/>
   <ListBinding
     Name="LOV_CurrencyCode"
     ListVOName="CurrencyVO"
@@ -293,7 +307,7 @@
       <Item Value="PaymentTermsName"/>
     </AttrArray>
     <AttrArray Name="ListAttrNames">
-      <Item Value="Description"/>
+      <Item Value="Name"/>
       <Item Value="Name"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
@@ -322,6 +336,102 @@
       <Item Value="Description"/>
     </AttrArray>
     <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustNum"
+    ListVOName="CustomerNameVO"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustNum_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustNum"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="CustName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Accountnumber"/>
+      <Item Value="Customername"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Accountnumber"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="CustomerNameVOCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustName"
+    ListVOName="CustomerNameVO"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustName_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustName"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="CustNum"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Customername"/>
+      <Item Value="Accountnumber"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Customername"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="CustomerNameVOCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Customername"
+    ListVOName="CustomerNameVO"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_Customername_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Customername"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="Customernumber"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Customername"/>
+      <Item Value="Accountnumber"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Customername"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="CustomerNameVOCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Customernumber"
+    ListVOName="CustomerNameVO"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_Customernumber_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Customernumber"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="Customername"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Accountnumber"/>
+      <Item Value="Customername"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Accountnumber"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="CustomerNameVOCriteria"
+      Hint="showAndExecute"/>
   </ListBinding>
   <SQLQuery>
     <![CDATA[SELECT AsoQuoteHeadersAll.QUOTE_HEADER_ID,
@@ -2019,10 +2129,17 @@ FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll]]>
     ColumnType="VARCHAR2"
     AliasName="CUSTOMERNAME"
     Expression="CUSTOMERNAME"
-    SQLType="VARCHAR">
+    SQLType="VARCHAR"
+    LOVName="LOV_Customername">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="360"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="Operatingunitname"
@@ -2049,10 +2166,17 @@ FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll]]>
     ColumnType="VARCHAR2"
     AliasName="CUSTOMERNUMBER"
     Expression="CUSTOMERNUMBER"
-    SQLType="VARCHAR">
+    SQLType="VARCHAR"
+    LOVName="LOV_Customernumber">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="30"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="Pricelistname"
@@ -2373,6 +2497,44 @@ FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll]]>
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="CustNum"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_CustNum">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustName"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_CustName">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <AttrArray Name="KeyAttributes">
     <Item Value="QuoteHeaderId"/>
   </AttrArray>

@@ -28,29 +28,13 @@
   <ViewAccessor
     Name="OUVO"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.OUVO"
-    RowLevelBinds="true">
-    <ViewCriteriaUsage
-      Name="OUVOCriteria"
-      FullName="xxatcust.oracle.apps.sudoku.model.readonlyvo.OUVO.OUVOCriteria"/>
-  </ViewAccessor>
+    RowLevelBinds="true"/>
   <ViewAccessor
     Name="OrderTypeVO"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.OrderTypeVO">
     <ViewCriteriaUsage
       Name="OrderTypeVOCriteria"
       FullName="xxatcust.oracle.apps.sudoku.model.readonlyvo.OrderTypeVO.OrderTypeVOCriteria"/>
-    <ParameterMap>
-      <PIMap Variable="p_orgId">
-        <TransientExpression><![CDATA[OrgId]]></TransientExpression>
-      </PIMap>
-    </ParameterMap>
-  </ViewAccessor>
-  <ViewAccessor
-    Name="CustomerNameVO"
-    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNameVO">
-    <ViewCriteriaUsage
-      Name="CustomerNameVOCriteria"
-      FullName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNameVO.CustomerNameVOCriteria"/>
     <ParameterMap>
       <PIMap Variable="p_orgId">
         <TransientExpression><![CDATA[OrgId]]></TransientExpression>
@@ -70,18 +54,6 @@
     <ParameterMap>
       <PIMap Variable="p_orgId">
         <TransientExpression><![CDATA[OrgId]]></TransientExpression>
-      </PIMap>
-    </ParameterMap>
-  </ViewAccessor>
-  <ViewAccessor
-    Name="CustomerNumberVO"
-    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNumberVO">
-    <ViewCriteriaUsage
-      Name="CustomerNumberVOCriteria"
-      FullName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNumberVO.CustomerNumberVOCriteria"/>
-    <ParameterMap>
-      <PIMap Variable="p_partId">
-        <TransientExpression><![CDATA[PartyId]]></TransientExpression>
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
@@ -127,13 +99,40 @@
   </ViewAccessor>
   <ViewAccessor
     Name="businessAgreementVo"
-    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.businessAgreementVo">
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.businessAgreementVo"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="userPrefEntityVO"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.views.userPrefEntityVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="NumberFormatViewVA"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.staticView.NumberFormatView"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="YesNoLOVVA"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.staticView.YesNoLOV"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="CustNameVO"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustNameVO">
+    <ViewCriteriaUsage
+      Name="CustNameVOCriteria"
+      FullName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustNameVO.CustNameVOCriteria"/>
     <ParameterMap>
-      <PIMap Variable="p_custAccId">
-        <TransientExpression><![CDATA[CustAccid]]></TransientExpression>
+      <PIMap Variable="P_org_id">
+        <TransientExpression><![CDATA[OrgId]]></TransientExpression>
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
+  <ViewAccessor
+    Name="userPrefSCVO"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.views.userPrefSCVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="CustomerNameVO1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNameVO"
+    RowLevelBinds="true"/>
   <ListBinding
     Name="LOV_OrganizationUnit"
     ListVOName="OUVO"
@@ -155,8 +154,8 @@
       <Item Value="OperatingUnit"/>
     </AttrArray>
     <DisplayCriteria
-      Name="OUVOCriteria"
-      Hint="showAndExecute"/>
+      Hint="showAndExecute"
+      Name="OUVOCriteria"/>
   </ListBinding>
   <ListBinding
     Name="LOV_OrderType"
@@ -180,7 +179,7 @@
   </ListBinding>
   <ListBinding
     Name="LOV_CustomerNumber"
-    ListVOName="CustomerNameVO"
+    ListVOName="CustNameVO"
     ListRangeSize="10"
     NullValueFlag="none"
     NullValueId="LOV_CustomerNumber_LOVUIHints_NullValueId"
@@ -189,21 +188,18 @@
       <Item Value="CustomerNumber"/>
     </AttrArray>
     <AttrArray Name="DerivedAttrNames">
-      <Item Value="PartyId"/>
-      <Item Value="CustAccid"/>
+      <Item Value="CustomerName"/>
     </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="Accountnumber"/>
-      <Item Value="Partyid"/>
-      <Item Value="CustAccountId"/>
+      <Item Value="Customername"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Accountnumber"/>
-      <Item Value="Customername"/>
     </AttrArray>
     <DisplayCriteria
-      Name="CustomerNameVOCriteria"
-      Hint="showAndExecute"/>
+      Hint="showAndExecute"
+      Name="CustNameVOCriteria"/>
   </ListBinding>
   <ListBinding
     Name="LOV_SalesChannel"
@@ -271,7 +267,7 @@
       <Item Value="IncoTermsMeaning"/>
     </AttrArray>
     <AttrArray Name="ListAttrNames">
-      <Item Value="Description"/>
+      <Item Value="Meaning"/>
       <Item Value="Meaning"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
@@ -314,50 +310,20 @@
   <ListBinding
     Name="LOV_PaymentTerms"
     ListVOName="PaymentTermsVO"
-    ListRangeSize="-1"
+    ListRangeSize="10"
     NullValueFlag="none"
     NullValueId="LOV_PaymentTerms_LOVUIHints_NullValueId"
     MRUCount="0">
     <AttrArray Name="AttrNames">
       <Item Value="PaymentTerms"/>
     </AttrArray>
-    <AttrArray Name="DerivedAttrNames">
-      <Item Value="PaymentTermsMean"/>
-    </AttrArray>
     <AttrArray Name="ListAttrNames">
-      <Item Value="Description"/>
       <Item Value="Name"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Description"/>
     </AttrArray>
-    <DisplayCriteria/>
-  </ListBinding>
-  <ListBinding
-    Name="LOV_CustomerName"
-    ListVOName="CustomerNameVO"
-    ListRangeSize="10"
-    NullValueFlag="none"
-    NullValueId="LOV_CustomerName_LOVUIHints_NullValueId"
-    MRUCount="0">
-    <AttrArray Name="AttrNames">
-      <Item Value="CustomerName"/>
-    </AttrArray>
-    <AttrArray Name="DerivedAttrNames">
-      <Item Value="PartyId"/>
-      <Item Value="CustAccid"/>
-    </AttrArray>
-    <AttrArray Name="ListAttrNames">
-      <Item Value="Customername"/>
-      <Item Value="Partyid"/>
-      <Item Value="CustAccountId"/>
-    </AttrArray>
-    <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="Customername"/>
-      <Item Value="Accountnumber"/>
-    </AttrArray>
     <DisplayCriteria
-      Name="CustomerNameVOCriteria"
       Hint="showAndExecute"/>
   </ListBinding>
   <ListBinding
@@ -370,11 +336,7 @@
     <AttrArray Name="AttrNames">
       <Item Value="Currency"/>
     </AttrArray>
-    <AttrArray Name="DerivedAttrNames">
-      <Item Value="CurrencyCode"/>
-    </AttrArray>
     <AttrArray Name="ListAttrNames">
-      <Item Value="Name"/>
       <Item Value="CurrencyCode"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
@@ -406,8 +368,8 @@
     Name="LOV_BusinessAgreement"
     ListVOName="businessAgreementVo"
     ListRangeSize="-1"
-    NullValueFlag="start"
-    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    NullValueFlag="none"
+    NullValueId="LOV_BusinessAgreement_LOVUIHints_NullValueId"
     MRUCount="0">
     <AttrArray Name="AttrNames">
       <Item Value="BusinessAgreement"/>
@@ -421,6 +383,243 @@
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Name"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_NumberFormat"
+    ListVOName="NumberFormatViewVA"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_NumberFormat_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="NumberFormat"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Id"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_PrdNumRefConfig"
+    ListVOName="YesNoLOVVA"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_PrdNumRefConfig_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="PrdNumRefConfig"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Code"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_PrdNumTargetConfig"
+    ListVOName="YesNoLOVVA"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_PrdNumTargetConfig_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="PrdNumTargetConfig"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Code"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_RefPriceRegConfig"
+    ListVOName="YesNoLOVVA"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_RefPriceRegConfig_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="RefPriceRegConfig"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Code"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_RefPriceTargetConfig"
+    ListVOName="YesNoLOVVA"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_RefPriceTargetConfig_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="RefPriceTargetConfig"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Code"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CurrencyForSC"
+    ListVOName="CurrencyVO"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_CurrencyForSC_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CurrencyForSC"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CurrencyCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Name"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_IncoTermForSC"
+    ListVOName="IncoTermVO1"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_IncoTermForSC_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="IncoTermForSC"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Meaning"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Description"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustomerNameForSC"
+    ListVOName="CustNameVO"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustomerNameForSC_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustomerNameForSC"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Accountnumber"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Customername"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="CustNameVOCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustomerName"
+    ListVOName="CustNameVO"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustomerName_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustomerName"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="CustNum"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Customername"/>
+      <Item Value="Accountnumber"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Customername"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="CustNameVOCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustNum"
+    ListVOName="CustNameVO"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustNum_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustNum"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="CustomerName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Accountnumber"/>
+      <Item Value="Customername"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Accountnumber"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="CustNameVOCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CustName"
+    ListVOName="CustNameVO"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_CustName_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CustName"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="CustNum"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Customername"/>
+      <Item Value="Accountnumber"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Customername"/>
+      <Item Value="Accountnumber"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="CustNameVOCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_OperatingUnit"
+    ListVOName="OUVO"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="OperatingUnit"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="OrgId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="OperatingUnit"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
@@ -599,10 +798,12 @@
     </Dependencies>
     <Properties>
       <SchemaBasedProperties>
-        <DISPLAYWIDTH
-          Value="20"/>
         <LABEL
           ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVO.CustomerNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+        <AUTOSUBMIT
+          Value="true"/>
         <CONTROLTYPE
           Value="input_text_lov"/>
       </SchemaBasedProperties>
@@ -689,7 +890,7 @@
         <DISPLAYWIDTH
           Value="20"/>
         <CONTROLTYPE
-          Value="choice"/>
+          Value="input_text_lov"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -1037,6 +1238,195 @@
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="PrdNumRefConfig"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_PrdNumRefConfig">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="radio"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PrdNumTargetConfig"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_PrdNumTargetConfig">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="radio"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RefPriceRegConfig"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_RefPriceRegConfig">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="radio"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RefPriceTargetConfig"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_RefPriceTargetConfig">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="radio"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="NumberFormat"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_NumberFormat">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CurrencyForSC"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_CurrencyForSC">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="IncoTermForSC"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_IncoTermForSC">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustomerNameForSC"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_CustomerNameForSC">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustNum"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_CustNum">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CustName"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_CustName">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OperatingUnit"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_OperatingUnit">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <AttrArray Name="KeyAttributes">
     <Item Value="DealId"/>
   </AttrArray>

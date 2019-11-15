@@ -10,8 +10,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -29,18 +32,22 @@ import oracle.apps.fnd.ext.common.Session;
 import oracle.jbo.AttributeDef;
 import oracle.jbo.Key;
 import oracle.jbo.Row;
+import oracle.jbo.RowSet;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.SessionData;
 import oracle.jbo.ViewCriteria;
 import oracle.jbo.server.ApplicationModuleImpl;
 import oracle.jbo.server.DBTransaction;
+import oracle.jbo.server.RowQualifier;
 import oracle.jbo.server.ViewObjectImpl;
 
 import xxatcust.oracle.apps.sudoku.model.module.common.SudokuAM;
 import xxatcust.oracle.apps.sudoku.model.readonlyvo.CFDReportVOImpl;
+import xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVORowImpl;
 import xxatcust.oracle.apps.sudoku.model.readonlyvo.RuleSetVORowImpl;
 import xxatcust.oracle.apps.sudoku.model.readonlyvo.XXATGlobalDirRVOImpl;
 import xxatcust.oracle.apps.sudoku.model.util.SudokuUtils;
+import xxatcust.oracle.apps.sudoku.model.views.QuoteUpdateVORowImpl;
 
 
 //import xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVOImpl;
@@ -101,171 +108,6 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
         }
         return currentUrlName;
 
-    }
-
-    public String getPath() {
-
-        ViewObjectImpl vo = getXXATGlobalDirRVO1();
-
-        Row row = vo.first();
-
-        String path = row.getAttribute("Description").toString();
-
-        return path;
-
-
-    }
-    public int callDUTReport(String confighid, String configrevno,
-                             String orderhid, String quoteno, String ponum,
-                             int respId, int usrId) {
-        CallableStatement cs = null;
-        String stmt = "XXAT_DUT_REP(:1,:2,:3,:4,:5,:6,:7,:8)";
-        StringBuilder errorMsg = new StringBuilder("<html><body>");
-        int reqid = 0;
-        try {
-
-            cs =
- this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
-                                                 0);
-
-
-            cs.setString(1, confighid);
-            cs.setString(2, configrevno);
-            cs.setString(3, orderhid);
-            cs.setString(4, quoteno);
-            cs.setString(5, ponum);
-            cs.setInt(6, respId);
-            cs.setInt(7, usrId);
-            cs.registerOutParameter(8, Types.INTEGER);
-            System.out.println("print before execute the procedure");
-
-
-            cs.executeUpdate();
-            reqid = cs.getInt(8);
-
-            System.out.println("print after execute the procedure");
-
-            System.out.println("print reqid" + reqid);
-        } catch (Exception e) {
-            errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
-            System.out.println("print error found in package execution" +
-                               e.getMessage());
-            //                e.printStackTrace();
-        } finally {
-            try {
-                if (cs != null)
-                    cs.close();
-            } catch (SQLException s) {
-                errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
-                //                    s.printStackTrace();
-                System.out.println("print error found in package execution1" +
-                                   s.getMessage());
-            }
-        }
-
-        return reqid;
-    }
-
-    public String callMOFReport(String confighid, String configrevno,
-                                String orderhid, String quoteno,
-                                String ponum) {
-        CallableStatement cs = null;
-        String stmt =
-            "XXAT_ASO_QUOTE_PKG.XXAT_MOF_REPORT_PRINT(:1,:2,:3,:4,:5,:6)";
-        StringBuilder errorMsg = new StringBuilder("<html><body>");
-        String output = null;
-        try {
-
-            cs =
- this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
-                                                 0);
-
-
-            cs.setString(1, confighid);
-            cs.setString(2, configrevno);
-            cs.setString(3, orderhid);
-            cs.setString(4, quoteno);
-            cs.setString(5, ponum);
-            //            cs.setInt(6, respId);
-            //            cs.setInt(7, usrId);
-            cs.registerOutParameter(6, Types.VARCHAR);
-            System.out.println("print before execute the procedure");
-
-
-            cs.executeUpdate();
-            output = cs.getString(6);
-
-            System.out.println("print after execute the procedure");
-
-            System.out.println("print output" + output);
-        } catch (Exception e) {
-            errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
-            System.out.println("print error found in package execution" +
-                               e.getMessage());
-            //                e.printStackTrace();
-        } finally {
-            try {
-                if (cs != null)
-                    cs.close();
-            } catch (SQLException s) {
-                errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
-                //                    s.printStackTrace();
-                System.out.println("print error found in package execution1" +
-                                   s.getMessage());
-            }
-        }
-
-        return output;
-    }
-
-    public String callCFDReport(String quoteNum, int respId, int usrId) {
-
-        CallableStatement cs = null;
-        String returnval = null;
-        StringBuilder errorMsg = new StringBuilder("<html><body>");
-        String reqstid = "";
-        String returnStatus = "";
-        String stmt = "   XXAT_CFD_REPT(:1,:2,:3,:4)";
-        try {
-            cs =
- this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
-                                                 0);
-            if (quoteNum != null) {
-                quoteNum = quoteNum.trim();
-                cs.setString(1, quoteNum);
-            } else
-                errorMsg.append("<p><b> Quote Number is Missing.</b></p>");
-
-
-            cs.setInt(2, respId);
-            cs.setInt(3, usrId);
-            cs.registerOutParameter(4, Types.VARCHAR);
-
-
-            errorMsg.append("</body></html>");
-            cs.executeUpdate();
-            reqstid = cs.getString(4);
-            //  String output =cs.getString(5);
-            System.out.println("print req id" + reqstid);
-            //            if ("<html><body></body></html>".equalsIgnoreCase(errorMsg.toString())) {
-            //                cs.executeUpdate();
-            //                returnStatus = cs.getString(5);
-            //                returnMessage = cs.getString(6);
-            //            }
-        } catch (Exception e) {
-            errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
-            //                e.printStackTrace();
-        } finally {
-            try {
-                if (cs != null)
-                    cs.close();
-            } catch (SQLException s) {
-                errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
-                //                    s.printStackTrace();
-            }
-        }
-
-        return reqstid;
     }
 
     public String getWrappedRequestAgent() {
@@ -440,8 +282,8 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
         Row row = null;
         PreparedStatement cs = null, cs1 = null;
         if (curRow != null) {
-            if ((String)curRow.getAttribute("CustomerNumber") != null) {
-                custNumber = (String)curRow.getAttribute("CustomerNumber");
+            if ((String)curRow.getAttribute("CustNum") != null) {
+                custNumber = (String)curRow.getAttribute("CustNum");
                 //                orgid = (BigDecimal)curRow.getAttribute("OrgId");
             }
         } else {
@@ -449,13 +291,13 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             if (quoteVO != null) {
                 row = quoteVO.getCurrentRow();
                 if (row != null) {
-                    custNumber = (String)row.getAttribute("CustomerNumber");
+                    custNumber = (String)row.getAttribute("CustNum");
                     //                    orgid = (BigDecimal)row.getAttribute("OrgId");
                 }
             }
         }
         try {
-            cs = this.getDBTransaction().createPreparedStatement(query, 0);
+                cs = this.getDBTransaction().createPreparedStatement(query, 0);
             cs.setString(1, custNumber);
             cs.setString(2, "BILL_TO");
 
@@ -491,6 +333,44 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             e.printStackTrace();
         }
     }
+    
+    
+    
+    public void getQuoteCustmerAddressForUpdateQuote(Row curRow) {
+        String shipTo = "";
+        String quoteTo = "";
+        String custNumber = null;
+        PreparedStatement cs = null, cs1 = null;
+        if (curRow != null) {
+            if ((String)curRow.getAttribute("Customernumber") != null)
+                custNumber = (String)curRow.getAttribute("Customernumber");
+        }
+        try {
+                cs = this.getDBTransaction().createPreparedStatement(query, 0);
+            cs.setString(1, custNumber);
+            cs.setString(2, "BILL_TO");
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                quoteTo = rs.getString(5);
+            }
+            cs1 = this.getDBTransaction().createPreparedStatement(query, 0);
+            cs1.setString(1, custNumber);
+            cs1.setString(2, "SHIP_TO");
+            ResultSet rs1 = cs1.executeQuery();
+            while (rs1.next()) {
+                shipTo = rs1.getString(5);
+            }
+            if (curRow != null) {
+                curRow.setAttribute("QuoteTo", quoteTo);
+                curRow.setAttribute("ShipTo", shipTo);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
 
     public String callQuoteAPI(int respid, int usrId) {
         ViewObjectImpl quoteVO = this.getQuotesVO();
@@ -539,9 +419,9 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                                                 "Quote For " + custName);
                         //                        errorMsg.append("<p><b>Quote Description is required.</b></p>");
                     }
-                    if (quoteVORow.getAttribute("CustomerNumber") != null) {
+                    if (quoteVORow.getAttribute("CustNum") != null) {
                         cs.setString(3,
-                                     quoteVORow.getAttribute("CustomerNumber").toString());
+                                     quoteVORow.getAttribute("CustNum").toString());
                         //                        System.out.println("CustomerNumber:" +
                         //                                           quoteVORow.getAttribute("CustomerNumber").toString());
                     } else {
@@ -584,26 +464,26 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                     }
                     //                    System.out.println("Payment Terms " +
                     //                                       quoteVORow.getAttribute("PaymentTerms"));
-                    if (quoteVORow.getAttribute("PaymentTermsMean") != null) {
+                    if (quoteVORow.getAttribute("PaymentTerms") != null) {
                         cs.setString(8,
-                                     quoteVORow.getAttribute("PaymentTermsMean").toString());
+                                     quoteVORow.getAttribute("PaymentTerms").toString());
                         //                        System.out.println("PaymentTerms:" +
                         //                                           quoteVORow.getAttribute("PaymentTermsMean").toString());
                     } else {
                         errorMsg.append("<p><b>Payment Terms is required.</b></p>");
                     }
-                    if (quoteVORow.getAttribute("CurrencyCode") != null) {
+                    if (quoteVORow.getAttribute("Currency") != null) {
                         cs.setString(9,
-                                     quoteVORow.getAttribute("CurrencyCode").toString());
+                                     quoteVORow.getAttribute("Currency").toString());
                         //                        System.out.println("Currency:" +
                         //                                           quoteVORow.getAttribute("CurrencyCode").toString());
                     } else {
                         errorMsg.append("<p><b>Currency is required.</b></p>");
                     }
 
-                    if (quoteVORow.getAttribute("IncoTermsMeaning") != null) {
+                    if (quoteVORow.getAttribute("IncoTerms") != null) {
                         cs.setString(10,
-                                     quoteVORow.getAttribute("IncoTermsMeaning").toString());
+                                     quoteVORow.getAttribute("IncoTerms").toString());
                         //                        System.out.println("IncoTerms:" +
                         //                                           quoteVORow.getAttribute("IncoTermsMeaning").toString());
                     } else {
@@ -645,7 +525,8 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                     if (quoteVORow.getAttribute("BusinessAgreementId") !=
                         null) {
                         cs.setString(17,
-                                     quoteVORow.getAttribute("BusinessAgreementId").toString());
+                                     quoteVORow.getAttribute("BusinessAgreement").toString());
+                        System.out.println("Business Agreeement Val:"+quoteVORow.getAttribute("BusinessAgreement").toString());
                         //                        System.out.println("CustAccId : " +
                         //                                           quoteVORow.getAttribute("CustAccid"));
                         //                        System.out.println("BusinessAgreement : " +
@@ -815,11 +696,22 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                 while (iter.hasNext()) {
                     row = iter.next();
                     quoteVO.setCurrentRow(row);
+                    //                    QuotesVORowImpl rowImpl = (QuotesVORowImpl)vo.getCurrentRow();
+                }
+                QuoteUpdateVORowImpl rowImpl =
+                    (QuoteUpdateVORowImpl)quoteVO.getCurrentRow();
+                if (rowImpl != null) {
+                    rowImpl.getUserBasedCSR();
+                    rowImpl.getUserBasedOrderType();
+                    rowImpl.getUserBasedCurrency();
+                    rowImpl.getUserBasedIncoTerm();
+                    rowImpl.getUserBasedSalesChannel();
+                    rowImpl.getUserBasedSalesRep();
                 }
                 getSalesRepDetails(row);
                 getCustSupportRepDetails(row);
                 getPaymentTermsForUpdate(row);
-                getUpdateQuoteCustmerAddress();
+                getUpdateQuoteCustmerAddress(row);
                 iter.closeRowSetIterator();
 
 
@@ -952,39 +844,34 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
     }
 
 
-    public void getUpdateQuoteCustmerAddress() {
+    public void getUpdateQuoteCustmerAddress(Row row) {
         String shipTo = "";
         String quoteTo = "";
         PreparedStatement cs = null, cs1 = null;
-
-        ViewObjectImpl quoteVO = this.getQuoteUpdateVO1();
-        System.out.println("Query is:" + query);
-        if (quoteVO != null) {
-            Row row = quoteVO.getCurrentRow();
             if (row != null) {
-                BigDecimal partyId = (BigDecimal)row.getAttribute("PartyId");
+                String accountNum = (String)row.getAttribute("Customernumber");
                 //                BigDecimal orgid = (BigDecimal)row.getAttribute("OrgId");
 
                 try {
                     cs =
  this.getDBTransaction().createPreparedStatement(query, 0);
-                    cs.setBigDecimal(1, partyId);
+                    cs.setString(1, accountNum);
                     cs.setString(2, "BILL_TO");
                     //                    cs.setBigDecimal(3, orgid);
 
                     ResultSet rs = cs.executeQuery();
                     while (rs.next()) {
-                        quoteTo = rs.getString(2);
+                        quoteTo = rs.getString(5);
                         System.out.println("quoteTo is:" + quoteTo);
                     }
                     cs1 =
 this.getDBTransaction().createPreparedStatement(query, 0);
-                    cs1.setBigDecimal(1, partyId);
+                    cs1.setString(1, accountNum);
                     cs1.setString(2, "SHIP_TO");
                     //                    cs1.setBigDecimal(3, orgid);
                     ResultSet rs1 = cs1.executeQuery();
                     while (rs1.next()) {
-                        shipTo = rs1.getString(2);
+                        shipTo = rs1.getString(5);
                         System.out.println("ShipTo is:" + shipTo);
                     }
                     row.setAttribute("QuoteTo", quoteTo);
@@ -997,9 +884,8 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 }
             }
         }
-    }
 
-    public String callUpdateQuoteAPI(int respid, int usrId) {
+    public String callUpdateQuoteAPI(int respid, int usrId,boolean isCustEditable) {
         ViewObjectImpl quoteVO = this.getQuoteUpdateVO1();
         String returnval = null;
         StringBuilder errorMsg = new StringBuilder("<html><body>");
@@ -1030,7 +916,17 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                      quoteVORow.getAttribute("QuoteName").toString());
                         System.out.println("QuoteName:" +
                                            quoteVORow.getAttribute("QuoteName").toString());
-                    } else {
+                    } else if(isCustEditable) {  //CustName
+                    String custName =
+                        (String)quoteVORow.getAttribute("CustName");
+                    cs.setString(2, "Quote For " + custName);
+                    System.out.println("QuoteDescription:" + "Quote For " +
+                                       custName);
+                    quoteVORow.setAttribute("QuoteName",
+                                            "Quote For " + custName);
+                    
+                    }
+                    else{
                         String custName =
                             (String)quoteVORow.getAttribute("Customername");
                         cs.setString(2, "Quote For " + custName);
@@ -1324,7 +1220,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         row.setAttribute("IncoTerms", incoTerm);
         row.setAttribute("Currency", currency);
         row.setAttribute("PaymentTerms", payterm);
-        row.setAttribute("CustomerNumber", custNumber);
+        row.setAttribute("CustNum", custNumber);
         row.setAttribute("CustomerName", custName);
         if (row != null) {
             quoteVO.insertRow(row);
@@ -1445,6 +1341,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                             row.setAttribute("OrganizationUnit", ou);
                             orgid = getOrgId(ou);
                             if (orgid != null) {
+                                initOrgBasedXMLQuote(orgid, row,orderType,custNumber,custName,salesCh,businessCSR,businessAggrement,currency,incoTerm);
                                 Row salesRepRow = getDefaulSalesRepVal(orgid);
                                 if (salesRepRow != null) {
                                     row.setAttribute("SalesRepresentative",
@@ -1485,8 +1382,6 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                         }
                                     }
                                 }
-
-
                                 if (custName != null || custNumber != null) {
                                     boolean numCheck = false;
                                     boolean nameCheck = false;
@@ -1497,7 +1392,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                                                   orgid)) {
                                                 qheaderValidMap.put("custNum",
                                                                     Boolean.TRUE);
-                                                row.setAttribute("CustomerNumber",
+                                                row.setAttribute("CustNum",
                                                                  custNumber);
                                                 numCheck = true;
                                             } else if (custName != null) {
@@ -1631,7 +1526,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     if (!currency.equals("")) {
                         if (isCurrencyValidate(currency)) {
                             qheaderValidMap.put("currency", Boolean.TRUE);
-                            row.setAttribute("CurrencyCode", currency);
+                            row.setAttribute("Currency", currency);
                         } else {
                             showWarning = true;
                             errorMsg.append("<p>Currency</p>");
@@ -1645,7 +1540,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     if (!incoTerm.equals("")) {
                         if (isIncoTermValidate(incoTerm)) {
                             qheaderValidMap.put("incoTerm", Boolean.TRUE);
-                            row.setAttribute("IncoTermsMeaning", incoTerm);
+                            row.setAttribute("IncoTerms", incoTerm);
                         } else {
                             showWarning = true;
                             errorMsg.append("<p>IncoTerm</p>");
@@ -1876,6 +1771,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         if (vo != null) {
             if (custNum != null) {
                 custNum = custNum.trim();
+                vo.clearCache();
+                vo.setNamedWhereClauseParam("p_orgId", null);
+                vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("p_orgId", orgid);
                 vo.setWhereClause("accountnumber='" + custNum + "'");
                 vo.executeQuery();
@@ -1975,21 +1873,6 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         return orgid;
     }
 
-    public boolean checkCustDetails(String orgid, String custNum,
-                                    String custName) {
-
-        if (orgid != null) {
-            ViewObjectImpl vo = this.getCustomerNumberVO();
-            if (vo != null) {
-                vo.setWhereClause("");
-            }
-
-        }
-
-        return false;
-    }
-
-
     public void getCurrency(String currency) {
         if (currency != null) {
             ViewObjectImpl vo = this.getCurrencyVO();
@@ -2004,7 +1887,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         Row row = null;
         ViewObjectImpl vo = this.getPrimarySalesRepVO();
         if (vo != null) {
-            vo.setNamedWhereClauseParam("P_ORG_ID", orgId);
+            vo.setNamedWhereClauseParam("p_orgId", orgId);
             vo.executeQuery();
             RowSetIterator iter = vo.createRowSetIterator("");
             while (iter.hasNext()) {
@@ -2035,22 +1918,165 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         }
     }
 
+
+    public void getDefaultValues() {
+        ViewObjectImpl vo = this.getQuotesVO();
+        if (vo != null) {
+            RowQualifier otrq = new RowQualifier("");
+
+        }
+
+    }
+
+//    public void initQuoteBasedOnUserPref(boolean isUserDefault) {
+//        ViewObjectImpl vo = this.getQuotesVO();
+//        QuotesVORowImpl rowImpl = (QuotesVORowImpl)vo.getCurrentRow();
+//        String custNum = null, custName = null;
+//                rowImpl.getuserBasedOU();
+//       
+////        rowImpl.getUserBasedSalesChannel();
+////        String csr = rowImpl.getUserBasedCSR();
+////        String currency = rowImpl.getUserBasedCurrency();
+////        String incoTerm = rowImpl.getUserBasedIncoTerm();
+//        String paymentTerm = rowImpl.getUserBasedPaymentTerm();
+//        if (isUserDefault) {
+//            if (vo != null) {
+//                Row row = vo.getCurrentRow();
+//            System.out.println("org value"+row.getAttribute("OrgId")); 
+//                Map custDetails = rowImpl.getUserBasedCustomerDetails();
+//                if (custDetails != null) {
+//                    custNum = (String)custDetails.get("custNum");
+//                    custName = (String)custDetails.get("custName");
+//                }
+////                String salesRep = rowImpl.getUserBasedSalesRep();
+////                String orderType = rowImpl.getUserBasedOrderType();
+////                row.setAttribute("OrderType", orderType);
+//                System.out.println("custName:"+custName+" custNumber:"+custNum);
+////                row.setAttribute("CustNum", custNum);
+////                row.setAttribute("CustName", custName);
+//                row.setAttribute("CustomerNumber", custNum);
+//                System.out.println(row.getAttribute("CustomerNumber"));
+//                row.setAttribute("CustomerName", custName);
+////                row.setAttribute("Currency", currency);
+////                row.setAttribute("IncoTerms", incoTerm);
+//                System.out.println(paymentTerm);
+//                row.setAttribute("PaymentTerms",paymentTerm);
+////                row.setAttribute("CustomerSupportRepresent", csr);
+////                row.setAttribute("SalesRepresentative", salesRep);
+//                vo.insertRow(row);
+//                vo.setCurrentRow(row);
+//            }
+//        }
+//    }
+    
+    
+//initOrgBasedXMLQuote(orgid, row,orderType,custNumber,custName,salesCh,businessCSR,businessAggrement,currency,incoTerm,payTerm);    
+    
+            public void initOrgBasedXMLQuote(BigDecimal orgId, Row row,String orderType,String custNum,String custName,String salesChannel,String csr,String ba,String currency,String incoTerm) {
+         BigDecimal otid = null;
+        BigDecimal csrID = null;
+                if(orderType!=null){
+       ViewObjectImpl otVO = this.getOrderTypeVO();
+           otVO.setNamedWhereClauseParam("p_orgId", orgId);
+       RowQualifier rq = new RowQualifier(" Name="+ orderType);
+       Row r[] = otVO.getFilteredRows(rq);
+       if(r!=null && r.length>0){
+         otid = (BigDecimal)r[0].getAttribute("TransactionTypeId");  
+           }
+       }
+//                if(csr!=null){
+//                ViewObjectImpl csrVO = this.getCustomerSupportRepresentVO();
+//        Row r[] = csrVO.getFilteredRows(" CustomerName", csr);
+//        if(r!=null && r.length>0){
+//          csrID = (BigDecimal)r[0].getAttribute("PersonId");  
+//            }
+//        }
+        ViewObjectImpl vo = this.getQuotesVO();
+        vo.setCurrentRow(row);
+        QuotesVORowImpl rowImpl = (QuotesVORowImpl)row;
+//          boolean isOrgIdExists = rowImpl.getuserBasedOU(orgId);
+//          if(isOrgIdExists){
+                  rowImpl.getUserBasedOrderType(orgId, otid);
+                  rowImpl.getUserBasedCustomerDetails(orgId,custNum,custName);
+//                  rowImpl.getUserBasedSalesRep(orgId);
+//              }
+        rowImpl.getUserBasedSalesChannel(salesChannel);
+//       rowImpl.getUserBasedCSR(csrID);
+        rowImpl.getUserBasedCurrency(currency);
+        rowImpl.getUserBasedIncoTerm(incoTerm);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        public void initQuoteBasedOnUserPref(boolean isUserDefault) {
+        ViewObjectImpl vo = this.getQuotesVO();
+        QuotesVORowImpl rowImpl = (QuotesVORowImpl)vo.getCurrentRow();
+        String custNum = null, custName = null;
+//                rowImpl.getuserBasedOU(null);
+        String currency = rowImpl.getUserBasedCurrency(null);
+        String incoTerm = rowImpl.getUserBasedIncoTerm(null);
+         Map custDetails = rowImpl.getUserBasedCustomerDetails(null,null,null);
+         String salesRep = rowImpl.getUserBasedSalesRep(null);
+         String orderType = rowImpl.getUserBasedOrderType(null,null);
+         rowImpl.getUserBasedSalesChannel(null);
+        String paymentTerm = rowImpl.getUserBasedPaymentTerm();
+        String csr = rowImpl.getUserBasedCSR(null);
+        if (isUserDefault) {
+            if (vo != null) {
+                Row row = vo.getCurrentRow();
+            System.out.println("org value"+row.getAttribute("OrgId"));              
+                if (custDetails != null) {
+                    custNum = (String)custDetails.get("custNum");
+                    custName = (String)custDetails.get("custName");
+                }
+                row.setAttribute("OrderType", orderType);
+                System.out.println("OrderType Value:"+orderType);
+                System.out.println("custName:"+custName+" custNumber:"+custNum);
+                row.setAttribute("CustNum",custNum);
+                System.out.println(row.getAttribute("CustNum"));
+                row.setAttribute("CustomerName", custName);
+                row.setAttribute("CustName", custName);
+                row.setAttribute("Currency", currency);
+                row.setAttribute("IncoTerms", incoTerm);
+                row.setAttribute("CustomerSupportRepresent", csr);
+                System.out.println(paymentTerm);
+                row.setAttribute("PaymentTerms",paymentTerm);
+                row.setAttribute("SalesRepresentative", salesRep);
+                vo.insertRow(row);
+                vo.setCurrentRow(row);
+                getQuoteCustmerAddress(row);
+            }
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+
     public void clearQuoteFields() {
         ViewObjectImpl quoteVO = this.getQuotesVO();
         if (quoteVO != null)
             quoteVO.executeEmptyRowSet();
-        //        RowSetIterator iter = quoteVO.createRowSetIterator("clear");
-        //        if (iter != null) {
-        //            if (iter.hasNext())
-        //                iter.next().remove();
-        //            iter.closeRowSetIterator();
-        //        }
         quoteVO.clearCache();
         Row row = quoteVO.createRow();
         if (row != null) {
             quoteVO.insertRow(row);
             quoteVO.setCurrentRow(row);
+            QuotesVORowImpl rowImpl = (QuotesVORowImpl)quoteVO.getCurrentRow();
+//            rowImpl.getuserBasedOU(null);
         }
+
     }
 
     public void initRuleSet() {
@@ -2095,8 +2121,25 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 String topLevelCode = (String)ruleSetMap.get("topLevelCode");
                 String secondLevelCode =
                     (String)ruleSetMap.get("secondLevelCode");
+                _logger.info("AMIMPL FirstLvCode "+topLevelCode);
+                _logger.info("AMIMPL SecLvlCode "+secondLevelCode);
                 String error = (String)ruleSetMap.get("error");
                 if (error != null && error.equalsIgnoreCase("N")) {
+                    if (secondLevelCode != null) {
+                        secondLevelCode = secondLevelCode.toUpperCase();
+                    }
+                    cRow.setAttribute("TopLevelCode", topLevelCode);
+                    cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                    RuleSetVORowImpl rwImpl =
+                        (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                    String secondLevelMeaning =
+                        rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                    System.out.println("From AM Impl second level meaning " +
+                                       secondLevelMeaning);
+                    cRow.setAttribute("SecondLevelMeaning",
+                                      secondLevelMeaning);
+                }
+                if(error==null){
                     if (secondLevelCode != null) {
                         secondLevelCode = secondLevelCode.toUpperCase();
                     }
@@ -2123,62 +2166,62 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
     public void initRuleSetForRef() {
         System.out.println("Init Rule Set config");
-        ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
-        if (ruleSetVO != null) {
-            //get value of rulset top level and second level choices
-            Row cRow = ruleSetVO.createRow();
-            ruleSetVO.insertRow(cRow);
-            Map ruleSetMap =
-                (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
-            // Map ruleSetMapConfig =
-            // (Map)ADFContext.getCurrent().getSessionScope().get("inputParamsMapFromConfig");
+                ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
+                if (ruleSetVO != null) {
+                    //get value of rulset top level and second level choices
+                    Row cRow = ruleSetVO.createRow();
+                    ruleSetVO.insertRow(cRow);
+                    Map ruleSetMap =
+                        (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
+                    // Map ruleSetMapConfig =
+                    // (Map)ADFContext.getCurrent().getSessionScope().get("inputParamsMapFromConfig");
 
-            if (ruleSetMap != null && ruleSetMap.size() > 0) {
-                ruleSetVO.setCurrentRow(cRow);
-                String topLevelCode = (String)ruleSetMap.get("topLevelCode");
-                String secondLevelCode =
-                    (String)ruleSetMap.get("secondLevelCode");
-                String error = (String)ruleSetMap.get("error");
-                //                    if (error != null && error.equalsIgnoreCase("N")) {
-                if (secondLevelCode != null) {
-                    secondLevelCode = secondLevelCode.toUpperCase();
-                }
-                cRow.setAttribute("TopLevelCode", topLevelCode);
-                cRow.setAttribute("SecondLevelCode", secondLevelCode);
-                RuleSetVORowImpl rwImpl =
-                    (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
-                String secondLevelMeaning =
-                    rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                System.out.println("From AM Impl second level meaning " +
-                                   secondLevelMeaning);
-                cRow.setAttribute("SecondLevelMeaning", secondLevelMeaning);
-                //                    }
-            }
-
-            else if (ruleSetMap != null) {
-                String topLevelCode = (String)ruleSetMap.get("topLevelCode");
-                String secondLevelCode =
-                    (String)ruleSetMap.get("secondLevelCode");
-                String error = (String)ruleSetMap.get("error");
-                if (error != null && error.equalsIgnoreCase("N")) {
-                    if (secondLevelCode != null) {
-                        secondLevelCode = secondLevelCode.toUpperCase();
+                    if (ruleSetMap != null && ruleSetMap.size() > 0) {
+                        ruleSetVO.setCurrentRow(cRow);
+                        String topLevelCode = (String)ruleSetMap.get("topLevelCode");
+                        String secondLevelCode =
+                            (String)ruleSetMap.get("secondLevelCode");
+                        String error = (String)ruleSetMap.get("error");
+                        //                    if (error != null && error.equalsIgnoreCase("N")) {
+                        if (secondLevelCode != null) {
+                            secondLevelCode = secondLevelCode.toUpperCase();
+                        }
+                        cRow.setAttribute("TopLevelCode", topLevelCode);
+                        cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                        RuleSetVORowImpl rwImpl =
+                            (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                        String secondLevelMeaning =
+                            rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                        System.out.println("From AM Impl second level meaning " +
+                                           secondLevelMeaning);
+                        cRow.setAttribute("SecondLevelMeaning", secondLevelMeaning);
+                        //                    }
                     }
-                    cRow.setAttribute("TopLevelCode", topLevelCode);
-                    cRow.setAttribute("SecondLevelCode", secondLevelCode);
-                    RuleSetVORowImpl rwImpl =
-                        (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
-                    String secondLevelMeaning =
-                        rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                    System.out.println("From AM Impl second level meaning " +
-                                       secondLevelMeaning);
-                    cRow.setAttribute("SecondLevelMeaning",
-                                      secondLevelMeaning);
-                }
 
-                ruleSetVO.setCurrentRow(cRow);
-            }
-        }
+                    else if (ruleSetMap != null) {
+                        String topLevelCode = (String)ruleSetMap.get("topLevelCode");
+                        String secondLevelCode =
+                            (String)ruleSetMap.get("secondLevelCode");
+                        String error = (String)ruleSetMap.get("error");
+                        if (error != null && error.equalsIgnoreCase("N")) {
+                            if (secondLevelCode != null) {
+                                secondLevelCode = secondLevelCode.toUpperCase();
+                            }
+                            cRow.setAttribute("TopLevelCode", topLevelCode);
+                            cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                            RuleSetVORowImpl rwImpl =
+                                (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                            String secondLevelMeaning =
+                                rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                            System.out.println("From AM Impl second level meaning " +
+                                               secondLevelMeaning);
+                            cRow.setAttribute("SecondLevelMeaning",
+                                              secondLevelMeaning);
+                        }
+
+                        ruleSetVO.setCurrentRow(cRow);
+                    }
+                }
     }
 
 
@@ -2550,6 +2593,150 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         return returnval;
     }
 
+    public void initUserPreference() {
+        //        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        ViewObjectImpl quotesVO = this.getQuotesVO();
+        //        ViewObjectImpl orderVO = this.getOrderTypeVO();
+        //        BigDecimal org = new BigDecimal(143);
+        //        if (vo != null)
+        //            vo.executeEmptyRowSet();
+        //        if (orderVO != null) {
+        //            orderVO.setNamedWhereClauseParam("p_orgId", null);
+        //            orderVO.setNamedWhereClauseParam("p_orgId", org);
+        //            orderVO.executeQuery();
+        //        }
+        if (quotesVO != null) {
+            Row row = quotesVO.createRow();
+            row.setAttribute("OrgId", 143);
+            row.setAttribute("OrganizationUnit", "CAS-OU-7303");
+            quotesVO.insertRow(row);
+            quotesVO.setCurrentRow(row);
+
+
+        }
+    }
+
+    public void initUserPref() {
+        ViewObjectImpl vo = this.getQuotesVO();
+//        ViewObjectImpl salesChannelDVO =
+//            this.getSalesChannelDefaultUsrPrefVO1();
+//        if (salesChannelDVO != null) {
+//            Row r = salesChannelDVO.createRow();
+//            salesChannelDVO.insertRow(r);
+//            salesChannelDVO.setCurrentRow(r);
+//        }
+        if (vo != null) {
+            Row r = vo.createRow();
+            vo.insertRow(r);
+            vo.setCurrentRow(r);
+            ADFContext.getCurrent().getSessionScope().put("ouGetters1", "Y");
+            ADFContext.getCurrent().getSessionScope().put("ouGetters2", "Y");
+        }
+    }
+
+    public void getSalesChannelBasedUserPref(String salesChannel) {
+        ViewObjectImpl vo = this.getQuotesVO();
+        String custNum = null, custName = null;
+        if (vo != null) {
+            Row r = vo.getCurrentRow();
+            QuotesVORowImpl rowImpl = (QuotesVORowImpl)vo.getCurrentRow();
+            Map map =
+                rowImpl.getSalesChannelBasedCustomerDetails(salesChannel.toString());
+            if (map != null) {
+                custNum = (String)map.get("custNum");
+                custName = (String)map.get("custName");
+            }
+            String currency =
+                rowImpl.getSalesChannelBasedCurrency(salesChannel);
+            String incoTerm =
+                rowImpl.getSalesChannelBasedIncoTerm(salesChannel);
+            String paymentTerm =
+                rowImpl.getSalesChannelBasedPaymentTerm(salesChannel);
+            String ba = rowImpl.getSalesChannelBasedBA(salesChannel);
+            if (custNum != null) {
+                r.setAttribute("CustNum", null);
+                r.setAttribute("CustomerName", null);
+                System.out.println("CustNum:"+r.getAttribute("CustNum"));
+                System.out.println("CustomerName:"+r.getAttribute("CustomerName"));
+                
+                r.setAttribute("CustNum", custNum);
+                r.setAttribute("CustomerName", custName);
+                System.out.println("CustNum:"+r.getAttribute("CustNum"));
+                System.out.println("CustomerName:"+r.getAttribute("CustomerName"));
+                getQuoteCustmerAddress(r);
+            }
+            else{
+                    r.setAttribute("CustNum", null);
+                    r.setAttribute("CustomerName", null);
+                    getQuoteCustmerAddress(r);
+                }
+            
+            if (incoTerm != null)
+                r.setAttribute("IncoTerms", incoTerm);
+
+            if (currency != null) {
+                r.setAttribute("Currency", currency);
+            } 
+            if (paymentTerm != null)
+                r.setAttribute("PaymentTerms", paymentTerm);
+            if (ba != null)
+                r.setAttribute("BusinessAgreement", ba);
+
+        }
+        
+    }
+
+    public boolean getSalesChannelBasedUserPrefForUpdateQuote(String salesChannel) {
+        ViewObjectImpl vo = this.getQuoteUpdateVO1();
+        String custNum = null, custName = null;
+        boolean isCustEditable = false;
+        if (vo != null) {
+            Row r = vo.getCurrentRow();
+            QuoteUpdateVORowImpl rowImpl = (QuoteUpdateVORowImpl)vo.getCurrentRow();
+            Map map =
+                rowImpl.getSalesChannelBasedCustomerDetails(salesChannel);
+            if (map != null) {
+                
+                custNum = (String)map.get("custNum");
+                custName = (String)map.get("custName");
+            }
+            String currency = rowImpl.getSalesChannelBasedCurrency(salesChannel);
+            String incoTerm = rowImpl.getSalesChannelBasedIncoTerm(salesChannel);
+            String paymentTerm = rowImpl.getSalesChannelBasedPaymentTerm(salesChannel);
+            String ba = rowImpl.getSalesChannelBasedBA(salesChannel);
+            if (custNum != null) {
+                isCustEditable = true;
+                r.setAttribute("CustNum", custNum);
+                r.setAttribute("Customername", custName);
+                }else{
+                    r.setAttribute("CustNum", null);
+                    r.setAttribute("Customername", null);
+                }
+            getQuoteCustmerAddressForUpdateQuote(r);
+            if (incoTerm != null)
+                r.setAttribute("Incoterms", incoTerm);
+            else
+                r.setAttribute("Incoterms", null);
+
+            if (currency != null) 
+                r.setAttribute("CurrencyCode", currency);
+            else
+                r.setAttribute("CurrencyCode", null);
+                
+            if (paymentTerm != null)
+                r.setAttribute("Paymentterms", paymentTerm);
+            else
+                r.setAttribute("Paymentterms", null);
+            if (ba != null)
+                r.setAttribute("Agrimentname", ba);
+            else
+            r.setAttribute("Agrimentname", null);
+
+        }
+        return isCustEditable;
+    }
+
+
     public String getFNDMsges(String msgName) {
         String msgText = null;
         if (msgName != null && !"".equalsIgnoreCase(msgName)) {
@@ -2563,6 +2750,2368 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     }
 
 
+//    public Map<String, List> getSelectedOUValues(int usrId, List ouList) {
+//        Map<String, List> ouMap = new HashMap<String, List>();
+//        StringBuilder ousb = new StringBuilder();
+//        Row row = null;
+//        String ou = null;
+//        List temp = null;
+//
+//        List<String> selectedValues = new ArrayList<String>();
+//        List selectedOrgValues = new ArrayList();
+//        ViewObjectImpl vo = this.getuserPrefEntityVO();
+//        ViewObjectImpl ouVO = this.getOUVO();
+//        RowQualifier rq = new RowQualifier(ouVO);
+//
+//        if (ouList != null & ouList.size() > 0) {
+//            ousb.append("('");
+//            ousb.append(ouList.get(0));
+//            for (int i = 1; i < ouList.size(); i++) {
+//                ousb.append("','").append(ouList.get(i));
+//                //                    orderV.append("'").append(",").append("'").append(temp.get(i));
+//            }
+//            ousb.append("')");
+//            rq.setWhereClause("OperatingUnit in" + ousb.toString());
+//            Row filteredRows[] = ouVO.getFilteredRows(rq);
+//            for (Row r : filteredRows) {
+//                selectedValues.add(r.getAttribute("OperatingUnit").toString());
+//                selectedOrgValues.add(r.getAttribute("OrgId").toString());
+//                System.out.println("Filtered Row- " +
+//                                   r.getAttribute("OperatingUnit") + "n");
+//                System.out.println("Filtered Row- " + r.getAttribute("OrgId") +
+//                                   "n");
+//            }
+//        } else {
+//            if (vo != null) {
+//                String col_type = "Operating_unit";
+//                Object obj[] = { usrId, col_type };
+//                Key key = new Key(obj);
+//                Row[] rows = vo.findByKey(key, 2);
+//                if (rows != null && rows.length > 0) {
+//                    row = rows[0];
+//                    ou = (String)row.getAttribute("ColumnVal");
+//                    System.out.println("ou is:" + ou);
+//                }
+//                if (ouVO != null && ou != null) {
+//                    temp = Arrays.asList(ou.split("\\s*,\\s*"));
+//
+//                    ousb.append("(").append(ou).append(")");
+//                    if (temp != null && temp.size() > 0) {
+//                        rq.setWhereClause("OrgId in" + ousb);
+//                        Row filteredRows[] = ouVO.getFilteredRows(rq);
+//                        for (Row r : filteredRows) {
+//                            selectedValues.add(r.getAttribute("OperatingUnit").toString());
+//                            selectedOrgValues.add(r.getAttribute("OrgId"));
+//                            System.out.println("Filtered Row OU- " +
+//                                               r.getAttribute("OperatingUnit"));
+//                            System.out.println("Filtered Row-OrgList " +
+//                                               r.getAttribute("OrgId"));
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        ouMap.put("ouValues", selectedValues);
+//        ouMap.put("orgList", selectedOrgValues);
+//        return ouMap;
+//    }
+
+    public List getSelectedOrderTypeValues(int usrId,String orgId) {
+        StringBuilder orderV = new StringBuilder("(");
+        String orderType = null;
+        List selectedNames = new ArrayList();
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        ViewObjectImpl otVO = this.getOrderTypeVO();
+        if(orgId!=null){
+        String col_type = "Order_type";
+        vo.clearCache();
+        vo.setWhereClause(null);
+//        RowQualifier rq = new RowQualifier("ColumnType =" + col_type +
+//                                     " and UserId=" + usrId + " and OperatingUnit ='"+orgId+"'");
+//        Row[] rows = vo.getFilteredRows(rq);
+        Object obj[] = { usrId, col_type,orgId };
+        Key key = new Key(obj);
+        Row[] rows = vo.findByKey(key, 3);
+        if (rows != null && rows.length > 0) {
+            orderType = (String)rows[0].getAttribute("ColumnVal");
+        }
+        if (orderType != null) {
+            orderV.append(orderType).append(")");
+            otVO.clearCache();
+            otVO.setWhereClause(null); 
+            otVO.setNamedWhereClauseParam("p_orgId", null);
+            otVO.setNamedWhereClauseParam("p_orgId", orgId);
+            otVO.setWhereClause("transaction_type_id in"+orderV.toString());
+            otVO.executeQuery();
+            RowSetIterator iter = otVO.createRowSetIterator(null);
+            while(iter.hasNext()){
+                Row r = iter.next();
+                    selectedNames.add(r.getAttribute("Name").toString());   
+                }  
+        }
+        }
+        return selectedNames;
+    }
+    String s = " AND EXISTS (\n" +
+        "          SELECT 1\n" +
+        "            FROM hz_cust_site_uses_all hzsu,\n" +
+        "                 hz_cust_acct_sites_all hzas,\n" +
+        "                 hz_party_sites hzps\n" +
+        "           WHERE hzsu.primary_flag = 'Y'\n" +
+        "             AND hzsu.cust_acct_site_id = hzas.cust_acct_site_id\n" +
+        "             AND hzsu.org_id = hzas.org_id\n" +
+        "             AND hzas.cust_account_id = ca.cust_account_id\n" +
+        "             AND hzps.party_site_id = hzas.party_site_id" +
+        "             AND hzsu.org_id in(";
+
+    public List getSelectedCustomerNameValues(int usrId, String salesChannel, String orgId) {
+        _logger.info("SudkuAmimpl: getSelectedCustomerNameValues: Start: customerName::");
+        StringBuilder custNumsb = new StringBuilder("('");
+        String custNumbers = null;
+        List<String> temp = null;
+        List selectedValues = new ArrayList();
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+        ViewObjectImpl custVO = this.getCustomerNameVO();
+        if (salesChannel != null) {
+            vo.clearCache();
+            vo.setWhereClause(null);
+            String col_type = "Customer";
+            Object obj[] = {usrId, col_type,salesChannel,orgId};
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 4);
+//    RowQualifier rq =
+//                    new RowQualifier("ColumnType =" + col_type +
+//                                     " and UserId=" + usrId + " and OperatingUnit ='"+orgId+"'"+ " and SalesChannel ='"+salesChannel+"'");
+//                        Row[] rows = vo.getFilteredRows(rq);
+                        if (rows != null && rows.length > 0) {
+                            _logger.info("SudkuAmimpl: getSelectedCustomerNameValues: check from userPref Table::");
+                            custNumbers = (String)rows[0].getAttribute("ColumnVal");
+                        }
+            _logger.info("SudkuAmimpl: getSelectedCustomerNameValues: Start: cust Numbers::" +
+                         custNumbers);
+            if (custVO != null && custNumbers != null) {
+                vo.clearCache();
+                vo.setWhereClause(null);
+                temp = Arrays.asList(custNumbers.split("\\s*,\\s*"));
+                if (temp != null && temp.size() > 0) {
+                    custNumsb.append(temp.get(0));
+                    for (int i = 1; i < temp.size(); i++) {
+                        custNumsb.append("','").append(temp.get(i));
+                    }
+                    custNumsb.append("')");
+                    _logger.info("SudkuAmimpl: getSelectedCustomerNameValues: Start: cust Numbers::" +
+                                 custNumsb.toString());
+                    custVO.setNamedWhereClauseParam("p_orgId", orgId);
+                    custVO.setWhereClause("accountnumber in "+custNumsb.toString());
+                    custVO.executeQuery();
+                    RowSetIterator iter = custVO.createRowSetIterator(null);
+                    while(iter.hasNext()){
+                        Row r = iter.next();
+                            selectedValues.add(r.getAttribute("Customername"));
+                        }
+//                    RowQualifier rq1 =
+//                        new RowQualifier("Accountnumber in" + custNumsb.toString());
+//                    //                                            rq.setWhereClause("Accountnumber in" +custNumsb.toString());
+//                    Row fRows[] = custVO.getFilteredRows(rq1);
+//                    for (Row r : fRows) {
+//                        selectedValues.add(r.getAttribute("Customername"));
+//                    }
+                }
+            }
+        }
+        _logger.info("SudkuAmimpl: getSelectedCustomerNameValues: End::");
+        return selectedValues;
+    }
+
+
+    public List getSelectedCustNumValues(int usrId, String orgId) {
+        long startTime = System.currentTimeMillis();
+        System.out.println("SudokuAmImpl:getSelectedCustNumValues: Start " +
+                           (System.currentTimeMillis() - startTime));
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+//        ViewObjectImpl custVO = this.getCustomerNameVO();   //p_orgId
+        String customer = null;
+        List selectedCustvals = new ArrayList();
+        List<String> temp = null;
+        String col_type = "Customer";
+//        RowQualifier rq1 =
+//                           new RowQualifier("ColumnType =" + col_type +
+//                                            " and UserId=" + usrId + " and OperatingUnit ='"+orgId+"'");
+//                               Row[] rows = vo.getFilteredRows(rq1);
+        Object obj[] = { usrId, col_type,orgId};
+        Key key = new Key(obj);
+        Row[] rows = vo.findByKey(key, 3);
+        if (rows != null && rows.length > 0) {
+            customer = (String)rows[0].getAttribute("ColumnVal");
+        }
+        if (customer != null) {
+            temp = Arrays.asList(customer.split("\\s*,\\s*"));
+            System.out.println("SudokuAmImpl:getSelectedCustNumValues: 2 " +
+                               (System.currentTimeMillis() - startTime));
+//            if(temp!=null && temp.size()>0)
+//                      selectedCustvals = temp;
+            for (String s : temp) {
+                        selectedCustvals.add(s);
+                        System.out.println("value is:" + s);
+                    }
+            System.out.println("SudokuAmImpl:getSelectedCustNumValues: 3 " +
+                               (System.currentTimeMillis() - startTime));
+        }
+
+        return selectedCustvals;
+    }
+
+
+    public List getSelectedCurrencyValues(int usrId) {
+        long startTime = System.currentTimeMillis();
+        System.out.println("from Sudoku:getSelectedCurrencyValues: Start " +
+                           (System.currentTimeMillis() - startTime));
+        StringBuilder currencysb = new StringBuilder("('");
+        Row row = null;
+        String currency = null;
+        List<String> temp = null;
+        List<String> selectedValues = new ArrayList<String>();
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        ViewObjectImpl currencyVO = this.getCurrencyVO();
+        String col_type = "Currency";
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        Object obj[] = { usrId, col_type,orgId };
+        Key key = new Key(obj);
+        Row[] rows = vo.findByKey(key, 3);
+        if (rows != null && rows.length > 0) {
+            row = rows[0];
+            currency = (String)row.getAttribute("ColumnVal");
+        }
+        System.out.println("from Sudoku:getSelectedCurrencyValues: UserPref lists " +
+                           (System.currentTimeMillis() - startTime));
+        if (currencyVO != null && currency != null) {
+            temp = Arrays.asList(currency.split("\\s*,\\s*"));
+            currencysb.append(temp.get(0));
+            for (int i = 1; i < temp.size(); i++) {
+                currencysb.append("','").append(temp.get(i));
+            }
+            currencysb.append("')");
+            System.out.println("cusrrency List:" + currencysb.toString());
+            RowQualifier rq =
+                new RowQualifier("CurrencyCode in" + currencysb.toString());
+            Row filteredRows[] = currencyVO.getFilteredRows(rq);
+            System.out.println("from Sudoku:getSelectedCurrencyValues: After Filtieing " +
+                               (System.currentTimeMillis() - startTime));
+            for (Row r : filteredRows) {
+                System.out.println("Value issss:" +
+                                   r.getAttribute("Name").toString());
+                selectedValues.add(r.getAttribute("Name").toString());
+            }
+            System.out.println("from Sudoku:getSelectedCurrencyValues: closing: " +
+                               (System.currentTimeMillis() - startTime));
+        }
+        return selectedValues;
+    }
+
+
+    public List getSelectedIncoTermValues(int usrId) {
+        StringBuilder incoTermsb = new StringBuilder(" ('");
+        Row row = null;
+        String incoTerm = null;
+        List<String> temp = null;
+        List selectedValues = new ArrayList<String>();
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        ViewObjectImpl incoTermVO = this.getIncoTermVO();
+        String col_type = "IncoTerm";
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        Object obj[] = { usrId, col_type,orgId };
+        Key key = new Key(obj);
+        Row[] rows = vo.findByKey(key, 3);
+        if (rows != null && rows.length > 0) {
+            row = rows[0];
+            incoTerm = (String)row.getAttribute("ColumnVal");
+        }
+        if (incoTermVO != null && incoTerm != null) {
+            temp = Arrays.asList(incoTerm.split("\\s*,\\s*"));
+            incoTermsb.append(temp.get(0));
+            for (int i = 1; i < temp.size(); i++) {
+                incoTermsb.append("'").append(",").append("'").append(temp.get(i));
+            }
+            incoTermsb.append("')");
+            RowQualifier rq = new RowQualifier(incoTermVO);
+            rq.setWhereClause("Meaning in" + incoTermsb.toString());
+            Row filteredRows[] = incoTermVO.getFilteredRows(rq);
+            for (Row r : filteredRows) {
+                System.out.println("IncoTerm Value is:" +
+                                   r.getAttribute("Description").toString());
+                selectedValues.add(r.getAttribute("Description"));
+            }
+        }
+        return selectedValues;
+    }
+
+    //For selected CSR Values
+
+
+    public List getSelectedCSRValues(int usrId) {
+        long startTime = System.currentTimeMillis();
+        System.out.println("from Sudoku:getSelectedCSRalues: Start " +
+                           (System.currentTimeMillis() - startTime));
+        StringBuilder csrsb = new StringBuilder("(");
+        String csr = null;
+        List<String> selectedValues = new ArrayList<String>();
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        ViewObjectImpl csrVO = this.getCSRForGlobalChoiceVO1();
+        String col_type = "CSR";
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        Object obj[] = { usrId, col_type,orgId };
+        Key key = new Key(obj);
+        Row[] rows = vo.findByKey(key, 3);
+        if (rows != null && rows.length > 0) {
+            csr = (String)rows[0].getAttribute("ColumnVal");
+        }
+        System.out.println("from Sudoku:getSelectedCSRValues: UserPref lists " +
+                           (System.currentTimeMillis() - startTime));
+        if (csrVO != null && csr != null) {
+            csrsb.append(csr);
+            csrsb.append(")");
+            RowQualifier rq =
+                new RowQualifier("PersonId in" + csrsb.toString());
+            Row filteredRows[] = csrVO.getFilteredRows(rq);
+            System.out.println("from Sudoku:getSelectedCsrValues: After Filtieing " +
+                               (System.currentTimeMillis() - startTime));
+            for (Row r : filteredRows) {
+                System.out.println("Value issss:" +
+                                   r.getAttribute("CustomerName").toString());
+                selectedValues.add(r.getAttribute("CustomerName").toString());
+            }
+            System.out.println("from Sudoku:getSelectedCsrValues: closing: " +
+                               (System.currentTimeMillis() - startTime));
+        }
+        return selectedValues;
+    }
+
+
+    public List getSelectedSalesChannelValues(int usrId) {
+        String salesChannel = null;
+        List selectedValues = new ArrayList();
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        String col_type = "Sales_Channel";
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        Object obj[] = { usrId, col_type,orgId };
+        Key key = new Key(obj);
+        Row[] rows = vo.findByKey(key, 3);
+        if (rows != null && rows.length > 0) {
+            salesChannel = (String)rows[0].getAttribute("ColumnVal");
+            if (salesChannel != null) {
+                selectedValues =
+                        Arrays.asList(salesChannel.split("\\s*,\\s*"));
+            }
+        }
+        return selectedValues;
+    }
+
+
+    public List getSelectedCurrencyValuesForSC(int usrId,
+                                               String salesChannel) {
+        long startTime = System.currentTimeMillis();
+        _logger.info("SudkuAmimpl: getSelectedCurrencyValuesForSC: Start:::");
+        System.out.println("from Sudoku:getSelectedCurrencyValues: Start " +
+                           (System.currentTimeMillis() - startTime));
+        StringBuilder currencysb = new StringBuilder("('");
+        String currency = null;
+        List<String> temp = null;
+        List<String> selectedValues = new ArrayList<String>();
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+        ViewObjectImpl currencyVO = this.getCurrencyVO();
+        String col_type = "Currency";
+        if (salesChannel != null) {
+            vo.clearCache();
+            vo.setWhereClause(null);
+//            RowQualifier rq1 =
+//                new RowQualifier("UserId =" + usrId + " And ColumnType =" +
+//                                 "'" + col_type + "' AND SalesChannel=" + "'" +
+//                                 salesChannel + "'");
+//            //            RowQualifier rq1 = new RowQualifier("UserId ="+usrId+" And ColumnType ="+col_type+" AND SalesChannel="+salesChannel);
+//            Row r1[] = vo.getFilteredRows(rq1);
+//            if (r1 != null && r1.length > 0) {
+//                currency = (String)r1[0].getAttribute("ColumnVal");
+//            }
+            //            vo.setWhereClause("USER_ID ="+usrId+" And COLUMN_TYPE ="+"'"+col_type+"' AND SALES_CHANNEL="+"'"+salesChannel+"'");
+            //            System.out.println("Query:"+vo.getQuery());
+            //            vo.executeQuery();
+            //            RowSetIterator iter = vo.getRowSetIterator();
+            //            while(iter.hasNext()){
+            //                Row r = iter.next();
+            //                    currency = (String)r.getAttribute("ColumnVal");
+            //                }
+            String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+                        Object obj[] = {usrId, col_type,salesChannel,orgId};
+                        Key key = new Key(obj);
+                        Row[] rows = vo.findByKey(key, 4);
+                        if (rows != null && rows.length > 0) {
+                            currency = (String)rows[0].getAttribute("ColumnVal");
+                        }
+            System.out.println("from Sudoku:getSelectedCurrencyValues: UserPref lists " +
+                               (System.currentTimeMillis() - startTime));
+            if (currencyVO != null && currency != null) {
+                currencyVO.clearCache();
+                temp = Arrays.asList(currency.split("\\s*,\\s*"));
+                currencysb.append(temp.get(0));
+                for (int i = 1; i < temp.size(); i++) {
+                    currencysb.append("','").append(temp.get(i));
+                }
+                currencysb.append("')");
+
+                System.out.println("cusrrency List:" + currencysb.toString());
+                RowQualifier rq =
+                    new RowQualifier("CurrencyCode in" + currencysb.toString());
+                Row filteredRows[] = currencyVO.getFilteredRows(rq);
+                System.out.println("from Sudoku:getSelectedCurrencyValues: After Filtieing " +
+                                   (System.currentTimeMillis() - startTime));
+                for (Row r : filteredRows) {
+                    System.out.println("Value issss:" +
+                                       r.getAttribute("Name").toString());
+                    selectedValues.add(r.getAttribute("Name").toString());
+                }
+            }
+            System.out.println("from Sudoku:getSelectedCurrencyValues: closing: " +
+                               (System.currentTimeMillis() - startTime));
+        }
+        return selectedValues;
+    }
+
+
+    public List getSelectedIncoTermValuesForSC(int usrId,
+                                               String salesChannel) {
+        StringBuilder incoTermsb = new StringBuilder(" ('");
+        String incoTerm = null;
+        List<String> temp = null;
+        List selectedValues = new ArrayList();
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+        ViewObjectImpl incoTermVO = this.getIncoTermVO();
+        if (salesChannel != null && incoTermVO != null) {
+            incoTermVO.clearCache();
+            vo.clearCache();
+            vo.setWhereClause(null);
+            String col_type = "IncoTerm";
+            String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+//            RowQualifier rq1 =
+//                new RowQualifier("UserId =" + usrId + " And ColumnType =" +
+//                                 "'" + col_type + "' AND SalesChannel=" + "'" +
+//                                 salesChannel + "'");
+//            Row r1[] = vo.getFilteredRows(rq1);
+//            if (r1 != null && r1.length > 0) {
+//                incoTerm = (String)r1[0].getAttribute("ColumnVal");
+//            }
+                        Object obj[] = { usrId, col_type, salesChannel,orgId };
+                        Key key = new Key(obj);
+                        Row[] rows = vo.findByKey(key, 4);
+                        if (rows != null && rows.length > 0) {
+                            incoTerm = (String)rows[0].getAttribute("ColumnVal");
+                        }
+            if (incoTermVO != null && incoTerm != null) {
+                incoTermVO.clearCache();
+                temp = Arrays.asList(incoTerm.split("\\s*,\\s*"));
+                incoTermsb.append(temp.get(0));
+                for (int i = 1; i < temp.size(); i++) {
+                    incoTermsb.append("'").append(",").append("'").append(temp.get(i));
+                }
+                incoTermsb.append("')");
+                RowQualifier rq = new RowQualifier(incoTermVO);
+                rq.setWhereClause("Meaning in" + incoTermsb.toString());
+                Row filteredRows[] = incoTermVO.getFilteredRows(rq);
+                for (Row r : filteredRows) {
+                    System.out.println("IncoTerm Value is:" +
+                                       r.getAttribute("Description").toString());
+                    selectedValues.add(r.getAttribute("Description"));
+                }
+            }
+        }
+        return selectedValues;
+    }
+
+
+    public List getSelectedPaymentTermValuesForSC(int usrId,
+                                                  String salesChannel) {
+        StringBuilder paymentTermsb = new StringBuilder(" ('");
+        String paymentTerm = null;
+        List<String> temp = null;
+        List selectedValues = new ArrayList();
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+        ViewObjectImpl paymentTermVO = this.getPaymentTermsVO();
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        String col_type = "PaymentTerms";
+        if (salesChannel != null) {
+            vo.clearCache();
+            vo.setWhereClause(null);
+//            RowQualifier rq1 =
+//                new RowQualifier("UserId =" + usrId + " And ColumnType =" +
+//                                 "'" + col_type + "' AND SalesChannel=" + "'" +
+//                                 salesChannel + "'");
+//            Row r1[] = vo.getFilteredRows(rq1);
+//            if (r1 != null && r1.length > 0) {
+//                paymentTerm = (String)r1[0].getAttribute("ColumnVal");
+//            }
+                        Object obj[] = { usrId, col_type, salesChannel,orgId };
+                        Key key = new Key(obj);
+                        Row[] rows = vo.findByKey(key, 4);
+                        if (rows != null && rows.length > 0) {
+                            paymentTerm = (String)rows[0].getAttribute("ColumnVal");
+                        }
+            if (paymentTermVO != null && paymentTerm != null) {
+                paymentTermVO.clearCache();
+                temp = Arrays.asList(paymentTerm.split("\\s*,\\s*"));
+                paymentTermsb.append(temp.get(0));
+                for (int i = 1; i < temp.size(); i++) {
+                    paymentTermsb.append("'").append(",").append("'").append(temp.get(i));
+                }
+                paymentTermsb.append("')");
+                RowQualifier rq = new RowQualifier(paymentTermVO);
+                rq.setWhereClause("Name in" + paymentTermsb.toString());
+                Row filteredRows[] = paymentTermVO.getFilteredRows(rq);
+                for (Row r : filteredRows) {
+                    System.out.println("PaymentTerm Value is:" +
+                                       r.getAttribute("Description").toString());
+                    selectedValues.add(r.getAttribute("Description").toString());
+                }
+            }
+        }
+        return selectedValues;
+    }
+
+
+    public List getSelectedBusinessAgreementForSC(int usrId,
+                                                  String salesChannel) {
+        StringBuilder baSB = new StringBuilder(" ('");
+        String bAgeement = null;
+        List<String> temp = null;
+        List selectedValues = new ArrayList();
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+        ViewObjectImpl baVO = this.getbusinessAgreementVo();
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        if (salesChannel != null) {
+            vo.clearCache();
+            vo.setWhereClause(null);
+            String col_type = "Business_Agreement";
+//            RowQualifier rq1 =
+//                new RowQualifier("UserId =" + usrId + " And ColumnType =" +
+//                                 "'" + col_type + "' AND SalesChannel=" + "'" +
+//                                 salesChannel + "'");
+//            Row r1[] = vo.getFilteredRows(rq1);
+//            if (r1 != null && r1.length > 0) {
+//                bAgeement = (String)r1[0].getAttribute("ColumnVal");
+//            }
+                        Object obj[] = { usrId, col_type, salesChannel,orgId };
+                        Key key = new Key(obj);
+                        Row[] rows = vo.findByKey(key, 4);
+                        if (rows != null && rows.length > 0) {
+                            bAgeement = (String)rows[0].getAttribute("ColumnVal");
+                        }
+            if (baVO != null && bAgeement != null) {
+                baVO.clearCache();
+                temp = Arrays.asList(bAgeement.split("\\s*,\\s*"));
+                baSB.append(temp.get(0));
+                for (int i = 1; i < temp.size(); i++) {
+                    baSB.append("','").append(temp.get(i));
+                }
+                baSB.append("')");
+                RowQualifier rq = new RowQualifier(baVO);
+                rq.setWhereClause("AgreementId in" + baSB.toString());
+                Row filteredRows[] = baVO.getFilteredRows(rq);
+                for (Row r : filteredRows) {
+                    System.out.println("business Agreement Value is:" +
+                                       r.getAttribute("Name").toString());
+                    selectedValues.add(r.getAttribute("Name"));
+                }
+            }
+        }
+        return selectedValues;
+    }
+
+
+    public void validatePrefStaticValues(int usrId) {
+        ViewObjectImpl quotesVo = this.getQuotesVO();
+        ViewObjectImpl userPrefVO = this.getuserPrefEntityVO();
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        Row row = null;
+        if (quotesVo != null) {
+            Row quotesRow = quotesVo.getCurrentRow();
+
+            if (quotesRow != null) {
+                String prdNumRefConfig = "Prd_num_ref_config";
+                String prdNumTargetConfig = "Prd_num_target_config";
+                String refPriceRefConfig = "Ref_price_ref_config";
+                String refPriceTargetConfig = "Ref_price_target_config";
+                String numFormat = "Num_format";
+                Object PrdNumrefobj[] = { usrId, prdNumRefConfig,orgId };
+                if (PrdNumrefobj.length > 0) {
+                    Key key = new Key(PrdNumrefobj);
+                    Row[] prdNumRef = userPrefVO.findByKey(key, 3);
+                    if (prdNumRef != null && prdNumRef.length > 0) {
+                        row = prdNumRef[0];
+                    } else {
+                        row = userPrefVO.createRow();
+                        row.setAttribute("UserId", usrId);
+                        row.setAttribute("ColumnType", prdNumRefConfig);
+                        row.setAttribute("OperatingUnit", orgId);
+                    }
+                    if (row != null) {
+                        System.out.println("user Name:" +
+                                           row.getAttribute("UserId") +
+                                           "::column_name::" +
+                                           row.getAttribute("ColumnType"));
+                        if(quotesRow.getAttribute("PrdNumRefConfig")!=null){
+                        row.setAttribute("ColumnVal", null);
+                        row.setAttribute("ColumnVal",
+                                         quotesRow.getAttribute("PrdNumRefConfig"));
+                        }
+                        else{
+                                row.setAttribute("ColumnVal","N");
+                            }
+                    }
+                }
+                Object prdNumTCon[] = { usrId, prdNumTargetConfig,orgId };
+                if (prdNumTCon.length > 0) {
+                    Key key = new Key(prdNumTCon);
+                    Row[] prdNumT = userPrefVO.findByKey(key, 3);
+                    if (prdNumT != null && prdNumT.length > 0) {
+                        row = prdNumT[0];
+                    } else {
+                        row = userPrefVO.createRow();
+                        row.setAttribute("UserId", usrId);
+                        row.setAttribute("ColumnType", prdNumTargetConfig);
+                        row.setAttribute("OperatingUnit", orgId);
+                    }
+                    if (row != null) {
+                        System.out.println("user Name:" +
+                                           row.getAttribute("UserId") +
+                                           "::column_name::" +
+                                           row.getAttribute("ColumnType"));
+                        if (quotesRow.getAttribute("PrdNumTargetConfig")!=null) {
+                            row.setAttribute("ColumnVal", null);
+                            row.setAttribute("ColumnVal",
+                                             quotesRow.getAttribute("PrdNumTargetConfig"));
+                        }
+                    }
+                }
+
+                Object refNumRefCon[] = { usrId, refPriceRefConfig,orgId };
+                if (refNumRefCon.length > 0) {
+                    Key key = new Key(refNumRefCon);
+                    Row[] refNumRCon = userPrefVO.findByKey(key, 3);
+                    if (refNumRCon != null && refNumRCon.length > 0) {
+                        row = refNumRCon[0];
+                    } else {
+                        row = userPrefVO.createRow();
+                        row.setAttribute("UserId", usrId);
+                        row.setAttribute("ColumnType", refPriceRefConfig);
+                        row.setAttribute("OperatingUnit", orgId);
+                    }
+                    if (row != null) {
+                        System.out.println("user Name:" +
+                                           row.getAttribute("UserId") +
+                                           "::column_name::" +
+                                           row.getAttribute("ColumnType"));
+                        if (quotesRow.getAttribute("RefPriceRegConfig")!=null) {
+                            row.setAttribute("ColumnVal", null);
+                            row.setAttribute("ColumnVal",
+                                             quotesRow.getAttribute("RefPriceRegConfig"));
+                        }
+                    }
+                }
+
+                Object refPriceTConfig[] = { usrId, refPriceTargetConfig,orgId };
+                if (refPriceTConfig.length > 0) {
+                    Key key = new Key(refPriceTConfig);
+                    Row[] refPriceTCon = userPrefVO.findByKey(key, 3);
+                    if (refPriceTCon != null && refPriceTCon.length > 0) {
+                        row = refPriceTCon[0];
+                    } else {
+                        row = userPrefVO.createRow();
+                        row.setAttribute("UserId", usrId);
+                        row.setAttribute("ColumnType", refPriceTargetConfig);
+                        row.setAttribute("OperatingUnit", orgId);
+                    }
+                    if (row != null) {
+                        System.out.println("user Name:" +
+                                           row.getAttribute("UserId") +
+                                           "::column_name::" +
+                                           row.getAttribute("ColumnType"));
+                        if (quotesRow.getAttribute("RefPriceTargetConfig")!=null) {
+                            row.setAttribute("ColumnVal", null);
+                            row.setAttribute("ColumnVal",
+                                             quotesRow.getAttribute("RefPriceTargetConfig"));
+                        }
+                    }
+                }
+                Object numFormating[] = { usrId, numFormat,orgId };
+                if (numFormating.length > 0) {
+                    Key key = new Key(numFormating);
+                    Row[] numFRow = userPrefVO.findByKey(key, 3);
+                    if (numFRow != null && numFRow.length > 0) {
+                        row = numFRow[0];
+                    } else {
+                        row = userPrefVO.createRow();
+                        row.setAttribute("UserId", usrId);
+                        row.setAttribute("ColumnType", numFormat);
+                        row.setAttribute("OperatingUnit", orgId);
+                    }
+                    if (row != null) {
+                        System.out.println("user Name:" +
+                                           row.getAttribute("UserId") +
+                                           "::column_name::" +
+                                           row.getAttribute("ColumnType"));
+                        row.setAttribute("ColumnVal", null);
+                        if (quotesRow.getAttribute("NumberFormat") != null)
+                            row.setAttribute("ColumnVal",
+                                             quotesRow.getAttribute("NumberFormat"));
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void getViewAccessors(int usrId) {
+        ViewObjectImpl prefVO = this.getuserPrefEntityVO();
+        String colType = "Order_type";
+        StringBuilder orderTypeValueList = new StringBuilder("(");
+        ViewObjectImpl vo = this.getQuotesVO();
+        RowSet lov = (RowSet)vo.getCurrentRow().getAttribute("OrderTypeVO");
+        ViewObjectImpl va = (ViewObjectImpl)lov.getViewObject();
+        if (va != null) {
+            Object obj[] = { usrId, colType };
+            Key key = new Key(obj);
+            Row[] rows = prefVO.findByKey(key, 2);
+            if (rows != null && rows.length > 0) {
+                orderTypeValueList.append(rows[0].getAttribute("ColumnVal"));
+                //                   System.out.println("list values are:"+orderTypeValueList);
+            } else
+                orderTypeValueList.append("''");
+
+            orderTypeValueList.append(")");
+            va.setWhereClause("transaction_type_id in" +
+                              orderTypeValueList.toString());
+                           va.setNamedWhereClauseParam("p_orgId", 143);
+            System.out.println("Query::" + va.getQuery());
+            va.executeQuery();
+            System.out.println(va);
+            System.out.println(va.getEstimatedRowCount());
+
+
+        }
+
+    }
+
+
+    //    public void filterOrderTypeRecords(int usrId){
+    //        StringBuilder orderV = new StringBuilder(" ('");
+    //        List<String> temp =null;
+    //          ViewObjectImpl vo = this.getuserPrefEntityVO();
+    //          ViewObjectImpl orderTypeVO = this.getOrderTypeVO();
+    //          String orderTypeValueList = null;
+    //          String colType = "Order_type";
+    //          Object obj[] = {usrId,colType};
+    //          Key key = new Key(obj);
+    //          Row[] rows = vo.findByKey(key,2);
+    //          if(rows!=null && rows.length>0){
+    //              orderTypeValueList = (String)rows[0].getAttribute("ColumnVal");
+    //              System.out.println("list values are:"+orderTypeValueList);
+    //              temp =  Arrays.asList(orderTypeValueList.split("\\s*,\\s*"));
+    //              orderV.append(temp.get(0));
+    //              for(int i=1;i<temp.size();i++)
+    //                 orderV.append("'").append(",").append("'").append(temp.get(i));
+    //
+    //              orderV.append("')");
+    //              orderTypeVO.setWhereClause("transaction_type_id in"+orderV.toString());
+    //              System.out.println("Query::"+orderTypeVO.getQuery());
+    //              orderTypeVO.executeQuery();
+    //              }
+    //        }
+
+
+    public void filterOrderTypeRecords(int usrId) {
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        ViewObjectImpl orderTypeVO = this.getOrderTypeVO();
+        StringBuilder orderTypeValueList = new StringBuilder("(");
+        String colType = "Order_type";
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        Object obj[] = { usrId, colType,orgId };
+        Key key = new Key(obj);
+        Row[] rows = vo.findByKey(key, 3);
+        if (rows != null && rows.length > 0) {
+            orderTypeValueList.append(rows[0].getAttribute("ColumnVal"));
+            System.out.println("list values are:" + orderTypeValueList);
+        }
+        orderTypeValueList.append(")");
+        orderTypeVO.setWhereClause("transaction_type_id in" +
+                                   orderTypeValueList.toString());
+        System.out.println("Query::" + orderTypeVO.getQuery());
+        orderTypeVO.executeQuery();
+    }
+
+
+    // Validate OU Values for Preference page
+
+    public String validateOUValues(int usrId, List ouValues) {
+        StringBuilder errorMsg = new StringBuilder("");
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        if (ouValues != null && ouValues.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            int size = ouValues.size();
+            sb.append(ouValues.get(0));
+            for (int i = 1; i < ouValues.size(); i++) {
+                System.out.println("selected valuseaa:" + ouValues.get(i));
+                sb.append(",").append(ouValues.get(i));
+            }
+            String temp = sb.toString();
+            if (temp != null && temp.endsWith(",")) {
+                temp = temp.substring(0, temp.length() - 1);
+            }
+            System.out.println("after removing last comma:" + temp);
+            Row row = null;
+            String colType = "Operating_unit";
+            if (vo != null) {
+                if (size > 0) {
+                    Object obj[] = { usrId, colType };
+                    Key key = new Key(obj);
+                    Row[] rows = vo.findByKey(key, 3);
+                    if (rows != null && rows.length > 0) {
+                        row = rows[0];
+                    } else if (temp != null) {
+                        row = vo.createRow();
+                        row.setAttribute("UserId", usrId);
+                        row.setAttribute("ColumnType", "Operating_unit");
+                    } else
+                        row = null;
+                    if (row != null) {
+                        System.out.println("user Name:" +
+                                           row.getAttribute("UserId") +
+                                           "::column_name::" +
+                                           row.getAttribute("ColumnType"));
+                        row.setAttribute("ColumnVal", null);
+                        row.setAttribute("ColumnVal", temp);
+                        //                        errorMsg = "Success";
+                    }
+                }
+            }
+        }
+        return errorMsg.toString();
+    }
+
+
+    // Validate Customer Values for Preference page
+
+    public String validateCustValues(int usrId, List custValues,
+                                     String custDefaultVal,String orgId) {
+        StringBuilder errorMsg = new StringBuilder("");
+        StringBuilder sb = new StringBuilder("");
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        if (custValues != null && custValues.size() > 0) {
+            sb.append(custValues.get(0));
+            for (int i = 1; i < custValues.size(); i++) {
+                System.out.println("selected valuseaa:" + custValues.get(i));
+                sb.append(",").append(custValues.get(i));
+            }
+        }
+            Row row = null;
+            String colType = "Customer";
+            if (vo != null) {
+//                RowQualifier rq1 =
+//                                   new RowQualifier("ColumnType =" + colType +
+//                                                    " and UserId=" + usrId + " and OperatingUnit ='"+orgId+"'");
+//                                       Row[] rows = vo.getFilteredRows(rq1);
+                Object obj[] = { usrId, colType,orgId };
+                Key key = new Key(obj);
+                Row[] rows = vo.findByKey(key, 3);
+                if (rows != null && rows.length > 0) {
+                    row = rows[0];
+                } else if (custDefaultVal != null ||
+                           !sb.toString().equalsIgnoreCase("")) {
+                    row = vo.createRow();
+                    row.setAttribute("UserId", usrId);
+                    row.setAttribute("ColumnType", "Customer");
+                    row.setAttribute("OperatingUnit", orgId);
+                    if (custDefaultVal != null)
+                        row.setAttribute("DefaultVal", custDefaultVal);
+                } else
+                    row = null;
+                if (row != null) {
+                    System.out.println("user Name:" +
+                                       row.getAttribute("UserId") +
+                                       "::column_name::" +
+                                       row.getAttribute("ColumnType"));
+                    row.setAttribute("ColumnVal", null);
+                    row.setAttribute("ColumnVal", sb.toString());
+                    if (custDefaultVal != null)
+                        row.setAttribute("DefaultVal", custDefaultVal);
+                }
+            }
+        return errorMsg.toString();
+    }
+
+    public String validateCustValuesForSC(int usrId, List custValues,
+                                          String custDefaultVal,
+                                          String salesChannel,String orgId) {
+
+        _logger.info("SudkuAmimpl: validateCustValuesForSC: Start: customerName::" +
+                     custDefaultVal);
+        StringBuilder errorMsg = new StringBuilder("");
+        String defaultVal = null;
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+        ViewObjectImpl custVO = this.getCustomerNameVO();
+        StringBuilder custNumber = new StringBuilder("");
+        StringBuilder sb = new StringBuilder("('");
+        if(custVO!=null){
+            custVO.clearCache();
+            custVO.setWhereClause(null);
+            custVO.setNamedWhereClauseParam("p_orgId", null);
+                custVO.setNamedWhereClauseParam("p_orgId", orgId);
+                custVO.setWhereClause("customername ='"+custDefaultVal+"'");
+            System.out.println("Query:"+custVO.getQuery());
+                custVO.executeQuery();
+                RowSetIterator iter = custVO.createRowSetIterator(null);
+                while(iter.hasNext()){
+                    Row r = iter.next();
+                        defaultVal = (String)r.getAttribute("Accountnumber");
+                    }
+            }
+        if (custValues != null && custValues.size() > 0) {
+          
+            sb.append(custValues.get(0));
+            for (int i = 1; i < custValues.size(); i++) {
+                System.out.println("selected valuseaa:" + custValues.get(i));
+                sb.append("','").append(custValues.get(i));
+            }
+        }
+            sb.append("')");
+            _logger.info("SudkuAmimpl: validateCustValuesForSC: : set of customoer names:" +
+                         sb.toString());
+            custVO.clearCache();
+            custVO.setWhereClause(null);
+            custVO.setNamedWhereClauseParam("p_orgId", null);
+//                custVO.setWhereClause("customername in"+sb.toString());
+                custVO.setNamedWhereClauseParam("p_orgId", orgId);
+            RowQualifier rq =
+                new RowQualifier("Customername in" + sb.toString());
+            Row r[] = custVO.getFilteredRows(rq);
+            custNumber.append(r[0].getAttribute("Accountnumber"));
+            for (Row r1 : r) {
+                custNumber.append(",").append(r1.getAttribute("Accountnumber"));
+            }
+            _logger.info("SudkuAmimpl: validateCustValuesForSC: : Customer numbers::" +
+                         custNumber.toString());
+       
+        Row row = null;
+        String colType = "Customer";
+        if (vo != null) {
+//            RowQualifier rq1 =
+//                                new RowQualifier("ColumnType =" + colType +
+//                                                 " and UserId=" + usrId + " and OperatingUnit ='"+orgId+"'"+ " and SalesChannel ='"+salesChannel+"'");
+//                                    Row[] rows = vo.getFilteredRows(rq1);
+            Object obj[] = { usrId, colType, salesChannel,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 4);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultVal != null ||
+                       !custNumber.toString().equalsIgnoreCase("")) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", "Customer");
+                row.setAttribute("SalesChannel", salesChannel);
+                row.setAttribute("OperatingUnit", orgId);
+                if (defaultVal != null)
+                    row.setAttribute("DefaultVal", defaultVal);
+            }
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+
+                if (custNumber.toString() != null) {
+                    row.setAttribute("ColumnVal", null);
+                    row.setAttribute("ColumnVal", custNumber.toString());
+                }
+                if (defaultVal != null)
+                    row.setAttribute("DefaultVal", defaultVal);
+
+            }
+        }
+        return errorMsg.toString();
+    }
+
+
+    /* To Validate orderType values for Preference Page*/
+
+    public String validateOrderTypeValues(int usrId, List orderTypeValues,
+                                          String orderTypeDefaultval,String orgId) {
+        StringBuilder errorMsg = new StringBuilder("");
+        BigDecimal defaultId = null;
+        String temp = null;
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        ViewObjectImpl otVO = this.getOrderTypeForUserPrefVO1();
+        Row filteredRows[] = otVO.getFilteredRows("Name", orderTypeDefaultval);
+        if (filteredRows != null && filteredRows.length > 0) {
+            defaultId =
+                    (BigDecimal)filteredRows[0].getAttribute("TransactionTypeId");
+        }
+        System.out.println("default OrderType Id is:" + defaultId);
+        StringBuilder orderValues = new StringBuilder();
+        if (orderTypeValues != null && orderTypeValues.size() > 0) {
+            StringBuilder sb = new StringBuilder("('");
+            sb.append(orderTypeValues.get(0));
+            for (int i = 1; i < orderTypeValues.size(); i++) {
+                System.out.println("selected valuseaa:" +
+                                   orderTypeValues.get(i));
+                sb.append("','").append(orderTypeValues.get(i));
+            }
+            sb.append("')");
+            if (otVO != null) {
+                otVO.clearCache();
+                otVO.setWhereClause(null);
+                RowQualifier rq = new RowQualifier("Name in" + sb.toString());
+                Row filteredRow[] = otVO.getFilteredRows(rq);
+                for (Row r : filteredRow) {
+                    System.out.println("Value issss:" +
+                                       r.getAttribute("TransactionTypeId").toString());
+                    orderValues.append(r.getAttribute("TransactionTypeId")).append(",");
+                }
+                temp = orderValues.toString();
+                if (temp != null && temp.endsWith(",")) {
+                    temp = temp.substring(0, temp.length() - 1);
+                }
+            }
+        }
+        Row row = null;
+        String colType = "Order_type";
+        if (vo != null) {
+//            RowQualifier rq1 =
+//                                new RowQualifier("ColumnType =" + colType +
+//                                                 " and UserId=" + usrId + " and OperatingUnit ='"+orgId+"'");
+//                                    Row[] rows = vo.getFilteredRows(rq1);
+            Object obj[] = { usrId, colType,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 3);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultId != null || temp != null) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", "Order_type");
+                row.setAttribute("OperatingUnit", orgId);
+                if (defaultId != null)
+                    row.setAttribute("DefaultVal", defaultId);
+            }
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+
+                if (temp != null) {
+                    row.setAttribute("ColumnVal", null);
+                    row.setAttribute("ColumnVal", temp);
+                }
+                if (defaultId != null)
+                    row.setAttribute("DefaultVal", defaultId);
+            }
+        }
+        return errorMsg.toString();
+    }
+
+
+    //To validate Currency for Preference page
+
+    public String validateCurrencyValues(int usrId, List currencyValues,
+                                         String defaultName) {
+        StringBuilder errorMsg = new StringBuilder("");
+        String defaultval = null;
+        ViewObjectImpl currencyVO = this.getCurrencyVO();
+        Row fRows[] = currencyVO.getFilteredRows("Name", defaultName);
+        if (fRows != null && fRows.length > 0) {
+            defaultval = (String)fRows[0].getAttribute("CurrencyCode");
+        }
+
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        StringBuilder currencysb = new StringBuilder("");
+        if (currencyValues != null && currencyValues.size() > 0) {
+            StringBuilder sb = new StringBuilder("('");
+            sb.append(currencyValues.get(0));
+            for (int i = 1; i < currencyValues.size(); i++) {
+                System.out.println("selected valuseaa:" +
+                                   currencyValues.get(i));
+                sb.append("','").append(currencyValues.get(i));
+            }
+            sb.append("')");
+            System.out.println("currency list:" + sb.toString());
+            RowQualifier rq = new RowQualifier(currencyVO);
+            rq.setWhereClause("Name in" + sb.toString());
+            Row filteredRows[] = currencyVO.getFilteredRows(rq);
+            currencysb.append(filteredRows[0].getAttribute("CurrencyCode"));
+            for (int i = 1; i < filteredRows.length; i++) {
+                System.out.println("Value issss:" +
+                                   filteredRows[i].getAttribute("CurrencyCode").toString());
+                currencysb.append(",").append(filteredRows[i].getAttribute("CurrencyCode"));
+            }
+        }
+        Row row = null;
+        String colType = "Currency";
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        if (vo != null) {
+            Object obj[] = { usrId, colType,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 3);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultval != null ||
+                       !currencysb.toString().equalsIgnoreCase("")) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", "Currency");
+                row.setAttribute("OperatingUnit", orgId);
+                
+                if (defaultval != null)
+                    row.setAttribute("DefaultVal", defaultval);
+            } else
+                row = null;
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+                row.setAttribute("ColumnVal", null);
+                row.setAttribute("ColumnVal", currencysb.toString());
+                if (defaultval != null)
+                    row.setAttribute("DefaultVal", defaultval);
+                //                        errorMsg = "Success";
+            }
+            //                else  errorMsg = "Success";
+        }
+        return errorMsg.toString();
+    }
+
+    //Validate Sales Rep values
+
+    public String validateSalesRepValues(int usrId, List salesRepVals,
+                                         String defaultVal,String orgId) {
+        _logger.info("SudokuAmimpl: validateSalesRepValues: start: Default Value is :: " +
+                     defaultVal);
+        StringBuilder errorMsg = new StringBuilder("");
+        String temp = null, orgvalues = null;
+//        StringBuilder orgVals = new StringBuilder();
+        StringBuilder orgValuessb = new StringBuilder("(");
+        BigDecimal defaultId = null;
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        ViewObjectImpl salesRepVO = this.getSalesRepForUserPrefVO();
+//        List orgList =
+//            (List)ADFContext.getCurrent().getPageFlowScope().get("orglist");
+//        if (orgId != null ) {
+//            for (int i = 0; i < orgList.size(); i++)
+//                orgVals.append(orgList.get(i)).append(",");
+//        }
+//        orgvalues = orgVals.toString();
+//        if (orgvalues != null && orgvalues.endsWith(",")) {
+//            orgvalues = orgvalues.substring(0, orgvalues.length() - 1);
+//        }
+//        orgValuessb.append(orgvalues).append(")");
+        if (defaultVal!=null) {
+            salesRepVO.clearCache();
+            salesRepVO.setWhereClause(null);
+            Row filteredRows[] =
+                salesRepVO.getFilteredRows("ResourceName", defaultVal);
+            if (filteredRows != null && filteredRows.length > 0) {
+                defaultId =
+                        (BigDecimal)filteredRows[0].getAttribute("ResourceId");
+            }
+            _logger.info("SudokuAmimpl: validateSalesRepValues: start: :: default Id:: " +
+                         defaultId);
+            System.out.println("default resource Id is:" + defaultId);
+        }
+        StringBuilder salesRepValsb = new StringBuilder();
+        if (salesRepVals != null && salesRepVals.size() > 0) {
+            StringBuilder sb = new StringBuilder("('");
+            sb.append(salesRepVals.get(0));
+            for (int i = 1; i < salesRepVals.size(); i++) {
+                System.out.println("selected valuseaa:" + salesRepVals.get(i));
+                sb.append("','").append(salesRepVals.get(i));
+            }
+            sb.append("')");
+            _logger.info("SudokuAmimpl: validateSalesRepValues: start: :: Sales Rep Values:: " +
+                         sb.toString());
+            if (salesRepVO != null) {
+                salesRepVO.clearCache();
+                salesRepVO.setWhereClause(null);
+                if (orgId != null) {
+                    salesRepVO.setWhereClause("resource_name in" +
+                                              sb.toString());
+                    System.out.println("Query::" + salesRepVO.getQuery());
+                    salesRepVO.executeQuery();
+                    RowSetIterator iter = salesRepVO.getRowSetIterator();
+                    while (iter.hasNext()) {
+                        Row row = iter.next();
+                        salesRepValsb.append(row.getAttribute("ResourceId")).append(",");
+                    }
+                    //                RowQualifier rq = new RowQualifier("Orgid in "+orgvalues+" and ResourceName in" + sb.toString());
+                    //                Row filteredRow[] = salesRepVO.getFilteredRows(rq);
+                    //                for (Row r : filteredRow) {
+                    //
+                    //                    System.out.println("Value issss:" +
+                    //                                       r.getAttribute("ResourceId").toString());
+                    //                    salesRepValsb.append(r.getAttribute("ResourceId")).append(",");
+                    //                }
+                    temp = salesRepValsb.toString();
+                    if (temp != null && temp.endsWith(",")) {
+                        temp = temp.substring(0, temp.length() - 1);
+                    }
+                    _logger.info("SudokuAmimpl: validateSalesRepValues: start: :: Sales Rep Ids:: " +
+                                 temp);
+                    System.out.println("after removing last comma:" + temp);
+                }
+            }
+        }
+        Row row = null;
+        String colType = "Sales_Rep";
+        if (vo != null) {
+            vo.clearCache();
+            vo.setWhereClause(null);
+//           RowQualifier rq1 = new RowQualifier("ColumnType =" + colType +
+//                                                " and UserId=" + usrId + " and OperatingUnit ='"+orgId+"'");
+//                                   Row[] rows = vo.getFilteredRows(rq1);
+
+            Object obj[] = { usrId, colType,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 3);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultId != null || temp != null) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", "Sales_Rep");
+                row.setAttribute("OperatingUnit", orgId);
+                if (defaultVal != null)
+                    row.setAttribute("DefaultVal", defaultId);
+            } else
+                row = null;
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+                row.setAttribute("ColumnVal", null);
+                if (temp != null)
+                    row.setAttribute("ColumnVal", temp);
+                if (defaultVal != null)
+                    row.setAttribute("DefaultVal", defaultId);
+                //                        errorMsg = "Success";
+            }
+            _logger.info("SudokuAmimpl: validateSalesRepValues: End: :: View Object call:: ");
+
+        }
+        _logger.info("SudokuAmimpl: validateSalesRepValues: End: ::");
+        //            errorMsg = "success";
+        return errorMsg.toString();
+    }
+    //Validate CSR values
+
+    public String validateCsrValues(int usrId, List csrValues, String csr) {
+        StringBuilder errorMsg = new StringBuilder("");
+        BigDecimal defaultval = null;
+        String temp = null;
+        ViewObjectImpl csrVO = this.getCSRForGlobalChoiceVO1();
+        Row fRows[] = csrVO.getFilteredRows("CustomerName", csr);
+        if (fRows != null && fRows.length > 0) {
+            defaultval = (BigDecimal)fRows[0].getAttribute("PersonId");
+        }
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        StringBuilder csrsb = new StringBuilder();
+        if (csrValues != null && csrValues.size() > 0) {
+            StringBuilder sb = new StringBuilder("('");
+            sb.append(csrValues.get(0));
+            for (int i = 1; i < csrValues.size(); i++) {
+                System.out.println("selected valuseaa:" + csrValues.get(i));
+                sb.append("','").append(csrValues.get(i));
+            }
+            sb.append("')");
+            RowQualifier rq =
+                new RowQualifier("CustomerName in" + sb.toString());
+            Row filteredRows[] = csrVO.getFilteredRows(rq);
+            //            csrsb.append(filteredRows[0].getAttribute("PersonId"));
+            for (Row r : filteredRows) {
+                System.out.println("Value issss:" +
+                                   r.getAttribute("PersonId").toString());
+                csrsb.append(r.getAttribute("PersonId")).append(",");
+            }
+            temp = csrsb.toString();
+            if (temp != null && temp.endsWith(",")) {
+                temp = temp.substring(0, temp.length() - 1);
+            }
+        }
+        Row row = null;
+        String colType = "CSR";
+        if (vo != null) {
+            Object obj[] = { usrId, colType,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 3);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultval != null || temp != null) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", colType);
+                row.setAttribute("OperatingUnit", orgId);
+                if (defaultval != null)
+                    row.setAttribute("DefaultVal", defaultval);
+            }
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+                if (temp != null) {
+                    row.setAttribute("ColumnVal", null);
+                    row.setAttribute("ColumnVal", temp);
+                }
+                if (defaultval != null)
+                    row.setAttribute("DefaultVal", defaultval);
+                //                        errorMsg = "Success";
+            }
+        }
+        return errorMsg.toString();
+    }
+
+
+    public String validateIncoTermValues(int usrId, List incoTermValues,
+                                         String dafaultVal) {
+        StringBuilder errorMsg = new StringBuilder("");
+        String defaultval = null;
+        String temp = null;
+        ViewObjectImpl incoTermVO = this.getIncoTermVO();
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        Row fRows[] = incoTermVO.getFilteredRows("Description", dafaultVal);
+        if (fRows != null && fRows.length > 0) {
+            defaultval = (String)fRows[0].getAttribute("Meaning");
+        }
+        StringBuilder incoTermsb = new StringBuilder();
+        if (incoTermValues != null && incoTermValues.size() > 0) {
+            StringBuilder sb = new StringBuilder("('");
+            sb.append(incoTermValues.get(0));
+            for (int i = 1; i < incoTermValues.size(); i++) {
+                System.out.println("selected valuseaa:" +
+                                   incoTermValues.get(i));
+                sb.append("'").append(",").append("'").append(incoTermValues.get(i));
+            }
+            sb.append("')");
+            if (incoTermVO != null) {
+                RowQualifier rq = new RowQualifier(incoTermVO);
+                rq.setWhereClause("Description in" + sb.toString());
+                Row filteredRows[] = incoTermVO.getFilteredRows(rq);
+                for (Row r : filteredRows)
+                    incoTermsb.append(r.getAttribute("Meaning")).append(",");
+
+                temp = incoTermsb.toString();
+                if (temp != null && temp.endsWith(",")) {
+                    temp = temp.substring(0, temp.length() - 1);
+                }
+            }
+        }
+        Row row = null;
+        String colType = "IncoTerm";
+        if (vo != null) {
+            Object obj[] = { usrId, colType,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 3);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultval != null || temp != null) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", "IncoTerm");
+                row.setAttribute("OperatingUnit", orgId);
+                if (defaultval != null)
+                    row.setAttribute("DefaultVal", defaultval);
+            } else
+                row = null;
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+
+                if (temp != null) {
+                    row.setAttribute("ColumnVal", null);
+                    row.setAttribute("ColumnVal", temp);
+                }
+                if (defaultval != null)
+                    row.setAttribute("DefaultVal", defaultval);
+                //                        errorMsg = "Success";
+            }
+        }
+        return errorMsg.toString();
+    }
+
+
+    public String validatePaymentTermValues(int usrId, String defaultVal) {
+        ViewObjectImpl paymentTermVO = this.getPaymentTermsVO();
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        StringBuilder errorMsg = new StringBuilder("");
+        Row fRows[] = paymentTermVO.getFilteredRows("Description", defaultVal);
+        if (fRows != null && fRows.length > 0) {
+            defaultVal = (String)fRows[0].getAttribute("Name");
+        }
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        Row row = null;
+        String colType = "PaymentTerms";
+        if (vo != null) {
+            Object obj[] = { usrId, colType,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 3);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultVal != null) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", colType);
+                row.setAttribute("OperatingUnit", orgId);
+                if (defaultVal != null)
+                    row.setAttribute("DefaultVal", defaultVal);
+            } else
+                row = null;
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+                row.setAttribute("ColumnVal", null);
+                if (defaultVal != null)
+                    row.setAttribute("DefaultVal", defaultVal);
+                //                        errorMsg = "Success";
+            }
+        }
+        return errorMsg.toString();
+    }
+
+    public String validateSalesChannelForSC(int usrId, List salesChannel) {
+        StringBuilder errorMsg = new StringBuilder("");
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        _logger.info("SudokuAmimpl: validateSalesChannelForSC: start: :: ");
+        Row row = null;
+        String colType = "Sales_Channel";
+        StringBuilder salesChannelsb = new StringBuilder();
+        if (salesChannel != null && salesChannel.size() > 0) {
+            salesChannelsb.append(salesChannel.get(0));
+            for (int i = 1; i < salesChannel.size(); i++) {
+                salesChannelsb.append(",").append(salesChannel.get(i));
+            }
+        }
+        if (vo != null) {
+            Object obj[] = { usrId, colType,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 3);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (salesChannelsb.toString() != null &&
+                       !salesChannelsb.toString().equalsIgnoreCase("")) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", colType);
+                row.setAttribute("OperatingUnit", orgId);
+            }
+            if (row != null) {
+
+                if (salesChannelsb.toString() != null) {
+                    row.setAttribute("ColumnVal", null);
+                    row.setAttribute("ColumnVal", salesChannelsb.toString());
+                }
+
+            }
+        }
+        return errorMsg.toString();
+    }
+
+
+    public String validateCurrencyValuesForSC(int usrId, List currencyValues,
+                                              String defaultVal,
+                                              String salesChannel) {
+        StringBuilder errorMsg = new StringBuilder("");
+        String defaultCode = null;
+        ViewObjectImpl currencyVO = this.getCurrencyVO();
+        Row fRows[] = currencyVO.getFilteredRows("Name", defaultVal);
+        if (fRows != null && fRows.length > 0) {
+            defaultCode = (String)fRows[0].getAttribute("CurrencyCode");
+        }
+        _logger.info("SudokuAmimpl: validateCurrencyValuesForSC: start: :: ");
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        StringBuilder currencysb = new StringBuilder("");
+        if (currencyValues != null && currencyValues.size() > 0) {
+            StringBuilder sb = new StringBuilder("('");
+            sb.append(currencyValues.get(0));
+            for (int i = 1; i < currencyValues.size(); i++) {
+                System.out.println("selected valuseaa:" +
+                                   currencyValues.get(i));
+                sb.append("','").append(currencyValues.get(i));
+            }
+            sb.append("')");
+            _logger.info("SudokuAmimpl: validateCurrencyValuesForSC: names list: :: " +
+                         sb.toString());
+            System.out.println("currency list:" + sb.toString());
+            if (currencyVO != null) {
+                currencyVO.clearCache();
+                System.out.println(currencyVO.getEstimatedRowCount());
+                RowQualifier rq = new RowQualifier("Name in" + sb.toString());
+                //            rq.setWhereClause();
+                Row filteredRows[] = currencyVO.getFilteredRows(rq);
+                currencysb.append(filteredRows[0].getAttribute("CurrencyCode"));
+                for (int i = 1; i < filteredRows.length; i++) {
+                    System.out.println("Value issss:" +
+                                       filteredRows[i].getAttribute("CurrencyCode").toString());
+                    currencysb.append(",").append(filteredRows[i].getAttribute("CurrencyCode"));
+                }
+            }
+            _logger.info("SudokuAmimpl: validateCurrencyValuesForSC: codes lis: :: " +
+                         currencysb.toString());
+        }
+        Row row = null;
+        String colType = "Currency";
+        if (vo != null) {
+            Object obj[] = { usrId, colType, salesChannel,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 4);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultCode != null ||
+                       !currencysb.toString().equalsIgnoreCase("")) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", "Currency");
+                row.setAttribute("SalesChannel", salesChannel);
+                row.setAttribute("OperatingUnit", orgId);
+                if (defaultCode != null)
+                    row.setAttribute("DefaultVal", defaultCode);
+            } else
+                row = null;
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+                if (currencysb.toString() != null) {
+                    row.setAttribute("ColumnVal", null);
+                    row.setAttribute("ColumnVal", currencysb.toString());
+                }
+                if (defaultCode != null)
+                    row.setAttribute("DefaultVal", defaultCode);
+                //                        errorMsg = "Success";
+            }
+        }
+        return errorMsg.toString();
+    }
+
+
+    public String validateIncoTermValuesForSC(int usrId, List incoTermValues,
+                                              String defaultVal,
+                                              String salesChannel) {
+        _logger.info("SudokuAmimpl: validateIncoTermValuesForSC: Start :: ");
+        StringBuilder errorMsg = new StringBuilder("");
+        String defaultCode = null;
+        ViewObjectImpl incoTermVO = this.getIncoTermVO();
+        Row fRows[] = incoTermVO.getFilteredRows("Description", defaultVal);
+        if (fRows != null && fRows.length > 0) {
+            defaultCode = (String)fRows[0].getAttribute("Meaning");
+        }
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        StringBuilder incoTermsb = new StringBuilder();
+        if (incoTermValues != null && incoTermValues.size() > 0) {
+            StringBuilder sb = new StringBuilder("('");
+            sb.append(incoTermValues.get(0));
+            for (int i = 1; i < incoTermValues.size(); i++) {
+                System.out.println("selected valuseaa:" +
+                                   incoTermValues.get(i));
+                sb.append("','").append(incoTermValues.get(i));
+            }
+            sb.append("')");
+            _logger.info("SudokuAmimpl: validateIncoTermValuesForSC: descriptions list :: " +
+                         sb.toString());
+            if (incoTermVO != null) {
+                RowQualifier rq = new RowQualifier(incoTermVO);
+                rq.setWhereClause("Description in" + sb.toString());
+                Row filteredRows[] = incoTermVO.getFilteredRows(rq);
+                incoTermsb.append(filteredRows[0].getAttribute("Meaning"));
+                for (int i = 1; i < filteredRows.length; i++) {
+                    System.out.println("Value issss:" +
+                                       filteredRows[i].getAttribute("Meaning").toString());
+                    incoTermsb.append(",").append(filteredRows[i].getAttribute("Meaning"));
+                }
+                _logger.info("SudokuAmimpl: validateIncoTermValuesForSC: Meanings: :: " +
+                             incoTermsb.toString());
+            }
+        }
+        Row row = null;
+        String colType = "IncoTerm";
+        if (vo != null) {
+            Object obj[] = { usrId, colType, salesChannel,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 4);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultCode != null ||
+                       (incoTermsb.toString() != null && !incoTermsb.toString().equalsIgnoreCase(""))) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", "IncoTerm");
+                row.setAttribute("SalesChannel", salesChannel);
+                row.setAttribute("OperatingUnit", orgId);
+                if (defaultCode != null)
+                    row.setAttribute("DefaultVal", defaultCode);
+            }
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+                row.setAttribute("ColumnVal", null);
+                row.setAttribute("ColumnVal", incoTermsb.toString());
+                if (defaultCode != null)
+                    row.setAttribute("DefaultVal", defaultCode);
+                //                        errorMsg = "Success";
+            }
+        }
+        return errorMsg.toString();
+    }
+
+
+    public String validateBAForSC(int usrId, List baValues, String defaultVal,
+                                  String salesChannel) {
+        StringBuilder errorMsg = new StringBuilder("");
+        BigDecimal defaultCode = null;
+        ViewObjectImpl baVO = this.getbusinessAgreementVo();
+        Row fRows[] = baVO.getFilteredRows("Name", defaultVal);
+        if (fRows != null && fRows.length > 0) {
+            defaultCode = (BigDecimal)fRows[0].getAttribute("AgreementId");
+        }
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+
+        StringBuilder basb = new StringBuilder();
+        if (baValues != null && baValues.size() > 0) {
+            StringBuilder sb = new StringBuilder("('");
+            sb.append(baValues.get(0));
+            for (int i = 1; i < baValues.size(); i++) {
+                System.out.println("selected valuseaa:" + baValues.get(i));
+                sb.append("','").append(baValues.get(i));
+            }
+            sb.append("')");
+            _logger.info("SudokuAmimpl: validateBAForSC: List of selected BA Names::: " +
+                         sb.toString());
+            if (baVO != null) {
+                RowQualifier rq = new RowQualifier(baVO);
+                rq.setWhereClause("Name in" + sb.toString());
+                Row filteredRows[] = baVO.getFilteredRows(rq);
+                basb.append(filteredRows[0].getAttribute("AgreementId"));
+                for (Row r : filteredRows) {
+                    System.out.println("Value issss:" +
+                                       r.getAttribute("AgreementId").toString());
+                    basb.append(",").append(r.getAttribute("AgreementId"));
+                }
+            }
+        }
+        _logger.info("SudokuAmimpl: validateBAForSC: BA Id's::: " +
+                     basb.toString());
+        Row row = null;
+        String colType = "Business_Agreement";
+        if (vo != null) {
+            Object obj[] = { usrId, colType, salesChannel,orgId};
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 4);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultCode != null ||
+                       (basb.toString() != null && !basb.toString().equalsIgnoreCase(""))) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", colType);
+                row.setAttribute("SalesChannel", salesChannel);
+                row.setAttribute("OperatingUnit", orgId);
+            }
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+                if (basb.toString() != null) {
+                    row.setAttribute("ColumnVal", null);
+                    row.setAttribute("ColumnVal", basb.toString());
+                }
+                if (defaultCode != null)
+                    row.setAttribute("DefaultVal", defaultCode);
+                //                        errorMsg = "Success";
+            }
+        }
+        return errorMsg.toString();
+    }
+
+    public String validatePaymentTermValuesforSC(int usrId,
+                                                 List PaymentTermValues,
+                                                 String defaultVal,
+                                                 String salesChannel) {
+        StringBuilder errorMsg = new StringBuilder("");
+        String defaultCode = null, temp = null;
+        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+        ViewObjectImpl paymentTermsVO = this.getPaymentTermsVO();
+        StringBuilder paymentTermssb = new StringBuilder();
+        _logger.info("SudokuAmimpl: validatePaymentTermValuesforSC: Start :: ");
+        Row fRows[] =
+            paymentTermsVO.getFilteredRows("Description", defaultVal);
+        if (fRows != null && fRows.length > 0) {
+            defaultCode = (String)fRows[0].getAttribute("Name");
+        }
+        if (PaymentTermValues != null && PaymentTermValues.size() > 0) {
+            StringBuilder sb = new StringBuilder("('");
+
+            sb.append(PaymentTermValues.get(0));
+            for (int i = 1; i < PaymentTermValues.size(); i++) {
+                System.out.println("selected valuseaa:" +
+                                   PaymentTermValues.get(i));
+                sb.append("','").append(PaymentTermValues.get(i));
+            }
+            sb.append("')");
+            _logger.info("SudokuAmimpl: validatePaymentTermValuesforSC: paymentTerm DEsc :: " +
+                         sb.toString());
+            if (paymentTermsVO != null) {
+                RowQualifier rq =
+                    new RowQualifier("Description in" + sb.toString());
+                Row filteredRows[] = paymentTermsVO.getFilteredRows(rq);
+                for (Row r : filteredRows) {
+                    paymentTermssb.append(r.getAttribute("Name")).append(",");
+                }
+
+                System.out.println("Query::" + paymentTermsVO.getQuery());
+            }
+            temp = paymentTermssb.toString();
+            if (temp != null && temp.endsWith(",")) {
+                temp = temp.substring(0, temp.length() - 1);
+            }
+            _logger.info("SudokuAmimpl: validatePaymentTermValuesforSC: Names :: " +
+                         temp);
+            System.out.println("after removing last comma:" + temp);
+        }
+        Row row = null;
+        String colType = "PaymentTerms";
+        if (vo != null) {
+            Object obj[] = { usrId, colType, salesChannel,orgId };
+            Key key = new Key(obj);
+            Row[] rows = vo.findByKey(key, 4);
+            if (rows != null && rows.length > 0) {
+                row = rows[0];
+            } else if (defaultCode != null || temp != null) {
+                row = vo.createRow();
+                row.setAttribute("UserId", usrId);
+                row.setAttribute("ColumnType", colType);
+                row.setAttribute("SalesChannel", salesChannel);
+                row.setAttribute("OperatingUnit", orgId);
+                if (defaultCode != null)
+                    row.setAttribute("DefaultVal", defaultCode);
+            }
+            if (row != null) {
+                System.out.println("user Name:" + row.getAttribute("UserId") +
+                                   "::column_name::" +
+                                   row.getAttribute("ColumnType"));
+
+                if (temp != null) {
+                    row.setAttribute("ColumnVal", null);
+                    row.setAttribute("ColumnVal", temp);
+
+                    if (defaultCode != null)
+                        row.setAttribute("DefaultVal", defaultCode);
+                    //                        errorMsg = "Success";
+                }
+            }
+        }
+        return errorMsg.toString();
+    }
+
+    // for getting Sales Representative values  getSelectedSalesRepValues
+
+    public String getDefaultSelectedRows(String colType,int usrId,String orgId) {
+        StringBuilder sb = new StringBuilder("'");
+        sb.append(colType).append("'");
+        String defaultVal = null;
+        if (colType != null) {
+            ViewObjectImpl vo = this.getuserPrefEntityVO();
+            if (vo != null) {
+             vo.clearCache();
+             vo.setWhereClause(null);
+                Object obj[] = {usrId, colType,orgId};
+                Key key = new Key(obj);
+                Row[] r = vo.findByKey(key, 3);
+//                RowQualifier rq =
+//                    new RowQualifier("ColumnType =" + sb.toString() +
+//                                     " and UserId=" + usrId + " and OperatingUnit ='"+orgId+"'");
+//         Row r[] = vo.getFilteredRows(rq);
+                {
+                    if (r != null && r.length > 0) {
+                        defaultVal = (String)r[0].getAttribute("DefaultVal");
+                    }
+                }
+            }
+        }
+        return defaultVal;
+    }  
+    public Map defaultVals(int usrId,String orgId) {
+        _logger.info("SudokuAmimpl: defaultVals: Start :: ");
+        String defaultCurrency = getDefaultSelectedRows("Currency",usrId,orgId);
+        String defaultOrderType = getDefaultSelectedRows("Order_type",usrId,orgId);
+        String defaultCustNum = getDefaultSelectedRows("Customer",usrId,orgId);
+        String defaultIncoTerm = getDefaultSelectedRows("IncoTerm",usrId,orgId);
+        String defaultSalesRep = getDefaultSelectedRows("Sales_Rep",usrId,orgId);
+        String defaultCSR = getDefaultSelectedRows("CSR",usrId,orgId);
+        String defaultPaymentTerm = getDefaultSelectedRows("PaymentTerms",usrId,orgId);
+        String currency = null;
+        ViewObjectImpl currencyVO = this.getCurrencyVO();
+                   
+        if (currencyVO != null && defaultCurrency != null) {
+            RowQualifier rq =
+                new RowQualifier("CurrencyCode =" + "'" + defaultCurrency +
+                                 "'");
+            Row r[] = currencyVO.getFilteredRows(rq);
+            if (r != null && r.length > 0) {
+                currency = (String)r[0].getAttribute("Name");
+            }
+        } 
+        String orderType = null;
+        ViewObjectImpl orderTypeVO = this.getOrderTypeVO();
+        if (orderTypeVO != null && defaultOrderType != null) {
+            orderTypeVO.clearCache();
+            orderTypeVO.setWhereClause(null);
+            orderTypeVO.setNamedWhereClauseParam("p_orgId", orgId);
+            orderTypeVO.setWhereClause("transaction_type_id ="+defaultOrderType);
+            orderTypeVO.executeQuery();
+            RowSetIterator iter = orderTypeVO.createRowSetIterator(null);
+            while(iter.hasNext()){
+                Row r = iter.next();
+                    orderType = (String)r.getAttribute("Name");
+                }
+//            RowQualifier rq =
+//                new RowQualifier("TransactionTypeId =" + defaultOrderType);
+//            Row r[] = orderTypeVO.getFilteredRows(rq);
+//            if (r != null && r.length > 0) {
+//                orderType = (String)r[0].getAttribute("Name");
+//            }
+        }
+
+        String incoTerm = null;
+        ViewObjectImpl incoTermVO = this.getIncoTermVO();
+        if (incoTermVO != null && defaultIncoTerm != null) {
+            RowQualifier rq =
+                new RowQualifier("Meaning =" + "'" + defaultIncoTerm + "'");
+            Row r[] = incoTermVO.getFilteredRows(rq);
+            if (r != null && r.length > 0) {
+                incoTerm = (String)r[0].getAttribute("Description");
+            }
+        }
+
+        String salesRep = null;
+        ViewObjectImpl salesRepVO = this.getSalesRepForUserPrefVO();
+
+        if (salesRepVO != null && defaultSalesRep != null) {
+            RowQualifier rq =
+                new RowQualifier("ResourceId =" + defaultSalesRep);
+            Row r[] = salesRepVO.getFilteredRows(rq);
+            if (r != null && r.length > 0) {
+                salesRep = (String)r[0].getAttribute("ResourceName");
+            }
+        }
+        String paymentTerm = null;
+        ViewObjectImpl paymentTermVO = this.getPaymentTermsVO();
+        if (paymentTermVO != null && defaultPaymentTerm != null) {
+            RowQualifier rq =
+                new RowQualifier("Name =" + "'" + defaultPaymentTerm + "'");
+            Row r[] = paymentTermVO.getFilteredRows(rq);
+            if (r != null && r.length > 0) {
+                paymentTerm = (String)r[0].getAttribute("Description");
+            }
+        }
+        String csr = null;
+        ViewObjectImpl csrVO = this.getCSRForGlobalChoiceVO1();
+        if (csrVO != null && defaultCSR != null) {
+            RowQualifier rq = new RowQualifier("PersonId =" + defaultCSR);
+            Row r[] = csrVO.getFilteredRows(rq);
+            if (r != null && r.length > 0) {
+                csr = (String)r[0].getAttribute("CustomerName");
+            }
+        }
+        _logger.info("Sudoku AMImpl: print defaultVals: Currency:" +
+                     defaultCurrency + ":: OrderType:" + defaultOrderType +
+                     "::IncoTerm::" + defaultIncoTerm + "::SalesRep:" +
+                     defaultSalesRep + "::CSR:" + defaultCSR +
+                     "::paymentTerm:" + defaultPaymentTerm);
+      
+
+        Map map = new HashMap();
+        if (map != null) {
+            map.put("currency", currency);
+            map.put("orderType", orderType);
+            map.put("custNum", defaultCustNum);
+            map.put("incoTerm", incoTerm);
+            map.put("salesRep", salesRep);
+            map.put("paymentTerm", paymentTerm);
+            map.put("csr", csr);
+        }
+        return map;
+    }
+
+
+    public String getDefaultSelectedRowsForSC(String colType,int usrId,String salesChannel,String orgId) {
+        StringBuilder sb = new StringBuilder("'");
+        sb.append(colType).append("'");
+        String defaultVal = null;
+        if (colType != null) {
+            ViewObjectImpl vo = this.getuserPrefSCVO1();
+            if (vo != null) {
+                vo.clearCache();
+                vo.setWhereClause(null);
+                if(orgId!=null){
+                    Object obj[] = { usrId, colType, salesChannel,orgId };
+                    Key key = new Key(obj);
+                    Row[] rows = vo.findByKey(key, 4);
+                    if(rows!=null && rows.length>0)
+                            defaultVal = (String)rows[0].getAttribute("DefaultVal");
+                }
+
+            }
+        }
+        return defaultVal;
+    }
+
+
+    public Map defaultValsForSC(int usrId,String salesChannel,List customerNums,String orgId) {
+        String defaultCurrency = getDefaultSelectedRowsForSC("Currency",usrId,salesChannel,orgId);
+        String defaultCustName = getDefaultSelectedRowsForSC("Customer",usrId,salesChannel,orgId);
+        String defaultIncoTerm = getDefaultSelectedRowsForSC("IncoTerm",usrId,salesChannel,orgId);
+        String defaultBA = getDefaultSelectedRowsForSC("Business_Agreement",usrId,salesChannel,orgId);
+        String defaultPaymentTerm = getDefaultSelectedRowsForSC("PaymentTerms",usrId,salesChannel,orgId);
+                    
+        ViewObjectImpl custNameVO = this.getCustomerNumberVO();
+      
+        String customer = null;
+        if (custNameVO != null && defaultCustName != null) {
+            custNameVO.clearCache();
+            custNameVO.setWhereClause(null);
+            Row r[] = custNameVO.getFilteredRows("Accountnumber",defaultCustName);
+            if (r != null && r.length > 0) {
+                customer = (String)r[0].getAttribute("Customername");
+            }
+        }
+
+        ViewObjectImpl currencyVO = this.getCurrencyVO();
+        String currency = null;
+        if (currencyVO != null && defaultCurrency != null) {
+            currencyVO.clearCache();
+            currencyVO.setWhereClause(null);
+            RowQualifier rq =
+                new RowQualifier("CurrencyCode =" + "'" + defaultCurrency +
+                                 "'");
+            Row r[] = currencyVO.getFilteredRows(rq);
+            if (r != null && r.length > 0) {
+                currency = (String)r[0].getAttribute("Name");
+            }
+        }
+
+        String incoTerm = null;
+        ViewObjectImpl incoTermVO = this.getIncoTermVO();
+        if (incoTermVO != null && defaultIncoTerm != null) {
+            RowQualifier rq =
+                new RowQualifier("Meaning =" + "'" + defaultIncoTerm + "'");
+            Row r[] = incoTermVO.getFilteredRows(rq);
+            if (r != null && r.length > 0) {
+                incoTerm = (String)r[0].getAttribute("Description");
+            }
+        }
+
+        String paymentTerm = null;
+        ViewObjectImpl paymentTermVO = this.getPaymentTermsVO();
+        if (paymentTermVO != null && defaultPaymentTerm != null) {
+            RowQualifier rq =
+                new RowQualifier("Name =" + "'" + defaultPaymentTerm + "'");
+            Row r[] = paymentTermVO.getFilteredRows(rq);
+            if (r != null && r.length > 0) {
+                paymentTerm = (String)r[0].getAttribute("Description");
+            }
+        }
+
+        String ba = null;
+        ViewObjectImpl baVO = this.getbusinessAgreementVo();
+        if (baVO != null && defaultBA != null) {
+            RowQualifier rq = new RowQualifier("AgreementId =" + defaultBA);
+            Row r[] = baVO.getFilteredRows(rq);
+            if (r != null && r.length > 0) {
+                ba = (String)r[0].getAttribute("Name");
+            }
+        }
+
+        Map map = new HashMap();
+        if (map != null) {
+            map.put("currency", currency);
+            map.put("customer", customer);
+            map.put("incoTerm", incoTerm);
+            map.put("paymentTerm", paymentTerm);
+            map.put("ba", ba);
+
+        }
+        return map;
+    }
+//    String salesRepQuery = "select DISTINCT jreb.resource_id, \n" +
+//        "          pp.phone_number fax,\n" +
+//        "          jreb.CATEGORY,\n" +
+//        "          jreb.source_name AS resource_name,\n" +
+//        "          jreb.source_email,\n" +
+//        "         jreb.source_phone  from jtf_rs_resource_extns jreb,JTF_RS_SALESREPS JRS, (select parent_id,PHONE_NUMBER from per_phones where phone_type='WF') pp,\n" +
+//        "          (select parent_id,PHONE_NUMBER from per_phones where phone_type='W1') ppfax\n" +
+//        "          where jreb.source_id = pp.parent_id(+)\n" +
+//        "          and jreb.source_id = ppfax.parent_id(+)\n" +
+//        "           AND jreb.resource_id=  JRS.RESOURCE_ID";
+
+    public List getAllSalesRepValues(String orgId) {
+        List salesRepValues = new ArrayList();
+        if (orgId != null) {
+            ViewObjectImpl vo = this.getSalesRepresentativeVO();
+            if (vo != null) {
+                vo.clearCache();
+                vo.setWhereClause(null);
+                vo.setNamedWhereClauseParam("p_orgId", null);
+                vo.setNamedWhereClauseParam("p_orgId", new BigDecimal(orgId));
+                System.out.println("result Query is:" + vo.getQuery());
+                _logger.info("All SalesRep Query from SudokuAMImpl: " +
+                             vo.getQuery());
+                vo.executeQuery();
+                RowSetIterator iter = vo.createRowSetIterator(null);
+                while (iter.hasNext()) {
+                    Row r = iter.next();
+                    salesRepValues.add(r.getAttribute("ResourceName"));
+                }
+                iter.closeRowSetIterator();
+            }
+        }
+        return salesRepValues;
+    }
+
+    public List getSelectedSalesRepValues(int usrId,String orgId) { //salesRep
+        long startTime = System.currentTimeMillis();
+        System.out.println("SudokuAMIMpl:getSelctedSalesRepValues:Start" +
+                           (System.currentTimeMillis() - startTime));
+        StringBuilder salesRepV = new StringBuilder("(");
+        String salesRepId = null;
+        List selectedNames = new ArrayList();
+        ViewObjectImpl vo = this.getuserPrefEntityVO();
+        ViewObjectImpl salesRepVO = this.getSalesRepresentativeVO();
+        String col_type = "Sales_Rep";
+        vo.clearCache();
+        vo.setWhereClause(null);
+//        RowQualifier rq1 =
+//                           new RowQualifier("ColumnType =" + col_type +
+//                                            " and UserId=" + usrId + " and OperatingUnit ='"+orgId+"'");
+//                               Row[] rows = vo.getFilteredRows(rq1);
+        Object obj[] = { usrId, col_type,orgId};
+        Key key = new Key(obj);
+        Row[] rows = vo.findByKey(key, 3);
+        if (rows != null && rows.length > 0)
+            salesRepId = (String)rows[0].getAttribute("ColumnVal");
+
+        if (salesRepId != null) {
+            salesRepV.append(salesRepId).append(")");
+            if(salesRepVO!=null){
+                salesRepVO.clearCache();
+                salesRepVO.setWhereClause(null);
+                salesRepVO.setNamedWhereClauseParam("p_orgId", orgId);
+                salesRepVO.setWhereClause("resource_id in"+salesRepV.toString());
+                salesRepVO.executeQuery();
+                System.out.println("SalesRep Count:"+salesRepVO.getEstimatedRowCount());
+                RowSetIterator iter = salesRepVO.createRowSetIterator(null);
+                while(iter.hasNext()){
+                    Row r  = iter.next();
+                    System.out.println("Value issss:" +
+                                       r.getAttribute("ResourceName").toString());
+                    selectedNames.add(r.getAttribute("ResourceName").toString());
+                }
+                }
+//            RowQualifier rq =
+//                new RowQualifier("ResourceId in" + salesRepV.toString());
+//            Row filteredRows[] = salesRepVO.getFilteredRows(rq);
+            System.out.println("SudokuAMIMpl:getSelctedSalesRepValues:4" +
+                               (System.currentTimeMillis() - startTime));
+        }
+        return selectedNames;
+    }
+
+
+    public boolean commitEntities() {
+        _logger.info("SudokuAMImpl : commitEntities Starts ");
+        try {
+            this.getDBTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        _logger.info("SudokuAMImpl : commitEntities Ends ");
+        return true;
+        }
+
+
+//    public void getSCBasedQuoteUpdateValues() {
+//        String salesChannel = null;
+//        String defaultCurrency = null;
+//        String defaultIncoTerm = null;
+//        String defaultPaymentTerm = null;
+//        String defaultBA = null;
+//        String custNum = null,custName = null;
+//        Map custMap = new HashMap();
+//        ViewObjectImpl vo = this.getQuoteUpdateVO1();
+//        if (vo != null) {
+//            Row r = vo.getCurrentRow();
+//            if (r != null) {
+//                salesChannel = (String)r.getAttribute("Saleschannel");
+//            }
+//            QuoteUpdateVORowImpl rowImpl =
+//                (QuoteUpdateVORowImpl)vo.getCurrentRow();
+//            if (rowImpl != null) {
+//                defaultCurrency =
+//                        rowImpl.getSalesChannelBasedCurrency(salesChannel);
+//                defaultIncoTerm =
+//                        rowImpl.getSalesChannelBasedIncoTerm(salesChannel);
+//                defaultPaymentTerm =
+//                        rowImpl.getSalesChannelBasedPaymentTerm(salesChannel);
+//                defaultBA = rowImpl.getSalesChannelBasedBA(salesChannel);
+//                custMap =
+//                        rowImpl.getSalesChannelBasedCustomerDetails(salesChannel);
+//                if(custMap !=null){
+//                    custNum = (String)custMap.get("custNum");
+//                    custName = (String)custMap.get("custName");
+//                    }
+//            }
+//            r.setAttribute("CurrencyCode", defaultCurrency);
+//            r.setAttribute("Incoterms", defaultIncoTerm);
+//            r.setAttribute("Paymentterms", defaultPaymentTerm);
+//            r.setAttribute("Agrimentname", defaultBA);
+//                        r.setAttribute("Customernumber", custNum);
+//                        r.setAttribute("Customername", custName);
+//        }
+//
+//    }
+    
+    public List getAllCustNumValues(BigDecimal orgId){
+        List custNumList = new ArrayList();
+        ViewObjectImpl vo = this.getCustomerNameVO();
+        if(vo!=null && orgId!=null){
+            vo.clearCache();
+            vo.setNamedWhereClauseParam("p_orgId", null);
+            vo.setWhereClause(null);
+            vo.setNamedWhereClauseParam("p_orgId", orgId);
+            vo.executeQuery();
+            RowSetIterator iter = vo.createRowSetIterator(null);
+            while(iter.hasNext()){
+                Row r = iter.next();
+                custNumList.add(r.getAttribute("Accountnumber"));
+                }
+            }
+        return custNumList;
+        }
+    
+    
+	
+	////From Vamshi
+    public Map<String, String> getQuoteHdrOrgID(String pquoteNo) {
+        DBTransaction trans = this.getDBTransaction();
+
+        String QuoteHid = null;
+        String OrgId = null;
+        HashMap<String, String> QuoteHdrOrgMap = new HashMap<String, String>();
+        try {
+
+
+            String sql =
+                "Select QUOTE_HEADER_ID,ORG_ID from ASO_QUOTE_HEADERS_ALL where QUOTE_NUMBER=" +
+                pquoteNo;
+
+            PreparedStatement ps = trans.createPreparedStatement(sql, 0);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+
+            QuoteHid = rs.getString(1);
+            OrgId = rs.getString(2);
+            _logger.info("print OrgId in AM" + OrgId);
+            QuoteHdrOrgMap.put("vQuoteHid", QuoteHid);
+            QuoteHdrOrgMap.put("vOrgId", OrgId);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return QuoteHdrOrgMap;
+    }
+	
+	//From Vamshi
+    public String getPath() {
+
+        ViewObjectImpl vo = getXXATGlobalDirRVO1();
+
+        Row row = vo.first();
+
+        String path = row.getAttribute("Description").toString();
+
+        return path;
+
+
+    }
+	//From Vamshi
+    public int callDUTReport(String confighid, String configrevno,
+                             String orderhid, String quoteno, String ponum,
+                             int respId, int usrId) {
+        CallableStatement cs = null;
+        String stmt = "XXAT_DUT_REP(:1,:2,:3,:4,:5,:6,:7,:8)";
+        StringBuilder errorMsg = new StringBuilder("<html><body>");
+        int reqid = 0;
+        try {
+
+            cs =
+ this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
+                                                 0);
+
+
+            cs.setString(1, confighid);
+            cs.setString(2, configrevno);
+            cs.setString(3, orderhid);
+            cs.setString(4, quoteno);
+            cs.setString(5, ponum);
+            cs.setInt(6, respId);
+            cs.setInt(7, usrId);
+            cs.registerOutParameter(8, Types.INTEGER);
+            System.out.println("print before execute the procedure");
+
+
+            cs.executeUpdate();
+            reqid = cs.getInt(8);
+
+            System.out.println("print after execute the procedure");
+
+            System.out.println("print reqid" + reqid);
+        } catch (Exception e) {
+            errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
+            System.out.println("print error found in package execution" +
+                               e.getMessage());
+            //                e.printStackTrace();
+        } finally {
+            try {
+                if (cs != null)
+                    cs.close();
+            } catch (SQLException s) {
+                errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
+                //                    s.printStackTrace();
+                System.out.println("print error found in package execution1" +
+                                   s.getMessage());
+            }
+        }
+
+        return reqid;
+    }
+//From Vamshi
+    public String callMOFReport(String confighid, String configrevno,
+                                String orderhid, String quoteno,
+                                String ponum) {
+        CallableStatement cs = null;
+        String stmt =
+            "XXAT_ASO_QUOTE_PKG.XXAT_MOF_REPORT_PRINT(:1,:2,:3,:4,:5,:6)";
+        StringBuilder errorMsg = new StringBuilder("<html><body>");
+        String output = null;
+        try {
+
+            cs =
+ this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
+                                                 0);
+
+
+            cs.setString(1, confighid);
+            cs.setString(2, configrevno);
+            cs.setString(3, orderhid);
+            cs.setString(4, quoteno);
+            cs.setString(5, ponum);
+            //            cs.setInt(6, respId);
+            //            cs.setInt(7, usrId);
+            cs.registerOutParameter(6, Types.VARCHAR);
+            System.out.println("print before execute the procedure");
+
+
+            cs.executeUpdate();
+            output = cs.getString(6);
+
+            System.out.println("print after execute the procedure");
+
+            System.out.println("print output" + output);
+        } catch (Exception e) {
+            errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
+            System.out.println("print error found in package execution" +
+                               e.getMessage());
+            //                e.printStackTrace();
+        } finally {
+            try {
+                if (cs != null)
+                    cs.close();
+            } catch (SQLException s) {
+                errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
+                //                    s.printStackTrace();
+                System.out.println("print error found in package execution1" +
+                                   s.getMessage());
+            }
+        }
+
+        return output;
+    }
+//From Vamshi
+    public String callCFDReport(String quoteNum, int respId, int usrId) {
+
+        CallableStatement cs = null;
+//        String returnval = null;
+        StringBuilder errorMsg = new StringBuilder("<html><body>");
+        String reqstid = "";
+//        String returnStatus = "";
+        String stmt = "   XXAT_CFD_REPT(:1,:2,:3,:4)";
+        try {
+            cs =
+ this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
+                                                 0);
+            if (quoteNum != null) {
+                quoteNum = quoteNum.trim();
+                cs.setString(1, quoteNum);
+            } else
+                errorMsg.append("<p><b> Quote Number is Missing.</b></p>");
+
+
+            cs.setInt(2, respId);
+            cs.setInt(3, usrId);
+            cs.registerOutParameter(4, Types.VARCHAR);
+
+
+            errorMsg.append("</body></html>");
+            cs.executeUpdate();
+            reqstid = cs.getString(4);
+            //  String output =cs.getString(5);
+            System.out.println("print req id" + reqstid);
+            //            if ("<html><body></body></html>".equalsIgnoreCase(errorMsg.toString())) {
+            //                cs.executeUpdate();
+            //                returnStatus = cs.getString(5);
+            //                returnMessage = cs.getString(6);
+            //            }
+        } catch (Exception e) {
+            errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
+            //                e.printStackTrace();
+        } finally {
+            try {
+                if (cs != null)
+                    cs.close();
+            } catch (SQLException s) {
+                errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
+                //                    s.printStackTrace();
+            }
+        }
+
+        return reqstid;
+    }	
     /**
      * Container's getter for FileUpdDwnEOView1.
      * @return FileUpdDwnEOView1
@@ -2689,11 +5238,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         return (ViewObjectImpl)findViewObject("CustomerNumberVO");
     }
 
-    public void getQuoteCustmerAddress() {
-
-    }
-
-    /**
+       /**
      * Container's getter for CustomerNameVO1.
      * @return CustomerNameVO1
      */
@@ -2786,7 +5331,94 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     public void initConfiguratorRuleSet() {
     }
 
-    public Hashtable getUiGrpMap() {
+    /**
+     * Container's getter for userPrefEntityVO.
+     * @return userPrefEntityVO
+     */
+    public ViewObjectImpl getuserPrefEntityVO() {
+        return (ViewObjectImpl)findViewObject("userPrefEntityVO");
+    }
+
+    /**
+     * Container's getter for userPrefSCVO1.
+     * @return userPrefSCVO1
+     */
+    public ViewObjectImpl getuserPrefSCVO1() {
+        return (ViewObjectImpl)findViewObject("userPrefSCVO1");
+    }
+
+    /**
+     * Container's getter for SalesChannelDefaultUsrPrefVO1.
+     * @return SalesChannelDefaultUsrPrefVO1
+     */
+    public ViewObjectImpl getSalesChannelDefaultUsrPrefVO1() {
+        return (ViewObjectImpl)findViewObject("SalesChannelDefaultUsrPrefVO1");
+    }
+
+    /**
+     * Container's getter for UserPrefGlobalChoiceDefaultVO1.
+     * @return UserPrefGlobalChoiceDefaultVO1
+     */
+    public ViewObjectImpl getUserPrefGlobalChoiceDefaultVO1() {
+        return (ViewObjectImpl)findViewObject("UserPrefGlobalChoiceDefaultVO1");
+    }
+
+    /**
+     * Container's getter for CSRForGlobalChoiceVO1.
+     * @return CSRForGlobalChoiceVO1
+     */
+    public ViewObjectImpl getCSRForGlobalChoiceVO1() {
+        return (ViewObjectImpl)findViewObject("CSRForGlobalChoiceVO1");
+    }
+
+    /**
+     * Container's getter for SalesRepForUserPrefVO.
+     * @return SalesRepForUserPrefVO
+     */
+    public ViewObjectImpl getSalesRepForUserPrefVO() {
+        return (ViewObjectImpl)findViewObject("SalesRepForUserPrefVO");
+    }
+
+//    public void setSalesRepQuery(String salesRepQuery) {
+//        this.salesRepQuery = salesRepQuery;
+//    }
+//
+//    public String getSalesRepQuery() {
+//        return salesRepQuery;
+//    }
+
+    /**
+     * Container's getter for XXATGlobalDirRVO1.
+     * @return XXATGlobalDirRVO1
+     */
+    public XXATGlobalDirRVOImpl getXXATGlobalDirRVO1() {
+        return (XXATGlobalDirRVOImpl)findViewObject("XXATGlobalDirRVO1");
+    }
+
+    /**
+     * Container's getter for CFDReportVO1.
+     * @return CFDReportVO1
+     */
+    public CFDReportVOImpl getCFDReportVO1() {
+        return (CFDReportVOImpl)findViewObject("CFDReportVO1");
+    }
+
+    /**
+     * Container's getter for UIGroupsVO.
+     * @return UIGroupsVO
+     */
+    public ViewObjectImpl getUIGroupsVO() {
+        return (ViewObjectImpl)findViewObject("UIGroupsVO");
+    }
+
+    /**
+     * Container's getter for OrderTypeForUserPrefVO1.
+     * @return OrderTypeForUserPrefVO1
+     */
+    public ViewObjectImpl getOrderTypeForUserPrefVO1() {
+        return (ViewObjectImpl)findViewObject("OrderTypeForUserPrefVO1");
+    }
+	 public Hashtable getUiGrpMap() {
         Hashtable<String, String> uiGrpMap = new Hashtable<String, String>();
         ViewObjectImpl uiGrpVO = this.getUIGroupsVO();
         if (uiGrpVO != null) {
@@ -2804,64 +5436,5 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         }
         ADFContext.getCurrent().getSessionScope().put("uiGrpMap", uiGrpMap);
         return uiGrpMap;
-    }
-
-    public Map<String, String> getQuoteHdrOrgID(String pquoteNo) {
-        DBTransaction trans = this.getDBTransaction();
-
-        String QuoteHid = null;
-        String OrgId = null;
-        HashMap<String, String> QuoteHdrOrgMap = new HashMap<String, String>();
-        try {
-
-
-            String sql =
-                "Select QUOTE_HEADER_ID,ORG_ID from ASO_QUOTE_HEADERS_ALL where QUOTE_NUMBER=" +
-                pquoteNo;
-
-            PreparedStatement ps = trans.createPreparedStatement(sql, 0);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-
-
-            QuoteHid = rs.getString(1);
-            OrgId = rs.getString(2);
-            _logger.info("print OrgId in AM" + OrgId);
-            QuoteHdrOrgMap.put("vQuoteHid", QuoteHid);
-            QuoteHdrOrgMap.put("vOrgId", OrgId);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        return QuoteHdrOrgMap;
-    }
-
-
-    /**
-     * Container's getter for UIGroupsVO1.
-     * @return UIGroupsVO1
-     */
-    public ViewObjectImpl getUIGroupsVO() {
-        return (ViewObjectImpl)findViewObject("UIGroupsVO");
-    }
-
-
-    /**
-     * Container's getter for CFDReportVO1.
-     * @return CFDReportVO1
-     */
-    public CFDReportVOImpl getCFDReportVO1() {
-        return (CFDReportVOImpl)findViewObject("CFDReportVO1");
-    }
-
-    /**
-     * Container's getter for XXATGlobalDirRVO1.
-     * @return XXATGlobalDirRVO1
-     */
-    public XXATGlobalDirRVOImpl getXXATGlobalDirRVO1() {
-        return (XXATGlobalDirRVOImpl)findViewObject("XXATGlobalDirRVO1");
     }
 }

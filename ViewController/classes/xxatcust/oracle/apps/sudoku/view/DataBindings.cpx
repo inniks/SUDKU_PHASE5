@@ -50,6 +50,10 @@
           usageId="xxatcust_oracle_apps_sudoku_view_ConfiguratorPageDef"/>
     <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ConfiguratorFlow.xml#ConfiguratorFlow@initRuleSetForRef"
           usageId="xxatcust_oracle_apps_sudoku_view_ConfiguratorFlow_ConfiguratorFlow_initRuleSetForRefPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/UserPreferences.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_UserPreferencesPageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UserPreferencesFlow.xml#UserPreferencesFlow@inituserPreference"
+          usageId="xxatcust_oracle_apps_sudoku_view_UserPreferencesFlow_UserPreferencesFlow_inituserPreferencePageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
@@ -94,6 +98,10 @@
           path="xxatcust.oracle.apps.sudoku.ui.pageFragments.ConfiguratorPageDef"/>
     <page id="xxatcust_oracle_apps_sudoku_view_ConfiguratorFlow_ConfiguratorFlow_initRuleSetForRefPageDef"
           path="xxatcust.oracle.apps.sudoku.pageFlows.ConfiguratorFlow_ConfiguratorFlow_initRuleSetForRefPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_UserPreferencesPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.UserPreferencesPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_UserPreferencesFlow_UserPreferencesFlow_inituserPreferencePageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.UserPreferencesFlow_UserPreferencesFlow_inituserPreferencePageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <BC4JDataControl id="SudokuAMDataControl"

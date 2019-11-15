@@ -169,5 +169,38 @@
         <Item Value="CustPhoneFax"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="filterOrderTypeRecords"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="filterOrderTypeRecords"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
+    <methodAction id="getViewAccessors"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getViewAccessors"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
+    <methodAction id="getSalesChannelBasedUserPref"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getSalesChannelBasedUserPref"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="initQuoteBasedOnUserPref"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="initQuoteBasedOnUserPref"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="isUserDefault" NDType="boolean"/>
+    </methodAction>
+    <listOfValues StaticList="false" Uses="LOV_CustNum"
+                  IterBinding="QuotesVOIterator" id="CustNum"/>
+    <listOfValues StaticList="false" Uses="LOV_CustName"
+                  IterBinding="QuotesVOIterator" id="CustName"/>
   </bindings>
 </pageDefinition>

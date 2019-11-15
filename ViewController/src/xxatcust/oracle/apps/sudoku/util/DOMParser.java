@@ -62,6 +62,29 @@ public class DOMParser {
             v93kObj = populateQuoteDataOnObject(v93kObj, r);
 
         }
+        if(r==null){
+            if (v93kObj.getConfigObject() != null) {
+                //Create a model bom and add it here
+                if (v93kObj.getConfigObject().getModelbomObjectList() ==
+                    null) {
+                    String ruleSetVal = null;
+                    if (v93kObj.getInputParams() != null) {
+                        ruleSetVal =
+                                v93kObj.getInputParams().getRuleSetTopLevelChoice();
+                    }
+                    ModelBom mb = new ModelBom();
+                   // mb.setPricelist((String)r.getAttribute("Pricelistname"));
+                    mb.setId(ruleSetVal);
+                    Ruleset rf = new Ruleset();
+                    rf.setId(v93kObj.getInputParams().getRuleSetSecondLevelChoice());
+                    mb.setRulesetObject(rf);
+
+                    ArrayList<ModelBom> mbList = new ArrayList<ModelBom>();
+                    mbList.add(mb);
+                    v93kObj.getConfigObject().setModelbomObjectList(mbList);
+                }
+            }
+        }
         File f = null;
         DocumentBuilderFactory dbFactory =
             DocumentBuilderFactory.newInstance();
@@ -115,7 +138,7 @@ public class DOMParser {
                         if (list != null && !list.isEmpty()) {
                             for (ConfiguratorNodePOJO node : list) {
                                 if (node.getNodeCategory() != null &&
-                                    node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+                                    node.getNodeCategory().equalsIgnoreCase("1")) {
                                     node.setXmlTag("HEADER");
                                 }
                                 if (node.getXmlTag() != null) {
@@ -217,13 +240,6 @@ public class DOMParser {
         if (qheaderValidMap == null) {
             qheaderValidMap = new HashMap<String, Boolean>();
         }
-        //        if (qheaderValidMap != null) {
-        //            for (Map.Entry<String, Boolean> entry :
-        //                 qheaderValidMap.entrySet()) {
-        //                System.out.println("Map Entry " + entry.getKey() + " : " +
-        //                                   entry.getValue());
-        //            }
-        //        }
         Element qheadernode = doc.createElement("qheader");
         if (qheaderObj.getQtitle() != null) {
             Node qTitleNode =
@@ -301,26 +317,6 @@ public class DOMParser {
         //Customer done,Now start contract object
         if (qheaderObj.getContractObject() != null) {
             Element contractNode = doc.createElement("contract");
-            //            if (qheaderObj.getContractObject().getConfixedpr() != null) {
-            //                Node confixedpr =
-            //                    getNodeElements(doc, null, "confixedpr", qheaderObj.getContractObject().getConfixedpr());
-            //                //contractNode.appendChild(confixedpr);
-            //            }
-            //            if (qheaderObj.getContractObject().getConwty() != null) {
-            //                Node conwty =
-            //                    getNodeElements(doc, null, "conwty", qheaderObj.getContractObject().getConwty());
-            //                //contractNode.appendChild(conwty);
-            //            }
-            //            if (qheaderObj.getContractObject().getConinco() != null) {
-            //                Node coninco =
-            //                    getNodeElements(doc, null, "coninco", qheaderObj.getContractObject().getConinco());
-            //                //contractNode.appendChild(coninco);
-            //            }
-            //            if (qheaderObj.getContractObject().getConpay() != null) {
-            //                Node conpay =
-            //                    getNodeElements(doc, null, "conpay", qheaderObj.getContractObject().getConpay());
-            //                //contractNode.appendChild(conpay);
-            //            }
             if (qheaderObj.getContractObject().getConid() != null) {
                 Node conid =
                     getNodeElements(doc, null, "conid", qheaderObj.getContractObject().getConid());
@@ -559,8 +555,8 @@ public class DOMParser {
                     for (ConfiguratorNodePOJO node : list) {
                         System.out.println("Node " + node.getNodeName());
                         if (node != null && node.getNodeName() != null &&
-                            node.getPrintGroupLevel() != null &&
-                            node.getPrintGroupLevel().equals("1")) {
+                            node.getNodeCategory() != null &&
+                            node.getNodeCategory().equals("1")) {
                             System.out.println("Setting ModelBom Id " +
                                                node.getNodeName());
                             modelbomNode.setAttribute("id",
@@ -572,9 +568,10 @@ public class DOMParser {
                             null &&
                             node.getNodeCategory().equalsIgnoreCase("1") &&
                             node.getNodeName().equalsIgnoreCase(v93.getInputParams().getRuleSetTopLevelChoice())) {
-                            //                            System.out.println("Matched the values");
-                            //                            System.out.println("Rule Set Top Level " +
-                            //                                               v93.getInputParams().getRuleSetTopLevelChoice());
+                                                        System.out.println("Matched the values");
+                                                        System.out.println("Rule Set Top Level " +
+                                                                           v93.getInputParams().getRuleSetTopLevelChoice());
+                                                        System.out.println("Config object is "+v93.getConfigObject());
                             if (v93.getConfigObject() != null) {
                                 List<ModelBom> modelBomList =
                                     v93.getConfigObject().getModelbomObjectList();
@@ -582,8 +579,6 @@ public class DOMParser {
                                     !modelBomList.isEmpty()) {
                                     for (ModelBom modelBomObj : modelBomList) {
                                         if (modelBomObj.getId() != null) {
-                                            //                                            modelbomNode.setAttribute("id",
-                                            //                                                                      modelBomObj.getId());
                                             if (modelBomObj.getCid() != null)
                                                 modelbomNode.appendChild(getNodeElements(doc,
                                                                                          null,
@@ -611,17 +606,17 @@ public class DOMParser {
 
                                                 //Add ruleset node
 
-                                                //ruleSetNode.setNodeValue(nodeValue);
                                             }
-                                            if (v93.getInputParams().getRuleSetSecondLevelChoice() !=
-                                                null) {
-                                                Element ruleSetNode =
-                                                    doc.createElement("ruleset");
-                                                ruleSetNode.setAttribute("id",
-                                                                         v93.getInputParams().getRuleSetSecondLevelChoice());
-                                                modelbomNode.appendChild(ruleSetNode);
-                                            }
+
                                         }
+                                    }
+                                    if (v93.getInputParams().getRuleSetSecondLevelChoice() !=
+                                        null) {
+                                        Element ruleSetNode =
+                                            doc.createElement("ruleset");
+                                        ruleSetNode.setAttribute("id",
+                                                                 v93.getInputParams().getRuleSetSecondLevelChoice());
+                                        modelbomNode.appendChild(ruleSetNode);
                                     }
                                 }
 
@@ -750,7 +745,27 @@ public class DOMParser {
                         mbList.add(mb);
                         v93.getConfigObject().setModelbomObjectList(mbList);
                     }
+                    else if(v93.getConfigObject().getModelbomObjectList()!=null && !v93.getConfigObject().getModelbomObjectList().isEmpty()) {
+                        String ruleSetVal = null;
+                        if (v93.getInputParams() != null) {
+                            ruleSetVal =
+                                    v93.getInputParams().getRuleSetTopLevelChoice();
+                        }
+                        ArrayList<ModelBom> mbList = v93.getConfigObject().getModelbomObjectList();
+                        if(mbList!=null && !mbList.isEmpty()){
+                            ModelBom mb = mbList.get(0);
+                            mbList.remove(0);
+                            mb.setPricelist((String)r.getAttribute("Pricelistname"));
+                            mb.setId(ruleSetVal);
+                            Ruleset rf = new Ruleset();
+                            rf.setId(v93.getInputParams().getRuleSetSecondLevelChoice());
+                            mb.setRulesetObject(rf);
+                            mbList.add(0,mb);
+                            v93.getConfigObject().setModelbomObjectList(mbList);
+                        }
+                    }
                 }
+                
 
                 if (v93.getQheaderObject() == null) {
                     QHeader qheader = new QHeader();

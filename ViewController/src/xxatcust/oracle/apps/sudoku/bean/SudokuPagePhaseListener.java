@@ -449,16 +449,28 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                            v93k.getInputParams().getRuleSetTopLevelChoice());
             ruleSetMap.put("secondLevelCode",
                            v93k.getInputParams().getRuleSetSecondLevelChoice());
-            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);            
         }
             if(v93k.getInputParams()==null){
             ruleSetMap.put("topLevelCode",
                            v93k.getInputParams().getRuleSetTopLevelChoice());
             ruleSetMap.put("secondLevelCode",
                            v93k.getInputParams().getRuleSetSecondLevelChoice());
+            //ADFContext.getCurrent().
                 ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
             
         }
+            if(ADFUtils.getSessionScopeValue("ruleSetMap")!=null){
+                HashMap rulesetMap = (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
+                if(rulesetMap!=null && ruleSetMap.isEmpty()){
+                    String topLvCode = (String)rulesetMap.get("topLevelCode");
+                    String scLvCode = (String)rulesetMap.get("secondLevelCode");
+                    _logger.info("RuleSet Map values in Load Quote "+topLvCode+"---"+scLvCode);
+                    
+                }
+               
+            }
+       
         ADFUtils.setSessionScopeValue("parentObject", v93k);
     }
 
