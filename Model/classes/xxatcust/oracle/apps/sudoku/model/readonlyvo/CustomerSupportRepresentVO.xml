@@ -39,10 +39,12 @@
        ppf.full_name Customer_name, 
        ppf.EMAIL_ADDRESS ,
        ppfax.PHONE_NUMBER Fax
+     --  pp.phone_type pp_1,
+   --    ppfax.phone_type ppfax_2
        from
-       (select parent_id,PHONE_NUMBER from per_phones where phone_type='W1') pp,
+       (select parent_id,PHONE_NUMBER,phone_type from per_phones where phone_type='W1' AND trunc(sysdate) between trunc(date_from) and nvl(trunc(date_to),sysdate+1)) pp,
        per_all_people_f ppf , 
-       (select parent_id,PHONE_NUMBER from per_phones where phone_type='WF') ppfax
+       (select parent_id,PHONE_NUMBER,phone_type from per_phones where phone_type='WF' AND trunc(sysdate) between trunc(date_from) and nvl(trunc(date_to),sysdate+1)) ppfax
     where  TRUNC (SYSDATE) BETWEEN ppf.effective_start_date AND ppf.effective_end_date
   and ppf.person_id=pp.parent_id(+)
   and ppf.person_id=ppfax.parent_id(+)]]>
@@ -201,7 +203,8 @@
         Conjunction="AND"
         Value=":bindCustName"
         IsBindVarValue="true"
-        Required="Optional"/>
+        Required="Optional"
+        GenerateIsNullClauseForBindVars="false"/>
     </ViewCriteriaRow>
   </ViewCriteria>
   <AttrArray Name="KeyAttributes">

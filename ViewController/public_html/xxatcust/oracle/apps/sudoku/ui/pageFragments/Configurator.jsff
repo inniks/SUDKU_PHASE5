@@ -56,7 +56,7 @@
       </af:group>
     </f:facet>
     <af:spacer width="10" height="10" id="s12"/>
-    <af:panelStretchLayout id="psl1" dimensionsFrom="children"
+ <af:panelStretchLayout id="psl1" dimensionsFrom="children"
                            styleClass="AFStretchWidth" topHeight="70px"
                            rendered="#{!ConfiguratorBean.defaultViewOnLoad}">
       <f:facet name="center">
@@ -7787,7 +7787,7 @@
           </af:iterator>
         </af:panelGroupLayout>
       </f:facet>
-    </af:panelStretchLayout>
+    </af:panelStretchLayout> 
     <af:popup id="resetConfig"
               binding="#{ConfiguratorBean.resetConfigurationPopup}">
       <af:dialog id="d2"

@@ -1157,6 +1157,9 @@ public class QuotesVORowImpl extends ViewRowImpl {
         if (orgId != null) {
             orgNumber = orgId;
             if (custName != null) {
+                vo.clearCache();
+                vo.setWhereClause(null);
+                vo.setNamedWhereClauseParam("P_org_id", null);
                 vo.setNamedWhereClauseParam("P_org_id", orgNumber);
                 Row r[] = vo.getFilteredRows("Customername", custName);
                 if (r != null && r.length > 0) {
@@ -1571,8 +1574,11 @@ public class QuotesVORowImpl extends ViewRowImpl {
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
                     defaultVal = (String)rows[0].getAttribute("DefaultVal");
                 }
-                if(defaultVal!=null)
+                if(defaultVal!=null){
                     sb.append(defaultVal);
+                }
+                if(defaultVal!=null && salesRepValues!=null)
+                    sb.append(",");
                 if(salesRepValues!=null)
                 sb.append(salesRepValues);
                 sb.append(")");
@@ -1652,21 +1658,27 @@ public class QuotesVORowImpl extends ViewRowImpl {
 
 
     public String getUserBasedCurrency(String currencyCode) {
+        System.out.println("OrgId::"+this.getOrgId());
+       System.out.println("orgIdd::"+new BigDecimal(this.getOrgId().toString()));
+       System.out.println("orgIddd::"+String.valueOf(this.getOrgId()));
         if (currencyCode != null) {
             currencyCode = currencyCode.trim();
         }
         ViewObjectImpl vo =
             (ViewObjectImpl)this.getCurrencyVO().getViewObject();
+        ViewObjectImpl userPrefVO = (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
         String colType = "Currency";
         String currency = null, defaultval = null;
         String defaultCurrencyVal = null;
         List<String> temp = null;
         Row fRow[] = null;
         StringBuilder sb = new StringBuilder("('");
-        if (vo != null) {
-            Object[] obj = { usrId, colType,this.getOrgId().toString() };
+        if (vo != null & userPrefVO!=null) {
+            userPrefVO.clearCache();
+            userPrefVO.setWhereClause(null);
+            Object[] obj = { usrId, colType,this.getOrgId()};
             Key key = new Key(obj);
-            Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
+            Row[] rows = userPrefVO.findByKey(key, 3);
             if (rows != null && rows.length > 0) {
                 currency = (String)rows[0].getAttribute("ColumnVal");
                 defaultval = (String)rows[0].getAttribute("DefaultVal");
@@ -1786,6 +1798,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
             vo.clearCache();
             vo.setWhereClause(null);
             vo.executeQuery();
+            System.out.println("count:"+vo.getEstimatedRowCount());
         }
         return defaultval;
     }

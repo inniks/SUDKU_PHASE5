@@ -16,6 +16,7 @@ import oracle.adf.share.ADFContext;
 import oracle.jbo.Key;
 import oracle.jbo.Row;
 import oracle.jbo.RowSet;
+import oracle.jbo.RowSetIterator;
 import oracle.jbo.server.AttributeDefImpl;
 import oracle.jbo.server.RowQualifier;
 import oracle.jbo.server.ViewObjectImpl;
@@ -1796,9 +1797,9 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 for (int i = 0; i < temp.size(); i++) {
                     sb.append("','").append(temp.get(i));
                 }
-                sb.append("')");
+                
             }
-
+            sb.append("')");
             System.out.println("currency List :values:" + sb.toString());
             vo.clearCache();
             vo.setWhereClause(null);
@@ -2046,8 +2047,8 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 for (int i = 0; i < temp.size(); i++) {
                     sb.append("','").append(temp.get(i));
                 }
-                sb.append("')");
             }
+            sb.append("')");
             System.out.println("sales Channel values:" + sb.toString());
             vo.clearCache();
             vo.setWhereClause(null);
@@ -2076,9 +2077,11 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                     orderTypeValues =
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
                 }
-                sb.append(this.getOrderTypeId()).append(",");
-                sb.append(this.getOrderTypeId()).append(",");
-                sb.append(orderTypeValues).append(")");
+//                sb.append(this.getOrderTypeId()).append(",");
+                sb.append(this.getOrderTypeId());
+                if(orderTypeValues!=null)
+                sb.append(",").append(orderTypeValues);
+                sb.append(")");
                 vo.clearCache();
                 vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("p_orgId", this.getOrgId());
@@ -2201,6 +2204,7 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
 
     public void getUserBasedSalesRep() {
         System.out.println("OrgId::" + this.getOrgId());
+        BigDecimal defaultval = null;
         System.out.println("QUote Based SalesRep:"+this.getSalesrepresentative());
         if (this.getOrgId() != null) {
             String salesRepValues = null;
@@ -2208,6 +2212,22 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
             ViewObjectImpl vo =
                 (ViewObjectImpl)this.getSalesRepresentativeVO().getViewObject();
             String colType = "Sales_Rep";
+            System.out.println("default valuess:"+this.getSalesrepresentative());
+            if(this.getSalesrepresentative()!=null){
+                vo.setWhereClause(null);
+                vo.setNamedWhereClauseParam("p_orgId", null);
+                vo.setNamedWhereClauseParam("p_orgId",this.getOrgId());
+    //                vo.setNamedWhereClauseParam("p_orgId",new BigDecimal(this.getOrgId().toString()));
+                vo.setWhereClause("resource_name='"+this.getSalesrepresentative()+"'");
+                System.out.println("Query:"+vo.getQuery());
+                vo.executeQuery();
+                RowSetIterator iter = vo.createRowSetIterator(null);
+                while(iter.hasNext()){
+                     Row r = iter.next();
+                        if(r!=null ){
+                        defaultval = (BigDecimal)r.getAttribute("ResourceId");
+                            }
+                }}
             if (vo != null) {
                 Object[] obj = { usrId, colType,String.valueOf(this.getOrgId()) };
                 Key key = new Key(obj);
@@ -2216,15 +2236,16 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                     salesRepValues =
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
                 }
-                sb.append(salesRepValues).append(")");
+                sb.append(defaultval);
+                sb.append(",").append(salesRepValues).append(")");
                
                 vo.clearCache();
                 vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("p_orgId", this.getOrgId());
-                if(!sb.toString().equalsIgnoreCase("('')"))
+                if(!sb.toString().equalsIgnoreCase("()"))
                 vo.setWhereClause("RESOURCE_ID in" + sb.toString());
-                else{}
                 vo.executeQuery();
+                System.out.println("count:"+vo.getEstimatedRowCount());
             }
         }
     }
@@ -2251,6 +2272,7 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
             vo.setWhereClause("person_id in" + sb.toString());
             else{}
             vo.executeQuery();
+            
         }
     }
 

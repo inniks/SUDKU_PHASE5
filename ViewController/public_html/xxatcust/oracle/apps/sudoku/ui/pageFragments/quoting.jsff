@@ -46,7 +46,7 @@
                                         columns="#{bindings.OrganizationUnit.hints.displayWidth}"
                                         shortDesc="#{bindings.OrganizationUnit.hints.tooltip}"
                                         autoSubmit="true"
-                                        launchPopupListener="#{pageFlowScope.QuotingBean.callOT}"
+                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                         requiredMessageDetail="Please Enter organization Unit"
                                         returnPopupListener="#{pageFlowScope.QuotingBean.OURPE}"
                                         valueChangeListener="#{pageFlowScope.QuotingBean.ouVCE}"
@@ -120,12 +120,13 @@
                                         popupTitle="Search and Select: #{bindings.CustNum.hints.label}"
                                         value="#{bindings.CustNum.inputValue}"
                                         label="Customer Number"
+                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                         model="#{bindings.CustNum.listOfValuesModel}"
                                         columns="#{bindings.CustNum.hints.displayWidth}"
                                         shortDesc="#{bindings.CustNum.hints.tooltip}"
                                         partialTriggers="organizationUnitId customerNameId soc3"
                                         requiredMessageDetail="Please Enter Customer Number"
-                                        valueChangeListener="#{pageFlowScope.QuotingBean.custNameVCE}"
+                                        valueChangeListener="#{pageFlowScope.QuotingBean.custNumVCE}"
                                         showRequired="true"
                                         binding="#{pageFlowScope.QuotingBean.bindCustNumber}"
                                         autoSubmit="true"
@@ -139,6 +140,7 @@
                                         popupTitle="Search and Select: #{bindings.CustomerName.hints.label}"
                                         value="#{bindings.CustomerName.inputValue}"
                                         label="Customer Name"
+                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                         model="#{bindings.CustomerName.listOfValuesModel}"
                                         columns="#{bindings.CustomerName.hints.displayWidth}"
                                         shortDesc="#{bindings.CustomerName.hints.tooltip}"
@@ -304,7 +306,8 @@
                                       requiredMessageDetail="Please Enter order Type"
                                       showRequired="true"
                                       binding="#{pageFlowScope.QuotingBean.bindOrderType}"
-                                      autoSubmit="true">
+                                      autoSubmit="true"
+                                      launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}">
                   <f:validator binding="#{bindings.OrderType.validator}"/>
                 </af:inputListOfValues>
                 <af:inputListOfValues id="priceListId"

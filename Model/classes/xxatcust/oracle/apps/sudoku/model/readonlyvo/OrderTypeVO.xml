@@ -148,8 +148,6 @@ AND otta.org_id = :p_orgId]]>
         ViewAttribute="Name"
         Operator="CONTAINS"
         Conjunction="AND"
-        Value=":bindName"
-        IsBindVarValue="true"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="OrderTypeVOCriteria_vcrow4_OrgId"

@@ -168,5 +168,21 @@
                   IterBinding="QuoteUpdateVO1Iterator" id="Customername1"/>
     <listOfValues StaticList="false" Uses="LOV_Customernumber"
                   IterBinding="QuoteUpdateVO1Iterator" id="Customernumber1"/>
+    <methodAction id="getQuoteCustmerAddressOnCustNameForUpdateQuoteChange"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getQuoteCustmerAddressOnCustNameForUpdateQuoteChange"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="custName" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getQuoteCustmerAddressOnCustNumForUpdateQuoteChange"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getQuoteCustmerAddressOnCustNumForUpdateQuoteChange"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="custNum" NDType="java.lang.String"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

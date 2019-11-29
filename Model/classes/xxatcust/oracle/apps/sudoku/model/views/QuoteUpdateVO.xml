@@ -48,11 +48,15 @@
     RowLevelBinds="true"/>
   <ViewAccessor
     Name="SalesRepresentativeVO"
-    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.SalesRepresentativeVO"
-    RowLevelBinds="true">
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.SalesRepresentativeVO">
     <ViewCriteriaUsage
       Name="SalesRepresentativeVOCriteria"
       FullName="xxatcust.oracle.apps.sudoku.model.readonlyvo.SalesRepresentativeVO.SalesRepresentativeVOCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="p_orgId">
+        <TransientExpression><![CDATA[OrgId]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
   </ViewAccessor>
   <ViewAccessor
     Name="CustomerSupportRepresentVO"
@@ -303,11 +307,7 @@
     <AttrArray Name="AttrNames">
       <Item Value="Paymentterms"/>
     </AttrArray>
-    <AttrArray Name="DerivedAttrNames">
-      <Item Value="PaymentTermsName"/>
-    </AttrArray>
     <AttrArray Name="ListAttrNames">
-      <Item Value="Name"/>
       <Item Value="Name"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
@@ -404,6 +404,7 @@
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Customername"/>
+      <Item Value="Accountnumber"/>
     </AttrArray>
     <DisplayCriteria
       Name="CustomerNameVOCriteria"
@@ -428,6 +429,7 @@
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Accountnumber"/>
+      <Item Value="Customername"/>
     </AttrArray>
     <DisplayCriteria
       Name="CustomerNameVOCriteria"
@@ -560,7 +562,7 @@ AND view_application_id=660)SalesChannel,
 (select NAME from oe_agreements_tl where agreement_id=AsoQuoteHeadersAll.CONTRACT_ID)AgrimentName,
 (select source_name from  jtf_rs_resource_extns where resource_id =AsoQuoteHeadersAll.resource_id)SalesRepresentative,
 (select full_name from per_all_people_f where   person_id=AsoQuoteHeadersAll.ATTRIBUTE10 AND TRUNC (SYSDATE) BETWEEN effective_start_date AND effective_end_date)BusinessCenterCsr,
-(select rtt.description from  ra_terms_tl rtt, ASO_PAYMENTS ASP 
+(select rtt.name from  ra_terms_tl rtt, ASO_PAYMENTS ASP 
 where ASP.PAYMENT_TERM_ID=rtt.term_id
 AND AsoQuoteHeadersAll.QUOTE_HEADER_ID =ASP.QUOTE_HEADER_ID)PaymentTerms,
 (select flv1.Description from fnd_lookup_values flv1, ASO_SHIPMENTS ASS 

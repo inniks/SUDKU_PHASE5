@@ -493,4 +493,28 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
             this.riInvokeExportedMethod(this,"callUpdateQuoteAPI",new String [] {"int","int","boolean"},new Object[] {new Integer(respid), new Integer(usrId), new Boolean(isCustEditable)});
         return (String)_ret;
     }
+
+    public void getQuoteCustmerAddressOnCustNumForUpdateQuoteChange(String custNum) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getQuoteCustmerAddressOnCustNumForUpdateQuoteChange",new String [] {"java.lang.String"},new Object[] {custNum});
+        return;
+    }
+
+    public void getQuoteCustmerAddressOnCustNumChange(String custNum) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getQuoteCustmerAddressOnCustNumChange",new String [] {"java.lang.String"},new Object[] {custNum});
+        return;
+    }
+
+    public void getQuoteCustmerAddressOnCustNameForUpdateQuoteChange(String custName) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getQuoteCustmerAddressOnCustNameForUpdateQuoteChange",new String [] {"java.lang.String"},new Object[] {custName});
+        return;
+    }
+
+    public void getQuoteCustmerAddressOnCustNameChange(String custName) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getQuoteCustmerAddressOnCustNameChange",new String [] {"java.lang.String"},new Object[] {custName});
+        return;
+    }
 }

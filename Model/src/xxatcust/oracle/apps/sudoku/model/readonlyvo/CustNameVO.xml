@@ -96,6 +96,8 @@ ORDER BY accountnumber]]>
           ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustNameVO.Customername_LABEL"/>
         <DISPLAYWIDTH
           Value="20"/>
+        <AUTOSUBMIT
+          Value="true"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -140,6 +142,8 @@ ORDER BY accountnumber]]>
           ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustNameVO.Accountnumber_LABEL"/>
         <DISPLAYWIDTH
           Value="20"/>
+        <AUTOSUBMIT
+          Value="true"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

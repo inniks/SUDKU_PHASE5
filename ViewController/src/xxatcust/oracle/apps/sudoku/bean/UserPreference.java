@@ -42,7 +42,7 @@ public class UserPreference {
     private List<SelectItem> orderTypeValues = new ArrayList<SelectItem>();
     private List<SelectItem> currencyValues = new ArrayList<SelectItem>();
     private List<SelectItem> incoTermValues = new ArrayList<SelectItem>();
-//    private List<SelectItem> ouValues = new ArrayList<SelectItem>();
+    //    private List<SelectItem> ouValues = new ArrayList<SelectItem>();
     private List<SelectItem> custNames = new ArrayList<SelectItem>();
     private List<SelectItem> custNumbers = new ArrayList<SelectItem>();
     private List<SelectItem> businessAgreemnt = new ArrayList<SelectItem>();
@@ -50,16 +50,37 @@ public class UserPreference {
     private List<SelectItem> SalesRepValues = new ArrayList<SelectItem>();
     private List<SelectItem> paymentTermValues = new ArrayList<SelectItem>();
     private List<SelectItem> salesChannelSC = new ArrayList<SelectItem>();
+
+
+    private List<SelectItem> orderTypeValuesForDefault =
+        new ArrayList<SelectItem>();
+    private List<SelectItem> currencyValuesForDefault =
+        new ArrayList<SelectItem>();
+    private List<SelectItem> incoTermValuesForDefault =
+        new ArrayList<SelectItem>();
+    private List<SelectItem> custNamesForDefault = new ArrayList<SelectItem>();
+    private List<SelectItem> custNumbersForDefault =
+        new ArrayList<SelectItem>();
+    private List<SelectItem> businessAgreemnForDefaultForDefault =
+        new ArrayList<SelectItem>();
+    private List<SelectItem> businessCenterCSRForDefault =
+        new ArrayList<SelectItem>();
+    private List<SelectItem> SalesRepValuesForDefault =
+        new ArrayList<SelectItem>();
+    private List<SelectItem> paymentTermValuesForDefault =
+        new ArrayList<SelectItem>();
+    private List<SelectItem> salesChannelSCForDefault =
+        new ArrayList<SelectItem>();
+
+
     private List customerNums = new ArrayList();
     private List otValues = new ArrayList();
     private List selectedBusinessAgreementValues = new ArrayList();
     private List selectedOrderTypeValues = new ArrayList();
-//    private List orglist = new ArrayList();
     private List salesRepIds = new ArrayList();
     private List selectedCurrencyValues = new ArrayList();
     private List selectedIncoTermValues = new ArrayList();
     private List selectedPaymentTermValues = new ArrayList();
-//    private List selectedOUValues = new ArrayList();
     private List selectedCustNameValues = new ArrayList();
     private List selectedCustNumValues = new ArrayList();
     private List selectedCSRValues = new ArrayList();
@@ -96,7 +117,6 @@ public class UserPreference {
     private String incoTermForSC;
     private String paymentTemForSC;
     private String baForSC;
-    private String csrForSC;
     private String salesChannel;
     private boolean isGlobalChoiceEnable = true;
     private boolean isSalesChnnelEnable = true;
@@ -105,6 +125,7 @@ public class UserPreference {
     private RichSelectOneChoice bindSalesChannel;
     private RichSelectOneChoice bindOU;
     private String orgId = null;
+
     public UserPreference() {
 
     }
@@ -156,7 +177,7 @@ public class UserPreference {
         long startTime = System.currentTimeMillis();
         System.out.println("getAllOrderTypeValues:Start" +
                            (System.currentTimeMillis() - startTime));
-        if (orgId != null ) {
+        if (orgId != null) {
             DCIteratorBinding DCiter =
                 ADFUtils.findIterator("OrderTypeVOIterator");
             ViewObjectImpl vo = (ViewObjectImpl)DCiter.getViewObject();
@@ -168,17 +189,22 @@ public class UserPreference {
                 orderTypeValues.clear();
             if (otValues != null && otValues.size() > 0)
                 otValues.clear();
+            if (orderTypeValuesForDefault != null)
+                orderTypeValuesForDefault.add(new SelectItem(null));
+            //                orderTypeValues.add(new SelectItem(null)); //TransactionTypeId
+            //                otValues.add(null);
             RowSetIterator iter = vo.createRowSetIterator(null);
-            while(iter.hasNext()){
+            while (iter.hasNext()) {
                 Row r = iter.next();
-                        orderTypeValues.add(new SelectItem(r.getAttribute("Name"))); //TransactionTypeId
-                        otValues.add(r.getAttribute("TransactionTypeId"));
-                }
-            if(iter!=null)
-                iter.closeRowSetIterator();
+                orderTypeValues.add(new SelectItem(r.getAttribute("Name")));
+                orderTypeValuesForDefault.add(new SelectItem(r.getAttribute("Name")));
+                otValues.add(r.getAttribute("TransactionTypeId"));
             }
-            System.out.println("getAllOrderTypeValues:Close Rowset " +
-                               (System.currentTimeMillis() - startTime));
+            if (iter != null)
+                iter.closeRowSetIterator();
+        }
+        System.out.println("getAllOrderTypeValues:Close Rowset " +
+                           (System.currentTimeMillis() - startTime));
         return orderTypeValues;
     }
 
@@ -193,7 +219,7 @@ public class UserPreference {
 
     public List getSelctedOTValues() {
         long startTime = System.currentTimeMillis();
-//        List otValuesList = new ArrayList();
+        //        List otValuesList = new ArrayList();
         System.out.println("getSelctedOTValues:Start" +
                            (System.currentTimeMillis() - startTime));
         if (selectedOrderTypeValues == null)
@@ -233,6 +259,9 @@ public class UserPreference {
 
     public void currencyVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() == null) {
+            if (selectedCurrencyValues != null &&
+                selectedCurrencyValues.size() > 0)
+                selectedCurrencyValues.clear();
             return;
         }
         List selectedListFromUI = (List)vce.getNewValue();
@@ -267,128 +296,119 @@ public class UserPreference {
     }
 
     public void onCommit(ActionEvent actionEvent) {
-        if (orgId!=null) {
-            String validateOUValues = null, validateCurrency =
-                null, validateIncoTerm = null, validateOrderType =
-                null, validateCustNum = null, validateSalesRep =
-                null, validateCSR = null, validateStatic =
-                null, validatePaymentTerm = null, validateSalesChannel = null;
-            if ((selectedOrderTypeValues != null &&
-                 selectedOrderTypeValues.size() > 0) || orderType != null) {
-                OperationBinding orderTypeob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateOrderTypeValues");
-                orderTypeob.getParamsMap().put("usrId", usrId);
-                orderTypeob.getParamsMap().put("orderTypeValues",
-                                               selectedOrderTypeValues);
+        if (orgId != null) {
 
-                if (orderType != null)
-                    orderTypeob.getParamsMap().put("orderTypeDefaultval",
-                                                   orderType);
-                orderTypeob.getParamsMap().put("orgId", orgId);
+            //            if ((selectedOrderTypeValues != null &&
+            //                 selectedOrderTypeValues.size() > 0) || orderType != null) {
+            OperationBinding orderTypeob =
+                ADFUtils.getBindingContainer().getOperationBinding("validateOrderTypeValues");
+            orderTypeob.getParamsMap().put("usrId", usrId);
+            orderTypeob.getParamsMap().put("orderTypeValues",
+                                           selectedOrderTypeValues);
 
-                if (orderTypeob != null) {
-                    validateOrderType = (String)orderTypeob.execute();
-                }
+            //                if (orderType != null)
+            orderTypeob.getParamsMap().put("orderTypeDefaultval", orderType);
+            orderTypeob.getParamsMap().put("orgId", orgId);
+
+            if (orderTypeob != null) {
+                orderTypeob.execute();
             }
-            if ((selectedCustNumValues != null &&
-                 selectedCustNumValues.size() > 0) || custNum != null) {
-                OperationBinding custNumob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateCustValues");
-                custNumob.getParamsMap().put("usrId", usrId);
-                custNumob.getParamsMap().put("custValues",
-                                             selectedCustNumValues);
-                if (custNum != null)
-                    custNumob.getParamsMap().put("custDefaultVal", custNum);
-                custNumob.getParamsMap().put("orgId", orgId);
-                if (custNumob != null)
-                    validateCustNum = (String)custNumob.execute();
-            }
-            if ((selectedSalesRepValues != null &&
-                 selectedSalesRepValues.size() > 0) || salesRep != null) {
-                OperationBinding salesRepob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateSalesRepValues");
-                salesRepob.getParamsMap().put("usrId", usrId);
-                salesRepob.getParamsMap().put("salesRepVals",
-                                              selectedSalesRepValues);
-                if (salesRep != null)
-                    salesRepob.getParamsMap().put("defaultVal", salesRep);
-                salesRepob.getParamsMap().put("orgId", orgId);
-                if (salesRepob != null)
-                    validateSalesRep = (String)salesRepob.execute();
-            }
+            //            }
+            //            if ((selectedCustNumValues != null &&
+            //                 selectedCustNumValues.size() > 0) || custNum != null) {
+            OperationBinding custNumob =
+                ADFUtils.getBindingContainer().getOperationBinding("validateCustValues");
+            custNumob.getParamsMap().put("usrId", usrId);
+            custNumob.getParamsMap().put("custValues", selectedCustNumValues);
+            //                if (custNum != null)
+            custNumob.getParamsMap().put("custDefaultVal", custNum);
+            custNumob.getParamsMap().put("orgId", orgId);
+            if (custNumob != null)
+                custNumob.execute();
+            //            }
+            //            if ((selectedSalesRepValues != null &&
+            //                 selectedSalesRepValues.size() > 0) || salesRep != null) {
+            OperationBinding salesRepob =
+                ADFUtils.getBindingContainer().getOperationBinding("validateSalesRepValues");
+            salesRepob.getParamsMap().put("usrId", usrId);
+            salesRepob.getParamsMap().put("salesRepVals",
+                                          selectedSalesRepValues);
+            //                if (salesRep != null)
+            salesRepob.getParamsMap().put("defaultVal", salesRep);
+            salesRepob.getParamsMap().put("orgId", orgId);
+            if (salesRepob != null)
+                salesRepob.execute();
+            //            }
             //
-            if ((selectedCSRValues != null && selectedCSRValues.size() > 0) ||
-                csr != null) {
-                OperationBinding csrob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateCsrValues");
-                csrob.getParamsMap().put("usrId", usrId);
-                csrob.getParamsMap().put("csrValues", selectedCSRValues);
-                if (csr != null)
-                    csrob.getParamsMap().put("csr", csr);
-                if (csrob != null)
-                    validateCSR = (String)csrob.execute();
-            }
-            if ((selectedCurrencyValues != null &&
-                 selectedCurrencyValues.size() > 0) || currency != null) {
-                OperationBinding currencyob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateCurrencyValues");
-                currencyob.getParamsMap().put("usrId", usrId);
-                currencyob.getParamsMap().put("currencyValues",
-                                              selectedCurrencyValues);
-                if (currency != null)
-                    currencyob.getParamsMap().put("defaultName", currency);
-                if (currencyob != null)
-                    validateCurrency = (String)currencyob.execute();
-            }
-
-            if ((selectedIncoTermValues != null &&
-                 selectedIncoTermValues.size() > 0) || incoTerm != null) {
-                OperationBinding incoTermob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateIncoTermValues");
-                incoTermob.getParamsMap().put("usrId", usrId);
-                incoTermob.getParamsMap().put("incoTermValues",
-                                              selectedIncoTermValues);
-                if (incoTerm != null)
-                    incoTermob.getParamsMap().put("dafaultVal", incoTerm);
-                if (incoTermob != null)
-                    validateIncoTerm = (String)incoTermob.execute();
-            }
+            //            if ((selectedCSRValues != null && selectedCSRValues.size() > 0) ||
+            //                csr != null) {
+            OperationBinding csrob =
+                ADFUtils.getBindingContainer().getOperationBinding("validateCsrValues");
+            csrob.getParamsMap().put("usrId", usrId);
+            csrob.getParamsMap().put("csrValues", selectedCSRValues);
+            //                if (csr != null)
+            csrob.getParamsMap().put("csr", csr);
+            if (csrob != null)
+                csrob.execute();
+            //            }
+            //            if ((selectedCurrencyValues != null &&
+            //                 selectedCurrencyValues.size() > 0) || currency != null) {
+            OperationBinding currencyob =
+                ADFUtils.getBindingContainer().getOperationBinding("validateCurrencyValues");
+            currencyob.getParamsMap().put("usrId", usrId);
+            currencyob.getParamsMap().put("currencyValues",
+                                          selectedCurrencyValues);
+            //                if (currency != null)
+            currencyob.getParamsMap().put("defaultName", currency);
+            if (currencyob != null)
+                currencyob.execute();
+            //            }
 
 
-            if (paymentTerm != null) {
-                OperationBinding paymentTermsob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validatePaymentTermValues");
-                paymentTermsob.getParamsMap().put("usrId", usrId);
-                if (paymentTerm != null)
-                    paymentTermsob.getParamsMap().put("defaultVal",
-                                                      paymentTerm);
-                if (paymentTermsob != null)
-                    validatePaymentTerm = (String)paymentTermsob.execute();
-            }
+            //            if ((selectedIncoTermValues != null &&
+            //                 selectedIncoTermValues.size() > 0) || incoTerm != null) {
+            OperationBinding incoTermob =
+                ADFUtils.getBindingContainer().getOperationBinding("validateIncoTermValues");
+            incoTermob.getParamsMap().put("usrId", usrId);
+            incoTermob.getParamsMap().put("incoTermValues",
+                                          selectedIncoTermValues);
+            //                if (incoTerm != null)
+            incoTermob.getParamsMap().put("dafaultVal", incoTerm);
+            if (incoTermob != null)
+                incoTermob.execute();
+            //            }
 
-            if (selectedSalesChannel != null &&
-                selectedSalesChannel.size() > 0) {
-                OperationBinding salesChannelOB =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateSalesChannelForSC");
-                salesChannelOB.getParamsMap().put("usrId", usrId);
-                salesChannelOB.getParamsMap().put("salesChannel",
-                                                  selectedSalesChannel);
-                if (salesChannelOB != null) {
-                    validateSalesChannel = (String)salesChannelOB.execute();
-                    _logger.info("userPreference: OnCommitSalesChannel: Start: validateSalesChannelForSC status::" +
-                                 validateSalesChannel);
-                }
+
+            //            if (paymentTerm != null) {
+            OperationBinding paymentTermsob =
+                ADFUtils.getBindingContainer().getOperationBinding("validatePaymentTermValues");
+            paymentTermsob.getParamsMap().put("usrId", usrId);
+            //                if (paymentTerm != null)
+            paymentTermsob.getParamsMap().put("defaultVal", paymentTerm);
+            if (paymentTermsob != null)
+                paymentTermsob.execute();
+            //            }
+
+            //            if (selectedSalesChannel != null &&
+            //                selectedSalesChannel.size() > 0) {
+            OperationBinding salesChannelOB =
+                ADFUtils.getBindingContainer().getOperationBinding("validateSalesChannelForSC");
+            salesChannelOB.getParamsMap().put("usrId", usrId);
+            salesChannelOB.getParamsMap().put("salesChannel",
+                                              selectedSalesChannel);
+            if (salesChannelOB != null) {
+                salesChannelOB.execute();
+
             }
+            //            }
             OperationBinding commitOperations =
                 ADFUtils.findOperation("commitEntities");
-
             System.out.println(this.bindPrdNumRefConf.getValue());
             OperationBinding staticValob =
                 ADFUtils.getBindingContainer().getOperationBinding("validatePrefStaticValues");
             staticValob.getParamsMap().put("usrId", usrId);
             if (staticValob != null) {
                 staticValob.execute();
-                validateStatic = "Y";
             }
             Boolean flag = (Boolean)commitOperations.execute();
             if (flag != null) {
@@ -396,11 +416,10 @@ public class UserPreference {
                     ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
                                         "Global Choice Data Saved Successfully");
             }
+        } else {
+            ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
+                                "Please Select Operating Unit before save");
         }
-        else{
-                ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                    "Please Select Operating Unit before save");
-            }
     }
 
 
@@ -414,6 +433,10 @@ public class UserPreference {
         System.out.println("getAllCurrencyValues: Start " +
                            (System.currentTimeMillis() - startTime));
         if (currencyValues != null) {
+            //            currencyValues.add(new SelectItem(null));
+            if (currencyValuesForDefault != null) {
+                currencyValuesForDefault.add(new SelectItem(null));
+            }
             DCIteratorBinding iter =
                 ADFUtils.findIterator("CurrencyVOIterator");
             RowSetIterator it =
@@ -421,6 +444,7 @@ public class UserPreference {
             while (it.hasNext()) {
                 Row row = it.next();
                 currencyValues.add(new SelectItem(row.getAttribute("Name")));
+                currencyValuesForDefault.add(new SelectItem(row.getAttribute("Name")));
             }
             it.closeRowSetIterator();
             System.out.println("getAllCurrencyValues: after close Rowset: " +
@@ -436,6 +460,9 @@ public class UserPreference {
         System.out.println("getAllSalesChannel: Start " +
                            (System.currentTimeMillis() - startTime));
         if (salesChannelSC != null) {
+            //            salesChannelSC.add(new SelectItem(null));
+            if (salesChannelSCForDefault != null)
+                salesChannelSCForDefault.add(new SelectItem(null));
             DCIteratorBinding iter =
                 ADFUtils.findIterator("SalesChannelVOIterator");
             RowSetIterator it =
@@ -443,6 +470,7 @@ public class UserPreference {
             while (it.hasNext()) {
                 Row row = it.next();
                 salesChannelSC.add(new SelectItem(row.getAttribute("Meaning")));
+                salesChannelSCForDefault.add(new SelectItem(row.getAttribute("Meaning")));
             }
             it.closeRowSetIterator();
             System.out.println("getAllSalesChannelValues: after close Rowset: " +
@@ -463,6 +491,9 @@ public class UserPreference {
 
     public List<SelectItem> getAllIncoTermValues() {
         if (incoTermValues != null) {
+            //            incoTermValues.add(new SelectItem(null));
+            if (incoTermValuesForDefault != null)
+                incoTermValuesForDefault.add(new SelectItem(null));
             DCIteratorBinding iter =
                 ADFUtils.findIterator("IncoTermVOIterator");
             RowSetIterator it =
@@ -470,6 +501,7 @@ public class UserPreference {
             while (it.hasNext()) {
                 Row row = it.next();
                 incoTermValues.add(new SelectItem(row.getAttribute("Description")));
+                incoTermValuesForDefault.add(new SelectItem(row.getAttribute("Description")));
             }
             it.closeRowSetIterator();
         }
@@ -478,15 +510,26 @@ public class UserPreference {
 
     public List<SelectItem> getAllPaymentTermValues() {
         if (paymentTermValues != null) {
+            //            paymentTermValues.add(new SelectItem(null));
+            if (paymentTermValuesForDefault != null)
+                paymentTermValuesForDefault.add(new SelectItem(null));
             DCIteratorBinding iter =
                 ADFUtils.findIterator("PaymentTermsVOIterator");
-            RowSetIterator it =
-                iter.getViewObject().createRowSetIterator(null);
-            while (it.hasNext()) {
-                Row row = it.next();
-                paymentTermValues.add(new SelectItem(row.getAttribute("Description")));
+            ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
+            if (vo != null) {
+                vo.clearCache();
+                vo.setWhereClause(null);
+                vo.executeQuery();
+                RowSetIterator it =
+                    iter.getViewObject().createRowSetIterator(null);
+                while (it.hasNext()) {
+                    Row row = it.next();
+                    paymentTermValues.add(new SelectItem(row.getAttribute("Description")));
+                    paymentTermValuesForDefault.add(new SelectItem(row.getAttribute("Description")));
+                }
+                it.closeRowSetIterator();
             }
-            it.closeRowSetIterator();
+
         }
         return paymentTermValues;
     }
@@ -602,7 +645,7 @@ public class UserPreference {
             if (colVal.equalsIgnoreCase("Y"))
                 this.bindPrdNumRefConf.setValue(0);
             else
-            this.bindPrdNumRefConf.setValue(1);
+                this.bindPrdNumRefConf.setValue(1);
         } else
             this.bindPrdNumRefConf.setValue(1);
 
@@ -663,7 +706,7 @@ public class UserPreference {
         if (vo != null) {
             vo.clearCache();
             vo.setWhereClause(null);
-            Object obj[] = { usrId, colVal,orgId };
+            Object obj[] = { usrId, colVal, orgId };
             Key key = new Key(obj);
             Row[] rows = vo.findByKey(key, 3);
             if (rows != null && rows.length > 0) {
@@ -698,7 +741,7 @@ public class UserPreference {
         if (vo != null) {
             vo.clearCache();
             vo.setWhereClause(null);
-            Object obj[] = { usrId, colVal,orgId };
+            Object obj[] = { usrId, colVal, orgId };
             Key key = new Key(obj);
             Row[] rows = vo.findByKey(key, 3);
             if (rows != null && rows.length > 0) {
@@ -733,7 +776,7 @@ public class UserPreference {
             vo.clearCache();
             vo.setWhereClause(null);
             System.out.println("size of VO:" + vo.getEstimatedRowCount());
-            Object obj[] = { usrId, colVal,orgId };
+            Object obj[] = { usrId, colVal, orgId };
             Key key = new Key(obj);
             Row[] rows = vo.findByKey(key, 3);
             if (rows != null && rows.length > 0) {
@@ -757,65 +800,65 @@ public class UserPreference {
         return bindNumFormat;
     }
 
-//    public void setOuValues(List<SelectItem> ouValues) {
-//        this.ouValues = ouValues;
-//    }
+    //    public void setOuValues(List<SelectItem> ouValues) {
+    //        this.ouValues = ouValues;
+    //    }
 
-//    public List<SelectItem> getAllOuValues() {
-//        if (ouValues != null) {
-//            DCIteratorBinding iter = ADFUtils.findIterator("OUVOIterator");
-//            ViewObject vo =  iter.getViewObject();
-//            if(vo!=null){
-//                vo.clearCache();
-//                vo.setWhereClause(null);
-//                    RowSetIterator it =
-//                        vo.createRowSetIterator(null);
-//                    
-//                    while (it.hasNext()) {
-//                        Row row = it.next();
-//                        ouValues.add(new SelectItem(row.getAttribute("OperatingUnit")));
-//                        //                System.out.println("OU Value is:" +
-//                        //                                   row.getAttribute("OperatingUnit"));
-//                        //                orglist.add(row.getAttribute("OrgId"));
-//                    }
-//
-//                    it.closeRowSetIterator();
-//                }
-//                          
-//          
-////            ADFUtils.setSessionScopeValue("ouGetters1", "N");
-//        }
-//        return ouValues;
-//    }
+    //    public List<SelectItem> getAllOuValues() {
+    //        if (ouValues != null) {
+    //            DCIteratorBinding iter = ADFUtils.findIterator("OUVOIterator");
+    //            ViewObject vo =  iter.getViewObject();
+    //            if(vo!=null){
+    //                vo.clearCache();
+    //                vo.setWhereClause(null);
+    //                    RowSetIterator it =
+    //                        vo.createRowSetIterator(null);
+    //
+    //                    while (it.hasNext()) {
+    //                        Row row = it.next();
+    //                        ouValues.add(new SelectItem(row.getAttribute("OperatingUnit")));
+    //                        //                System.out.println("OU Value is:" +
+    //                        //                                   row.getAttribute("OperatingUnit"));
+    //                        //                orglist.add(row.getAttribute("OrgId"));
+    //                    }
+    //
+    //                    it.closeRowSetIterator();
+    //                }
+    //
+    //
+    ////            ADFUtils.setSessionScopeValue("ouGetters1", "N");
+    //        }
+    //        return ouValues;
+    //    }
 
-//    public List<SelectItem> getOuValues() {
-        //        //        HashMap refreshGetters =
-        //        //            (HashMap)ADFContext.getCurrent().getSessionScope().get("refreshGetters");
-        //        //        if (refreshGetters != null) {
-        //        //            String ouGetters = (String)refreshGetters.get("ouGetter");
-        //        //            System.out.println("from getOUvalues:"+ouGetters);
-        //        //            if (ouGetters != null && ouGetters.equalsIgnoreCase("Y")) {
-        //
-        //        String ouGetters = (String)ADFUtils.getSessionScopeValue("ouGetters1");
-        //        if (ouGetters != null && ouGetters.equalsIgnoreCase("Y")) {
-        //            if (ouValues != null) {
-        //                DCIteratorBinding iter = ADFUtils.findIterator("OUVOIterator");
-        //                RowSetIterator it =
-        //                    iter.getViewObject().createRowSetIterator(null);
-        //                while (it.hasNext()) {
-        //                    Row row = it.next();
-        //                    ouValues.add(new SelectItem(row.getAttribute("OperatingUnit")));
-        //                    //                System.out.println("OU Value is:" +
-        //                    //                                   row.getAttribute("OperatingUnit"));
-        //                    orglist.add(row.getAttribute("OrgId"));
-        //                }
-        //                it.closeRowSetIterator();
-        //                ADFUtils.setSessionScopeValue("ouGetters1","N");
-        //            }
-        //        }
+    //    public List<SelectItem> getOuValues() {
+    //        //        HashMap refreshGetters =
+    //        //            (HashMap)ADFContext.getCurrent().getSessionScope().get("refreshGetters");
+    //        //        if (refreshGetters != null) {
+    //        //            String ouGetters = (String)refreshGetters.get("ouGetter");
+    //        //            System.out.println("from getOUvalues:"+ouGetters);
+    //        //            if (ouGetters != null && ouGetters.equalsIgnoreCase("Y")) {
+    //
+    //        String ouGetters = (String)ADFUtils.getSessionScopeValue("ouGetters1");
+    //        if (ouGetters != null && ouGetters.equalsIgnoreCase("Y")) {
+    //            if (ouValues != null) {
+    //                DCIteratorBinding iter = ADFUtils.findIterator("OUVOIterator");
+    //                RowSetIterator it =
+    //                    iter.getViewObject().createRowSetIterator(null);
+    //                while (it.hasNext()) {
+    //                    Row row = it.next();
+    //                    ouValues.add(new SelectItem(row.getAttribute("OperatingUnit")));
+    //                    //                System.out.println("OU Value is:" +
+    //                    //                                   row.getAttribute("OperatingUnit"));
+    //                    orglist.add(row.getAttribute("OrgId"));
+    //                }
+    //                it.closeRowSetIterator();
+    //                ADFUtils.setSessionScopeValue("ouGetters1","N");
+    //            }
+    //        }
 
-//        return ouValues;
-//    }
+    //        return ouValues;
+    //    }
 
     public void setCustNames(List<SelectItem> custNames) {
         this.custNames = custNames;
@@ -872,36 +915,36 @@ public class UserPreference {
         return custNames;
     }
 
-//    public void setSelectedOUValues(List selectedOUValues) {
-//        this.selectedOUValues = selectedOUValues;
-//    }
+    //    public void setSelectedOUValues(List selectedOUValues) {
+    //        this.selectedOUValues = selectedOUValues;
+    //    }
 
-//    public List getSelectedOUValues() {
-//        String ouGetters = (String)ADFUtils.getSessionScopeValue("ouGetters2");
-////        if (ouGetters != null && ouGetters.equalsIgnoreCase("Y")) {
-//            Map<String, List> map = new HashMap<String, List>();
-//            if(selectedOUValues==null)
-//                selectedOUValues = new ArrayList();
-//            OperationBinding ob =
-//                ADFUtils.getBindingContainer().getOperationBinding("getSelectedOUValues");
-//            ob.getParamsMap().put("usrId", usrId);
-//            ob.getParamsMap().put("ouList", selectedOUValues);
-//            if (ob != null) {
-//                map = (Map<String, List>)ob.execute();
-//            }
-//            if (map != null) {
-//                if (map.containsKey("ouValues")) {
-//                    selectedOUValues = map.get("ouValues");
-//                }
-//                if (map.containsKey("orgList")) {
-//                    orglist = map.get("orgList");
-//                }
-//                ADFUtils.setPageFlowScopeValue("orglist", orglist);
-//                ADFUtils.setSessionScopeValue("ouGetters2", "N");
-//            }
-////        }
-//        return selectedOUValues;
-//    }
+    //    public List getSelectedOUValues() {
+    //        String ouGetters = (String)ADFUtils.getSessionScopeValue("ouGetters2");
+    ////        if (ouGetters != null && ouGetters.equalsIgnoreCase("Y")) {
+    //            Map<String, List> map = new HashMap<String, List>();
+    //            if(selectedOUValues==null)
+    //                selectedOUValues = new ArrayList();
+    //            OperationBinding ob =
+    //                ADFUtils.getBindingContainer().getOperationBinding("getSelectedOUValues");
+    //            ob.getParamsMap().put("usrId", usrId);
+    //            ob.getParamsMap().put("ouList", selectedOUValues);
+    //            if (ob != null) {
+    //                map = (Map<String, List>)ob.execute();
+    //            }
+    //            if (map != null) {
+    //                if (map.containsKey("ouValues")) {
+    //                    selectedOUValues = map.get("ouValues");
+    //                }
+    //                if (map.containsKey("orgList")) {
+    //                    orglist = map.get("orgList");
+    //                }
+    //                ADFUtils.setPageFlowScopeValue("orglist", orglist);
+    //                ADFUtils.setSessionScopeValue("ouGetters2", "N");
+    //            }
+    ////        }
+    //        return selectedOUValues;
+    //    }
 
     public void setSelectedCustNameValues(List selectedCustNameValues) {
         this.selectedCustNameValues = selectedCustNameValues;
@@ -919,12 +962,12 @@ public class UserPreference {
             ob.getParamsMap().put("usrId", usrId);
             ob.getParamsMap().put("salesChannel", salesChannel);
             ob.getParamsMap().put("orgId", orgId);
-            
+
             if (ob != null) {
                 custNameList = (List<String>)ob.execute();
                 if (custNameList != null && custNameList.size() > 0) {
                     for (int i = 0; i < custNameList.size(); i++) {
-                            selectedCustNameValues.add(custNameList.get(i));
+                        selectedCustNameValues.add(custNameList.get(i));
                     }
 
                 }
@@ -939,78 +982,90 @@ public class UserPreference {
         return selectedCustNameValues;
     }
 
-//    public void setOrglist(List orglist) {
-//        this.orglist = orglist;
-//    }
-//
-//    public List getOrglist() {
-//        return orglist;
-//    }
+    //    public void setOrglist(List orglist) {
+    //        this.orglist = orglist;
+    //    }
+    //
+    //    public List getOrglist() {
+    //        return orglist;
+    //    }
 
-     
-    
-        public void ouVCE(ValueChangeEvent vce) {
-                if (vce.getNewValue() != null &&
-                    vce.getOldValue() != vce.getNewValue()) {
-//                    RichInputListOfValues soc = (RichInputListOfValues)vce.getComponent();
-                    RichSelectOneChoice soc = (RichSelectOneChoice)vce.getComponent();
-                    System.out.println("Index: " + soc.getValue().toString());
-                    vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
-                    Object orgValue = ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("OperatingUnit");
-                    System.out.println("OrgId idddds:"+orgValue);
-                    ADFUtils.setSessionScopeValue("UserBasedOrgId", null);
-                    getBindGlobalChoiceShowDetail().setDisclosed(false);
-                    getBindSalesChannelShowDetail().setDisclosed(false);
-                    isGlobalChoiceEnable = true;
-                    isSalesChnnelEnable = true;
-                    if(selectedCustNumValues!=null){
-                            selectedCustNumValues.clear();
-                        }
-                    if(selectedOrderTypeValues!=null){
-                            selectedCustNumValues.clear();
-                        }
-                    if(selectedSalesRepValues!=null){
-                        selectedSalesRepValues.clear();
-                        }
-                    if(custNames!=null)
-                        custNames.clear();
-                    if(custNumbers!=null)
-                        custNumbers.clear();
-                    if(customerNums!=null)
-                        customerNums.clear();
-                    if(selectedCSRValues!=null)
-                        selectedCSRValues.clear();
-                    if(selectedCurrencyValues!=null)
-                        selectedCurrencyValues.clear();
-                    if(selectedIncoTermValues!=null)
-                        selectedIncoTermValues.clear();
-                    if(selectedPaymentTermValues!=null)
-                        selectedPaymentTermValues.clear();
-                    if(selectedSalesChannel==null)
-                        selectedSalesChannel = new ArrayList();
-                    if(selectedSalesChannel!=null)
-                        selectedSalesChannel = new ArrayList();
-                    if(selectedCustNameValues !=null)
-                             selectedCustNameValues.clear();
-                    
-                        if (selectedCurrencyValsSC != null)
-                            selectedCurrencyValsSC.clear();
-                        if (selectedIncoTermSC != null)
-                            selectedIncoTermSC.clear();
-                        if (selectedCustNameValues != null)
-                            selectedCustNameValues.clear();
-                        if (selectedPaymentTermSC != null)
-                            selectedPaymentTermSC.clear();
-                        if (selectedBusinessAgreementValues != null)
-                            selectedBusinessAgreementValues.clear();
-                    getBindGlobalChoiceShowDetail().setDisclosed(false);
-                    getBindSalesChannelShowDetail().setDisclosed(false);
-                    System.out.println("Selected Value is:" + vce.getNewValue());
-//                    System.out.println("OrgId:"+getBindOU().getValue());
-//                    System.out.println("Orgid:"+vce.getNewValue());
-                    orgId = orgValue.toString();
-                    ADFUtils.setSessionScopeValue("UserBasedOrgId", orgId);                }
+
+    public void ouVCE(ValueChangeEvent vce) {
+        if (vce.getNewValue() != null &&
+            vce.getOldValue() != vce.getNewValue()) {
+            //                    RichInputListOfValues soc = (RichInputListOfValues)vce.getComponent();
+            RichSelectOneChoice soc = (RichSelectOneChoice)vce.getComponent();
+            System.out.println("Index: " + soc.getValue().toString());
+            vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            Object orgValue =
+                ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("OperatingUnit");
+            System.out.println("OrgId idddds:" + orgValue);
+            ADFUtils.setSessionScopeValue("UserBasedOrgId", null);
+            getBindGlobalChoiceShowDetail().setDisclosed(false);
+            getBindSalesChannelShowDetail().setDisclosed(false);
+            isGlobalChoiceEnable = true;
+            isSalesChnnelEnable = true;
+            if (selectedCustNumValues != null) {
+                selectedCustNumValues.clear();
             }
+            if (selectedOrderTypeValues != null) {
+                selectedCustNumValues.clear();
+            }
+            if (selectedSalesRepValues != null) {
+                selectedSalesRepValues.clear();
+            }
+            if (custNames != null)
+                custNames.clear();
+            if (custNumbers != null)
+                custNumbers.clear();
+            if (customerNums != null)
+                customerNums.clear();
+            if (selectedCSRValues != null)
+                selectedCSRValues.clear();
+            if (selectedCurrencyValues != null)
+                selectedCurrencyValues.clear();
+            if (selectedIncoTermValues != null)
+                selectedIncoTermValues.clear();
+            if (selectedPaymentTermValues != null)
+                selectedPaymentTermValues.clear();
+            if (selectedSalesChannel == null)
+                selectedSalesChannel = new ArrayList();
+            if (selectedSalesChannel != null)
+                selectedSalesChannel = new ArrayList();
+            if (selectedCustNameValues != null)
+                selectedCustNameValues.clear();
+
+            if (selectedCurrencyValsSC != null)
+                selectedCurrencyValsSC.clear();
+            if (selectedIncoTermSC != null)
+                selectedIncoTermSC.clear();
+            if (selectedCustNameValues != null)
+                selectedCustNameValues.clear();
+            if (selectedPaymentTermSC != null)
+                selectedPaymentTermSC.clear();
+            if (selectedBusinessAgreementValues != null)
+                selectedBusinessAgreementValues.clear();
+
+
+            if (custNamesForDefault != null)
+                custNamesForDefault.clear();
+            if (custNumbersForDefault != null)
+                custNumbersForDefault.clear();
+            if (orderTypeValuesForDefault != null)
+                orderTypeValuesForDefault.clear();
+            if (SalesRepValuesForDefault != null)
+                SalesRepValuesForDefault.clear();
+            getBindGlobalChoiceShowDetail().setDisclosed(false);
+            getBindSalesChannelShowDetail().setDisclosed(false);
+            System.out.println("Selected Value is:" + vce.getNewValue());
+            if (orgValue != null)
+                orgId = orgValue.toString();
+            else
+                orgId = null;
+            ADFUtils.setSessionScopeValue("UserBasedOrgId", orgId);
+        }
+    }
 
     public void custNameVCE(ValueChangeEvent vce) {
         List<String> selectedValues = new ArrayList<String>();
@@ -1020,9 +1075,9 @@ public class UserPreference {
         }
         //            Map<String, Object> pfs =
         //                AdfFacesContext.getCurrentInstance().getPageFlowScope();
-        if(selectedCustNameValues ==null)
+        if (selectedCustNameValues == null)
             selectedCustNameValues = new ArrayList();
-        
+
         selectedListFromUI = (List)vce.getNewValue();
         if (selectedListFromUI.size() > 0) {
             for (int i = 0; i < selectedListFromUI.size(); i++) {
@@ -1042,6 +1097,8 @@ public class UserPreference {
         System.out.println("getAllBA: Start " +
                            (System.currentTimeMillis() - startTime));
         if (businessAgreemnt != null) {
+            if (businessCenterCSRForDefault != null)
+                businessCenterCSRForDefault.add(new SelectItem(null));
             DCIteratorBinding iter =
                 ADFUtils.findIterator("businessAgreementVoIterator");
             RowSetIterator it =
@@ -1128,7 +1185,6 @@ public class UserPreference {
         return userName;
     }
 
- 
 
     public void setCustNumbers(List<SelectItem> custNumbers) {
         this.custNumbers = custNumbers;
@@ -1139,107 +1195,122 @@ public class UserPreference {
         long startTime = System.currentTimeMillis();
         System.out.println("getAllCustNumValues:Start" +
                            (System.currentTimeMillis() - startTime));
-        
-        DCIteratorBinding DCiter =
-            ADFUtils.findIterator("CustomerNameVOIterator");
-        ViewObjectImpl vo = (ViewObjectImpl)DCiter.getViewObject();
-        if(vo!=null){
-            vo.clearCache();
+        if (custNames == null)
+            custNames = new ArrayList<SelectItem>();
+        if (custNumbers == null)
+            custNumbers = new ArrayList<SelectItem>();
+        //            custNames.add(new SelectItem(null));
+        //            custNumbers.add(new SelectItem(null));
+        if (custNamesForDefault == null)
+            custNamesForDefault = new ArrayList<SelectItem>();
+        if (custNumbersForDefault == null)
+            custNumbersForDefault = new ArrayList<SelectItem>();
+        custNamesForDefault.add(new SelectItem(null));
+        custNumbersForDefault.add(new SelectItem(null));
+
+        if (orgId != null) {
+            DCIteratorBinding DCiter =
+                ADFUtils.findIterator("CustomerNameVOIterator");
+            ViewObjectImpl vo = (ViewObjectImpl)DCiter.getViewObject();
+            if (vo != null) {
+                vo.clearCache();
                 vo.setNamedWhereClauseParam("p_orgId", null);
                 vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("p_orgId", new BigDecimal(orgId));
                 vo.executeQuery();
                 RowSetIterator iter = vo.createRowSetIterator(null);
-                while(iter.hasNext()){
+                while (iter.hasNext()) {
                     Row r = iter.next();
-                        custNames.add(new SelectItem(r.getAttribute("Customername")));
-                        custNumbers.add(new SelectItem(r.getAttribute("Accountnumber")));
-                        customerNums.add(r.getAttribute("Accountnumber"));
-                    }
-                if(iter!=null){
+                    custNames.add(new SelectItem(r.getAttribute("Customername")));
+                    custNumbers.add(new SelectItem(r.getAttribute("Accountnumber")));
+                    customerNums.add(r.getAttribute("Accountnumber"));
+                    custNamesForDefault.add(new SelectItem(r.getAttribute("Customername")));
+                    custNumbersForDefault.add(new SelectItem(r.getAttribute("Accountnumber")));
+                }
+                if (iter != null) {
                     iter.closeRowSetIterator();
-                    }
+                }
             }
-    return custNumbers;
         }
-        
-        
-       
-//        if (orglist != null && orglist.size() > 0) {
-//            StringBuilder sb = new StringBuilder();
-//            String query1 = "SELECT p.party_name customername, p.party_number registryid,\n" + 
-//            "       ca.account_number accountnumber, ca.account_name accountdescription,\n" + 
-//            "       ca.cust_account_id, p.party_type customertype, p.party_id partyid,\n" + 
-//            "       NULL salesforceid\n" + 
-//            "  FROM hz_parties p, hz_cust_accounts ca\n" + 
-//            "WHERE ca.status(+) = 'A'\n" + 
-//            "   AND ca.party_id = p.party_id\n" + 
-//            "   AND NVL (ca.account_activation_date, SYSDATE) <= SYSDATE\n" + 
-//            "   AND NVL (ca.account_termination_date, SYSDATE) >= SYSDATE\n" + 
-//            "   AND p.status = 'A'\n" + 
-//            "   AND p.party_id = ca.party_id";
-//            
-//            String query2 = " AND EXISTS (\n" +
-//                "          SELECT 1\n" +
-//                "            FROM hz_cust_site_uses_all hzsu,\n" +
-//                "                 hz_cust_acct_sites_all hzas,\n" +
-//                "                 hz_party_sites hzps\n" +
-//                "           WHERE hzsu.primary_flag = 'Y'\n" +
-//                "             AND hzsu.cust_acct_site_id = hzas.cust_acct_site_id\n" +
-//                "             AND hzsu.org_id = hzas.org_id\n" +
-//                "             AND hzas.cust_account_id = ca.cust_account_id\n" +
-//                "             AND hzps.party_site_id = hzas.party_site_id" +
-//                "             AND hzsu.org_id in(";
-//            if (custNumbers != null) {
-//                DCIteratorBinding iter =
-//                    ADFUtils.findIterator("CustomerNameFOrPrefVOIterator");
-//                ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
-//
-//                if (vo != null) {
-//                    vo.clearCache();
-//                    vo.setWhereClause(null);
-//                    sb.append(query1);
-//                    sb.append(query2);
-//                    sb.append(orglist.get(0));
-//                    for (int i = 1; i < orglist.size(); i++) {
-//                        sb.append(",").append(orglist.get(i));
-//                        System.out.println("org Value is:" + orglist.get(i));
-//                    }
-//                    sb.append("))");
-//                    // System.out.println("set of OrgList:" + sb.toString());
-//                    vo.setQuery(null);
-//                    vo.setQuery(sb.toString());
-//                    //                    vo.setWhereClause(sb.toString());
-//                    System.out.println("get Customer Query:" + vo.getQuery());
-//                    vo.executeQuery();
-//                    RowQualifier rq = new RowQualifier(vo);
-//                    Row filteredRows[] = vo.getFilteredRows(rq);
-//                    if (custNumbers != null && custNumbers.size() > 0) {
-//                        custNames.clear();
-//                        custNumbers.clear();
-//                        customerNums.clear();
-//                    }
-//                    for (Row r : filteredRows) {
-//                        custNames.add(new SelectItem(r.getAttribute("Customername")));
-//                        custNumbers.add(new SelectItem(r.getAttribute("Accountnumber")));
-//                        customerNums.add(r.getAttribute("Accountnumber"));
-//                    }
-//
-//                    //                                        RowSetIterator custIter = vo.createRowSetIterator(null);
-//                    //                                        while (custIter.hasNext()) {
-//                    //                                            Row row = custIter.next();
-//                    //                                            custNames.add(new SelectItem(row.getAttribute("Customername")));
-//                    //                                            //                        custNumbers.add(row.getAttribute("Accountnumber"));
-//                    //                                            custNumbers.add(new SelectItem(row.getAttribute("Accountnumber")));
-//                    //                                        }
-//                    System.out.println("getAllCustNumalues:Start" +
-//                                       (System.currentTimeMillis() -
-//                                        startTime));
-//                }
-//            }
-//        }
-//        return custNumbers;
-//    }
+        return custNumbers;
+    }
+
+
+    //        if (orglist != null && orglist.size() > 0) {
+    //            StringBuilder sb = new StringBuilder();
+    //            String query1 = "SELECT p.party_name customername, p.party_number registryid,\n" +
+    //            "       ca.account_number accountnumber, ca.account_name accountdescription,\n" +
+    //            "       ca.cust_account_id, p.party_type customertype, p.party_id partyid,\n" +
+    //            "       NULL salesforceid\n" +
+    //            "  FROM hz_parties p, hz_cust_accounts ca\n" +
+    //            "WHERE ca.status(+) = 'A'\n" +
+    //            "   AND ca.party_id = p.party_id\n" +
+    //            "   AND NVL (ca.account_activation_date, SYSDATE) <= SYSDATE\n" +
+    //            "   AND NVL (ca.account_termination_date, SYSDATE) >= SYSDATE\n" +
+    //            "   AND p.status = 'A'\n" +
+    //            "   AND p.party_id = ca.party_id";
+    //
+    //            String query2 = " AND EXISTS (\n" +
+    //                "          SELECT 1\n" +
+    //                "            FROM hz_cust_site_uses_all hzsu,\n" +
+    //                "                 hz_cust_acct_sites_all hzas,\n" +
+    //                "                 hz_party_sites hzps\n" +
+    //                "           WHERE hzsu.primary_flag = 'Y'\n" +
+    //                "             AND hzsu.cust_acct_site_id = hzas.cust_acct_site_id\n" +
+    //                "             AND hzsu.org_id = hzas.org_id\n" +
+    //                "             AND hzas.cust_account_id = ca.cust_account_id\n" +
+    //                "             AND hzps.party_site_id = hzas.party_site_id" +
+    //                "             AND hzsu.org_id in(";
+    //            if (custNumbers != null) {
+    //                DCIteratorBinding iter =
+    //                    ADFUtils.findIterator("CustomerNameFOrPrefVOIterator");
+    //                ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
+    //
+    //                if (vo != null) {
+    //                    vo.clearCache();
+    //                    vo.setWhereClause(null);
+    //                    sb.append(query1);
+    //                    sb.append(query2);
+    //                    sb.append(orglist.get(0));
+    //                    for (int i = 1; i < orglist.size(); i++) {
+    //                        sb.append(",").append(orglist.get(i));
+    //                        System.out.println("org Value is:" + orglist.get(i));
+    //                    }
+    //                    sb.append("))");
+    //                    // System.out.println("set of OrgList:" + sb.toString());
+    //                    vo.setQuery(null);
+    //                    vo.setQuery(sb.toString());
+    //                    //                    vo.setWhereClause(sb.toString());
+    //                    System.out.println("get Customer Query:" + vo.getQuery());
+    //                    vo.executeQuery();
+    //                    RowQualifier rq = new RowQualifier(vo);
+    //                    Row filteredRows[] = vo.getFilteredRows(rq);
+    //                    if (custNumbers != null && custNumbers.size() > 0) {
+    //                        custNames.clear();
+    //                        custNumbers.clear();
+    //                        customerNums.clear();
+    //                    }
+    //                    for (Row r : filteredRows) {
+    //                        custNames.add(new SelectItem(r.getAttribute("Customername")));
+    //                        custNumbers.add(new SelectItem(r.getAttribute("Accountnumber")));
+    //                        customerNums.add(r.getAttribute("Accountnumber"));
+    //                    }
+    //
+    //                    //                                        RowSetIterator custIter = vo.createRowSetIterator(null);
+    //                    //                                        while (custIter.hasNext()) {
+    //                    //                                            Row row = custIter.next();
+    //                    //                                            custNames.add(new SelectItem(row.getAttribute("Customername")));
+    //                    //                                            //                        custNumbers.add(row.getAttribute("Accountnumber"));
+    //                    //                                            custNumbers.add(new SelectItem(row.getAttribute("Accountnumber")));
+    //                    //                                        }
+    //                    System.out.println("getAllCustNumalues:Start" +
+    //                                       (System.currentTimeMillis() -
+    //                                        startTime));
+    //                }
+    //            }
+    //        }
+    //        return custNumbers;
+    //    }
 
     public List<SelectItem> getCustNumbers() {
         return custNumbers;
@@ -1413,26 +1484,25 @@ public class UserPreference {
             selectedCustNumValues = new ArrayList();
         if (selectedCustNumValues != null &&
             selectedCustNumValues.size() == 0) {
-//            if (this.customerNums != null && this.customerNums.size() > 0) {
-                OperationBinding ob =
-                    ADFUtils.getBindingContainer().getOperationBinding("getSelectedCustNumValues");
-                ob.getParamsMap().put("usrId", usrId);
-                ob.getParamsMap().put("orgId", orgId);
-                if (ob != null) {
-                    custNumList = (List)ob.execute();
-                    if (custNumList != null && custNumList.size() > 0) {
-                        for (int i = 0; i < custNumList.size(); i++) {
-                            if (custNumList.contains(custNumList.get(i))) {
-                                selectedCustNumValues.add(custNumList.get(i));
-                            }
+            //            if (this.customerNums != null && this.customerNums.size() > 0) {
+            OperationBinding ob =
+                ADFUtils.getBindingContainer().getOperationBinding("getSelectedCustNumValues");
+            ob.getParamsMap().put("usrId", usrId);
+            ob.getParamsMap().put("orgId", orgId);
+            if (ob != null) {
+                custNumList = (List)ob.execute();
+                if (custNumList != null && custNumList.size() > 0) {
+                    for (int i = 0; i < custNumList.size(); i++) {
+                        if (custNumList.contains(custNumList.get(i))) {
+                            selectedCustNumValues.add(custNumList.get(i));
                         }
                     }
-                    //                    selectedCustNumValues = (List)ob.execute();
-                    System.out.println("getSelctedCustNumValues:End" +
-                                       (System.currentTimeMillis() -
-                                        startTime));
                 }
-//            }
+                //                    selectedCustNumValues = (List)ob.execute();
+                System.out.println("getSelctedCustNumValues:End" +
+                                   (System.currentTimeMillis() - startTime));
+            }
+            //            }
         }
         return selectedCustNumValues;
     }
@@ -1518,6 +1588,9 @@ public class UserPreference {
         System.out.println("getAllCSRValues:Start" +
                            (System.currentTimeMillis() - startTime));
         if (businessCenterCSR != null) {
+            //            businessCenterCSR.add(new SelectItem(null));
+            if (businessCenterCSRForDefault != null)
+                businessCenterCSRForDefault.add(new SelectItem(null));
             DCIteratorBinding iter =
                 ADFUtils.findIterator("CSRForGlobalChoiceVO1Iterator");
             RowSetIterator it =
@@ -1525,6 +1598,7 @@ public class UserPreference {
             while (it.hasNext()) {
                 Row row = it.next();
                 businessCenterCSR.add(new SelectItem(row.getAttribute("CustomerName")));
+                businessCenterCSRForDefault.add(new SelectItem(row.getAttribute("CustomerName")));
             }
             it.closeRowSetIterator();
             System.out.println("getAllCSRValues:Start" +
@@ -1573,58 +1647,25 @@ public class UserPreference {
         System.out.println("getSalesRepValues:Start" +
                            (System.currentTimeMillis() - startTime));
         if (orgId != null) {
-           if(SalesRepValues!=null)
-               SalesRepValues.clear();
+            if (SalesRepValues != null)
+                SalesRepValues.clear();
+            if (SalesRepValuesForDefault != null)
+                SalesRepValuesForDefault.add(new SelectItem(null));
+            //            SalesRepValues.add(null);
             OperationBinding ob =
                 ADFUtils.findOperation("getAllSalesRepValues");
             ob.getParamsMap().put("orgId", orgId);
             if (ob != null) {
                 salesRepVal = (List)ob.execute();
             }
-            if (salesRepVal != null ) {
-                if(salesRepVal.size() > 0){
-//                SalesRepValues.clear();
-                for (int i = 0; i < salesRepVal.size(); i++) {
-                    SalesRepValues.add(new SelectItem(salesRepVal.get(i)));
+            if (salesRepVal != null) {
+                if (salesRepVal.size() > 0) {
+                    for (int i = 0; i < salesRepVal.size(); i++) {
+                        SalesRepValues.add(new SelectItem(salesRepVal.get(i)));
+                        SalesRepValuesForDefault.add(new SelectItem(salesRepVal.get(i)));
+                    }
                 }
             }
-            }
-
-            //            StringBuilder sb = new StringBuilder("(");
-            //            sb.append(orglist.get(0));
-            //            for (int i = 1; i < orglist.size(); i++) {
-            //                sb.append(",").append(orglist.get(i));
-            //                System.out.println("org Value is:" + orglist.get(i));
-            //            }
-            //            sb.append(")");
-            //
-            ////            if (SalesRepValues != null) {
-            //                DCIteratorBinding iter =
-            //                    ADFUtils.findIterator("SalesRepresentativeVOIterator");
-            //                ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
-            //                RowQualifier rq = new RowQualifier("Orgid in" + sb.toString());
-            //                Row r[] = vo.getFilteredRows(rq);
-            //                for (Row row : r) {
-            //                    SalesRepValues.add(new SelectItem(row.getAttribute("ResourceName")));
-            ////                    salesRepIds.add(row.getAttribute("ResourceId"));
-            //                }
-            //                                RowSetIterator it =
-            //                                    iter.getViewObject().createRowSetIterator(null);
-            //                if(SalesRepValues!=null)
-            //                    SalesRepValues.clear();
-            //                                ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
-            //                                if(vo!=null){
-            //                                    vo.setWhereClause("org_id in"+sb.toString());
-            //                                    System.out.println("Query:"+vo.getQuery());
-            //                                    vo.executeQuery();
-            //                                        RowSetIterator it = vo.getRowSetIterator();
-            //                                        while(it.hasNext()){
-            //                                                Row row = it.next();
-            //                                                SalesRepValues.add(new SelectItem(row.getAttribute("ResourceName")));
-            //                                            }
-            //                                        System.out.println("size"+SalesRepValues.size());
-            //                                        it.closeRowSetIterator();
-            //                                    }
             System.out.println("getSalesRepValues:Start" +
                                (System.currentTimeMillis() - startTime));
         }
@@ -1754,7 +1795,7 @@ public class UserPreference {
             vo.clearCache();
             vo.setWhereClause(null);
             System.out.println("size of VO:" + vo.getEstimatedRowCount());
-            Object obj[] = { usrId, colType,orgId };
+            Object obj[] = { usrId, colType, orgId };
             Key key = new Key(obj);
             Row[] rows = vo.findByKey(key, 3);
             if (rows != null && rows.length > 0) {
@@ -1771,7 +1812,7 @@ public class UserPreference {
         ob.getParamsMap().put("usrId", usrId);
         ob.getParamsMap().put("salesChannel", salesChannel);
         ob.getParamsMap().put("customerNums", customerNums);
-        ob.getParamsMap().put("orgId",orgId);
+        ob.getParamsMap().put("orgId", orgId);
         //        ob.getParamsMap().put("orgList", orglist);
         //        ob.getParamsMap().put("custList",custNumbers);
         if (ob != null) {
@@ -1784,25 +1825,19 @@ public class UserPreference {
                     _logger.info("User Preferences: getDefaultValues: map values: currency:" +
                                  map.get("currency"));
                     currencyForSC = (String)map.get("currency");
+                } else {
+                    currencyForSC = null;
                 }
-                else{
-                        currencyForSC = null;
-                    }
             }
-            else
-                currencyForSC = null;
-            
             if (map.containsKey("customer")) {
                 if (map.get("customer") != null) {
                     _logger.info("User Preferences: getDefaultValues: map values: orderType:" +
                                  map.get("customer"));
-                        custNameForSC = (String)map.get("customer");
-                }
-                else
+                    custNameForSC = (String)map.get("customer");
+                } else
+                    custNameForSC = null;
+            } else
                 custNameForSC = null;
-            }
-            else
-            custNameForSC = null;
             if (map.containsKey("incoTerm")) {
                 incoTermForSC = (String)map.get("incoTerm");
             }
@@ -1823,10 +1858,11 @@ public class UserPreference {
     public void getDefaultValues() {
         _logger.info("User Preferences: getDefaultValues: Start:");
         Map map = new HashMap();
-        OperationBinding ob = ADFUtils.findOperation("defaultVals");  //customerNums
+        OperationBinding ob =
+            ADFUtils.findOperation("defaultVals"); //customerNums
         ob.getParamsMap().put("usrId", usrId);
         ob.getParamsMap().put("customerNums", customerNums);
-         ob.getParamsMap().put("orgId",orgId);
+        ob.getParamsMap().put("orgId", orgId);
         if (ob != null) {
             map = (Map)ob.execute();
         }
@@ -1836,11 +1872,10 @@ public class UserPreference {
                 if (map.get("currency") != null) {
                     _logger.info("User Preferences: getDefaultValues: map values: currency:" +
                                  map.get("currency"));
-                    if ((String)map.get("currency") != null)
-                        currency = (String)map.get("currency");
-                    
+                    currency = (String)map.get("currency");
+                } else {
+                    currency = null;
                 }
-                currency = null;
             }
             if (map.containsKey("orderType")) {
                 if (map.get("orderType") != null) {
@@ -1848,10 +1883,10 @@ public class UserPreference {
                                  map.get("orderType"));
                     if ((String)map.get("orderType") != null) {
                         orderType = (String)map.get("orderType");
-//                        String ot = (String)map.get("orderType");
-//                        if (orderTypeValues.contains(ot)) {
-//                            orderType = ot;
-//                        }
+                        //                        String ot = (String)map.get("orderType");
+                        //                        if (orderTypeValues.contains(ot)) {
+                        //                            orderType = ot;
+                        //                        }
                         //                        orderType = (String)map.get("orderType");
                     } else
                         orderType = null;
@@ -1860,10 +1895,10 @@ public class UserPreference {
             if (map.containsKey("custNum")) {
                 if (map.get("custNum") != null) {
                     custNum = (String)map.get("custNum");
-//                    String num = (String)map.get("custNum");
-//                    if (customerNums.contains(num)) {
-//                        custNum = num;
-//                    }
+                    //                    String num = (String)map.get("custNum");
+                    //                    if (customerNums.contains(num)) {
+                    //                        custNum = num;
+                    //                    }
                 } else
                     custNum = null;
             }
@@ -1948,19 +1983,20 @@ public class UserPreference {
         if (vce.getNewValue() == null) {
             return;
         }
-        if(vce.getOldValue()!= vce.getNewValue() &&vce.getNewValue()!=null ){
-            if(selectedCustNameForSC!=null)
+        if (vce.getOldValue() != vce.getNewValue() &&
+            vce.getNewValue() != null) {
+            if (selectedCustNameForSC != null)
                 selectedCustNameForSC.clear();
-        selectedListFromUI = (List)vce.getNewValue();
-        if (selectedListFromUI.size() > 0) {
-            for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
-                selectedValues.add(selectedListFromUI.get(i).toString());
+            selectedListFromUI = (List)vce.getNewValue();
+            if (selectedListFromUI.size() > 0) {
+                for (int i = 0; i < selectedListFromUI.size(); i++) {
+                    System.out.println("Selected values are from loop:" +
+                                       selectedListFromUI.get(i) +
+                                       "id value is:" + i);
+                    selectedValues.add(selectedListFromUI.get(i).toString());
+                }
+                selectedCustNameForSC = selectedValues;
             }
-            selectedCustNameForSC = selectedValues;
-           }
         }
     }
 
@@ -2150,7 +2186,7 @@ public class UserPreference {
     }
 
     public void onCommitSalesChannel(ActionEvent ae) {
-        if (salesChannel!=null && orgId!=null) {
+        if (salesChannel != null && orgId != null) {
             String validateCurrency = null, validateIncoTerm =
                 null, validatePaymentTerm = null, validateCustName =
                 null, validateBA = null, validateSalesChannel = null;
@@ -2158,107 +2194,111 @@ public class UserPreference {
             if (selectedCustNameForSC == null)
                 selectedCustNameForSC = new ArrayList();
 
-            if ((selectedCustNameForSC!=null &&selectedCustNameForSC.size()>0)||custNameForSC!=null) {
-                OperationBinding custNameob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateCustValuesForSC");
-                custNameob.getParamsMap().put("usrId", usrId);
-                custNameob.getParamsMap().put("custValues",
-                                              selectedCustNameForSC);
-                if (custNameForSC != null)
-                    custNameob.getParamsMap().put("custDefaultVal",
-                                                  custNameForSC);
-                custNameob.getParamsMap().put("salesChannel", salesChannel);
-                custNameob.getParamsMap().put("orgId", orgId);
-                if (custNameob != null) {
-                    validateCustName = (String)custNameob.execute();
-                    _logger.info("userPreference: OnCommitSalesChannel: Start: validateCustName status::" +
-                                 validateCustName);
-                }
+            //            if ((selectedCustNameForSC != null &&
+            //                 selectedCustNameForSC.size() > 0) || custNameForSC != null) {
+            OperationBinding custNameob =
+                ADFUtils.getBindingContainer().getOperationBinding("validateCustValuesForSC");
+            custNameob.getParamsMap().put("usrId", usrId);
+            custNameob.getParamsMap().put("custValues", selectedCustNameForSC);
+            //                if (custNameForSC != null)
+            custNameob.getParamsMap().put("custDefaultVal", custNameForSC);
+            custNameob.getParamsMap().put("salesChannel", salesChannel);
+            custNameob.getParamsMap().put("orgId", orgId);
+            if (custNameob != null) {
+                validateCustName = (String)custNameob.execute();
+                _logger.info("userPreference: OnCommitSalesChannel: Start: validateCustName status::" +
+                             validateCustName);
             }
+            //            }
 
-            if ((selectedCurrencyValsSC!=null &&selectedCurrencyValsSC.size()>0)||currencyForSC!=null) {
-                OperationBinding currencyob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateCurrencyValuesForSC");
-                currencyob.getParamsMap().put("usrId", usrId);
-                currencyob.getParamsMap().put("currencyValues",
-                                              selectedCurrencyValsSC);
-                currencyob.getParamsMap().put("defaultVal", currencyForSC);
-                currencyob.getParamsMap().put("salesChannel", salesChannel);
-                if (currencyob != null) {
-                    validateCurrency = (String)currencyob.execute();
-                    _logger.info("userPreference: OnCommitSalesChannel: Start: validateCurrency status::" +
-                                 validateCurrency);
-                }
+            //            if ((selectedCurrencyValsSC != null &&
+            //                 selectedCurrencyValsSC.size() > 0) || currencyForSC != null) {
+            OperationBinding currencyob =
+                ADFUtils.getBindingContainer().getOperationBinding("validateCurrencyValuesForSC");
+            currencyob.getParamsMap().put("usrId", usrId);
+            currencyob.getParamsMap().put("currencyValues",
+                                          selectedCurrencyValsSC);
+            currencyob.getParamsMap().put("defaultVal", currencyForSC);
+            currencyob.getParamsMap().put("salesChannel", salesChannel);
+            if (currencyob != null) {
+                validateCurrency = (String)currencyob.execute();
+                _logger.info("userPreference: OnCommitSalesChannel: Start: validateCurrency status::" +
+                             validateCurrency);
             }
+            //            }
 
-            if ((selectedIncoTermSC!=null && selectedIncoTermSC.size()>0)|| incoTermForSC!=null) {
-                OperationBinding incoTermob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateIncoTermValuesForSC");
-                incoTermob.getParamsMap().put("usrId", usrId);
-                incoTermob.getParamsMap().put("incoTermValues",
-                                              selectedIncoTermSC);
-                incoTermob.getParamsMap().put("defaultVal", incoTermForSC);
-                incoTermob.getParamsMap().put("salesChannel", salesChannel);
+            //            if ((selectedIncoTermSC != null &&
+            //                 selectedIncoTermSC.size() > 0) || incoTermForSC != null) {
+            OperationBinding incoTermob =
+                ADFUtils.getBindingContainer().getOperationBinding("validateIncoTermValuesForSC");
+            incoTermob.getParamsMap().put("usrId", usrId);
+            incoTermob.getParamsMap().put("incoTermValues",
+                                          selectedIncoTermSC);
+            incoTermob.getParamsMap().put("defaultVal", incoTermForSC);
+            incoTermob.getParamsMap().put("salesChannel", salesChannel);
 
-                if (incoTermob != null) {
-                    validateIncoTerm = (String)incoTermob.execute();
-                    _logger.info("userPreference: OnCommitSalesChannel: Start: validateIncoTerm status::" +
-                                 validateIncoTerm);
-                }
+            if (incoTermob != null) {
+                validateIncoTerm = (String)incoTermob.execute();
+                _logger.info("userPreference: OnCommitSalesChannel: Start: validateIncoTerm status::" +
+                             validateIncoTerm);
             }
+            //            }
 
-            if ((selectedPaymentTermSC!=null && selectedPaymentTermSC.size()>0)||paymentTemForSC!=null) {
-                OperationBinding paymentTermob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validatePaymentTermValuesforSC");
-                paymentTermob.getParamsMap().put("usrId", usrId);
-                paymentTermob.getParamsMap().put("PaymentTermValues",
-                                                 selectedPaymentTermSC);
-                paymentTermob.getParamsMap().put("defaultVal",
-                                                 paymentTemForSC);
-                paymentTermob.getParamsMap().put("salesChannel", salesChannel);
-                if (paymentTermob != null) {
-                    validatePaymentTerm = (String)paymentTermob.execute();
-                    _logger.info("userPreference: OnCommitSalesChannel: Start: validatePaymentTerm status::" +
-                                 validatePaymentTerm);
-                }
+            //            if ((selectedPaymentTermSC != null &&
+            //                 selectedPaymentTermSC.size() > 0) ||
+            //                paymentTemForSC != null) {
+            OperationBinding paymentTermob =
+                ADFUtils.getBindingContainer().getOperationBinding("validatePaymentTermValuesforSC");
+            paymentTermob.getParamsMap().put("usrId", usrId);
+            paymentTermob.getParamsMap().put("PaymentTermValues",
+                                             selectedPaymentTermSC);
+            paymentTermob.getParamsMap().put("defaultVal", paymentTemForSC);
+            paymentTermob.getParamsMap().put("salesChannel", salesChannel);
+            if (paymentTermob != null) {
+                validatePaymentTerm = (String)paymentTermob.execute();
+                _logger.info("userPreference: OnCommitSalesChannel: Start: validatePaymentTerm status::" +
+                             validatePaymentTerm);
             }
+            //            }
 
-            if ((selectedBusinessAgreementValues!=null &&selectedBusinessAgreementValues.size()>0)||baForSC!=null) {
-                OperationBinding baob =
-                    ADFUtils.getBindingContainer().getOperationBinding("validateBAForSC");
-                baob.getParamsMap().put("usrId", usrId);
-                baob.getParamsMap().put("baValues",
-                                        selectedBusinessAgreementValues);
-                baob.getParamsMap().put("defaultVal", baForSC);
-                baob.getParamsMap().put("salesChannel", salesChannel);
-                if (baob != null) {
-                    validateBA = (String)baob.execute();
-                    _logger.info("userPreference: OnCommitSalesChannel: Start: validateBA status::" +
-                                 validateBA);
-                }
+            //            if ((selectedBusinessAgreementValues != null &&
+            //                 selectedBusinessAgreementValues.size() > 0) ||
+            //                baForSC != null) {
+            OperationBinding baob =
+                ADFUtils.getBindingContainer().getOperationBinding("validateBAForSC");
+            baob.getParamsMap().put("usrId", usrId);
+            baob.getParamsMap().put("baValues",
+                                    selectedBusinessAgreementValues);
+            baob.getParamsMap().put("defaultVal", baForSC);
+            baob.getParamsMap().put("salesChannel", salesChannel);
+            if (baob != null) {
+                validateBA = (String)baob.execute();
+                _logger.info("userPreference: OnCommitSalesChannel: Start: validateBA status::" +
+                             validateBA);
             }
+            //            }
             OperationBinding commitOperations =
                 ADFUtils.findOperation("commitEntities");
             Boolean flag = (Boolean)commitOperations.execute();
             if (flag)
                 ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
                                     "Sales Channel Data Saved Successfully");
+        } else {
+            ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
+                                "Please Select Operating Unit and Sales Channel Value before Save");
         }
-        else{
-                ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                    "Please Select Operating Unit and Sales Channel Value before Save");
-            }
     }
 
     public void getGlobalChoiceDetails(DisclosureEvent disclosureEvent) {
+
         if (disclosureEvent.isExpanded()) {
             RichShowDetailHeader choiceShowDetail =
                 getBindSalesChannelShowDetail();
             choiceShowDetail.setDisclosed(false);
         }
-
+        //Updated On 18-11-2019
         if (isGlobalChoiceEnable) {
-            if (getBindOU().getValue()!=null) {
+            if (orgId != null) {
                 if (disclosureEvent.isExpanded()) {
                     RichShowDetailHeader choiceShowDetail =
                         getBindSalesChannelShowDetail();
@@ -2285,18 +2325,16 @@ public class UserPreference {
                 getBindGlobalChoiceShowDetail().setDisclosed(false);
                 FacesContext ctx = FacesContext.getCurrentInstance();
                 FacesMessage fm =
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Selected Operating unit should not be empty!.",
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Please Select Operating unit",
                                      "");
                 ctx.addMessage(null, fm);
-                System.out.println("Selected Operating unit should not be empty");
-
             }
         }
     }
 
     public void getSalesChannelDetails(DisclosureEvent disclosureEvent) {
-        if (getBindSalesChannel().getValue() != null &&
-            (getBindOU().getValue() != null )) {
+        //Updated On 18-11-2019
+        if (getBindSalesChannel().getValue() != null && orgId != null) {
             if (disclosureEvent.isExpanded()) {
                 RichShowDetailHeader choiceShowDetail =
                     getBindGlobalChoiceShowDetail();
@@ -2315,10 +2353,10 @@ public class UserPreference {
                     isSalesChnnelEnable = false;
                 }
             }
-        } else{
+        } else {
             getBindSalesChannelShowDetail().setDisclosed(false);
             ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                "Please Select Sales Channel");
+                                "Please select Sales Channel and Operating Unit");
         }
 
     }
@@ -2388,13 +2426,6 @@ public class UserPreference {
         return baForSC;
     }
 
-    public void setCsrForSC(String csrForSC) {
-        this.csrForSC = csrForSC;
-    }
-
-    public String getCsrForSC() {
-        return csrForSC;
-    }
 
     public void setPaymentTerm(String paymentTerm) {
         this.paymentTerm = paymentTerm;
@@ -2474,5 +2505,86 @@ public class UserPreference {
 
     public String getOrgId() {
         return orgId;
+    }
+
+    public void setOrderTypeValuesForDefault(List<SelectItem> orderTypeValuesForDefault) {
+        this.orderTypeValuesForDefault = orderTypeValuesForDefault;
+    }
+
+    public List<SelectItem> getOrderTypeValuesForDefault() {
+        return orderTypeValuesForDefault;
+    }
+
+    public void setCurrencyValuesForDefault(List<SelectItem> currencyValuesForDefault) {
+        this.currencyValuesForDefault = currencyValuesForDefault;
+    }
+
+    public List<SelectItem> getCurrencyValuesForDefault() {
+        return currencyValuesForDefault;
+    }
+
+    public void setIncoTermValuesForDefault(List<SelectItem> incoTermValuesForDefault) {
+        this.incoTermValuesForDefault = incoTermValuesForDefault;
+    }
+
+    public List<SelectItem> getIncoTermValuesForDefault() {
+        return incoTermValuesForDefault;
+    }
+
+    public void setCustNamesForDefault(List<SelectItem> custNamesForDefault) {
+        this.custNamesForDefault = custNamesForDefault;
+    }
+
+    public List<SelectItem> getCustNamesForDefault() {
+        return custNamesForDefault;
+    }
+
+    public void setCustNumbersForDefault(List<SelectItem> custNumbersForDefault) {
+        this.custNumbersForDefault = custNumbersForDefault;
+    }
+
+    public List<SelectItem> getCustNumbersForDefault() {
+        return custNumbersForDefault;
+    }
+
+    public void setBusinessAgreemnForDefaultForDefault(List<SelectItem> businessAgreemnForDefaultForDefault) {
+        this.businessAgreemnForDefaultForDefault =
+                businessAgreemnForDefaultForDefault;
+    }
+
+    public List<SelectItem> getBusinessAgreemnForDefaultForDefault() {
+        return businessAgreemnForDefaultForDefault;
+    }
+
+    public void setBusinessCenterCSRForDefault(List<SelectItem> businessCenterCSRForDefault) {
+        this.businessCenterCSRForDefault = businessCenterCSRForDefault;
+    }
+
+    public List<SelectItem> getBusinessCenterCSRForDefault() {
+        return businessCenterCSRForDefault;
+    }
+
+    public void setSalesRepValuesForDefault(List<SelectItem> SalesRepValuesForDefault) {
+        this.SalesRepValuesForDefault = SalesRepValuesForDefault;
+    }
+
+    public List<SelectItem> getSalesRepValuesForDefault() {
+        return SalesRepValuesForDefault;
+    }
+
+    public void setPaymentTermValuesForDefault(List<SelectItem> paymentTermValuesForDefault) {
+        this.paymentTermValuesForDefault = paymentTermValuesForDefault;
+    }
+
+    public List<SelectItem> getPaymentTermValuesForDefault() {
+        return paymentTermValuesForDefault;
+    }
+
+    public void setSalesChannelSCForDefault(List<SelectItem> salesChannelSCForDefault) {
+        this.salesChannelSCForDefault = salesChannelSCForDefault;
+    }
+
+    public List<SelectItem> getSalesChannelSCForDefault() {
+        return salesChannelSCForDefault;
     }
 }

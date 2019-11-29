@@ -359,19 +359,78 @@ public class QuotingBean {
             ob.execute();
         }
     }
-
-    public void custNameVCE(ValueChangeEvent valueChangeEvent) {
-        if (valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue() &&
-            valueChangeEvent.getNewValue() != null) {
+    public void custNameVCE(ValueChangeEvent vce) {
+        if (vce.getNewValue() != vce.getOldValue() &&
+            vce.getNewValue() != null) {
+        System.out.println("customer number:"+vce.getNewValue());
             businessAgrement = true;
-                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddress"); //curRow
-                    ob.getParamsMap().put("curRow", null);
+                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNameChange"); //curRow
+                    ob.getParamsMap().put("custName", vce.getNewValue().toString());
             //                if(ob.getErrors().size()==0){
                         ob.execute();
         } else {
             businessAgrement = false;
         }
     }
+    
+    public void custNameForUpdateQuoteVCE(ValueChangeEvent vce) {
+        if (vce.getNewValue() != vce.getOldValue() &&
+            vce.getNewValue() != null) {
+        System.out.println("customer number:"+vce.getNewValue());
+            businessAgrement = true;
+                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNameForUpdateQuoteChange"); //curRow
+                    ob.getParamsMap().put("custName", vce.getNewValue().toString());
+            //                if(ob.getErrors().size()==0){
+                        ob.execute();
+        } else {
+            businessAgrement = false;
+        }
+    }
+    public void custNumForUpdateQuoteVCE(ValueChangeEvent vce) {
+        if (vce.getNewValue() != vce.getOldValue() &&
+            vce.getNewValue() != null) {
+        System.out.println("customer number:"+vce.getNewValue());
+            businessAgrement = true;
+                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNumForUpdateQuoteChange"); //curRow
+                    ob.getParamsMap().put("custNum", vce.getNewValue().toString());
+            //                if(ob.getErrors().size()==0){
+                        ob.execute();
+        } else {
+            businessAgrement = false;
+        }
+    }
+    
+    
+    
+    public void custNumVCE(ValueChangeEvent vce) {
+        if (vce.getNewValue() != vce.getOldValue() &&
+            vce.getNewValue() != null) {
+        System.out.println("customer number:"+vce.getNewValue());
+            businessAgrement = true;
+                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNumChange"); //curRow
+                    ob.getParamsMap().put("custNum", vce.getNewValue().toString());
+            //                if(ob.getErrors().size()==0){
+                        ob.execute();
+        } else {
+            businessAgrement = false;
+        }
+    }
+    
+    
+    
+
+//    public void custNameVCE(ValueChangeEvent valueChangeEvent) {
+//        if (valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue() &&
+//            valueChangeEvent.getNewValue() != null) {
+//            businessAgrement = true;
+//                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddress"); //curRow
+//                    ob.getParamsMap().put("curRow", null);
+//            //                if(ob.getErrors().size()==0){
+//                        ob.execute();
+//        } else {
+//            businessAgrement = false;
+//        }
+//    }
 
     public void oucustNameRPL(ReturnPopupEvent returnPopupEvent) {
         if (returnPopupEvent != null) {

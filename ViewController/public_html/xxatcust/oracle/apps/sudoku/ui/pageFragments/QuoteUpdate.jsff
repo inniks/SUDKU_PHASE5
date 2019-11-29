@@ -33,7 +33,7 @@
           <f:facet name="first">
             <af:panelGroupLayout layout="scroll"
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                                 id="pgl25">
+                                 id="pgl25" partialTriggers="soc3">
               <af:panelGroupLayout id="pgl8" layout="horizontal"
                                    partialTriggers="soc3">
                 <af:spacer width="50" height="10" id="s24"/>
@@ -115,6 +115,19 @@
                     <f:validator binding="#{bindings.Customernumber.validator}"/>
                   </af:inputText>
                   <af:spacer width="10" height="15" id="s1"/>
+                   <af:inputListOfValues id="custNumId"
+                                        popupTitle="Search and Select: #{bindings.Customernumber1.hints.label}"
+                                        value="#{bindings.Customernumber1.inputValue}"
+                                        label="Customer Number" 
+                                        model="#{bindings.Customernumber1.listOfValuesModel}"
+                                        rendered = "#{pageFlowScope.QuotingBean.isCustEditable eq true}"
+                                        columns="20"
+                                        valueChangeListener="#{pageFlowScope.QuotingBean.custNumForUpdateQuoteVCE}"
+                                        shortDesc="#{bindings.Customernumber1.hints.tooltip}"
+                                        autoSubmit="true"
+                                        partialTriggers="soc3 custNameId">
+                    <f:validator binding="#{bindings.Customernumber1.validator}"/>
+                  </af:inputListOfValues>
                   <af:inputListOfValues id="custNameId"
                                         popupTitle="Search and Select: #{bindings.Customername1.hints.label}"
                                         value="#{bindings.Customername1.inputValue}"
@@ -122,29 +135,19 @@
                                         model="#{bindings.Customername1.listOfValuesModel}"
                                         rendered = "#{pageFlowScope.QuotingBean.isCustEditable eq true}"
                                         columns="20"
+                                        valueChangeListener="#{pageFlowScope.QuotingBean.custNameForUpdateQuoteVCE}"
                                         shortDesc="#{bindings.Customername1.hints.tooltip}"
                                         partialTriggers="soc3 custNumId">
                     <f:validator binding="#{bindings.Customername1.validator}"/>
                   </af:inputListOfValues>
-                  <af:inputListOfValues id="custNumId"
-                                        popupTitle="Search and Select: #{bindings.Customernumber1.hints.label}"
-                                        value="#{bindings.Customernumber1.inputValue}"
-                                        label="Customer Number" 
-                                        model="#{bindings.Customernumber1.listOfValuesModel}"
-                                        rendered = "#{pageFlowScope.QuotingBean.isCustEditable eq true}"
-                                        columns="20"
-                                        shortDesc="#{bindings.Customernumber1.hints.tooltip}"
-                                        autoSubmit="true"
-                                        partialTriggers="soc3 custNameId">
-                    <f:validator binding="#{bindings.Customernumber1.validator}"/>
-                  </af:inputListOfValues>
+                 
                 </af:panelFormLayout>
               </af:panelGroupLayout>
               <af:separator id="s32"
                             inlineStyle="color:Black; font-size:large; font-weight:bolder;"/>
               <af:spacer width="10" height="20" id="s14"/>
               <af:panelGroupLayout id="pgl26" layout="horizontal"
-                                   >
+                                   partialTriggers="soc3">
                 <af:spacer width="57" height="10" id="s12"/>
                 <af:panelGroupLayout id="pgl9" layout="scroll">
                   <af:outputLabel value="Quote To" id="ol1"
@@ -440,7 +443,8 @@
               <af:spacer width="10" height="10" id="s6"/>
               <af:panelGroupLayout id="pgl27" layout="horizontal"
                                    >
-                <af:panelGroupLayout id="pgl24" layout="vertical">
+                <af:panelGroupLayout id="pgl24" layout="vertical"
+                                     partialTriggers="soc3">
                   <af:outputLabel value="Ship To" id="ol2"
                                   inlineStyle="font-weight:bold; color:Black;"/>
                   <af:spacer width="10" height="5" id="spacer2"/>

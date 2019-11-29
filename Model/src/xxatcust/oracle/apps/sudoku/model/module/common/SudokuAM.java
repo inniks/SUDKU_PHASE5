@@ -192,4 +192,12 @@ public interface SudokuAM extends ApplicationModule {
                                   String defaultVal, String orgId);
 
     String callUpdateQuoteAPI(int respid, int usrId, boolean isCustEditable);
+
+    void getQuoteCustmerAddressOnCustNumForUpdateQuoteChange(String custNum);
+
+    void getQuoteCustmerAddressOnCustNumChange(String custNum);
+
+    void getQuoteCustmerAddressOnCustNameForUpdateQuoteChange(String custName);
+
+    void getQuoteCustmerAddressOnCustNameChange(String custName);
 }

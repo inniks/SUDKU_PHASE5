@@ -37,7 +37,7 @@
                               valueChangeListener="#{pageFlowScope.UserPrefBean.salesChannelForDefaultVCE}"
                               contentStyle="width:140.0px"
                               binding="#{pageFlowScope.UserPrefBean.bindSalesChannel}">
-            <f:selectItems value="#{pageFlowScope.UserPrefBean.salesChannelSC}"
+            <f:selectItems value="#{pageFlowScope.UserPrefBean.salesChannelSCForDefault}"
                            id="si28"/>
           </af:selectOneChoice>
         </af:panelGroupLayout>
@@ -80,7 +80,7 @@
                                     autoSubmit="true"
                                     value="#{pageFlowScope.UserPrefBean.orderType}"
                                     contentStyle="width:140.0px">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.orderTypeValues}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.orderTypeValuesForDefault}"
                                  id="si114"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s3"/>
@@ -90,7 +90,7 @@
                                     id="soc6"
                                     value="#{pageFlowScope.UserPrefBean.custNum}"
                                     contentStyle="width:140.0px">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.custNumbers}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.custNumbersForDefault}"
                                  id="si15"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s6"/>
@@ -98,7 +98,7 @@
                                     label="Primay Currency" autoSubmit="true"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.currencyForGlobalChoiceVCE}"
                                     id="soc13" contentStyle="width:140.0px">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.currencyValues}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.currencyValuesForDefault}"
                                  id="si212"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s7"/>
@@ -106,7 +106,7 @@
                                     label="Primay Inco Term" autoSubmit="true"
                                     id="soc3" contentStyle="width:140.0px"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.incoTermForGlobalChoiceVCE}">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.incoTermValues}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.incoTermValuesForDefault}"
                                  id="si12"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s8"/>
@@ -115,7 +115,7 @@
                                     autoSubmit="true"
                                     contentStyle="width:140.0px"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.csrForGlobalChoiceVCE}">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.businessCenterCSR}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.businessCenterCSRForDefault}"
                                  id="si18"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s9"/>
@@ -124,7 +124,7 @@
                                     label="Primary Payment Term" id="soc4"
                                     contentStyle="width:140.0px"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.paymentTermForGlobalChoiceVCE}">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.paymentTermValues}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.paymentTermValuesForDefault}"
                                  id="si13"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s11"/>
@@ -134,7 +134,7 @@
                                     id="soc14"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.salesRepForDefaultVCE}"
                                     contentStyle="width:140.0px">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.salesRepValues}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.salesRepValuesForDefault}"
                                  id="si213"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s12"/>
@@ -292,7 +292,7 @@
                                     label="Customer Name" autoSubmit="true"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.custNameForSCDefaultVCE}"
                                     id="soc20" contentStyle="width:140.0px">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.custNames}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.custNamesForDefault}"
                                  id="si29"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s5"/>
@@ -300,7 +300,7 @@
                                     label="Currency"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.currencyForSCDefaultVCE}"
                                     id="soc17" contentStyle="width:140.0px">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.allCurrencyValues}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.currencyValuesForDefault}"
                                  id="si30"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s10"/>
@@ -308,7 +308,7 @@
                                     label="Business Agreement"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.baForSCDefaultVCE}"
                                     id="soc18" contentStyle="width:140.0px">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.allBAgreement}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.businessCenterCSRForDefault}"
                                  id="si32"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s23"/>
@@ -316,7 +316,7 @@
                                     label="IncoTerm"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.incoTermForSCDefaultVCE}"
                                     id="soc19" contentStyle="width:140.0px">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.allIncoTermValues}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.incoTermValuesForDefault}"
                                  id="si27"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s24"/>
@@ -324,7 +324,7 @@
                                     label="PaymentTerm"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.paymentTErmForSCDefaultVCE}"
                                     id="soc15" contentStyle="width:140.0px">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.allPaymentTermValues}"
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.paymentTermValuesForDefault}"
                                  id="si31"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s17"/>

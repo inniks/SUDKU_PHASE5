@@ -863,5 +863,37 @@
         Name="isCustEditable"
         Type="boolean"/>
     </Method>
+    <Method
+      Name="getQuoteCustmerAddressOnCustNumForUpdateQuoteChange">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="custNum"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="getQuoteCustmerAddressOnCustNumChange">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="custNum"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="getQuoteCustmerAddressOnCustNameForUpdateQuoteChange">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="custName"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="getQuoteCustmerAddressOnCustNameChange">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="custName"
+        Type="java.lang.String"/>
+    </Method>
   </ClientInterface>
 </AppModule>
