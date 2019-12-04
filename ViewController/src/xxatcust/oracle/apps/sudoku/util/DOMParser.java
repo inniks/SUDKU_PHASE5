@@ -637,14 +637,14 @@ public class DOMParser {
                     System.out.println("**************************************");
                     for (ConfiguratorNodePOJO node : listItems) {
 
-                        //                        if (node != null && node.getNodeName() != null &&
-                        //                            node.getNodeCategory() != null &&
-                        //                            node.getNodeCategory().equals("1")) {
-                        //                            System.out.println("Setting ModelBom Id " +
-                        //                                               node.getNodeName());
-                        //                            modelbomNode.setAttribute("id",
-                        //                                                      node.getNodeName());
-                        //                        }
+                                                if (node != null && node.getNodeName() != null &&
+                                                    node.getNodeCategory() != null &&
+                                                    node.getNodeCategory().equals("1")) {
+                                                    System.out.println("Setting ModelBom Id " +
+                                                                       node.getNodeName());
+                                                    modelbomNode.setAttribute("id",
+                                                                              node.getNodeName());
+                                                }
                         Element e = doc.createElement("item");
                         if (node.getNodeName() != null) {
 

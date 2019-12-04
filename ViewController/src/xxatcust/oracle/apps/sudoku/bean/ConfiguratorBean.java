@@ -32,6 +32,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import javax.faces.event.ValueChangeEvent;
@@ -174,6 +175,7 @@ public class ConfiguratorBean {
     private RichOutputFormatted conflictText;
     private RichInputText otsDisplay;
     private String oneTimeSpecial;
+
     public ConfiguratorBean() {
         super();
     }
@@ -209,17 +211,18 @@ public class ConfiguratorBean {
                                           JsonMappingException {
         //The refresh should happen only if there is a v93k object available
         System.out.println("Init Configurator..");
-//       V93kQuote v93k = (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
-//       ADFUtils.setSessionScopeValue("parentObject", v93k);//Comment for server run
-//       HashMap ruleSetMap = new HashMap();
-//       if (v93k.getInputParams() != null) {
-//           ruleSetMap.put("topLevelCode",
-//                          v93k.getInputParams().getRuleSetTopLevelChoice());
-//           ruleSetMap.put("secondLevelCode",
-//                          v93k.getInputParams().getRuleSetSecondLevelChoice());
-//           ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);            
-//       }
-        V93kQuote v93k = 
+            //   V93kQuote v93k = (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
+             //  ADFUtils.setSessionScopeValue("parentObject", v93k);//Comment for server run
+              // HashMap ruleSetMap = new HashMap();
+//               if (v93k.getInputParams() != null) {
+////                   ruleSetMap.put("topLevelCode",
+////                                  v93k.getInputParams().getRuleSetTopLevelChoice());
+////                   ruleSetMap.put("secondLevelCode",
+////                                  v93k.getInputParams().getRuleSetSecondLevelChoice());
+//                   ruleSetMap.put("error", "Y");
+//                   ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+//               }
+        V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
         if (v93k != null && v93k.getInputParams() != null &&
             v93k.getInputParams().getImportSource() != null) {
@@ -281,7 +284,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         miscUpgTreeModel = null;
         infraUpgTreeModel = null;
         oneTimeSpecial = null;
-        if(otsDisplay!=null){
+        if (otsDisplay != null) {
             otsDisplay.setValue(null);
         }
         V93kQuote v93k =
@@ -414,15 +417,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
-        String responseJson =
-            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        System.out.println("Response Json from Configurator : " +
-                           responseJson);
-        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-        v93k = (V93kQuote)obj;
+//                String responseJson =
+//                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+//                System.out.println("Response Json from Configurator : " +
+//                                   responseJson);
+//                Object obj = mapper.readValue(responseJson, V93kQuote.class);
+//                v93k = (V93kQuote)obj;
 
         // else use this
-        //v93k = (V93kQuote)convertJsonToObject(null);
+        v93k = (V93kQuote)convertJsonToObject(null);
         if (v93k != null && v93k.getInputParams() != null) {
             Map ruleSetMap = new HashMap();
             ruleSetMap.put("topLevelCode",
@@ -431,7 +434,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                            v93k.getInputParams().getRuleSetSecondLevelChoice());
             ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
         }
-        refreshRuleSets();//Refresh the ruleset list of values
+        refreshRuleSets(); //Refresh the ruleset list of values
         ADFUtils.setSessionScopeValue("parentObject", v93k);
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         return v93k;
@@ -453,7 +456,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         miscUpgTreeModel = null;
         infraUpgTreeModel = null;
         oneTimeSpecial = null;
-        if(otsDisplay!=null){
+        if (otsDisplay != null) {
             otsDisplay.setValue(null);
         }
         if (sysInfraTreeModel == null) {
@@ -613,19 +616,19 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             if (v93k != null) {
                 UiSelection uiSelection = v93k.getUiSelection();
                 if (uiSelection != null) {
-//                    String czNodeName = uiSelection.getCzNodeName();
-//                    if (czNodeName != null) {
-//                        czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
-//                        //czNodeName = "\"" + czNodeName + "\"";
-//                        uiSelection.setCzNodeName(czNodeName);
-//                    }
+                    //                    String czNodeName = uiSelection.getCzNodeName();
+                    //                    if (czNodeName != null) {
+                    //                        czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
+                    //                        //czNodeName = "\"" + czNodeName + "\"";
+                    //                        uiSelection.setCzNodeName(czNodeName);
+                    //                    }
                     uiSelection.setUserConfirmation(true);
                     v93k.setUiSelection(uiSelection);
                     ADFUtils.setSessionScopeValue("parentObject", v93k);
                 }
             }
             v93k = callServlet(v93k);
-           
+
             buildConfiguratorUI(v93k);
             confirmPopup.cancel();
             //            if (selectedNodeValueMap != null &&
@@ -674,10 +677,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             //                System.out.println("Cz Node name has special characters : "+czNodeName);
             //                czNodeName = "\""+czNodeName+"\"";
             //            }
-//            if (czNodeName != null) {
-//                czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
-//                //czNodeName = "\"" + czNodeName + "\"";
-//            }
+            //            if (czNodeName != null) {
+            //                czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
+            //                //czNodeName = "\"" + czNodeName + "\"";
+            //            }
             String identifier = (String)selectedNodeValueMap.get("identifier");
             String nodeColor = (String)selectedNodeValueMap.get("nodeColor");
             String parentGroupName =
@@ -833,6 +836,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         UIComponent parent = component.getParent();
         List<UIComponent> children = parent.getChildren();
         String inputValue = (String)valueChangeEvent.getNewValue();
+        if (inputValue != null && inputValue.equals("")) {
+            inputValue = "0";
+        }
         HashMap<String, String> inputNodeValueMap =
             new HashMap<String, String>();
         String uiSubGrpName = (String)ADFUtils.evaluateEL("#{node.nodeName}");
@@ -938,10 +944,10 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputNodeValueMap.get("parentGroupName");
             String czNodeName = (String)inputNodeValueMap.get("czNodeName");
-//            if (czNodeName != null) {
-//                //czNodeName = "\"" + czNodeName + "\"";
-//                czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
-//            }
+            //            if (czNodeName != null) {
+            //                //czNodeName = "\"" + czNodeName + "\"";
+            //                czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
+            //            }
             String refQty = (String)inputNodeValueMap.get("refQty");
             String targetQty = (String)inputNodeValueMap.get("targetQty");
             String uiNodeName = (String)inputNodeValueMap.get("uiNodeName");
@@ -1048,6 +1054,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             if (rulesetSecondLevelChoice != null &&
                 rulesetTopLevelChoice != null) {
                 //Reset the v93k object and build from start
+                //Refresh the import source taskflow parameter
+                ADFUtils.setSessionScopeValue("refreshImpSrc", "Y");
                 ADFUtils.setSessionScopeValue("parentObject", null);
                 refreshConfiguratorUI((String)ADFUtils.getSessionScopeValue("loadParameter"),
                                       (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"),
@@ -1124,16 +1132,39 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
     public void ruleSetSecondValChange(ValueChangeEvent valueChangeEvent) {
         System.out.println("New Value is " + valueChangeEvent.getNewValue());
-        if (ADFUtils.getSessionScopeValue("firstLoad") == null) {
-            ADFUtils.setSessionScopeValue("firstLoad", "Y");
-            ADFUtils.setSessionScopeValue("loadParameter", "LOAD_CONFIG_UI");
-        } else {
-            ADFUtils.setSessionScopeValue("loadParameter",
-                                          "RESET_AND_LOAD_CONFIG");
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+        DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
+        String secondLevelCode = null;
+        Row cRow = null;
+        if (iter != null) {
+            cRow = iter.getCurrentRow();
+            if (cRow != null) {
+                secondLevelCode = (String)cRow.getAttribute("SecondLevelCode");
+            }
         }
-        //Invoke the confirmation popup if the ui is NOT being loaded for 1st tim
-        RichPopup.PopupHints hints = new RichPopup.PopupHints();
-        resetConfigurationPopup.show(hints);
+        String ruleSetSecLevelChoice = (String)valueChangeEvent.getNewValue();
+        if (secondLevelCode != null &&
+            !secondLevelCode.equalsIgnoreCase("OTS")) {
+            if (ADFUtils.getSessionScopeValue("firstLoad") == null) {
+                ADFUtils.setSessionScopeValue("firstLoad", "Y");
+                ADFUtils.setSessionScopeValue("loadParameter",
+                                              "LOAD_CONFIG_UI");
+            } else {
+                ADFUtils.setSessionScopeValue("loadParameter",
+                                              "RESET_AND_LOAD_CONFIG");
+            }
+            //Invoke the confirmation popup if the ui is NOT being loaded for 1st tim
+            RichPopup.PopupHints hints = new RichPopup.PopupHints();
+            resetConfigurationPopup.show(hints);
+        } else if (secondLevelCode != null &&
+                   secondLevelCode.equalsIgnoreCase("OTS")) {
+            if (cRow != null) {
+                cRow.setAttribute("SecondLevelCode", null);
+            }
+            ADFUtils.showFacesMessage("Expert Mode Cannot Be Selected , Please Select Any Other Choice..",
+                                      FacesMessage.SEVERITY_WARN);
+        }
+
     }
 
     public void setDigitalSdiCollection(List<ShowDetailItemCollection> digitalSdiCollection) {
@@ -1572,12 +1603,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputLOVMap.get("parentGroupName");
             String czNodeName = (String)inputLOVMap.get("czNodeName");
-//            if (czNodeName != null) {
-//                System.out.println("Cz Node name has special characters : " +
-//                                   czNodeName);
-//                czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
-//                //czNodeName = "\"" + czNodeName + "\"";
-//            }
+            //            if (czNodeName != null) {
+            //                System.out.println("Cz Node name has special characters : " +
+            //                                   czNodeName);
+            //                czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
+            //                //czNodeName = "\"" + czNodeName + "\"";
+            //            }
             String identifier = (String)inputLOVMap.get("identifier");
             UiSelection uiSelection = v93k.getUiSelection();
             if (uiSelection == null) {
@@ -1659,11 +1690,28 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public Boolean getDefaultViewOnLoad() {
+        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         String configCancelled =
             (String)ADFUtils.getSessionScopeValue("cancelAll");
+        HashMap ruleSetMap = (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
         if (configCancelled != null && configCancelled.equalsIgnoreCase("Y")) {
             defaultViewOnLoad = true;
         }
+        if(ruleSetMap!=null && !ruleSetMap.isEmpty()){
+            if(ruleSetMap.containsKey("error")){
+                String error = (String)ruleSetMap.get("error");
+                if(error!=null && error.equalsIgnoreCase("Y")){
+                    defaultViewOnLoad = true ;
+                }
+            }
+        }
+//        if(v93k!=null){
+//            boolean hasErrors = configHasErrors(v93k);
+//            if(hasErrors){
+//                defaultViewOnLoad = true ;
+//            }
+//        }
+        
         return defaultViewOnLoad;
     }
 
@@ -2012,14 +2060,36 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public String getOneTimeSpecial() {
-        
+
         return oneTimeSpecial;
     }
-    
-    public void refreshRuleSets(){
-        OperationBinding initRuleSetForRef = ADFUtils.findOperation("initRuleSetForRef");
-        if(initRuleSetForRef!=null){
+
+    public void refreshRuleSets() {
+        OperationBinding initRuleSetForRef =
+            ADFUtils.findOperation("initRuleSetForRef");
+        if (initRuleSetForRef != null) {
             initRuleSetForRef.execute();
         }
+    }
+    
+    public boolean configHasErrors(V93kQuote v93k) {
+        boolean hasErrors = false;
+        if (v93k != null) {
+            //Check if no exceptions from configurator
+            if (v93k.getExceptionMap() != null) {
+                TreeMap<String, ArrayList<String>> exceptionMap =
+                    v93k.getExceptionMap().getErrorList();
+                List<String> errorMessages =
+                    v93k.getExceptionMap().getErrorsMessages();
+                if (exceptionMap != null && exceptionMap.size() > 0) {
+                    hasErrors = true;
+                }
+                if (errorMessages != null && errorMessages.size() > 0) {
+                    hasErrors = true;
+                }
+            }
+           
+        }
+        return hasErrors;
     }
 }

@@ -18,7 +18,12 @@
     <taskFlow id="ImportSrcFlow1"
               taskFlowId="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ImportSrcFlow.xml#ImportSrcFlow"
               activation="deferred"
-              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"
+              Refresh="ifNeeded">
+      <parameters>
+        <parameter id="refreshImpSrc" value="#{sessionScope.refreshImpSrc}"/>
+      </parameters>
+    </taskFlow>
     <iterator id="CFDReportVO1Iterator" Binds="CFDReportVO1"
               DataControl="SudokuAMDataControl" RangeSize="25"/>
   </executables>

@@ -153,8 +153,6 @@ public class XMLImportPageBean {
         Object obj = null;
         //Reading JSOn from File to POJO
         ObjectMapper mapper = new ObjectMapper();
-        //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
-        //mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         _logger.info("Print mapper  parseXMLToPojo" + mapper);
         //comment this to run locally
         String responseJson =

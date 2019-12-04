@@ -2,6 +2,11 @@
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="ImportSrcFlow">
     <default-activity id="__7">initImportSource</default-activity>
+    <input-parameter-definition id="__12">
+      <name id="__13">refreshImpSrc</name>
+      <value>#{sessionScope.refreshImpSrc}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
     <managed-bean id="__8">
       <managed-bean-name id="__10">ImportSourceBean</managed-bean-name>
       <managed-bean-class id="__9">xxatcust.oracle.apps.sudoku.bean.ImportSource</managed-bean-class>

@@ -183,6 +183,8 @@ public class ImportSource {
         //        Boolean isDuplicateQuote = true;
         //        Boolean isUpdateQuote = false;
         //        String duplicateQuoteNum = null;
+        //Reset import source flow refresh parameter
+        ADFUtils.setSessionScopeValue("refreshImpSrc", null);
         int respid =
             Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
                              null ? "51156" :
@@ -287,34 +289,36 @@ public class ImportSource {
                                v93kQuote.getInputParams().getRuleSetTopLevelChoice());
                 ruleSetMap.put("secondLevelCode",
                                v93kQuote.getInputParams().getRuleSetSecondLevelChoice());
-                TreeMap<String, ArrayList<String>> exceptionMap =
-                    v93kQuote.getExceptionMap().getErrorList();
-                List<String> errorMessages =
-                    v93kQuote.getExceptionMap().getErrorsMessages();
-                StringBuilder errMessage = new StringBuilder("ERROR");
-                if (exceptionMap != null && exceptionMap.size() > 0) {
+                if (v93kQuote.getExceptionMap() != null) {
+                    TreeMap<String, ArrayList<String>> exceptionMap =
+                        v93kQuote.getExceptionMap().getErrorList();
+                    List<String> errorMessages =
+                        v93kQuote.getExceptionMap().getErrorsMessages();
+                    StringBuilder errMessage = new StringBuilder("ERROR");
+                    if (exceptionMap != null && exceptionMap.size() > 0) {
 
-                    for (Map.Entry<String, ArrayList<String>> entry :
-                         exceptionMap.entrySet()) {
-                        String key = entry.getKey();
-                        ArrayList<String> value = entry.getValue();
-                        for (String s : value) {
+                        for (Map.Entry<String, ArrayList<String>> entry :
+                             exceptionMap.entrySet()) {
+                            String key = entry.getKey();
+                            ArrayList<String> value = entry.getValue();
+                            for (String s : value) {
+                                errMessage.append(s);
+                            }
+                        }
+                    }
+                    if (errorMessages != null && errorMessages.size() > 0) {
+                        for (String s : errorMessages) {
                             errMessage.append(s);
                         }
                     }
-                }
-                if (errorMessages != null && errorMessages.size() > 0) {
-                    for (String s : errorMessages) {
-                        errMessage.append(s);
-                    }
-                }
-                if (errMessage != null &&
-                    errMessage.toString().equals("ERROR")) {
-                    //no error
-                    ruleSetMap.put("error", "N");
-                } else {
-                    ruleSetMap.put("error", "Y");
+                    if (errMessage != null &&
+                        errMessage.toString().equals("ERROR")) {
+                        //no error
+                        ruleSetMap.put("error", "N");
+                    } else {
+                        ruleSetMap.put("error", "Y");
 
+                    }
                 }
 
                 ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
@@ -482,9 +486,10 @@ public class ImportSource {
             (String)ADFUtils.getSessionScopeValue("UserId") == null ? "0" :
             (String)ADFUtils.getSessionScopeValue("UserId");
         String timestamp = Long.toString(System.currentTimeMillis());
-        String uniqueSessionId = (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
+        String uniqueSessionId =
+            (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
         String inactiveSessionId = uniqueSessionId;
-         uniqueSessionId =   userId.concat(timestamp);
+        uniqueSessionId = userId.concat(timestamp);
         InputParams inputParam = new InputParams();
         UiSelection uiSelection = new UiSelection();
         uiSelection.setUniqueSessionId(uniqueSessionId);
@@ -565,9 +570,13 @@ public class ImportSource {
             obj = v93k;
             String jsonStr = JSONUtils.convertObjToJson(obj);
             ObjectMapper mapper = new ObjectMapper();
+            //comment this to run locally
             String responseJson =
                 (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+
             obj = mapper.readValue(responseJson, V93kQuote.class);
+
+            //obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
         }
         ADFUtils.setSessionScopeValue("parentObject", obj);
 
@@ -617,7 +626,9 @@ public class ImportSource {
             (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
         if (impSrcPopup != null) {
             //impSrcPopup.hide();
+            ADFUtils.setSessionScopeValue("refreshImpSrc", "Y");
             impSrcPopup.cancel();
+            
         }
     }
 
@@ -658,7 +669,7 @@ public class ImportSource {
             ADFUtils.setSessionScopeValue("ImpSrcChanged", "Y");
         }
     }
-    
+
     public boolean configHasErrors(V93kQuote v93k) {
         boolean hasErrors = false;
         if (v93k != null) {
@@ -675,7 +686,7 @@ public class ImportSource {
                     hasErrors = true;
                 }
             }
-           
+
         }
         return hasErrors;
     }

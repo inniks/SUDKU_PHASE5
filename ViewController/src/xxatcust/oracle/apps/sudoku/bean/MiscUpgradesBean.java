@@ -211,14 +211,12 @@ public class MiscUpgradesBean {
 
             }
         }
-        System.out.println(sdiCollection);
         return sdiCollection;
     }
 
     public static SdiCollectionMiscUpgradeModel createSuperSubGroups(V93kQuote v93k,
                                                                      ConfiguratorUiGroup uiGroup,
                                                                      int indexer) {
-
         String groupName = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getMiscUpgradeGroup() != null) {
@@ -242,6 +240,7 @@ public class MiscUpgradesBean {
                         (ConfiguratorUiSubGroup)subGrppair.getValue();
                     if(subGrp!=null && subGrp.getSubGroupIdentifier()==null){
                         subGrp.setSubGroupIdentifier("TEST");
+                        //subGrp.setSubGroupIdentifier(groupName);
                     }
                     if (subGrp != null &&
                         subGrp.getSubGroupIdentifier() != null &&
@@ -282,7 +281,7 @@ public class MiscUpgradesBean {
                                                                index);
                     listofcollections.add(uiFieldCollection);
                     testList.add(uiFieldCollection);
-
+                    index++;
 
                 }
             }
@@ -300,7 +299,6 @@ public class MiscUpgradesBean {
                 Map.Entry pair = (Map.Entry)it.next();
                 String key = (String)pair.getKey();
                 subGrpName = key;
-                System.out.println("Key is " + subGrpName);
                 ArrayList<ArrayList<UiField>> val =
                     (ArrayList<ArrayList<UiField>>)pair.getValue();
                 ArrayList<UiField> test1 = new ArrayList<UiField>();
@@ -308,6 +306,7 @@ public class MiscUpgradesBean {
                     for (int i = 0; i < val.size(); i++) {
                         test1.add(val.get(i).get(0));
                     }
+                    System.out.println("Index being passed is "+counter);
                     ShowDetailItemCollection showDetItem =
                         new ShowDetailItemCollection(Integer.toString(counter),
                                                      test1, key, key);
@@ -337,7 +336,7 @@ public class MiscUpgradesBean {
         uiFieldCollection = new ArrayList<UiField>();
         UiField uiField = null;
         String requiredFlag = "N";
-        
+        //int ind = 0;
 
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (uiSbGrp != null) {

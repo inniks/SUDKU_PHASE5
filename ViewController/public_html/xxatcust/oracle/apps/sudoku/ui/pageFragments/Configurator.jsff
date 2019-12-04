@@ -70,7 +70,7 @@
                     binding="#{ConfiguratorBean.confirmPopup}">
             <af:dialog id="d1" title="Configuration has below warning(s)"
                        contentWidth="450" contentHeight="200"
-                       type="cancel">
+                       type="ok">
               <af:panelGroupLayout id="pg12l4" layout="scroll">
                 <af:outputFormatted id="ofpop4"
                                     binding="#{ConfiguratorBean.warnText}"/>
@@ -6091,7 +6091,8 @@
                                                           inlineStyle="height:25px; width:30px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgpgl18"
-                                                             layout="horizontal">
+                                                             layout="horizontal"
+                                                             rendered="#{node.codeName ne '5' ? true : (theadIter.uiGrpIndex eq '1'  ? false : true)}">
                                           <af:inputText id="misUpgit2"
                                                         columns="5"
                                                         disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
@@ -6168,14 +6169,32 @@
                                     </af:panelBorderLayout>
                                     <af:panelBorderLayout id="misUpgpb20"
                                                           inlineStyle="height:25px; width:60px; border-style:none;">
-                                      <f:facet name="innerLeft"/>
+                                      <f:facet name="innerLeft">
+                                        <af:panelGroupLayout id="pgl26_msc"
+                                                           rendered="#{theadIter.uiGrpIndex eq '1' and node.nodeName eq 'System Controller'}">
+                                        <af:selectOneChoice id="soc2"
+                                                            
+                                                            contentStyle="width:200px;"
+                                                            valueChangeListener="#{ConfiguratorBean.handleLOVInput}"
+                                                            autoSubmit="true"
+                                                            valuePassThru="true"
+                                                            value="#{theadIter.selectedLovValue}">
+                                          <f:selectItems value="#{theadIter.listOfValueModel}"
+                                                         id="si111"/>
+                                        </af:selectOneChoice>
+                                        <af:inputText label="Label 8" id="it_xcv_4"
+                                                      visible="false"
+                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                      </af:panelGroupLayout>
+                                      </f:facet>
                                     </af:panelBorderLayout>
                                     <af:panelBorderLayout id="misUpgpb1"
                                                           inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgpgl7"
                                                              layout="horizontal"
-                                                             halign="left">
+                                                             halign="left"
+                                                             rendered="#{node.codeName ne '5' ? true : (theadIter.uiGrpIndex eq '1'  ? false : true)}">
                                           <af:outputFormatted id="misUpgth_of1"
                                                               value="#{theadIter.uiField1}"
                                                               inlineStyle="#{theadIter.uiField1_bgColor}"/>

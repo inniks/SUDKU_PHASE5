@@ -12,8 +12,12 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import java.util.TreeMap;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -87,7 +91,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
 
-        validateEBSSession(pagePhaseEvent);
+        //validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {
@@ -215,7 +219,8 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                 String jSession = (String)request.getAttribute("JSESSION");
                 String quoteNumber =
                     (String)request.getAttribute("pQuoteNumber");
-                String callFromSearchQuote = (String)request.getAttribute("Search");
+                String callFromSearchQuote =
+                    (String)request.getAttribute("Search");
                 _logger.info("quoteNumbervalue from pQuoteNumber: " +
                              quoteNumber);
                 Map map1 =
@@ -233,9 +238,11 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                             map1.get("pQuoteNumber") == null ? "" : map1.get("pQuoteNumber").toString();
                     _logger.info("2nd quoteNumber: " + quoteNumber);
                 }
-                if(callFromSearchQuote==null){
-                    callFromSearchQuote = map1.get("Search") == null ? "" : map1.get("Search").toString();
-                    _logger.info("CallFromSearchQuote: " + callFromSearchQuote);
+                if (callFromSearchQuote == null) {
+                    callFromSearchQuote =
+                            map1.get("Search") == null ? "" : map1.get("Search").toString();
+                    _logger.info("CallFromSearchQuote: " +
+                                 callFromSearchQuote);
                 }
                 ADFUtils.setSessionScopeValue("targetQuoteNumber",
                                               quoteNumber);
@@ -285,8 +292,9 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                             return;
                         } else {
                             String userId = sessionEBS.getUserId();
-                            if(userId==null){
-                                ADFUtils.showFacesMessage("Could not establish session between EBS and ADF,Please contact IT Support", FacesMessage.SEVERITY_ERROR);
+                            if (userId == null) {
+                                ADFUtils.showFacesMessage("Could not establish session between EBS and ADF,Please contact IT Support",
+                                                          FacesMessage.SEVERITY_ERROR);
                             }
                             _logger.info("UserId : " + userId);
                             String userName = sessionEBS.getUserName();
@@ -343,15 +351,19 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                             sessionADF.setAttribute("OrgId", orgId);
                             if (quoteNumber != null &&
                                 !quoteNumber.equals("")) {
-                                callCIOServletOnLoad(quoteNumber,callFromSearchQuote);
+                                callCIOServletOnLoad(quoteNumber,
+                                                     callFromSearchQuote);
 
                             }
-                            if(callFromSearchQuote!=null && callFromSearchQuote.equalsIgnoreCase("Y")){
-                                if(quoteNumber==null || quoteNumber.equals("")){
-                                    ADFUtils.showFacesMessage("Quote Number is null,Please contact IT Support", FacesMessage.SEVERITY_ERROR);
+                            if (callFromSearchQuote != null &&
+                                callFromSearchQuote.equalsIgnoreCase("Y")) {
+                                if (quoteNumber == null ||
+                                    quoteNumber.equals("")) {
+                                    ADFUtils.showFacesMessage("Quote Number is null,Please contact IT Support",
+                                                              FacesMessage.SEVERITY_ERROR);
                                 }
                             }
-                           
+
                             javax.servlet.http.Cookie cookie =
                                 wrappedRequest.getICXCookie();
                             String icxcookieName = cookie.getName();
@@ -400,9 +412,10 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
         return true;
     }
 
-    public void callCIOServletOnLoad(String targetQuoteNum,String fromQuote) throws IOException,
-                                                                   JsonGenerationException,
-                                                                   JsonMappingException {
+    public void callCIOServletOnLoad(String targetQuoteNum,
+                                     String fromQuote) throws IOException,
+                                                              JsonGenerationException,
+                                                              JsonMappingException {
         SessionDetails sessionDetails = new SessionDetails();
         String userId =
             (String)ADFUtils.getSessionScopeValue("UserId") == null ? "0" :
@@ -429,7 +442,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                                  (String)ADFUtils.getSessionScopeValue("UserId"));
         sessionDetails.setTargetQuoteNumber(targetQuoteNum);
         //Add input params
-        inputParam.setCopyReferenceConfiguration(true); //Passing copy ref value as true
+        inputParam.setCopyReferenceConfiguration(false); //Passing copy ref value as true
         inputParam.setImportSource("LOAD_QUOTE_FROM_SEARCH");
         inputParam.setReuseQuote(true);
         inputParam.setQuoteNumber(targetQuoteNum);
@@ -443,35 +456,65 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
             (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
         _logger.info("Response JSON " + responseJson);
         v93k = mapper.readValue(responseJson, V93kQuote.class);
+        boolean configHasErrors = configHasErrors(v93k);
+
         HashMap ruleSetMap = new HashMap();
-        if (v93k.getInputParams() != null) {
-            ruleSetMap.put("topLevelCode",
-                           v93k.getInputParams().getRuleSetTopLevelChoice());
-            ruleSetMap.put("secondLevelCode",
-                           v93k.getInputParams().getRuleSetSecondLevelChoice());
-            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);            
-        }
-            if(v93k.getInputParams()==null){
-            ruleSetMap.put("topLevelCode",
-                           v93k.getInputParams().getRuleSetTopLevelChoice());
-            ruleSetMap.put("secondLevelCode",
-                           v93k.getInputParams().getRuleSetSecondLevelChoice());
-            //ADFContext.getCurrent().
+        if (!configHasErrors) {
+            if (v93k.getInputParams() != null) {
+                ruleSetMap.put("topLevelCode",
+                               v93k.getInputParams().getRuleSetTopLevelChoice());
+                ruleSetMap.put("secondLevelCode",
+                               v93k.getInputParams().getRuleSetSecondLevelChoice());
                 ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-            
-        }
-            if(ADFUtils.getSessionScopeValue("ruleSetMap")!=null){
-                HashMap rulesetMap = (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
-                if(rulesetMap!=null && ruleSetMap.isEmpty()){
-                    String topLvCode = (String)rulesetMap.get("topLevelCode");
-                    String scLvCode = (String)rulesetMap.get("secondLevelCode");
-                    _logger.info("RuleSet Map values in Load Quote "+topLvCode+"---"+scLvCode);
-                    
-                }
-               
             }
-       
+            if (v93k.getInputParams() == null) {
+                ruleSetMap.put("topLevelCode",
+                               v93k.getInputParams().getRuleSetTopLevelChoice());
+                ruleSetMap.put("secondLevelCode",
+                               v93k.getInputParams().getRuleSetSecondLevelChoice());
+                //ADFContext.getCurrent().
+                ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+
+            }
+            if (ADFUtils.getSessionScopeValue("ruleSetMap") != null) {
+                HashMap rulesetMap =
+                    (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
+                if (rulesetMap != null && ruleSetMap.isEmpty()) {
+                    String topLvCode = (String)rulesetMap.get("topLevelCode");
+                    String scLvCode =
+                        (String)rulesetMap.get("secondLevelCode");
+                    _logger.info("RuleSet Map values in Load Quote " +
+                                 topLvCode + "---" + scLvCode);
+
+                }
+
+            }
+        } else {
+            ruleSetMap.put("error", "Y");
+            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+        }
         ADFUtils.setSessionScopeValue("parentObject", v93k);
+    }
+
+    public boolean configHasErrors(V93kQuote v93k) {
+        boolean hasErrors = false;
+        if (v93k != null) {
+            //Check if no exceptions from configurator
+            if (v93k.getExceptionMap() != null) {
+                TreeMap<String, ArrayList<String>> exceptionMap =
+                    v93k.getExceptionMap().getErrorList();
+                List<String> errorMessages =
+                    v93k.getExceptionMap().getErrorsMessages();
+                if (exceptionMap != null && exceptionMap.size() > 0) {
+                    hasErrors = true;
+                }
+                if (errorMessages != null && errorMessages.size() > 0) {
+                    hasErrors = true;
+                }
+            }
+
+        }
+        return hasErrors;
     }
 
 }

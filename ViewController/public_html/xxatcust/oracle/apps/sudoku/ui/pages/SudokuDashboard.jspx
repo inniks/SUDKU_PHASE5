@@ -25,7 +25,8 @@
             <af:panelGroupLayout layout="scroll"
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="dashPGL" styleClass="AFStretchWidth">
-              <af:popup id="imSrcP1">
+              <af:popup id="imSrcP1" childCreation="deferred"
+                        contentDelivery="immediate">
                 <af:dialog id="d2" type="none" contentWidth="600"
                            contentHeight="300">
                   <af:region value="#{bindings.ImportSrcFlow1.regionModel}"
@@ -236,7 +237,8 @@
                                                   type="action"/>
                         </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s13"/>
-                        <af:commandImageLink id="ctb16" disabled="false"
+                        <af:commandImageLink id="ctb16"
+                                             disabled="#{viewScope.LoadDynamicRegionBean.disableReportButtons eq 'Y'}"
                                              icon="/Resources/images/imgs/View PMF_ena.png"
                                              partialSubmit="true"
                                              disabledIcon="/Resources/images/imgs/View PMF.png">

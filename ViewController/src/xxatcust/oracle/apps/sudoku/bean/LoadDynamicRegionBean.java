@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import com.sun.java.util.collections.Hashtable;
 
 import java.io.BufferedInputStream;
@@ -25,9 +26,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 //import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.Map;
@@ -410,6 +411,11 @@ public class LoadDynamicRegionBean {
             ADFUtils.setSessionScopeValue("parentObject", v93k);
         }
         boolean configHasErrors = configHasErrors(v93k);
+        if(configHasErrors){
+            HashMap rulesetMap = new HashMap();
+            rulesetMap.put("error", "Y");
+            ADFUtils.setSessionScopeValue("ruleSetMap", rulesetMap);
+        }
         if (!configHasErrors) {
             String createQtMsg = getFndMessages(SudokuUtils.createQteMsg);
             String discount = null;
@@ -1082,8 +1088,13 @@ public class LoadDynamicRegionBean {
             if (inputParams == null) {
                 inputParams = new InputParams();
             }
+            SessionDetails sessionDetails = v93k.getSessionDetails();
+            if(sessionDetails==null){
+                sessionDetails = new SessionDetails();
+            }
             inputParams.setImportSource("CANCEL_CONFIG");
             v93k.setInputParams(inputParams);
+            v93k.setSessionDetails(sessionDetails);
             String jsonStr = JSONUtils.convertObjToJson(v93k);
             System.out.println("Input JSON " + jsonStr);
             ObjectMapper mapper = new ObjectMapper();
@@ -1125,6 +1136,7 @@ public class LoadDynamicRegionBean {
         ADFUtils.setSessionScopeValue("selectedNodeValueMap", null);
         ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
         ADFUtils.setSessionScopeValue("inputLOVMap", null);
+        ADFUtils.setSessionScopeValue("refreshImpSrc", "Y");
         //ADFUtils.setSessionScopeValue("currView", "config");
         //        RichCommandImageLink button =
         //            (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to view reference page
@@ -1168,6 +1180,28 @@ public class LoadDynamicRegionBean {
                 disableString = "config";
         }
         return disableString;
+    }
+    
+    public String getDisableReportButtons(){
+        String disableReports = "N";
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(v93k!=null && v93k.getSessionDetails()!=null){
+            SessionDetails sessDetails = v93k.getSessionDetails();
+            boolean isUpgradeOnSrcConfig = sessDetails.isUpgradeOnSourceConfiguration();
+            boolean isUpgradeFromScratch = sessDetails.isUpgradefromScratch();
+            String targetQuoteNumber = sessDetails.getTargetQuoteNumber();
+            if(isUpgradeFromScratch|| isUpgradeOnSrcConfig || (targetQuoteNumber==null)){
+                disableReports = "Y" ;
+            }
+            else{
+                disableReports = "N";
+            }
+        }
+        else{
+            disableReports ="Y";
+        }
+        return disableReports;
     }
     
     public void navToLoadPref(ActionEvent actionEvent) {

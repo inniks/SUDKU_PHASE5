@@ -270,6 +270,9 @@ public class TargetConfiguration {
                                         System.out.println("Setting node designation for "+node.getNodeName());
                                         nodeDesig = "header";
                                     }
+                                    if(i>0){
+                                        nodeDesig = "upgrade";
+                                    }
                                     
                                     if (node.getPrintGroupLevel() != null &&
                                         node.getPrintGroupLevel().equalsIgnoreCase("1")) {
