@@ -319,7 +319,7 @@
         </af:popup>
         <af:popup id="MOFPopup"
                   popupFetchListener="#{viewScope.LoadDynamicRegionBean.onMOFreportFetch}">
-          <af:dialog id="d7" type="cancel" contentWidth="400" contentHeight="400"
+          <af:dialog id="d7" type="cancel" contentWidth="200" contentHeight="200"
                      title="Model File Report">
             <af:outputFormatted id="of5"
                                 binding="#{viewScope.LoadDynamicRegionBean.setMOFop}"/>

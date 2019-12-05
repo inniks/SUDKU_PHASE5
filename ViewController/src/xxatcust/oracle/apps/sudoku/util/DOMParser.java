@@ -62,7 +62,7 @@ public class DOMParser {
             v93kObj = populateQuoteDataOnObject(v93kObj, r);
 
         }
-        if(r==null){
+        if (r == null) {
             if (v93kObj.getConfigObject() != null) {
                 //Create a model bom and add it here
                 if (v93kObj.getConfigObject().getModelbomObjectList() ==
@@ -73,7 +73,7 @@ public class DOMParser {
                                 v93kObj.getInputParams().getRuleSetTopLevelChoice();
                     }
                     ModelBom mb = new ModelBom();
-                   // mb.setPricelist((String)r.getAttribute("Pricelistname"));
+                    // mb.setPricelist((String)r.getAttribute("Pricelistname"));
                     mb.setId(ruleSetVal);
                     Ruleset rf = new Ruleset();
                     rf.setId(v93kObj.getInputParams().getRuleSetSecondLevelChoice());
@@ -139,6 +139,13 @@ public class DOMParser {
                             for (ConfiguratorNodePOJO node : list) {
                                 if (node.getNodeCategory() != null &&
                                     node.getNodeCategory().equalsIgnoreCase("1")) {
+                                    node.setXmlTag("HEADER");
+                                }
+                                if (node.getNodeCategory() != null &&
+                                    (node.getNodeCategory().equalsIgnoreCase("2") ||
+                                     node.getNodeCategory().equalsIgnoreCase("3") ||
+                                     node.getNodeCategory().equalsIgnoreCase("4") ||
+                                     node.getNodeCategory().equalsIgnoreCase("5"))) {
                                     node.setXmlTag("HEADER");
                                 }
                                 if (node.getXmlTag() != null) {
@@ -568,10 +575,11 @@ public class DOMParser {
                             null &&
                             node.getNodeCategory().equalsIgnoreCase("1") &&
                             node.getNodeName().equalsIgnoreCase(v93.getInputParams().getRuleSetTopLevelChoice())) {
-                                                        System.out.println("Matched the values");
-                                                        System.out.println("Rule Set Top Level " +
-                                                                           v93.getInputParams().getRuleSetTopLevelChoice());
-                                                        System.out.println("Config object is "+v93.getConfigObject());
+                            System.out.println("Matched the values");
+                            System.out.println("Rule Set Top Level " +
+                                               v93.getInputParams().getRuleSetTopLevelChoice());
+                            System.out.println("Config object is " +
+                                               v93.getConfigObject());
                             if (v93.getConfigObject() != null) {
                                 List<ModelBom> modelBomList =
                                     v93.getConfigObject().getModelbomObjectList();
@@ -630,21 +638,36 @@ public class DOMParser {
             for (Map.Entry<String, List<ConfiguratorNodePOJO>> entry :
                  allNodesByCategoriesMap.entrySet()) {
                 String key = entry.getKey();
+                List<ConfiguratorNodePOJO> listItemsTemp = entry.getValue();
+                if (listItemsTemp != null && !listItemsTemp.isEmpty()) {
+                    ConfiguratorNodePOJO firstNode = listItemsTemp.get(0);
+                    if (firstNode != null && firstNode.getNodeName() != null &&
+                        firstNode.getNodeCategory() != null &&
+                        (firstNode.getNodeCategory().equals("1") ||
+                         firstNode.getNodeCategory().equals("2") ||
+                         firstNode.getNodeCategory().equals("3"))) {
+                        System.out.println("Setting ModelBom Id " +
+                                           firstNode.getNodeName());
+                        modelbomNode.setAttribute("id",
+                                                  firstNode.getNodeName());
+                    }
+
+                }
                 if (!key.equalsIgnoreCase("HEADER")) {
                     List<ConfiguratorNodePOJO> listItems = entry.getValue();
 
                     Element itemNode = doc.createElement(key);
                     System.out.println("**************************************");
                     for (ConfiguratorNodePOJO node : listItems) {
-
-                                                if (node != null && node.getNodeName() != null &&
-                                                    node.getNodeCategory() != null &&
-                                                    node.getNodeCategory().equals("1")) {
-                                                    System.out.println("Setting ModelBom Id " +
-                                                                       node.getNodeName());
-                                                    modelbomNode.setAttribute("id",
-                                                                              node.getNodeName());
-                                                }
+                        //
+                        //                                                if (node != null && node.getNodeName() != null &&
+                        //                                                    node.getNodeCategory() != null &&
+                        //                                                    (node.getNodeCategory().equals("1")||node.getNodeCategory().equals("2")||node.getNodeCategory().equals("3"))) {
+                        //                                                    System.out.println("Setting ModelBom Id " +
+                        //                                                                       node.getNodeName());
+                        //                                                    modelbomNode.setAttribute("id",
+                        //                                                                              node.getNodeName());
+                        //                                                }
                         Element e = doc.createElement("item");
                         if (node.getNodeName() != null) {
 
@@ -744,15 +767,17 @@ public class DOMParser {
                         ArrayList<ModelBom> mbList = new ArrayList<ModelBom>();
                         mbList.add(mb);
                         v93.getConfigObject().setModelbomObjectList(mbList);
-                    }
-                    else if(v93.getConfigObject().getModelbomObjectList()!=null && !v93.getConfigObject().getModelbomObjectList().isEmpty()) {
+                    } else if (v93.getConfigObject().getModelbomObjectList() !=
+                               null &&
+                               !v93.getConfigObject().getModelbomObjectList().isEmpty()) {
                         String ruleSetVal = null;
                         if (v93.getInputParams() != null) {
                             ruleSetVal =
                                     v93.getInputParams().getRuleSetTopLevelChoice();
                         }
-                        ArrayList<ModelBom> mbList = v93.getConfigObject().getModelbomObjectList();
-                        if(mbList!=null && !mbList.isEmpty()){
+                        ArrayList<ModelBom> mbList =
+                            v93.getConfigObject().getModelbomObjectList();
+                        if (mbList != null && !mbList.isEmpty()) {
                             ModelBom mb = mbList.get(0);
                             mbList.remove(0);
                             mb.setPricelist((String)r.getAttribute("Pricelistname"));
@@ -760,12 +785,12 @@ public class DOMParser {
                             Ruleset rf = new Ruleset();
                             rf.setId(v93.getInputParams().getRuleSetSecondLevelChoice());
                             mb.setRulesetObject(rf);
-                            mbList.add(0,mb);
+                            mbList.add(0, mb);
                             v93.getConfigObject().setModelbomObjectList(mbList);
                         }
                     }
                 }
-                
+
 
                 if (v93.getQheaderObject() == null) {
                     QHeader qheader = new QHeader();

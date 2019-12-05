@@ -502,6 +502,7 @@ public class XMLImportPageBean {
         System.out.println("Init Upload XML");
         if (quoteTotal != null && errorPopup != null) {
             getPageInitText();
+            //getPageInitText();
         }
     }
 
@@ -550,7 +551,13 @@ public class XMLImportPageBean {
         // RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("pb2lim"));
         exportDownload(null);
         UIComponent ui = ADFUtils.findComponentInRoot("pb2lim");
+        
         if (ui != null) {
+            System.out.println("UI Component is "+ui);
+            if(listViewCollection!=null){
+                System.out.println("Collection formed "+listViewCollection.size());
+            }
+            
             String cancelAll =
                 (String)ADFUtils.getSessionScopeValue("cancelAll");
             if (cancelAll != null && cancelAll.equalsIgnoreCase("Y")) {
@@ -558,7 +565,9 @@ public class XMLImportPageBean {
                     quoteTotal.setValue(null);
                 }
             }
-            AdfFacesContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("pb2lim"));
+            AdfFacesContext.getCurrentInstance().addPartialTarget(ui);
+            ADFUtils.addPartialTarget(ui);
+            
         }
 
         return pageInitText;
@@ -934,15 +943,7 @@ public class XMLImportPageBean {
                 }
             }
         }
-        //        } if(cancelAll!=null && cancelAll.equalsIgnoreCase("Y")) {
-        //            listViewCollection = new ArrayList<ListViewModel>();
-        //            root = new ArrayList();
-        //            categoryTree = new ChildPropertyTreeModel(root, "childNodes");
-        //            List<ChildPropertyTreeModel> listOfTrees = new ArrayList();
-        //            listOfTrees.add(categoryTree);
-        //            ListViewModel listViewObj = new ListViewModel();
-        //            listViewCollection.add(listViewObj);
-        //        }
+        System.out.println("List view coll "+listViewCollection);
         return listViewCollection;
     }
 

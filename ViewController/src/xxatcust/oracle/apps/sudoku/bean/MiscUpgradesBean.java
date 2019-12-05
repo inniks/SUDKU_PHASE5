@@ -195,9 +195,9 @@ public class MiscUpgradesBean {
                 Map.Entry pair = (Map.Entry)iter.next();
                 ConfiguratorUiGroup grp =
                     (ConfiguratorUiGroup)pair.getValue(); // this will be digital , dps etc
-
+                System.out.println("*************"+grp.getUiGroupName());
                 SdiCollectionMiscUpgradeModel sdiInstance =
-                    createSuperSubGroups(v93k, grp, indexer);
+                    createSuperSubGroups(v93k, grp, indexer,grp.getUiGroupName());
                 indexer++;
                 sdiCollection.add(sdiInstance);
             }
@@ -216,7 +216,7 @@ public class MiscUpgradesBean {
 
     public static SdiCollectionMiscUpgradeModel createSuperSubGroups(V93kQuote v93k,
                                                                      ConfiguratorUiGroup uiGroup,
-                                                                     int indexer) {
+                                                                     int indexer,String uiParentGrp) {
         String groupName = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getMiscUpgradeGroup() != null) {
@@ -239,7 +239,7 @@ public class MiscUpgradesBean {
                     ConfiguratorUiSubGroup subGrp =
                         (ConfiguratorUiSubGroup)subGrppair.getValue();
                     if(subGrp!=null && subGrp.getSubGroupIdentifier()==null){
-                        subGrp.setSubGroupIdentifier("TEST");
+                        subGrp.setSubGroupIdentifier(uiParentGrp);
                         //subGrp.setSubGroupIdentifier(groupName);
                     }
                     if (subGrp != null &&

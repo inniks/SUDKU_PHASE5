@@ -211,17 +211,17 @@ public class ConfiguratorBean {
                                           JsonMappingException {
         //The refresh should happen only if there is a v93k object available
         System.out.println("Init Configurator..");
-            //   V93kQuote v93k = (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
-             //  ADFUtils.setSessionScopeValue("parentObject", v93k);//Comment for server run
-              // HashMap ruleSetMap = new HashMap();
-//               if (v93k.getInputParams() != null) {
-////                   ruleSetMap.put("topLevelCode",
-////                                  v93k.getInputParams().getRuleSetTopLevelChoice());
-////                   ruleSetMap.put("secondLevelCode",
-////                                  v93k.getInputParams().getRuleSetSecondLevelChoice());
-//                   ruleSetMap.put("error", "Y");
-//                   ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-//               }
+        //               V93kQuote v93k = (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
+        //               ADFUtils.setSessionScopeValue("parentObject", v93k);//Comment for server run
+        //               HashMap ruleSetMap = new HashMap();
+        //               if (v93k.getInputParams() != null) {
+        ////                   ruleSetMap.put("topLevelCode",
+        ////                                  v93k.getInputParams().getRuleSetTopLevelChoice());
+        ////                   ruleSetMap.put("secondLevelCode",
+        ////                                  v93k.getInputParams().getRuleSetSecondLevelChoice());
+        //                   ruleSetMap.put("error", "Y");
+        //                   ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+        //               }
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
         if (v93k != null && v93k.getInputParams() != null &&
@@ -252,7 +252,7 @@ public class ConfiguratorBean {
         Object obj = null;
         try {
             obj =
-mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
+mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot1.json"),
                  xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote.class);
 
         } catch (JsonParseException e) {
@@ -417,12 +417,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
-//                String responseJson =
-//                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-//                System.out.println("Response Json from Configurator : " +
-//                                   responseJson);
-//                Object obj = mapper.readValue(responseJson, V93kQuote.class);
-//                v93k = (V93kQuote)obj;
+//        String responseJson =
+//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+//        System.out.println("Response Json from Configurator : " +
+//                           responseJson);
+//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+//        v93k = (V93kQuote)obj;
 
         // else use this
         v93k = (V93kQuote)convertJsonToObject(null);
@@ -1088,6 +1088,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         rfResourcesTreeModel = null;
         miscUpgTreeModel = null;
         infraUpgTreeModel = null;
+        ADFUtils.setSessionScopeValue("configSaved", null);
         v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
             v93k = new V93kQuote();
@@ -1690,28 +1691,28 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public Boolean getDefaultViewOnLoad() {
-        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         String configCancelled =
             (String)ADFUtils.getSessionScopeValue("cancelAll");
-        HashMap ruleSetMap = (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
+        String configSaved =
+            (String)ADFUtils.getSessionScopeValue("configSaved");
+        HashMap ruleSetMap =
+            (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
         if (configCancelled != null && configCancelled.equalsIgnoreCase("Y")) {
             defaultViewOnLoad = true;
         }
-        if(ruleSetMap!=null && !ruleSetMap.isEmpty()){
-            if(ruleSetMap.containsKey("error")){
+        if (ruleSetMap != null && !ruleSetMap.isEmpty()) {
+            if (ruleSetMap.containsKey("error")) {
                 String error = (String)ruleSetMap.get("error");
-                if(error!=null && error.equalsIgnoreCase("Y")){
-                    defaultViewOnLoad = true ;
+                if (error != null && error.equalsIgnoreCase("Y")) {
+                    defaultViewOnLoad = true;
                 }
             }
         }
-//        if(v93k!=null){
-//            boolean hasErrors = configHasErrors(v93k);
-//            if(hasErrors){
-//                defaultViewOnLoad = true ;
-//            }
-//        }
-        
+        if (configSaved != null && configSaved.equalsIgnoreCase("Y")) {
+            defaultViewOnLoad = true;
+        }
         return defaultViewOnLoad;
     }
 
@@ -2071,7 +2072,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             initRuleSetForRef.execute();
         }
     }
-    
+
     public boolean configHasErrors(V93kQuote v93k) {
         boolean hasErrors = false;
         if (v93k != null) {
@@ -2088,7 +2089,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     hasErrors = true;
                 }
             }
-           
+
         }
         return hasErrors;
     }

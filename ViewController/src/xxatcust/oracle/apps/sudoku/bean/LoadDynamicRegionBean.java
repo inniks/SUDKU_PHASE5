@@ -392,11 +392,6 @@ public class LoadDynamicRegionBean {
             String czNodeName = null;
             if (v93k.getUiSelection() != null) {
                 czNodeName = v93k.getUiSelection().getCzNodeName();
-//                if (czNodeName != null) {
-//                    //czNodeName = "\"" + czNodeName + "\"";
-//                    czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
-//                    v93k.getUiSelection().setCzNodeName(czNodeName);
-//                }
             }
 
             String jsonStr = JSONUtils.convertObjToJson(v93k);
@@ -539,6 +534,7 @@ public class LoadDynamicRegionBean {
                                                 }
 
                                                 //Save to oracle success , set param here
+                                                ADFUtils.setSessionScopeValue("configSaved", "Y");
                                             } else if (createMsg.contains("E-")) {
                                                 String[] resMsg =
                                                     createMsg.split("-", 2);
@@ -670,6 +666,7 @@ public class LoadDynamicRegionBean {
                                                                      "</b></p>");
                                                 }
                                                 //save too oracle success
+                                                ADFUtils.setSessionScopeValue("configSaved", "Y");
                                             } else if (createMsg.contains("E-")) {
                                                 String[] resMsg =
                                                     createMsg.split("-", 2);
@@ -788,6 +785,7 @@ public class LoadDynamicRegionBean {
                                                                      "</b></p>");
                                                 }
                                                 //save to oracle success
+                                                ADFUtils.setSessionScopeValue("configSaved", "Y");
                                             } else if (updateMsg.contains("E-")) {
                                                 String[] resMsg =
                                                     updateMsg.split("-", 2);
@@ -1128,20 +1126,13 @@ public class LoadDynamicRegionBean {
         ADFUtils.setSessionScopeValue("ruleSetMap", null);
         ADFUtils.setSessionScopeValue("qheaderValidMap", null);
         ADFUtils.setSessionScopeValue("ruleSetMap", null);
-        //
-        //
-        //        //Set one session scope for cancelled
         ADFUtils.setSessionScopeValue("cancelAll", "Y");
         ADFUtils.setSessionScopeValue("uniqueSessionId", null);
         ADFUtils.setSessionScopeValue("selectedNodeValueMap", null);
         ADFUtils.setSessionScopeValue("inputNodeValueMap", null);
         ADFUtils.setSessionScopeValue("inputLOVMap", null);
         ADFUtils.setSessionScopeValue("refreshImpSrc", "Y");
-        //ADFUtils.setSessionScopeValue("currView", "config");
-        //        RichCommandImageLink button =
-        //            (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to view reference page
-        //        ActionEvent acEvent = new ActionEvent(button);
-        //        acEvent.queue();
+        ADFUtils.setSessionScopeValue("configSaved", null);
         cancelPop.cancel();
     }
 
