@@ -218,6 +218,7 @@ public class UiField {
     private String selectedLovValue;
     private String licenceRowIndex;
     private Boolean disableEFCol;
+
     public UiField() {
 
 
@@ -259,7 +260,7 @@ public class UiField {
         int numOfSelections = 0;
         int countLicensesEntered = 0;
         int countOfEFEntries = 0;
-        boolean displayOnlyLogic = false;       
+        boolean displayOnlyLogic = false;
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
 
             ConfiguratorUiNode node = null;
@@ -272,7 +273,7 @@ public class UiField {
                         List<ConfiguratorUiNode> list =
                             listOfNodes.get(0).getConfigUiNodes();
                         for (ConfiguratorUiNode uiNode : list) {
-                            if(uiNode!=null && uiNode.isIsSelected()){
+                            if (uiNode != null && uiNode.isIsSelected()) {
                                 String czNodeName =
                                     uiNode.getCzNodeName() == null ? "-1" :
                                     uiNode.getCzNodeName();
@@ -282,8 +283,10 @@ public class UiField {
                                 String identifier =
                                     uiNode.getIdentifier() == null ? "-1" :
                                     uiNode.getIdentifier();
-                                selectedLovValue = czNodeName.concat("-").concat(uiNodeName).concat("-").concat(identifier);
-                                System.out.println("Selected LOV Value is "+selectedLovValue);
+                                selectedLovValue =
+                                        czNodeName.concat("-").concat(uiNodeName).concat("-").concat(identifier);
+                                System.out.println("Selected LOV Value is " +
+                                                   selectedLovValue);
                             }
                             String czNodeName =
                                 uiNode.getCzNodeName() == null ? "-1" :
@@ -401,7 +404,8 @@ public class UiField {
                             uiField1_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField1_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField1_color = SudokuUtils.TARGET_COLOR;
                         }
 
@@ -426,6 +430,15 @@ public class UiField {
                     if (uiField1_identifier != null &&
                         uiField1_identifier.equalsIgnoreCase("OBSOLETE")) {
                         uiField1_color = "Red";
+                    }
+                    if (node != null) {
+                        int qty1 = node.getQuantity();
+                        if (qty1 != -1) {
+                            uiField1_qty = Integer.toString(qty1);
+                            sumLicenceInputs =
+                                    sumLicenceInputs + node.getQuantity();
+                            countOfEFEntries++;
+                        }
                     }
                     if (node != null) {
                         uiField1_refQty =
@@ -470,7 +483,8 @@ public class UiField {
                             uiField2_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField2_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField2_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField2_dis = node.isDisableNode();
@@ -534,6 +548,12 @@ public class UiField {
                         //                        if (uiField2_dis) {
                         //                            uiField2_color = "Yellow";
                         //                        }
+                        if (qty != -1) {
+                            uiField2_qty = Integer.toString(qty);
+                            sumLicenceInputs =
+                                    sumLicenceInputs + node.getQuantity();
+                            countOfEFEntries++;
+                        }
                         uiField2_refQty =
                                 node.getReferenceQuantiy() == -1 ? "-1" :
                                 Integer.toString(node.getReferenceQuantiy());
@@ -573,7 +593,8 @@ public class UiField {
                             uiField3_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField3_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField3_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField3_dis = node.isDisableNode();
@@ -657,7 +678,8 @@ public class UiField {
                             uiField4_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField4_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField4_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField4_dis = node.isDisableNode();
@@ -742,7 +764,8 @@ public class UiField {
                             uiField5_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField5_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField5_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField5_dis = node.isDisableNode();
@@ -815,7 +838,8 @@ public class UiField {
                             uiField6_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField6_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField6_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField6_dis = node.isDisableNode();
@@ -909,7 +933,8 @@ public class UiField {
                             uiField7_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField7_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField7_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField7_dis = node.isDisableNode();
@@ -993,7 +1018,8 @@ public class UiField {
                             uiField8_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField8_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField8_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField8_dis = node.isDisableNode();
@@ -1078,7 +1104,8 @@ public class UiField {
                             uiField9_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField9_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField9_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField9_dis = node.isDisableNode();
@@ -1152,7 +1179,8 @@ public class UiField {
                             uiField10_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField10_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField10_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField10_dis = node.isDisableNode();
@@ -1227,7 +1255,8 @@ public class UiField {
                             uiField11_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField11_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField11_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField11_dis = node.isDisableNode();
@@ -1303,7 +1332,8 @@ public class UiField {
                             uiField12_color = SudokuUtils.REFERENCE_COLOR;
                         else if (node.isDisplayTargetColor())
                             uiField12_color = SudokuUtils.TARGET_COLOR;
-                        if(node.isDisplayReferenceColor() && node.isDisplayTargetColor()){
+                        if (node.isDisplayReferenceColor() &&
+                            node.isDisplayTargetColor()) {
                             uiField12_color = SudokuUtils.TARGET_COLOR;
                         }
                         uiField12_dis = node.isDisableNode();
@@ -1386,10 +1416,9 @@ public class UiField {
         if (sumInsTar != 0) {
             sumInstaBaseTar = Integer.toString(sumInsTar);
         }
-        if(countOfEFEntries>=2){
+        if (countOfEFEntries >= 2) {
             disableEFCol = true;
         }
-        
     }
 
 

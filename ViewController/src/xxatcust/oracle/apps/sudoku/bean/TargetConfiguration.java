@@ -89,6 +89,11 @@ public class TargetConfiguration {
             if (cancelAll != null && cancelAll.equalsIgnoreCase("Y")) {
                 quoteTotal.setValue(null);
             }
+            RichPopup.PopupHints hints = new RichPopup.PopupHints();
+            if(errPopup!=null){
+                errPopup.show(hints);
+                errPopup.cancel();
+            }
             AdfFacesContext.getCurrentInstance().addPartialTarget(ui);
         }
         //ADFUtils.refreshPage();
@@ -203,13 +208,13 @@ public class TargetConfiguration {
                                          node.getPrintGroupLevel().equalsIgnoreCase("2") ||
                                          node.getPrintGroupLevel().equalsIgnoreCase("3") ||
                                          node.getPrintGroupLevel().equalsIgnoreCase("4"))) {
-                                        if (node.getExtendedPrice() != null) {
-                                            lineQuoteAmount =
-                                                new Double(node.getExtendedPrice());
-                                            //                                            sumQuoteTotal = sumQuoteTotal + b;
-                                            //                                            lineQuoteAmount = new Double( node.getExtendedPrice());
-                                            //                                            System.out.println("Sum Total "+sumQuoteTotal);
-                                        }
+//                                        if (node.getExtendedPrice() != null) {
+//                                            lineQuoteAmount =
+//                                                new Double(node.getExtendedPrice());
+//                                            //                                            sumQuoteTotal = sumQuoteTotal + b;
+//                                            //                                            lineQuoteAmount = new Double( node.getExtendedPrice());
+//                                            //                                            System.out.println("Sum Total "+sumQuoteTotal);
+//                                        }
                                     }
                                     if (node.getNodeCategory() != null &&
                                         node.getPrintGroupLevel() != null) {

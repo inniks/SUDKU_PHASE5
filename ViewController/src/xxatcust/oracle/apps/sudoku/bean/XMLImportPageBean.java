@@ -826,11 +826,11 @@ public class XMLImportPageBean {
                             for (ConfiguratorNodePOJO node : allNodesList) {
                                 if (node.getPrintGroupLevel() != null &&
                                     node.getPrintGroupLevel().equalsIgnoreCase("1")) {
-                                    if (node.getExtendedPrice() != null) {
-                                        Double b =
-                                            new Double(node.getExtendedPrice());
-                                        sumQuoteTotal = sumQuoteTotal + b;
-                                    }
+//                                    if (node.getExtendedPrice() != null) {
+//                                        Double b =
+//                                            new Double(node.getExtendedPrice());
+//                                        sumQuoteTotal = sumQuoteTotal + b;
+//                                    }
                                 }
                                 if (node.getNodeCategory() != null &&
                                     node.getPrintGroupLevel() != null) {
@@ -922,8 +922,10 @@ public class XMLImportPageBean {
 
 
         } catch (Exception e) {
-            //ADFUtils.routeExceptions(e);
+            e.printStackTrace();
         } finally {
+            validationError = null;
+            
         }
         return listOfTrees;
     }

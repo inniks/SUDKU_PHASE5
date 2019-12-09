@@ -1984,8 +1984,11 @@ public class LoadDynamicRegionBean {
             _logger.info("print excelreport call start ");
             //  initializeAppsContext("0", "51157", "880");
             _logger.info("print after apps intilization in bean ");
-            String quoteNum = // "81779" ;
-                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            String quoteNum = null ;
+            V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+            if(v93k!=null && v93k.getSessionDetails()!=null){
+                quoteNum = v93k.getSessionDetails().getTargetQuoteNumber();
+            }
             OperationBinding ob =
                 getBindings().getOperationBinding("callCFDReport");
             ob.getParamsMap().put("quoteNum", quoteNum);

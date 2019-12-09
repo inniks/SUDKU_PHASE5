@@ -49,6 +49,7 @@ import oracle.adf.share.ADFContext;
 import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichListView;
+import oracle.adf.view.rich.component.rich.input.RichInputListOfValues;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.input.RichSelectItem;
 import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
@@ -62,16 +63,27 @@ import oracle.adf.view.rich.component.rich.output.RichOutputText;
 import oracle.adf.view.rich.context.AdfFacesContext;
 import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.event.LaunchPopupEvent;
+import oracle.adf.view.rich.model.ListOfValuesModel;
 import oracle.adf.view.rich.render.ClientEvent;
+
 
 import oracle.binding.OperationBinding;
 
+import oracle.jbo.AttributeDef;
 import oracle.jbo.Row;
 
+import oracle.jbo.RowSet;
+import oracle.jbo.ViewCriteria;
+import oracle.jbo.ViewCriteriaRow;
+import oracle.jbo.ViewObject;
+import oracle.jbo.common.ListBindingDef;
 import oracle.jbo.uicli.binding.JUCtrlHierBinding;
 
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
 
+import oracle.jbo.uicli.binding.JUCtrlListBinding;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.myfaces.trinidad.event.DisclosureEvent;
 import org.apache.myfaces.trinidad.event.RowDisclosureEvent;
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
@@ -213,24 +225,24 @@ public class ConfiguratorBean {
     public void initConfigurator() throws IOException, JsonGenerationException,
                                           JsonMappingException {
         //The refresh should happen only if there is a v93k object available
-        System.out.println("Init Configurator..");
-//        V93kQuote v93k =
-//            (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
-//        ADFUtils.setSessionScopeValue("parentObject",
-//                                      v93k); //Comment for server run
-//        HashMap ruleSetMap = new HashMap();
-//        if (v93k.getInputParams() != null) {
-//            ruleSetMap.put("topLevelCode",
-//                           v93k.getInputParams().getRuleSetTopLevelChoice());
-//            ruleSetMap.put("secondLevelCode",
-//                           v93k.getInputParams().getRuleSetSecondLevelChoice());
-//            //ruleSetMap.put("error", "Y");
-//            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-//        }
+//        System.out.println("Init Configurator..");
+//                V93kQuote v93k =
+//                    (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
+//                ADFUtils.setSessionScopeValue("parentObject",
+//                                              v93k); //Comment for server run
+//                HashMap ruleSetMap = new HashMap();
+//                if (v93k.getInputParams() != null) {
+//                    ruleSetMap.put("topLevelCode",
+//                                   v93k.getInputParams().getRuleSetTopLevelChoice());
+//                    ruleSetMap.put("secondLevelCode",
+//                                   v93k.getInputParams().getRuleSetSecondLevelChoice());
+//                    //ruleSetMap.put("error", "Y");
+//                    ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+//                }
         //Comment till here
-        
-                V93kQuote v93k =
-                    (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
+
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
         if (v93k != null && v93k.getInputParams() != null &&
             v93k.getInputParams().getImportSource() != null) {
 
@@ -259,7 +271,7 @@ public class ConfiguratorBean {
         Object obj = null;
         try {
             obj =
-mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot1.json"),
+mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                  xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote.class);
 
         } catch (JsonParseException e) {
@@ -1873,12 +1885,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot1.json"),
                            !formattedErrStr.toString().equals("<html><body><body><html>")) {
                     String cutStr = formattedErrStr.toString();
                     _logger.info("Cut String " + cutStr);
-                    if (cutStr.contains("<html><body>")) {
-                        cutStr.replace("<html><body>", "");
-                    }
-                    if (cutStr.contains("<body><html>")) {
-                        cutStr.replace("<body><html>", "");
-                    }
+                    StringUtils.replace(cutStr, "<html><body>", "");
+                    StringUtils.replace(cutStr, "<body><html>", "");
                     ADFUtils.showFacesMessage(cutStr,
                                               FacesMessage.SEVERITY_ERROR);
                 }
@@ -2107,5 +2115,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot1.json"),
 
         }
         return hasErrors;
+    }
+
+    public void ruleSetLaunchListener(LaunchPopupEvent launchPopupEvent) {
+        
     }
 }

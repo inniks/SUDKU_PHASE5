@@ -10,6 +10,7 @@ public class SessionDetails {
     private String userId;
     private String applicationId;
     private String respId;
+    private String databaseId;
     private String modelId;
     private String topItemId;
     private String publicationId;
@@ -21,23 +22,30 @@ public class SessionDetails {
     private String configHdrId;
     private String configRevNbr;
     private String configurationMode;
-    private ArrayList<String> nonComplaintsItems = new ArrayList<String>();
+    private ArrayList<String> nonComplaintsItems = new ArrayList<String>(); //TODO remove this before UAT
     private String servletMode; // value is EBS when using from EBS side manually testing
+    private String icxSessionTokenValue;
     private HashMap<String, String> fndMessages = new HashMap<String, String>(); 
     private HashMap<String, String> categoryToXMLTagMappings = new HashMap<String, String>(); 
     private boolean reloadInExpertMode = false;
     
-    boolean formalQuote = false;
-    boolean updateQuote = false;
-    boolean duplicateQuote = false;
-    boolean createNewQuote = false;
-    String sourceQuoteNumber;
-    String targetQuoteNumber;
+    private boolean formalQuote = false;
+    private boolean updateQuote = false;
+    private boolean duplicateQuote = false;
+    private boolean createNewQuote = false;
+    private String sourceQuoteNumber;
+    private String targetQuoteNumber;
     
-    boolean upgradeOnSourceConfiguration = false;
-    boolean upgradefromScratch = false;
-    boolean systemConfigurationFromUI = false;
-    boolean systemConfigurationFromImport = false;
+    private boolean upgradeOnSourceConfiguration = false;
+    private boolean upgradefromScratch = false;
+    private boolean systemConfigurationFromUI = false;
+    private boolean systemConfigurationFromImport = false;
+    
+    private String decimalSeperator = ".";// . is default decimal seperator
+    private String groupSeperator = ",";  // , is default group seperator
+    
+    private boolean isQuoteSaved = false;
+    
     
     // Non bom items from the source configuration before doing upgrade 
     HashSet<ConfiguratorUiNode> sourceConfigNonBomItems = new HashSet<ConfiguratorUiNode>();
@@ -318,5 +326,45 @@ public class SessionDetails {
 
     public HashMap<String, HashMap<String, Integer>> getInfraStructureUpgradeItems() {
         return infraStructureUpgradeItems;
+    }
+
+    public void setDatabaseId(String databaseId) {
+        this.databaseId = databaseId;
+    }
+
+    public String getDatabaseId() {
+        return databaseId;
+    }
+
+    public void setIcxSessionTokenValue(String icxSessionTokenValue) {
+        this.icxSessionTokenValue = icxSessionTokenValue;
+    }
+
+    public String getIcxSessionTokenValue() {
+        return icxSessionTokenValue;
+    }
+
+    public void setDecimalSeperator(String decimalSeperator) {
+        this.decimalSeperator = decimalSeperator;
+    }
+
+    public String getDecimalSeperator() {
+        return decimalSeperator;
+    }
+
+    public void setGroupSeperator(String groupSeperator) {
+        this.groupSeperator = groupSeperator;
+    }
+
+    public String getGroupSeperator() {
+        return groupSeperator;
+    }
+
+    public void setQuoteSaved(boolean isQuoteSaved) {
+        this.isQuoteSaved = isQuoteSaved;
+    }
+
+    public boolean isQuoteSaved() {
+        return isQuoteSaved;
     }
 }

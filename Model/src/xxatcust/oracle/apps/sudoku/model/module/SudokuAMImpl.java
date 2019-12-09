@@ -2461,6 +2461,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         if (secondLevelCode != null) {
                             secondLevelCode = secondLevelCode.toUpperCase();
                         }
+                        if(error==null){
                         cRow.setAttribute("TopLevelCode", topLevelCode);
                         cRow.setAttribute("SecondLevelCode", secondLevelCode);
                         RuleSetVORowImpl rwImpl =
@@ -2470,6 +2471,8 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         System.out.println("From AM Impl second level meaning " +
                                            secondLevelMeaning);
                         cRow.setAttribute("SecondLevelMeaning", secondLevelMeaning);
+                        }
+                        ruleSetVO.setCurrentRow(cRow);
                         //                    }
                     }
 

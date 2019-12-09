@@ -19,7 +19,10 @@ public class V93kQuote {
     List<ConfiguratorNodePOJO> nodeCollection ;
     ArrayList<QuoteLinePOJO> referenceConfigurationLines;
     ArrayList<QuoteLinePOJO> targetConfigurationLines;
-
+    
+    String referenceQuoteNetPrice;
+    String targetQuoteNetPrice;
+    
     SessionDetails sessionDetails ;
     ExceptionHandlerPOJO exceptionMap ;
     InputParams inputParams ;
@@ -107,5 +110,21 @@ public class V93kQuote {
 
     public UiSelection getUiSelection() {
         return uiSelection;
+    }
+
+    public void setReferenceQuoteNetPrice(String referenceQuoteNetPrice) {
+        this.referenceQuoteNetPrice = referenceQuoteNetPrice;
+    }
+
+    public String getReferenceQuoteNetPrice() {
+        return referenceQuoteNetPrice;
+    }
+
+    public void setTargetQuoteNetPrice(String targetQuoteNetPrice) {
+        this.targetQuoteNetPrice = targetQuoteNetPrice;
+    }
+
+    public String getTargetQuoteNetPrice() {
+        return targetQuoteNetPrice;
     }
 }
