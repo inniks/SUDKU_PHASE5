@@ -108,6 +108,7 @@ public class XMLImportPageBean {
     private ArrayList<ListViewModel> listViewCollection;
     private RichOutputText pageInitOP;
     private RichOutputText expertMode;
+    private RichPopup debugPopup;
 
     public XMLImportPageBean() {
 
@@ -500,9 +501,16 @@ public class XMLImportPageBean {
 
     public void initUploadXml() {
         System.out.println("Init Upload XML");
+        UIComponent ui = ADFUtils.findComponentInRoot("pb2lim");
+        System.out.println("uI Comp " + ui);
+        System.out.println("Quote Total " + quoteTotal);
         if (quoteTotal != null && errorPopup != null) {
             getPageInitText();
-            //getPageInitText();
+        }
+
+        if (ui != null) {
+            System.out.println("REfreshing.....");
+            ADFUtils.addPartialTarget(ui);
         }
     }
 
@@ -548,16 +556,16 @@ public class XMLImportPageBean {
     public RichOutputText getPageInitText() {
         refreshView(null);
         getListViewCollection();
-        // RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("pb2lim"));
         exportDownload(null);
         UIComponent ui = ADFUtils.findComponentInRoot("pb2lim");
-        
+
         if (ui != null) {
-            System.out.println("UI Component is "+ui);
-            if(listViewCollection!=null){
-                System.out.println("Collection formed "+listViewCollection.size());
+            System.out.println("UI Component is " + ui);
+            if (listViewCollection != null) {
+                System.out.println("Collection formed " +
+                                   listViewCollection.size());
             }
-            
+
             String cancelAll =
                 (String)ADFUtils.getSessionScopeValue("cancelAll");
             if (cancelAll != null && cancelAll.equalsIgnoreCase("Y")) {
@@ -565,9 +573,14 @@ public class XMLImportPageBean {
                     quoteTotal.setValue(null);
                 }
             }
+            RichPopup.PopupHints hints = new RichPopup.PopupHints();
+            if (debugPopup != null) {
+                debugPopup.show(hints);
+                debugPopup.cancel();
+            }
             AdfFacesContext.getCurrentInstance().addPartialTarget(ui);
             ADFUtils.addPartialTarget(ui);
-            
+
         }
 
         return pageInitText;
@@ -762,7 +775,7 @@ public class XMLImportPageBean {
                             warningPopup.show(hints);
                         }
 
-                        
+
                     } else {
                         String errTemp = null;
                         if (errMessage != null &&
@@ -791,7 +804,7 @@ public class XMLImportPageBean {
                         categoryTree =
                                 new ChildPropertyTreeModel(root, "childNodes");
                         listOfTrees.add(categoryTree);
-                        return listOfTrees ;
+                        return listOfTrees;
 
                     }
                 }
@@ -943,7 +956,11 @@ public class XMLImportPageBean {
                 }
             }
         }
-        System.out.println("List view coll "+listViewCollection);
+        System.out.println("List view coll " + listViewCollection);
+        if (panelBorderBinding != null) {
+            ADFUtils.addPartialTarget(panelBorderBinding);
+        }
+        System.out.println("Page init text is " + pageInitText);
         return listViewCollection;
     }
 
@@ -953,5 +970,13 @@ public class XMLImportPageBean {
 
     public RichOutputText getExpertMode() {
         return expertMode;
+    }
+
+    public void setDebugPopup(RichPopup debugPopup) {
+        this.debugPopup = debugPopup;
+    }
+
+    public RichPopup getDebugPopup() {
+        return debugPopup;
     }
 }

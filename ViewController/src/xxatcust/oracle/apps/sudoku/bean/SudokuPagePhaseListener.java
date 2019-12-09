@@ -91,7 +91,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
 
-        //validateEBSSession(pagePhaseEvent);
+        validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {
@@ -457,9 +457,10 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
         _logger.info("Response JSON " + responseJson);
         v93k = mapper.readValue(responseJson, V93kQuote.class);
         boolean configHasErrors = configHasErrors(v93k);
-
+        _logger.info("Load from OAF has errors "+configHasErrors);
         HashMap ruleSetMap = new HashMap();
         if (!configHasErrors) {
+        
             if (v93k.getInputParams() != null) {
                 ruleSetMap.put("topLevelCode",
                                v93k.getInputParams().getRuleSetTopLevelChoice());
@@ -492,6 +493,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
         } else {
             ruleSetMap.put("error", "Y");
             ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+            _logger.info("Putting error in rulesetMap "+ruleSetMap.get("error"));
         }
         ADFUtils.setSessionScopeValue("parentObject", v93k);
     }

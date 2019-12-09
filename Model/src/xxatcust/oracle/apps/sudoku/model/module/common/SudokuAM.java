@@ -160,8 +160,6 @@ public interface SudokuAM extends ApplicationModule {
     String callCFDReport(String quoteNum, int respId, int usrId);
 
 
-    Map defaultVals(int usrId, String orgId);
-
     Map defaultValsForSC(int usrId, String salesChannel, List customerNums,
                          String orgId);
 
@@ -200,4 +198,10 @@ public interface SudokuAM extends ApplicationModule {
     void getQuoteCustmerAddressOnCustNameForUpdateQuoteChange(String custName);
 
     void getQuoteCustmerAddressOnCustNameChange(String custName);
+
+    void clearUserPrefVO(int usrId);
+
+    Map defaultValsOUDependencies(int usrId, String orgId);
+
+    Map defaultVals(int usrId);
 }

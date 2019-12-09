@@ -46,6 +46,7 @@ import oracle.adf.model.BindingContext;
 import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.share.ADFContext;
+import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichListView;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
@@ -105,6 +106,8 @@ import xxatcust.oracle.apps.sudoku.viewmodel.ux.SdiCollectionMiscUpgradeModel;
 import xxatcust.oracle.apps.sudoku.viewmodel.ux.ShowDetailItemCollection;
 
 public class ConfiguratorBean {
+    private static ADFLogger _logger =
+        ADFLogger.createADFLogger(ConfiguratorBean.class);
     private List<ShowDetailItemCollection> sdiCollection;
     private List<ShowDetailItemCollection> sysConSdiCollection;
     private List<ShowDetailItemCollection> addSwToolsSdiCollection;
@@ -211,19 +214,23 @@ public class ConfiguratorBean {
                                           JsonMappingException {
         //The refresh should happen only if there is a v93k object available
         System.out.println("Init Configurator..");
-        //               V93kQuote v93k = (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
-        //               ADFUtils.setSessionScopeValue("parentObject", v93k);//Comment for server run
-        //               HashMap ruleSetMap = new HashMap();
-        //               if (v93k.getInputParams() != null) {
-        ////                   ruleSetMap.put("topLevelCode",
-        ////                                  v93k.getInputParams().getRuleSetTopLevelChoice());
-        ////                   ruleSetMap.put("secondLevelCode",
-        ////                                  v93k.getInputParams().getRuleSetSecondLevelChoice());
-        //                   ruleSetMap.put("error", "Y");
-        //                   ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-        //               }
-        V93kQuote v93k =
-            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
+//        V93kQuote v93k =
+//            (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
+//        ADFUtils.setSessionScopeValue("parentObject",
+//                                      v93k); //Comment for server run
+//        HashMap ruleSetMap = new HashMap();
+//        if (v93k.getInputParams() != null) {
+//            ruleSetMap.put("topLevelCode",
+//                           v93k.getInputParams().getRuleSetTopLevelChoice());
+//            ruleSetMap.put("secondLevelCode",
+//                           v93k.getInputParams().getRuleSetSecondLevelChoice());
+//            //ruleSetMap.put("error", "Y");
+//            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+//        }
+        //Comment till here
+        
+                V93kQuote v93k =
+                    (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
         if (v93k != null && v93k.getInputParams() != null &&
             v93k.getInputParams().getImportSource() != null) {
 
@@ -417,15 +424,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot1.json"),
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
-//        String responseJson =
-//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-//        System.out.println("Response Json from Configurator : " +
-//                           responseJson);
-//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-//        v93k = (V93kQuote)obj;
+                String responseJson =
+                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+                System.out.println("Response Json from Configurator : " +
+                                   responseJson);
+                Object obj = mapper.readValue(responseJson, V93kQuote.class);
+                v93k = (V93kQuote)obj;
 
         // else use this
-        v93k = (V93kQuote)convertJsonToObject(null);
+        //v93k = (V93kQuote)convertJsonToObject(null);
         if (v93k != null && v93k.getInputParams() != null) {
             Map ruleSetMap = new HashMap();
             ruleSetMap.put("topLevelCode",
@@ -1864,7 +1871,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot1.json"),
                     }
                 } else if (errorPopup == null && formattedErrStr != null &&
                            !formattedErrStr.toString().equals("<html><body><body><html>")) {
-                    ADFUtils.showFacesMessage(formattedErrStr.toString(),
+                    String cutStr = formattedErrStr.toString();
+                    _logger.info("Cut String " + cutStr);
+                    if (cutStr.contains("<html><body>")) {
+                        cutStr.replace("<html><body>", "");
+                    }
+                    if (cutStr.contains("<body><html>")) {
+                        cutStr.replace("<body><html>", "");
+                    }
+                    ADFUtils.showFacesMessage(cutStr,
                                               FacesMessage.SEVERITY_ERROR);
                 }
                 if (!isError && isConflict && conflictText != null &&

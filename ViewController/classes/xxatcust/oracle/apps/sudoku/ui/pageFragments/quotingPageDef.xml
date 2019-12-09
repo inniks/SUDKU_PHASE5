@@ -218,5 +218,12 @@
                   IsViewObjectMethod="false">
       <NamedData NDName="custNum" NDType="java.lang.String"/>
     </methodAction>
+    <methodAction id="clearUserPrefVO"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="clearUserPrefVO"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

@@ -39,6 +39,7 @@ public class QuotingBean {
     private RichPopup bindCreateQuotePopup;
     private RichInputText bindDiscount;
     private boolean isCustEditable;
+    private String successMsg;
 
     public QuotingBean() {
         super();
@@ -49,7 +50,7 @@ public class QuotingBean {
     }
 
 
-    public void saveQuoteDetails(ActionEvent actionEvent) {
+    public String saveQuoteDetails() {
         String msg = "";
         FacesContext fc = FacesContext.getCurrentInstance();
         int respid =
@@ -75,6 +76,9 @@ public class QuotingBean {
 
             String[] resultMsg = msg.split("-", 2);
             msg = resultMsg[1];
+//            successMsg= msg.toString();
+//            ShowPopup();
+            
             message = new FacesMessage(msg);
             message.setSeverity(FacesMessage.SEVERITY_INFO);
             fc.addMessage(null, message);
@@ -89,6 +93,7 @@ public class QuotingBean {
                     ADFUtils.setSessionScopeValue("parentObject", v93k);
                     ADFUtils.setSessionScopeValue("targetQuoteNumber",
                                                   arrOfStr[1]);
+                    updateQuote();
 
                     if (getBindDiscount().getValue() != null) {
                         if (v93k.getQheaderObject() != null) {
@@ -112,11 +117,19 @@ public class QuotingBean {
                 v93kNew.setSessionDetails(sesDet);
                 ADFUtils.setSessionScopeValue("parentObject", v93kNew);
             }
+            return "updateQuote";
         } else {
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             fc.addMessage(null, message);
         }
+        return null;
     }
+    
+    public void ShowPopup() {
+              RichPopup.PopupHints hints = new RichPopup.PopupHints();
+              this.getBindCreateQuotePopup().show(hints);
+     
+     }
 
     public String initQuotePage() {
         isCustEnable = false;
@@ -519,12 +532,12 @@ public class QuotingBean {
 
     public String updateQuote() {
         //getUpdateQuote
-        OperationBinding ob =
-            getBindings().getOperationBinding("getUpdateQuote");
-        if (ob.getErrors().size() == 0) {
-            ob.execute();
-        }
-        return "update";
+//        OperationBinding ob =
+//            getBindings().getOperationBinding("getUpdateQuote");
+//        if (ob.getErrors().size() == 0) {
+//            ob.execute();
+//        }
+        return "updateQuote";
     }
 
 
@@ -753,5 +766,18 @@ public class QuotingBean {
 
     public boolean isIsCustEditable() {
         return isCustEditable;
+    }
+
+    public String getQuoteUpdate() {
+    String val =  updateQuote();
+        return null;
+    }
+
+    public void setSuccessMsg(String successMsg) {
+        this.successMsg = successMsg;
+    }
+
+    public String getSuccessMsg() {
+        return successMsg;
     }
 }

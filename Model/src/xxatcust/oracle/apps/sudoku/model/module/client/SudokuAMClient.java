@@ -407,12 +407,6 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         return (String)_ret;
     }
 
-    public Map defaultVals(int usrId, String orgId) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"defaultVals",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), orgId});
-        return (Map)_ret;
-    }
-
     public Map defaultValsForSC(int usrId, String salesChannel,
                                 List customerNums, String orgId) {
         Object _ret =
@@ -516,5 +510,23 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         Object _ret =
             this.riInvokeExportedMethod(this,"getQuoteCustmerAddressOnCustNameChange",new String [] {"java.lang.String"},new Object[] {custName});
         return;
+    }
+
+    public void clearUserPrefVO(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"clearUserPrefVO",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return;
+    }
+
+    public Map defaultValsOUDependencies(int usrId, String orgId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"defaultValsOUDependencies",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), orgId});
+        return (Map)_ret;
+    }
+
+    public Map defaultVals(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"defaultVals",new String [] {"int"},new Object[] {new Integer(usrId)});
+        return (Map)_ret;
     }
 }

@@ -688,17 +688,6 @@
         Type="int"/>
     </Method>
     <Method
-      Name="defaultVals">
-      <Return
-        Type="java.util.Map"/>
-      <Parameter
-        Name="usrId"
-        Type="int"/>
-      <Parameter
-        Name="orgId"
-        Type="java.lang.String"/>
-    </Method>
-    <Method
       Name="defaultValsForSC">
       <Return
         Type="java.util.Map"/>
@@ -894,6 +883,33 @@
       <Parameter
         Name="custName"
         Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="clearUserPrefVO">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="usrId"
+        Type="int"/>
+    </Method>
+    <Method
+      Name="defaultValsOUDependencies">
+      <Return
+        Type="java.util.Map"/>
+      <Parameter
+        Name="usrId"
+        Type="int"/>
+      <Parameter
+        Name="orgId"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="defaultVals">
+      <Return
+        Type="java.util.Map"/>
+      <Parameter
+        Name="usrId"
+        Type="int"/>
     </Method>
   </ClientInterface>
 </AppModule>

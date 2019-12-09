@@ -115,7 +115,7 @@ public class LoadDynamicRegionBean {
     private String targetRefTF =
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/TargetConfigFlow.xml#TargetConfigFlow";
     private String loadPref =
-           "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UserPreferencesFlow.xml#UserPreferencesFlow";
+        "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UserPreferencesFlow.xml#UserPreferencesFlow";
     private String currentTF = "configurator";
     private RichPopup expConfigPopup;
     private RichInputText fileNameBinding;
@@ -141,21 +141,20 @@ public class LoadDynamicRegionBean {
     }
 
     public TaskFlowId getDynamicTaskFlowId() {
-           if (this.getCurrentTF().equalsIgnoreCase("configurator")) {
-               return TaskFlowId.parse(taskFlowId);
-           } else if (this.getCurrentTF().equalsIgnoreCase("viewRef")) {
-               return TaskFlowId.parse(viewReferenceTFId);
-           } else if (this.getCurrentTF().equalsIgnoreCase("quoteUpdate")) {
-               return TaskFlowId.parse(quoteTFUpdateId);
-           } else if (this.getCurrentTF().equalsIgnoreCase("targetRef")) {
-               return TaskFlowId.parse(targetRefTF);
-           }else if (this.getCurrentTF().equalsIgnoreCase("loadPref")) {
-               return TaskFlowId.parse(loadPref);  
-           }  
-           else {
-               return TaskFlowId.parse(quoteTFId);
-           }
-       }
+        if (this.getCurrentTF().equalsIgnoreCase("configurator")) {
+            return TaskFlowId.parse(taskFlowId);
+        } else if (this.getCurrentTF().equalsIgnoreCase("viewRef")) {
+            return TaskFlowId.parse(viewReferenceTFId);
+        } else if (this.getCurrentTF().equalsIgnoreCase("quoteUpdate")) {
+            return TaskFlowId.parse(quoteTFUpdateId);
+        } else if (this.getCurrentTF().equalsIgnoreCase("targetRef")) {
+            return TaskFlowId.parse(targetRefTF);
+        } else if (this.getCurrentTF().equalsIgnoreCase("loadPref")) {
+            return TaskFlowId.parse(loadPref);
+        } else {
+            return TaskFlowId.parse(quoteTFId);
+        }
+    }
 
     public void setTaskFlowId(String taskFlowId) {
         this.taskFlowId = taskFlowId;
@@ -195,7 +194,25 @@ public class LoadDynamicRegionBean {
 
     public String getNavString() throws Exception {
         String importSource = null, quoteNumber = null, quoteNumFromSession =
-            null;
+            null, error = null, cancelAll = null;
+        String targetQuoteNumber =
+            (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+        V93kQuote v93 =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93 != null && v93.getSessionDetails() != null) {
+            targetQuoteNumber = v93.getSessionDetails().getTargetQuoteNumber();
+            ADFUtils.setSessionScopeValue("targetQuoteNumber",
+                                          targetQuoteNumber);
+        }
+        HashMap ruleSetMap =
+            (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
+        cancelAll = (String)ADFUtils.getSessionScopeValue("cancelAll");
+        if (ruleSetMap != null && !ruleSetMap.isEmpty()) {
+            if (ruleSetMap.containsKey("error")) {
+                error = (String)ruleSetMap.get("error");
+            }
+        }
+        _logger.info("Has Error " + error);
         HashMap inputParamsMap =
             (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap");
         if (inputParamsMap != null && !inputParamsMap.isEmpty()) {
@@ -209,21 +226,31 @@ public class LoadDynamicRegionBean {
         if (importSource != null &&
             (String)ADFContext.getCurrent().getSessionScope().get("quoteNumFromXML") !=
             null) {
-            System.out.println("LOAD PAGE ::UPDATE QUOTE");
+            _logger.info("LOAD PAGE ::CREATE QUOTE IN XML MODE");
+            System.out.println("LOAD PAGE ::CREATE QUOTE IN XML MODE");
             return "quote";
         }
-        quoteNumFromSession =
-                (String)ADFUtils.getSessionScopeValue("quoteNumber");
-        if (importSource != null &&
-            (quoteNumFromSession != null || ADFUtils.getSessionScopeValue("targetQuoteNumber") !=
-             null)) {
+        if ((error != null || cancelAll != null || importSource == null) &&
+            targetQuoteNumber == null) {
+            System.out.println("LOAD PAGE ::CREATE QUOTE");
+            _logger.info("LOAD PAGE ::CREATE QUOTE");
+            return "quote";
+        }
+        if ((targetQuoteNumber != null || quoteNumber != null)) {
             System.out.println("LOAD PAGE ::UPDATE QUOTE");
+            _logger.info("LOAD PAGE ::UPDATE QUOTE");
             return "quoteUpdate";
         }
-        if (importSource == null || quoteNumFromSession == null) {
-            System.out.println("LOAD PAGE ::CREATE QUOTE");
-            return "quote";
-        } else
+        //        quoteNumFromSession =
+        //                (String)ADFUtils.getSessionScopeValue("quoteNumber");
+        //        if (importSource != null &&
+        //            (quoteNumFromSession != null || ADFUtils.getSessionScopeValue("targetQuoteNumber") !=
+        //             null)) {
+        //            System.out.println("LOAD PAGE ::UPDATE QUOTE");
+        //            _logger.info("LOAD PAGE ::UPDATE QUOTE");
+        //            return "quoteUpdate";
+        //        }
+        else
             return "configurator";
 
     }
@@ -387,7 +414,9 @@ public class LoadDynamicRegionBean {
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         //Do not call configurator if there is an error from Save Config to quote
-        if (v93k != null && v93k.getInputParams() != null && v93k.getSessionDetails()!=null && v93k.getSessionDetails().getTargetQuoteNumber()!=null){
+        if (v93k != null && v93k.getInputParams() != null &&
+            v93k.getSessionDetails() != null &&
+            v93k.getSessionDetails().getTargetQuoteNumber() != null) {
             v93k.getInputParams().setImportSource("SAVE_CONFIG_TO_QUOTE");
             String czNodeName = null;
             if (v93k.getUiSelection() != null) {
@@ -406,7 +435,7 @@ public class LoadDynamicRegionBean {
             ADFUtils.setSessionScopeValue("parentObject", v93k);
         }
         boolean configHasErrors = configHasErrors(v93k);
-        if(configHasErrors){
+        if (configHasErrors) {
             HashMap rulesetMap = new HashMap();
             rulesetMap.put("error", "Y");
             ADFUtils.setSessionScopeValue("ruleSetMap", rulesetMap);
@@ -534,7 +563,8 @@ public class LoadDynamicRegionBean {
                                                 }
 
                                                 //Save to oracle success , set param here
-                                                ADFUtils.setSessionScopeValue("configSaved", "Y");
+                                                ADFUtils.setSessionScopeValue("configSaved",
+                                                                              "Y");
                                             } else if (createMsg.contains("E-")) {
                                                 String[] resMsg =
                                                     createMsg.split("-", 2);
@@ -666,7 +696,8 @@ public class LoadDynamicRegionBean {
                                                                      "</b></p>");
                                                 }
                                                 //save too oracle success
-                                                ADFUtils.setSessionScopeValue("configSaved", "Y");
+                                                ADFUtils.setSessionScopeValue("configSaved",
+                                                                              "Y");
                                             } else if (createMsg.contains("E-")) {
                                                 String[] resMsg =
                                                     createMsg.split("-", 2);
@@ -785,7 +816,8 @@ public class LoadDynamicRegionBean {
                                                                      "</b></p>");
                                                 }
                                                 //save to oracle success
-                                                ADFUtils.setSessionScopeValue("configSaved", "Y");
+                                                ADFUtils.setSessionScopeValue("configSaved",
+                                                                              "Y");
                                             } else if (updateMsg.contains("E-")) {
                                                 String[] resMsg =
                                                     updateMsg.split("-", 2);
@@ -1059,10 +1091,17 @@ public class LoadDynamicRegionBean {
 
     public void navToConfigurator(ActionEvent actionEvent) {
         ADFUtils.setSessionScopeValue("currView", "config");
+       
     }
 
     public void navToViewRef(ActionEvent actionEvent) {
         ADFUtils.setSessionScopeValue("currView", "viewRef");
+//        RichCommandImageLink button =
+//            (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to create quote page
+//        if (button != null) {
+//            ActionEvent acEvent = new ActionEvent(button);
+//            acEvent.queue();
+//        }
     }
 
     public void navToTargetConfig(ActionEvent actionEvent) {
@@ -1078,6 +1117,7 @@ public class LoadDynamicRegionBean {
                                                                         JsonMappingException {
 
         //Call the CIO servlet with unique identifier , before setting all session values to null
+        String currView = (String)ADFUtils.getSessionScopeValue("currView");
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k != null) {
@@ -1087,7 +1127,7 @@ public class LoadDynamicRegionBean {
                 inputParams = new InputParams();
             }
             SessionDetails sessionDetails = v93k.getSessionDetails();
-            if(sessionDetails==null){
+            if (sessionDetails == null) {
                 sessionDetails = new SessionDetails();
             }
             inputParams.setImportSource("CANCEL_CONFIG");
@@ -1104,8 +1144,6 @@ public class LoadDynamicRegionBean {
             v93k = (V93kQuote)obj;
             ADFUtils.setSessionScopeValue("parentObject", v93k);
         }
-
-
         ADFUtils.setSessionScopeValue("cancelAll", "Y");
         if (ADFUtils.findComponentInRoot("config_Phd") != null) {
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("config_Phd"));
@@ -1133,7 +1171,19 @@ public class LoadDynamicRegionBean {
         ADFUtils.setSessionScopeValue("inputLOVMap", null);
         ADFUtils.setSessionScopeValue("refreshImpSrc", "Y");
         ADFUtils.setSessionScopeValue("configSaved", null);
+        ADFUtils.setSessionScopeValue("refreshImpSrc", null);
         cancelPop.cancel();
+        if (currView != null &&
+            (currView.equals("quoteUpdate") || currView.equals("quote"))) {
+            ADFUtils.setSessionScopeValue("currView", "quote");
+            RichCommandImageLink button =
+                (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb_qhdr"); // Navigate to create quote page
+            if (button != null) {
+                ActionEvent acEvent = new ActionEvent(button);
+                acEvent.queue();
+            }
+        }
+
     }
 
     public String getRefreshToken() {
@@ -1161,8 +1211,10 @@ public class LoadDynamicRegionBean {
         String disableString = null;
         String currView = (String)ADFUtils.getSessionScopeValue("currView");
         if (currView != null) {
-            if (currView.equalsIgnoreCase("quote"))
+            if (currView.equalsIgnoreCase("quote")) {
+                //Disable Quote button if there is error in loading
                 disableString = "quote";
+            }
             if (currView.equalsIgnoreCase("viewRef"))
                 disableString = "ref";
             if (currView.equalsIgnoreCase("targetRef"))
@@ -1172,32 +1224,32 @@ public class LoadDynamicRegionBean {
         }
         return disableString;
     }
-    
-    public String getDisableReportButtons(){
+
+    public String getDisableReportButtons() {
         String disableReports = "N";
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        if(v93k!=null && v93k.getSessionDetails()!=null){
+        if (v93k != null && v93k.getSessionDetails() != null) {
             SessionDetails sessDetails = v93k.getSessionDetails();
-            boolean isUpgradeOnSrcConfig = sessDetails.isUpgradeOnSourceConfiguration();
+            boolean isUpgradeOnSrcConfig =
+                sessDetails.isUpgradeOnSourceConfiguration();
             boolean isUpgradeFromScratch = sessDetails.isUpgradefromScratch();
             String targetQuoteNumber = sessDetails.getTargetQuoteNumber();
-            if(isUpgradeFromScratch|| isUpgradeOnSrcConfig || (targetQuoteNumber==null)){
-                disableReports = "Y" ;
-            }
-            else{
+            if (isUpgradeFromScratch || isUpgradeOnSrcConfig ||
+                (targetQuoteNumber == null)) {
+                disableReports = "Y";
+            } else {
                 disableReports = "N";
             }
-        }
-        else{
-            disableReports ="Y";
+        } else {
+            disableReports = "Y";
         }
         return disableReports;
     }
-    
+
     public void navToLoadPref(ActionEvent actionEvent) {
-            ADFUtils.setSessionScopeValue("currView", "loadPref");
-        }
+        ADFUtils.setSessionScopeValue("currView", "loadPref");
+    }
 
     public void exportTargetConfig(ActionEvent actionEvent) {
         //Check if target lines exist , If yes open the popup or show error
@@ -1436,8 +1488,12 @@ public class LoadDynamicRegionBean {
         try {
             _logger.info("print report call start ");
 
-            String quoteNum =
-                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            String quoteNum = null ;
+            V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+            if(v93k!=null && v93k.getSessionDetails()!=null){
+                quoteNum = v93k.getSessionDetails().getTargetQuoteNumber();
+            }
+                //(String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
             Object quotehid = null;
             String orgId = null;
             OperationBinding ob1 =
@@ -1636,8 +1692,11 @@ public class LoadDynamicRegionBean {
                                    OutputStream outputStream) {
         try {
             _logger.info("print excelreport call start ");
-            String quoteNum = // "81779" ;
-                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            String quoteNum = null ;
+            V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+            if(v93k!=null && v93k.getSessionDetails()!=null){
+                quoteNum = v93k.getSessionDetails().getTargetQuoteNumber();
+            }
 
             String orgId = null;
             OperationBinding ob2 =
@@ -1788,8 +1847,11 @@ public class LoadDynamicRegionBean {
         try {
 
 
-            String quoteNum = // "81779" ;
-                (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            String quoteNum = null ;
+            V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+            if(v93k!=null && v93k.getSessionDetails()!=null){
+                quoteNum = v93k.getSessionDetails().getTargetQuoteNumber();
+            }
             Object quotehid = null;
             String orgId = null;
             OperationBinding ob1 =
@@ -2041,7 +2103,7 @@ public class LoadDynamicRegionBean {
                     hasErrors = true;
                 }
             }
-           
+
         }
         return hasErrors;
     }

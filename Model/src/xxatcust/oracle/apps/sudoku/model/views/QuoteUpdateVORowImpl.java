@@ -1785,9 +1785,9 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
-            Object[] obj = { usrId, colType,String.valueOf(this.getOrgId()) };
+            Object[] obj = { usrId, colType };
             Key key = new Key(obj);
-            Row[] rows = this.getuserPrefEntityVA().findByKey(key, 3);
+            Row[] rows = this.getuserPrefEntityVA().findByKey(key, 2);
             if (rows != null && rows.length > 0)
                 currency = (String)rows[0].getAttribute("ColumnVal");
             System.out.println("currency values is:" + currency);
@@ -1874,9 +1874,9 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
-            Object[] obj = { usrId, colType,String.valueOf(this.getOrgId()) };
+            Object[] obj = { usrId, colType };
             Key key = new Key(obj);
-            Row[] rows = this.getuserPrefEntityVA().findByKey(key, 3);
+            Row[] rows = this.getuserPrefEntityVA().findByKey(key, 2);
             if (rows != null && rows.length > 0) {
                 incoTerm = (String)rows[0].getAttribute("ColumnVal");
             }
@@ -2017,7 +2017,7 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 vo.executeQuery();
           
         }
-        return defaultIncoTerm;
+        return defaultval;
     }
 
     public void getUserBasedSalesChannel() {
@@ -2028,9 +2028,9 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
-            Object[] obj = { usrId, colType,String.valueOf(this.getOrgId()) };
+            Object[] obj = { usrId, colType };
             Key key = new Key(obj);
-            Row[] rows = this.getuserPrefEntityVA().findByKey(key, 3);
+            Row[] rows = this.getuserPrefEntityVA().findByKey(key, 2);
             if (rows != null && rows.length > 0) {
                 salesChannel = (String)rows[0].getAttribute("ColumnVal");
             }
@@ -2063,16 +2063,21 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
     public void getUserBasedOrderType() {
         System.out.println("OrgId::" + this.getOrgId());
         System.out.println("Order Type:"+this.getOrdertypename()+"OrderTypeId:"+this.getOrderTypeId());
+        ViewObjectImpl userBasedVO = (ViewObjectImpl)this.getuserPrefEntityVA().getViewObject();
         if (this.getOrgId() != null) {
             String orderTypeValues = null;
             StringBuilder sb = new StringBuilder("(");
             ViewObjectImpl vo =
                 (ViewObjectImpl)this.getOrderTypeVO().getViewObject();
-            String colType = "Order_type";
+            String colType = "'Order_type'";
             if (vo != null) {
-                Object[] obj = { usrId, colType,String.valueOf(this.getOrgId()) };
-                Key key = new Key(obj);
-                Row[] rows = this.getuserPrefEntityVA().findByKey(key, 3);
+//                Object[] obj = { usrId, colType,St };
+//                Key key = new Key(obj);
+//                Row[] rows = this.getuserPrefEntityVA().findByKey(key, 3);
+                RowQualifier rq1 =
+                    new RowQualifier("ColumnType =" + colType + " and UserId=" +
+                                     usrId + " and OperatingUnit ='" + String.valueOf(this.getOrgId()) +"'");
+                Row[] rows = userBasedVO.getFilteredRows(rq1);
                 if (rows != null && rows.length > 0) {
                     orderTypeValues =
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
@@ -2206,12 +2211,13 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
         System.out.println("OrgId::" + this.getOrgId());
         BigDecimal defaultval = null;
         System.out.println("QUote Based SalesRep:"+this.getSalesrepresentative());
+        ViewObjectImpl userBasedVO = (ViewObjectImpl)this.getuserPrefEntityVA().getViewObject();
         if (this.getOrgId() != null) {
             String salesRepValues = null;
             StringBuilder sb = new StringBuilder("(");
             ViewObjectImpl vo =
                 (ViewObjectImpl)this.getSalesRepresentativeVO().getViewObject();
-            String colType = "Sales_Rep";
+            String colType = "'Sales_Rep'";
             System.out.println("default valuess:"+this.getSalesrepresentative());
             if(this.getSalesrepresentative()!=null){
                 vo.setWhereClause(null);
@@ -2228,10 +2234,16 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                         defaultval = (BigDecimal)r.getAttribute("ResourceId");
                             }
                 }}
-            if (vo != null) {
-                Object[] obj = { usrId, colType,String.valueOf(this.getOrgId()) };
-                Key key = new Key(obj);
-                Row[] rows = this.getuserPrefEntityVA().findByKey(key, 3);
+            if (vo != null && userBasedVO!=null ) {
+                userBasedVO.clearCache();
+                userBasedVO.setWhereClause(null);
+                RowQualifier rq1 =
+                    new RowQualifier("ColumnType =" + colType + " and UserId=" +
+                                     usrId + " and OperatingUnit ='" + String.valueOf(this.getOrgId()) +"'");
+                Row[] rows = userBasedVO.getFilteredRows(rq1);
+//                Object[] obj = { usrId, colType,String.valueOf(this.getOrgId()) };
+//                Key key = new Key(obj);
+//                Row[] rows = this.getuserPrefEntityVA().findByKey(key, 3);
                 if (rows != null && rows.length > 0) {
                     salesRepValues =
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
@@ -2257,9 +2269,9 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
             (ViewObjectImpl)this.getCustomerSupportRepresentVO().getViewObject();
         String colType = "CSR";
         if (vo != null) {
-            Object[] obj = { usrId, colType,String.valueOf(this.getOrgId()) };
+            Object[] obj = { usrId, colType };
             Key key = new Key(obj);
-            Row[] rows = this.getuserPrefEntityVA().findByKey(key, 3);
+            Row[] rows = this.getuserPrefEntityVA().findByKey(key, 2);
             if (rows != null && rows.length > 0) {
                 csrValues =
                         (String)rows[0].getAttribute("ColumnVal"); //DefaultVal

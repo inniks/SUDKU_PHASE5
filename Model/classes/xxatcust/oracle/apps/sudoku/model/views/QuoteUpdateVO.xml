@@ -565,7 +565,7 @@ AND view_application_id=660)SalesChannel,
 (select rtt.name from  ra_terms_tl rtt, ASO_PAYMENTS ASP 
 where ASP.PAYMENT_TERM_ID=rtt.term_id
 AND AsoQuoteHeadersAll.QUOTE_HEADER_ID =ASP.QUOTE_HEADER_ID)PaymentTerms,
-(select flv1.Description from fnd_lookup_values flv1, ASO_SHIPMENTS ASS 
+(select flv1.Meaning from fnd_lookup_values flv1, ASO_SHIPMENTS ASS 
 where flv1.lookup_type = 'FOB' 
 and ASS.FOB_CODE =flv1.lookup_code 
 and AsoQuoteHeadersAll.QUOTE_HEADER_ID          =ASS.QUOTE_HEADER_ID)IncoTerms

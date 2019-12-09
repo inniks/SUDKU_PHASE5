@@ -215,7 +215,7 @@
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToLoadPref}"
                                              partialSubmit="true"
                                              disabledIcon="/Resources/images/imgs/Load preferences.png"
-                                             icon="/Resources/images/imgs/Load preferences.png">
+                                             icon="/Resources/images/imgs/Load preferences_edit.png">
                           <af:setPropertyListener from="loadPref"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
@@ -265,7 +265,7 @@
                         </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s17"/>
                         <af:commandImageLink id="cil1"
-                                             icon="/Resources/images/imgs/Print Page.png"
+                                             icon="/Resources/images/imgs/Print Page_edit.png"
                                              disabledIcon="/Resources/images/imgs/Print Page.png"
                                              disabled="false"></af:commandImageLink>
                       </af:panelGroupLayout>

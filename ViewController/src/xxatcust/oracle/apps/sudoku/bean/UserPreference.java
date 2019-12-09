@@ -296,10 +296,16 @@ public class UserPreference {
     }
 
     public void onCommit(ActionEvent actionEvent) {
-        if (orgId != null) {
-
-            //            if ((selectedOrderTypeValues != null &&
-            //                 selectedOrderTypeValues.size() > 0) || orderType != null) {
+        OperationBinding clearDataOB =
+            ADFUtils.getBindingContainer().getOperationBinding("clearUserPrefVO");
+        clearDataOB.getParamsMap().put("usrId", usrId);
+        if(clearDataOB!=null)
+            clearDataOB.execute();
+        boolean isOT = false,isCust = false,isSalesRep = false,isCSR =false,isIncoTerm = false,isCurrency = false,isPaymentTerm = false,isSC = false;
+        if(selectedOrderTypeValues==null)
+            selectedOrderTypeValues= new ArrayList();
+                            if ((selectedOrderTypeValues != null && selectedOrderTypeValues.size() > 0) || orderType != null) {  //selectedOrderTypeValues.size() > 0
+                                isOT = true;
             OperationBinding orderTypeob =
                 ADFUtils.getBindingContainer().getOperationBinding("validateOrderTypeValues");
             orderTypeob.getParamsMap().put("usrId", usrId);
@@ -313,9 +319,11 @@ public class UserPreference {
             if (orderTypeob != null) {
                 orderTypeob.execute();
             }
-            //            }
-            //            if ((selectedCustNumValues != null &&
-            //                 selectedCustNumValues.size() > 0) || custNum != null) {
+                        }
+                            if(selectedCustNumValues ==null)
+                                selectedCustNumValues = new ArrayList();
+                        if ((selectedCustNumValues != null && selectedCustNumValues.size()>0 ) || custNum != null) {  //                selectedCustNumValues.size() > 0
+                            isCust  = true;
             OperationBinding custNumob =
                 ADFUtils.getBindingContainer().getOperationBinding("validateCustValues");
             custNumob.getParamsMap().put("usrId", usrId);
@@ -325,9 +333,11 @@ public class UserPreference {
             custNumob.getParamsMap().put("orgId", orgId);
             if (custNumob != null)
                 custNumob.execute();
-            //            }
-            //            if ((selectedSalesRepValues != null &&
-            //                 selectedSalesRepValues.size() > 0) || salesRep != null) {
+                        }
+                       if(selectedSalesRepValues == null)
+                           selectedSalesRepValues= new ArrayList();
+                        if ((selectedSalesRepValues != null && selectedSalesRepValues.size() > 0 ) || salesRep != null) {  //           selectedSalesRepValues.size() > 0
+                            isSalesRep = true;
             OperationBinding salesRepob =
                 ADFUtils.getBindingContainer().getOperationBinding("validateSalesRepValues");
             salesRepob.getParamsMap().put("usrId", usrId);
@@ -338,10 +348,11 @@ public class UserPreference {
             salesRepob.getParamsMap().put("orgId", orgId);
             if (salesRepob != null)
                 salesRepob.execute();
-            //            }
-            //
-            //            if ((selectedCSRValues != null && selectedCSRValues.size() > 0) ||
-            //                csr != null) {
+                        }
+        if (selectedCSRValues == null )
+            selectedCSRValues= new ArrayList();
+                        if ((selectedCSRValues != null && selectedCSRValues.size() > 0) ||csr != null) {  //&& selectedCSRValues.size() > 0
+                            isCSR = true;
             OperationBinding csrob =
                 ADFUtils.getBindingContainer().getOperationBinding("validateCsrValues");
             csrob.getParamsMap().put("usrId", usrId);
@@ -350,9 +361,11 @@ public class UserPreference {
             csrob.getParamsMap().put("csr", csr);
             if (csrob != null)
                 csrob.execute();
-            //            }
-            //            if ((selectedCurrencyValues != null &&
-            //                 selectedCurrencyValues.size() > 0) || currency != null) {
+                        }
+        if (selectedCurrencyValues == null )
+            selectedCurrencyValues = new ArrayList();
+                        if ((selectedCurrencyValues != null &&  selectedCurrencyValues.size() > 0) || currency != null) {  //              &&  selectedCurrencyValues.size() > 0
+                            isCurrency = true;
             OperationBinding currencyob =
                 ADFUtils.getBindingContainer().getOperationBinding("validateCurrencyValues");
             currencyob.getParamsMap().put("usrId", usrId);
@@ -362,11 +375,11 @@ public class UserPreference {
             currencyob.getParamsMap().put("defaultName", currency);
             if (currencyob != null)
                 currencyob.execute();
-            //            }
-
-
-            //            if ((selectedIncoTermValues != null &&
-            //                 selectedIncoTermValues.size() > 0) || incoTerm != null) {
+                        }
+                        if(selectedIncoTermValues==null)
+                            selectedIncoTermValues=new ArrayList();
+                        if ((selectedIncoTermValues != null && selectedIncoTermValues.size() > 0) || incoTerm != null) { //selectedIncoTermValues.size() > 0
+                            isIncoTerm = true;
             OperationBinding incoTermob =
                 ADFUtils.getBindingContainer().getOperationBinding("validateIncoTermValues");
             incoTermob.getParamsMap().put("usrId", usrId);
@@ -376,10 +389,9 @@ public class UserPreference {
             incoTermob.getParamsMap().put("dafaultVal", incoTerm);
             if (incoTermob != null)
                 incoTermob.execute();
-            //            }
-
-
-            //            if (paymentTerm != null) {
+                        }
+                        if (paymentTerm != null) {
+                            isPaymentTerm= true;
             OperationBinding paymentTermsob =
                 ADFUtils.getBindingContainer().getOperationBinding("validatePaymentTermValues");
             paymentTermsob.getParamsMap().put("usrId", usrId);
@@ -387,10 +399,10 @@ public class UserPreference {
             paymentTermsob.getParamsMap().put("defaultVal", paymentTerm);
             if (paymentTermsob != null)
                 paymentTermsob.execute();
-            //            }
+                        }
 
-            //            if (selectedSalesChannel != null &&
-            //                selectedSalesChannel.size() > 0) {
+                        if (selectedSalesChannel != null) {  //   selectedSalesChannel.size() > 0
+                            isSC = true;
             OperationBinding salesChannelOB =
                 ADFUtils.getBindingContainer().getOperationBinding("validateSalesChannelForSC");
             salesChannelOB.getParamsMap().put("usrId", usrId);
@@ -400,7 +412,7 @@ public class UserPreference {
                 salesChannelOB.execute();
 
             }
-            //            }
+                        }
             OperationBinding commitOperations =
                 ADFUtils.findOperation("commitEntities");
             System.out.println(this.bindPrdNumRefConf.getValue());
@@ -410,15 +422,19 @@ public class UserPreference {
             if (staticValob != null) {
                 staticValob.execute();
             }
+            
+            if (isOT == true || isCust == true || isSalesRep == true || isCSR ==true || isIncoTerm == true || isCurrency == true || isPaymentTerm ==true || isSC == true) {
             Boolean flag = (Boolean)commitOperations.execute();
             if (flag != null) {
                 if (flag)
                     ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
                                         "Global Choice Data Saved Successfully");
             }
-        } else {
+            isOT = false;isCust = false;isSalesRep = false;isCSR =false;isIncoTerm = false;isCurrency = false;isPaymentTerm = false;isSC = false;
+        }
+        else {
             ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                "Please Select Operating Unit before save");
+                                "Please Select any of value before save");
         }
     }
 
@@ -706,9 +722,9 @@ public class UserPreference {
         if (vo != null) {
             vo.clearCache();
             vo.setWhereClause(null);
-            Object obj[] = { usrId, colVal, orgId };
+            Object obj[] = { usrId, colVal };
             Key key = new Key(obj);
-            Row[] rows = vo.findByKey(key, 3);
+            Row[] rows = vo.findByKey(key, 2);
             if (rows != null && rows.length > 0) {
                 temp = (String)rows[0].getAttribute("ColumnVal");
             }
@@ -741,9 +757,9 @@ public class UserPreference {
         if (vo != null) {
             vo.clearCache();
             vo.setWhereClause(null);
-            Object obj[] = { usrId, colVal, orgId };
+            Object obj[] = { usrId, colVal };
             Key key = new Key(obj);
-            Row[] rows = vo.findByKey(key, 3);
+            Row[] rows = vo.findByKey(key, 2);
             if (rows != null && rows.length > 0) {
                 temp = (String)rows[0].getAttribute("ColumnVal");
             }
@@ -776,9 +792,9 @@ public class UserPreference {
             vo.clearCache();
             vo.setWhereClause(null);
             System.out.println("size of VO:" + vo.getEstimatedRowCount());
-            Object obj[] = { usrId, colVal, orgId };
+            Object obj[] = { usrId, colVal };
             Key key = new Key(obj);
-            Row[] rows = vo.findByKey(key, 3);
+            Row[] rows = vo.findByKey(key, 2);
             if (rows != null && rows.length > 0) {
                 temp = (String)rows[0].getAttribute("ColumnVal");
             }
@@ -1002,52 +1018,29 @@ public class UserPreference {
                 ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("OperatingUnit");
             System.out.println("OrgId idddds:" + orgValue);
             ADFUtils.setSessionScopeValue("UserBasedOrgId", null);
-            getBindGlobalChoiceShowDetail().setDisclosed(false);
+//            getBindGlobalChoiceShowDetail().setDisclosed(false);
             getBindSalesChannelShowDetail().setDisclosed(false);
             isGlobalChoiceEnable = true;
             isSalesChnnelEnable = true;
-            if (selectedCustNumValues != null) {
+            if (selectedCustNumValues != null) 
                 selectedCustNumValues.clear();
-            }
-            if (selectedOrderTypeValues != null) {
+            if (selectedOrderTypeValues != null) 
                 selectedCustNumValues.clear();
-            }
-            if (selectedSalesRepValues != null) {
+            if (selectedSalesRepValues != null) 
                 selectedSalesRepValues.clear();
-            }
             if (custNames != null)
                 custNames.clear();
             if (custNumbers != null)
                 custNumbers.clear();
             if (customerNums != null)
                 customerNums.clear();
-            if (selectedCSRValues != null)
-                selectedCSRValues.clear();
-            if (selectedCurrencyValues != null)
-                selectedCurrencyValues.clear();
-            if (selectedIncoTermValues != null)
-                selectedIncoTermValues.clear();
-            if (selectedPaymentTermValues != null)
-                selectedPaymentTermValues.clear();
-            if (selectedSalesChannel == null)
-                selectedSalesChannel = new ArrayList();
-            if (selectedSalesChannel != null)
-                selectedSalesChannel = new ArrayList();
-            if (selectedCustNameValues != null)
-                selectedCustNameValues.clear();
-
-            if (selectedCurrencyValsSC != null)
-                selectedCurrencyValsSC.clear();
-            if (selectedIncoTermSC != null)
-                selectedIncoTermSC.clear();
+    
             if (selectedCustNameValues != null)
                 selectedCustNameValues.clear();
             if (selectedPaymentTermSC != null)
                 selectedPaymentTermSC.clear();
             if (selectedBusinessAgreementValues != null)
                 selectedBusinessAgreementValues.clear();
-
-
             if (custNamesForDefault != null)
                 custNamesForDefault.clear();
             if (custNumbersForDefault != null)
@@ -1056,7 +1049,7 @@ public class UserPreference {
                 orderTypeValuesForDefault.clear();
             if (SalesRepValuesForDefault != null)
                 SalesRepValuesForDefault.clear();
-            getBindGlobalChoiceShowDetail().setDisclosed(false);
+//            getBindGlobalChoiceShowDetail().setDisclosed(false);
             getBindSalesChannelShowDetail().setDisclosed(false);
             System.out.println("Selected Value is:" + vce.getNewValue());
             if (orgValue != null)
@@ -1064,6 +1057,15 @@ public class UserPreference {
             else
                 orgId = null;
             ADFUtils.setSessionScopeValue("UserBasedOrgId", orgId);
+            if(orgId!=null){
+            getDefaultValsForOUDependencies(orgId);
+            getAllCustNums();
+            getSelectedCustNumVals();
+            getAllOrderTypeValues();
+            getSelctedOTValues();
+            getAllSalesRepValues();
+            getSelectedSalesRepVals();
+            }
         }
     }
 
@@ -1795,9 +1797,9 @@ public class UserPreference {
             vo.clearCache();
             vo.setWhereClause(null);
             System.out.println("size of VO:" + vo.getEstimatedRowCount());
-            Object obj[] = { usrId, colType, orgId };
+            Object obj[] = { usrId, colType };
             Key key = new Key(obj);
-            Row[] rows = vo.findByKey(key, 3);
+            Row[] rows = vo.findByKey(key, 2);
             if (rows != null && rows.length > 0) {
                 colValues = (String)rows[0].getAttribute("ColumnVal");
             }
@@ -1854,6 +1856,48 @@ public class UserPreference {
         }
     }
 
+    public void getDefaultValsForOUDependencies(String orgId){
+            Map map = new HashMap();
+            OperationBinding ob =
+                ADFUtils.findOperation("defaultValsOUDependencies"); //customerNums
+            ob.getParamsMap().put("usrId", usrId);
+            ob.getParamsMap().put("orgId", orgId);
+            if (ob != null) 
+                map = (Map)ob.execute();
+            
+            if (map != null) {
+                if (map.containsKey("orderType")) {
+                    if (map.get("orderType") != null) {
+                        _logger.info("User Preferences: getDefaultValues: map values: orderType:" +
+                                     map.get("orderType"));
+                        if ((String)map.get("orderType") != null) {
+                            orderType = (String)map.get("orderType");
+                        } else
+                            orderType = null;
+                    }
+                }
+                if (map.containsKey("custNum")) {
+                    if (map.get("custNum") != null) {
+                        custNum = (String)map.get("custNum");
+                    } else
+                        custNum = null;
+                }
+               
+                if (map.containsKey("salesRep")) {
+                    _logger.info("User Preferences: getDefaultValues: map values: salesRep:" +
+                                 map.get("salesRep"));
+                    if (map.get("salesRep") != null) {
+                        String sp = (String)map.get("salesRep");
+                        if (SalesRepValues.contains(sp)) {
+                            salesRep = sp;
+                        }
+                    }
+                    salesRep = (String)map.get("salesRep");
+                    //                    bindSalesRep.setValue(map.get("salesRep"));
+                }
+            }
+        }
+
 
     public void getDefaultValues() {
         _logger.info("User Preferences: getDefaultValues: Start:");
@@ -1861,8 +1905,6 @@ public class UserPreference {
         OperationBinding ob =
             ADFUtils.findOperation("defaultVals"); //customerNums
         ob.getParamsMap().put("usrId", usrId);
-        ob.getParamsMap().put("customerNums", customerNums);
-        ob.getParamsMap().put("orgId", orgId);
         if (ob != null) {
             map = (Map)ob.execute();
         }
@@ -2189,7 +2231,7 @@ public class UserPreference {
         if (salesChannel != null && orgId != null) {
             String validateCurrency = null, validateIncoTerm =
                 null, validatePaymentTerm = null, validateCustName =
-                null, validateBA = null, validateSalesChannel = null;
+                null, validateBA = null;
 
             if (selectedCustNameForSC == null)
                 selectedCustNameForSC = new ArrayList();
@@ -2298,12 +2340,11 @@ public class UserPreference {
         }
         //Updated On 18-11-2019
         if (isGlobalChoiceEnable) {
-            if (orgId != null) {
+//            if (orgId != null) {
                 if (disclosureEvent.isExpanded()) {
                     RichShowDetailHeader choiceShowDetail =
                         getBindSalesChannelShowDetail();
                     choiceShowDetail.setDisclosed(false);
-                    getAllCustNums();
                     getSelectedIncoTermVals();
                     getDefaultValues();
                     getSelectedCurrencyVals();
@@ -2312,23 +2353,18 @@ public class UserPreference {
                     getRefPriceRefConf();
                     getRefPriceTConfig();
                     getNumFormat();
-                    getAllOrderTypeValues();
-                    getSelctedOTValues();
-                    getSelectedCustNumVals();
                     getSelectedCSRVals();
-                    getAllSalesRepValues();
-                    getSelectedSalesRepVals();
                     getSelectedSalesChannelSC();
                     isGlobalChoiceEnable = false;
                 }
-            } else {
-                getBindGlobalChoiceShowDetail().setDisclosed(false);
-                FacesContext ctx = FacesContext.getCurrentInstance();
-                FacesMessage fm =
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Please Select Operating unit",
-                                     "");
-                ctx.addMessage(null, fm);
-            }
+//            } else {
+//                getBindGlobalChoiceShowDetail().setDisclosed(false);
+//                FacesContext ctx = FacesContext.getCurrentInstance();
+//                FacesMessage fm =
+//                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Please Select Operating unit",
+//                                     "");
+//                ctx.addMessage(null, fm);
+//            }
         }
     }
 

@@ -44,6 +44,12 @@
         <fixed-outcome>initQuote</fixed-outcome>
       </outcome>
     </method-call>
+    <task-flow-call id="QuoteUpdateFlow">
+      <task-flow-reference>
+        <document>/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuoteUpdateFlow.xml</document>
+        <id>QuoteUpdateFlow</id>
+      </task-flow-reference>
+    </task-flow-call>
     <control-flow-rule id="__28">
       <from-activity-id id="__29">SearchQuote</from-activity-id>
       <control-flow-case id="__37">
@@ -63,6 +69,10 @@
       <control-flow-case id="__74">
         <from-outcome id="__75">clear</from-outcome>
         <to-activity-id id="__73">clearQuoteFields</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__18">
+        <from-outcome id="__33">updateQuote</from-outcome>
+        <to-activity-id id="__32">QuoteUpdateFlow</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__19">

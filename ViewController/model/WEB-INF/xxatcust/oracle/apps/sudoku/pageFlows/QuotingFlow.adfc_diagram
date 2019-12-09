@@ -22,9 +22,9 @@
       <property
          name="y">213.91895</property>
       <property
-         name="pageFragment">true</property>
-      <property
          name="x">487.5</property>
+      <property
+         name="pageFragment">true</property>
    </View>
    <View
       id="View5">
@@ -41,9 +41,9 @@
       <property
          name="y">77.637695</property>
       <property
-         name="pageFragment">true</property>
-      <property
          name="x">-66.0</property>
+      <property
+         name="pageFragment">true</property>
    </View>
    <MethodCall
       id="MethodCall8">
@@ -139,5 +139,32 @@
          name="fromOutcome">clear</property>
       <property
          name="sdm:polyPoints">L54,446.37405,217.06836,191.35449,207.88477,R54</property>
+   </ControlFlowCase>
+   <TaskFlowCall
+      id="TaskFlowCall13">
+      <property
+         name="taskFlowId">QuoteUpdateFlow</property>
+      <property
+         name="activityId">QuoteUpdateFlow</property>
+      <property
+         name="documentReference">/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuoteUpdateFlow.xml</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>QuoteUpdateFlow&lt;/b>&lt;/p>&lt;p>Activity Type:  Task Flow Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">223.54004</property>
+      <property
+         name="x">671.36035</property>
+   </TaskFlowCall>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase16"
+      from="View2"
+      to="TaskFlowCall13">
+      <property
+         name="fromOutcome">updateQuote</property>
+      <property
+         name="sdm:polyPoints">R50,528.5,213.56836,630.36035,223.54004,L50</property>
    </ControlFlowCase>
 </SDM>

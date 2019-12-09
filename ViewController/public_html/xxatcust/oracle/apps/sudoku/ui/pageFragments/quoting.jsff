@@ -169,9 +169,28 @@
                                          rendered="false">
                     <f:validator binding="#{bindings.CustName.validator}"/>
                   </af:inputListOfValues>
-                  
                 </af:panelFormLayout>
               </af:panelGroupLayout>
+              <af:popup id="p2"
+                        binding="#{pageFlowScope.QuotingBean.bindCreateQuotePopup}"
+                        autoCancel="disabled">
+                <af:dialog id="d2" title="Info:"
+                           inlineStyle="width:10.0cm;">
+                  <af:panelGroupLayout id="pgl29" layout="vertical">
+                    <af:outputText id="ot2"
+                                   value="#{pageFlowScope.QuotingBean.successMsg}"/>
+                    <f:facet name="separator"/>
+                  </af:panelGroupLayout>
+                  <af:spacer width="10" height="10" id="s35"/>
+                  <af:panelGroupLayout id="pgl30" halign="end"
+                                       valign="baseline" layout="vertical">
+                    <af:commandButton text="Ok" id="cb6"
+                                      action="#{pageFlowScope.QuotingBean.updateQuote}">
+                      <af:showPopupBehavior popupId="p2" triggerType="action"/>
+                    </af:commandButton>
+                  </af:panelGroupLayout>
+                </af:dialog>
+              </af:popup>
               <af:separator id="s32"
                             inlineStyle="color:Black; font-size:large; font-weight:bolder;"/>
               <af:spacer width="10" height="20" id="s14"/>
@@ -269,7 +288,7 @@
               <af:panelGroupLayout id="pgl2">
                 <af:spacer width="300" height="10" id="s17"/>
                 <af:commandButton text="Create Quote Header" id="cb1"
-                                  actionListener="#{pageFlowScope.QuotingBean.saveQuoteDetails}"/>
+                                  action="#{pageFlowScope.QuotingBean.saveQuoteDetails}"/>
                 <af:spacer width="10" height="10" id="s18"/>
                 <af:commandButton text="Clear" id="cb2" immediate="true"
                                   action="clear">
@@ -277,6 +296,8 @@
                 </af:commandButton>
                 <af:resetButton text="resetButton 1" id="rb2" rendered="false"/>
                 <af:spacer width="10" height="10" id="s25"/>
+                <af:commandButton text="updateQuote" id="cb5"
+                                  action="updateQuote" rendered="false"/>
                 <af:commandButton text="Update Quote" id="cb4"
                                   action="#{pageFlowScope.QuotingBean.updateQuote}"
                                   rendered="false"/>
@@ -565,13 +586,13 @@
     </f:facet>
     <f:facet name="start"/>
     <f:facet name="end">
-      <af:popup id="p1"
+      <!--<af:popup id="p1"
                 binding="#{pageFlowScope.QuotingBean.bindCreateQuotePopup}">
         <af:dialog id="d1" type="ok">
           <af:outputFormatted id="of1"
                               binding="#{pageFlowScope.QuotingBean.bindErrForCreate}"/>
         </af:dialog>
-      </af:popup>
+      </af:popup>-->
     </f:facet>
     <f:facet name="top">
      <af:panelGroupLayout id="pgl5" layout="horizontal">
@@ -584,4 +605,5 @@
             </af:panelGroupLayout>
     </f:facet>
   </af:panelStretchLayout>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:QuotingBean-->
 </jsp:root>

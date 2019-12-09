@@ -184,7 +184,7 @@ public class ImportSource {
         //        Boolean isUpdateQuote = false;
         //        String duplicateQuoteNum = null;
         //Reset import source flow refresh parameter
-        ADFUtils.setSessionScopeValue("refreshImpSrc", null);
+       
         ADFUtils.setSessionScopeValue("configSaved", null);
         int respid =
             Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==

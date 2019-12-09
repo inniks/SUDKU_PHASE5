@@ -61,7 +61,8 @@
               <af:commandToolbarButton text="Hide Prices" id="ctb6"
                                        partialTriggers="ctb2" rendered="false"/>
               <af:spacer width="10" height="10" id="s7"/>
-              <af:commandToolbarButton text="Show Debug Logs" id="ctb3">
+              <af:commandToolbarButton text="Show Debug Logs" id="ctb3"
+                                       rendered="false">
                 <af:showPopupBehavior popupId="debugPop" triggerType="click"/>
               </af:commandToolbarButton>
               <af:spacer width="10" height="10" id="s19"/>
@@ -270,7 +271,8 @@
                   </af:panelGroupLayout>
                 </af:dialog>
               </af:popup>
-              <af:popup id="debugPop" autoCancel="disabled">
+              <af:popup id="debugPop" autoCancel="disabled"
+                        binding="#{XMLImportPageBean.debugPopup}">
                 <af:dialog id="d2" type="ok" contentWidth="600"
                            contentHeight="400" title="Debug Logs">
                   <af:panelGroupLayout layout="scroll"

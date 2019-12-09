@@ -46,8 +46,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="XXAT_USERPREF_GLOBALCHOICE"
-    PrimaryKey="true">
+    TableName="XXAT_USERPREF_GLOBALCHOICE">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="20"/>
     </DesignTime>
@@ -87,8 +86,6 @@
         Value="xxatcust.oracle.apps.sudoku.model.entity.userpreferenceEO.UserId"/>
       <Item
         Value="xxatcust.oracle.apps.sudoku.model.entity.userpreferenceEO.ColumnType"/>
-      <Item
-        Value="xxatcust.oracle.apps.sudoku.model.entity.userpreferenceEO.OperatingUnit"/>
     </AttrArray>
   </Key>
 </Entity>
