@@ -183,18 +183,17 @@
                 </af:panelGroupLayout>
               </af:panelBox>
             </af:popup>
+            <af:popup id="p2" 
+                      binding="#{pageFlowScope.TargetConfigurationBean.errPopup}"
+                      autoCancel="disabled" rendered="true">
+              <af:dialog id="d1" type="none"
+                         contentWidth="2" contentHeight="2">
+               
+              </af:dialog>
+            </af:popup>
             <af:outputText value="outputText1" id="ot17" visible="false"
                            binding="#{pageFlowScope.TargetConfigurationBean.pageInitText}"/>
           </af:panelGroupLayout>
-          <af:popup id="p2"
-                    binding="#{pageFlowScope.TargetConfigurationBean.errPopup}">
-            <af:dialog id="d1" title="Exceptions Occurred :" type="cancel"
-                       contentWidth="450" contentHeight="200">
-              <af:outputFormatted id="of1"
-                                  binding="#{pageFlowScope.TargetConfigurationBean.errorText}"
-                                  inlineStyle="color:Red;"/>
-            </af:dialog>
-          </af:popup>
           <f:facet name="toolbar"/>
         </af:panelBox>
       </af:panelGroupLayout>

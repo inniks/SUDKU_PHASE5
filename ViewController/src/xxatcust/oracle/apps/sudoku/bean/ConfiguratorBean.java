@@ -63,6 +63,7 @@ import oracle.adf.view.rich.component.rich.output.RichOutputText;
 import oracle.adf.view.rich.context.AdfFacesContext;
 import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.event.LaunchPopupEvent;
+import oracle.adf.view.rich.event.ReturnPopupEvent;
 import oracle.adf.view.rich.model.ListOfValuesModel;
 import oracle.adf.view.rich.render.ClientEvent;
 
@@ -74,14 +75,18 @@ import oracle.jbo.Row;
 
 import oracle.jbo.RowSet;
 import oracle.jbo.ViewCriteria;
+import oracle.jbo.ViewCriteriaManager;
 import oracle.jbo.ViewCriteriaRow;
 import oracle.jbo.ViewObject;
+import oracle.jbo.common.JboCompOper;
 import oracle.jbo.common.ListBindingDef;
 import oracle.jbo.uicli.binding.JUCtrlHierBinding;
 
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
 
 import oracle.jbo.uicli.binding.JUCtrlListBinding;
+
+import oracle.jdbc.OracleTypes;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.myfaces.trinidad.event.DisclosureEvent;
@@ -225,24 +230,24 @@ public class ConfiguratorBean {
     public void initConfigurator() throws IOException, JsonGenerationException,
                                           JsonMappingException {
         //The refresh should happen only if there is a v93k object available
-//        System.out.println("Init Configurator..");
-//                V93kQuote v93k =
-//                    (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
-//                ADFUtils.setSessionScopeValue("parentObject",
-//                                              v93k); //Comment for server run
-//                HashMap ruleSetMap = new HashMap();
-//                if (v93k.getInputParams() != null) {
-//                    ruleSetMap.put("topLevelCode",
-//                                   v93k.getInputParams().getRuleSetTopLevelChoice());
-//                    ruleSetMap.put("secondLevelCode",
-//                                   v93k.getInputParams().getRuleSetSecondLevelChoice());
-//                    //ruleSetMap.put("error", "Y");
-//                    ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-//                }
+                System.out.println("Init Configurator..");
+                        V93kQuote v93k =
+                            (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
+                        ADFUtils.setSessionScopeValue("parentObject",
+                                                      v93k); //Comment for server run
+                        HashMap ruleSetMap = new HashMap();
+                        if (v93k.getInputParams() != null) {
+                            ruleSetMap.put("topLevelCode",
+                                           v93k.getInputParams().getRuleSetTopLevelChoice());
+                            ruleSetMap.put("secondLevelCode",
+                                           v93k.getInputParams().getRuleSetSecondLevelChoice());
+                            //ruleSetMap.put("error", "Y");
+                            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+                        }
         //Comment till here
 
-        V93kQuote v93k =
-            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
+//        V93kQuote v93k =
+//            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
         if (v93k != null && v93k.getInputParams() != null &&
             v93k.getInputParams().getImportSource() != null) {
 
@@ -436,15 +441,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
-                String responseJson =
-                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-                System.out.println("Response Json from Configurator : " +
-                                   responseJson);
-                Object obj = mapper.readValue(responseJson, V93kQuote.class);
-                v93k = (V93kQuote)obj;
+        //                String responseJson =
+        //                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        //                System.out.println("Response Json from Configurator : " +
+        //                                   responseJson);
+        //                Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        //                v93k = (V93kQuote)obj;
 
         // else use this
-        //v93k = (V93kQuote)convertJsonToObject(null);
+        v93k = (V93kQuote)convertJsonToObject(null);
         if (v93k != null && v93k.getInputParams() != null) {
             Map ruleSetMap = new HashMap();
             ruleSetMap.put("topLevelCode",
@@ -2118,6 +2123,156 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public void ruleSetLaunchListener(LaunchPopupEvent launchPopupEvent) {
-        
+        String currentColumnName = null;
+        String valueExpression = null;
+        JUCtrlListBinding ctrlListBinding = null;
+        ViewObject baseViewObject = null;
+        AttributeDef lovAttributeDef = null;
+        AttributeDef lovlistAttributeDef = null;
+        ListBindingDef listBindingDef = null;
+        String[] listAttributeNames = null;
+        ListOfValuesModel listOfValuesModel = null;
+        ViewCriteria viewCriteria = null;
+        Object submittedValue = null;
+        ViewCriteriaRow viewCriteriaRow = null;
+        RowSet rowSet = null;
+        Row listRow = null;
+        Row baseViewObjectRow = null;
+        if (!launchPopupEvent.isLaunchPopup()) {
+            return;
+        }
+        submittedValue = launchPopupEvent.getSubmittedValue();
+        //  if (submittedValue != null && !submittedValue.equals("")) {
+
+        BindingContext bindingContext = BindingContext.getCurrent();
+        oracle.binding.BindingContainer bindingContainter =
+            bindingContext.getCurrentBindingsEntry();
+        RichInputListOfValues inputListOfValues =
+            (RichInputListOfValues)launchPopupEvent.getComponent();
+        if (inputListOfValues != null) {
+
+            // below code gets the value expression for the current column i.e in our case #{bindings.SiteName.inputValue}
+            valueExpression =
+                    inputListOfValues.getValueExpression(inputListOfValues.VALUE_KEY.getName()).toString();
+            if (valueExpression != null) {
+                // if the column is in the af table then the value will be #{row.bindings.SiteName.inputValue} so we are replacing row.
+                valueExpression =
+                        StringUtils.replace(valueExpression, "row.", "");
+                //                    if(valueExpression!=null && valueExpression.equalsIgnoreCase("ValueExpression[#{sessionScope.sessionWideSiteName}]")){
+                //
+                //                    }
+                System.out.println(valueExpression);
+                currentColumnName =
+                        valueExpression.substring(valueExpression.indexOf(".") +
+                                                  1,
+                                                  valueExpression.lastIndexOf("."));
+                if (currentColumnName != null) {
+                    ctrlListBinding =
+                            (JUCtrlListBinding)bindingContainter.getControlBinding(currentColumnName);
+                    if (ctrlListBinding != null) {
+                        baseViewObject =
+                                ctrlListBinding.getIteratorBinding().getViewObject();
+                        if (baseViewObject != null) {
+                            baseViewObjectRow = baseViewObject.getCurrentRow();
+                            lovAttributeDef =
+                                    baseViewObject.findAttributeDef(currentColumnName);
+                            if (lovAttributeDef != null) {
+                                listBindingDef =
+                                        lovAttributeDef.getListBindingDef();
+                                if (listBindingDef != null) {
+                                    listAttributeNames =
+                                            listBindingDef.getListAttrNames();
+                                    if (listAttributeNames != null &&
+                                        listAttributeNames.length > 0) {
+                                        listOfValuesModel =
+                                                inputListOfValues.getModel();
+                                        if (listOfValuesModel != null) {
+                                            DCIteratorBinding iterBinding =
+                                                ctrlListBinding.getListIterBinding();
+                                            ViewCriteriaManager vcm =
+                                                iterBinding.getViewObject().getViewCriteriaManager();
+                                            ViewCriteria[] allVc =
+                                                vcm.getAllViewCriterias();
+                                            if (allVc != null &&
+                                                allVc.length > 0) {
+                                                for (int i = 0;
+                                                     i < allVc.length; i++) {
+                                                    if (allVc[i].getName().equalsIgnoreCase("RSetSecLevelLOVICriteria1") ||
+                                                        allVc[i].getName().equalsIgnoreCase("RSetSecLevelLOVIICriteria1")){
+                                                            viewCriteria = allVc[i];
+                                                        }
+                                                }
+                                            }
+//                                            viewCriteria =
+//                                                    iterBinding.getViewObject().getViewCriteriaManager().getViewCriteria(listBindingDef.getDisplayCriteriaName());
+                                            if (viewCriteria != null) {
+                                                
+                                                viewCriteriaRow =
+                                                        (ViewCriteriaRow)viewCriteria.getRowAtRangeIndex(1);
+                                                if (viewCriteriaRow != null) {
+                                                    lovlistAttributeDef =
+                                                            viewCriteriaRow.getStructureDef().findAttributeDef(listAttributeNames[0]);
+                                                    if (lovAttributeDef !=
+                                                        null) {
+                                                        if (lovAttributeDef.getSQLType() ==
+                                                            OracleTypes.NUMBER) {
+                                                            viewCriteriaRow.setAttribute(listAttributeNames[0],
+                                                                                         submittedValue);
+                                                            viewCriteriaRow.getCriteriaItem(listAttributeNames[0]).setOperator(JboCompOper.OPER_EQ);
+                                                        } else if (lovAttributeDef.getSQLType() ==
+                                                                   OracleTypes.VARCHAR) {
+                                                            String a =
+                                                                "%" + submittedValue +
+                                                                "%";
+                                                            viewCriteriaRow.setAttribute(listAttributeNames[0],
+                                                                                         a); /*submittedValue+"%"*/
+                                                            viewCriteriaRow.getCriteriaItem(listAttributeNames[0]).setOperator(JboCompOper.OPER_LIKE);
+                                                        }
+                                                        listOfValuesModel.performQuery(listOfValuesModel.getQueryDescriptor());
+                                                        if (ctrlListBinding.getListIterBinding().getRowSetIterator() !=
+                                                            null &&
+                                                            ctrlListBinding.getListIterBinding().getRowSetIterator().getFetchedRowCount() >
+                                                            0) /*&&
+                                                                ctrlListBinding.getListIterBinding().getRowSetIterator().get >
+                                                                0*/ {
+                                                            rowSet =
+                                                                    ctrlListBinding.getListIterBinding().getRowSetIterator().getRowSet();
+                                                            listRow =
+                                                                    rowSet.getRowAtRangeIndex(0);
+                                                            if (listRow !=
+                                                                null &&
+                                                                listRow.getAttribute(listAttributeNames[0]).equals(submittedValue)) {
+                                                                if (baseViewObjectRow !=
+                                                                    null) {
+                                                                    baseViewObjectRow.setAttribute(currentColumnName,
+                                                                                                   submittedValue);
+                                                                    baseViewObject.setCurrentRow(baseViewObjectRow);
+                                                                }
+                                                                RowKeySetImpl rowKeySet =
+                                                                    new RowKeySetImpl();
+                                                                List list =
+                                                                    new ArrayList();
+                                                                list.add(listRow.getKey());
+                                                                launchPopupEvent.setLaunchPopup(false);
+                                                                launchPopupEvent.queue();
+                                                                inputListOfValues.queueEvent(new ReturnPopupEvent(inputListOfValues,
+                                                                                                                  rowKeySet));
+                                                                AdfFacesContext.getCurrentInstance().addPartialTarget(inputListOfValues);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
     }
 }

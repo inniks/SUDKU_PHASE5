@@ -80,7 +80,6 @@ public class TargetConfiguration {
     public RichOutputText getPageInitText() {
         refreshView(null);
         getListViewCollection();
-        // RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("pb2lim"));
         exportDownload(null);
         UIComponent ui = ADFUtils.findComponentInRoot("psexconfig");
         if (ui != null) {
@@ -95,8 +94,8 @@ public class TargetConfiguration {
                 errPopup.cancel();
             }
             AdfFacesContext.getCurrentInstance().addPartialTarget(ui);
+            ADFUtils.addPartialTarget(ui);
         }
-        //ADFUtils.refreshPage();
         return pageInitText;
     }
 
@@ -114,9 +113,13 @@ public class TargetConfiguration {
     }
 
     public void initTargetConfiguration() {
-        System.out.println("Initializing target configuration....");
+        UIComponent ui = ADFUtils.findComponentInRoot("psexconfig");
         if (quoteTotal != null) {
             getPageInitText();
+        }
+        if (ui != null) {
+            System.out.println("REfreshing.....");
+            ADFUtils.addPartialTarget(ui);
         }
     }
 
@@ -272,7 +275,6 @@ public class TargetConfiguration {
                                 for (ConfiguratorNodePOJO node : childList) {
                                     String nodeDesig = null;
                                     if(i==0 && index==0){
-                                        System.out.println("Setting node designation for "+node.getNodeName());
                                         nodeDesig = "header";
                                     }
                                     if (node.getPrintGroupLevel() != null &&
@@ -445,7 +447,6 @@ public class TargetConfiguration {
                     ChildPropertyTreeModel child =
                         (ChildPropertyTreeModel)pair.getKey();
                     Double lineTotal = (Double)pair.getValue();
-                    System.out.println("Line total "+lineTotal);
                     listOftrees.add(child);
                     netQuoteTotal = netQuoteTotal + lineTotal;
                 }

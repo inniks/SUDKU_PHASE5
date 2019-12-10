@@ -307,7 +307,6 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             while (rs.next()) {
 
                 quoteTo = rs.getString(5);
-                //                System.out.println("quoteTo is:" + quoteTo);
             }
             cs1 = this.getDBTransaction().createPreparedStatement(query, 0);
             cs1.setString(1, custNumber);
@@ -316,17 +315,14 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             ResultSet rs1 = cs1.executeQuery();
             while (rs1.next()) {
                 shipTo = rs1.getString(5);
-                //                System.out.println("ShipTo is:" + shipTo);
             }
             if (curRow != null) {
                 curRow.setAttribute("QuoteTo", quoteTo);
                 curRow.setAttribute("ShipTo", shipTo);
-                //                System.out.println("QuoteTo:" + quoteTo + ":shipto:" + shipTo);
             }
             if (row != null) {
                 row.setAttribute("QuoteTo", quoteTo);
                 row.setAttribute("ShipTo", shipTo);
-                //                System.out.println("QuoteTo:" + quoteTo + ":shipto:" + shipTo);
             }
 
         } catch (SQLException e) {
@@ -400,12 +396,10 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             ResultSet rs1 = cs1.executeQuery();
             while (rs1.next()) {
                 shipTo = rs1.getString(5);
-                //                System.out.println("ShipTo is:" + shipTo);
             }
             if (row != null) {
                 row.setAttribute("QuoteTo", quoteTo);
                 row.setAttribute("ShipTo", shipTo);
-                //                System.out.println("QuoteTo:" + quoteTo + ":shipto:" + shipTo);
             }
 
         } catch (SQLException e) {
@@ -462,7 +456,6 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             if (row != null) {
                 row.setAttribute("QuoteTo", quoteTo);
                 row.setAttribute("ShipTo", shipTo);
-                //                System.out.println("QuoteTo:" + quoteTo + ":shipto:" + shipTo);
             }
 
         } catch (SQLException e) {
@@ -513,7 +506,6 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             while (rs.next()) {
 
                 quoteTo = rs.getString(5);
-                //                System.out.println("quoteTo is:" + quoteTo);
             }
             cs1 = this.getDBTransaction().createPreparedStatement(query, 0);
             cs1.setString(1, custNumber);
@@ -522,12 +514,10 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             ResultSet rs1 = cs1.executeQuery();
             while (rs1.next()) {
                 shipTo = rs1.getString(5);
-                //                System.out.println("ShipTo is:" + shipTo);
             }
             if (row != null) {
                 row.setAttribute("QuoteTo", quoteTo);
                 row.setAttribute("ShipTo", shipTo);
-                //                System.out.println("QuoteTo:" + quoteTo + ":shipto:" + shipTo);
             }
 
         } catch (SQLException e) {
@@ -611,47 +601,34 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     if (quoteVORow.getAttribute("OrganizationUnit") != null) {
                         cs.setString(1,
                                      quoteVORow.getAttribute("OrganizationUnit").toString());
-                        //                        System.out.println("OrganizationUnit:" +
-                        //                                           quoteVORow.getAttribute("OrganizationUnit").toString());
                     } else {
                         errorMsg.append("<p><b>Organization Unit is required.</b></p>");
                     }
                     if (quoteVORow.getAttribute("QuoteDescription") != null) {
                         cs.setString(2,
                                      quoteVORow.getAttribute("QuoteDescription").toString());
-                        //                        System.out.println("QuoteDescription:" +
-                        //                                           quoteVORow.getAttribute("QuoteDescription").toString());
                     } else {
                         String custName =
                             (String)quoteVORow.getAttribute("CustomerName");
                         cs.setString(2, "Quote For " + custName);
-                        //                        System.out.println("QuoteDescription:" + "Quote For " +
-                        //                                           custName);
                         quoteVORow.setAttribute("QuoteDescription",
                                                 "Quote For " + custName);
-                        //                        errorMsg.append("<p><b>Quote Description is required.</b></p>");
                     }
                     if (quoteVORow.getAttribute("CustNum") != null) {
                         cs.setString(3,
                                      quoteVORow.getAttribute("CustNum").toString());
-                        //                        System.out.println("CustomerNumber:" +
-                        //                                           quoteVORow.getAttribute("CustomerNumber").toString());
                     } else {
                         errorMsg.append("<p><b>Customer Number is required.</b></p>");
                     }
                     if (quoteVORow.getAttribute("OrderType") != null) {
                         cs.setString(4,
                                      quoteVORow.getAttribute("OrderType").toString());
-                        //                        System.out.println("OrderType:" +
-                        //                                           quoteVORow.getAttribute("OrderType").toString());
                     } else {
                         errorMsg.append("<p><b>Order Type is required.</b></p>");
                     }
                     //                if(quoteVORow.getAttribute("OrganizationUnit")!=null)
                     if (quoteVORow.getAttribute("PriceList") != null) {
                         cs.setString(5, "Systems Corporate Price List");
-                        //                        System.out.println("Price List:" +
-                        //                                           "Systems Corporate Price List");
                     } else {
                         errorMsg.append("<p><b> Price List is required.</b></p>");
                     }

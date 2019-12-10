@@ -38,8 +38,7 @@
                                   partialTriggers="topLevelMeaningId"
                                   autoSubmit="true"
                                   valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}"
-                                  disabled="#{bindings.SecondLevelCode eq 'OTS'}"
-                                  launchPopupListener="#{ConfiguratorBean.ruleSetLaunchListener}">
+                                  disabled="#{bindings.SecondLevelCode eq 'OTS'}">
               <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
             </af:inputListOfValues>
             <af:inputText label="Label 13" id="it5"

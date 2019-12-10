@@ -563,11 +563,6 @@ public class XMLImportPageBean {
 
         if (ui != null) {
             System.out.println("UI Component is " + ui);
-            if (listViewCollection != null) {
-                System.out.println("Collection formed " +
-                                   listViewCollection.size());
-            }
-
             String cancelAll =
                 (String)ADFUtils.getSessionScopeValue("cancelAll");
             if (cancelAll != null && cancelAll.equalsIgnoreCase("Y")) {
