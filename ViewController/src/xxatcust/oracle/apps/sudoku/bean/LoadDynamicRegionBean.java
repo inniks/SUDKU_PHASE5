@@ -1091,17 +1091,17 @@ public class LoadDynamicRegionBean {
 
     public void navToConfigurator(ActionEvent actionEvent) {
         ADFUtils.setSessionScopeValue("currView", "config");
-       
+
     }
 
     public void navToViewRef(ActionEvent actionEvent) {
         ADFUtils.setSessionScopeValue("currView", "viewRef");
-//        RichCommandImageLink button =
-//            (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to create quote page
-//        if (button != null) {
-//            ActionEvent acEvent = new ActionEvent(button);
-//            acEvent.queue();
-//        }
+        //        RichCommandImageLink button =
+        //            (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to create quote page
+        //        if (button != null) {
+        //            ActionEvent acEvent = new ActionEvent(button);
+        //            acEvent.queue();
+        //        }
     }
 
     public void navToTargetConfig(ActionEvent actionEvent) {
@@ -1221,6 +1221,8 @@ public class LoadDynamicRegionBean {
                 disableString = "target";
             if (currView.equalsIgnoreCase("config"))
                 disableString = "config";
+            if (currView.equalsIgnoreCase("loadPref"))
+                disableString = "loadPref";
         }
         return disableString;
     }
@@ -1488,12 +1490,13 @@ public class LoadDynamicRegionBean {
         try {
             _logger.info("print report call start ");
 
-            String quoteNum = null ;
-            V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-            if(v93k!=null && v93k.getSessionDetails()!=null){
+            String quoteNum = null;
+            V93kQuote v93k =
+                (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+            if (v93k != null && v93k.getSessionDetails() != null) {
                 quoteNum = v93k.getSessionDetails().getTargetQuoteNumber();
             }
-                //(String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+            //(String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
             Object quotehid = null;
             String orgId = null;
             OperationBinding ob1 =
@@ -1692,9 +1695,10 @@ public class LoadDynamicRegionBean {
                                    OutputStream outputStream) {
         try {
             _logger.info("print excelreport call start ");
-            String quoteNum = null ;
-            V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-            if(v93k!=null && v93k.getSessionDetails()!=null){
+            String quoteNum = null;
+            V93kQuote v93k =
+                (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+            if (v93k != null && v93k.getSessionDetails() != null) {
                 quoteNum = v93k.getSessionDetails().getTargetQuoteNumber();
             }
 
@@ -1847,9 +1851,10 @@ public class LoadDynamicRegionBean {
         try {
 
 
-            String quoteNum = null ;
-            V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-            if(v93k!=null && v93k.getSessionDetails()!=null){
+            String quoteNum = null;
+            V93kQuote v93k =
+                (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+            if (v93k != null && v93k.getSessionDetails() != null) {
                 quoteNum = v93k.getSessionDetails().getTargetQuoteNumber();
             }
             Object quotehid = null;
@@ -1984,9 +1989,10 @@ public class LoadDynamicRegionBean {
             _logger.info("print excelreport call start ");
             //  initializeAppsContext("0", "51157", "880");
             _logger.info("print after apps intilization in bean ");
-            String quoteNum = null ;
-            V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-            if(v93k!=null && v93k.getSessionDetails()!=null){
+            String quoteNum = null;
+            V93kQuote v93k =
+                (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+            if (v93k != null && v93k.getSessionDetails() != null) {
                 quoteNum = v93k.getSessionDetails().getTargetQuoteNumber();
             }
             OperationBinding ob =

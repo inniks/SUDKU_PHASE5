@@ -285,7 +285,7 @@ ORDER BY accountnumber]]>
       <ViewCriteriaItem
         Name="Accountnumber"
         ViewAttribute="Accountnumber"
-        Operator="="
+        Operator="CONTAINS"
         Conjunction="OR"
         Value=":p_accountNum"
         IsBindVarValue="true"

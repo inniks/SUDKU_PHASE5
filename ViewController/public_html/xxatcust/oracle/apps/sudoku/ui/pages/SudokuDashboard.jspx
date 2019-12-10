@@ -215,6 +215,7 @@
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToLoadPref}"
                                              partialSubmit="true"
                                              disabledIcon="/Resources/images/imgs/Load preferences.png"
+                                             disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'loadPref'}"
                                              icon="/Resources/images/imgs/Load preferences_edit.png">
                           <af:setPropertyListener from="loadPref"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"

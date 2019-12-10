@@ -1407,6 +1407,8 @@
     LOVName="LOV_CustName">
     <Properties>
       <SchemaBasedProperties>
+        <LABEL
+          ResId="CustName_LABEL"/>
         <CONTROLTYPE
           Value="input_text_lov"/>
       </SchemaBasedProperties>

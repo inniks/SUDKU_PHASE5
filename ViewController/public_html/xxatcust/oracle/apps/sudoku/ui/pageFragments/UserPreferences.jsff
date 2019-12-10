@@ -70,7 +70,8 @@
             <af:panelGroupLayout
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pgl1">
-              <af:panelFormLayout id="pfl1" maxColumns="3" rows="3">
+              <af:panelFormLayout id="pfl1" maxColumns="3" rows="3"
+                                  partialTriggers="soc2">
                 <af:inputText label="Primary Sales Person" id="it1" columns="20"
                               value="#{pageFlowScope.UserPrefBean.userName}"
                               disabled="true"/>
@@ -96,7 +97,7 @@
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s6"/>
                 <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.currency}"
-                                    label="Primay Currency" autoSubmit="true"
+                                    label="Primary Currency" autoSubmit="true"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.currencyForGlobalChoiceVCE}"
                                     id="soc13" contentStyle="width:140.0px">
                   <f:selectItems value="#{pageFlowScope.UserPrefBean.currencyValuesForDefault}"
@@ -104,7 +105,7 @@
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s7"/>
                 <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.incoTerm}"
-                                    label="Primay Inco Term" autoSubmit="true"
+                                    label="Primary IncoTerm" autoSubmit="true"
                                     id="soc3" contentStyle="width:140.0px"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.incoTermForGlobalChoiceVCE}">
                   <f:selectItems value="#{pageFlowScope.UserPrefBean.incoTermValuesForDefault}"
@@ -119,38 +120,45 @@
                   <f:selectItems value="#{pageFlowScope.UserPrefBean.businessCenterCSRForDefault}"
                                  id="si18"/>
                 </af:selectOneChoice>
-              </af:panelFormLayout>
-              <af:panelFormLayout id="pfl4" maxColumns="3" rows="1">
-                <af:selectOneChoice label="Primary Order Type Values" id="soc5"
+                <af:spacer width="10" height="10" id="s11"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.salesRep}"
+                                    autoSubmit="true"
+                                    label="Primary Sales Representative"
+                                    id="soc14"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.salesRepForDefaultVCE}"
+                                    contentStyle="width:140.0px"
+                                    disabled="#{pageFlowScope.UserPrefBean.orgId eq null}">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.salesRepValuesForDefault}"
+                                 id="si213"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s12"
+                           rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"/>
+                <af:selectOneChoice label="Primary OrderType" id="soc5"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.OrderTypeForChoiceVCE}"
                                     autoSubmit="true"
                                     value="#{pageFlowScope.UserPrefBean.orderType}"
                                     contentStyle="width:140.0px"
-                                    rendered="#{pageFlowScope.UserPrefBean.orgId ne null}">
+                                    disabled="#{pageFlowScope.UserPrefBean.orgId eq null}">
                   <f:selectItems value="#{pageFlowScope.UserPrefBean.orderTypeValuesForDefault}"
                                  id="si114"/>
                 </af:selectOneChoice>
-                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.salesRep}"
-                                    autoSubmit="true"
-                                    rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"
-                                    label="Primary Sales Representative"
-                                    id="soc14"
-                                    valueChangeListener="#{pageFlowScope.UserPrefBean.salesRepForDefaultVCE}"
-                                    contentStyle="width:140.0px">
-                  <f:selectItems value="#{pageFlowScope.UserPrefBean.salesRepValuesForDefault}"
-                                 id="si213"/>
-                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s18"
+                           rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"/>
                 <af:selectOneChoice label="Primary Customer Number"
                                     autoSubmit="true"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.custNumForDefaultVCE}"
                                     id="soc6"
-                                    rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"
                                     value="#{pageFlowScope.UserPrefBean.custNum}"
-                                    contentStyle="width:140.0px">
+                                    contentStyle="width:140.0px"
+                                    disabled="#{pageFlowScope.UserPrefBean.orgId eq null}">
                   <f:selectItems value="#{pageFlowScope.UserPrefBean.custNumbersForDefault}"
                                  id="si15"/>
                 </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s19"
+                           rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"/>
               </af:panelFormLayout>
+              <af:panelFormLayout id="pfl4" maxColumns="3" rows="1"
+                                  labelWidth="40"/>
               <af:spacer width="10" height="10" id="s9"/>
               <af:panelFormLayout id="pfl2"
                                   maxColumns="1" rows="4">
@@ -245,10 +253,10 @@
               <af:selectManyShuttle leadingHeader="Sales rep values"
                                     trailingHeader="Selected Values"
                                     autoSubmit="true" label=" "
-                                    rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"
                                     value="#{pageFlowScope.UserPrefBean.selectedSalesRepValues}"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.salesRepVCE}"
-                                    id="sms6" contentStyle="width:280px;">
+                                    id="sms6" contentStyle="width:280px;"
+                                    disabled="#{pageFlowScope.UserPrefBean.orgId eq null}">
                 <f:selectItems value="#{pageFlowScope.UserPrefBean.salesRepValues}"
                                id="si17"/>
               </af:selectManyShuttle>
@@ -257,8 +265,8 @@
                                     value="#{pageFlowScope.UserPrefBean.selectedCustNumValues}"
                                     leadingHeader="Customer Numbers"
                                     trailingHeader="Selected Values"
-                                    rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"
-                                    contentStyle="width:280px;">
+                                    contentStyle="width:280px;"
+                                    disabled="#{pageFlowScope.UserPrefBean.orgId eq null}">
                 <f:selectItems value="#{pageFlowScope.UserPrefBean.custNumbers}"
                                id="si14"/>
               </af:selectManyShuttle>
@@ -266,10 +274,10 @@
                                     label=" " id="sms1"
                                     leadingHeader="Order Type Available"
                                     trailingHeader="Selected vaues"
-                                    rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.orderTypeVCE}"
                                     autoSubmit="true"
-                                    contentStyle="width:280px;">
+                                    contentStyle="width:280px;"
+                                    disabled="#{pageFlowScope.UserPrefBean.orgId eq null}">
                 <f:selectItems value="#{pageFlowScope.UserPrefBean.orderTypeValues}"
                                id="si1"/>
               </af:selectManyShuttle>

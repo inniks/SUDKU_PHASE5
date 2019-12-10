@@ -329,7 +329,7 @@
       <Item Value="IncoTermsMeaning"/>
     </AttrArray>
     <AttrArray Name="ListAttrNames">
-      <Item Value="Description"/>
+      <Item Value="Meaning"/>
       <Item Value="Meaning"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
@@ -2138,6 +2138,8 @@ FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll]]>
     </DesignTime>
     <Properties>
       <SchemaBasedProperties>
+        <LABEL
+          ResId="Customername_LABEL"/>
         <CONTROLTYPE
           Value="input_text_lov"/>
       </SchemaBasedProperties>
@@ -2175,6 +2177,8 @@ FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll]]>
     </DesignTime>
     <Properties>
       <SchemaBasedProperties>
+        <LABEL
+          ResId="Customernumber_LABEL"/>
         <CONTROLTYPE
           Value="input_text_lov"/>
       </SchemaBasedProperties>

@@ -431,15 +431,15 @@ public class UiField {
                         uiField1_identifier.equalsIgnoreCase("OBSOLETE")) {
                         uiField1_color = "Red";
                     }
-                    if (node != null) {
-                        int qty1 = node.getQuantity();
-                        if (qty1 != -1) {
-                            uiField1_qty = Integer.toString(qty1);
-                            sumLicenceInputs =
-                                    sumLicenceInputs + node.getQuantity();
-                            countOfEFEntries++;
-                        }
-                    }
+//                    if (node != null) {
+//                        int qty1 = node.getQuantity();
+//                        if (qty1 != -1) {
+//                            uiField1_qty = Integer.toString(qty1);
+//                            sumLicenceInputs =
+//                                    sumLicenceInputs + node.getQuantity();
+//                            countOfEFEntries++;
+//                        }
+//                    }
                     if (node != null) {
                         uiField1_refQty =
                                 node.getReferenceQuantiy() == -1 ? "-1" :
