@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,6 +30,12 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+
+import javax.el.ValueExpression;
+
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -41,6 +51,7 @@ import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
 
 import oracle.adf.model.binding.DCBindingContainer;
+import oracle.adf.model.binding.DCDataControl;
 import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichListView;
@@ -50,7 +61,10 @@ import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.component.rich.output.RichOutputText;
 import oracle.adf.view.rich.context.AdfFacesContext;
 
+import oracle.jbo.ApplicationModule;
 import oracle.jbo.JboException;
+
+import oracle.jbo.server.DBTransaction;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.myfaces.trinidad.event.SelectionEvent;
@@ -61,6 +75,7 @@ import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import org.xml.sax.SAXException;
 
+import xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl;
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
 import xxatcust.oracle.apps.sudoku.util.JSONUtils;
@@ -315,9 +330,36 @@ public class XMLImportPageBean {
     }
 
     public Boolean getProductsRendered() {
-        return productsRendered;
+        boolean prodRend = true;
+        HashMap userPrefMap = getProductPriceUserPref();
+        if (userPrefMap != null && !userPrefMap.isEmpty()) {
+            if (userPrefMap.containsKey("Prd_num_ref_config")) {
+                String Prd_num_ref_config =
+                    (String)userPrefMap.get("Prd_num_ref_config");
+                if (Prd_num_ref_config != null &&
+                    Prd_num_ref_config.equalsIgnoreCase("N")) {
+                    prodRend = false;
+                }
+            }
+        }
+        return prodRend;
     }
 
+    public Boolean getPriceRendered() {
+        boolean priceRendered = true;
+        HashMap userPrefMap = getProductPriceUserPref();
+        if (userPrefMap != null && !userPrefMap.isEmpty()) {
+            if (userPrefMap.containsKey("Ref_price_ref_config")) {
+                String Ref_price_ref_config =
+                    (String)userPrefMap.get("Ref_price_ref_config");
+                if (Ref_price_ref_config != null &&
+                    Ref_price_ref_config.equalsIgnoreCase("N")) {
+                    priceRendered = false;
+                }
+            }
+        }
+        return priceRendered;
+    }
 
     public void hideProducts(ActionEvent actionEvent) {
         if (productsRendered) {
@@ -533,7 +575,7 @@ public class XMLImportPageBean {
         if (validationError != null) {
             validationError.setValue(null);
         }
-        quoteTotal.setValue(null);
+        //quoteTotal.setValue(null);
         showListHeader = true;
         categoryTree = null;
         allNodes = null;
@@ -567,7 +609,7 @@ public class XMLImportPageBean {
                 (String)ADFUtils.getSessionScopeValue("cancelAll");
             if (cancelAll != null && cancelAll.equalsIgnoreCase("Y")) {
                 if (quoteTotal != null) {
-                    quoteTotal.setValue(null);
+                    //quoteTotal.setValue(null);
                 }
             }
             RichPopup.PopupHints hints = new RichPopup.PopupHints();
@@ -635,6 +677,8 @@ public class XMLImportPageBean {
     }
 
     private List<ChildPropertyTreeModel> createChildrenTrees() {
+
+
         List<ChildPropertyTreeModel> listOfTrees =
             new ArrayList<ChildPropertyTreeModel>();
         try {
@@ -840,7 +884,7 @@ public class XMLImportPageBean {
                             }
                         }
                         if (quoteTotal != null) {
-                            quoteTotal.setValue(sumQuoteTotal);
+                            //quoteTotal.setValue(sumQuoteTotal);
                         }
                         distinctList = removeDuplicatesFromList(catList);
                         for (String distinctCategory : distinctList) {
@@ -906,7 +950,8 @@ public class XMLImportPageBean {
                         //Trying to sort root
                         NodeComparator comparator = new NodeComparator();
                         Collections.sort(root, comparator);
-
+                        //                        NodeCategory labelRow = new NodeCategory("0","Product","Description","Qty",null,"Unit Price","Ex Price",null,null,"header");
+                        //                        root.add(0,labelRow);
                         categoryTree =
                                 new ChildPropertyTreeModel(root, "childNodes");
                         ADFUtils.setSessionScopeValue("categoryTree",
@@ -977,5 +1022,92 @@ public class XMLImportPageBean {
 
     public RichPopup getDebugPopup() {
         return debugPopup;
+    }
+
+    public String getQuoteNetTotal() {
+        String refQuoteNetTotal = null;
+        boolean hasErrors = false;
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        hasErrors = configHasErrors(v93k);
+        if (v93k != null) {
+            refQuoteNetTotal = v93k.getReferenceQuoteNetPrice();
+        }
+        if (hasErrors) {
+            refQuoteNetTotal = null;
+        }
+        return refQuoteNetTotal;
+    }
+
+    public boolean configHasErrors(V93kQuote v93k) {
+        boolean hasErrors = false;
+        if (v93k != null) {
+            //Check if no exceptions from configurator
+            if (v93k.getExceptionMap() != null) {
+                TreeMap<String, ArrayList<String>> exceptionMap =
+                    v93k.getExceptionMap().getErrorList();
+                List<String> errorMessages =
+                    v93k.getExceptionMap().getErrorsMessages();
+                if (exceptionMap != null && exceptionMap.size() > 0) {
+                    hasErrors = true;
+                }
+                if (errorMessages != null && errorMessages.size() > 0) {
+                    hasErrors = true;
+                }
+            }
+
+        }
+        return hasErrors;
+    }
+
+    public HashMap getProductPriceUserPref() {
+
+        HashMap choiceHashMap =
+            (HashMap)ADFUtils.getSessionScopeValue("userPrefMap");
+        if (choiceHashMap == null) {
+            choiceHashMap = new HashMap();
+            String userId = (String)ADFUtils.getSessionScopeValue("UserId");
+            SudokuAMImpl am = (SudokuAMImpl)getAm();
+            if (am != null) {
+                String query =
+                    "select * from xxat_userpref_globalchoice where user_id=:1 and column_type IN ('Prd_num_ref_config','Prd_num_target_config','Ref_price_ref_config','Ref_price_target_config')";
+                DBTransaction dbTrans = (DBTransaction)am.getTransaction();
+                PreparedStatement ps =
+                    dbTrans.createPreparedStatement(query, 0);
+                try {
+                    ps.setString(1, userId == null ? "0" : userId);
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
+                        choiceHashMap.put(rs.getString(2), rs.getString(3));
+                    }
+                    ADFUtils.setSessionScopeValue("userPrefMap",
+                                                  choiceHashMap);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (ps != null) {
+                        try {
+                            ps.close();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                    }
+                }
+
+            }
+        }
+        return choiceHashMap;
+    }
+
+
+    private SudokuAMImpl getAm() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        BindingContext bindingContext = BindingContext.getCurrent();
+        DCDataControl dc =
+            bindingContext.findDataControl("SudokuAMDataControl"); // Name of application module in datacontrolBinding.cpx
+        SudokuAMImpl appM = (SudokuAMImpl)dc.getDataProvider();
+        return appM;
     }
 }

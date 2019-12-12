@@ -6,6 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,6 +26,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import oracle.adf.model.BindingContext;
+import oracle.adf.model.binding.DCDataControl;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.layout.RichPanelSplitter;
@@ -30,9 +36,12 @@ import oracle.adf.view.rich.component.rich.output.RichOutputText;
 
 import oracle.adf.view.rich.context.AdfFacesContext;
 
+import oracle.jbo.server.DBTransaction;
+
 import org.apache.myfaces.trinidad.context.RequestContext;
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
 
+import xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl;
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 import xxatcust.oracle.apps.sudoku.util.JaxbParser;
 import xxatcust.oracle.apps.sudoku.util.NodeComparator;
@@ -68,7 +77,7 @@ public class TargetConfiguration {
     public void refreshView(ActionEvent actionEvent) {
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         //Trying to clear previous values here
-        quoteTotal.setValue(null);
+        //quoteTotal.setValue(null);
         categoryTree = null;
         allNodes = null;
         listViewCollection = null;
@@ -86,10 +95,10 @@ public class TargetConfiguration {
             String cancelAll =
                 (String)ADFUtils.getSessionScopeValue("cancelAll");
             if (cancelAll != null && cancelAll.equalsIgnoreCase("Y")) {
-                quoteTotal.setValue(null);
+                // quoteTotal.setValue(null);
             }
             RichPopup.PopupHints hints = new RichPopup.PopupHints();
-            if(errPopup!=null){
+            if (errPopup != null) {
                 errPopup.show(hints);
                 errPopup.cancel();
             }
@@ -117,8 +126,11 @@ public class TargetConfiguration {
         if (quoteTotal != null) {
             getPageInitText();
         }
-        if (ui != null) {
+        if (panelSplitterBind != null) {
             System.out.println("REfreshing.....");
+            ADFUtils.addPartialTarget(ui);
+        }
+        if (ui != null) {
             ADFUtils.addPartialTarget(ui);
         }
     }
@@ -202,22 +214,22 @@ public class TargetConfiguration {
                                 new LinkedHashMap<String, List<ConfiguratorNodePOJO>>();
                             if (allNodesList != null &&
                                 !allNodesList.isEmpty()) {
-                                int index=0;
+                                int index = 0;
                                 for (ConfiguratorNodePOJO node :
                                      allNodesList) {
-                                   
+
                                     if (node.getPrintGroupLevel() != null &&
                                         (node.getPrintGroupLevel().equalsIgnoreCase("1") ||
                                          node.getPrintGroupLevel().equalsIgnoreCase("2") ||
                                          node.getPrintGroupLevel().equalsIgnoreCase("3") ||
                                          node.getPrintGroupLevel().equalsIgnoreCase("4"))) {
-//                                        if (node.getExtendedPrice() != null) {
-//                                            lineQuoteAmount =
-//                                                new Double(node.getExtendedPrice());
-//                                            //                                            sumQuoteTotal = sumQuoteTotal + b;
-//                                            //                                            lineQuoteAmount = new Double( node.getExtendedPrice());
-//                                            //                                            System.out.println("Sum Total "+sumQuoteTotal);
-//                                        }
+                                        //                                        if (node.getExtendedPrice() != null) {
+                                        //                                            lineQuoteAmount =
+                                        //                                                new Double(node.getExtendedPrice());
+                                        //                                            //                                            sumQuoteTotal = sumQuoteTotal + b;
+                                        //                                            //                                            lineQuoteAmount = new Double( node.getExtendedPrice());
+                                        //                                            //                                            System.out.println("Sum Total "+sumQuoteTotal);
+                                        //                                        }
                                     }
                                     if (node.getNodeCategory() != null &&
                                         node.getPrintGroupLevel() != null) {
@@ -267,25 +279,30 @@ public class TargetConfiguration {
                                                          null, null, null,
                                                          null, null,
                                                          printGrpLevel, null);
-                               
+
                                 root.add(firstLevel);
                                 List<ConfiguratorNodePOJO> childList =
                                     (List<ConfiguratorNodePOJO>)pair.getValue();
-                               
+
                                 for (ConfiguratorNodePOJO node : childList) {
                                     String nodeDesig = null;
-                                    if(i==0 && index==0){
+                                    if (i == 0 && index == 0) {
                                         nodeDesig = "header";
                                     }
                                     if (node.getPrintGroupLevel() != null &&
                                         node.getPrintGroupLevel().equalsIgnoreCase("1")) {
                                         nodeDesig = "header";
                                     }
-                                    if(node.getNodeCategory()!=null && (node.getNodeCategory().equalsIgnoreCase("1")||node.getNodeCategory().equalsIgnoreCase("2")||node.getNodeCategory().equalsIgnoreCase("3")||node.getNodeCategory().equalsIgnoreCase("4")||node.getNodeCategory().equalsIgnoreCase("5"))){
+                                    if (node.getNodeCategory() != null &&
+                                        (node.getNodeCategory().equalsIgnoreCase("1") ||
+                                         node.getNodeCategory().equalsIgnoreCase("2") ||
+                                         node.getNodeCategory().equalsIgnoreCase("3") ||
+                                         node.getNodeCategory().equalsIgnoreCase("4") ||
+                                         node.getNodeCategory().equalsIgnoreCase("5"))) {
                                         node.setPrintGroupLevel("0");
                                     }
                                     //if(node.getPrintGroupLevel()!=null && node.getPrintGroupLevel().eq)
-                                    
+
                                     NodeCategory secondLevel =
                                         new NodeCategory(category,
                                                          node.getNodeName(),
@@ -429,6 +446,9 @@ public class TargetConfiguration {
     }
 
     public ArrayList<ListViewModel> getListViewCollection() {
+        if (panelSplitterBind != null) {
+            ADFUtils.addPartialTarget(panelSplitterBind);
+        }
         Double netQuoteTotal = new Double(0);
         String refreshImport =
             (String)ADFUtils.getSessionScopeValue("refreshImport");
@@ -437,7 +457,7 @@ public class TargetConfiguration {
             listViewCollection = new ArrayList<ListViewModel>();
             LinkedHashMap<ChildPropertyTreeModel, Double> mapOfTrees =
                 createChildrenTrees();
-            
+
             List<ChildPropertyTreeModel> listOftrees =
                 new ArrayList<ChildPropertyTreeModel>();
             if (mapOfTrees != null && !mapOfTrees.isEmpty()) {
@@ -452,7 +472,7 @@ public class TargetConfiguration {
                 }
             }
             if (quoteTotal != null) {
-                quoteTotal.setValue(netQuoteTotal);
+                //quoteTotal.setValue(netQuoteTotal);
             }
             if (listOftrees != null && !listOftrees.isEmpty()) {
                 for (int i = 0; i < listOftrees.size(); i++) {
@@ -464,6 +484,7 @@ public class TargetConfiguration {
                 }
             }
         }
+
         return listViewCollection;
     }
 
@@ -473,5 +494,125 @@ public class TargetConfiguration {
 
     public RichOutputText getExpertMode() {
         return expertMode;
+    }
+
+    public String getQuoteNetTotal() {
+        String refQuoteNetTotal = null;
+        boolean hasErrors = false;
+
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        hasErrors = configHasErrors(v93k);
+        if (v93k != null) {
+            refQuoteNetTotal = v93k.getTargetQuoteNetPrice();
+        }
+        if (hasErrors) {
+            refQuoteNetTotal = null;
+        }
+        return refQuoteNetTotal;
+    }
+
+    public boolean configHasErrors(V93kQuote v93k) {
+        boolean hasErrors = false;
+        if (v93k != null) {
+            //Check if no exceptions from configurator
+            if (v93k.getExceptionMap() != null) {
+                TreeMap<String, ArrayList<String>> exceptionMap =
+                    v93k.getExceptionMap().getErrorList();
+                List<String> errorMessages =
+                    v93k.getExceptionMap().getErrorsMessages();
+                if (exceptionMap != null && exceptionMap.size() > 0) {
+                    hasErrors = true;
+                }
+                if (errorMessages != null && errorMessages.size() > 0) {
+                    hasErrors = true;
+                }
+            }
+
+        }
+        return hasErrors;
+    }
+
+    public Boolean getProductsRendered() {
+        boolean prodRend = true;
+        HashMap userPrefMap = getProductPriceUserPref();
+        if (userPrefMap != null && !userPrefMap.isEmpty()) {
+            if (userPrefMap.containsKey("Prd_num_target_config")) {
+                String Prd_num_target_config =
+                    (String)userPrefMap.get("Prd_num_target_config");
+                if (Prd_num_target_config != null &&
+                    Prd_num_target_config.equalsIgnoreCase("N")) {
+                    prodRend = false;
+                }
+            }
+        }
+        return prodRend;
+    }
+
+    public Boolean getPriceRendered() {
+        boolean priceRendered = true;
+        HashMap userPrefMap = getProductPriceUserPref();
+        if (userPrefMap != null && !userPrefMap.isEmpty()) {
+            if (userPrefMap.containsKey("Ref_price_target_config")) {
+                String Ref_price_target_config =
+                    (String)userPrefMap.get("Ref_price_target_config");
+                if (Ref_price_target_config != null &&
+                    Ref_price_target_config.equalsIgnoreCase("N")) {
+                    priceRendered = false;
+                }
+            }
+        }
+        return priceRendered;
+    }
+
+    public HashMap getProductPriceUserPref() {
+
+        HashMap choiceHashMap =
+            (HashMap)ADFUtils.getSessionScopeValue("userPrefMap");
+        if (choiceHashMap == null) {
+            choiceHashMap = new HashMap();
+            String userId = (String)ADFUtils.getSessionScopeValue("UserId");
+            SudokuAMImpl am = (SudokuAMImpl)getAm();
+            if (am != null) {
+                String query =
+                    "select * from xxat_userpref_globalchoice where user_id=:1 and column_type IN ('Prd_num_ref_config','Prd_num_target_config','Ref_price_ref_config','Ref_price_target_config')";
+                DBTransaction dbTrans = (DBTransaction)am.getTransaction();
+                PreparedStatement ps =
+                    dbTrans.createPreparedStatement(query, 0);
+                try {
+                    ps.setString(1, userId == null ? "0" : userId);
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
+                        choiceHashMap.put(rs.getString(2), rs.getString(3));
+                    }
+                    ADFUtils.setSessionScopeValue("userPrefMap",
+                                                  choiceHashMap);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (ps != null) {
+                        try {
+                            ps.close();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                    }
+                }
+
+            }
+        }
+        return choiceHashMap;
+    }
+
+
+    private SudokuAMImpl getAm() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        BindingContext bindingContext = BindingContext.getCurrent();
+        DCDataControl dc =
+            bindingContext.findDataControl("SudokuAMDataControl"); // Name of application module in datacontrolBinding.cpx
+        SudokuAMImpl appM = (SudokuAMImpl)dc.getDataProvider();
+        return appM;
     }
 }

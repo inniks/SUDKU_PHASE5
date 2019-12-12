@@ -7,6 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+
+import javax.el.ValueExpression;
+
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -71,6 +77,7 @@ public class UserPreference {
         new ArrayList<SelectItem>();
     private List<SelectItem> salesChannelSCForDefault =
         new ArrayList<SelectItem>();
+    private List<SelectItem> numberFormatList = new ArrayList<SelectItem>();
 
 
     private List customerNums = new ArrayList();
@@ -96,7 +103,7 @@ public class UserPreference {
     private RichSelectOneRadio bindPrdNumTConf;
     private RichSelectOneRadio bindRefPriceRefConf;
     private RichSelectOneRadio bindRefPriceTConfig;
-    private RichSelectOneChoice bindNumFormat;
+//    private RichSelectOneChoice bindNumFormat;
     private String userName =
         ((String)ADFUtils.getSessionScopeValue("UserName") == null ? "Admin" :
          (String)ADFUtils.getSessionScopeValue("UserName"));
@@ -125,6 +132,7 @@ public class UserPreference {
     private RichSelectOneChoice bindSalesChannel;
     private RichSelectOneChoice bindOU;
     private String orgId = null;
+    private String numFormat = null;
 
     public UserPreference() {
 
@@ -135,6 +143,7 @@ public class UserPreference {
             ADFUtils.getBindingContainer().getOperationBinding("initUserPref");
         if (ob != null)
             ob.execute();
+          getAllNumFormatVals();
         getAllCurrencyValues();
         getAllPaymentTermValues();
         getAllIncoTermValues();
@@ -419,6 +428,7 @@ public class UserPreference {
             OperationBinding staticValob =
                 ADFUtils.getBindingContainer().getOperationBinding("validatePrefStaticValues");
             staticValob.getParamsMap().put("usrId", usrId);
+        staticValob.getParamsMap().put("numberFormat", numFormat);
             if (staticValob != null) {
                 staticValob.execute();
             }
@@ -782,11 +792,16 @@ public class UserPreference {
         return bindRefPriceTConfig;
     }
 
-    public void getNumFormat() {
+    public void getNumFormatValue() {
         String temp = null;
         String colVal = "Num_format";
         DCIteratorBinding iter =
             ADFUtils.findIterator("userPrefEntityVOIterator");
+//        DCIteratorBinding iter1 =
+//            ADFUtils.findIterator("QuotesVOIterator");
+//        ViewObjectImpl vo1 = (ViewObjectImpl)iter.getViewObject();
+       
+        
         ViewObject vo = iter.getViewObject();
         if (vo != null) {
             vo.clearCache();
@@ -799,22 +814,29 @@ public class UserPreference {
                 temp = (String)rows[0].getAttribute("ColumnVal");
             }
         }
+//        if(vo1!=null){
+//            Row r = vo1.getCurrentRow();
+//            r.setAttribute("NumberFormat", temp);
+//            System.out.println("number format value:"+r.getAttribute("NumberFormat"));
+//            }
         if (temp != null && !"".equalsIgnoreCase(temp)) {
-            int i = Integer.parseInt(temp);
-            bindNumFormat.setValue(i);
-        } else {
-            bindNumFormat.setValue(0);
+            numFormat = temp;
+//            int i = Integer.parseInt(temp);
+//            bindNumFormat.setValue(temp);
         }
+//        } else {
+//            bindNumFormat.setValue(te);
+//        }
     }
 
-    public void setBindNumFormat(RichSelectOneChoice bindNumFormat) {
-        this.bindNumFormat = bindNumFormat;
-
-    }
-
-    public RichSelectOneChoice getBindNumFormat() {
-        return bindNumFormat;
-    }
+//    public void setBindNumFormat(RichSelectOneChoice bindNumFormat) {
+//        this.bindNumFormat = bindNumFormat;
+//
+//    }
+//
+//    public RichSelectOneChoice getBindNumFormat() {
+//        return bindNumFormat;
+//    }
 
     //    public void setOuValues(List<SelectItem> ouValues) {
     //        this.ouValues = ouValues;
@@ -2352,7 +2374,8 @@ public class UserPreference {
                     getPrdNumTConf();
                     getRefPriceRefConf();
                     getRefPriceTConfig();
-                    getNumFormat();
+//                    getAllNumFormatVals();
+                    getNumFormatValue();
                     getSelectedCSRVals();
                     getSelectedSalesChannelSC();
                     isGlobalChoiceEnable = false;
@@ -2622,5 +2645,50 @@ public class UserPreference {
 
     public List<SelectItem> getSalesChannelSCForDefault() {
         return salesChannelSCForDefault;
+    }
+
+
+    public List<SelectItem> getAllNumFormatVals(){
+//        if(numberFormatList == null)
+            numberFormatList = new ArrayList<SelectItem>();
+//        if(numberFormatList!=null){
+                numberFormatList.add(new SelectItem("10 000.00"));
+                numberFormatList.add(new SelectItem("10 000,00"));
+                numberFormatList.add(new SelectItem("10'000.00"));
+                numberFormatList.add(new SelectItem("10'000,00"));
+                numberFormatList.add(new SelectItem("10,000.00"));
+                numberFormatList.add(new SelectItem("10.000,00"));
+//            }
+         return numberFormatList;
+        }
+
+    public void numFormatVCE(ValueChangeEvent vce) {
+        System.out.println("value is:"+vce.getNewValue());
+        numFormat = vce.getNewValue().toString();
+//    String s = (String)ADFUtils.invokeEL("#{bindings.NumberFormat.selectedValue}");
+        
+        
+//                    RichSelectOneChoice soc = (RichSelectOneChoice)vce.getComponent();
+//            System.out.println("Index: " + soc.getValue().toString());
+//            vce.getComponent().processUpdates(FacesContext.getCurrentInstance());    
+//            Object numFormat =
+//                ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("NumberFormat");
+//            System.out.println("Number valuee:" + numFormat);
+        }
+
+    public void setNumFormat(String numFormat) {
+        this.numFormat = numFormat;
+    }
+
+    public String getNumFormat() {
+        return numFormat;
+    }
+
+    public void setNumberFormatList(List<SelectItem> numberFormatList) {
+        this.numberFormatList = numberFormatList;
+    }
+
+    public List<SelectItem> getNumberFormatList() {
+        return numberFormatList;
     }
 }

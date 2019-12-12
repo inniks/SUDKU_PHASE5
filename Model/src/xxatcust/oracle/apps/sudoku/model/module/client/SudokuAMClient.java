@@ -2,6 +2,7 @@ package xxatcust.oracle.apps.sudoku.model.module.client;
 
 import java.math.BigDecimal;
 
+import java.util.Hashtable;
 import java.util.List;
 
 import java.util.Map;
@@ -221,12 +222,6 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
     public void getViewAccessors(int usrId) {
         Object _ret =
             this.riInvokeExportedMethod(this,"getViewAccessors",new String [] {"int"},new Object[] {new Integer(usrId)});
-        return;
-    }
-
-    public void validatePrefStaticValues(int usrId) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"validatePrefStaticValues",new String [] {"int"},new Object[] {new Integer(usrId)});
         return;
     }
 
@@ -528,5 +523,23 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         Object _ret =
             this.riInvokeExportedMethod(this,"defaultVals",new String [] {"int"},new Object[] {new Integer(usrId)});
         return (Map)_ret;
+    }
+
+    public void validatePrefStaticValues(int usrId, String numberFormat) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validatePrefStaticValues",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), numberFormat});
+        return;
+    }
+
+    public String getCurrencyFormat(String userId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getCurrencyFormat",new String [] {"java.lang.String"},new Object[] {userId});
+        return (String)_ret;
+    }
+
+    public Hashtable getPriceProductChoices(String userId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getPriceProductChoices",new String [] {"java.lang.String"},new Object[] {userId});
+        return (Hashtable)_ret;
     }
 }

@@ -23,13 +23,12 @@
                               id="sms2" label=" " rendered="false"
                               leadingHeader="Operating Unit values"
                               trailingHeader="Selected Units"
-                            valueChangeListener="#{pageFlowScope.UserPrefBean.ouVCE}"
+                              valueChangeListener="#{pageFlowScope.UserPrefBean.ouVCE}"
                               autoSubmit="true" layout="horizontal"
                               contentStyle="width:300px;height:160px;">
           <f:selectItems value="#{pageFlowScope.UserPrefBean.ouValues}"
                          id="si10"/>
         </af:selectManyShuttle>
-        
         <af:panelGroupLayout id="pgl6" layout="vertical" halign="start"
                              valign="baseline">
           <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.salesChannel}"
@@ -43,9 +42,8 @@
         </af:panelGroupLayout>
       </af:panelGroupLayout>
     </af:panelBox>
-    <af:panelGroupLayout id="pgl7" layout="horizontal"
-                         halign="end" valign="baseline"
-                         styleClass="AFStretchWidth">
+    <af:panelGroupLayout id="pgl7" layout="horizontal" halign="end"
+                         valign="baseline" styleClass="AFStretchWidth">
       <af:commandButton text="Save Global Choice" id="cb1"
                         actionListener="#{pageFlowScope.UserPrefBean.onCommit}"
                         partialSubmit="true"/>
@@ -55,8 +53,7 @@
       <af:spacer width="10" height="10" id="s16"/>
     </af:panelGroupLayout>
     <af:separator id="s20"/>
-    <af:panelGroupLayout id="pgl2" layout="vertical"
-                         styleClass="AFStretchWidth"
+    <af:panelGroupLayout id="pgl2" layout="vertical" styleClass="AFStretchWidth"
                          partialTriggers="sms2 soc16">
       <af:showDetailHeader text="Global Choice List" id="sdh1"
                            disclosureListener="#{pageFlowScope.UserPrefBean.getGlobalChoiceDetails}"
@@ -67,8 +64,7 @@
                           splitterPosition="306" inlineStyle="height:1100.0px;"
                           orientation="vertical">
           <f:facet name="first">
-            <af:panelGroupLayout
-                                 xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+            <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pgl1">
               <af:panelFormLayout id="pfl1" maxColumns="3" rows="3"
                                   partialTriggers="soc2">
@@ -85,14 +81,12 @@
                                  id="si13"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s3"/>
-                <af:selectOneChoice value="#{bindings.NumberFormat.inputValue}"
-                                    label="Number Format"
-                                    required="#{bindings.NumberFormat.hints.mandatory}"
-                                    shortDesc="#{bindings.NumberFormat.hints.tooltip}"
-                                    id="soc1" autoSubmit="true"
-                                    binding="#{pageFlowScope.UserPrefBean.bindNumFormat}"
-                                    contentStyle="width:140.0px">
-                  <f:selectItems value="#{bindings.NumberFormat.items}"
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.numFormat}"
+                                    label="Number Format" id="soc1"
+                                    autoSubmit="true"
+                                    contentStyle="width:140.0px"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.numFormatVCE}">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.numberFormatList}"
                                  id="si4"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s6"/>
@@ -131,8 +125,7 @@
                   <f:selectItems value="#{pageFlowScope.UserPrefBean.salesRepValuesForDefault}"
                                  id="si213"/>
                 </af:selectOneChoice>
-                <af:spacer width="10" height="10" id="s12"
-                           rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"/>
+                <af:spacer width="10" height="10" id="s12"/>
                 <af:selectOneChoice label="Primary OrderType" id="soc5"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.OrderTypeForChoiceVCE}"
                                     autoSubmit="true"
@@ -142,8 +135,7 @@
                   <f:selectItems value="#{pageFlowScope.UserPrefBean.orderTypeValuesForDefault}"
                                  id="si114"/>
                 </af:selectOneChoice>
-                <af:spacer width="10" height="10" id="s18"
-                           rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"/>
+                <af:spacer width="10" height="10" id="s18"/>
                 <af:selectOneChoice label="Primary Customer Number"
                                     autoSubmit="true"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.custNumForDefaultVCE}"
@@ -154,14 +146,12 @@
                   <f:selectItems value="#{pageFlowScope.UserPrefBean.custNumbersForDefault}"
                                  id="si15"/>
                 </af:selectOneChoice>
-                <af:spacer width="10" height="10" id="s19"
-                           rendered="#{pageFlowScope.UserPrefBean.orgId ne null}"/>
+                <af:spacer width="10" height="10" id="s19"/>
               </af:panelFormLayout>
               <af:panelFormLayout id="pfl4" maxColumns="3" rows="1"
                                   labelWidth="40"/>
               <af:spacer width="10" height="10" id="s9"/>
-              <af:panelFormLayout id="pfl2"
-                                  maxColumns="1" rows="4">
+              <af:panelFormLayout id="pfl2" maxColumns="1" rows="4">
                 <af:selectOneRadio value="#{bindings.PrdNumRefConfig.inputValue}"
                                    label="Display Product Numbers on the Reference Configuration View"
                                    required="#{bindings.PrdNumRefConfig.hints.mandatory}"

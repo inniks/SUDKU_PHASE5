@@ -10,6 +10,7 @@ public class UiSelection {
     private String uiNodeName = "";
     private String valueSelected;
     private String uiType;
+    //@JsonRawValue
     private String czNodeName;
     private String identifier;
     private int quantity;

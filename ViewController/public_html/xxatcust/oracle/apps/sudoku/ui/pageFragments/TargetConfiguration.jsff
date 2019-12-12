@@ -58,7 +58,7 @@
                               <af:gridCell marginStart="5px" width="15%"
                                            id="gc9"
                                            inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
-                                           rendered="true">
+                                           rendered="#{pageFlowScope.TargetConfigurationBean.productsRendered}">
                                 <af:outputText value="#{node.nodeName}"
                                                id="ot1"/>
                               </af:gridCell>
@@ -87,13 +87,15 @@
                               </af:gridCell>
                               <af:gridCell marginStart="5px" width="14%"
                                            id="gc11"
-                                           inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
+                                           inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
+                                           rendered="#{pageFlowScope.TargetConfigurationBean.priceRendered}">
                                 <af:outputText value="#{node.unitPrice}"
                                                id="ot5"/>
                               </af:gridCell>
                               <af:gridCell marginStart="5px" width="14%"
                                            id="gc6"
-                                           inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
+                                           inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
+                                           rendered="#{pageFlowScope.TargetConfigurationBean.priceRendered}">
                                 <af:outputText value="#{node.extendedPrice}"
                                                id="ot6"/>
                               </af:gridCell>
@@ -117,7 +119,7 @@
                     <af:panelLabelAndMessage label="Quote Total :" id="plam5"
                                              inlineStyle="font-size:small; color:Navy; font-weight:bolder;"
                                              rendered="false"/>
-                    <af:outputFormatted value="Quote Net Total :" id="of2"
+                    <af:outputFormatted value="Quote Net Total :#{pageFlowScope.TargetConfigurationBean.quoteNetTotal}" id="of2"
                                         inlineStyle="color:Blue; font-family:Georgia, 'Times New Roman', times, Serif; font-weight:bold;"/>
                     <af:outputText id="ot16"
                                    binding="#{pageFlowScope.TargetConfigurationBean.quoteTotal}"
@@ -136,8 +138,10 @@
                       <af:spacer width="7" height="10" id="s3"/>
                       <af:outputText value="Product Number" id="ot7"
                                      inlineStyle="color:Black;  font-weight:bold;"
-                                     styleClass="ABHeader"/>
-                      <af:spacer width="92" height="10" id="s5"/>
+                                     styleClass="ABHeader"
+                                     rendered="#{pageFlowScope.TargetConfigurationBean.productsRendered}"/>
+                      <af:spacer width="92" height="10" id="s5"
+                                 rendered="#{pageFlowScope.TargetConfigurationBean.productsRendered}"/>
                       <af:outputText value="Product Description" id="ot8"
                                      inlineStyle="color:Black; font-weight:bold;"
                                      styleClass="ABHeader"/>
@@ -152,11 +156,14 @@
                       <af:spacer width="122" height="10" id="s10"/>
                       <af:outputText value="Unit Price" id="ot1M1"
                                      inlineStyle="color:Black;  font-weight:bold;"
-                                     styleClass="ABHeader"/>
-                      <af:spacer width="80" height="10" id="s11"/>
+                                     styleClass="ABHeader"
+                                     rendered="#{pageFlowScope.TargetConfigurationBean.priceRendered}"/>
+                      <af:spacer width="80" height="10" id="s11"
+                                 rendered="#{pageFlowScope.TargetConfigurationBean.priceRendered}"/>
                       <af:outputText value="Extended Price" id="ot12"
                                      inlineStyle="color:Black;  font-weight:bold;"
-                                     noWrap="true" styleClass="ABHeader"/>
+                                     noWrap="true" styleClass="ABHeader"
+                                     rendered="#{pageFlowScope.TargetConfigurationBean.priceRendered}"/>
                       <af:spacer width="118" height="10" id="s12"/>
                     </af:panelGroupLayout>
                   </af:group>

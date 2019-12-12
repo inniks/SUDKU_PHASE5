@@ -4300,7 +4300,8 @@
                                         </af:selectOneChoice>
                                         <af:inputText label="Label 8" id="it4"
                                                       visible="false"
-                                                      placeholder="#{sysConIter.parentGroupName}"/>
+                                                      placeholder="#{sysConIter.parentGroupName}"
+                                                      helpTopicId="#{sysConIter.uiField1_czModelName}"/>
                                       </af:panelGroupLayout>
                                     </af:group>
                                   </f:facet>
@@ -6184,7 +6185,8 @@
                                         </af:selectOneChoice>
                                         <af:inputText label="Label 8" id="it_xcv_4"
                                                       visible="false"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
+                                                      placeholder="#{theadIter.parentGroupName}"
+                                                      helpTopicId="#{theadIter.uiField1_czModelName}"/>
                                       </af:panelGroupLayout>
                                       </f:facet>
                                     </af:panelBorderLayout>

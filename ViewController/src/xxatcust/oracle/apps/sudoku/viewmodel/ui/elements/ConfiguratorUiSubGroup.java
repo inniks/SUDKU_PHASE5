@@ -11,6 +11,8 @@ public class ConfiguratorUiSubGroup {
     
     String subGroupIdentifier = null;
     
+   // String subGroupSecondName = null;
+    
     boolean required = false;
     
     ArrayList<ConfiguratorUiElement> uiElements = new ArrayList<ConfiguratorUiElement>();

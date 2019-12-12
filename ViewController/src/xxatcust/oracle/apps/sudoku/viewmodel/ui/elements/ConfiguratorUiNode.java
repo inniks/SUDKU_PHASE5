@@ -1,5 +1,6 @@
 package xxatcust.oracle.apps.sudoku.viewmodel.ui.elements;
 
+
 public class ConfiguratorUiNode {
     public ConfiguratorUiNode() {
         super();
@@ -27,7 +28,6 @@ public class ConfiguratorUiNode {
     int quantity = -1;
     int referenceQuantiy = -1;
     int targetQuantity = -1;
-    
     String czModelName = null;  
     
     public void setUiNodeName(String uiNodeName) {

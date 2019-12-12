@@ -362,14 +362,6 @@
         Type="int"/>
     </Method>
     <Method
-      Name="validatePrefStaticValues">
-      <Return
-        Type="void"/>
-      <Parameter
-        Name="usrId"
-        Type="int"/>
-    </Method>
-    <Method
       Name="validateOUValues">
       <Return
         Type="java.lang.String"/>
@@ -910,6 +902,33 @@
       <Parameter
         Name="usrId"
         Type="int"/>
+    </Method>
+    <Method
+      Name="validatePrefStaticValues">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="usrId"
+        Type="int"/>
+      <Parameter
+        Name="numberFormat"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="getCurrencyFormat">
+      <Return
+        Type="java.lang.String"/>
+      <Parameter
+        Name="userId"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="getPriceProductChoices">
+      <Return
+        Type="java.util.Hashtable"/>
+      <Parameter
+        Name="userId"
+        Type="java.lang.String"/>
     </Method>
   </ClientInterface>
 </AppModule>

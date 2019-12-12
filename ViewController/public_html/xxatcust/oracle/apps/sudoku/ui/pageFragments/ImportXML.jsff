@@ -49,11 +49,11 @@
             <af:toolbar id="t1" partialTriggers="ctb1 ctb4 ctb2 ctb6">
               <af:commandToolbarButton text="Show Products" id="ctb1"
                                        actionListener="#{XMLImportPageBean.showProducts}"
-                                       rendered="#{!XMLImportPageBean.productsRendered}"
+                                       rendered="false"
                                        partialTriggers="ctb4"/>
               <af:commandToolbarButton text="Hide Products" id="ctb4"
                                        actionListener="#{XMLImportPageBean.hideProducts}"
-                                       rendered="#{XMLImportPageBean.productsRendered}"
+                                       rendered="false"
                                        partialTriggers="ctb1"/>
               <af:spacer width="10" height="10" id="s15"/>
               <af:commandToolbarButton text="Show Prices" id="ctb2"
@@ -122,58 +122,63 @@
                                      rendered="true" fetchSize="100">
                           <f:facet name="groupHeaderStamp">
                             <af:listItem id="li3" styleClass="ABHeader">
-                              <af:outputText value="#{node.category}" id="ot142"
-                                             inlineStyle="font-weight:bold;"/>
+                              <af:panelGroupLayout id="pgl16">
+                                <af:outputText value="#{node.category}" id="ot1"
+                                               inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
+                                               truncateAt="0"/>
+                              </af:panelGroupLayout>
                             </af:listItem>
                           </f:facet>
                           <af:listItem id="li2">
                             <af:panelGridLayout id="pgl15k">
                               <af:gridRow marginTop="5px" height="auto"
-                                          id="gr2">
+                                          id="gr2_a">
                                 <af:gridCell marginStart="5px" width="15%"
-                                             id="gc9"
+                                             id="gc9_a"
                                              rendered="#{XMLImportPageBean.productsRendered}">
                                   <af:outputText value="#{node.nodeName}"
-                                                 id="ot1"
+                                                 id="ot1_a"
                                                  inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'/>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="25%"
-                                             id="gc4"
+                                             id="gc4_a"
                                              inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
                                   <af:outputText value="#{node.nodeDescription}"
-                                                 id="ot2" truncateAt="65"
+                                                 id="ot2_a" truncateAt="65"
                                                  shortDesc="#{node.nodeDescription}"/>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" marginEnd="5px"
-                                             width="14%" id="gc5"
+                                             width="14%" id="gc5_a"
                                              inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                  <af:spacer width="150" height="10" id="s4"/>
+                                  <af:spacer width="150" height="10" id="s4_a"/>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="14%"
-                                             id="gc3"
+                                             id="gc3_a"
                                              inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
                                   <af:outputText value="#{node.nodeQty}"
-                                                 id="ot3"/>
+                                                 id="ot3_a"/>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="14%"
-                                             id="gc8"
+                                             id="gc8_a"
                                              inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                  <af:outputText id="ot4" value="#{node.uom}"/>
+                                  <af:outputText id="ot4_a" value="#{node.uom}"/>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="14%"
-                                             id="gc11"
-                                             inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
+                                             id="gc11_a"
+                                             inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
+                                             rendered="#{XMLImportPageBean.priceRendered}">
                                   <af:outputText value="#{node.unitPrice}"
-                                                 id="ot5"/>
+                                                 id="ot5_a"/>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="14%"
-                                             id="gc6"
-                                             inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
+                                             id="gc6_a"
+                                             inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
+                                             rendered="#{XMLImportPageBean.priceRendered}">
                                   <af:outputText value="#{node.extendedPrice}"
-                                                 id="ot6"/>
+                                                 id="ot6_a"/>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="14%"
-                                             id="gc6_1"
+                                             id="gc6_1_a"
                                              inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
                                              rendered="false">
                                   <!--<af:outputText value="#{node.extendedPrice}" id="ot6_1"/>-->
@@ -192,7 +197,8 @@
                                           inlineStyle="color:Blue; font-family:'Times New Roman', 'Arial Black', times, Serif; font-size:small; font-weight:bold;"/>
                       <af:outputText id="ot16"
                                      binding="#{XMLImportPageBean.quoteTotal}"
-                                     inlineStyle="font-size:small; color:Navy; font-weight:bold;"/>
+                                     inlineStyle="font-size:small; color:Navy; font-weight:bold;"
+                                     value="#{XMLImportPageBean.quoteNetTotal}"/>
                       <af:panelLabelAndMessage label="Quote Net Total :" id="plam5"
                                                inlineStyle="font-size:x-large; color:Navy; font-weight:bolder; font-family:'Courier New', Courier, monospace;"
                                                rendered="false"/>
@@ -204,7 +210,7 @@
                       <af:spacer width="10" height="20" id="s28"/>
                       <af:panelGroupLayout id="pgl5" inlineStyle="color: Aqua;"
                                            partialTriggers="cb1"
-                                           rendered="#{XMLImportPageBean.showListHeader eq true}">
+                                           rendered="true">
                         <af:outputText value="Line" id="ot14"
                                        inlineStyle="color:Black; font-weight:bold; font-size:small;"
                                        styleClass="ABHeader"/>
@@ -221,29 +227,31 @@
                                        inlineStyle="color:Black; font-weight:bold;"
                                        styleClass="ABHeader"/>
                         <af:spacer width="270" height="10" id="s8"/>
-                        <af:spacer width="28" height="10" id="s24"
-                                   rendered="#{XMLImportPageBean.productsRendered eq false}"/>
+                        <af:spacer width="28" height="10" id="s24"/>
                         <af:outputText value="Quantity" id="ot9"
                                        inlineStyle="color:Black;  font-weight:bold;"
                                        styleClass="ABHeader"/>
                         <af:spacer width="141" height="10" id="s9"/>
-                        <af:spacer width="25" height="10" id="s23"
-                                   rendered="#{XMLImportPageBean.productsRendered eq false}"/>
+                        <af:spacer width="25" height="10" id="s23"/>
                         <af:outputText value="UOM" id="ot10"
                                        inlineStyle="color:Black;  font-weight:bold;"
                                        styleClass="ABHeader"/>
-                        <af:spacer width="140" height="10" id="s10"/>
+                        <af:spacer width="140" height="10" id="s10"
+                                   rendered="#{XMLImportPageBean.priceRendered}"/>
                         <af:spacer width="30" height="10" id="s22"
-                                   rendered="#{XMLImportPageBean.productsRendered eq false}"/>
+                                   rendered="#{XMLImportPageBean.priceRendered}"/>
                         <af:outputText value="Unit Price" id="o1t11"
                                        inlineStyle="color:Black;  font-weight:bold;"
-                                       styleClass="ABHeader"/>
-                        <af:spacer width="96" height="10" id="s11"/>
+                                       styleClass="ABHeader"
+                                       rendered="#{XMLImportPageBean.priceRendered}"/>
+                        <af:spacer width="96" height="10" id="s11"
+                                   rendered="#{XMLImportPageBean.priceRendered}"/>
                         <af:spacer width="20" height="10" id="s20"
-                                   rendered="#{XMLImportPageBean.productsRendered eq false}"/>
+                                   rendered="#{XMLImportPageBean.priceRendered}"/>
                         <af:outputText value="Extended Price" id="ot12"
                                        inlineStyle="color:Black;  font-weight:bold;"
-                                       noWrap="true" styleClass="ABHeader"/>
+                                       noWrap="true" styleClass="ABHeader"
+                                       rendered="#{XMLImportPageBean.priceRendered}"/>
                       </af:panelGroupLayout>
                     </af:group>
                   </f:facet>

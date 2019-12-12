@@ -112,7 +112,7 @@
             <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pt_pgl1" styleClass="AFStretchWidth"
                                  layout="vertical"
-                                 partialTriggers="ctb1_vre ctb3 ctb_qhdr ctb4">
+                                 partialTriggers="ctb1_vre ctb3 ctb_qhdr ctb4 ctb7">
               <af:panelGroupLayout id="pt_pgl7" layout="horizontal"
                                    styleClass="AFStretchWidth">
                 <af:panelGroupLayout id="pgl_11" layout="horizontal"
@@ -183,7 +183,8 @@
                                              icon="/Resources/images/imgs/Save To Orcl.png"
                                              partialSubmit="true"/>
                         <af:spacer width="4" height="10" id="s10"/>
-                        <af:commandImageLink id="ctb19" disabled="false"
+                        <af:commandImageLink id="ctb19"
+                                             disabled="#{viewScope.LoadDynamicRegionBean.disableReportButtons eq 'Y'}"
                                              partialSubmit="true"
                                              icon="/Resources/images/imgs/printQuote_ena.png"
                                              disabledIcon="/Resources/images/imgs/printQuote.png">
@@ -248,16 +249,19 @@
                                                          filename="XXATREPT_Report_for_PMF.pdf"/>
                         </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s14"/>
-                        <af:commandImageLink id="ctb17" disabled="false"
+                        <af:commandImageLink id="ctb17"
+                                             disabled="#{viewScope.LoadDynamicRegionBean.disableReportButtons eq 'Y'}"
                                              icon="/Resources/images/imgs/View DUT_ena.png"
                                              partialSubmit="true"
+                                             
                                              disabledIcon="/Resources/images/imgs/View DUT.png">
                           <af:fileDownloadActionListener filename="XXATREPT_RDV_Report___Real_DUT.xls"
                                                          contentType="application/excel"
                                                          method="#{viewScope.LoadDynamicRegionBean.processExcelOutput}"/>
                         </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s15"/>
-                        <af:commandImageLink id="ctb18" disabled="false"
+                        <af:commandImageLink id="ctb18"
+                                             disabled="#{viewScope.LoadDynamicRegionBean.disableReportButtons eq 'Y'}"
                                              icon="/Resources/images/imgs/View Model File_ena.png"
                                              partialSubmit="true"
                                              disabledIcon="/Resources/images/imgs/View Model File.png">

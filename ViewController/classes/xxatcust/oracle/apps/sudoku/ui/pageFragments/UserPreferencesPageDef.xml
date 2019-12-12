@@ -126,6 +126,7 @@
                   Action="invokeMethod" MethodName="validatePrefStaticValues"
                   IsViewObjectMethod="false">
       <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="numberFormat" NDType="java.lang.String"/>
     </methodAction>
     <methodAction id="getSelectedCustomerNameValues"
                   InstanceName="SudokuAMDataControl.dataProvider"

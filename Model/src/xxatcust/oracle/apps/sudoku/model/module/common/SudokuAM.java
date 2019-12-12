@@ -2,6 +2,7 @@ package xxatcust.oracle.apps.sudoku.model.module.common;
 
 import java.math.BigDecimal;
 
+import java.util.Hashtable;
 import java.util.List;
 
 import java.util.Map;
@@ -79,9 +80,6 @@ public interface SudokuAM extends ApplicationModule {
 
 
     void getViewAccessors(int usrId);
-
-
-    void validatePrefStaticValues(int usrId);
 
 
     String validateOUValues(int usrId, List ouValues);
@@ -204,4 +202,10 @@ public interface SudokuAM extends ApplicationModule {
     Map defaultValsOUDependencies(int usrId, String orgId);
 
     Map defaultVals(int usrId);
+
+    void validatePrefStaticValues(int usrId, String numberFormat);
+
+    String getCurrencyFormat(String userId);
+
+    Hashtable getPriceProductChoices(String userId);
 }

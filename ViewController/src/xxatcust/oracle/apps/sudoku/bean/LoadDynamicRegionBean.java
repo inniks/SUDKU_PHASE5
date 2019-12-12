@@ -411,6 +411,7 @@ public class LoadDynamicRegionBean {
     public void saveQuoteFromSysToOrcl(ActionEvent actionEvent) throws MalformedURLException,
                                                                        IOException {
         //Before calling all the API's,Pass import source as "SAVE_CONFIG_TO_QUOTE"
+        boolean isQuoteSaved = false;
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         //Do not call configurator if there is an error from Save Config to quote
@@ -563,8 +564,9 @@ public class LoadDynamicRegionBean {
                                                 }
 
                                                 //Save to oracle success , set param here
-                                                ADFUtils.setSessionScopeValue("configSaved",
-                                                                              "Y");
+//                                                ADFUtils.setSessionScopeValue("configSaved",
+//                                                                              "Y");
+                                                isQuoteSaved = true;
                                             } else if (createMsg.contains("E-")) {
                                                 String[] resMsg =
                                                     createMsg.split("-", 2);
@@ -696,8 +698,9 @@ public class LoadDynamicRegionBean {
                                                                      "</b></p>");
                                                 }
                                                 //save too oracle success
-                                                ADFUtils.setSessionScopeValue("configSaved",
-                                                                              "Y");
+//                                                ADFUtils.setSessionScopeValue("configSaved",
+//                                                                              "Y");
+                                                isQuoteSaved = true ;
                                             } else if (createMsg.contains("E-")) {
                                                 String[] resMsg =
                                                     createMsg.split("-", 2);
@@ -816,8 +819,9 @@ public class LoadDynamicRegionBean {
                                                                      "</b></p>");
                                                 }
                                                 //save to oracle success
-                                                ADFUtils.setSessionScopeValue("configSaved",
-                                                                              "Y");
+//                                                ADFUtils.setSessionScopeValue("configSaved",
+//                                                                              "Y");
+                                                isQuoteSaved = true;
                                             } else if (updateMsg.contains("E-")) {
                                                 String[] resMsg =
                                                     updateMsg.split("-", 2);
@@ -958,6 +962,7 @@ public class LoadDynamicRegionBean {
                                     v93k.getSessionDetails().getTargetQuoteNumber();
                         } else if (quoteForWarranty == null &&
                                    v93k.getSessionDetails().isUpdateQuote()) {
+                            _logger.info("Calling callWarrentyAPI....QUOTE NUM " +v93k.getSessionDetails().getSourceQuoteNumber());
                             warrantyOb.getParamsMap().put("quoteNum",
                                                           v93k.getSessionDetails().getSourceQuoteNumber());
                             quoteForWarranty =
@@ -975,6 +980,7 @@ public class LoadDynamicRegionBean {
                                          warrantyList) {
                                         //call the warranty api
                                         String item = node.getNodeName();
+                                        _logger.info("Calling callWarrentyAPI....QUOTE FOR WARRANTY " +quoteForWarranty+" "+item);
                                         warrantyOb.getParamsMap().put("quoteNum",
                                                                       quoteForWarranty);
                                         warrantyOb.getParamsMap().put("prodName",
@@ -987,6 +993,7 @@ public class LoadDynamicRegionBean {
                                         if (warrantyOb != null) {
                                             retMsg =
                                                     (String)warrantyOb.execute();
+                                            _logger.info("After Execute callWarrentyAPI....QUOTE FOR WARRANTY " +quoteForWarranty+" "+item);
                                             if (retMsg != null) {
                                                 if (retMsg.contains("<html><body>")) {
                                                     resultErrMsg.append(retMsg.toString());
@@ -1050,7 +1057,12 @@ public class LoadDynamicRegionBean {
                 //                bindPopup1.show(hints);
             }
         } else {
+            isQuoteSaved = false ;
             displayConfigErrors(v93k);
+        }
+        if(v93k!=null && v93k.getSessionDetails()!=null){
+            v93k.getSessionDetails().setQuoteSaved(isQuoteSaved);
+            ADFUtils.setSessionScopeValue("parentObject", v93k);
         }
     }
 

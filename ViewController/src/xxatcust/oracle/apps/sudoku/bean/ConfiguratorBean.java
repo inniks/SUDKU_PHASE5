@@ -230,24 +230,24 @@ public class ConfiguratorBean {
     public void initConfigurator() throws IOException, JsonGenerationException,
                                           JsonMappingException {
         //The refresh should happen only if there is a v93k object available
-                System.out.println("Init Configurator..");
-                        V93kQuote v93k =
-                            (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
-                        ADFUtils.setSessionScopeValue("parentObject",
-                                                      v93k); //Comment for server run
-                        HashMap ruleSetMap = new HashMap();
-                        if (v93k.getInputParams() != null) {
-                            ruleSetMap.put("topLevelCode",
-                                           v93k.getInputParams().getRuleSetTopLevelChoice());
-                            ruleSetMap.put("secondLevelCode",
-                                           v93k.getInputParams().getRuleSetSecondLevelChoice());
-                            //ruleSetMap.put("error", "Y");
-                            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-                        }
+        //                System.out.println("Init Configurator..");
+        //                        V93kQuote v93k =
+        //                            (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
+        //                        ADFUtils.setSessionScopeValue("parentObject",
+        //                                                      v93k); //Comment for server run
+        //                        HashMap ruleSetMap = new HashMap();
+        //                        if (v93k.getInputParams() != null) {
+        //                            ruleSetMap.put("topLevelCode",
+        //                                           v93k.getInputParams().getRuleSetTopLevelChoice());
+        //                            ruleSetMap.put("secondLevelCode",
+        //                                           v93k.getInputParams().getRuleSetSecondLevelChoice());
+        //                            //ruleSetMap.put("error", "Y");
+        //                            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+        //                        }
         //Comment till here
 
-//        V93kQuote v93k =
-//            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject"); //Uncomment for server
         if (v93k != null && v93k.getInputParams() != null &&
             v93k.getInputParams().getImportSource() != null) {
 
@@ -375,56 +375,70 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void handleNodeSelection(ActionEvent actionEvent) throws IOException,
                                                                     JsonGenerationException,
                                                                     JsonMappingException {
-        UIComponent component = actionEvent.getComponent();
-        List<UIComponent> children = component.getChildren();
-        String selectedValue = null;
-        HashMap<String, String> selectedNodeValueMap =
-            new HashMap<String, String>();
-        String uiSubGrpName = (String)ADFUtils.evaluateEL("#{node.nodeName}");
-        selectedNodeValueMap.put("uiSubGrpName", uiSubGrpName);
-        String czNodeName = null;
-        String nodeColor = null;
-        String identifier = null;
-        String parentGroupName = null;
-        String refQty = null;
-        String targetQty = null;
-        String czModelName = null;
-        String uiNodeName = null;
-        //(V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        for (UIComponent comp : children) {
-            if (comp instanceof RichOutputFormatted) {
-                RichOutputFormatted of = (RichOutputFormatted)comp;
-                selectedValue = (String)of.getValue();
-                selectedNodeValueMap.put("selectedValue", selectedValue);
-                //czNodeName = of.getShortDesc() ;
-            }
-            if (comp instanceof RichInputText) {
-                RichInputText it = (RichInputText)comp;
-                if (it != null) {
-                    identifier = it.getShortDesc();
-                    czNodeName = (String)it.getValue();
-                    nodeColor = it.getLabel();
-                    parentGroupName = it.getPlaceholder();
-                    refQty = it.getChangedDesc();
-                    targetQty = it.getHelpTopicId();
-                    czModelName = it.getRequiredMessageDetail();
-                    uiNodeName = it.getContentStyle();
-                    selectedNodeValueMap.put("identifier", identifier);
-                    selectedNodeValueMap.put("czNodeName", czNodeName);
-                    selectedNodeValueMap.put("nodeColor", nodeColor);
-                    selectedNodeValueMap.put("parentGroupName",
-                                             parentGroupName);
-                    selectedNodeValueMap.put("refQty", refQty);
-                    selectedNodeValueMap.put("targetQty", targetQty);
-                    selectedNodeValueMap.put("czModelName", czModelName);
-                    selectedNodeValueMap.put("uiNodeName", uiNodeName);
-
-                }
+        V93kQuote v93 =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        boolean isQuoteSaved = false;
+        if (v93 != null && v93.getSessionDetails() != null) {
+            if (v93.getSessionDetails().isQuoteSaved()) {
+                isQuoteSaved = true;
             }
         }
-        ADFUtils.setSessionScopeValue("selectedNodeValueMap",
-                                      selectedNodeValueMap);
-        continueWithSelection();
+        if (!isQuoteSaved) {
+            UIComponent component = actionEvent.getComponent();
+            List<UIComponent> children = component.getChildren();
+            String selectedValue = null;
+            HashMap<String, String> selectedNodeValueMap =
+                new HashMap<String, String>();
+            String uiSubGrpName =
+                (String)ADFUtils.evaluateEL("#{node.nodeName}");
+            selectedNodeValueMap.put("uiSubGrpName", uiSubGrpName);
+            String czNodeName = null;
+            String nodeColor = null;
+            String identifier = null;
+            String parentGroupName = null;
+            String refQty = null;
+            String targetQty = null;
+            String czModelName = null;
+            String uiNodeName = null;
+            //(V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+            for (UIComponent comp : children) {
+                if (comp instanceof RichOutputFormatted) {
+                    RichOutputFormatted of = (RichOutputFormatted)comp;
+                    selectedValue = (String)of.getValue();
+                    selectedNodeValueMap.put("selectedValue", selectedValue);
+                    //czNodeName = of.getShortDesc() ;
+                }
+                if (comp instanceof RichInputText) {
+                    RichInputText it = (RichInputText)comp;
+                    if (it != null) {
+                        identifier = it.getShortDesc();
+                        czNodeName = (String)it.getValue();
+                        nodeColor = it.getLabel();
+                        parentGroupName = it.getPlaceholder();
+                        refQty = it.getChangedDesc();
+                        targetQty = it.getHelpTopicId();
+                        czModelName = it.getRequiredMessageDetail();
+                        uiNodeName = it.getContentStyle();
+                        selectedNodeValueMap.put("identifier", identifier);
+                        selectedNodeValueMap.put("czNodeName", czNodeName);
+                        selectedNodeValueMap.put("nodeColor", nodeColor);
+                        selectedNodeValueMap.put("parentGroupName",
+                                                 parentGroupName);
+                        selectedNodeValueMap.put("refQty", refQty);
+                        selectedNodeValueMap.put("targetQty", targetQty);
+                        selectedNodeValueMap.put("czModelName", czModelName);
+                        selectedNodeValueMap.put("uiNodeName", uiNodeName);
+
+                    }
+                }
+            }
+            ADFUtils.setSessionScopeValue("selectedNodeValueMap",
+                                          selectedNodeValueMap);
+            continueWithSelection();
+        } else {
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN,
+                                "Quote has already been saved to Oracle,This action is not allowed..");
+        }
 
 
     }
@@ -441,15 +455,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         System.out.println("Json String build is" + jsonStr);
         //If config is live use this
-        //                String responseJson =
-        //                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        //                System.out.println("Response Json from Configurator : " +
-        //                                   responseJson);
-        //                Object obj = mapper.readValue(responseJson, V93kQuote.class);
-        //                v93k = (V93kQuote)obj;
+        String responseJson =
+            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        System.out.println("Response Json from Configurator : " +
+                           responseJson);
+        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        v93k = (V93kQuote)obj;
 
         // else use this
-        v93k = (V93kQuote)convertJsonToObject(null);
+        //v93k = (V93kQuote)convertJsonToObject(null);
         if (v93k != null && v93k.getInputParams() != null) {
             Map ruleSetMap = new HashMap();
             ruleSetMap.put("topLevelCode",
@@ -856,55 +870,70 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void handleInput(ValueChangeEvent valueChangeEvent) throws IOException,
                                                                       JsonGenerationException,
                                                                       JsonMappingException {
-        UIComponent component = valueChangeEvent.getComponent();
-        UIComponent parent = component.getParent();
-        List<UIComponent> children = parent.getChildren();
-        String inputValue = (String)valueChangeEvent.getNewValue();
-        if (inputValue != null && inputValue.equals("")) {
-            inputValue = "0";
-        }
-        HashMap<String, String> inputNodeValueMap =
-            new HashMap<String, String>();
-        String uiSubGrpName = (String)ADFUtils.evaluateEL("#{node.nodeName}");
-        inputNodeValueMap.put("uiSubGrpName", uiSubGrpName);
-        inputNodeValueMap.put("inputValue", inputValue);
-        String parentGroupName = null;
-        String czNodeName = null;
-        String identifier = null;
-        String refQty = null;
-        String targetQty = null;
-        String quantity = null;
-        String czModelName = null;
-        String uiNodeName = null;
-
-        for (UIComponent comp : children) {
-            if (comp instanceof RichOutputFormatted) {
-                RichOutputFormatted rf = (RichOutputFormatted)comp;
-                if (rf != null) {
-                    parentGroupName = rf.getShortDesc();
-                    inputNodeValueMap.put("parentGroupName", parentGroupName);
-                    czNodeName = (String)rf.getValue();
-                    inputNodeValueMap.put("czNodeName", czNodeName);
-                    identifier = rf.getStyleClass();
-                    inputNodeValueMap.put("identifier", identifier);
-                }
-            }
-            if (comp instanceof RichInputText) {
-                RichInputText inpText = (RichInputText)comp;
-                refQty = inpText.getRequiredMessageDetail();
-                targetQty = inpText.getHelpTopicId();
-                uiNodeName = inpText.getShortDesc();
-                czModelName = inpText.getChangedDesc();
-                inputNodeValueMap.put("refQty", refQty);
-                inputNodeValueMap.put("targetQty", targetQty);
-                inputNodeValueMap.put("uiNodeName", uiNodeName);
-                inputNodeValueMap.put("czModelName", czModelName);
-            }
-        }
         V93kQuote v93 =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        ADFUtils.setSessionScopeValue("inputNodeValueMap", inputNodeValueMap);
-        continueWithInput();
+        boolean isQuoteSaved = false;
+        if (v93 != null && v93.getSessionDetails() != null) {
+            if (v93.getSessionDetails().isQuoteSaved()) {
+                isQuoteSaved = true;
+            }
+        }
+        if (!isQuoteSaved) {
+            UIComponent component = valueChangeEvent.getComponent();
+            UIComponent parent = component.getParent();
+            List<UIComponent> children = parent.getChildren();
+            String inputValue = (String)valueChangeEvent.getNewValue();
+            if (inputValue != null && inputValue.equals("")) {
+                inputValue = "0";
+            }
+            HashMap<String, String> inputNodeValueMap =
+                new HashMap<String, String>();
+            String uiSubGrpName =
+                (String)ADFUtils.evaluateEL("#{node.nodeName}");
+            inputNodeValueMap.put("uiSubGrpName", uiSubGrpName);
+            inputNodeValueMap.put("inputValue", inputValue);
+            String parentGroupName = null;
+            String czNodeName = null;
+            String identifier = null;
+            String refQty = null;
+            String targetQty = null;
+            String quantity = null;
+            String czModelName = null;
+            String uiNodeName = null;
+
+            for (UIComponent comp : children) {
+                if (comp instanceof RichOutputFormatted) {
+                    RichOutputFormatted rf = (RichOutputFormatted)comp;
+                    if (rf != null) {
+                        parentGroupName = rf.getShortDesc();
+                        inputNodeValueMap.put("parentGroupName",
+                                              parentGroupName);
+                        czNodeName = (String)rf.getValue();
+                        inputNodeValueMap.put("czNodeName", czNodeName);
+                        identifier = rf.getStyleClass();
+                        inputNodeValueMap.put("identifier", identifier);
+                    }
+                }
+                if (comp instanceof RichInputText) {
+                    RichInputText inpText = (RichInputText)comp;
+                    refQty = inpText.getRequiredMessageDetail();
+                    targetQty = inpText.getHelpTopicId();
+                    uiNodeName = inpText.getShortDesc();
+                    czModelName = inpText.getChangedDesc();
+                    inputNodeValueMap.put("refQty", refQty);
+                    inputNodeValueMap.put("targetQty", targetQty);
+                    inputNodeValueMap.put("uiNodeName", uiNodeName);
+                    inputNodeValueMap.put("czModelName", czModelName);
+                }
+            }
+
+            ADFUtils.setSessionScopeValue("inputNodeValueMap",
+                                          inputNodeValueMap);
+            continueWithInput();
+        } else {
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN,
+                                "Quote has already been saved to Oracle,This action is not allowed..");
+        }
 
     }
 
@@ -1570,49 +1599,69 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void handleLOVInput(ValueChangeEvent valueChangeEvent) throws IOException,
                                                                          JsonGenerationException,
                                                                          JsonMappingException {
-
-        String newVal = (String)valueChangeEvent.getNewValue();
-        String czNodeName = null;
-        String uiNodeName = null;
-        String identifier = null;
-        if (newVal != null) {
-            String[] lovNodeArray = newVal.split("-");
-            if (lovNodeArray[0] != null)
-                czNodeName = lovNodeArray[0];
-            if (lovNodeArray[1] != null)
-                uiNodeName = lovNodeArray[1];
-            if (lovNodeArray[2] != null)
-                identifier = lovNodeArray[2];
-        }
-        UIComponent component = valueChangeEvent.getComponent();
-        UIComponent parent = component.getParent();
-        List<UIComponent> children = parent.getChildren();
-
-
-        HashMap<String, String> inputLOVMap = new HashMap<String, String>();
-        String uiSubGrpName = (String)ADFUtils.evaluateEL("#{node.nodeName}");
-        inputLOVMap.put("uiSubGrpName", uiSubGrpName);
-        inputLOVMap.put("inputValue", uiNodeName);
-        String parentGroupName = null;
-        for (UIComponent comp : children) {
-            if (comp instanceof RichInputText) {
-                RichInputText rf = (RichInputText)comp;
-                if (rf != null) {
-                    parentGroupName = rf.getPlaceholder();
-                    inputLOVMap.put("parentGroupName", parentGroupName);
-
-                    inputLOVMap.put("czNodeName", czNodeName);
-                }
+        V93kQuote v93 =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        boolean isQuoteSaved = false;
+        if (v93 != null && v93.getSessionDetails() != null) {
+            if (v93.getSessionDetails().isQuoteSaved()) {
+                isQuoteSaved = true;
             }
         }
 
-        ADFUtils.setSessionScopeValue("inputLOVMap", inputLOVMap);
-        continueWithLOVInput();
+        if (!isQuoteSaved) {
+
+            String newVal = (String)valueChangeEvent.getNewValue();
+            String czNodeName = null;
+            String uiNodeName = null;
+            String identifier = null;
+            String czModelName = null;
+            if (newVal != null) {
+                String[] lovNodeArray = newVal.split("-");
+                if (lovNodeArray[0] != null)
+                    czNodeName = lovNodeArray[0];
+                if (lovNodeArray[1] != null)
+                    uiNodeName = lovNodeArray[1];
+                if (lovNodeArray[2] != null)
+                    identifier = lovNodeArray[2];
+            }
+            UIComponent component = valueChangeEvent.getComponent();
+            UIComponent parent = component.getParent();
+            List<UIComponent> children = parent.getChildren();
+
+
+            HashMap<String, String> inputLOVMap =
+                new HashMap<String, String>();
+            String uiSubGrpName =
+                (String)ADFUtils.evaluateEL("#{node.nodeName}");
+            inputLOVMap.put("uiSubGrpName", uiSubGrpName);
+            inputLOVMap.put("inputValue", uiNodeName);
+            String parentGroupName = null;
+            for (UIComponent comp : children) {
+                if (comp instanceof RichInputText) {
+                    RichInputText rf = (RichInputText)comp;
+                    if (rf != null) {
+                        parentGroupName = rf.getPlaceholder();
+                        czModelName = rf.getHelpTopicId();
+                        inputLOVMap.put("parentGroupName", parentGroupName);
+
+                        inputLOVMap.put("czNodeName", czNodeName);
+                        inputLOVMap.put("czModelName", czModelName);
+                    }
+                }
+            }
+
+            ADFUtils.setSessionScopeValue("inputLOVMap", inputLOVMap);
+            continueWithLOVInput();
+        } else {
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN,
+                                "Quote has already been saved to Oracle,This action is not allowed..");
+        }
     }
 
     public void continueWithLOVInput() throws IOException,
                                               JsonGenerationException,
                                               JsonMappingException {
+
         String uniqueSessionId =
             (String)ADFUtils.getSessionScopeValue("uniqueSessionId");
         V93kQuote v93k =
@@ -1628,6 +1677,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputLOVMap.get("parentGroupName");
             String czNodeName = (String)inputLOVMap.get("czNodeName");
+            String czModelName = (String)inputLOVMap.get("czModelName");
             //            if (czNodeName != null) {
             //                System.out.println("Cz Node name has special characters : " +
             //                                   czNodeName);
@@ -1651,7 +1701,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
             uiSelection.setCzNodeName(czNodeName);
             uiSelection.setIdentifier(identifier);
-
+            uiSelection.setCzModelName(czModelName);
             SessionDetails sessionDetails = v93k.getSessionDetails();
             if (v93k.getSessionDetails() == null) {
                 sessionDetails = new SessionDetails();
@@ -1683,6 +1733,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             //displayConfigWarnAndErrors();
             ADFUtils.addPartialTarget(ADFUtils.findComponentInRoot("confPGL"));
         }
+
 
     }
 
@@ -1890,8 +1941,9 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                            !formattedErrStr.toString().equals("<html><body><body><html>")) {
                     String cutStr = formattedErrStr.toString();
                     _logger.info("Cut String " + cutStr);
-                    StringUtils.replace(cutStr, "<html><body>", "");
-                    StringUtils.replace(cutStr, "<body><html>", "");
+
+                    cutStr = StringUtils.replace(cutStr, "<html><body>", "");
+                    cutStr = StringUtils.replace(cutStr, "<body><html>", "");
                     ADFUtils.showFacesMessage(cutStr,
                                               FacesMessage.SEVERITY_ERROR);
                 }
@@ -2198,15 +2250,16 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                                 for (int i = 0;
                                                      i < allVc.length; i++) {
                                                     if (allVc[i].getName().equalsIgnoreCase("RSetSecLevelLOVICriteria1") ||
-                                                        allVc[i].getName().equalsIgnoreCase("RSetSecLevelLOVIICriteria1")){
-                                                            viewCriteria = allVc[i];
-                                                        }
+                                                        allVc[i].getName().equalsIgnoreCase("RSetSecLevelLOVIICriteria1")) {
+                                                        viewCriteria =
+                                                                allVc[i];
+                                                    }
                                                 }
                                             }
-//                                            viewCriteria =
-//                                                    iterBinding.getViewObject().getViewCriteriaManager().getViewCriteria(listBindingDef.getDisplayCriteriaName());
+                                            //                                            viewCriteria =
+                                            //                                                    iterBinding.getViewObject().getViewCriteriaManager().getViewCriteria(listBindingDef.getDisplayCriteriaName());
                                             if (viewCriteria != null) {
-                                                
+
                                                 viewCriteriaRow =
                                                         (ViewCriteriaRow)viewCriteria.getRowAtRangeIndex(1);
                                                 if (viewCriteriaRow != null) {
