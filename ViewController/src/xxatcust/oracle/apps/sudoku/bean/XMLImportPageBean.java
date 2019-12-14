@@ -829,7 +829,9 @@ public class XMLImportPageBean {
                         }
                         RichPopup.PopupHints hints1 =
                             new RichPopup.PopupHints();
+                        if(errorPopup!=null){
                         errorPopup.show(hints1);
+                        }
                         ADFUtils.setSessionScopeValue("quoteNumber",
                                                       null); //If exception occurs , Quoting should be loaded in create mode, Not in update mode
                         ADFUtils.setSessionScopeValue("targetQuoteNumber",

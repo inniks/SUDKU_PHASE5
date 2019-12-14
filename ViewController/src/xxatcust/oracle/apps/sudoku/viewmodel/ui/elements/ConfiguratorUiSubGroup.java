@@ -8,10 +8,10 @@ public class ConfiguratorUiSubGroup {
     }
     
     String subGroupName = null;
+
+    String subGroupSecondName = null;
     
     String subGroupIdentifier = null;
-    
-   // String subGroupSecondName = null;
     
     boolean required = false;
     
@@ -51,5 +51,13 @@ public class ConfiguratorUiSubGroup {
 
     public String getSubGroupIdentifier() {
         return subGroupIdentifier;
+    }
+
+    public void setSubGroupSecondName(String subGroupSecondName) {
+        this.subGroupSecondName = subGroupSecondName;
+    }
+
+    public String getSubGroupSecondName() {
+        return subGroupSecondName;
     }
 }

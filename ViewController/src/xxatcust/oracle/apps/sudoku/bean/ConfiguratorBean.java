@@ -230,20 +230,20 @@ public class ConfiguratorBean {
     public void initConfigurator() throws IOException, JsonGenerationException,
                                           JsonMappingException {
         //The refresh should happen only if there is a v93k object available
-        //                System.out.println("Init Configurator..");
-        //                        V93kQuote v93k =
-        //                            (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
-        //                        ADFUtils.setSessionScopeValue("parentObject",
-        //                                                      v93k); //Comment for server run
-        //                        HashMap ruleSetMap = new HashMap();
-        //                        if (v93k.getInputParams() != null) {
-        //                            ruleSetMap.put("topLevelCode",
-        //                                           v93k.getInputParams().getRuleSetTopLevelChoice());
-        //                            ruleSetMap.put("secondLevelCode",
-        //                                           v93k.getInputParams().getRuleSetSecondLevelChoice());
-        //                            //ruleSetMap.put("error", "Y");
-        //                            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-        //                        }
+//                        System.out.println("Init Configurator..");
+//                                V93kQuote v93k =
+//                                    (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
+//                                ADFUtils.setSessionScopeValue("parentObject",
+//                                                              v93k); //Comment for server run
+//                                HashMap ruleSetMap = new HashMap();
+//                                if (v93k.getInputParams() != null) {
+//                                    ruleSetMap.put("topLevelCode",
+//                                                   v93k.getInputParams().getRuleSetTopLevelChoice());
+//                                    ruleSetMap.put("secondLevelCode",
+//                                                   v93k.getInputParams().getRuleSetSecondLevelChoice());
+//                                    //ruleSetMap.put("error", "Y");
+//                                    ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+//                                }
         //Comment till here
 
         V93kQuote v93k =
@@ -1142,6 +1142,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         miscUpgTreeModel = null;
         infraUpgTreeModel = null;
         ADFUtils.setSessionScopeValue("configSaved", null);
+        String targetQuoteNumber = (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
         v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
             v93k = new V93kQuote();
@@ -1157,6 +1158,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             sessionDetails.setUserId((String)ADFUtils.getSessionScopeValue("UserId") ==
                                      null ? "0" :
                                      (String)ADFUtils.getSessionScopeValue("UserId"));
+            sessionDetails.setTargetQuoteNumber(targetQuoteNumber);
             inputParam.setImportSource(loadParameter);
             inputParam.setRuleSetTopLevelChoice(rulesetTopChoice);
             inputParam.setRuleSetSecondLevelChoice(ruleSetSecondChoice);
@@ -1946,6 +1948,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     cutStr = StringUtils.replace(cutStr, "<body><html>", "");
                     ADFUtils.showFacesMessage(cutStr,
                                               FacesMessage.SEVERITY_ERROR);
+                    _logger.info("Cut String " + cutStr);
                 }
                 if (!isError && isConflict && conflictText != null &&
                     conflictPopup != null) {

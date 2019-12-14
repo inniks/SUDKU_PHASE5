@@ -368,6 +368,7 @@ public class ImportSource {
                                         v93kQuote.getSessionDetails().setTargetQuoteNumber(arrOfStr[1].toString());
                                         ADFContext.getCurrent().getSessionScope().put("targetQuoteNumber",
                                                                                       arrOfStr[1].toString());
+                                        _logger.info("Tareget Quote in duplicate mode "+arrOfStr[1]);
 
                                         if ((v93kQuote.getInputParams().getReuseQuote()) &&
                                             (v93kQuote.getSessionDetails().isDuplicateQuote() ||
@@ -417,7 +418,7 @@ public class ImportSource {
                 //Quote id exists in the xml,query other values from DB and attach to v93k object
 
             }
-
+            ADFUtils.setSessionScopeValue("parentObject", v93kQuote);
             //Trying to queue a button press event
             RichCommandImageLink button =
                 (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to view reference page

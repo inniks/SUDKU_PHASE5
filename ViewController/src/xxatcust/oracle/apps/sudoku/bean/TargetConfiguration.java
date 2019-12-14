@@ -66,6 +66,8 @@ public class TargetConfiguration {
     private RichPanelSplitter panelSplitterBind;
     private ArrayList<ListViewModel> listViewCollection;
     private RichOutputText expertMode;
+    private RichOutputFormatted refText;
+    private RichPopup refreshPopup;
 
     public TargetConfiguration() {
     }
@@ -84,6 +86,9 @@ public class TargetConfiguration {
         if (expertMode != null) {
             expertMode.setValue(null);
         }
+        if(refreshPopup!=null){
+            refreshPopup.cancel();
+        }
     }
 
     public RichOutputText getPageInitText() {
@@ -98,9 +103,10 @@ public class TargetConfiguration {
                 // quoteTotal.setValue(null);
             }
             RichPopup.PopupHints hints = new RichPopup.PopupHints();
-            if (errPopup != null) {
-                errPopup.show(hints);
-                errPopup.cancel();
+            if (refreshPopup != null) {
+                refreshPopup.show(hints);
+                refreshPopup.cancel();
+                ADFUtils.addPartialTarget(refreshPopup.getParent());
             }
             AdfFacesContext.getCurrentInstance().addPartialTarget(ui);
             ADFUtils.addPartialTarget(ui);
@@ -125,10 +131,6 @@ public class TargetConfiguration {
         UIComponent ui = ADFUtils.findComponentInRoot("psexconfig");
         if (quoteTotal != null) {
             getPageInitText();
-        }
-        if (panelSplitterBind != null) {
-            System.out.println("REfreshing.....");
-            ADFUtils.addPartialTarget(ui);
         }
         if (ui != null) {
             ADFUtils.addPartialTarget(ui);
@@ -446,10 +448,8 @@ public class TargetConfiguration {
     }
 
     public ArrayList<ListViewModel> getListViewCollection() {
-        if (panelSplitterBind != null) {
-            ADFUtils.addPartialTarget(panelSplitterBind);
-        }
-        Double netQuoteTotal = new Double(0);
+       
+        
         String refreshImport =
             (String)ADFUtils.getSessionScopeValue("refreshImport");
         if (listViewCollection == null && refreshImport != null &&
@@ -466,9 +466,9 @@ public class TargetConfiguration {
                     Map.Entry pair = (Map.Entry)it.next();
                     ChildPropertyTreeModel child =
                         (ChildPropertyTreeModel)pair.getKey();
-                    Double lineTotal = (Double)pair.getValue();
+                    //Double lineTotal = (Double)pair.getValue();
                     listOftrees.add(child);
-                    netQuoteTotal = netQuoteTotal + lineTotal;
+                    //netQuoteTotal = netQuoteTotal + lineTotal;
                 }
             }
             if (quoteTotal != null) {
@@ -484,7 +484,13 @@ public class TargetConfiguration {
                 }
             }
         }
-
+        if(refreshPopup!=null){
+            refreshPopup.cancel();
+        }
+        if(panelSplitterBind!=null){
+            ADFUtils.addPartialTarget(panelSplitterBind);
+        }
+     
         return listViewCollection;
     }
 
@@ -614,5 +620,21 @@ public class TargetConfiguration {
             bindingContext.findDataControl("SudokuAMDataControl"); // Name of application module in datacontrolBinding.cpx
         SudokuAMImpl appM = (SudokuAMImpl)dc.getDataProvider();
         return appM;
+    }
+
+    public void setRefText(RichOutputFormatted refText) {
+        this.refText = refText;
+    }
+
+    public RichOutputFormatted getRefText() {
+        return refText;
+    }
+
+    public void setRefreshPopup(RichPopup refreshPopup) {
+        this.refreshPopup = refreshPopup;
+    }
+
+    public RichPopup getRefreshPopup() {
+        return refreshPopup;
     }
 }

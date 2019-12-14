@@ -665,7 +665,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         cs.setString(1,
                                      quoteVORow.getAttribute("OrganizationUnit").toString());
                     } else {
-                        errorMsg.append("<p><b>Organization Unit is required.</b></p>");
+                        errorMsg.append("<p><b>Operating Unit is required.</b></p>");
                     }
                     if (quoteVORow.getAttribute("QuoteDescription") != null) {
                         cs.setString(2,
@@ -915,12 +915,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             quoteVO.applyViewCriteria(null);
             quoteVO.reset();
             quoteVO.setNamedWhereClauseParam("bindQuoteNum", null);
-            String quoteFromSesion =
-                (String)ADFContext.getCurrent().getSessionScope().get("quoteNumber");
+            String quoteFromSesion = null;
+            // (String)ADFContext.getCurrent().getSessionScope().get("quoteNumber");
             if (quoteFromSesion == null) {
                 quoteFromSesion =
                         (String)ADFContext.getCurrent().getSessionScope().get("targetQuoteNumber");
+
             }
+            _logger.info("Target Quote in getUpdateQuote " + quoteFromSesion);
             if (ADFContext.getCurrent().getSessionScope().get("isDuplicateQuote") !=
                 null)
                 quoteSessionState =
@@ -935,14 +937,19 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     quoteFromSesion = "-1";
                 }
                 BigDecimal quoteVal = new BigDecimal(quoteFromSesion);
-                if (quoteSessionState && duplicateQuoteNum != null) {
-                    quoteVO.setWhereClause("QUOTE_NUMBER=" +
-                                           duplicateQuoteNum);
-                } else
+                //                if (quoteSessionState && duplicateQuoteNum != null) {
+                //                    quoteVO.setWhereClause("QUOTE_NUMBER=" +
+                //                                           duplicateQuoteNum);
+                //                } else
+                //                    quoteVO.setWhereClause("QUOTE_NUMBER=" + quoteVal);
+                if (quoteFromSesion != null) {
                     quoteVO.setWhereClause("QUOTE_NUMBER=" + quoteVal);
+                    _logger.info("In Update Quote Executing with quote Num "+quoteVal);
+                }
                 System.out.println("get Query:" + quoteVO.getQuery());
 
                 quoteVO.executeQuery();
+                _logger.info("In update quote,query executed and returns "+quoteVO.getEstimatedRowCount()+" Rows");
                 System.out.println("after Execution");
                 RowSetIterator iter = quoteVO.createRowSetIterator("");
 
@@ -3726,22 +3733,23 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.
+                        System.out.println("user Name:" + row.getAttribute
 
-                                getAttribute("UserId") + "::column_name::" +
+                                ("UserId") + "::column_name::" + row.
 
-                                row.
+                                getAttribute
 
-                                getAttribute("ColumnType"));
+                                ("ColumnType"));
 
                         if (quotesRow.getAttribute("PrdNumRefConfig") !=
                             null) {
 
                             row.setAttribute("ColumnVal", null);
 
-                            row.setAttribute("ColumnVal", quotesRow.
+                            row.setAttribute("ColumnVal",
+                                             quotesRow.getAttribute
 
-                                    getAttribute("PrdNumRefConfig"));
+                                    ("PrdNumRefConfig"));
 
                         }
 
@@ -3781,22 +3789,23 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.
+                        System.out.println("user Name:" + row.getAttribute
 
-                                getAttribute("UserId") + "::column_name::" +
+                                ("UserId") + "::column_name::" + row.
 
-                                row.
+                                getAttribute
 
-                                getAttribute("ColumnType"));
+                                ("ColumnType"));
 
                         if (quotesRow.getAttribute("PrdNumTargetConfig") !=
                             null) {
 
                             row.setAttribute("ColumnVal", null);
 
-                            row.setAttribute("ColumnVal", quotesRow.
+                            row.setAttribute("ColumnVal",
+                                             quotesRow.getAttribute
 
-                                    getAttribute("PrdNumTargetConfig"));
+                                    ("PrdNumTargetConfig"));
 
                         }
 
@@ -3831,22 +3840,23 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.
+                        System.out.println("user Name:" + row.getAttribute
 
-                                getAttribute("UserId") + "::column_name::" +
+                                ("UserId") + "::column_name::" + row.
 
-                                row.
+                                getAttribute
 
-                                getAttribute("ColumnType"));
+                                ("ColumnType"));
 
                         if (quotesRow.getAttribute("RefPriceRegConfig") !=
                             null) {
 
                             row.setAttribute("ColumnVal", null);
 
-                            row.setAttribute("ColumnVal", quotesRow.
+                            row.setAttribute("ColumnVal",
+                                             quotesRow.getAttribute
 
-                                    getAttribute("RefPriceRegConfig"));
+                                    ("RefPriceRegConfig"));
 
                         }
 
@@ -3881,22 +3891,23 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.
+                        System.out.println("user Name:" + row.getAttribute
 
-                                getAttribute("UserId") + "::column_name::" +
+                                ("UserId") + "::column_name::" + row.
 
-                                row.
+                                getAttribute
 
-                                getAttribute("ColumnType"));
+                                ("ColumnType"));
 
                         if (quotesRow.getAttribute("RefPriceTargetConfig") !=
                             null) {
 
                             row.setAttribute("ColumnVal", null);
 
-                            row.setAttribute("ColumnVal", quotesRow.
+                            row.setAttribute("ColumnVal",
+                                             quotesRow.getAttribute
 
-                                    getAttribute("RefPriceTargetConfig"));
+                                    ("RefPriceTargetConfig"));
 
                         }
 
@@ -3933,13 +3944,13 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.
+                        System.out.println("user Name:" + row.getAttribute
 
-                                getAttribute("UserId") + "::column_name::" +
+                                ("UserId") + "::column_name::" + row.
 
-                                row.
+                                getAttribute
 
-                                getAttribute("ColumnType"));
+                                ("ColumnType"));
 
                         row.setAttribute("ColumnVal", numberFormat);
 

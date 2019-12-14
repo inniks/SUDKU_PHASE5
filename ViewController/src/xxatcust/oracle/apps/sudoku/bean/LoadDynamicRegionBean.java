@@ -223,6 +223,13 @@ public class LoadDynamicRegionBean {
                 quoteNumber = (String)inputParamsMap.get("quoteNumber");
             }
         }
+        _logger.info(": Params for Page Load : ");
+        _logger.info("Import Source "+importSource);  
+        _logger.info("Error  "+error);  
+        _logger.info("Cancel All "+cancelAll);  
+        _logger.info("Import Source "+importSource);  
+        _logger.info("Target Quote Number  "+targetQuoteNumber);  
+        _logger.info("Import Source "+importSource);  
         if (importSource != null &&
             (String)ADFContext.getCurrent().getSessionScope().get("quoteNumFromXML") !=
             null) {
@@ -236,9 +243,14 @@ public class LoadDynamicRegionBean {
             _logger.info("LOAD PAGE ::CREATE QUOTE");
             return "quote";
         }
-        if ((targetQuoteNumber != null || quoteNumber != null)) {
+        if(targetQuoteNumber!=null && targetQuoteNumber.equals("")){
+            return "quote";
+        }
+        
+        if (((targetQuoteNumber != null && !targetQuoteNumber.equals("")) || quoteNumber != null)) {
             System.out.println("LOAD PAGE ::UPDATE QUOTE");
-            _logger.info("LOAD PAGE ::UPDATE QUOTE");
+            ADFContext.getCurrent().getSessionScope().put("targetQuoteNumber", targetQuoteNumber);
+            _logger.info("LOAD PAGE ::UPDATE QUOTE "+targetQuoteNumber);
             return "quoteUpdate";
         }
         //        quoteNumFromSession =

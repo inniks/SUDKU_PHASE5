@@ -198,6 +198,21 @@
                
               </af:dialog>
             </af:popup>
+            <af:popup id="debugPop" autoCancel="disabled"
+                      binding="#{pageFlowScope.TargetConfigurationBean.refreshPopup}">
+                <af:dialog id="d2" type="ok" contentWidth="0"
+                           contentHeight="0" title="Debug Logs">
+                  <af:panelGroupLayout layout="scroll"
+                                       xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                       id="pgl7_1">
+                    <af:panelGroupLayout id="pgl6_1">
+                      <af:outputFormatted id="of5"
+                                          binding="#{pageFlowScope.TargetConfigurationBean.refText}"
+                                          inlineStyle="color:Black;"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:dialog>
+              </af:popup>
             <af:outputText value="outputText1" id="ot17" visible="false"
                            binding="#{pageFlowScope.TargetConfigurationBean.pageInitText}"/>
           </af:panelGroupLayout>
