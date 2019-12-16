@@ -55,6 +55,7 @@ public class SystemInfraBean {
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
+                    //String secondSubGrpName = subGroup.getSubGroupSecondName();
                     requiredFlag = subGroup.isRequired()? "Y" :"N" ;
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();

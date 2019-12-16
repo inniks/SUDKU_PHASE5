@@ -312,27 +312,33 @@
                                 <af:panelBorderLayout id="pb3"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
                                   <f:facet name="innerLeft">
-                                    <af:panelGroupLayout id="pgl_71"
-                                                         layout="horizontal"
-                                                         halign="left">
-                                      <af:commandLink id="cl3"
-                                                      actionListener="#{ConfiguratorBean.handleNodeSelection}"
-                                                      disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
-                                        <af:outputFormatted id="th_of3"
-                                                            value="#{theadIter.uiField3}"
-                                                            inlineStyle="#{theadIter.uiField3_bgColor}"/>
-                                        <af:inputText id="ip3_helper"
-                                                      visible="false"
-                                                      value="#{theadIter.czNodeName3}"
-                                                      changedDesc="#{theadIter.uiField3_refQty}"
-                                                      helpTopicId="#{theadIter.uiField3_tarQty}"
-                                                      requiredMessageDetail="#{theadIter.uiField3_czModelName}"
-                                                      contentStyle="#{theadIter.uiField3_uiNodeName}"
-                                                      shortDesc="#{theadIter.uiField3_identifier}"
-                                                      label="#{theadIter.uiField3_color}"
-                                                      placeholder="#{theadIter.parentGroupName}"/>
-                                      </af:commandLink>
-                                    </af:panelGroupLayout>
+                                    <af:group id="g7">
+                                      <af:panelGroupLayout id="pgl_71"
+                                                           layout="horizontal"
+                                                           halign="left">
+                                        <af:commandLink id="cl3"
+                                                        actionListener="#{ConfiguratorBean.handleNodeSelection}"
+                                                        disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
+                                          <af:outputFormatted id="th_of3"
+                                                              value="#{theadIter.uiField3}"
+                                                              inlineStyle="#{theadIter.uiField3_bgColor}"/>
+                                          <af:inputText id="ip3_helper"
+                                                        visible="false"
+                                                        value="#{theadIter.czNodeName3}"
+                                                        changedDesc="#{theadIter.uiField3_refQty}"
+                                                        helpTopicId="#{theadIter.uiField3_tarQty}"
+                                                        requiredMessageDetail="#{theadIter.uiField3_czModelName}"
+                                                        contentStyle="#{theadIter.uiField3_uiNodeName}"
+                                                        shortDesc="#{theadIter.uiField3_identifier}"
+                                                        label="#{theadIter.uiField3_color}"
+                                                        placeholder="#{theadIter.parentGroupName}"/>
+                                        </af:commandLink>
+                                      </af:panelGroupLayout>
+                                      <af:panelGroupLayout id="pgl15">
+                                        <af:outputText value="outputText2"
+                                                       id="ot2"/>
+                                      </af:panelGroupLayout>
+                                    </af:group>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="pb4"

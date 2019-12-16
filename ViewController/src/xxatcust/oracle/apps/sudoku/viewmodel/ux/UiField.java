@@ -218,7 +218,7 @@ public class UiField {
     private String selectedLovValue;
     private String licenceRowIndex;
     private Boolean disableEFCol;
-
+    private String subGrpSecondName;
     public UiField() {
 
 
@@ -268,6 +268,8 @@ public class UiField {
                 if (listOfNodes.get(0).getConfigUiNodes() != null &&
                     listOfNodes.get(0).getConfigUiNodes().size() > 0) {
                     //Implementing LIST oF values for country
+                    
+                    
                     if (listOfNodes.get(0).getUiElementType() == 4) {
                         listOfValueModel = new ArrayList<SelectItem>();
                         List<ConfiguratorUiNode> list =
@@ -3023,5 +3025,13 @@ public class UiField {
 
     public Boolean getDisableEFCol() {
         return disableEFCol;
+    }
+
+    public void setSubGrpSecondName(String subGrpSecondName) {
+        this.subGrpSecondName = subGrpSecondName;
+    }
+
+    public String getSubGrpSecondName() {
+        return subGrpSecondName;
     }
 }
