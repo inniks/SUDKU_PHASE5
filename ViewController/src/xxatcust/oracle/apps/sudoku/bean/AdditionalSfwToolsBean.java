@@ -53,6 +53,7 @@ public class AdditionalSfwToolsBean {
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
+                    String secondName = subGroup.getSubGroupSecondName();
                     requiredFlag = subGroup.isRequired()? "Y" :"N" ;
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();
@@ -66,7 +67,7 @@ public class AdditionalSfwToolsBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,null);
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,null,secondName);
 
                         uiFieldCollection.add(uiField);
                     }

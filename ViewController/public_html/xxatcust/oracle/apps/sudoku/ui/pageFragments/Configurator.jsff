@@ -334,8 +334,9 @@
                                                         placeholder="#{theadIter.parentGroupName}"/>
                                         </af:commandLink>
                                       </af:panelGroupLayout>
-                                      <af:panelGroupLayout id="pgl15">
-                                        <af:outputText value="outputText2"
+                                      <af:panelGroupLayout id="pgl15"
+                                                           rendered="#{topNode.index eq '6'}">
+                                        <af:outputText value="#{theadIter.subGrpSecondName}"
                                                        id="ot2"/>
                                       </af:panelGroupLayout>
                                     </af:group>

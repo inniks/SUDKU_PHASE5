@@ -57,6 +57,7 @@ public class SystemControllerBean {
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
+                    String secondName = subGroup.getSubGroupSecondName();
                     requiredFlag = subGroup.isRequired()?"Y":"N";
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();
@@ -70,7 +71,7 @@ public class SystemControllerBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,Integer.toString(index));
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,Integer.toString(index),secondName);
                         index++;
                         uiFieldCollection.add(uiField);
                     }

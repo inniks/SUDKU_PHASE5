@@ -2,7 +2,7 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core">
-  <af:panelBox text="Import Reference Configuration" id="pb1">
+  <af:panelBox text="Import Source Configuration" id="pb1">
     <f:facet name="toolbar"/>
     <af:panelSplitter id="ps1" styleClass="AFStretchWidth">
       <f:facet name="second">

@@ -59,6 +59,7 @@ public class WtyTrainingAndSupportBean {
                     requiredFlag = subGroup.isRequired() ? "Y" : "N";
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();
+                    String secondName = subGroup.getSubGroupSecondName();
                     if (listOfElements != null && !listOfElements.isEmpty()) {
                         for (int i = 0; i < listOfElements.size(); i++) {
                             ConfiguratorUiElement element =
@@ -72,7 +73,7 @@ public class WtyTrainingAndSupportBean {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
                                            groupName,
-                                            Integer.toString(index));
+                                            Integer.toString(index),secondName);
                         index++;
                         uiFieldCollection.add(uiField);
                     }

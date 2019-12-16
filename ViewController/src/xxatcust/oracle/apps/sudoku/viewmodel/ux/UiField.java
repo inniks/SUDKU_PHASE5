@@ -251,7 +251,7 @@ public class UiField {
 
     public UiField(List<ConfiguratorUiElement> listOfNodes, String subGrpName,
                    String requireFlagSubGrp, String parentGroupName,
-                   String uiGrpIndex) {
+                   String uiGrpIndex,String secondName) {
         super();
         this.listOfNodes = listOfNodes;
         this.uiGrpIndex = uiGrpIndex;
@@ -398,6 +398,7 @@ public class UiField {
                         }
                         uiField1 = node.getUiNodeName();
                         selectedValue = subGrpName;
+                        subGrpSecondName =secondName;
                         requiredFlagSubGrp = requireFlagSubGrp;
                         czNodeName1 = node.getCzNodeName();
                         uiField1_code = czNodeName1;
@@ -709,8 +710,8 @@ public class UiField {
                         //If an input is there ,disable other inputs
                         if (node.getQuantity() != -1) {
                             //some value already exists
-                            sumLicenceInputs =
-                                    sumLicenceInputs + node.getQuantity();
+//                            sumLicenceInputs =
+//                                    sumLicenceInputs + node.getQuantity();
                             countLicensesEntered++;
                             countOfEFEntries++;
                             //disableMultipleInputs = true ;

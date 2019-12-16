@@ -62,6 +62,7 @@ public class MiscUpgradesBean {
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
+                    String secondName = subGroup.getSubGroupSecondName();
                     requiredFlag = subGroup.isRequired() ? "Y" : "N";
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();
@@ -78,7 +79,7 @@ public class MiscUpgradesBean {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
                                             groupName,
-                                            Integer.toString(index));
+                                            Integer.toString(index),secondName);
                         index++;
                         uiFieldCollection.add(uiField);
                     }
@@ -344,6 +345,7 @@ public class MiscUpgradesBean {
             List<ConfiguratorUiElement> listOfElements =
                 uiSbGrp.getUiElements();
             String subGrpName = uiSbGrp.getSubGroupName();
+            String secondName = uiSbGrp.getSubGroupSecondName();
             requiredFlag = uiSbGrp.isRequired() ? "Y" : "N";
             List<ConfiguratorUiElement> listUiNodesBySubGrp =
                 new ArrayList<ConfiguratorUiElement>();
@@ -358,7 +360,7 @@ public class MiscUpgradesBean {
                 !listUiNodesBySubGrp.isEmpty()) {
                 uiField =
                         new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
-                                    uiGrpName, Integer.toString(index));
+                                    uiGrpName, Integer.toString(index),secondName);
                 index++;
                 uiFieldCollection.add(uiField);
             }

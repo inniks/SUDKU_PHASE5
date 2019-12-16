@@ -34,6 +34,7 @@ public class DigitalResourcesBean {
         UiField uiField = null;
         String requiredFlag = "N";
         String groupName = null;
+        String secondName = null ;
         LinkedHashMap<String, ConfiguratorUiSubGroup> mapUiSubGrp = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getDigitalResourceGroup() != null) {
@@ -59,6 +60,7 @@ public class DigitalResourcesBean {
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
+                    secondName = subGroup.getSubGroupSecondName();
                     requiredFlag = subGroup.isRequired() ? "Y" : "N";
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();
@@ -75,7 +77,7 @@ public class DigitalResourcesBean {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
                                             groupName,
-                                            Integer.toString(index));
+                                            Integer.toString(index),secondName);
                         index++;
                         uiFieldCollection.add(uiField);
                     }

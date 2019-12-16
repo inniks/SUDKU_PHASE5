@@ -55,6 +55,7 @@ public class SystemInfraBean {
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
+                    String secondName = subGroup.getSubGroupSecondName();
                     //String secondSubGrpName = subGroup.getSubGroupSecondName();
                     requiredFlag = subGroup.isRequired()? "Y" :"N" ;
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
@@ -69,7 +70,7 @@ public class SystemInfraBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,null);
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,null,secondName);
 
                         uiFieldCollection.add(uiField);
                     }

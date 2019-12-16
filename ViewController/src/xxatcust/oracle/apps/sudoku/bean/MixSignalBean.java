@@ -55,6 +55,7 @@ public class MixSignalBean {
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
+                    String secondName = subGroup.getSubGroupSecondName();
                     requiredFlag = subGroup.isRequired() ? "Y" : "N";
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
                         new ArrayList<ConfiguratorUiElement>();
@@ -71,7 +72,7 @@ public class MixSignalBean {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
                                             groupName,
-                                            Integer.toString(index));
+                                            Integer.toString(index),secondName);
                         index++;
                         uiFieldCollection.add(uiField);
                     }
