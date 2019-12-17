@@ -203,9 +203,10 @@ public interface SudokuAM extends ApplicationModule {
 
     Map defaultVals(int usrId);
 
-    void validatePrefStaticValues(int usrId, String numberFormat);
 
     String getCurrencyFormat(String userId);
 
     Hashtable getPriceProductChoices(String userId);
+
+    void validatePrefStaticValues(int usrId, String numberFormat);
 }

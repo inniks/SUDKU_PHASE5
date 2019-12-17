@@ -75,7 +75,6 @@
                                         required="#{bindings.Salesrepresentative.hints.mandatory}"
                                         columns="20"
                                         shortDesc="#{bindings.Salesrepresentative.hints.tooltip}"
-                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                         autoSubmit="true">
                     <f:validator binding="#{bindings.Salesrepresentative.validator}"/>
                   </af:inputListOfValues>
@@ -86,7 +85,6 @@
                                         model="#{bindings.Businesscentercsr.listOfValuesModel}"
                                         required="#{bindings.Businesscentercsr.hints.mandatory}"
                                         columns="20"
-                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                         shortDesc="#{bindings.Businesscentercsr.hints.tooltip}"
                                         autoSubmit="true">
                     <f:validator binding="#{bindings.Businesscentercsr.validator}"/>
@@ -271,7 +269,6 @@
                                       model="#{bindings.Ordertypename.listOfValuesModel}"
                                       required="#{bindings.Ordertypename.hints.mandatory}"
                                       columns="20"
-                                      launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                       shortDesc="#{bindings.Ordertypename.hints.tooltip}"
                                       autoSubmit="true">
                   <f:validator binding="#{bindings.Ordertypename.validator}"/>
@@ -283,7 +280,6 @@
                                       model="#{bindings.Pricelistname.listOfValuesModel}"
                                       required="#{bindings.Pricelistname.hints.mandatory}"
                                       columns="20"
-                                      launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                       shortDesc="#{bindings.Pricelistname.hints.tooltip}"
                                       autoSubmit="true">
                   <f:validator binding="#{bindings.Pricelistname.validator}"/>

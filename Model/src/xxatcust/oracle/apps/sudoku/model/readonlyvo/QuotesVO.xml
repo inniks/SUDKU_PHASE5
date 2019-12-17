@@ -1388,10 +1388,12 @@
     LOVName="LOV_CustNum">
     <Properties>
       <SchemaBasedProperties>
-        <AUTOSUBMIT
-          Value="true"/>
+        <LABEL
+          ResId="CustNum_LABEL"/>
         <CONTROLTYPE
           Value="input_text_lov"/>
+        <AUTOSUBMIT
+          Value="true"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

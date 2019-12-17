@@ -103,12 +103,11 @@ and qlhb.list_type_code = 'PRL']]>
       <ViewCriteriaItem
         Name="PriceListVOCriteria_vcrow107_Name"
         ViewAttribute="Name"
-        Operator="CONTAINS"
+        Operator="STARTSWITH"
         Conjunction="AND"
         Value=":bindPriceList"
         IsBindVarValue="true"
-        Required="Optional"
-        GenerateIsNullClauseForBindVars="false"/>
+        Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
   <AttrArray Name="KeyAttributes">

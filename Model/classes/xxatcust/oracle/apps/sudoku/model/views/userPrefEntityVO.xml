@@ -15,7 +15,9 @@
        userpreferenceEO.COLUMN_TYPE, 
        userpreferenceEO.OPERATING_UNIT, 
        userpreferenceEO.COLUMN_VAL, 
-       userpreferenceEO.DEFAULT_VAL">
+       userpreferenceEO.DEFAULT_VAL, 
+       userpreferenceEO.DECIMAL_SEPERATOR, 
+       userpreferenceEO.GROUP_SEPERATOR">
   <DesignTime>
     <Attr Name="_codeGenFlag2" Value="VarAccess"/>
   </DesignTime>
@@ -55,6 +57,18 @@
     EntityAttrName="DefaultVal"
     EntityUsage="userpreferenceEO"
     AliasName="DEFAULT_VAL"/>
+  <ViewAttribute
+    Name="DecimalSeperator"
+    PrecisionRule="true"
+    EntityAttrName="DecimalSeperator"
+    EntityUsage="userpreferenceEO"
+    AliasName="DECIMAL_SEPERATOR"/>
+  <ViewAttribute
+    Name="GroupSeperator"
+    PrecisionRule="true"
+    EntityAttrName="GroupSeperator"
+    EntityUsage="userpreferenceEO"
+    AliasName="GROUP_SEPERATOR"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="xxatcust.oracle.apps.sudoku.model.ModelBundle"/>

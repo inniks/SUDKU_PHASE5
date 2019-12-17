@@ -10,13 +10,9 @@
     <f:facet name="second">
       <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                            id="pgl4" layout="scroll">
-        <af:panelGroupLayout id="pgl1">
-          <af:commandButton text="Refresh" id="cb1"
-                            actionListener="#{pageFlowScope.TargetConfigurationBean.refresh}"
-                            rendered="false"/>
-        </af:panelGroupLayout>
         <af:panelBox text=" " id="pb1" showDisclosure="false" showHeader="never"
-                     maximized="true" styleClass="AFStretchWidth">
+                     maximized="true" styleClass="AFStretchWidth"
+                     rendered="#{pageFlowScope.TargetConfigurationBean.readOnlyUI eq false}">
           <af:panelHeader text=" " id="ph1" size="-1"
                           inlineStyle="color:Teal; font-weight:bolder;"
                           type="default">
@@ -193,30 +189,33 @@
             <af:popup id="p2" 
                       binding="#{pageFlowScope.TargetConfigurationBean.errPopup}"
                       autoCancel="disabled" rendered="true">
-              <af:dialog id="d1" type="none"
-                         contentWidth="2" contentHeight="2">
-               
-              </af:dialog>
             </af:popup>
             <af:popup id="debugPop" autoCancel="disabled"
                       binding="#{pageFlowScope.TargetConfigurationBean.refreshPopup}">
-                <af:dialog id="d2" type="ok" contentWidth="0"
-                           contentHeight="0" title="Debug Logs">
-                  <af:panelGroupLayout layout="scroll"
-                                       xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                                       id="pgl7_1">
-                    <af:panelGroupLayout id="pgl6_1">
-                      <af:outputFormatted id="of5"
-                                          binding="#{pageFlowScope.TargetConfigurationBean.refText}"
-                                          inlineStyle="color:Black;"/>
-                    </af:panelGroupLayout>
-                  </af:panelGroupLayout>
-                </af:dialog>
               </af:popup>
             <af:outputText value="outputText1" id="ot17" visible="false"
                            binding="#{pageFlowScope.TargetConfigurationBean.pageInitText}"/>
           </af:panelGroupLayout>
           <f:facet name="toolbar"/>
+        </af:panelBox>
+        <af:panelBox id="pb3"
+                     rendered="#{pageFlowScope.TargetConfigurationBean.readOnlyUI}"
+                     showDisclosure="false" background="medium">
+          <f:facet name="toolbar"/>
+          <af:panelHeader text=" " id="ph1_1" size="-1"
+                          inlineStyle="color:Teal; font-weight:bolder;"
+                          type="default">
+            <f:facet name="context">
+              <af:group id="g1_1">
+                <af:outputFormatted value="Target Configuration" id="of3_1"
+                                    inlineStyle="color:Teal; font-size:large; font-weight:bold;"/>
+              </af:group>
+            </f:facet>
+            <f:facet name="menuBar"/>
+            <af:panelBox text="No Results" id="pb4">
+              <f:facet name="toolbar"/>
+            </af:panelBox>
+          </af:panelHeader>
         </af:panelBox>
       </af:panelGroupLayout>
       <!--   <af:resource type="css" source="/css/Style.css"/> -->

@@ -1796,14 +1796,13 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 sb.append(this.getCurrencyCode());
                 for (int i = 0; i < temp.size(); i++) {
                     sb.append("','").append(temp.get(i));
-                }
-                
+                } 
             }
             sb.append("')");
             System.out.println("currency List :values:" + sb.toString());
             vo.clearCache();
             vo.setWhereClause(null);
-            if (!sb.toString().equalsIgnoreCase("('')"))
+            if (currency!=null)
                 vo.setWhereClause("currency_code in" + sb.toString());
             else {
             }
@@ -2071,6 +2070,8 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 (ViewObjectImpl)this.getOrderTypeVO().getViewObject();
             String colType = "'Order_type'";
             if (vo != null) {
+                vo.clearCache();
+                vo.setWhereClause(null);
 //                Object[] obj = { usrId, colType,St };
 //                Key key = new Key(obj);
 //                Row[] rows = this.getuserPrefEntityVA().findByKey(key, 3);
@@ -2090,7 +2091,7 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 vo.clearCache();
                 vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("p_orgId", this.getOrgId());
-                if(!sb.toString().equalsIgnoreCase("('')"))
+                if(orderTypeValues!=null)
                 vo.setWhereClause("transaction_type_id in" + sb.toString());
                 vo.executeQuery();
             }
@@ -2249,12 +2250,13 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
                 }
                 sb.append(defaultval);
+                if(salesRepValues!=null)
                 sb.append(",").append(salesRepValues).append(")");
                
                 vo.clearCache();
                 vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("p_orgId", this.getOrgId());
-                if(!sb.toString().equalsIgnoreCase("()"))
+                if(salesRepValues!=null)
                 vo.setWhereClause("RESOURCE_ID in" + sb.toString());
                 vo.executeQuery();
                 System.out.println("count:"+vo.getEstimatedRowCount());

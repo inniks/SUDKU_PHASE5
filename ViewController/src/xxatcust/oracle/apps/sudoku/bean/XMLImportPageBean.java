@@ -124,7 +124,7 @@ public class XMLImportPageBean {
     private RichOutputText pageInitOP;
     private RichOutputText expertMode;
     private RichPopup debugPopup;
-
+    private Boolean readOnlyUI = true ;
     public XMLImportPageBean() {
 
         super();
@@ -333,6 +333,7 @@ public class XMLImportPageBean {
         boolean prodRend = true;
         HashMap userPrefMap = getProductPriceUserPref();
         if (userPrefMap != null && !userPrefMap.isEmpty()) {
+            System.out.println("HashMap formed is "+userPrefMap);
             if (userPrefMap.containsKey("Prd_num_ref_config")) {
                 String Prd_num_ref_config =
                     (String)userPrefMap.get("Prd_num_ref_config");
@@ -342,6 +343,7 @@ public class XMLImportPageBean {
                 }
             }
         }
+        System.out.println("Products rendered "+prodRend);
         return prodRend;
     }
 
@@ -1077,6 +1079,8 @@ public class XMLImportPageBean {
                 PreparedStatement ps =
                     dbTrans.createPreparedStatement(query, 0);
                 try {
+                    //ps.setString(1, "11639");
+                    System.out.println("User Id "+userId);
                     ps.setString(1, userId == null ? "0" : userId);
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
@@ -1111,5 +1115,33 @@ public class XMLImportPageBean {
             bindingContext.findDataControl("SudokuAMDataControl"); // Name of application module in datacontrolBinding.cpx
         SudokuAMImpl appM = (SudokuAMImpl)dc.getDataProvider();
         return appM;
+    }
+
+    public void setReadOnlyUI(Boolean readOnlyUI) {
+        this.readOnlyUI = readOnlyUI;
+    }
+
+    public Boolean getReadOnlyUI() {
+        boolean readOnly = true ;
+        V93kQuote v93 = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(v93!=null && v93.getReferenceConfigurationLines()!=null && !v93.getReferenceConfigurationLines().isEmpty()){
+            readOnly = false ;
+        }
+        String configCancelled =
+            (String)ADFUtils.getSessionScopeValue("cancelAll");
+        HashMap ruleSetMap =
+            (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
+        if (ruleSetMap != null && !ruleSetMap.isEmpty()) {
+            if (ruleSetMap.containsKey("error")) {
+                String error = (String)ruleSetMap.get("error");
+                if (error != null && error.equalsIgnoreCase("Y")) {
+                    readOnly = true;
+                }
+            }
+        }
+        if(configCancelled!=null && configCancelled.equals("Y")){
+            readOnly = true ;
+        }
+        return readOnly;
     }
 }

@@ -25,7 +25,8 @@
                                   shortDesc="#{bindings.TopLevelMeaning.hints.tooltip}"
                                   launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                   autoSubmit="true"
-                                  valueChangeListener="#{ConfiguratorBean.rulesetChanged}">
+                                  valueChangeListener="#{ConfiguratorBean.rulesetChanged}"
+                                  label="Top Level Choice">
               <f:validator binding="#{bindings.TopLevelMeaning.validator}"/>
             </af:inputListOfValues>
             <af:inputListOfValues id="secondLevelMeaningId"
@@ -38,7 +39,8 @@
                                   partialTriggers="topLevelMeaningId"
                                   autoSubmit="true"
                                   valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}"
-                                  disabled="#{bindings.SecondLevelCode eq 'OTS'}">
+                                  disabled="#{bindings.SecondLevelCode eq 'OTS'}"
+                                  label="Second Level Choice">
               <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
             </af:inputListOfValues>
             <af:inputText label="Label 13" id="it5"

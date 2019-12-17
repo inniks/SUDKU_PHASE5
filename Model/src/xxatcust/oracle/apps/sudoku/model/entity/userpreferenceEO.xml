@@ -75,6 +75,30 @@
       <Attr Name="_DisplaySize" Value="100"/>
     </DesignTime>
   </Attribute>
+  <Attribute
+    Name="DecimalSeperator"
+    Precision="30"
+    ColumnName="DECIMAL_SEPERATOR"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXAT_USERPREF_GLOBALCHOICE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="GroupSeperator"
+    Precision="30"
+    ColumnName="GROUP_SEPERATOR"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXAT_USERPREF_GLOBALCHOICE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
   <Key
     Name="UserpreferenceeoPrimaryKey"
     PrimaryKey="true">

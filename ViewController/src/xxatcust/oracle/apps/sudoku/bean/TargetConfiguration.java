@@ -68,7 +68,7 @@ public class TargetConfiguration {
     private RichOutputText expertMode;
     private RichOutputFormatted refText;
     private RichPopup refreshPopup;
-
+    private Boolean readOnlyUI = true;
     public TargetConfiguration() {
     }
 
@@ -104,7 +104,9 @@ public class TargetConfiguration {
             }
             RichPopup.PopupHints hints = new RichPopup.PopupHints();
             if (refreshPopup != null) {
+                
                 refreshPopup.show(hints);
+                refreshPopup.hide();
                 refreshPopup.cancel();
                 ADFUtils.addPartialTarget(refreshPopup.getParent());
             }
@@ -485,9 +487,12 @@ public class TargetConfiguration {
             }
         }
         if(refreshPopup!=null){
+            
+            refreshPopup.hide();
             refreshPopup.cancel();
         }
         if(panelSplitterBind!=null){
+            //refreshPopup.addPartialTarget(FacesContext.getCurrentInstance(), null, panelSplitterBind);
             ADFUtils.addPartialTarget(panelSplitterBind);
         }
      
@@ -636,5 +641,33 @@ public class TargetConfiguration {
 
     public RichPopup getRefreshPopup() {
         return refreshPopup;
+    }
+
+    public void setReadOnlyUI(Boolean readOnlyUI) {
+        this.readOnlyUI = readOnlyUI;
+    }
+
+    public Boolean getReadOnlyUI() {
+        boolean readOnly = true ;
+        V93kQuote v93 = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(v93!=null && v93.getTargetConfigurationLines()!=null && !v93.getTargetConfigurationLines().isEmpty()){
+            readOnly = false ;
+        }
+        String configCancelled =
+            (String)ADFUtils.getSessionScopeValue("cancelAll");
+        HashMap ruleSetMap =
+            (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
+        if (ruleSetMap != null && !ruleSetMap.isEmpty()) {
+            if (ruleSetMap.containsKey("error")) {
+                String error = (String)ruleSetMap.get("error");
+                if (error != null && error.equalsIgnoreCase("Y")) {
+                    readOnly = true;
+                }
+            }
+        }
+        if(configCancelled!=null && configCancelled.equals("Y")){
+            readOnly = true ;
+        }
+        return readOnly;
     }
 }

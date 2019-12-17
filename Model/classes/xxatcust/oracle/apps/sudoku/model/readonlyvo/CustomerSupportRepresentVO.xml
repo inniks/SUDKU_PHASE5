@@ -199,12 +199,11 @@
       <ViewCriteriaItem
         Name="CustomerSupportRepresentVOCriteria_vcrow92_CustomerName"
         ViewAttribute="CustomerName"
-        Operator="CONTAINS"
+        Operator="STARTSWITH"
         Conjunction="AND"
         Value=":bindCustName"
         IsBindVarValue="true"
-        Required="Optional"
-        GenerateIsNullClauseForBindVars="false"/>
+        Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
   <AttrArray Name="KeyAttributes">

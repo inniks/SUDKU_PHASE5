@@ -158,12 +158,6 @@
         <Item Value="Discount"/>
       </AttrNames>
     </attributeValues>
-    <methodAction id="defaultSalesRepOnCreateQuote"
-                  InstanceName="SudokuAMDataControl.dataProvider"
-                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
-                  Action="invokeMethod"
-                  MethodName="defaultSalesRepOnCreateQuote"
-                  IsViewObjectMethod="false"/>
     <attributeValues IterBinding="QuotesVOIterator" id="CustPhoneFax">
       <AttrNames>
         <Item Value="CustPhoneFax"/>

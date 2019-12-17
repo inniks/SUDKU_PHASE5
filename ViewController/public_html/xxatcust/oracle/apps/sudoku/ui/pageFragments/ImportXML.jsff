@@ -9,7 +9,8 @@
                       secondBorder="none" secondLandmark="navigation"
                       dimensionsFrom="children">
       <f:facet name="first">
-        <af:panelGroupLayout id="pgl3" layout="horizontal" valign="top">
+        <af:panelGroupLayout id="pgl3" layout="horizontal" valign="top"
+                             rendered="#{XMLImportPageBean.readOnlyUI eq false}">
           <af:panelHeader text=" " id="ph1" size="-1"
                           inlineStyle="color:#6b1600; font-size: large;">
             <af:spacer width="10" height="10" id="s17"/>
@@ -67,7 +68,7 @@
               </af:commandToolbarButton>
               <af:spacer width="10" height="10" id="s19"/>
               <af:commandToolbarButton text="Show Warning(s)"
-                                       id="ctb5">
+                                       id="ctb5" rendered="false">
                 <af:showPopupBehavior popupId="wrnPop" triggerType="click"/>
               </af:commandToolbarButton>
               <af:spacer width="50" height="10" id="s25"/>
@@ -101,7 +102,8 @@
                              layout="scroll">
           <af:panelBox text=" " id="pb1" showDisclosure="false"
                        showHeader="never" maximized="true"
-                       styleClass="AFStretchWidth">
+                       styleClass="AFStretchWidth"
+                       rendered="#{XMLImportPageBean.readOnlyUI eq false}">
             <af:panelGroupLayout id="pgl8" layout="vertical"
                                  styleClass="AFStretchWidth"
                                  partialTriggers="cb1">
@@ -311,6 +313,25 @@
                              visible="false"/>
             </af:panelGroupLayout>
           </af:panelBox>
+          <af:panelBox id="pb3"
+                     rendered="#{XMLImportPageBean.readOnlyUI}"
+                     showDisclosure="false" background="medium">
+          <f:facet name="toolbar"/>
+          <af:panelHeader text=" " id="ph1_1" size="-1"
+                          inlineStyle="color:Teal; font-weight:bolder;"
+                          type="default">
+            <f:facet name="context">
+              <af:group id="g1_1">
+                <af:outputFormatted value="Import Source Configuration" id="of3_1"
+                                    inlineStyle="color:Maroon; font-size:large; font-weight:bold;"/>
+              </af:group>
+            </f:facet>
+            <f:facet name="menuBar"/>
+            <af:panelBox text="No Results" id="pb4">
+              <f:facet name="toolbar"/>
+            </af:panelBox>
+          </af:panelHeader>
+        </af:panelBox>
         </af:panelGroupLayout>
       </f:facet>
     </af:panelSplitter>

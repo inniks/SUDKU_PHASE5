@@ -1250,6 +1250,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
                 if (vo.getEstimatedRowCount() < 2) {
                     vo.clearCache();
                     vo.setWhereClause(null);
+                    vo.setNamedWhereClauseParam("P_org_id", orgNumber);
                     vo.executeQuery();
                 }
             }
@@ -1639,6 +1640,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             }
               sb.append(")");
             if (defaultVal != null) {
+                vo.clearCache();
+                vo.setWhereClause(null);
                 Row fRow[] =
                     vo.getFilteredRows("PersonId", new BigDecimal(defaultVal));
                 if (fRow != null && fRow.length > 0) {
@@ -1646,12 +1649,10 @@ public class QuotesVORowImpl extends ViewRowImpl {
                 }
             }
             vo.clearCache();
+            vo.reset();
             vo.setWhereClause(null);
-            if (!sb.toString().equalsIgnoreCase("()")) {
+            if (!sb.toString().equalsIgnoreCase("()")) 
                 vo.setWhereClause("person_id in" + sb.toString());
-            } else {
-                //                            vo.setWhereClause("person_id in" + sb.toString());
-            }
             vo.executeQuery();
         }
 

@@ -87,6 +87,10 @@ import oracle.jbo.ViewObject;
 import oracle.jbo.domain.BlobDomain;
 import oracle.jbo.server.DBTransaction;
 
+import org.apache.myfaces.trinidad.render.ExtendedRenderKitService;
+
+import org.apache.myfaces.trinidad.util.Service;
+
 import xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl;
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
@@ -2164,4 +2168,11 @@ public class LoadDynamicRegionBean {
     public String getLoadPref() {
         return loadPref;
     }
+    public void callPrintPage(ActionEvent actionEvent) {
+        
+            FacesContext fctx = FacesContext.getCurrentInstance();
+            ExtendedRenderKitService service = Service.getRenderKitService(fctx, ExtendedRenderKitService.class);
+            service.addScript(fctx, "ShowPrintPage");
+        }
+
 }

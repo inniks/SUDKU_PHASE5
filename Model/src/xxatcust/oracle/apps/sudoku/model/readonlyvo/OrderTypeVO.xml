@@ -146,17 +146,11 @@ AND otta.org_id = :p_orgId]]>
       <ViewCriteriaItem
         Name="OrderTypeVOCriteria_vcrow4_Name"
         ViewAttribute="Name"
-        Operator="CONTAINS"
+        Operator="STARTSWITH"
         Conjunction="AND"
-        Required="Optional"/>
-      <ViewCriteriaItem
-        Name="OrderTypeVOCriteria_vcrow4_OrgId"
-        ViewAttribute="OrgId"
-        Operator="="
-        Conjunction="AND"
-        Value=":p_orgId"
-        IsBindVarValue="true"
-        Required="Optional"/>
+        Required="Optional"
+        Value=":bindName"
+        IsBindVarValue="true"/>
     </ViewCriteriaRow>
   </ViewCriteria>
   <AttrArray Name="KeyAttributes">

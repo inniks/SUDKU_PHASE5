@@ -209,12 +209,11 @@
       <ViewCriteriaItem
         Name="ResourceName"
         ViewAttribute="ResourceName"
-        Operator="CONTAINS"
+        Operator="STARTSWITH"
         Conjunction="AND"
         Value=":bindContactName"
         IsBindVarValue="true"
-        Required="Optional"
-        GenerateIsNullClauseForBindVars="false"/>
+        Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
   <AttrArray Name="KeyAttributes">

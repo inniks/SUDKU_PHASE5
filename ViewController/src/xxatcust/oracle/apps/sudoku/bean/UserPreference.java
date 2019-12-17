@@ -438,7 +438,7 @@ public class UserPreference {
             if (flag != null) {
                 if (flag)
                     ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                        "Global Choice Data Saved Successfully");
+                                        "Global Choices Saved Successfully");
             }
             isOT = false;isCust = false;isSalesRep = false;isCSR =false;isIncoTerm = false;isCurrency = false;isPaymentTerm = false;isSC = false;
         }
@@ -2346,7 +2346,7 @@ public class UserPreference {
             Boolean flag = (Boolean)commitOperations.execute();
             if (flag)
                 ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                    "Sales Channel Data Saved Successfully");
+                                    "Sales Channel Choices Saved Successfully");
         } else {
             ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
                                 "Please Select Operating Unit and Sales Channel Value before Save");

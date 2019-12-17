@@ -1947,7 +1947,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     cutStr = StringUtils.replace(cutStr, "<html><body>", "");
                     cutStr = StringUtils.replace(cutStr, "<body><html>", "");
                     cutStr = StringUtils.replace(cutStr, "<p><b>", "");
-                    cutStr = StringUtils.replace(cutStr, "<b><p>","");
+                    cutStr = StringUtils.replace(cutStr, "</b></p>","");
                     ADFUtils.showFacesMessage(cutStr,
                                               FacesMessage.SEVERITY_ERROR);
                     _logger.info("Cut String " + cutStr);

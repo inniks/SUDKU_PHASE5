@@ -525,12 +525,6 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         return (Map)_ret;
     }
 
-    public void validatePrefStaticValues(int usrId, String numberFormat) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"validatePrefStaticValues",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), numberFormat});
-        return;
-    }
-
     public String getCurrencyFormat(String userId) {
         Object _ret =
             this.riInvokeExportedMethod(this,"getCurrencyFormat",new String [] {"java.lang.String"},new Object[] {userId});
@@ -541,5 +535,11 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         Object _ret =
             this.riInvokeExportedMethod(this,"getPriceProductChoices",new String [] {"java.lang.String"},new Object[] {userId});
         return (Hashtable)_ret;
+    }
+
+    public void validatePrefStaticValues(int usrId, String numberFormat) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"validatePrefStaticValues",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), numberFormat});
+        return;
     }
 }

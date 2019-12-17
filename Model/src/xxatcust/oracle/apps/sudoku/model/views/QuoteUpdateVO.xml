@@ -2238,6 +2238,8 @@ FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll]]>
     </DesignTime>
     <Properties>
       <SchemaBasedProperties>
+        <LABEL
+          ResId="Ordertypename_LABEL"/>
         <CONTROLTYPE
           Value="input_text_lov"/>
       </SchemaBasedProperties>

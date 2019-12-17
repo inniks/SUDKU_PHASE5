@@ -4,7 +4,14 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
   <jsp:directive.page contentType="text/html;charset=UTF-8"/>
   <f:view>
-    <af:document id="d1" title="Sudoku Dashboard">
+    <af:document id="d1" title="Sudoku Dashboard"> 
+          <af:clientListener method="ShowPrintPage" type="click"/>
+         <af:resource type="javascript">
+                  function ShowPrintPage(){
+                      window.print();
+                  }
+ 
+          </af:resource>
       <af:messages id="m1"/>
       <af:form id="f1" usesUpload="true">
         <af:panelStretchLayout id="psl1" topHeight="80px" endWidth="10px"
@@ -152,7 +159,7 @@
                         </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s6"/>
                         <af:commandImageLink id="ct2b1" partialSubmit="true"
-                                             icon="/Resources/images/imgs/Import ref Config.png">
+                                             icon="/Resources/images/Import ref Config.png">
                           <af:showPopupBehavior popupId="imSrcP1"
                                                 triggerType="click"/>
                         </af:commandImageLink>
@@ -160,9 +167,9 @@
                         <af:commandImageLink id="ctb1_vre"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToViewRef}"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'ref'}"
-                                             icon="/Resources/images/imgs/View Ref.png"
+                                             icon="/Resources/images/View Ref.png"
                                              partialSubmit="true"
-                                             disabledIcon="/Resources/images/imgs/viewRef_dis.png">
+                                             disabledIcon="/Resources/images/viewRef_dis.png">
                           <af:setPropertyListener from="viewRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
@@ -269,10 +276,15 @@
                                                 triggerType="action"/>
                         </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s17"/>
-                        <af:commandImageLink id="cil1"
+                 <af:commandImageLink id="cil1" partialSubmit="true"
                                              icon="/Resources/images/imgs/Print Page_edit.png"
                                              disabledIcon="/Resources/images/imgs/Print Page.png"
-                                             disabled="false"></af:commandImageLink>
+                                             actionListener="#{viewScope.LoadDynamicRegionBean.callPrintPage}"
+                                             disabled="false">
+                          <af:clientListener method="ShowPrintPage"
+                                             type="click"/>
+                        </af:commandImageLink>
+
                       </af:panelGroupLayout>
                     </af:panelFormLayout>
                   </af:panelGroupLayout>
