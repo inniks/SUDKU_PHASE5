@@ -4,7 +4,8 @@
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:h="http://java.sun.com/jsf/html">
   <af:panelHeader text=" " id="config_Phd"
-                  binding="#{ConfiguratorBean.parentUiComp}">
+                  binding="#{ConfiguratorBean.parentUiComp}"
+                  partialTriggers="topLevelMeaningId">
     <f:facet name="context">
       <af:outputFormatted value="V93000 Configuration and Budgetary Quoting Tool"
                           id="of5"
@@ -40,12 +41,16 @@
                                   autoSubmit="true"
                                   valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}"
                                   disabled="#{bindings.SecondLevelCode eq 'OTS'}"
-                                  label="Second Level Choice">
+                                  label="Second Level Choice"
+                                  rendered="#{ConfiguratorBean.oneTimeSpecial ne 'OTS'}">
               <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
             </af:inputListOfValues>
-            <af:inputText label="Label 13" id="it5"
-                          binding="#{ConfiguratorBean.otsDisplay}"
-                          rendered="false"/>
+            <af:inputText label="Second Level Choice" id="it5"
+                          
+                          rendered="#{ConfiguratorBean.oneTimeSpecial eq 'OTS'}"
+                          disabled="true"
+                          value="#{ConfiguratorBean.otsDislayValue}"
+                          columns="20" partialTriggers="topLevelMeaningId"/>
           </af:panelGroupLayout>
         </af:panelBox>
         <af:toolbar id="t1" rendered="false">

@@ -42,7 +42,7 @@
     </Properties>
   </Variable>
   <SQLQuery>
-    <![CDATA[select lookup_code, meaning from fnd_lookup_values where lookup_type = 'XXAT_SUDOKU_RULE_SET_E8000SYS']]>
+    <![CDATA[select lookup_code, meaning from fnd_lookup_values where lookup_type = 'XXAT_SUDOKU_RULE_SET_E8000SYS' and lookup_code <> 'OTS']]>
   </SQLQuery>
   <ViewAttribute
     Name="LookupCode"

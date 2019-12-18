@@ -1256,16 +1256,21 @@ public class LoadDynamicRegionBean {
     }
 
     public String getDisableReportButtons() {
+        Boolean isQuoteSaved = false;
         String disableReports = "N";
         V93kQuote v93k =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k != null && v93k.getSessionDetails() != null) {
+            isQuoteSaved = v93k.getSessionDetails().isQuoteSaved();
             SessionDetails sessDetails = v93k.getSessionDetails();
             boolean isUpgradeOnSrcConfig =
                 sessDetails.isUpgradeOnSourceConfiguration();
             boolean isUpgradeFromScratch = sessDetails.isUpgradefromScratch();
             String targetQuoteNumber = sessDetails.getTargetQuoteNumber();
-            if (isUpgradeFromScratch || isUpgradeOnSrcConfig ||
+//            if(isQuoteSaved && !isUpgradeFromScratch){
+//                disableReports = "Y";
+//            }
+            if (isUpgradeFromScratch || 
                 (targetQuoteNumber == null)) {
                 disableReports = "Y";
             } else {

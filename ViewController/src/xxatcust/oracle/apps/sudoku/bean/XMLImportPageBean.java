@@ -333,7 +333,6 @@ public class XMLImportPageBean {
         boolean prodRend = true;
         HashMap userPrefMap = getProductPriceUserPref();
         if (userPrefMap != null && !userPrefMap.isEmpty()) {
-            System.out.println("HashMap formed is "+userPrefMap);
             if (userPrefMap.containsKey("Prd_num_ref_config")) {
                 String Prd_num_ref_config =
                     (String)userPrefMap.get("Prd_num_ref_config");
@@ -343,7 +342,6 @@ public class XMLImportPageBean {
                 }
             }
         }
-        System.out.println("Products rendered "+prodRend);
         return prodRend;
     }
 
@@ -544,16 +542,12 @@ public class XMLImportPageBean {
     }
 
     public void initUploadXml() {
-        System.out.println("Init Upload XML");
         UIComponent ui = ADFUtils.findComponentInRoot("pb2lim");
-        System.out.println("uI Comp " + ui);
-        System.out.println("Quote Total " + quoteTotal);
         if (quoteTotal != null && errorPopup != null) {
             getPageInitText();
         }
 
         if (ui != null) {
-            System.out.println("REfreshing.....");
             ADFUtils.addPartialTarget(ui);
         }
     }
@@ -606,7 +600,6 @@ public class XMLImportPageBean {
         UIComponent ui = ADFUtils.findComponentInRoot("pb2lim");
 
         if (ui != null) {
-            System.out.println("UI Component is " + ui);
             String cancelAll =
                 (String)ADFUtils.getSessionScopeValue("cancelAll");
             if (cancelAll != null && cancelAll.equalsIgnoreCase("Y")) {
@@ -914,6 +907,7 @@ public class XMLImportPageBean {
                         Iterator it =
                             allNodesByCategoriesMap.entrySet().iterator();
                         NodeCategory firstLevel = null;
+                        int index = 0;
                         while (it.hasNext()) {
                             Map.Entry pair = (Map.Entry)it.next();
                             String Key = (String)pair.getKey();
@@ -929,12 +923,36 @@ public class XMLImportPageBean {
                                 (List<ConfiguratorNodePOJO>)pair.getValue();
 
                             for (ConfiguratorNodePOJO node : childList) {
-                                //System.out.println("Node is "+node.getNodeName());
                                 String nodeDesig = null;
+//                                if (i == 0 && index == 0) {
+//                                    nodeDesig = "header";
+//                                }
+//                                if(i==1 && index ==0){
+//                                    nodeDesig = "header";
+//                                }
+//                                if(i==2 && index ==0){
+//                                    nodeDesig = "header";
+//                                }
+//                                if(i==3 && index ==0){
+//                                    nodeDesig = "header";
+//                                }
+//                                if(i==4 && index ==0){
+//                                    nodeDesig = "header";
+//                                }
                                 if (node.getPrintGroupLevel() != null &&
-                                    node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+                                    (node.getPrintGroupLevel().equalsIgnoreCase("1")||node.getPrintGroupLevel().equalsIgnoreCase("2")|| node.getPrintGroupLevel().equalsIgnoreCase("3")||node.getPrintGroupLevel().equalsIgnoreCase("4"))) {
                                     nodeDesig = "header";
-                                    System.out.println("Setting node Designation");
+                                }
+                                if (node.getNodeCategory() != null &&
+                                    (node.getNodeCategory().equalsIgnoreCase("1") ||
+                                     node.getNodeCategory().equalsIgnoreCase("2") ||
+                                     node.getNodeCategory().equalsIgnoreCase("3") ||
+                                     node.getNodeCategory().equalsIgnoreCase("4") ||
+                                     node.getNodeCategory().equalsIgnoreCase("5"))) {
+                                    node.setPrintGroupLevel("0");
+                                }
+                                if(node.getPrintGroupLevel()!=null && node.getPrintGroupLevel().equals("0")){
+                                    nodeDesig = "header";
                                 }
                                 NodeCategory secondLevel =
                                     new NodeCategory(category,
@@ -947,9 +965,12 @@ public class XMLImportPageBean {
                                                      node.getNodeColor(),
                                                      node.getPrintGroupLevel(),
                                                      nodeDesig);
+                                if(i==2){
+                                    System.out.println("Adding Node "+node.getNodeName()+" "+node.getNodeCategory()+" "+node.getPrintGroupLevel());
+                                }
                                 firstLevel.addNodes(secondLevel);
                             }
-
+                            index++;
                         }
                         //Trying to sort root
                         NodeComparator comparator = new NodeComparator();
@@ -1004,11 +1025,9 @@ public class XMLImportPageBean {
                 }
             }
         }
-        System.out.println("List view coll " + listViewCollection);
         if (panelBorderBinding != null) {
             ADFUtils.addPartialTarget(panelBorderBinding);
         }
-        System.out.println("Page init text is " + pageInitText);
         return listViewCollection;
     }
 
@@ -1080,7 +1099,6 @@ public class XMLImportPageBean {
                     dbTrans.createPreparedStatement(query, 0);
                 try {
                     //ps.setString(1, "11639");
-                    System.out.println("User Id "+userId);
                     ps.setString(1, userId == null ? "0" : userId);
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {

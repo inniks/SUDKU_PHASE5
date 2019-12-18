@@ -195,6 +195,7 @@ public class ConfiguratorBean {
     private RichOutputFormatted conflictText;
     private RichInputText otsDisplay;
     private String oneTimeSpecial;
+    private String otsDislayValue ;
 
     public ConfiguratorBean() {
         super();
@@ -214,7 +215,6 @@ public class ConfiguratorBean {
         rt.setInlineStyle(inlineStyle);
         ADFUtils.addPartialTarget(rt);
         String out = "Payload:" + ui + " " + column + " Val: " + rt.getValue();
-        System.out.println("Out Value " + out);
 
     }
 
@@ -258,7 +258,6 @@ public class ConfiguratorBean {
     public RichOutputText getPageInitText() throws IOException,
                                                    JsonGenerationException,
                                                    JsonMappingException {
-        System.out.println("Initializing Page....." + confirmPopup);
         return pageInitText;
     }
 
@@ -293,7 +292,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     public void refreshView(ActionEvent actionEvent) throws IOException,
                                                             JsonGenerationException,
                                                             JsonMappingException {
-        System.out.println("RECREATING THE UI TREE......");
         //Call configurator to load data
         sysInfraTreeModel = null;
         warrantyTreeModel = null;
@@ -360,7 +358,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public void sysInfraDisclosure(DisclosureEvent disclosureEvent) {
-        System.out.println("Disclosure Event Fired");
     }
 
     public void setSysInfraSdi(RichShowDetailItem sysInfraSdi) {
@@ -453,7 +450,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         ObjectMapper mapper = new ObjectMapper();
         //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-        System.out.println("Json String build is" + jsonStr);
         //If config is live use this
 //        String responseJson =
 //            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
@@ -1059,6 +1055,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public void rulesetChanged(ValueChangeEvent valueChangeEvent) {
+        if(otsDisplay!=null){
+            otsDisplay.setValue(null);
+        }
+        oneTimeSpecial = null;
+        otsDislayValue = null;
         DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
         if (iter != null) {
             Row currRow = iter.getCurrentRow();
@@ -1127,7 +1128,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                                       String ruleSetSecondChoice) throws IOException,
                                                                          JsonGenerationException,
                                                                          JsonMappingException {
-        System.out.println("RECREATING THE UI TREE......");
         //Call configurator to load data
         sysInfraTreeModel = null;
         warrantyTreeModel = null;
@@ -1187,7 +1187,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public void ruleSetSecondValChange(ValueChangeEvent valueChangeEvent) {
-        System.out.println("New Value is " + valueChangeEvent.getNewValue());
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
         String secondLevelCode = null;
@@ -2146,7 +2145,32 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public String getOneTimeSpecial() {
-
+        boolean ruleSetChanged = false ;
+        String newRuleSetVal = null;
+        String oldRuleSetVal = null;
+        DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
+        if (iter != null) {
+            Row currRow = iter.getCurrentRow();
+            if(currRow!=null){
+                newRuleSetVal = (String)currRow.getAttribute("TopLevelCode");
+            }
+        }
+        oneTimeSpecial = null;
+        String displayOts = null ;
+        String ots = null;
+        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(v93k!=null && v93k.getInputParams()!=null){
+            ots = v93k.getInputParams().getRuleSetSecondLevelChoice();
+            oldRuleSetVal = v93k.getInputParams().getRuleSetTopLevelChoice();
+        }
+       
+        if(ots!=null && ots.equalsIgnoreCase("OTS")){
+            oneTimeSpecial = "OTS";
+        }
+        if(ots!=null && newRuleSetVal!=null &&  oldRuleSetVal!=null && !oldRuleSetVal.equalsIgnoreCase(newRuleSetVal)){
+            oneTimeSpecial = null;
+            otsDislayValue = null;
+        }
         return oneTimeSpecial;
     }
 
@@ -2218,7 +2242,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 //                    if(valueExpression!=null && valueExpression.equalsIgnoreCase("ValueExpression[#{sessionScope.sessionWideSiteName}]")){
                 //
                 //                    }
-                System.out.println(valueExpression);
                 currentColumnName =
                         valueExpression.substring(valueExpression.indexOf(".") +
                                                   1,
@@ -2332,5 +2355,17 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
         }
 
+    }
+
+    public void setOtsDislayValue(String otsDislayValue) {
+        this.otsDislayValue = otsDislayValue;
+    }
+
+    public String getOtsDislayValue() {
+        if(oneTimeSpecial!=null && oneTimeSpecial.equalsIgnoreCase("OTS")){
+            otsDislayValue = "Advantest Expert";
+        }
+        System.out.println("OTS Display Value "+otsDislayValue);
+        return otsDislayValue;
     }
 }

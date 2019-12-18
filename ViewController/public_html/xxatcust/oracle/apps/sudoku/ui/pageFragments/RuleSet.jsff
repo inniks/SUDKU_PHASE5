@@ -13,7 +13,7 @@
                         columns="25"
                         maximumLength="#{bindings.TopLevelMeaning1.hints.precision}"
                         shortDesc="#{bindings.TopLevelMeaning1.hints.tooltip}"
-                        id="it1" disabled="true">
+                        id="it1" disabled="true" label="Top Level Choice">
             <f:validator binding="#{bindings.TopLevelMeaning1.validator}"/>
           </af:inputText>
         </af:panelLabelAndMessage>
@@ -36,7 +36,8 @@
         <af:panelLabelAndMessage
                                  id="plam1" rendered="true">
           <af:inputText value="#{bindings.SecondLevelMeaning.inputValue}"
-                        id="ot1" disabled="true" columns="25"/>
+                        id="ot1" disabled="true" columns="25"
+                        label="Second Level Choice"/>
         </af:panelLabelAndMessage>
         <af:selectOneChoice value="#{bindings.SecondLevelMeaning1.inputValue}"
                             required="#{bindings.SecondLevelMeaning1.hints.mandatory}"

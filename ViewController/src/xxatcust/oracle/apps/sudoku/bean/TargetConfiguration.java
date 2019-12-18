@@ -293,8 +293,20 @@ public class TargetConfiguration {
                                     if (i == 0 && index == 0) {
                                         nodeDesig = "header";
                                     }
+                                    if(i==1 && index ==0){
+                                        nodeDesig = "header";
+                                    }
+                                    if(i==2 && index ==0){
+                                        nodeDesig = "header";
+                                    }
+                                    if(i==3 && index ==0){
+                                        nodeDesig = "header";
+                                    }
+                                    if(i==4 && index ==0){
+                                        nodeDesig = "header";
+                                    }
                                     if (node.getPrintGroupLevel() != null &&
-                                        node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+                                        (node.getPrintGroupLevel().equalsIgnoreCase("1")||node.getPrintGroupLevel().equalsIgnoreCase("2")|| node.getPrintGroupLevel().equalsIgnoreCase("3")||node.getPrintGroupLevel().equalsIgnoreCase("4"))) {
                                         nodeDesig = "header";
                                     }
                                     if (node.getNodeCategory() != null &&

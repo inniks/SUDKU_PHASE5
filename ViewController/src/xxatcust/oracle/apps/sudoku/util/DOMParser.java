@@ -507,6 +507,10 @@ public class DOMParser {
                                       List<HashMap> listOfLines,
                                       List modelNameList) {
         //listOfLines.get(index)
+        boolean upgradeFromScratch = false;
+        if(v93!=null && v93.getSessionDetails()!=null && v93.getSessionDetails().isUpgradefromScratch()){
+            upgradeFromScratch = true ;
+        }
         Element configNode = doc.createElement("config");
         Config configObj = v93.getConfigObject();
         if (listOfLines != null && !listOfLines.isEmpty()) {
@@ -522,7 +526,7 @@ public class DOMParser {
         if (configObj != null && configObj.getVersion() != null) {
             configNode.setAttribute("version", configObj.getVersion());
         }
-        if (configObj != null && configObj.getPmfObject() != null) {
+        if (configObj != null && configObj.getPmfObject() != null && !upgradeFromScratch) {
             Node pmfNode = doc.createElement("pmf");
             List<PogoMappingFile> listPmf =
                 configObj.getPmfObject().getPmfMap();
