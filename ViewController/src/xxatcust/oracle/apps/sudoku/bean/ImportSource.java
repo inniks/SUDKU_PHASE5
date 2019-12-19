@@ -563,6 +563,7 @@ public class ImportSource {
             ObjectMapper mapper = new ObjectMapper();
             String responseJson =
                 (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+            // obj = (V93kQuote)JSONUtils.convertJsonToObject(null);//For local run,use this to debug xml upload related issues
             obj = mapper.readValue(responseJson, V93kQuote.class);
         } else if (importSource != null) {
             V93kQuote v93k = new V93kQuote();

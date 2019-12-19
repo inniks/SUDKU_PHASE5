@@ -2,6 +2,7 @@ package xxatcust.oracle.apps.sudoku.model.module.client;
 
 import java.math.BigDecimal;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -85,6 +86,12 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         return (Map)_ret;
     }
 
+
+    public Hashtable getPriceProductChoices(String userId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getPriceProductChoices",new String [] {"java.lang.String"},new Object[] {userId});
+        return (Hashtable)_ret;
+    }
 
     public void clearQuoteFields() {
         Object _ret =
@@ -531,15 +538,15 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
         return (String)_ret;
     }
 
-    public Hashtable getPriceProductChoices(String userId) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"getPriceProductChoices",new String [] {"java.lang.String"},new Object[] {userId});
-        return (Hashtable)_ret;
-    }
-
     public void validatePrefStaticValues(int usrId, String numberFormat) {
         Object _ret =
             this.riInvokeExportedMethod(this,"validatePrefStaticValues",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), numberFormat});
         return;
+    }
+
+    public HashMap getPriceProductChoices() {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"getPriceProductChoices",null,null);
+        return (HashMap)_ret;
     }
 }

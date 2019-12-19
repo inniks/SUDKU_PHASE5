@@ -15,11 +15,11 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">163.89648</property>
+         name="y">192.19531</property>
+      <property
+         name="x">563.0</property>
       <property
          name="pageFragment">true</property>
-      <property
-         name="x">441.0</property>
    </View>
    <MethodCall
       id="MethodCall5">
@@ -32,9 +32,9 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">173.14941</property>
+         name="y">115.44824</property>
       <property
-         name="x">183.68457</property>
+         name="x">294.68457</property>
    </MethodCall>
    <ControlFlowCase
       islink="true"
@@ -44,6 +44,6 @@
       <property
          name="fromOutcome">initImportSource</property>
       <property
-         name="sdm:polyPoints">R50,224.68457,172.79883,400.0,163.5459,L50</property>
+         name="sdm:polyPoints">R50,335.68457,115.09766,522.0,191.84473,L50</property>
    </ControlFlowCase>
 </SDM>

@@ -912,14 +912,6 @@
         Type="java.lang.String"/>
     </Method>
     <Method
-      Name="getPriceProductChoices">
-      <Return
-        Type="java.util.Hashtable"/>
-      <Parameter
-        Name="userId"
-        Type="java.lang.String"/>
-    </Method>
-    <Method
       Name="validatePrefStaticValues">
       <Return
         Type="void"/>
@@ -929,6 +921,11 @@
       <Parameter
         Name="numberFormat"
         Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="getPriceProductChoices">
+      <Return
+        Type="java.util.HashMap"/>
     </Method>
   </ClientInterface>
 </AppModule>

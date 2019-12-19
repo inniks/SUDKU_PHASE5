@@ -2,6 +2,7 @@ package xxatcust.oracle.apps.sudoku.model.module.common;
 
 import java.math.BigDecimal;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -206,7 +207,8 @@ public interface SudokuAM extends ApplicationModule {
 
     String getCurrencyFormat(String userId);
 
-    Hashtable getPriceProductChoices(String userId);
 
     void validatePrefStaticValues(int usrId, String numberFormat);
+
+    HashMap getPriceProductChoices();
 }

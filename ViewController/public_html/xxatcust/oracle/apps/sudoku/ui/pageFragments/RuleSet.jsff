@@ -2,11 +2,12 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core">
-  <af:panelBox id="pb1" showDisclosure="false" text="Ruleset">
+  <af:panelBox id="pb1" showDisclosure="false"
+               text="Source Configuration Ruleset">
     <f:facet name="toolbar"/>
     <af:panelGroupLayout id="pgl1">
       <af:panelFormLayout id="pfl1">
-        <af:panelLabelAndMessage id="plam3">
+        <af:panelLabelAndMessage id="plam3" label="Top Level Choice">
           <af:inputText value="#{bindings.TopLevelMeaning1.inputValue}"
                         simple="true"
                         required="#{bindings.TopLevelMeaning1.hints.mandatory}"
@@ -34,10 +35,10 @@
         </af:panelLabelAndMessage>
         <af:spacer width="10" height="10" id="s1"/>
         <af:panelLabelAndMessage
-                                 id="plam1" rendered="true">
+                                 id="plam1" rendered="true"
+                                 label="Second Level Choice">
           <af:inputText value="#{bindings.SecondLevelMeaning.inputValue}"
-                        id="ot1" disabled="true" columns="25"
-                        label="Second Level Choice"/>
+                        id="ot1" disabled="true" columns="25"/>
         </af:panelLabelAndMessage>
         <af:selectOneChoice value="#{bindings.SecondLevelMeaning1.inputValue}"
                             required="#{bindings.SecondLevelMeaning1.hints.mandatory}"

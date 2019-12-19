@@ -466,8 +466,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                            v93k.getInputParams().getRuleSetTopLevelChoice());
             ruleSetMap.put("secondLevelCode",
                            v93k.getInputParams().getRuleSetSecondLevelChoice());
-            ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-        }
+            ADFUtils.setSessionScopeValue("ruleSetMapConfig", ruleSetMap);
+        } // Testing this
         refreshRuleSets(); //Refresh the ruleset list of values
         ADFUtils.setSessionScopeValue("parentObject", v93k);
         ADFUtils.setSessionScopeValue("refreshImport", "Y");

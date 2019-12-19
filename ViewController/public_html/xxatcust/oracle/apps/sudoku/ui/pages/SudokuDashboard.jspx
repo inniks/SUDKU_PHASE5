@@ -4,14 +4,13 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
   <jsp:directive.page contentType="text/html;charset=UTF-8"/>
   <f:view>
-    <af:document id="d1" title="Sudoku Dashboard"> 
-          <af:clientListener method="ShowPrintPage" type="click"/>
-         <af:resource type="javascript">
-                  function ShowPrintPage(){
-                      window.print();
-                  }
- 
-          </af:resource>
+    <af:document id="d1" title="Sudoku Dashboard">
+      <af:clientListener method="ShowPrintPage" type="click"/>
+      <af:resource type="javascript">
+        function ShowPrintPage() {
+            window.print();
+        }
+      </af:resource>
       <af:messages id="m1"/>
       <af:form id="f1" usesUpload="true">
         <af:panelStretchLayout id="psl1" topHeight="80px" endWidth="10px"
@@ -219,7 +218,7 @@
                         </af:popup>
                       </af:panelGroupLayout>
                       <af:panelGroupLayout id="pgl5" layout="horizontal">
-                       <af:commandImageLink id="ctb7" 
+                        <af:commandImageLink id="ctb7"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToLoadPref}"
                                              partialSubmit="true"
                                              disabledIcon="/Resources/images/imgs/Load preferences.png"
@@ -260,7 +259,6 @@
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableReportButtons eq 'Y'}"
                                              icon="/Resources/images/imgs/View DUT_ena.png"
                                              partialSubmit="true"
-                                             
                                              disabledIcon="/Resources/images/imgs/View DUT.png">
                           <af:fileDownloadActionListener filename="XXATREPT_RDV_Report___Real_DUT.xls"
                                                          contentType="application/excel"
@@ -276,7 +274,7 @@
                                                 triggerType="action"/>
                         </af:commandImageLink>
                         <af:spacer width="5" height="10" id="s17"/>
-                 <af:commandImageLink id="cil1" partialSubmit="true"
+                        <af:commandImageLink id="cil1" partialSubmit="true"
                                              icon="/Resources/images/imgs/Print Page_edit.png"
                                              disabledIcon="/Resources/images/imgs/Print Page.png"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.callPrintPage}"
@@ -284,7 +282,6 @@
                           <af:clientListener method="ShowPrintPage"
                                              type="click"/>
                         </af:commandImageLink>
-
                       </af:panelGroupLayout>
                     </af:panelFormLayout>
                   </af:panelGroupLayout>
@@ -336,23 +333,32 @@
         </af:popup>
         <af:popup id="MOFPopup"
                   popupFetchListener="#{viewScope.LoadDynamicRegionBean.onMOFreportFetch}">
-          <af:dialog id="d7" type="cancel" contentWidth="200" contentHeight="200"
-                     title="Model File Report">
+          <af:dialog id="d7" type="cancel" contentWidth="200"
+                     contentHeight="200" title="Model File Report">
             <af:outputFormatted id="of5"
                                 binding="#{viewScope.LoadDynamicRegionBean.setMOFop}"/>
           </af:dialog>
         </af:popup>
-                  <af:popup id="errPopup"
-                            binding="#{viewScope.LoadDynamicRegionBean.errorPopupBinding}">
-            <af:dialog id="errorD3" title="Error(s) occurred :" contentWidth="450"
-                       contentHeight="200" type="cancel"
-                       inlineStyle="color:Red;">
-              <af:panelGroupLayout id="pgl11" layout="scroll">
-                <af:outputFormatted id="ot15" inlineStyle="color:Red;"
-                                    binding="#{viewScope.LoadDynamicRegionBean.errMsgFromConfig}"/>
-              </af:panelGroupLayout>
-            </af:dialog>
-          </af:popup>
+        <af:popup id="errPopup"
+                  binding="#{viewScope.LoadDynamicRegionBean.errorPopupBinding}">
+          <af:dialog id="errorD3" title="Error(s) occurred :" contentWidth="450"
+                     contentHeight="200" type="cancel" inlineStyle="color:Red;">
+            <af:panelGroupLayout id="pgl11" layout="scroll">
+              <af:outputFormatted id="ot15" inlineStyle="color:Red;"
+                                  binding="#{viewScope.LoadDynamicRegionBean.errMsgFromConfig}"/>
+            </af:panelGroupLayout>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="wrnPop" autoCancel="disabled"
+                  binding="#{viewScope.LoadDynamicRegionBean.warningPopup}">
+          <af:dialog id="d1_wrn" title="Configurations has below warning(s)"
+                     contentWidth="450" contentHeight="200">
+            <af:panelGroupLayout id="pg12l4" layout="scroll">
+              <af:outputFormatted id="of4_warn"
+                                  binding="#{viewScope.LoadDynamicRegionBean.warnText}"/>
+            </af:panelGroupLayout>
+          </af:dialog>
+        </af:popup>
       </af:form>
     </af:document>
   </f:view>

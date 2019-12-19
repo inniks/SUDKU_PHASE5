@@ -305,6 +305,8 @@ public class UserPreference {
     }
 
     public void onCommit(ActionEvent actionEvent) {
+        //nsrivastava Added this
+        ADFUtils.setSessionScopeValue("userPrefMap", null);
         OperationBinding clearDataOB =
             ADFUtils.getBindingContainer().getOperationBinding("clearUserPrefVO");
         clearDataOB.getParamsMap().put("usrId", usrId);

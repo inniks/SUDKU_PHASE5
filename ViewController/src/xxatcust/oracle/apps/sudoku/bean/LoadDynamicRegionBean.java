@@ -136,6 +136,8 @@ public class LoadDynamicRegionBean {
     private RichOutputFormatted setMOFop;
     private RichPopup errorPopupBinding;
     private RichOutputFormatted errMsgFromConfig;
+    private RichPopup warningPopup;
+    private RichOutputFormatted warnText;
 
     public LoadDynamicRegionBean() {
     }
@@ -228,12 +230,12 @@ public class LoadDynamicRegionBean {
             }
         }
         _logger.info(": Params for Page Load : ");
-        _logger.info("Import Source "+importSource);  
-        _logger.info("Error  "+error);  
-        _logger.info("Cancel All "+cancelAll);  
-        _logger.info("Import Source "+importSource);  
-        _logger.info("Target Quote Number  "+targetQuoteNumber);  
-        _logger.info("Import Source "+importSource);  
+        _logger.info("Import Source " + importSource);
+        _logger.info("Error  " + error);
+        _logger.info("Cancel All " + cancelAll);
+        _logger.info("Import Source " + importSource);
+        _logger.info("Target Quote Number  " + targetQuoteNumber);
+        _logger.info("Import Source " + importSource);
         if (importSource != null &&
             (String)ADFContext.getCurrent().getSessionScope().get("quoteNumFromXML") !=
             null) {
@@ -247,14 +249,16 @@ public class LoadDynamicRegionBean {
             _logger.info("LOAD PAGE ::CREATE QUOTE");
             return "quote";
         }
-        if(targetQuoteNumber!=null && targetQuoteNumber.equals("")){
+        if (targetQuoteNumber != null && targetQuoteNumber.equals("")) {
             return "quote";
         }
-        
-        if (((targetQuoteNumber != null && !targetQuoteNumber.equals("")) || quoteNumber != null)) {
+
+        if (((targetQuoteNumber != null && !targetQuoteNumber.equals("")) ||
+             quoteNumber != null)) {
             System.out.println("LOAD PAGE ::UPDATE QUOTE");
-            ADFContext.getCurrent().getSessionScope().put("targetQuoteNumber", targetQuoteNumber);
-            _logger.info("LOAD PAGE ::UPDATE QUOTE "+targetQuoteNumber);
+            ADFContext.getCurrent().getSessionScope().put("targetQuoteNumber",
+                                                          targetQuoteNumber);
+            _logger.info("LOAD PAGE ::UPDATE QUOTE " + targetQuoteNumber);
             return "quoteUpdate";
         }
         //        quoteNumFromSession =
@@ -452,12 +456,24 @@ public class LoadDynamicRegionBean {
             ADFUtils.setSessionScopeValue("parentObject", v93k);
         }
         boolean configHasErrors = configHasErrors(v93k);
+        boolean configHasWarnings = configHasWarning(v93k);
         if (configHasErrors) {
+            SessionDetails sesDetails = v93k.getSessionDetails();
+            if (v93k.getSessionDetails() == null) {
+                sesDetails = new SessionDetails();
+            }
+            sesDetails.setQuoteSaved(true);
+            ADFUtils.setSessionScopeValue("parentObject", v93k);
             HashMap rulesetMap = new HashMap();
             rulesetMap.put("error", "Y");
             ADFUtils.setSessionScopeValue("ruleSetMap", rulesetMap);
+            displayConfigErrors(v93k);
         }
-        if (!configHasErrors) {
+        if(configHasWarnings && !configHasErrors){
+            displayWarnings(v93k);
+        }
+        
+        if (!configHasErrors && !configHasWarnings) {
             String createQtMsg = getFndMessages(SudokuUtils.createQteMsg);
             String discount = null;
             int respid =
@@ -580,8 +596,8 @@ public class LoadDynamicRegionBean {
                                                 }
 
                                                 //Save to oracle success , set param here
-//                                                ADFUtils.setSessionScopeValue("configSaved",
-//                                                                              "Y");
+                                                //                                                ADFUtils.setSessionScopeValue("configSaved",
+                                                //                                                                              "Y");
                                                 isQuoteSaved = true;
                                             } else if (createMsg.contains("E-")) {
                                                 String[] resMsg =
@@ -714,9 +730,9 @@ public class LoadDynamicRegionBean {
                                                                      "</b></p>");
                                                 }
                                                 //save too oracle success
-//                                                ADFUtils.setSessionScopeValue("configSaved",
-//                                                                              "Y");
-                                                isQuoteSaved = true ;
+                                                //                                                ADFUtils.setSessionScopeValue("configSaved",
+                                                //                                                                              "Y");
+                                                isQuoteSaved = true;
                                             } else if (createMsg.contains("E-")) {
                                                 String[] resMsg =
                                                     createMsg.split("-", 2);
@@ -835,8 +851,8 @@ public class LoadDynamicRegionBean {
                                                                      "</b></p>");
                                                 }
                                                 //save to oracle success
-//                                                ADFUtils.setSessionScopeValue("configSaved",
-//                                                                              "Y");
+                                                //                                                ADFUtils.setSessionScopeValue("configSaved",
+                                                //                                                                              "Y");
                                                 isQuoteSaved = true;
                                             } else if (updateMsg.contains("E-")) {
                                                 String[] resMsg =
@@ -978,7 +994,8 @@ public class LoadDynamicRegionBean {
                                     v93k.getSessionDetails().getTargetQuoteNumber();
                         } else if (quoteForWarranty == null &&
                                    v93k.getSessionDetails().isUpdateQuote()) {
-                            _logger.info("Calling callWarrentyAPI....QUOTE NUM " +v93k.getSessionDetails().getSourceQuoteNumber());
+                            _logger.info("Calling callWarrentyAPI....QUOTE NUM " +
+                                         v93k.getSessionDetails().getSourceQuoteNumber());
                             warrantyOb.getParamsMap().put("quoteNum",
                                                           v93k.getSessionDetails().getSourceQuoteNumber());
                             quoteForWarranty =
@@ -996,7 +1013,9 @@ public class LoadDynamicRegionBean {
                                          warrantyList) {
                                         //call the warranty api
                                         String item = node.getNodeName();
-                                        _logger.info("Calling callWarrentyAPI....QUOTE FOR WARRANTY " +quoteForWarranty+" "+item);
+                                        _logger.info("Calling callWarrentyAPI....QUOTE FOR WARRANTY " +
+                                                     quoteForWarranty + " " +
+                                                     item);
                                         warrantyOb.getParamsMap().put("quoteNum",
                                                                       quoteForWarranty);
                                         warrantyOb.getParamsMap().put("prodName",
@@ -1009,7 +1028,9 @@ public class LoadDynamicRegionBean {
                                         if (warrantyOb != null) {
                                             retMsg =
                                                     (String)warrantyOb.execute();
-                                            _logger.info("After Execute callWarrentyAPI....QUOTE FOR WARRANTY " +quoteForWarranty+" "+item);
+                                            _logger.info("After Execute callWarrentyAPI....QUOTE FOR WARRANTY " +
+                                                         quoteForWarranty +
+                                                         " " + item);
                                             if (retMsg != null) {
                                                 if (retMsg.contains("<html><body>")) {
                                                     resultErrMsg.append(retMsg.toString());
@@ -1073,10 +1094,10 @@ public class LoadDynamicRegionBean {
                 //                bindPopup1.show(hints);
             }
         } else {
-            isQuoteSaved = false ;
+            isQuoteSaved = false;
             displayConfigErrors(v93k);
         }
-        if(v93k!=null && v93k.getSessionDetails()!=null){
+        if (v93k != null && v93k.getSessionDetails() != null) {
             v93k.getSessionDetails().setQuoteSaved(isQuoteSaved);
             ADFUtils.setSessionScopeValue("parentObject", v93k);
         }
@@ -1200,6 +1221,7 @@ public class LoadDynamicRegionBean {
         ADFUtils.setSessionScopeValue("refreshImpSrc", "Y");
         ADFUtils.setSessionScopeValue("configSaved", null);
         ADFUtils.setSessionScopeValue("refreshImpSrc", null);
+        ADFUtils.setSessionScopeValue("ruleSetMapConfig", null);
         cancelPop.cancel();
         if (currView != null &&
             (currView.equals("quoteUpdate") || currView.equals("quote"))) {
@@ -1267,11 +1289,10 @@ public class LoadDynamicRegionBean {
                 sessDetails.isUpgradeOnSourceConfiguration();
             boolean isUpgradeFromScratch = sessDetails.isUpgradefromScratch();
             String targetQuoteNumber = sessDetails.getTargetQuoteNumber();
-//            if(isQuoteSaved && !isUpgradeFromScratch){
-//                disableReports = "Y";
-//            }
-            if (isUpgradeFromScratch || 
-                (targetQuoteNumber == null)) {
+            //            if(isQuoteSaved && !isUpgradeFromScratch){
+            //                disableReports = "Y";
+            //            }
+            if (isUpgradeFromScratch || (targetQuoteNumber == null)) {
                 disableReports = "Y";
             } else {
                 disableReports = "N";
@@ -2150,6 +2171,70 @@ public class LoadDynamicRegionBean {
         return hasErrors;
     }
 
+    private Boolean configHasWarning(V93kQuote v93k) {
+        boolean hasWarning = false;
+        if(v93k!=null && v93k.getExceptionMap()!=null){
+        TreeMap<String, ArrayList<String>> notifications =
+            v93k.getExceptionMap().getNotificationList();
+        TreeMap<String, ArrayList<String>> warnings =
+            v93k.getExceptionMap().getWarningList();
+        if (warnings != null && warnings.size() > 0) {
+            hasWarning = true ;
+        }
+        if(notifications!=null && !notifications.isEmpty()){
+            hasWarning = true ;
+        }
+        }
+        return hasWarning;
+    }
+
+    private void displayWarnings(V93kQuote v93k) {
+        if (v93k != null && v93k.getExceptionMap() != null) {
+            StringBuilder warningMessage = new StringBuilder("<html><body>");
+            TreeMap<String, ArrayList<String>> notifications =
+                v93k.getExceptionMap().getNotificationList();
+            TreeMap<String, ArrayList<String>> warnings =
+                v93k.getExceptionMap().getWarningList();
+            if (warnings != null && warnings.size() > 0) {
+
+
+                for (Map.Entry<String, ArrayList<String>> entry :
+                     warnings.entrySet()) {
+                    String key = entry.getKey();
+                    //iterate for each key
+                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
+                    ArrayList<String> value = entry.getValue();
+                    for (String str : value) {
+                        warningMessage.append("<p><b>" + str + "</b></p>");
+                    }
+                }
+                warningMessage.append("</body></html>");
+            }
+            //Check for notification messages from configurator
+
+            if (notifications != null && notifications.size() > 0) {
+                for (Map.Entry<String, ArrayList<String>> entry :
+                     notifications.entrySet()) {
+                    String key = entry.getKey();
+                    ArrayList<String> value = entry.getValue();
+                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
+                    for (String str : value) {
+                        warningMessage.append("<p><b>" + str + "</b></p>");
+                    }
+                }
+                warningMessage.append("</body></html>");
+
+                RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                if (warningMessage != null &&
+                    !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
+                    warningPopup != null) {
+                    warnText.setValue(warningMessage.toString());
+                    warningPopup.show(hints);
+                }
+            }
+        }
+    }
+
     public void setErrorPopupBinding(RichPopup errorPopupBinding) {
         this.errorPopupBinding = errorPopupBinding;
     }
@@ -2173,11 +2258,28 @@ public class LoadDynamicRegionBean {
     public String getLoadPref() {
         return loadPref;
     }
-    public void callPrintPage(ActionEvent actionEvent) {
-        
-            FacesContext fctx = FacesContext.getCurrentInstance();
-            ExtendedRenderKitService service = Service.getRenderKitService(fctx, ExtendedRenderKitService.class);
-            service.addScript(fctx, "ShowPrintPage");
-        }
 
+    public void callPrintPage(ActionEvent actionEvent) {
+
+        FacesContext fctx = FacesContext.getCurrentInstance();
+        ExtendedRenderKitService service =
+            Service.getRenderKitService(fctx, ExtendedRenderKitService.class);
+        service.addScript(fctx, "ShowPrintPage");
+    }
+
+    public void setWarningPopup(RichPopup warningPopup) {
+        this.warningPopup = warningPopup;
+    }
+
+    public RichPopup getWarningPopup() {
+        return warningPopup;
+    }
+
+    public void setWarnText(RichOutputFormatted warnText) {
+        this.warnText = warnText;
+    }
+
+    public RichOutputFormatted getWarnText() {
+        return warnText;
+    }
 }
