@@ -6220,11 +6220,11 @@
                                   </af:panelGroupLayout>
                                   <af:panelGroupLayout id="misUpgc_s_12"
                                                        layout="horizontal"
-                                                       rendered="false">
-                                    <af:spacer width="50" height="10"
+                                                       rendered="#{theadIter.licenseRowIndexMiscUpg eq theadIter.uiGrpIndex and theadIter.elementList eq 'Y'}">
+                                    <af:spacer width="10" height="10"
                                                id="misUpgc_s_13"/>
                                     <af:panelBorderLayout id="misUpgc_s_14"
-                                                          inlineStyle="height:25px; width:45px; border-style:none;">
+                                                          inlineStyle="height:25px; width:30px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgc_s_1001"
                                                              layout="horizontal">

@@ -219,6 +219,8 @@ public class UiField {
     private String licenceRowIndex;
     private Boolean disableEFCol;
     private String subGrpSecondName;
+    private Integer licenseRowIndexMiscUpg;
+    private String  elementList;
     public UiField() {
 
 
@@ -251,7 +253,7 @@ public class UiField {
 
     public UiField(List<ConfiguratorUiElement> listOfNodes, String subGrpName,
                    String requireFlagSubGrp, String parentGroupName,
-                   String uiGrpIndex,String secondName) {
+                   String uiGrpIndex,String secondName,int licenseRowIndex) {
         super();
         this.listOfNodes = listOfNodes;
         this.uiGrpIndex = uiGrpIndex;
@@ -261,8 +263,11 @@ public class UiField {
         int countLicensesEntered = 0;
         int countOfEFEntries = 0;
         boolean displayOnlyLogic = false;
+        licenseRowIndexMiscUpg = licenseRowIndex;
         if (listOfNodes != null && !listOfNodes.isEmpty()) {
-
+            if(listOfNodes.size()>1){
+                elementList = "Y"; 
+            }
             ConfiguratorUiNode node = null;
             if (listOfNodes.get(0) != null) {
                 if (listOfNodes.get(0).getConfigUiNodes() != null &&
@@ -3034,5 +3039,23 @@ public class UiField {
 
     public String getSubGrpSecondName() {
         return subGrpSecondName;
+    }
+
+    public void setLicenseRowIndexMiscUpg(Integer licenseRowIndexMiscUpg) {
+        this.licenseRowIndexMiscUpg = licenseRowIndexMiscUpg;
+    }
+
+    public Integer getLicenseRowIndexMiscUpg() {
+        return licenseRowIndexMiscUpg;
+    }
+
+
+
+    public void setElementList(String elementList) {
+        this.elementList = elementList;
+    }
+
+    public String getElementList() {
+        return elementList;
     }
 }

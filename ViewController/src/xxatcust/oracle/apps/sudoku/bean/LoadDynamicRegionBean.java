@@ -65,6 +65,7 @@ import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.context.AdfFacesContext;
 
 
+import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.event.PopupFetchEvent;
 
 import oracle.apps.fnd.ext.common.AppsRequestWrapper;
@@ -138,6 +139,7 @@ public class LoadDynamicRegionBean {
     private RichOutputFormatted errMsgFromConfig;
     private RichPopup warningPopup;
     private RichOutputFormatted warnText;
+    private RichPopup quoteNavPopup;
 
     public LoadDynamicRegionBean() {
     }
@@ -199,6 +201,7 @@ public class LoadDynamicRegionBean {
     }
 
     public String getNavString() throws Exception {
+        String currView = (String)ADFUtils.getSessionScopeValue("currView");
         String importSource = null, quoteNumber = null, quoteNumFromSession =
             null, error = null, cancelAll = null;
         String targetQuoteNumber =
@@ -1292,11 +1295,9 @@ public class LoadDynamicRegionBean {
             //            if(isQuoteSaved && !isUpgradeFromScratch){
             //                disableReports = "Y";
             //            }
-            if (isUpgradeFromScratch || (targetQuoteNumber == null)) {
+            if (isUpgradeFromScratch || isQuoteSaved) {
                 disableReports = "Y";
-            } else {
-                disableReports = "N";
-            }
+            } 
         } else {
             disableReports = "Y";
         }
@@ -1369,8 +1370,11 @@ public class LoadDynamicRegionBean {
         return infoFromPopup;
     }
 
-    public void logoutEBS(ActionEvent actionEvent) {
+    public void logoutEBS(ActionEvent actionEvent) throws IOException,
+                                                          JsonGenerationException,
+                                                          JsonMappingException {
         _logger.info("Logging out the user from EBS");
+        cancelAllConfigurations(null);
         //  ADFUtils.setSessionScopeValue("parentObject", null);
         FacesContext fctx = FacesContext.getCurrentInstance();
         HttpServletRequest request =
@@ -1438,8 +1442,11 @@ public class LoadDynamicRegionBean {
     }
 
 
-    public void homeEBS(ActionEvent actionEvent) {
+    public void homeEBS(ActionEvent actionEvent) throws IOException,
+                                                        JsonGenerationException,
+                                                        JsonMappingException {
         _logger.info("home out the user from EBS");
+        cancelAllConfigurations(null);
         //  ADFUtils.setSessionScopeValue("parentObject", null);
         FacesContext fctx = FacesContext.getCurrentInstance();
         HttpServletRequest request =
@@ -2281,5 +2288,27 @@ public class LoadDynamicRegionBean {
 
     public RichOutputFormatted getWarnText() {
         return warnText;
+    }
+    
+    private Boolean isNavigationOutOfQuote(){
+        boolean isNavOutOfQuote = false;
+        String currView = (String)ADFUtils.getSessionScopeValue("currView");
+        if(currView!=null && (currView.equalsIgnoreCase("quote")||currView.equalsIgnoreCase("quoteUpdate"))){
+            isNavOutOfQuote = true ;
+        }
+        return isNavOutOfQuote;
+    }
+
+
+    public void setQuoteNavPopup(RichPopup quoteNavPopup) {
+        this.quoteNavPopup = quoteNavPopup;
+    }
+
+    public RichPopup getQuoteNavPopup() {
+        return quoteNavPopup;
+    }
+
+    public void quoteNavigationDialogEvent(DialogEvent dialogEvent) {
+        // Add event code here...
     }
 }

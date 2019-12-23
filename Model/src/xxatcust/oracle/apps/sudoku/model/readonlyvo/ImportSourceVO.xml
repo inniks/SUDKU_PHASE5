@@ -27,9 +27,13 @@
     Name="ReuseQuoteLOV1"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.ReuseQuoteLOV"
     RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="ImpSrcLOVUpdated1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.ImpSrcLOVUpdated"
+    RowLevelBinds="true"/>
   <ListBinding
     Name="LOV_ImportSrcMeaning"
-    ListVOName="ImportSrcLOV2"
+    ListVOName="ImpSrcLOVUpdated1"
     ListRangeSize="-1"
     NullValueFlag="none"
     NullValueId="LOV_ImportSrcMeaning_LOVUIHints_NullValueId"
@@ -100,7 +104,7 @@
     Type="java.lang.String"
     ColumnType="CHAR"
     AliasName="VIEW_ATTR"
-    SQLType="BIT"
+    SQLType="VARCHAR"
     LOVName="LOV_ReuseQuote">
     <Properties>
       <SchemaBasedProperties>

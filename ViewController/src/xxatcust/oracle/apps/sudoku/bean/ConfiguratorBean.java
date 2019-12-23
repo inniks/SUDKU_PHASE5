@@ -460,14 +460,21 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
         // else use this
         v93k = (V93kQuote)convertJsonToObject(null);
+        Map ruleSetMap = new HashMap();
         if (v93k != null && v93k.getInputParams() != null) {
-            Map ruleSetMap = new HashMap();
+            
             ruleSetMap.put("topLevelCode",
                            v93k.getInputParams().getRuleSetTopLevelChoice());
             ruleSetMap.put("secondLevelCode",
                            v93k.getInputParams().getRuleSetSecondLevelChoice());
-            ADFUtils.setSessionScopeValue("ruleSetMapConfig", ruleSetMap);
-        } // Testing this
+            
+        }
+        // Testing this
+        boolean configHasErrors = configHasErrors(v93k);
+        if(configHasErrors){
+            ruleSetMap.put("error", "Y");
+        }
+        ADFUtils.setSessionScopeValue("ruleSetMapConfig", ruleSetMap);
         refreshRuleSets(); //Refresh the ruleset list of values
         ADFUtils.setSessionScopeValue("parentObject", v93k);
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
@@ -1141,6 +1148,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         rfResourcesTreeModel = null;
         miscUpgTreeModel = null;
         infraUpgTreeModel = null;
+        ADFUtils.setSessionScopeValue("ruleSetMap", null);
         ADFUtils.setSessionScopeValue("configSaved", null);
         String targetQuoteNumber = (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
         v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
@@ -1774,7 +1782,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         String configSaved =
             (String)ADFUtils.getSessionScopeValue("configSaved");
         HashMap ruleSetMap =
-            (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
+            (HashMap)ADFUtils.getSessionScopeValue("ruleSetMapConfig");
         if (configCancelled != null && configCancelled.equalsIgnoreCase("Y")) {
             defaultViewOnLoad = true;
         }

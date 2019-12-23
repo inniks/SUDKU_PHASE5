@@ -92,7 +92,7 @@
               <af:popup id="can_all"
                         binding="#{viewScope.LoadDynamicRegionBean.cancelPop}">
                 <af:dialog id="d5"
-                           title="Are you sure you want to cancel all configurations ?"
+                           title="Are you sure you want to Reset all existing changes ?"
                            type="none">
                   <af:panelGroupLayout id="pgl1" halign="end">
                     <af:commandButton text="Yes" id="cb4"
@@ -357,6 +357,13 @@
               <af:outputFormatted id="of4_warn"
                                   binding="#{viewScope.LoadDynamicRegionBean.warnText}"/>
             </af:panelGroupLayout>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="quoteNavPopup" autoCancel="disabled"
+                  binding="#{viewScope.LoadDynamicRegionBean.quoteNavPopup}">
+          <af:dialog id="d1_wrning" title="Your existing quote header changes will be lost. Do you want to proceed?"
+                     contentWidth="400" contentHeight="200" type="yesNo"
+                     dialogListener="#{viewScope.LoadDynamicRegionBean.quoteNavigationDialogEvent}">
           </af:dialog>
         </af:popup>
       </af:form>

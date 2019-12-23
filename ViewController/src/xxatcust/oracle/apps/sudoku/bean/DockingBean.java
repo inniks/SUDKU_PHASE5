@@ -74,7 +74,7 @@ public class DockingBean {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
                                             groupName,
-                                            Integer.toString(index),secondName);
+                                            Integer.toString(index),secondName,0);
                         index++;
                         uiFieldCollection.add(uiField);
                     }

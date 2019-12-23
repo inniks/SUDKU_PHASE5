@@ -71,7 +71,7 @@ public class SystemControllerBean {
 
                     if (listUiNodesBySubGrp != null &&
                         !listUiNodesBySubGrp.isEmpty()) {
-                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,Integer.toString(index),secondName);
+                        uiField = new UiField(listUiNodesBySubGrp, subGrpName,requiredFlag,groupName,Integer.toString(index),secondName,0);
                         index++;
                         uiFieldCollection.add(uiField);
                     }

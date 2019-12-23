@@ -14,6 +14,7 @@ import oracle.jbo.Key;
 import oracle.jbo.Row;
 import oracle.jbo.RowSet;
 import oracle.jbo.server.AttributeDefImpl;
+import oracle.jbo.server.EntityImpl;
 import oracle.jbo.server.RowQualifier;
 import oracle.jbo.server.ViewObjectImpl;
 import oracle.jbo.server.ViewRowImpl;
@@ -1072,18 +1073,20 @@ public class QuotesVORowImpl extends ViewRowImpl {
             StringBuilder sb = new StringBuilder("(");
             ViewObjectImpl vo =
                 (ViewObjectImpl)this.getOrderTypeVO().getViewObject();
-            ViewObjectImpl userBasedVO = (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
-            
+            ViewObjectImpl userBasedVO =
+                (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
+
             String colType = "'Order_type'";
             if (userBasedVO != null) {
                 userBasedVO.clearCache();
                 userBasedVO.setWhereClause(null);
-//                Object[] obj = { usrId, colType,orgNumber };
-//                Key key = new Key(obj);
-//                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
+                //                Object[] obj = { usrId, colType,orgNumber };
+                //                Key key = new Key(obj);
+                //                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
                 RowQualifier rq1 =
                     new RowQualifier("ColumnType =" + colType + " and UserId=" +
-                                     usrId + " and OperatingUnit ='" + String.valueOf(orgNumber) +"'");
+                                     usrId + " and OperatingUnit ='" +
+                                     String.valueOf(orgNumber) + "'");
                 Row[] rows = userBasedVO.getFilteredRows(rq1);
                 if (rows != null && rows.length > 0) {
                     orderTypeValues =
@@ -1152,7 +1155,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
         String acountNum = null;
         ViewObjectImpl vo =
             (ViewObjectImpl)this.getCustNameVO().getViewObject();
-        ViewObjectImpl userBasedVO = (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
+        ViewObjectImpl userBasedVO =
+            (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
         BigDecimal orgNumber = null;
         if (orgId != null) {
             orgNumber = orgId;
@@ -1177,83 +1181,83 @@ public class QuotesVORowImpl extends ViewRowImpl {
 
             String colType = "'Customer'";
             if (userBasedVO != null) {
-//                                Object[] obj = { usrId, colType,orgNumber };
-//                                Key key = new Key(obj);
-//                                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
+                //                                Object[] obj = { usrId, colType,orgNumber };
+                //                                Key key = new Key(obj);
+                //                                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
                 userBasedVO.clearCache();
                 userBasedVO.setWhereClause(null);
                 RowQualifier rq1 =
                     new RowQualifier("ColumnType =" + colType + " and UserId=" +
-                                     usrId + " and OperatingUnit ='" + String.valueOf(orgNumber) +"'");
+                                     usrId + " and OperatingUnit ='" +
+                                     String.valueOf(orgNumber) + "'");
                 Row[] rows = userBasedVO.getFilteredRows(rq1);
-        
+
                 if (rows != null && rows.length > 0) {
                     custVal =
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
                     defaultVal = (String)rows[0].getAttribute("DefaultVal");
                     System.out.println("default customer value:" + defaultVal);
                 }
-                    if (defaultVal != null && vo != null) {
-                        vo.clearCache();
-                        vo.setWhereClause(null);
-                        vo.setNamedWhereClauseParam("P_org_id", null);
-                        vo.setNamedWhereClauseParam("P_org_id", orgNumber);
-                        Row fRow[] =
-                            vo.getFilteredRows("Accountnumber", defaultVal); //Accountnumber
-                        if (fRow != null && fRow.length > 0) {
-                            customername =
-                                    (String)fRow[0].getAttribute("Customername");
-                            custDetailsMap.put("custNum", defaultVal);
-                            custDetailsMap.put("custName", customername);
-                        }
+                if (defaultVal != null && vo != null) {
+                    vo.clearCache();
+                    vo.setWhereClause(null);
+                    vo.setNamedWhereClauseParam("P_org_id", null);
+                    vo.setNamedWhereClauseParam("P_org_id", orgNumber);
+                    Row fRow[] =
+                        vo.getFilteredRows("Accountnumber", defaultVal); //Accountnumber
+                    if (fRow != null && fRow.length > 0) {
+                        customername =
+                                (String)fRow[0].getAttribute("Customername");
+                        custDetailsMap.put("custNum", defaultVal);
+                        custDetailsMap.put("custName", customername);
+                    }
 
-                    }
-                    if (custVal != null) {
-                        temp = Arrays.asList(custVal.split("\\s*,\\s*"));
-                        if (acountNum != null) {
-                            sb.append(acountNum);
-                            for (int i = 0; i < temp.size(); i++) {
-                                sb.append("','").append(temp.get(i));
-                            }
-                        } else if (custNum != null) {
-                            custNum = custNum.trim();
-                            sb.append(custNum);
-                            for (int i = 0; i < temp.size(); i++) {
-                                sb.append("','").append(temp.get(i));
-                            }
-                        } else if (defaultVal != null) {
-                            sb.append(defaultVal);
-                            for (int i = 0; i < temp.size(); i++) {
-                                sb.append("','").append(temp.get(i));
-                            }
-                        } else {
-                            sb.append(temp.get(0));
-                            for (int i = 1; i < temp.size(); i++) {
-                                sb.append("','").append(temp.get(i));
-                            }
+                }
+                if (custVal != null) {
+                    temp = Arrays.asList(custVal.split("\\s*,\\s*"));
+                    if (acountNum != null) {
+                        sb.append(acountNum);
+                        for (int i = 0; i < temp.size(); i++) {
+                            sb.append("','").append(temp.get(i));
+                        }
+                    } else if (custNum != null) {
+                        custNum = custNum.trim();
+                        sb.append(custNum);
+                        for (int i = 0; i < temp.size(); i++) {
+                            sb.append("','").append(temp.get(i));
+                        }
+                    } else if (defaultVal != null) {
+                        sb.append(defaultVal);
+                        for (int i = 0; i < temp.size(); i++) {
+                            sb.append("','").append(temp.get(i));
+                        }
+                    } else {
+                        sb.append(temp.get(0));
+                        for (int i = 1; i < temp.size(); i++) {
+                            sb.append("','").append(temp.get(i));
                         }
                     }
-                    
                 }
-                sb.append("')");
-                System.out.println("customer Name list valuse ::" +
-                                   sb.toString());
+
+            }
+            sb.append("')");
+            System.out.println("customer Name list valuse ::" + sb.toString());
+            vo.clearCache();
+            vo.setWhereClause(null);
+            vo.setNamedWhereClauseParam("P_org_id", orgNumber);
+            if (!sb.toString().equalsIgnoreCase("('')")) {
+                vo.setWhereClause("accountnumber in" + sb.toString());
+            }
+            System.out.println("Query is:" + sb.toString());
+            vo.executeQuery();
+            System.out.println("row count:" + vo.getEstimatedRowCount());
+            if (vo.getEstimatedRowCount() < 2) {
                 vo.clearCache();
                 vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("P_org_id", orgNumber);
-                if (!sb.toString().equalsIgnoreCase("('')")) {
-                    vo.setWhereClause("accountnumber in" + sb.toString());
-                }
-                System.out.println("Query is:"+sb.toString());
                 vo.executeQuery();
-                System.out.println("row count:" + vo.getEstimatedRowCount());
-                if (vo.getEstimatedRowCount() < 2) {
-                    vo.clearCache();
-                    vo.setWhereClause(null);
-                    vo.setNamedWhereClauseParam("P_org_id", orgNumber);
-                    vo.executeQuery();
-                }
             }
+        }
         return custDetailsMap;
     }
 
@@ -1267,20 +1271,21 @@ public class QuotesVORowImpl extends ViewRowImpl {
             StringBuilder sb = new StringBuilder("('");
             ViewObjectImpl vo =
                 (ViewObjectImpl)this.getCustNameVO().getViewObject();
-//            ViewObjectImpl scBasedVO = (ViewObjectImpl)this.getuserPrefSCVO().getViewObject();
+            //            ViewObjectImpl scBasedVO = (ViewObjectImpl)this.getuserPrefSCVO().getViewObject();
 
             String colType = "Customer";
             if (vo != null) {
                 System.out.println("SalesChannel::" + salesChannel);
-                Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
+                Object[] obj =
+                { usrId, colType, salesChannel, String.valueOf(this.getOrgId()) };
                 Key key = new Key(obj);
                 Row[] rows = this.getuserPrefSCVO().findByKey(key, 4);
-//                scBasedVO.clearCache();
-//                scBasedVO.setWhereClause(null);
-//		RowQualifier rq1 =
-//                    new RowQualifier("ColumnType =" + colType +
-//                                     " and UserId=" + usrId + " and OperatingUnit ='"+String.valueOf(this.getOrgId())+"'");
-//                        Row[] rows = scBasedVO.getFilteredRows(rq1);
+                //                scBasedVO.clearCache();
+                //                scBasedVO.setWhereClause(null);
+                //		RowQualifier rq1 =
+                //                    new RowQualifier("ColumnType =" + colType +
+                //                                     " and UserId=" + usrId + " and OperatingUnit ='"+String.valueOf(this.getOrgId())+"'");
+                //                        Row[] rows = scBasedVO.getFilteredRows(rq1);
                 if (rows != null && rows.length > 0) {
                     custVal =
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
@@ -1354,7 +1359,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
         Row fRow[] = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
-            Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
+            Object[] obj =
+            { usrId, colType, salesChannel, String.valueOf(this.getOrgId()) };
             Key key = new Key(obj);
             Row[] rows = this.getuserPrefSCVO().findByKey(key, 4);
             if (rows != null && rows.length > 0) {
@@ -1400,11 +1406,12 @@ public class QuotesVORowImpl extends ViewRowImpl {
             (ViewObjectImpl)this.getIncoTermVO1().getViewObject();
         String colType = "IncoTerm";
         String incoTerm = null, defaultval = null;
-//        String defaultIncoTerm = null;
+        //        String defaultIncoTerm = null;
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
-            Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
+            Object[] obj =
+            { usrId, colType, salesChannel, String.valueOf(this.getOrgId()) };
             Key key = new Key(obj);
             Row[] rows = this.getuserPrefSCVO().findByKey(key, 4);
             if (rows != null && rows.length > 0) {
@@ -1447,7 +1454,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
-            Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
+            Object[] obj =
+            { usrId, colType, salesChannel, String.valueOf(this.getOrgId()) };
             Key key = new Key(obj);
             Row[] rows = this.getuserPrefSCVO().findByKey(key, 4);
             if (rows != null && rows.length > 0) {
@@ -1478,14 +1486,14 @@ public class QuotesVORowImpl extends ViewRowImpl {
                     }
                 }
             }
-                sb.append("')");
-                System.out.println("Payment Term values:" + sb.toString());
-                vo.clearCache();
-                vo.setWhereClause(null);
-                if (!sb.toString().equalsIgnoreCase("('')"))
-                    vo.setWhereClause("Name in" + sb.toString());
-                vo.executeQuery();
-           
+            sb.append("')");
+            System.out.println("Payment Term values:" + sb.toString());
+            vo.clearCache();
+            vo.setWhereClause(null);
+            if (!sb.toString().equalsIgnoreCase("('')"))
+                vo.setWhereClause("Name in" + sb.toString());
+            vo.executeQuery();
+
         }
         return defaultval;
     }
@@ -1500,7 +1508,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("(");
         if (vo != null) {
-            Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
+            Object[] obj =
+            { usrId, colType, salesChannel, String.valueOf(this.getOrgId()) };
             Key key = new Key(obj);
             Row[] rows = this.getuserPrefSCVO().findByKey(key, 4);
             if (rows != null && rows.length > 0) {
@@ -1560,30 +1569,32 @@ public class QuotesVORowImpl extends ViewRowImpl {
             StringBuilder sb = new StringBuilder("(");
             ViewObjectImpl vo =
                 (ViewObjectImpl)this.getSalesRepresentativeVO().getViewObject();
-            ViewObjectImpl userBasedVO = (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
+            ViewObjectImpl userBasedVO =
+                (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
             String colType = "'Sales_Rep'";
             if (userBasedVO != null) {
                 userBasedVO.clearCache();
                 userBasedVO.setWhereClause(null);
-//                Object[] obj = { usrId, colType,orgNumber };
-//                Key key = new Key(obj);
-//                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
-                  RowQualifier rq1 =
+                //                Object[] obj = { usrId, colType,orgNumber };
+                //                Key key = new Key(obj);
+                //                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
+                RowQualifier rq1 =
                     new RowQualifier("ColumnType =" + colType + " and UserId=" +
-                                     usrId + " and OperatingUnit ='" + String.valueOf(orgNumber) +"'");
+                                     usrId + " and OperatingUnit ='" +
+                                     String.valueOf(orgNumber) + "'");
                 Row[] rows = userBasedVO.getFilteredRows(rq1);
                 if (rows != null && rows.length > 0) {
                     salesRepValues =
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
                     defaultVal = (String)rows[0].getAttribute("DefaultVal");
                 }
-                if(defaultVal!=null){
+                if (defaultVal != null) {
                     sb.append(defaultVal);
                 }
-                if(defaultVal!=null && salesRepValues!=null)
+                if (defaultVal != null && salesRepValues != null)
                     sb.append(",");
-                if(salesRepValues!=null)
-                sb.append(salesRepValues);
+                if (salesRepValues != null)
+                    sb.append(salesRepValues);
                 sb.append(")");
                 if (defaultVal != null) {
                     vo.clearCache();
@@ -1591,8 +1602,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
                     vo.setNamedWhereClauseParam("p_orgId", null);
                     vo.setNamedWhereClauseParam("p_orgId", orgNumber);
                     RowQualifier rq =
-                        new RowQualifier(" ResourceId =" +
-                                         new BigDecimal(defaultVal));
+                        new RowQualifier(" ResourceId =" + new BigDecimal(defaultVal));
                     Row fRow[] = vo.getFilteredRows(rq);
                     if (fRow != null && fRow.length > 0) {
                         defaultSalesRep =
@@ -1630,7 +1640,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
                         (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
                 defaultVal = (String)rows[0].getAttribute("DefaultVal");
             }
-            if (csrValues!=null) {
+            if (csrValues != null) {
                 if (csr != null) {
                     sb.append(csr).append(",").append(csrValues);
                 } else if (defaultVal != null) {
@@ -1638,7 +1648,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
                 } else
                     sb.append(csrValues);
             }
-              sb.append(")");
+            sb.append(")");
             if (defaultVal != null) {
                 vo.clearCache();
                 vo.setWhereClause(null);
@@ -1651,7 +1661,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
             vo.clearCache();
             vo.reset();
             vo.setWhereClause(null);
-            if (!sb.toString().equalsIgnoreCase("()")) 
+            if (!sb.toString().equalsIgnoreCase("()"))
                 vo.setWhereClause("person_id in" + sb.toString());
             vo.executeQuery();
         }
@@ -1661,25 +1671,27 @@ public class QuotesVORowImpl extends ViewRowImpl {
 
 
     public String getUserBasedCurrency(String currencyCode) {
-        System.out.println("OrgId::"+this.getOrgId());
-       System.out.println("orgIdd::"+new BigDecimal(this.getOrgId().toString()));
-       System.out.println("orgIddd::"+String.valueOf(this.getOrgId()));
+        System.out.println("OrgId::" + this.getOrgId());
+        System.out.println("orgIdd::" +
+                           new BigDecimal(this.getOrgId().toString()));
+        System.out.println("orgIddd::" + String.valueOf(this.getOrgId()));
         if (currencyCode != null) {
             currencyCode = currencyCode.trim();
         }
         ViewObjectImpl vo =
             (ViewObjectImpl)this.getCurrencyVO().getViewObject();
-        ViewObjectImpl userPrefVO = (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
+        ViewObjectImpl userPrefVO =
+            (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
         String colType = "Currency";
         String currency = null, defaultval = null;
         String defaultCurrencyVal = null;
         List<String> temp = null;
         Row fRow[] = null;
         StringBuilder sb = new StringBuilder("('");
-        if (vo != null & userPrefVO!=null) {
+        if (vo != null & userPrefVO != null) {
             userPrefVO.clearCache();
             userPrefVO.setWhereClause(null);
-            Object[] obj = { usrId, colType};
+            Object[] obj = { usrId, colType };
             Key key = new Key(obj);
             Row[] rows = userPrefVO.findByKey(key, 2);
             if (rows != null && rows.length > 0) {
@@ -1732,7 +1744,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
             (ViewObjectImpl)this.getIncoTermVO1().getViewObject();
         String colType = "IncoTerm";
         String incoTerm = null, defaultval = null;
-//        String defaultIncoTerm = null;
+        //        String defaultIncoTerm = null;
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
@@ -1764,14 +1776,14 @@ public class QuotesVORowImpl extends ViewRowImpl {
                     }
                 }
             }
-                sb.append("')");
-                vo.clearCache();
-                vo.setWhereClause(null);
-                if (!sb.toString().equalsIgnoreCase("('')")) {
-                    vo.setWhereClause("meaning in" + sb.toString());
-                }
-                vo.executeQuery();
-           
+            sb.append("')");
+            vo.clearCache();
+            vo.setWhereClause(null);
+            if (!sb.toString().equalsIgnoreCase("('')")) {
+                vo.setWhereClause("meaning in" + sb.toString());
+            }
+            vo.executeQuery();
+
         }
         return defaultval;
     }
@@ -1801,7 +1813,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
             vo.clearCache();
             vo.setWhereClause(null);
             vo.executeQuery();
-            System.out.println("count:"+vo.getEstimatedRowCount());
+            System.out.println("count:" + vo.getEstimatedRowCount());
         }
         return defaultval;
     }

@@ -270,17 +270,6 @@
                   </af:panelGroupLayout>
                 </af:dialog>
               </af:popup>
-              <af:popup id="p1" binding="#{XMLImportPageBean.errorPopup}">
-                <af:dialog id="d3" title="Error(s) occurred :"
-                           contentWidth="450" contentHeight="200" type="cancel"
-                           inlineStyle="color:Red;">
-                  <af:panelGroupLayout id="pgl11" layout="scroll">
-                    <af:outputFormatted id="ot15" inlineStyle="color:Red;"
-                                        binding="#{XMLImportPageBean.validationError}"
-                                        value="outputFormatted1"/>
-                  </af:panelGroupLayout>
-                </af:dialog>
-              </af:popup>
               <af:popup id="debugPop" autoCancel="disabled"
                         binding="#{XMLImportPageBean.debugPopup}">
                 <af:dialog id="d2" type="ok" contentWidth="600"
@@ -337,5 +326,15 @@
     </af:panelSplitter>
     <af:outputText value="outputText1" id="ot17" visible="false"
                    binding="#{XMLImportPageBean.pageInitText}"/>
+    <af:popup id="p1" binding="#{XMLImportPageBean.errorPopup}">
+      <af:dialog id="d3" title="Error(s) occurred :" contentWidth="450"
+                 contentHeight="200" type="cancel" inlineStyle="color:Red;">
+        <af:panelGroupLayout id="pgl11" layout="scroll">
+          <af:outputFormatted id="ot15" inlineStyle="color:Red;"
+                              binding="#{XMLImportPageBean.validationError}"
+                              value="outputFormatted1"/>
+        </af:panelGroupLayout>
+      </af:dialog>
+    </af:popup>
   </af:panelBox>
 </jsp:root>

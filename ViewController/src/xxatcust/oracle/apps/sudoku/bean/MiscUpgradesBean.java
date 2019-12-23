@@ -53,6 +53,8 @@ public class MiscUpgradesBean {
 
             //Iterate for all subgroups here and place them in a list
             int index = 1;
+
+
             if (mapUiSubGrp != null && !mapUiSubGrp.isEmpty()) {
                 Iterator it = mapUiSubGrp.entrySet().iterator();
                 while (it.hasNext()) {
@@ -62,6 +64,7 @@ public class MiscUpgradesBean {
                     List<ConfiguratorUiElement> listOfElements =
                         subGroup.getUiElements();
                     String subGrpName = subGroup.getSubGroupName();
+
                     String secondName = subGroup.getSubGroupSecondName();
                     requiredFlag = subGroup.isRequired() ? "Y" : "N";
                     List<ConfiguratorUiElement> listUiNodesBySubGrp =
@@ -78,8 +81,8 @@ public class MiscUpgradesBean {
                         !listUiNodesBySubGrp.isEmpty()) {
                         uiField =
                                 new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
-                                            groupName,
-                                            Integer.toString(index),secondName);
+                                            groupName, Integer.toString(index),
+                                            secondName,0);
                         index++;
                         uiFieldCollection.add(uiField);
                     }
@@ -196,9 +199,9 @@ public class MiscUpgradesBean {
                 Map.Entry pair = (Map.Entry)iter.next();
                 ConfiguratorUiGroup grp =
                     (ConfiguratorUiGroup)pair.getValue(); // this will be digital , dps etc
-                System.out.println("*************"+grp.getUiGroupName());
                 SdiCollectionMiscUpgradeModel sdiInstance =
-                    createSuperSubGroups(v93k, grp, indexer,grp.getUiGroupName());
+                    createSuperSubGroups(v93k, grp, indexer,
+                                         grp.getUiGroupName());
                 indexer++;
                 sdiCollection.add(sdiInstance);
             }
@@ -217,7 +220,8 @@ public class MiscUpgradesBean {
 
     public static SdiCollectionMiscUpgradeModel createSuperSubGroups(V93kQuote v93k,
                                                                      ConfiguratorUiGroup uiGroup,
-                                                                     int indexer,String uiParentGrp) {
+                                                                     int indexer,
+                                                                     String uiParentGrp) {
         String groupName = null;
         if (v93k != null && v93k.getUiRoot() != null &&
             v93k.getUiRoot().getMiscUpgradeGroup() != null) {
@@ -239,7 +243,8 @@ public class MiscUpgradesBean {
                     Map.Entry subGrppair = (Map.Entry)sgIter.next();
                     ConfiguratorUiSubGroup subGrp =
                         (ConfiguratorUiSubGroup)subGrppair.getValue();
-                    if(subGrp!=null && subGrp.getSubGroupIdentifier()==null){
+                    if (subGrp != null &&
+                        subGrp.getSubGroupIdentifier() == null) {
                         subGrp.setSubGroupIdentifier(uiParentGrp);
                         //subGrp.setSubGroupIdentifier(groupName);
                     }
@@ -256,6 +261,8 @@ public class MiscUpgradesBean {
             }
         }
         LinkedHashMap<String, List> testMap = new LinkedHashMap();
+
+
         for (String uiSubGrpName : allSuperSubGroupList) {
 
             LinkedHashMap<String, ConfiguratorUiSubGroup> subGroup =
@@ -265,6 +272,9 @@ public class MiscUpgradesBean {
             ArrayList testList = new ArrayList();
             Iterator sgIter = subGroup.entrySet().iterator();
             int index = 1;
+            int licenseIndex = 1;
+            licenseIndex = findLicenseRowIndex(subGroup, uiSubGrpName);
+            System.out.println("License Index for "+uiSubGrpName+" "+licenseIndex);
 
             while (sgIter.hasNext()) {
                 Map.Entry subGrppair = (Map.Entry)sgIter.next();
@@ -277,9 +287,10 @@ public class MiscUpgradesBean {
                     //for ex:PS1600
                     ArrayList<UiField> uiFieldCollection = null;
                     uiFieldCollection =
-                            prepareMiscUpgradesSubGrpDataModel(subGrp, groupName,
+                            prepareMiscUpgradesSubGrpDataModel(subGrp,
+                                                               groupName,
                                                                uiFieldCollection,
-                                                               index);
+                                                               index,licenseIndex);
                     listofcollections.add(uiFieldCollection);
                     testList.add(uiFieldCollection);
                     index++;
@@ -307,7 +318,6 @@ public class MiscUpgradesBean {
                     for (int i = 0; i < val.size(); i++) {
                         test1.add(val.get(i).get(0));
                     }
-                    System.out.println("Index being passed is "+counter);
                     ShowDetailItemCollection showDetItem =
                         new ShowDetailItemCollection(Integer.toString(counter),
                                                      test1, key, key);
@@ -330,7 +340,7 @@ public class MiscUpgradesBean {
     public static ArrayList<UiField> prepareMiscUpgradesSubGrpDataModel(ConfiguratorUiSubGroup uiSbGrp,
                                                                         String uiGrpName,
                                                                         ArrayList<UiField> uiFieldCollection,
-                                                                        int index) {
+                                                                        int index,int licensRowIndex) {
         //Based on a refresh condition,prepare the data model for testhead,dut etc.
         //For each ui subgroup,One UIField object is to be created
 
@@ -360,7 +370,8 @@ public class MiscUpgradesBean {
                 !listUiNodesBySubGrp.isEmpty()) {
                 uiField =
                         new UiField(listUiNodesBySubGrp, subGrpName, requiredFlag,
-                                    uiGrpName, Integer.toString(index),secondName);
+                                    uiGrpName, Integer.toString(index),
+                                    secondName,licensRowIndex);
                 index++;
                 uiFieldCollection.add(uiField);
             }
@@ -371,5 +382,22 @@ public class MiscUpgradesBean {
         return uiFieldCollection;
     }
 
-
+    private static Integer findLicenseRowIndex( LinkedHashMap<String, ConfiguratorUiSubGroup> subGrpMap,String uiSubGrpName){
+        int index = 1 ;
+        Iterator sgIter = subGrpMap.entrySet().iterator();
+                    while (sgIter.hasNext()) {
+                        Map.Entry subGrppair = (Map.Entry)sgIter.next();
+                        ConfiguratorUiSubGroup subGrp =
+                            (ConfiguratorUiSubGroup)subGrppair.getValue();
+                        if (subGrp != null && subGrp.getSubGroupIdentifier() != null &&
+                            subGrp.getSubGroupIdentifier().equalsIgnoreCase(uiSubGrpName)) {
+                            index++;
+                            if (subGrp.getUiElements() != null &&
+                                subGrp.getUiElements().size() > 1) {
+                                break;
+                            }
+                        }
+                    }
+        return index-1 ;
+    }
 }
