@@ -7,21 +7,19 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import java.util.Map;
 import java.util.Set;
 
-import java.util.TreeMap;
 
 import javax.faces.application.FacesMessage;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -133,8 +131,8 @@ public class DOMParser {
                 //Now the list of lines is prepared
                 if (!listOfLines.isEmpty()) {
                     for (List<ConfiguratorNodePOJO> list : listOfLists) {
-                        HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
-                            new HashMap<String, List<ConfiguratorNodePOJO>>();
+                        LinkedHashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
+                            new LinkedHashMap<String, List<ConfiguratorNodePOJO>>();
                         if (list != null && !list.isEmpty()) {
                             for (ConfiguratorNodePOJO node : list) {
                                 if (node.getNodeCategory() != null &&
@@ -235,17 +233,17 @@ public class DOMParser {
 
     private static Node qHeaderNode(QHeader qheaderObj, Document doc) {
         //parse the qheader object and create nodes accordingly
-        HashMap<String, Boolean> qheaderValidMap =
-            (HashMap<String, Boolean>)ADFUtils.getSessionScopeValue("qheaderValidMap");
+        LinkedHashMap<String, Boolean> qheaderValidMap =
+            (LinkedHashMap<String, Boolean>)ADFUtils.getSessionScopeValue("qheaderValidMap");
 
         String targetQuoteNumber =
             (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
         if (targetQuoteNumber != null) {
-            qheaderValidMap = new HashMap<String, Boolean>();
+            qheaderValidMap = new LinkedHashMap<String, Boolean>();
         }
 
         if (qheaderValidMap == null) {
-            qheaderValidMap = new HashMap<String, Boolean>();
+            qheaderValidMap = new LinkedHashMap<String, Boolean>();
         }
         Element qheadernode = doc.createElement("qheader");
         if (qheaderObj.getQtitle() != null) {
@@ -504,7 +502,7 @@ public class DOMParser {
     }
 
     private static Node configPmfNode(V93kQuote v93, Document doc,
-                                      List<HashMap> listOfLines,
+                                      List<LinkedHashMap> listOfLines,
                                       List modelNameList) {
         //listOfLines.get(index)
         boolean upgradeFromScratch = false;
@@ -514,7 +512,7 @@ public class DOMParser {
         Element configNode = doc.createElement("config");
         Config configObj = v93.getConfigObject();
         if (listOfLines != null && !listOfLines.isEmpty()) {
-            for (HashMap mapByLine : listOfLines) {
+            for (LinkedHashMap mapByLine : listOfLines) {
                 Node modelBomNode =
                     modelBomNode(v93, doc, mapByLine, modelNameList);
                 if (modelBomNode != null) {
@@ -551,7 +549,7 @@ public class DOMParser {
     }
 
     private static Node modelBomNode(V93kQuote v93, Document doc,
-                                     HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap,
+                                     LinkedHashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap,
                                      List<String> modelNameList) {
         Element modelbomNode = doc.createElement("modelbom");
         if (v93 != null && allNodesByCategoriesMap != null &&

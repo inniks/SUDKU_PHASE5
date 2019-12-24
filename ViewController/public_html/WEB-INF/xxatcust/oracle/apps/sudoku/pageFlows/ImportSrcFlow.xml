@@ -13,7 +13,7 @@
       <managed-bean-scope id="__11">pageFlow</managed-bean-scope>
     </managed-bean>
     <view id="ImportSource">
-      <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSource.jsff</page>
+      <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSourceUpdated.jsff</page>
     </view>
     <method-call id="initImportSource">
       <method>#{bindings.initImportSource.execute}</method>

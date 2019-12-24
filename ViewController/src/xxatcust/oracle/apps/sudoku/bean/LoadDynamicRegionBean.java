@@ -1281,28 +1281,28 @@ public class LoadDynamicRegionBean {
     }
 
     public String getDisableReportButtons() {
-        Boolean isQuoteSaved = false;
-        String disableReports = "N";
-        V93kQuote v93k =
-            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        if (v93k != null && v93k.getSessionDetails() != null) {
-            isQuoteSaved = v93k.getSessionDetails().isQuoteSaved();
-            SessionDetails sessDetails = v93k.getSessionDetails();
-            boolean isUpgradeOnSrcConfig =
-                sessDetails.isUpgradeOnSourceConfiguration();
-            boolean isUpgradeFromScratch = sessDetails.isUpgradefromScratch();
-            String targetQuoteNumber = sessDetails.getTargetQuoteNumber();
-            //            if(isQuoteSaved && !isUpgradeFromScratch){
-            //                disableReports = "Y";
-            //            }
-            if (isUpgradeFromScratch || isQuoteSaved) {
-                disableReports = "Y";
-            } 
-        } else {
-            disableReports = "Y";
-        }
-        return disableReports;
-    }
+           Boolean isQuoteSaved = false;
+           String disableReports = "N";
+           V93kQuote v93k =
+               (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+           if (v93k != null && v93k.getSessionDetails() != null) {
+               isQuoteSaved = v93k.getSessionDetails().isQuoteSaved();
+               SessionDetails sessDetails = v93k.getSessionDetails();
+               boolean isUpgradeOnSrcConfig =
+                   sessDetails.isUpgradeOnSourceConfiguration();
+               boolean isUpgradeFromScratch = sessDetails.isUpgradefromScratch();
+               String targetQuoteNumber = sessDetails.getTargetQuoteNumber();
+               //            if(isQuoteSaved && !isUpgradeFromScratch){
+               //                disableReports = "Y";
+               //            }
+               if (isUpgradeFromScratch || isQuoteSaved) {
+                   disableReports = "Y";
+               } 
+           } else {
+               disableReports = "Y";
+           }
+           return disableReports;
+       }
 
     public void navToLoadPref(ActionEvent actionEvent) {
         ADFUtils.setSessionScopeValue("currView", "loadPref");

@@ -54,6 +54,8 @@
           usageId="xxatcust_oracle_apps_sudoku_view_UserPreferencesPageDef"/>
     <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UserPreferencesFlow.xml#UserPreferencesFlow@inituserPreference"
           usageId="xxatcust_oracle_apps_sudoku_view_UserPreferencesFlow_UserPreferencesFlow_inituserPreferencePageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSourceUpdated.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_ImportSourceUpdatedPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
@@ -102,6 +104,8 @@
           path="xxatcust.oracle.apps.sudoku.ui.pageFragments.UserPreferencesPageDef"/>
     <page id="xxatcust_oracle_apps_sudoku_view_UserPreferencesFlow_UserPreferencesFlow_inituserPreferencePageDef"
           path="xxatcust.oracle.apps.sudoku.pageFlows.UserPreferencesFlow_UserPreferencesFlow_inituserPreferencePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_ImportSourceUpdatedPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.ImportSourceUpdatedPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <BC4JDataControl id="SudokuAMDataControl"

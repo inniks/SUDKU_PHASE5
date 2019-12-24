@@ -7,7 +7,7 @@
       <property
          name="activityId">ImportSource</property>
       <property
-         name="page">/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSource.jsff</property>
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSourceUpdated.jsff</property>
       <property
          name="start">false</property>
       <property
@@ -17,9 +17,9 @@
       <property
          name="y">192.19531</property>
       <property
-         name="x">563.0</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">563.0</property>
    </View>
    <MethodCall
       id="MethodCall5">

@@ -91,7 +91,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
 
-        //validateEBSSession(pagePhaseEvent);
+        validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {
@@ -442,9 +442,10 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                                  (String)ADFUtils.getSessionScopeValue("UserId"));
         sessionDetails.setTargetQuoteNumber(targetQuoteNum);
         //Add input params
-        inputParam.setCopyReferenceConfiguration(false); //Passing copy ref value as true
+        //inputParam.setCopyReferenceConfiguration(false); //Passing copy ref value as true
         inputParam.setImportSource("LOAD_QUOTE_FROM_SEARCH");
-        inputParam.setReuseQuote(true);
+        //inputParam.setReuseQuote(true);
+        inputParam.setModifySourceConfig(true);
         inputParam.setQuoteNumber(targetQuoteNum);
         V93kQuote v93k = new V93kQuote();
         v93k.setInputParams(inputParam);

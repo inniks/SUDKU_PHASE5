@@ -52,6 +52,8 @@ import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import org.xml.sax.SAXException;
 
+import org.xml.sax.SAXParseException;
+
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
 import xxatcust.oracle.apps.sudoku.util.JSONUtils;
@@ -184,7 +186,7 @@ public class ImportSource {
         //        Boolean isUpdateQuote = false;
         //        String duplicateQuoteNum = null;
         //Reset import source flow refresh parameter
-       
+
         ADFUtils.setSessionScopeValue("configSaved", null);
         int respid =
             Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
@@ -206,10 +208,12 @@ public class ImportSource {
         String formalQuoteNum = null;
         String importSource = null;
         String quoteNumber = null;
-        String reuseQuote =
-            null; //true if "Re-use the existing Quote ID, if possible" is selected
-        String copyReferenceConfiguration = null;
-        boolean copyRefConf = false;
+        String configType = null;
+        Boolean configTypeBool = null;
+        //String reuseQuote =
+        //    null; //true if "Re-use the existing Quote ID, if possible" is selected
+        //String copyReferenceConfiguration = null;
+        //boolean copyRefConf = false;
         DCIteratorBinding iter =
             ADFUtils.findIterator("ImportSourceVO1Iterator");
         if (iter != null) {
@@ -219,22 +223,28 @@ public class ImportSource {
                 budgetQuoteNum =
                         (String)currRow.getAttribute("BudgetQuoteId"); //can be formal quote id as well
                 formalQuoteNum = (String)currRow.getAttribute("FormalQuoteId");
+                configType = (String)currRow.getAttribute("ConfigurationType");
+                //                if(configType!=null){
+                //                    if(configType.equalsIgnoreCase("UPGRADE")){
+                //
+                //                    }
+                //                }
                 // if(budgetQuoteNum!=null && b)
-                System.out.println("Reuse quote value " +
-                                   currRow.getAttribute("ReuseQuote"));
-                reuseQuote = (String)currRow.getAttribute("ReuseQuote");
-                Boolean reuseQuoteBool = true;
-                if (reuseQuote != null && reuseQuote.equalsIgnoreCase("N")) {
-                    reuseQuoteBool = false;
-                }
-                copyReferenceConfiguration =
-                        (String)currRow.getAttribute("CopyRefConfig");
-                if (copyReferenceConfiguration != null) {
-                    if (copyReferenceConfiguration.equalsIgnoreCase("Y")) {
-                        copyRefConf = true;
-                    } else
-                        copyRefConf = false;
-                }
+                //                System.out.println("Reuse quote value " +
+                //                                   currRow.getAttribute("ReuseQuote"));
+                // reuseQuote = (String)currRow.getAttribute("ReuseQuote");
+                //   Boolean reuseQuoteBool = true;
+                //                if (reuseQuote != null && reuseQuote.equalsIgnoreCase("N")) {
+                //                    reuseQuoteBool = false;
+                //                }
+                //                copyReferenceConfiguration =
+                //                        (String)currRow.getAttribute("CopyRefConfig");
+                //                if (copyReferenceConfiguration != null) {
+                //                    if (copyReferenceConfiguration.equalsIgnoreCase("Y")) {
+                //                        copyRefConf = true;
+                //                    } else
+                //                        copyRefConf = false;
+                //                }
                 if (importSource != null &&
                     importSource.equalsIgnoreCase("BUDGET_QUOTE")) {
                     quoteNumber = budgetQuoteNum;
@@ -250,9 +260,9 @@ public class ImportSource {
                 }
                 inputParamsMap.put("importSource", importSource);
                 inputParamsMap.put("quoteNumber", quoteNumber);
-
-                inputParamsMap.put("reuseQuote", reuseQuoteBool);
-                inputParamsMap.put("copyRefConf", copyRefConf);
+                inputParamsMap.put("configType", configType);
+                //   inputParamsMap.put("reuseQuote", reuseQuoteBool);
+                //inputParamsMap.put("copyRefConf", copyRefConf);
                 ADFUtils.setSessionScopeValue("inputParamsMap",
                                               inputParamsMap);
                 if (quoteNumber != null) {
@@ -368,10 +378,10 @@ public class ImportSource {
                                         v93kQuote.getSessionDetails().setTargetQuoteNumber(arrOfStr[1].toString());
                                         ADFContext.getCurrent().getSessionScope().put("targetQuoteNumber",
                                                                                       arrOfStr[1].toString());
-                                        _logger.info("Tareget Quote in duplicate mode "+arrOfStr[1]);
+                                        _logger.info("Tareget Quote in duplicate mode " +
+                                                     arrOfStr[1]);
 
-                                        if ((v93kQuote.getInputParams().getReuseQuote()) &&
-                                            (v93kQuote.getSessionDetails().isDuplicateQuote() ||
+                                        if ((v93kQuote.getSessionDetails().isDuplicateQuote() ||
                                              v93kQuote.getSessionDetails().isCreateNewQuote())) {
                                             msages.append("<p><b>");
                                             //                                            msages.append("New quote has been assigned" +
@@ -427,6 +437,11 @@ public class ImportSource {
             // }
 
         } catch (Exception jaxbe) {
+            
+            if(jaxbe instanceof SAXParseException){
+                ADFUtils.showFacesMessage("XML cannot be parsed correctly , Please check if the file has any special characters", FacesMessage.SEVERITY_ERROR);
+            }
+            
             if (jaxbe instanceof IllegalArgumentException) {
                 if (invalidUploadMsgg != null)
                     ADFUtils.showFacesMessage(invalidUploadMsgg,
@@ -521,8 +536,21 @@ public class ImportSource {
             if (inputParamsMap.get("reuseQuote") != null) {
                 inputParam.setReuseQuote((Boolean)inputParamsMap.get("reuseQuote"));
             }
-            if (inputParamsMap.get("copyRefConf") != null) {
-                inputParam.setCopyReferenceConfiguration((Boolean)inputParamsMap.get("copyRefConf"));
+            //            if (inputParamsMap.get("copyRefConf") != null) {
+            //                inputParam.setCopyReferenceConfiguration((Boolean)inputParamsMap.get("copyRefConf"));
+            //            }
+
+            if (inputParamsMap.get("configType") != null) {
+                String configType = (String)inputParamsMap.get("configType");
+                if (configType.equalsIgnoreCase("UPGRADE")) {
+                    inputParam.setUpgradeSourceConfig(true);
+                }
+                if (configType.equalsIgnoreCase("UPDATE")) {
+                    inputParam.setUpgradeSourceConfig(true);
+                }
+                if (configType.equalsIgnoreCase("DUPLICATE")) {
+                    inputParam.setDuplicateSourceConfig(true);
+                }
             }
             //Get values of rules set choices from session
             if (inputParamsMap.get("ruleSetTop") != null) {
@@ -561,9 +589,10 @@ public class ImportSource {
             ADFUtils.setSessionScopeValue("quoteNumber", otherTemp);
             String jsonStr = JSONUtils.convertObjToJson(parent);
             ObjectMapper mapper = new ObjectMapper();
-            String responseJson =
-                (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-            // obj = (V93kQuote)JSONUtils.convertJsonToObject(null);//For local run,use this to debug xml upload related issues
+                        String responseJson =
+                            (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+//            obj =
+//(V93kQuote)JSONUtils.convertJsonToObject(null); //For local run,use this to debug xml upload related issues
             obj = mapper.readValue(responseJson, V93kQuote.class);
         } else if (importSource != null) {
             V93kQuote v93k = new V93kQuote();
@@ -631,7 +660,7 @@ public class ImportSource {
             //impSrcPopup.hide();
             ADFUtils.setSessionScopeValue("refreshImpSrc", "Y");
             impSrcPopup.cancel();
-            
+
         }
     }
 
@@ -700,5 +729,9 @@ public class ImportSource {
 
     public V93kQuote getV93kQuote() {
         return v93kQuote;
+    }
+
+    public void configTypeChanged(ValueChangeEvent valueChangeEvent) {
+        // Add event code here...
     }
 }

@@ -1,2 +1,157 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"></jsp:root>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox id="pb2" showDisclosure="false">
+    <f:facet name="toolbar"/>
+    <af:panelHeader text=" " id="pb1">
+      <af:panelSplitter id="ps1" styleClass="AFStretchWidth">
+        <f:facet name="second">
+          <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                               id="pgl6" styleClass="AFStretchWidth"
+                               layout="scroll">
+            <af:panelFormLayout id="pfl1" rows="1" maxColumns="2">
+              <f:facet name="footer">
+                <af:group id="g1">
+                  <af:panelGroupLayout id="pgl4">
+                    <af:spacer width="10" height="40" id="s3"/>
+                    <af:panelGroupLayout id="pgl3" layout="horizontal"
+                                         partialTriggers="sor1">
+                      <af:selectOneRadio value="#{bindings.ConfigTypeMeaning.inputValue}"
+                                         required="#{bindings.ConfigTypeMeaning.hints.mandatory}"
+                                         shortDesc="#{bindings.ConfigTypeMeaning.hints.tooltip}"
+                                         id="sor2" autoSubmit="true"
+                                         valueChangeListener="#{pageFlowScope.ImportSourceBean.configTypeChanged}">
+                        <f:selectItems value="#{bindings.ConfigTypeMeaning.items}"
+                                       id="si2"/>
+                      </af:selectOneRadio>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:group>
+              </f:facet>
+              <af:panelGroupLayout id="pgl1">
+                <af:selectOneRadio value="#{bindings.ImportSrcMeaning.inputValue}"
+                                   required="#{bindings.ImportSrcMeaning.hints.mandatory}"
+                                   shortDesc="#{bindings.ImportSrcMeaning.hints.tooltip}"
+                                   id="sor1" valuePassThru="true"
+                                   valueChangeListener="#{pageFlowScope.ImportSourceBean.importSrcSelected}"
+                                   autoSubmit="true" layout="vertical">
+                  <f:selectItems value="#{bindings.ImportSrcMeaning.items}"
+                                 id="si1"/>
+                </af:selectOneRadio>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="pgl7" layout="vertical"
+                                   partialTriggers="sor1" halign="left">
+                <af:panelFormLayout id="pfl2">
+                  <af:panelGroupLayout id="pgl12_1" layout="horizontal">
+                    <af:panelLabelAndMessage id="plam1_1">
+                      <af:inputText value="#{bindings.SalesOrderNumber.inputValue}"
+                                    simple="true"
+                                    required="#{bindings.SalesOrderNumber.hints.mandatory}"
+                                    columns="#{bindings.SalesOrderNumber.hints.displayWidth}"
+                                    maximumLength="#{bindings.SalesOrderNumber.hints.precision}"
+                                    shortDesc="#{bindings.SalesOrderNumber.hints.tooltip}"
+                                    id="it2" disabled="true">
+                        <f:validator binding="#{bindings.SalesOrderNumber.validator}"/>
+                      </af:inputText>
+                    </af:panelLabelAndMessage>
+                  </af:panelGroupLayout>
+                  <af:panelGroupLayout id="pgl13" layout="horizontal">
+                    <af:panelLabelAndMessage id="pla2m1">
+                      <af:inputText id="it21"
+                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'FORMAL_QUOTE'}"
+                                    binding="#{pageFlowScope.ImportSourceBean.formalQuote}"
+                                    value="#{bindings.FormalQuoteId.inputValue}"
+                                    required="#{bindings.FormalQuoteId.hints.mandatory}"
+                                    columns="#{bindings.FormalQuoteId.hints.displayWidth}"
+                                    valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}"
+                                    autoSubmit="true"
+                                    maximumLength="#{bindings.FormalQuoteId.hints.precision}">
+                        <f:validator binding="#{bindings.FormalQuoteId.validator}"/>
+                      </af:inputText>
+                    </af:panelLabelAndMessage>
+                  </af:panelGroupLayout>
+                  <af:panelGroupLayout id="pgl12">
+                    <af:panelLabelAndMessage id="plam1">
+                      <af:inputText id="it1"
+                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'BUDGET_QUOTE'}"
+                                    binding="#{pageFlowScope.ImportSourceBean.budgetQuote}"
+                                    value="#{bindings.BudgetQuoteId.inputValue}"
+                                    required="#{bindings.BudgetQuoteId.hints.mandatory}"
+                                    columns="#{bindings.BudgetQuoteId.hints.displayWidth}"
+                                    maximumLength="#{bindings.BudgetQuoteId.hints.precision}"
+                                    autoSubmit="true"
+                                    valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}">
+                        <f:validator binding="#{bindings.BudgetQuoteId.validator}"/>
+                      </af:inputText>
+                    </af:panelLabelAndMessage>
+                  </af:panelGroupLayout>
+                  <af:panelGroupLayout id="pgl14" layout="horizontal">
+                    <af:panelLabelAndMessage
+                                             id="plam3">
+                      <af:inputFile id="it111"
+                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'XML_FILE'}"
+                                    binding="#{pageFlowScope.ImportSourceBean.inputFileBinding}"
+                                    styleClass="inputFile" immediate="true"
+                                    valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}"
+                                    columns="20"/>
+                    </af:panelLabelAndMessage>
+                  </af:panelGroupLayout>
+                  <af:panelGroupLayout id="pgl8" layout="horizontal">
+                    <af:commandButton text="Search" id="cb1"
+                                      actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"
+                                      rendered="false"/>
+                  </af:panelGroupLayout>
+                </af:panelFormLayout>
+                <af:panelFormLayout id="pfl4" rendered="false">
+                  <af:panelGroupLayout id="pgl2" layout="horizontal">
+                    <af:commandButton text="Search" id="cb2" rendered="false"/>
+                  </af:panelGroupLayout>
+                </af:panelFormLayout>
+                <af:panelFormLayout id="pfl5" rendered="false">
+                  <af:panelGroupLayout id="pgl9" layout="horizontal">
+                    <af:panelLabelAndMessage label="Sales Order Number"
+                                             id="pl2am1">
+                      <af:spacer width="10" height="10" id="s8"/>
+                    </af:panelLabelAndMessage>
+                    <af:commandButton text="Search" id="cb3" rendered="false"/>
+                  </af:panelGroupLayout>
+                </af:panelFormLayout>
+                <af:panelFormLayout id="pfl6" rendered="false">
+                  <af:panelGroupLayout id="pgl10" layout="horizontal">
+                    <af:commandButton text="Call Configurator" id="cb4"
+                                      rendered="false"/>
+                  </af:panelGroupLayout>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+            </af:panelFormLayout>
+            <af:spacer width="10" height="10" id="s10"/>
+            <af:panelGroupLayout id="pgl11" layout="horizontal"
+                                 styleClass="AFStretchWidth">
+              <af:spacer width="230" height="10" id="s11"/>
+              <af:toolbar id="t1">
+                <af:commandToolbarButton text="Ok" id="ctb1"
+                                         actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"
+                                         rendered="true">
+                  <af:setPropertyListener from="#{pageFlowScope.ImportSourceBean.refreshToken}"
+                                          to="#{sessionScope.refreshFlag}"
+                                          type="action"/>
+                </af:commandToolbarButton>
+                <af:commandToolbarButton text="Cancel" id="ctb2"
+                                         actionListener="#{pageFlowScope.ImportSourceBean.cancelPopup}"
+                                         rendered="true"/>
+              </af:toolbar>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelSplitter>
+      <f:facet name="context">
+        <af:group id="g2">
+          <af:spacer width="10" height="10" id="s4"/>
+          <af:outputFormatted value="Import Source Configuration" id="of2"
+                              inlineStyle="font-size:large; color:Maroon;"/>
+        </af:group>
+      </f:facet>
+    </af:panelHeader>
+  </af:panelBox>
+</jsp:root>

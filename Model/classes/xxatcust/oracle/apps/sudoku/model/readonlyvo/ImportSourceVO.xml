@@ -27,9 +27,17 @@
     Name="ReuseQuoteLOV1"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.ReuseQuoteLOV"
     RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="ImpSrcLOVUpdated1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.ImpSrcLOVUpdated"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="ConfigTypeLOV1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.ConfigTypeLOV"
+    RowLevelBinds="true"/>
   <ListBinding
     Name="LOV_ImportSrcMeaning"
-    ListVOName="ImportSrcLOV2"
+    ListVOName="ImpSrcLOVUpdated1"
     ListRangeSize="-1"
     NullValueFlag="none"
     NullValueId="LOV_ImportSrcMeaning_LOVUIHints_NullValueId"
@@ -67,6 +75,28 @@
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
+  <ListBinding
+    Name="LOV_ConfigTypeMeaning"
+    ListVOName="ConfigTypeLOV1"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_ConfigTypeMeaning_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ConfigTypeMeaning"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="ConfigurationType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="ConfigTypeMeaning"/>
+      <Item Value="ConfigTypeId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="ConfigTypeMeaning"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
   <ViewAttribute
     Name="ImportSrcCode"
     IsPersistent="false"
@@ -100,7 +130,7 @@
     Type="java.lang.String"
     ColumnType="CHAR"
     AliasName="VIEW_ATTR"
-    SQLType="BIT"
+    SQLType="VARCHAR"
     LOVName="LOV_ReuseQuote">
     <Properties>
       <SchemaBasedProperties>
@@ -154,6 +184,32 @@
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="ConfigurationType"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="ConfigTypeMeaning"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_ConfigTypeMeaning">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="radio"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <AttrArray Name="KeyAttributes">
     <Item Value="ImportSrcCode"/>
   </AttrArray>

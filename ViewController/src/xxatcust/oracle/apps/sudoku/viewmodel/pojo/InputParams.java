@@ -8,6 +8,10 @@ public class InputParams {
     private Boolean reuseQuote;//true if "Re-use the existing Quote ID, if possible" is selected 
     private Boolean copyReferenceConfiguration ;
 
+    private Boolean upgradeSourceConfig; // new Quote ID
+    private Boolean modifySourceConfig; // Re-use existing Quote ID
+    private Boolean duplicateSourceConfig;// new Quote ID
+
     public InputParams() {
         super();
     }
@@ -58,5 +62,29 @@ public class InputParams {
 
     public Boolean getCopyReferenceConfiguration() {
         return copyReferenceConfiguration;
+    }
+
+    public void setUpgradeSourceConfig(Boolean upgradeOnSourceConfig) {
+        this.upgradeSourceConfig = upgradeOnSourceConfig;
+    }
+
+    public Boolean getUpgradeSourceConfig() {
+        return upgradeSourceConfig;
+    }
+
+    public void setModifySourceConfig(Boolean modifyOnSourceConfig) {
+        this.modifySourceConfig = modifyOnSourceConfig;
+    }
+
+    public Boolean getModifySourceConfig() {
+        return modifySourceConfig;
+    }
+
+    public void setDuplicateSourceConfig(Boolean duplicateSourceConfig) {
+        this.duplicateSourceConfig = duplicateSourceConfig;
+    }
+
+    public Boolean getDuplicateSourceConfig() {
+        return duplicateSourceConfig;
     }
 }

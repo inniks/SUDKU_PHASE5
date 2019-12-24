@@ -40,7 +40,7 @@
                                   partialTriggers="topLevelMeaningId"
                                   autoSubmit="true"
                                   valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}"
-                                  disabled="#{bindings.SecondLevelCode eq 'OTS'}"
+                                  disabled="#{bindings.TopLevelMeaning.inputValue eq null}"
                                   label="Second Level Choice"
                                   rendered="#{ConfiguratorBean.oneTimeSpecial ne 'OTS'}">
               <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
@@ -73,39 +73,6 @@
           <af:outputText value="outputText1" id="ot1"
                          binding="#{ConfiguratorBean.pageInitText}"
                          visible="false"/>
-          <af:popup id="cnfPopup" autoCancel="disabled"
-                    binding="#{ConfiguratorBean.confirmPopup}">
-            <af:dialog id="d1" title="Configuration has below warning(s)"
-                       contentWidth="450" contentHeight="200"
-                       type="ok">
-              <af:panelGroupLayout id="pg12l4" layout="scroll">
-                <af:outputFormatted id="ofpop4"
-                                    binding="#{ConfiguratorBean.warnText}"/>
-              </af:panelGroupLayout>
-            </af:dialog>
-          </af:popup>
-          <af:popup id="p1" binding="#{ConfiguratorBean.errorPopup}">
-            <af:dialog id="d3" title="Error(s) occurred :" contentWidth="450"
-                       contentHeight="200" type="cancel"
-                       inlineStyle="color:Red;">
-              <af:panelGroupLayout id="pgl11" layout="scroll">
-                <af:outputFormatted id="ot15" inlineStyle="color:Red;"
-                                    binding="#{ConfiguratorBean.errMessage}"/>
-              </af:panelGroupLayout>
-            </af:dialog>
-          </af:popup>
-           <af:popup id="conflictPop" autoCancel="disabled"
-                    binding="#{ConfiguratorBean.conflictPopup}">
-            <af:dialog id="conflict_d1" title="Configuration has below conflict(s)"
-                       contentWidth="450" contentHeight="200"
-                       type="okCancel"
-                       dialogListener="#{ConfiguratorBean.warnPopupDialogListener}">
-              <af:panelGroupLayout id="conflictpg12l4" layout="scroll">
-                <af:outputFormatted id="conflictofpop4"
-                                    binding="#{ConfiguratorBean.conflictText}"/>
-              </af:panelGroupLayout>
-            </af:dialog>
-          </af:popup>
           <af:listView id="sysLv" value="#{ConfiguratorBean.sysInfraTreeModel}"
                        var="node" binding="#{ConfiguratorBean.sysInfraListView}"
                        groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
@@ -7829,6 +7796,36 @@
                  title="Your existing configuration will be lost,Are you sure you want to continue?"
                  type="yesNo"
                  dialogListener="#{ConfiguratorBean.resetConfigurationAndCallServlet}"/>
+    </af:popup>
+    <af:popup id="p1" binding="#{ConfiguratorBean.errorPopup}">
+      <af:dialog id="d3" title="Error(s) occurred :" contentWidth="450"
+                 contentHeight="200" type="cancel" inlineStyle="color:Red;">
+        <af:panelGroupLayout id="pgl11" layout="scroll">
+          <af:outputFormatted id="ot15" inlineStyle="color:Red;"
+                              binding="#{ConfiguratorBean.errMessage}"/>
+        </af:panelGroupLayout>
+      </af:dialog>
+    </af:popup>
+    <af:popup id="cnfPopup" autoCancel="disabled"
+              binding="#{ConfiguratorBean.confirmPopup}">
+      <af:dialog id="d1" title="Configuration has below warning(s)"
+                 contentWidth="450" contentHeight="200" type="ok">
+        <af:panelGroupLayout id="pg12l4" layout="scroll">
+          <af:outputFormatted id="ofpop4"
+                              binding="#{ConfiguratorBean.warnText}"/>
+        </af:panelGroupLayout>
+      </af:dialog>
+    </af:popup>
+    <af:popup id="conflictPop" autoCancel="disabled"
+              binding="#{ConfiguratorBean.conflictPopup}">
+      <af:dialog id="conflict_d1" title="Configuration has below conflict(s)"
+                 contentWidth="450" contentHeight="200" type="okCancel"
+                 dialogListener="#{ConfiguratorBean.warnPopupDialogListener}">
+        <af:panelGroupLayout id="conflictpg12l4" layout="scroll">
+          <af:outputFormatted id="conflictofpop4"
+                              binding="#{ConfiguratorBean.conflictText}"/>
+        </af:panelGroupLayout>
+      </af:dialog>
     </af:popup>
   </af:panelHeader>
 </jsp:root>
