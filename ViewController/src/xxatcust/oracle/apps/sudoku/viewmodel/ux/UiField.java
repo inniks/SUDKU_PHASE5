@@ -521,11 +521,11 @@ public class UiField {
                             sumTar = sumTar + node.getTargetQuantity();
                         }
                         int qty = node.getQuantity();
-                        if (qty != -1) {
-                            uiField2_qty = Integer.toString(qty);
-                            sumLicenceInputs =
-                                    sumLicenceInputs + node.getQuantity();
-                        }
+//                        if (qty != -1) {
+//                            uiField2_qty = Integer.toString(qty);
+//                            sumLicenceInputs =
+//                                    sumLicenceInputs + node.getQuantity();
+//                        }
                         switch (uiElementType) {
                         case 1:
                             uiField2_type = "NUMERIC";

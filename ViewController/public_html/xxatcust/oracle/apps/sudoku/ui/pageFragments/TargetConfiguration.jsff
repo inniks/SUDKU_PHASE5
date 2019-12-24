@@ -113,7 +113,7 @@
                   <af:panelGroupLayout id="pgl12" halign="center"
                                        layout="horizontal">
                     <af:panelLabelAndMessage label="Quote Total :" id="plam5"
-                                             inlineStyle="font-size:small; color:Navy; font-weight:bolder;"
+                                             inlineStyle="color:Blue; font-family:'Times New Roman', 'Arial Black', times, Serif; font-size:small; font-weight:bold;"
                                              rendered="false"/>
                     <af:outputFormatted value="Quote Net Total :#{pageFlowScope.TargetConfigurationBean.quoteNetTotal}" id="of2"
                                         inlineStyle="color:Blue; font-family:Georgia, 'Times New Roman', times, Serif; font-weight:bold;"/>

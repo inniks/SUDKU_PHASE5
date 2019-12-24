@@ -124,7 +124,8 @@ public class XMLImportPageBean {
     private RichOutputText pageInitOP;
     private RichOutputText expertMode;
     private RichPopup debugPopup;
-    private Boolean readOnlyUI = true ;
+    private Boolean readOnlyUI = true;
+
     public XMLImportPageBean() {
 
         super();
@@ -824,8 +825,8 @@ public class XMLImportPageBean {
                         }
                         RichPopup.PopupHints hints1 =
                             new RichPopup.PopupHints();
-                        if(errorPopup!=null){
-                        errorPopup.show(hints1);
+                        if (errorPopup != null) {
+                            errorPopup.show(hints1);
                         }
                         ADFUtils.setSessionScopeValue("quoteNumber",
                                                       null); //If exception occurs , Quoting should be loaded in create mode, Not in update mode
@@ -924,23 +925,26 @@ public class XMLImportPageBean {
 
                             for (ConfiguratorNodePOJO node : childList) {
                                 String nodeDesig = null;
-//                                if (i == 0 && index == 0) {
-//                                    nodeDesig = "header";
-//                                }
-//                                if(i==1 && index ==0){
-//                                    nodeDesig = "header";
-//                                }
-//                                if(i==2 && index ==0){
-//                                    nodeDesig = "header";
-//                                }
-//                                if(i==3 && index ==0){
-//                                    nodeDesig = "header";
-//                                }
-//                                if(i==4 && index ==0){
-//                                    nodeDesig = "header";
-//                                }
+                                //                                if (i == 0 && index == 0) {
+                                //                                    nodeDesig = "header";
+                                //                                }
+                                //                                if(i==1 && index ==0){
+                                //                                    nodeDesig = "header";
+                                //                                }
+                                //                                if(i==2 && index ==0){
+                                //                                    nodeDesig = "header";
+                                //                                }
+                                //                                if(i==3 && index ==0){
+                                //                                    nodeDesig = "header";
+                                //                                }
+                                //                                if(i==4 && index ==0){
+                                //                                    nodeDesig = "header";
+                                //                                }
                                 if (node.getPrintGroupLevel() != null &&
-                                    (node.getPrintGroupLevel().equalsIgnoreCase("1")||node.getPrintGroupLevel().equalsIgnoreCase("2")|| node.getPrintGroupLevel().equalsIgnoreCase("3")||node.getPrintGroupLevel().equalsIgnoreCase("4"))) {
+                                    (node.getPrintGroupLevel().equalsIgnoreCase("1") ||
+                                     node.getPrintGroupLevel().equalsIgnoreCase("2") ||
+                                     node.getPrintGroupLevel().equalsIgnoreCase("3") ||
+                                     node.getPrintGroupLevel().equalsIgnoreCase("4"))) {
                                     nodeDesig = "header";
                                 }
                                 if (node.getNodeCategory() != null &&
@@ -951,7 +955,8 @@ public class XMLImportPageBean {
                                      node.getNodeCategory().equalsIgnoreCase("5"))) {
                                     node.setPrintGroupLevel("0");
                                 }
-                                if(node.getPrintGroupLevel()!=null && node.getPrintGroupLevel().equals("0")){
+                                if (node.getPrintGroupLevel() != null &&
+                                    node.getPrintGroupLevel().equals("0")) {
                                     nodeDesig = "header";
                                 }
                                 NodeCategory secondLevel =
@@ -965,8 +970,13 @@ public class XMLImportPageBean {
                                                      node.getNodeColor(),
                                                      node.getPrintGroupLevel(),
                                                      nodeDesig);
-                                if(i==2){
-                                    System.out.println("Adding Node "+node.getNodeName()+" "+node.getNodeCategory()+" "+node.getPrintGroupLevel());
+                                if (i == 2) {
+                                    System.out.println("Adding Node " +
+                                                       node.getNodeName() +
+                                                       " " +
+                                                       node.getNodeCategory() +
+                                                       " " +
+                                                       node.getPrintGroupLevel());
                                 }
                                 firstLevel.addNodes(secondLevel);
                             }
@@ -1140,10 +1150,12 @@ public class XMLImportPageBean {
     }
 
     public Boolean getReadOnlyUI() {
-        boolean readOnly = true ;
-        V93kQuote v93 = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        if(v93!=null && v93.getReferenceConfigurationLines()!=null && !v93.getReferenceConfigurationLines().isEmpty()){
-            readOnly = false ;
+        boolean readOnly = true;
+        V93kQuote v93 =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93 != null && v93.getReferenceConfigurationLines() != null &&
+            !v93.getReferenceConfigurationLines().isEmpty()) {
+            readOnly = false;
         }
         String configCancelled =
             (String)ADFUtils.getSessionScopeValue("cancelAll");
@@ -1157,8 +1169,8 @@ public class XMLImportPageBean {
                 }
             }
         }
-        if(configCancelled!=null && configCancelled.equals("Y")){
-            readOnly = true ;
+        if (configCancelled != null && configCancelled.equals("Y")) {
+            readOnly = true;
         }
         return readOnly;
     }

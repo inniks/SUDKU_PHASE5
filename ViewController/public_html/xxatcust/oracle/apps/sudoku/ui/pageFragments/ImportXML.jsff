@@ -90,7 +90,7 @@
           </f:facet>
           <c:set var="viewcontrollerBundle"
                  value="#{adfBundle['xxat.apps.sudoku.view.ViewControllerBundle']}"/>
-          <af:spacer width="10" height="10" id="s14"/>
+          <af:spacer width="415" height="10" id="s14"/>
           <af:panelGroupLayout id="pgl2" halign="end">
             <af:region value="#{bindings.RuleSetFlow1.regionModel}" id="r1"/>
           </af:panelGroupLayout>
@@ -324,8 +324,6 @@
         </af:panelGroupLayout>
       </f:facet>
     </af:panelSplitter>
-    <af:outputText value="outputText1" id="ot17" visible="false"
-                   binding="#{XMLImportPageBean.pageInitText}"/>
     <af:popup id="p1" binding="#{XMLImportPageBean.errorPopup}">
       <af:dialog id="d3" title="Error(s) occurred :" contentWidth="450"
                  contentHeight="200" type="cancel" inlineStyle="color:Red;">
@@ -336,5 +334,7 @@
         </af:panelGroupLayout>
       </af:dialog>
     </af:popup>
+    <af:outputText value="outputText1" id="ot17" visible="false"
+                   binding="#{XMLImportPageBean.pageInitText}"/>
   </af:panelBox>
 </jsp:root>

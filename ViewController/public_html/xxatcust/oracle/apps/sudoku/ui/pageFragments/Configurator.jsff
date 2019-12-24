@@ -1700,7 +1700,7 @@
                                                     disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly or theadIter.disableEFCol}"
                                                     columns="5"
                                                     autoSubmit="true"
-                                                    value="#{theadIter.uiField2_qty}"
+                                                    value="#{theadIter.uiField1_qty}"
                                                     requiredMessageDetail="#{theadIter.uiField2_refQty}"
                                                     helpTopicId="#{theadIter.uiField2_tarQty}"
                                                     changedDesc="#{theadIter.uiField2_czModelName}"
