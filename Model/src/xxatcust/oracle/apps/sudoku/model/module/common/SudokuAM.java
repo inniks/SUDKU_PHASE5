@@ -47,8 +47,6 @@ public interface SudokuAM extends ApplicationModule {
 
     void getQuoteCustmerAddress(Row curRow);
 
-    void defaultSalesRepOnCreateQuote();
-
 
     String clearQuoteFieldwithParams(String ou, String orderType,
                                      String priceList, String businessCSR,
@@ -209,6 +207,8 @@ public interface SudokuAM extends ApplicationModule {
 
 
     void validatePrefStaticValues(int usrId, String numberFormat);
+
+    void clearUserPrefSCVO(int usrId);
 
     HashMap getPriceProductChoices();
 }

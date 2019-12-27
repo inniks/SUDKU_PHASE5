@@ -183,7 +183,6 @@ af|showDetailHeader::disclosed-icon-style {
 af|showDetailHeader::undisclosed-icon-style {
     background-image: url("/select.png"); 
 }
-
 .mysor af|selectOneRadio::content div {
-  padding: 0px 0px 15px 0px;
+  padding: 0px 0px 90px 0px;
 }

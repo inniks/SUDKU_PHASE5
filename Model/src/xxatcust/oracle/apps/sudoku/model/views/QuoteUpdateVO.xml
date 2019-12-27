@@ -1467,7 +1467,6 @@ FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll]]>
   </ViewAttribute>
   <ViewAttribute
     Name="Attribute15"
-    IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
     Precision="240"

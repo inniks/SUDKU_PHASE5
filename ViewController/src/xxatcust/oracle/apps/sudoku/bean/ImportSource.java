@@ -546,7 +546,7 @@ public class ImportSource {
                     inputParam.setUpgradeSourceConfig(true);
                 }
                 if (configType.equalsIgnoreCase("UPDATE")) {
-                    inputParam.setUpgradeSourceConfig(true);
+                    inputParam.setModifySourceConfig(true);
                 }
                 if (configType.equalsIgnoreCase("DUPLICATE")) {
                     inputParam.setDuplicateSourceConfig(true);

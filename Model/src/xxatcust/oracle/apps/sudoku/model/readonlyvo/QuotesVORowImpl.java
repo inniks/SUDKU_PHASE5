@@ -14,7 +14,6 @@ import oracle.jbo.Key;
 import oracle.jbo.Row;
 import oracle.jbo.RowSet;
 import oracle.jbo.server.AttributeDefImpl;
-import oracle.jbo.server.EntityImpl;
 import oracle.jbo.server.RowQualifier;
 import oracle.jbo.server.ViewObjectImpl;
 import oracle.jbo.server.ViewRowImpl;
@@ -47,7 +46,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setQuoteDescription((String)value);
             }
-        },
+        }
+        ,
         DealId {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getDealId();
@@ -56,7 +56,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setDealId((String)value);
             }
-        },
+        }
+        ,
         SalesChannel {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSalesChannel();
@@ -65,7 +66,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setSalesChannel((String)value);
             }
-        },
+        }
+        ,
         SalesRepresentative {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSalesRepresentative();
@@ -74,7 +76,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setSalesRepresentative((String)value);
             }
-        },
+        }
+        ,
         CustomerSupportRepresent {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerSupportRepresent();
@@ -83,7 +86,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustomerSupportRepresent((String)value);
             }
-        },
+        }
+        ,
         OrganizationUnit {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getOrganizationUnit();
@@ -92,7 +96,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setOrganizationUnit((String)value);
             }
-        },
+        }
+        ,
         OrderType {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getOrderType();
@@ -101,7 +106,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setOrderType((String)value);
             }
-        },
+        }
+        ,
         CustomerName {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerName();
@@ -110,7 +116,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustomerName((String)value);
             }
-        },
+        }
+        ,
         CustomerNumber {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerNumber();
@@ -119,7 +126,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustomerNumber((String)value);
             }
-        },
+        }
+        ,
         AdvantestQuotationNumber {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getAdvantestQuotationNumber();
@@ -128,7 +136,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAdvantestQuotationNumber((String)value);
             }
-        },
+        }
+        ,
         QuotationDate {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getQuotationDate();
@@ -137,7 +146,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setQuotationDate((String)value);
             }
-        },
+        }
+        ,
         Page {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getPage();
@@ -146,7 +156,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setPage((String)value);
             }
-        },
+        }
+        ,
         Systemid {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSystemid();
@@ -155,7 +166,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setSystemid((String)value);
             }
-        },
+        }
+        ,
         PaymentTerms {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getPaymentTerms();
@@ -164,7 +176,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setPaymentTerms((String)value);
             }
-        },
+        }
+        ,
         IncoTerms {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getIncoTerms();
@@ -173,7 +186,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setIncoTerms((String)value);
             }
-        },
+        }
+        ,
         Currency {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCurrency();
@@ -182,7 +196,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCurrency((String)value);
             }
-        },
+        }
+        ,
         QuoteTo {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getQuoteTo();
@@ -191,7 +206,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setQuoteTo((String)value);
             }
-        },
+        }
+        ,
         ShipTo {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getShipTo();
@@ -200,7 +216,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setShipTo((String)value);
             }
-        },
+        }
+        ,
         PartyId {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getPartyId();
@@ -209,7 +226,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setPartyId((BigDecimal)value);
             }
-        },
+        }
+        ,
         SalesContactName {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSalesContactName();
@@ -218,7 +236,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setSalesContactName((String)value);
             }
-        },
+        }
+        ,
         SalesPhoneNum {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSalesPhoneNum();
@@ -227,7 +246,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setSalesPhoneNum((String)value);
             }
-        },
+        }
+        ,
         SalesFaxNum {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSalesFaxNum();
@@ -236,7 +256,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setSalesFaxNum((String)value);
             }
-        },
+        }
+        ,
         SalesEmail {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSalesEmail();
@@ -245,7 +266,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setSalesEmail((String)value);
             }
-        },
+        }
+        ,
         CustomerContactName {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerContactName();
@@ -254,7 +276,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustomerContactName((String)value);
             }
-        },
+        }
+        ,
         CustomerPhoneNum {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerPhoneNum();
@@ -263,7 +286,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustomerPhoneNum((String)value);
             }
-        },
+        }
+        ,
         CustomerFaxNum {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerFaxNum();
@@ -272,7 +296,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustomerFaxNum((String)value);
             }
-        },
+        }
+        ,
         CustomerEmail {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerEmail();
@@ -281,7 +306,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustomerEmail((String)value);
             }
-        },
+        }
+        ,
         Customerparentid {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerparentid();
@@ -290,7 +316,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustomerparentid((BigDecimal)value);
             }
-        },
+        }
+        ,
         AttentionToOrDept {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getAttentionToOrDept();
@@ -299,7 +326,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttentionToOrDept((String)value);
             }
-        },
+        }
+        ,
         QuoteEmail {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getQuoteEmail();
@@ -308,7 +336,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setQuoteEmail((String)value);
             }
-        },
+        }
+        ,
         OrgId {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getOrgId();
@@ -317,7 +346,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setOrgId((BigDecimal)value);
             }
-        },
+        }
+        ,
         PriceList {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getPriceList();
@@ -326,7 +356,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setPriceList((String)value);
             }
-        },
+        }
+        ,
         CustAccid {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustAccid();
@@ -335,7 +366,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustAccid((String)value);
             }
-        },
+        }
+        ,
         BusinessAgreement {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getBusinessAgreement();
@@ -344,7 +376,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setBusinessAgreement((String)value);
             }
-        },
+        }
+        ,
         BusinessAgreementId {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getBusinessAgreementId();
@@ -353,7 +386,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setBusinessAgreementId((String)value);
             }
-        },
+        }
+        ,
         Discount {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getDiscount();
@@ -362,7 +396,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setDiscount((String)value);
             }
-        },
+        }
+        ,
         SalesRepName {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSalesRepName();
@@ -371,7 +406,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setSalesRepName((String)value);
             }
-        },
+        }
+        ,
         CurrencyCode {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCurrencyCode();
@@ -380,7 +416,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCurrencyCode((String)value);
             }
-        },
+        }
+        ,
         IncoTermsMeaning {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getIncoTermsMeaning();
@@ -389,7 +426,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setIncoTermsMeaning((String)value);
             }
-        },
+        }
+        ,
         PaymentTermsMean {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getPaymentTermsMean();
@@ -398,7 +436,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setPaymentTermsMean((String)value);
             }
-        },
+        }
+        ,
         SalesChCode {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSalesChCode();
@@ -407,7 +446,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setSalesChCode((String)value);
             }
-        },
+        }
+        ,
         CustPhoneFax {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustPhoneFax();
@@ -416,7 +456,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustPhoneFax((String)value);
             }
-        },
+        }
+        ,
         PrdNumRefConfig {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getPrdNumRefConfig();
@@ -425,7 +466,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setPrdNumRefConfig((String)value);
             }
-        },
+        }
+        ,
         PrdNumTargetConfig {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getPrdNumTargetConfig();
@@ -434,7 +476,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setPrdNumTargetConfig((String)value);
             }
-        },
+        }
+        ,
         RefPriceRegConfig {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getRefPriceRegConfig();
@@ -443,7 +486,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setRefPriceRegConfig((String)value);
             }
-        },
+        }
+        ,
         RefPriceTargetConfig {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getRefPriceTargetConfig();
@@ -452,7 +496,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setRefPriceTargetConfig((String)value);
             }
-        },
+        }
+        ,
         NumberFormat {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getNumberFormat();
@@ -461,7 +506,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setNumberFormat((String)value);
             }
-        },
+        }
+        ,
         CurrencyForSC {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCurrencyForSC();
@@ -470,7 +516,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCurrencyForSC((String)value);
             }
-        },
+        }
+        ,
         IncoTermForSC {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getIncoTermForSC();
@@ -479,7 +526,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setIncoTermForSC((String)value);
             }
-        },
+        }
+        ,
         CustomerNameForSC {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerNameForSC();
@@ -488,7 +536,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustomerNameForSC((String)value);
             }
-        },
+        }
+        ,
         CustNum {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustNum();
@@ -497,7 +546,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustNum((String)value);
             }
-        },
+        }
+        ,
         CustName {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustName();
@@ -506,7 +556,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setCustName((String)value);
             }
-        },
+        }
+        ,
         OperatingUnit {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getOperatingUnit();
@@ -515,7 +566,18 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setOperatingUnit((String)value);
             }
-        },
+        }
+        ,
+        OperatingUnitForSC {
+            public Object get(QuotesVORowImpl obj) {
+                return obj.getOperatingUnitForSC();
+            }
+
+            public void put(QuotesVORowImpl obj, Object value) {
+                obj.setOperatingUnitForSC((String)value);
+            }
+        }
+        ,
         OUVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getOUVO();
@@ -524,7 +586,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         OrderTypeVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getOrderTypeVO();
@@ -533,7 +596,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         SalesChannelVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSalesChannelVO();
@@ -542,7 +606,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         SalesRepresentativeVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getSalesRepresentativeVO();
@@ -551,7 +616,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         CustomerSupportRepresentVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerSupportRepresentVO();
@@ -560,7 +626,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         IncoTermVO1 {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getIncoTermVO1();
@@ -569,7 +636,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         NodeCategoryVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getNodeCategoryVO();
@@ -578,7 +646,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         PaymentTermsVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getPaymentTermsVO();
@@ -587,7 +656,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         PrimarySalesPersonVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getPrimarySalesPersonVO();
@@ -596,7 +666,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         QuotesVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getQuotesVO();
@@ -605,7 +676,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         CurrencyVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCurrencyVO();
@@ -614,7 +686,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         PriceListVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getPriceListVO();
@@ -623,7 +696,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         businessAgreementVo {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getbusinessAgreementVo();
@@ -632,7 +706,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         userPrefEntityVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getuserPrefEntityVO();
@@ -641,7 +716,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         NumberFormatViewVA {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getNumberFormatViewVA();
@@ -650,7 +726,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         YesNoLOVVA {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getYesNoLOVVA();
@@ -659,7 +736,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         CustNameVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustNameVO();
@@ -668,7 +746,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         userPrefSCVO {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getuserPrefSCVO();
@@ -677,7 +756,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        },
+        }
+        ,
         CustomerNameVO1 {
             public Object get(QuotesVORowImpl obj) {
                 return obj.getCustomerNameVO1();
@@ -686,7 +766,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
             public void put(QuotesVORowImpl obj, Object value) {
                 obj.setAttributeInternal(index(), value);
             }
-        };
+        }
+        ;
         private static AttributesEnum[] vals = null;
         private static final int firstIndex = 0;
 
@@ -722,24 +803,17 @@ public class QuotesVORowImpl extends ViewRowImpl {
                          (String)ADFContext.getCurrent().getSessionScope().get("UserId"));
 
 
-    public static final int QUOTEDESCRIPTION =
-        AttributesEnum.QuoteDescription.index();
+    public static final int QUOTEDESCRIPTION = AttributesEnum.QuoteDescription.index();
     public static final int DEALID = AttributesEnum.DealId.index();
     public static final int SALESCHANNEL = AttributesEnum.SalesChannel.index();
-    public static final int SALESREPRESENTATIVE =
-        AttributesEnum.SalesRepresentative.index();
-    public static final int CUSTOMERSUPPORTREPRESENT =
-        AttributesEnum.CustomerSupportRepresent.index();
-    public static final int ORGANIZATIONUNIT =
-        AttributesEnum.OrganizationUnit.index();
+    public static final int SALESREPRESENTATIVE = AttributesEnum.SalesRepresentative.index();
+    public static final int CUSTOMERSUPPORTREPRESENT = AttributesEnum.CustomerSupportRepresent.index();
+    public static final int ORGANIZATIONUNIT = AttributesEnum.OrganizationUnit.index();
     public static final int ORDERTYPE = AttributesEnum.OrderType.index();
     public static final int CUSTOMERNAME = AttributesEnum.CustomerName.index();
-    public static final int CUSTOMERNUMBER =
-        AttributesEnum.CustomerNumber.index();
-    public static final int ADVANTESTQUOTATIONNUMBER =
-        AttributesEnum.AdvantestQuotationNumber.index();
-    public static final int QUOTATIONDATE =
-        AttributesEnum.QuotationDate.index();
+    public static final int CUSTOMERNUMBER = AttributesEnum.CustomerNumber.index();
+    public static final int ADVANTESTQUOTATIONNUMBER = AttributesEnum.AdvantestQuotationNumber.index();
+    public static final int QUOTATIONDATE = AttributesEnum.QuotationDate.index();
     public static final int PAGE = AttributesEnum.Page.index();
     public static final int SYSTEMID = AttributesEnum.Systemid.index();
     public static final int PAYMENTTERMS = AttributesEnum.PaymentTerms.index();
@@ -748,89 +822,60 @@ public class QuotesVORowImpl extends ViewRowImpl {
     public static final int QUOTETO = AttributesEnum.QuoteTo.index();
     public static final int SHIPTO = AttributesEnum.ShipTo.index();
     public static final int PARTYID = AttributesEnum.PartyId.index();
-    public static final int SALESCONTACTNAME =
-        AttributesEnum.SalesContactName.index();
-    public static final int SALESPHONENUM =
-        AttributesEnum.SalesPhoneNum.index();
+    public static final int SALESCONTACTNAME = AttributesEnum.SalesContactName.index();
+    public static final int SALESPHONENUM = AttributesEnum.SalesPhoneNum.index();
     public static final int SALESFAXNUM = AttributesEnum.SalesFaxNum.index();
     public static final int SALESEMAIL = AttributesEnum.SalesEmail.index();
-    public static final int CUSTOMERCONTACTNAME =
-        AttributesEnum.CustomerContactName.index();
-    public static final int CUSTOMERPHONENUM =
-        AttributesEnum.CustomerPhoneNum.index();
-    public static final int CUSTOMERFAXNUM =
-        AttributesEnum.CustomerFaxNum.index();
-    public static final int CUSTOMEREMAIL =
-        AttributesEnum.CustomerEmail.index();
-    public static final int CUSTOMERPARENTID =
-        AttributesEnum.Customerparentid.index();
-    public static final int ATTENTIONTOORDEPT =
-        AttributesEnum.AttentionToOrDept.index();
+    public static final int CUSTOMERCONTACTNAME = AttributesEnum.CustomerContactName.index();
+    public static final int CUSTOMERPHONENUM = AttributesEnum.CustomerPhoneNum.index();
+    public static final int CUSTOMERFAXNUM = AttributesEnum.CustomerFaxNum.index();
+    public static final int CUSTOMEREMAIL = AttributesEnum.CustomerEmail.index();
+    public static final int CUSTOMERPARENTID = AttributesEnum.Customerparentid.index();
+    public static final int ATTENTIONTOORDEPT = AttributesEnum.AttentionToOrDept.index();
     public static final int QUOTEEMAIL = AttributesEnum.QuoteEmail.index();
     public static final int ORGID = AttributesEnum.OrgId.index();
     public static final int PRICELIST = AttributesEnum.PriceList.index();
     public static final int CUSTACCID = AttributesEnum.CustAccid.index();
-    public static final int BUSINESSAGREEMENT =
-        AttributesEnum.BusinessAgreement.index();
-    public static final int BUSINESSAGREEMENTID =
-        AttributesEnum.BusinessAgreementId.index();
+    public static final int BUSINESSAGREEMENT = AttributesEnum.BusinessAgreement.index();
+    public static final int BUSINESSAGREEMENTID = AttributesEnum.BusinessAgreementId.index();
     public static final int DISCOUNT = AttributesEnum.Discount.index();
     public static final int SALESREPNAME = AttributesEnum.SalesRepName.index();
     public static final int CURRENCYCODE = AttributesEnum.CurrencyCode.index();
-    public static final int INCOTERMSMEANING =
-        AttributesEnum.IncoTermsMeaning.index();
-    public static final int PAYMENTTERMSMEAN =
-        AttributesEnum.PaymentTermsMean.index();
+    public static final int INCOTERMSMEANING = AttributesEnum.IncoTermsMeaning.index();
+    public static final int PAYMENTTERMSMEAN = AttributesEnum.PaymentTermsMean.index();
     public static final int SALESCHCODE = AttributesEnum.SalesChCode.index();
     public static final int CUSTPHONEFAX = AttributesEnum.CustPhoneFax.index();
-    public static final int PRDNUMREFCONFIG =
-        AttributesEnum.PrdNumRefConfig.index();
-    public static final int PRDNUMTARGETCONFIG =
-        AttributesEnum.PrdNumTargetConfig.index();
-    public static final int REFPRICEREGCONFIG =
-        AttributesEnum.RefPriceRegConfig.index();
-    public static final int REFPRICETARGETCONFIG =
-        AttributesEnum.RefPriceTargetConfig.index();
+    public static final int PRDNUMREFCONFIG = AttributesEnum.PrdNumRefConfig.index();
+    public static final int PRDNUMTARGETCONFIG = AttributesEnum.PrdNumTargetConfig.index();
+    public static final int REFPRICEREGCONFIG = AttributesEnum.RefPriceRegConfig.index();
+    public static final int REFPRICETARGETCONFIG = AttributesEnum.RefPriceTargetConfig.index();
     public static final int NUMBERFORMAT = AttributesEnum.NumberFormat.index();
-    public static final int CURRENCYFORSC =
-        AttributesEnum.CurrencyForSC.index();
-    public static final int INCOTERMFORSC =
-        AttributesEnum.IncoTermForSC.index();
-    public static final int CUSTOMERNAMEFORSC =
-        AttributesEnum.CustomerNameForSC.index();
+    public static final int CURRENCYFORSC = AttributesEnum.CurrencyForSC.index();
+    public static final int INCOTERMFORSC = AttributesEnum.IncoTermForSC.index();
+    public static final int CUSTOMERNAMEFORSC = AttributesEnum.CustomerNameForSC.index();
     public static final int CUSTNUM = AttributesEnum.CustNum.index();
     public static final int CUSTNAME = AttributesEnum.CustName.index();
-    public static final int OPERATINGUNIT =
-        AttributesEnum.OperatingUnit.index();
+    public static final int OPERATINGUNIT = AttributesEnum.OperatingUnit.index();
+    public static final int OPERATINGUNITFORSC = AttributesEnum.OperatingUnitForSC.index();
     public static final int OUVO = AttributesEnum.OUVO.index();
     public static final int ORDERTYPEVO = AttributesEnum.OrderTypeVO.index();
-    public static final int SALESCHANNELVO =
-        AttributesEnum.SalesChannelVO.index();
-    public static final int SALESREPRESENTATIVEVO =
-        AttributesEnum.SalesRepresentativeVO.index();
-    public static final int CUSTOMERSUPPORTREPRESENTVO =
-        AttributesEnum.CustomerSupportRepresentVO.index();
+    public static final int SALESCHANNELVO = AttributesEnum.SalesChannelVO.index();
+    public static final int SALESREPRESENTATIVEVO = AttributesEnum.SalesRepresentativeVO.index();
+    public static final int CUSTOMERSUPPORTREPRESENTVO = AttributesEnum.CustomerSupportRepresentVO.index();
     public static final int INCOTERMVO1 = AttributesEnum.IncoTermVO1.index();
-    public static final int NODECATEGORYVO =
-        AttributesEnum.NodeCategoryVO.index();
-    public static final int PAYMENTTERMSVO =
-        AttributesEnum.PaymentTermsVO.index();
-    public static final int PRIMARYSALESPERSONVO =
-        AttributesEnum.PrimarySalesPersonVO.index();
+    public static final int NODECATEGORYVO = AttributesEnum.NodeCategoryVO.index();
+    public static final int PAYMENTTERMSVO = AttributesEnum.PaymentTermsVO.index();
+    public static final int PRIMARYSALESPERSONVO = AttributesEnum.PrimarySalesPersonVO.index();
     public static final int QUOTESVO = AttributesEnum.QuotesVO.index();
     public static final int CURRENCYVO = AttributesEnum.CurrencyVO.index();
     public static final int PRICELISTVO = AttributesEnum.PriceListVO.index();
-    public static final int BUSINESSAGREEMENTVO =
-        AttributesEnum.businessAgreementVo.index();
-    public static final int USERPREFENTITYVO =
-        AttributesEnum.userPrefEntityVO.index();
-    public static final int NUMBERFORMATVIEWVA =
-        AttributesEnum.NumberFormatViewVA.index();
+    public static final int BUSINESSAGREEMENTVO = AttributesEnum.businessAgreementVo.index();
+    public static final int USERPREFENTITYVO = AttributesEnum.userPrefEntityVO.index();
+    public static final int NUMBERFORMATVIEWVA = AttributesEnum.NumberFormatViewVA.index();
     public static final int YESNOLOVVA = AttributesEnum.YesNoLOVVA.index();
     public static final int CUSTNAMEVO = AttributesEnum.CustNameVO.index();
     public static final int USERPREFSCVO = AttributesEnum.userPrefSCVO.index();
-    public static final int CUSTOMERNAMEVO1 =
-        AttributesEnum.CustomerNameVO1.index();
+    public static final int CUSTOMERNAMEVO1 = AttributesEnum.CustomerNameVO1.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -1073,20 +1118,18 @@ public class QuotesVORowImpl extends ViewRowImpl {
             StringBuilder sb = new StringBuilder("(");
             ViewObjectImpl vo =
                 (ViewObjectImpl)this.getOrderTypeVO().getViewObject();
-            ViewObjectImpl userBasedVO =
-                (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
-
+            ViewObjectImpl userBasedVO = (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
+            
             String colType = "'Order_type'";
             if (userBasedVO != null) {
                 userBasedVO.clearCache();
                 userBasedVO.setWhereClause(null);
-                //                Object[] obj = { usrId, colType,orgNumber };
-                //                Key key = new Key(obj);
-                //                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
+//                Object[] obj = { usrId, colType,orgNumber };
+//                Key key = new Key(obj);
+//                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
                 RowQualifier rq1 =
                     new RowQualifier("ColumnType =" + colType + " and UserId=" +
-                                     usrId + " and OperatingUnit ='" +
-                                     String.valueOf(orgNumber) + "'");
+                                     usrId + " and OperatingUnit ='" + String.valueOf(orgNumber) +"'");
                 Row[] rows = userBasedVO.getFilteredRows(rq1);
                 if (rows != null && rows.length > 0) {
                     orderTypeValues =
@@ -1155,8 +1198,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
         String acountNum = null;
         ViewObjectImpl vo =
             (ViewObjectImpl)this.getCustNameVO().getViewObject();
-        ViewObjectImpl userBasedVO =
-            (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
+        ViewObjectImpl userBasedVO = (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
         BigDecimal orgNumber = null;
         if (orgId != null) {
             orgNumber = orgId;
@@ -1181,83 +1223,83 @@ public class QuotesVORowImpl extends ViewRowImpl {
 
             String colType = "'Customer'";
             if (userBasedVO != null) {
-                //                                Object[] obj = { usrId, colType,orgNumber };
-                //                                Key key = new Key(obj);
-                //                                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
+//                                Object[] obj = { usrId, colType,orgNumber };
+//                                Key key = new Key(obj);
+//                                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
                 userBasedVO.clearCache();
                 userBasedVO.setWhereClause(null);
                 RowQualifier rq1 =
                     new RowQualifier("ColumnType =" + colType + " and UserId=" +
-                                     usrId + " and OperatingUnit ='" +
-                                     String.valueOf(orgNumber) + "'");
+                                     usrId + " and OperatingUnit ='" + String.valueOf(orgNumber) +"'");
                 Row[] rows = userBasedVO.getFilteredRows(rq1);
-
+        
                 if (rows != null && rows.length > 0) {
                     custVal =
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
                     defaultVal = (String)rows[0].getAttribute("DefaultVal");
                     System.out.println("default customer value:" + defaultVal);
                 }
-                if (defaultVal != null && vo != null) {
-                    vo.clearCache();
-                    vo.setWhereClause(null);
-                    vo.setNamedWhereClauseParam("P_org_id", null);
-                    vo.setNamedWhereClauseParam("P_org_id", orgNumber);
-                    Row fRow[] =
-                        vo.getFilteredRows("Accountnumber", defaultVal); //Accountnumber
-                    if (fRow != null && fRow.length > 0) {
-                        customername =
-                                (String)fRow[0].getAttribute("Customername");
-                        custDetailsMap.put("custNum", defaultVal);
-                        custDetailsMap.put("custName", customername);
-                    }
+                    if (defaultVal != null && vo != null) {
+                        vo.clearCache();
+                        vo.setWhereClause(null);
+                        vo.setNamedWhereClauseParam("P_org_id", null);
+                        vo.setNamedWhereClauseParam("P_org_id", orgNumber);
+                        Row fRow[] =
+                            vo.getFilteredRows("Accountnumber", defaultVal); //Accountnumber
+                        if (fRow != null && fRow.length > 0) {
+                            customername =
+                                    (String)fRow[0].getAttribute("Customername");
+                            custDetailsMap.put("custNum", defaultVal);
+                            custDetailsMap.put("custName", customername);
+                        }
 
-                }
-                if (custVal != null) {
-                    temp = Arrays.asList(custVal.split("\\s*,\\s*"));
-                    if (acountNum != null) {
-                        sb.append(acountNum);
-                        for (int i = 0; i < temp.size(); i++) {
-                            sb.append("','").append(temp.get(i));
-                        }
-                    } else if (custNum != null) {
-                        custNum = custNum.trim();
-                        sb.append(custNum);
-                        for (int i = 0; i < temp.size(); i++) {
-                            sb.append("','").append(temp.get(i));
-                        }
-                    } else if (defaultVal != null) {
-                        sb.append(defaultVal);
-                        for (int i = 0; i < temp.size(); i++) {
-                            sb.append("','").append(temp.get(i));
-                        }
-                    } else {
-                        sb.append(temp.get(0));
-                        for (int i = 1; i < temp.size(); i++) {
-                            sb.append("','").append(temp.get(i));
+                    }
+                    if (custVal != null) {
+                        temp = Arrays.asList(custVal.split("\\s*,\\s*"));
+                        if (acountNum != null) {
+                            sb.append(acountNum);
+                            for (int i = 0; i < temp.size(); i++) {
+                                sb.append("','").append(temp.get(i));
+                            }
+                        } else if (custNum != null) {
+                            custNum = custNum.trim();
+                            sb.append(custNum);
+                            for (int i = 0; i < temp.size(); i++) {
+                                sb.append("','").append(temp.get(i));
+                            }
+                        } else if (defaultVal != null) {
+                            sb.append(defaultVal);
+                            for (int i = 0; i < temp.size(); i++) {
+                                sb.append("','").append(temp.get(i));
+                            }
+                        } else {
+                            sb.append(temp.get(0));
+                            for (int i = 1; i < temp.size(); i++) {
+                                sb.append("','").append(temp.get(i));
+                            }
                         }
                     }
+                    
                 }
-
-            }
-            sb.append("')");
-            System.out.println("customer Name list valuse ::" + sb.toString());
-            vo.clearCache();
-            vo.setWhereClause(null);
-            vo.setNamedWhereClauseParam("P_org_id", orgNumber);
-            if (!sb.toString().equalsIgnoreCase("('')")) {
-                vo.setWhereClause("accountnumber in" + sb.toString());
-            }
-            System.out.println("Query is:" + sb.toString());
-            vo.executeQuery();
-            System.out.println("row count:" + vo.getEstimatedRowCount());
-            if (vo.getEstimatedRowCount() < 2) {
+                sb.append("')");
+                System.out.println("customer Name list valuse ::" +
+                                   sb.toString());
                 vo.clearCache();
                 vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("P_org_id", orgNumber);
+                if (!sb.toString().equalsIgnoreCase("('')")) {
+                    vo.setWhereClause("accountnumber in" + sb.toString());
+                }
+                System.out.println("Query is:"+sb.toString());
                 vo.executeQuery();
+                System.out.println("row count:" + vo.getEstimatedRowCount());
+                if (vo.getEstimatedRowCount() < 2) {
+                    vo.clearCache();
+                    vo.setWhereClause(null);
+                    vo.setNamedWhereClauseParam("P_org_id", orgNumber);
+                    vo.executeQuery();
+                }
             }
-        }
         return custDetailsMap;
     }
 
@@ -1271,21 +1313,20 @@ public class QuotesVORowImpl extends ViewRowImpl {
             StringBuilder sb = new StringBuilder("('");
             ViewObjectImpl vo =
                 (ViewObjectImpl)this.getCustNameVO().getViewObject();
-            //            ViewObjectImpl scBasedVO = (ViewObjectImpl)this.getuserPrefSCVO().getViewObject();
+//            ViewObjectImpl scBasedVO = (ViewObjectImpl)this.getuserPrefSCVO().getViewObject();
 
             String colType = "Customer";
             if (vo != null) {
                 System.out.println("SalesChannel::" + salesChannel);
-                Object[] obj =
-                { usrId, colType, salesChannel, String.valueOf(this.getOrgId()) };
+                Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
                 Key key = new Key(obj);
                 Row[] rows = this.getuserPrefSCVO().findByKey(key, 4);
-                //                scBasedVO.clearCache();
-                //                scBasedVO.setWhereClause(null);
-                //		RowQualifier rq1 =
-                //                    new RowQualifier("ColumnType =" + colType +
-                //                                     " and UserId=" + usrId + " and OperatingUnit ='"+String.valueOf(this.getOrgId())+"'");
-                //                        Row[] rows = scBasedVO.getFilteredRows(rq1);
+//                scBasedVO.clearCache();
+//                scBasedVO.setWhereClause(null);
+//		RowQualifier rq1 =
+//                    new RowQualifier("ColumnType =" + colType +
+//                                     " and UserId=" + usrId + " and OperatingUnit ='"+String.valueOf(this.getOrgId())+"'");
+//                        Row[] rows = scBasedVO.getFilteredRows(rq1);
                 if (rows != null && rows.length > 0) {
                     custVal =
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
@@ -1359,8 +1400,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
         Row fRow[] = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
-            Object[] obj =
-            { usrId, colType, salesChannel, String.valueOf(this.getOrgId()) };
+            
+            Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
             Key key = new Key(obj);
             Row[] rows = this.getuserPrefSCVO().findByKey(key, 4);
             if (rows != null && rows.length > 0) {
@@ -1406,12 +1447,11 @@ public class QuotesVORowImpl extends ViewRowImpl {
             (ViewObjectImpl)this.getIncoTermVO1().getViewObject();
         String colType = "IncoTerm";
         String incoTerm = null, defaultval = null;
-        //        String defaultIncoTerm = null;
+//        String defaultIncoTerm = null;
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
-            Object[] obj =
-            { usrId, colType, salesChannel, String.valueOf(this.getOrgId()) };
+            Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
             Key key = new Key(obj);
             Row[] rows = this.getuserPrefSCVO().findByKey(key, 4);
             if (rows != null && rows.length > 0) {
@@ -1454,8 +1494,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
-            Object[] obj =
-            { usrId, colType, salesChannel, String.valueOf(this.getOrgId()) };
+            Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
             Key key = new Key(obj);
             Row[] rows = this.getuserPrefSCVO().findByKey(key, 4);
             if (rows != null && rows.length > 0) {
@@ -1486,14 +1525,14 @@ public class QuotesVORowImpl extends ViewRowImpl {
                     }
                 }
             }
-            sb.append("')");
-            System.out.println("Payment Term values:" + sb.toString());
-            vo.clearCache();
-            vo.setWhereClause(null);
-            if (!sb.toString().equalsIgnoreCase("('')"))
-                vo.setWhereClause("Name in" + sb.toString());
-            vo.executeQuery();
-
+                sb.append("')");
+                System.out.println("Payment Term values:" + sb.toString());
+                vo.clearCache();
+                vo.setWhereClause(null);
+                if (!sb.toString().equalsIgnoreCase("('')"))
+                    vo.setWhereClause("Name in" + sb.toString());
+                vo.executeQuery();
+           
         }
         return defaultval;
     }
@@ -1508,8 +1547,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("(");
         if (vo != null) {
-            Object[] obj =
-            { usrId, colType, salesChannel, String.valueOf(this.getOrgId()) };
+            Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
             Key key = new Key(obj);
             Row[] rows = this.getuserPrefSCVO().findByKey(key, 4);
             if (rows != null && rows.length > 0) {
@@ -1569,32 +1607,30 @@ public class QuotesVORowImpl extends ViewRowImpl {
             StringBuilder sb = new StringBuilder("(");
             ViewObjectImpl vo =
                 (ViewObjectImpl)this.getSalesRepresentativeVO().getViewObject();
-            ViewObjectImpl userBasedVO =
-                (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
+            ViewObjectImpl userBasedVO = (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
             String colType = "'Sales_Rep'";
             if (userBasedVO != null) {
                 userBasedVO.clearCache();
                 userBasedVO.setWhereClause(null);
-                //                Object[] obj = { usrId, colType,orgNumber };
-                //                Key key = new Key(obj);
-                //                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
-                RowQualifier rq1 =
+//                Object[] obj = { usrId, colType,orgNumber };
+//                Key key = new Key(obj);
+//                Row[] rows = this.getuserPrefEntityVO().findByKey(key, 3);
+                  RowQualifier rq1 =
                     new RowQualifier("ColumnType =" + colType + " and UserId=" +
-                                     usrId + " and OperatingUnit ='" +
-                                     String.valueOf(orgNumber) + "'");
+                                     usrId + " and OperatingUnit ='" + String.valueOf(orgNumber) +"'");
                 Row[] rows = userBasedVO.getFilteredRows(rq1);
                 if (rows != null && rows.length > 0) {
                     salesRepValues =
                             (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
                     defaultVal = (String)rows[0].getAttribute("DefaultVal");
                 }
-                if (defaultVal != null) {
+                if(defaultVal!=null){
                     sb.append(defaultVal);
                 }
-                if (defaultVal != null && salesRepValues != null)
+                if(defaultVal!=null && salesRepValues!=null)
                     sb.append(",");
-                if (salesRepValues != null)
-                    sb.append(salesRepValues);
+                if(salesRepValues!=null)
+                sb.append(salesRepValues);
                 sb.append(")");
                 if (defaultVal != null) {
                     vo.clearCache();
@@ -1602,7 +1638,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
                     vo.setNamedWhereClauseParam("p_orgId", null);
                     vo.setNamedWhereClauseParam("p_orgId", orgNumber);
                     RowQualifier rq =
-                        new RowQualifier(" ResourceId =" + new BigDecimal(defaultVal));
+                        new RowQualifier(" ResourceId =" +
+                                         new BigDecimal(defaultVal));
                     Row fRow[] = vo.getFilteredRows(rq);
                     if (fRow != null && fRow.length > 0) {
                         defaultSalesRep =
@@ -1640,7 +1677,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
                         (String)rows[0].getAttribute("ColumnVal"); //DefaultVal
                 defaultVal = (String)rows[0].getAttribute("DefaultVal");
             }
-            if (csrValues != null) {
+            if (csrValues!=null) {
                 if (csr != null) {
                     sb.append(csr).append(",").append(csrValues);
                 } else if (defaultVal != null) {
@@ -1648,7 +1685,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
                 } else
                     sb.append(csrValues);
             }
-            sb.append(")");
+              sb.append(")");
             if (defaultVal != null) {
                 vo.clearCache();
                 vo.setWhereClause(null);
@@ -1661,7 +1698,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
             vo.clearCache();
             vo.reset();
             vo.setWhereClause(null);
-            if (!sb.toString().equalsIgnoreCase("()"))
+            if (!sb.toString().equalsIgnoreCase("()")) 
                 vo.setWhereClause("person_id in" + sb.toString());
             vo.executeQuery();
         }
@@ -1671,27 +1708,25 @@ public class QuotesVORowImpl extends ViewRowImpl {
 
 
     public String getUserBasedCurrency(String currencyCode) {
-        System.out.println("OrgId::" + this.getOrgId());
-        System.out.println("orgIdd::" +
-                           new BigDecimal(this.getOrgId().toString()));
-        System.out.println("orgIddd::" + String.valueOf(this.getOrgId()));
+        System.out.println("OrgId::"+this.getOrgId());
+//       System.out.println("orgIdd::"+new BigDecimal(this.getOrgId().toString()));
+//       System.out.println("orgIddd::"+String.valueOf(this.getOrgId()));
         if (currencyCode != null) {
             currencyCode = currencyCode.trim();
         }
         ViewObjectImpl vo =
             (ViewObjectImpl)this.getCurrencyVO().getViewObject();
-        ViewObjectImpl userPrefVO =
-            (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
+        ViewObjectImpl userPrefVO = (ViewObjectImpl)this.getuserPrefEntityVO().getViewObject();
         String colType = "Currency";
         String currency = null, defaultval = null;
         String defaultCurrencyVal = null;
         List<String> temp = null;
         Row fRow[] = null;
         StringBuilder sb = new StringBuilder("('");
-        if (vo != null & userPrefVO != null) {
+        if (vo != null & userPrefVO!=null) {
             userPrefVO.clearCache();
             userPrefVO.setWhereClause(null);
-            Object[] obj = { usrId, colType };
+            Object[] obj = { usrId, colType};
             Key key = new Key(obj);
             Row[] rows = userPrefVO.findByKey(key, 2);
             if (rows != null && rows.length > 0) {
@@ -1744,7 +1779,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
             (ViewObjectImpl)this.getIncoTermVO1().getViewObject();
         String colType = "IncoTerm";
         String incoTerm = null, defaultval = null;
-        //        String defaultIncoTerm = null;
+//        String defaultIncoTerm = null;
         List<String> temp = null;
         StringBuilder sb = new StringBuilder("('");
         if (vo != null) {
@@ -1776,14 +1811,14 @@ public class QuotesVORowImpl extends ViewRowImpl {
                     }
                 }
             }
-            sb.append("')");
-            vo.clearCache();
-            vo.setWhereClause(null);
-            if (!sb.toString().equalsIgnoreCase("('')")) {
-                vo.setWhereClause("meaning in" + sb.toString());
-            }
-            vo.executeQuery();
-
+                sb.append("')");
+                vo.clearCache();
+                vo.setWhereClause(null);
+                if (!sb.toString().equalsIgnoreCase("('')")) {
+                    vo.setWhereClause("meaning in" + sb.toString());
+                }
+                vo.executeQuery();
+           
         }
         return defaultval;
     }
@@ -1813,7 +1848,7 @@ public class QuotesVORowImpl extends ViewRowImpl {
             vo.clearCache();
             vo.setWhereClause(null);
             vo.executeQuery();
-            System.out.println("count:" + vo.getEstimatedRowCount());
+            System.out.println("count:"+vo.getEstimatedRowCount());
         }
         return defaultval;
     }
@@ -3109,6 +3144,22 @@ public class QuotesVORowImpl extends ViewRowImpl {
     }
 
     /**
+     * Gets the attribute value for the calculated attribute OperatingUnitForSC.
+     * @return the OperatingUnitForSC
+     */
+    public String getOperatingUnitForSC() {
+        return (String) getAttributeInternal(OPERATINGUNITFORSC);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for the calculated attribute OperatingUnitForSC.
+     * @param value value to set the  OperatingUnitForSC
+     */
+    public void setOperatingUnitForSC(String value) {
+        setAttributeInternal(OPERATINGUNITFORSC, value);
+    }
+
+    /**
      * Gets the view accessor <code>RowSet</code> OUVO.
      */
     public RowSet getOUVO() {
@@ -3258,10 +3309,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
      */
     protected Object getAttrInvokeAccessor(int index,
                                            AttributeDefImpl attrDef) throws Exception {
-        if ((index >= AttributesEnum.firstIndex()) &&
-            (index < AttributesEnum.count())) {
-            return AttributesEnum.staticValues()[index -
-                AttributesEnum.firstIndex()].get(this);
+        if ((index >= AttributesEnum.firstIndex()) && (index < AttributesEnum.count())) {
+            return AttributesEnum.staticValues()[index - AttributesEnum.firstIndex()].get(this);
         }
         return super.getAttrInvokeAccessor(index, attrDef);
     }
@@ -3276,10 +3325,8 @@ public class QuotesVORowImpl extends ViewRowImpl {
      */
     protected void setAttrInvokeAccessor(int index, Object value,
                                          AttributeDefImpl attrDef) throws Exception {
-        if ((index >= AttributesEnum.firstIndex()) &&
-            (index < AttributesEnum.count())) {
-            AttributesEnum.staticValues()[index -
-                AttributesEnum.firstIndex()].put(this, value);
+        if ((index >= AttributesEnum.firstIndex()) && (index < AttributesEnum.count())) {
+            AttributesEnum.staticValues()[index - AttributesEnum.firstIndex()].put(this, value);
             return;
         }
         super.setAttrInvokeAccessor(index, value, attrDef);

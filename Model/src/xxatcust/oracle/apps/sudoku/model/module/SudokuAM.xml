@@ -214,11 +214,6 @@
         Type="oracle.jbo.Row"/>
     </Method>
     <Method
-      Name="defaultSalesRepOnCreateQuote">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
       Name="clearQuoteFieldwithParams">
       <Return
         Type="java.lang.String"/>
@@ -921,6 +916,14 @@
       <Parameter
         Name="numberFormat"
         Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="clearUserPrefSCVO">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="usrId"
+        Type="int"/>
     </Method>
     <Method
       Name="getPriceProductChoices">

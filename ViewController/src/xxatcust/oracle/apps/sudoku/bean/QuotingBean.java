@@ -76,9 +76,9 @@ public class QuotingBean {
 
             String[] resultMsg = msg.split("-", 2);
             msg = resultMsg[1];
-//            successMsg= msg.toString();
-//            ShowPopup();
-            
+            //            successMsg= msg.toString();
+            //            ShowPopup();
+
             message = new FacesMessage(msg);
             message.setSeverity(FacesMessage.SEVERITY_INFO);
             fc.addMessage(null, message);
@@ -124,12 +124,12 @@ public class QuotingBean {
         }
         return null;
     }
-    
+
     public void ShowPopup() {
-              RichPopup.PopupHints hints = new RichPopup.PopupHints();
-              this.getBindCreateQuotePopup().show(hints);
-     
-     }
+        RichPopup.PopupHints hints = new RichPopup.PopupHints();
+        this.getBindCreateQuotePopup().show(hints);
+
+    }
 
     public String initQuotePage() {
         isCustEnable = false;
@@ -142,8 +142,8 @@ public class QuotingBean {
             if (v93k.getSessionDetails() != null) {
                 if (v93k.getSessionDetails().isCreateNewQuote() ||
                     v93k.getSessionDetails().isDuplicateQuote()) {
-                
-                
+
+
                     OperationBinding ob =
                         getBindings().getOperationBinding("clearQuoteFieldwithParams");
 
@@ -372,78 +372,81 @@ public class QuotingBean {
             ob.execute();
         }
     }
+
     public void custNameVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != vce.getOldValue() &&
             vce.getNewValue() != null) {
-        System.out.println("customer number:"+vce.getNewValue());
+            System.out.println("customer number:" + vce.getNewValue());
             businessAgrement = true;
-                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNameChange"); //curRow
-                    ob.getParamsMap().put("custName", vce.getNewValue().toString());
+            OperationBinding ob =
+                getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNameChange"); //curRow
+            ob.getParamsMap().put("custName", vce.getNewValue().toString());
             //                if(ob.getErrors().size()==0){
-                        ob.execute();
+            ob.execute();
         } else {
             businessAgrement = false;
         }
     }
-    
+
     public void custNameForUpdateQuoteVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != vce.getOldValue() &&
             vce.getNewValue() != null) {
-        System.out.println("customer number:"+vce.getNewValue());
+            System.out.println("customer number:" + vce.getNewValue());
             businessAgrement = true;
-                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNameForUpdateQuoteChange"); //curRow
-                    ob.getParamsMap().put("custName", vce.getNewValue().toString());
+            OperationBinding ob =
+                getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNameForUpdateQuoteChange"); //curRow
+            ob.getParamsMap().put("custName", vce.getNewValue().toString());
             //                if(ob.getErrors().size()==0){
-                        ob.execute();
+            ob.execute();
         } else {
             businessAgrement = false;
         }
     }
+
     public void custNumForUpdateQuoteVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != vce.getOldValue() &&
             vce.getNewValue() != null) {
-        System.out.println("customer number:"+vce.getNewValue());
+            System.out.println("customer number:" + vce.getNewValue());
             businessAgrement = true;
-                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNumForUpdateQuoteChange"); //curRow
-                    ob.getParamsMap().put("custNum", vce.getNewValue().toString());
+            OperationBinding ob =
+                getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNumForUpdateQuoteChange"); //curRow
+            ob.getParamsMap().put("custNum", vce.getNewValue().toString());
             //                if(ob.getErrors().size()==0){
-                        ob.execute();
+            ob.execute();
         } else {
             businessAgrement = false;
         }
     }
-    
-    
-    
+
+
     public void custNumVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != vce.getOldValue() &&
             vce.getNewValue() != null) {
-        System.out.println("customer number:"+vce.getNewValue());
+            System.out.println("customer number:" + vce.getNewValue());
             businessAgrement = true;
-                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNumChange"); //curRow
-                    ob.getParamsMap().put("custNum", vce.getNewValue().toString());
+            OperationBinding ob =
+                getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNumChange"); //curRow
+            ob.getParamsMap().put("custNum", vce.getNewValue().toString());
             //                if(ob.getErrors().size()==0){
-                        ob.execute();
+            ob.execute();
         } else {
             businessAgrement = false;
         }
     }
-    
-    
-    
 
-//    public void custNameVCE(ValueChangeEvent valueChangeEvent) {
-//        if (valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue() &&
-//            valueChangeEvent.getNewValue() != null) {
-//            businessAgrement = true;
-//                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddress"); //curRow
-//                    ob.getParamsMap().put("curRow", null);
-//            //                if(ob.getErrors().size()==0){
-//                        ob.execute();
-//        } else {
-//            businessAgrement = false;
-//        }
-//    }
+
+    //    public void custNameVCE(ValueChangeEvent valueChangeEvent) {
+    //        if (valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue() &&
+    //            valueChangeEvent.getNewValue() != null) {
+    //            businessAgrement = true;
+    //                    OperationBinding ob = getBindings().getOperationBinding("getQuoteCustmerAddress"); //curRow
+    //                    ob.getParamsMap().put("curRow", null);
+    //            //                if(ob.getErrors().size()==0){
+    //                        ob.execute();
+    //        } else {
+    //            businessAgrement = false;
+    //        }
+    //    }
 
     public void oucustNameRPL(ReturnPopupEvent returnPopupEvent) {
         if (returnPopupEvent != null) {
@@ -459,12 +462,14 @@ public class QuotingBean {
 
     public void ouVCE(ValueChangeEvent vce) {
         if (vce.getOldValue() != vce.getNewValue() &&
-            vce.getNewValue() != null &&!vce.getNewValue().equals("")) {
-            RichInputListOfValues soc = (RichInputListOfValues)vce.getComponent();
+            vce.getNewValue() != null && !vce.getNewValue().equals("")) {
+            RichInputListOfValues soc =
+                (RichInputListOfValues)vce.getComponent();
             System.out.println("Index: " + soc.getValue().toString());
             vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
-            Object value = ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("OrganizationUnit");
-//            System.out.println("org valuu: " + value.toString());
+            Object value =
+                ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("OrganizationUnit");
+            //            System.out.println("org valuu: " + value.toString());
             boolean isUserDefault = true;
             V93kQuote v93k =
                 (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
@@ -476,10 +481,10 @@ public class QuotingBean {
                 if (ob != null) {
                     ob.execute();
                 }
-//                OperationBinding binding =
-//                    getBindings().getOperationBinding("defaultSalesRepOnCreateQuote");
-//                if (binding != null && binding.getErrors().size() == 0)
-//                    binding.execute();
+                //                OperationBinding binding =
+                //                    getBindings().getOperationBinding("defaultSalesRepOnCreateQuote");
+                //                if (binding != null && binding.getErrors().size() == 0)
+                //                    binding.execute();
             } else {
                 isUserDefault = true;
                 OperationBinding ob =
@@ -507,8 +512,8 @@ public class QuotingBean {
 
         } else {
 
-//                        getBindCustomerName().setValue(null);
-//                        getBindCustNumber().setValue(null);
+            //                        getBindCustomerName().setValue(null);
+            //                        getBindCustNumber().setValue(null);
             isCustEnable = false;
         }
     }
@@ -516,13 +521,13 @@ public class QuotingBean {
     public void OURPE(ReturnPopupEvent returnPopupEvent) {
         if (returnPopupEvent != null) {
             isCustEnable = true;
-//            OperationBinding binding =
-//                getBindings().getOperationBinding("defaultSalesRepOnCreateQuote");
-//            if (binding != null && binding.getErrors().size() == 0)
-//                binding.execute();
-//            getBindOrderType().setValue(null);
-//            getBindCustomerName().setValue(null);
-//            getBindCustNumber().setValue(null);
+            //            OperationBinding binding =
+            //                getBindings().getOperationBinding("defaultSalesRepOnCreateQuote");
+            //            if (binding != null && binding.getErrors().size() == 0)
+            //                binding.execute();
+            //            getBindOrderType().setValue(null);
+            //            getBindCustomerName().setValue(null);
+            //            getBindCustNumber().setValue(null);
 
         } else {
             isCustEnable = false;
@@ -532,11 +537,11 @@ public class QuotingBean {
 
     public String updateQuote() {
         //getUpdateQuote
-//        OperationBinding ob =
-//            getBindings().getOperationBinding("getUpdateQuote");
-//        if (ob.getErrors().size() == 0) {
-//            ob.execute();
-//        }
+        //        OperationBinding ob =
+        //            getBindings().getOperationBinding("getUpdateQuote");
+        //        if (ob.getErrors().size() == 0) {
+        //            ob.execute();
+        //        }
         return "updateQuote";
     }
 
@@ -598,7 +603,7 @@ public class QuotingBean {
         operationBinding.getParamsMap().put("respid", respid);
         operationBinding.getParamsMap().put("usrId", usrId);
         operationBinding.getParamsMap().put("isCustEditable", isCustEditable);
-        if ( operationBinding != null)
+        if (operationBinding != null)
             msg = (String)operationBinding.execute();
         FacesMessage message = new FacesMessage(msg);
         if (msg.contains("<html><body>")) {
@@ -670,22 +675,22 @@ public class QuotingBean {
     }
 
     public void orderTypeVCE(ValueChangeEvent vce) {
-            if (vce.getNewValue() != null &&
+        if (vce.getNewValue() != null &&
             vce.getOldValue() != vce.getNewValue()) {
             UIComponent uiComp = (UIComponent)vce.getSource();
             uiComp.processUpdates(FacesContext.getCurrentInstance());
             //            ADFContext.getCurrent().getSessionScope().put("OrganizationUnit",null);
             ADFContext.getCurrent().getSessionScope().put("OrderTypeValue",
                                                           null);
-//            Row r = null;
-//            DCIteratorBinding iter = ADFUtils.findIterator("QuotesVOIterator");
-//            if (iter != null) {
-//                ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
-//                if (vo != null)
-//                    r = vo.getCurrentRow();
-////                if (r != null)
-////                    r.setAttribute("OrderType", null);
-//            }
+            //            Row r = null;
+            //            DCIteratorBinding iter = ADFUtils.findIterator("QuotesVOIterator");
+            //            if (iter != null) {
+            //                ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
+            //                if (vo != null)
+            //                    r = vo.getCurrentRow();
+            ////                if (r != null)
+            ////                    r.setAttribute("OrderType", null);
+            //            }
 
         }
 
@@ -723,42 +728,41 @@ public class QuotingBean {
     public void salesChannelVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != null &&
             vce.getOldValue() != vce.getNewValue()) {
-         RichSelectOneChoice soc = (RichSelectOneChoice)vce.getComponent();
-    System.out.println("Index: " + soc.getValue().toString());
-    vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
-    Object value = ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("SalesChannel");
-    System.out.println("Value " + value.toString());
-        OperationBinding ob =
-            ADFUtils.findOperation("getSalesChannelBasedUserPref");
-           ob.getParamsMap().put("salesChannel", value);
-        if (ob != null) {         
-            ob.execute();
-        }
+            RichSelectOneChoice soc = (RichSelectOneChoice)vce.getComponent();
+            vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            Object value =
+                ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("SalesChannel");
+            OperationBinding ob =
+                ADFUtils.findOperation("getSalesChannelBasedUserPref");
+            ob.getParamsMap().put("salesChannel", value);
+            if (ob != null) {
+                ob.execute();
+            }
 
+        }
     }
-}
 
     public void salesChannelForUpdateQuoteVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != null &&
-            vce.getOldValue() != vce.getNewValue()) {   
-            isCustEditable =true;
-         RichSelectOneChoice soc = (RichSelectOneChoice)vce.getComponent();
-        System.out.println("Index: " + soc.getValue().toString());
-        vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
-        Object value = ADFUtils.findIterator("QuoteUpdateVO1Iterator").getCurrentRow().getAttribute("Saleschannel");
-        System.out.println("Value " + value.toString());
-        OperationBinding ob =
-            ADFUtils.findOperation("getSalesChannelBasedUserPrefForUpdateQuote");
-           ob.getParamsMap().put("salesChannel", value.toString());
-        if (ob != null) {         
-       ob.execute();
-        }
-
-        }
-        else{
-                isCustEditable = false;
+            vce.getOldValue() != vce.getNewValue()) {
+            isCustEditable = true;
+            RichSelectOneChoice soc = (RichSelectOneChoice)vce.getComponent();
+            System.out.println("Index: " + soc.getValue().toString());
+            vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            Object value =
+                ADFUtils.findIterator("QuoteUpdateVO1Iterator").getCurrentRow().getAttribute("Saleschannel");
+            System.out.println("Value " + value.toString());
+            OperationBinding ob =
+                ADFUtils.findOperation("getSalesChannelBasedUserPrefForUpdateQuote");
+            ob.getParamsMap().put("salesChannel", value.toString());
+            if (ob != null) {
+                ob.execute();
             }
-}
+
+        } else {
+            isCustEditable = false;
+        }
+    }
 
     public void setIsCustEditable(boolean isCustEditable) {
         this.isCustEditable = isCustEditable;
@@ -769,7 +773,7 @@ public class QuotingBean {
     }
 
     public String getQuoteUpdate() {
-    String val =  updateQuote();
+        String val = updateQuote();
         return null;
     }
 

@@ -506,8 +506,9 @@ public class DOMParser {
                                       List modelNameList) {
         //listOfLines.get(index)
         boolean upgradeFromScratch = false;
-        if(v93!=null && v93.getSessionDetails()!=null && v93.getSessionDetails().isUpgradefromScratch()){
-            upgradeFromScratch = true ;
+        if (v93 != null && v93.getSessionDetails() != null &&
+            v93.getSessionDetails().isUpgradefromScratch()) {
+            upgradeFromScratch = true;
         }
         Element configNode = doc.createElement("config");
         Config configObj = v93.getConfigObject();
@@ -524,7 +525,8 @@ public class DOMParser {
         if (configObj != null && configObj.getVersion() != null) {
             configNode.setAttribute("version", configObj.getVersion());
         }
-        if (configObj != null && configObj.getPmfObject() != null && !upgradeFromScratch) {
+        if (configObj != null && configObj.getPmfObject() != null &&
+            !upgradeFromScratch) {
             Node pmfNode = doc.createElement("pmf");
             List<PogoMappingFile> listPmf =
                 configObj.getPmfObject().getPmfMap();
@@ -660,42 +662,36 @@ public class DOMParser {
 
                     Element itemNode = doc.createElement(key);
                     System.out.println("**************************************");
-                    for (ConfiguratorNodePOJO node : listItems) {
-                        //
-                        //                                                if (node != null && node.getNodeName() != null &&
-                        //                                                    node.getNodeCategory() != null &&
-                        //                                                    (node.getNodeCategory().equals("1")||node.getNodeCategory().equals("2")||node.getNodeCategory().equals("3"))) {
-                        //                                                    System.out.println("Setting ModelBom Id " +
-                        //                                                                       node.getNodeName());
-                        //                                                    modelbomNode.setAttribute("id",
-                        //                                                                              node.getNodeName());
-                        //                                                }
-                        Element e = doc.createElement("item");
-                        if (node.getNodeName() != null) {
+                    if (!listItems.isEmpty()) {
 
-                            e.setTextContent(node.getNodeName());
-                        }
-                        if (node.getNodeQty() != null) {
-                            try {
-                                String s = node.getNodeQty();
-                                float f = new Float(s);
-                                int i = (int)f;
+                        for (ConfiguratorNodePOJO node : listItems) {
+                            Element e = doc.createElement("item");
+                            if (node.getNodeName() != null) {
 
-                                e.setAttribute("qty", Integer.toString(i));
-                            } catch (NumberFormatException nfe) {
-                                // TODO: Add catch code
-                                ADFUtils.showFacesMessage(nfe.getMessage(),
-                                                          FacesMessage.SEVERITY_ERROR);
-                            } catch (DOMException dome) {
-                                // TODO: Add catch code
-                                ADFUtils.showFacesMessage(dome.getMessage(),
-                                                          FacesMessage.SEVERITY_ERROR);
+                                e.setTextContent(node.getNodeName());
                             }
-                        }
-                        itemNode.appendChild(e);
-                    }
+                            if (node.getNodeQty() != null) {
+                                try {
+                                    String s = node.getNodeQty();
+                                    float f = new Float(s);
+                                    int i = (int)f;
 
-                    modelbomNode.appendChild(itemNode);
+                                    e.setAttribute("qty", Integer.toString(i));
+                                } catch (NumberFormatException nfe) {
+                                    // TODO: Add catch code
+                                    ADFUtils.showFacesMessage(nfe.getMessage(),
+                                                              FacesMessage.SEVERITY_ERROR);
+                                } catch (DOMException dome) {
+                                    // TODO: Add catch code
+                                    ADFUtils.showFacesMessage(dome.getMessage(),
+                                                              FacesMessage.SEVERITY_ERROR);
+                                }
+                            }
+                            itemNode.appendChild(e);
+                        }
+
+                        modelbomNode.appendChild(itemNode);
+                    }
                 }
             }
             //modelBomNodes.add(modelbomNode) ;

@@ -14,9 +14,10 @@
     <f:facet name="toolbar">
       <af:group id="g2">
         <af:panelBox id="pgl1" background="medium" text="Ruleset Selection"
-                     showDisclosure="false">
+                     showDisclosure="false"
+                     inlineStyle="width:350px; text-align:justify;">
           <af:panelGroupLayout id="pgl13" layout="vertical" halign="end"
-                               rendered="true">
+                               rendered="true" styleClass="AFStretchWidth">
             <af:inputListOfValues id="topLevelMeaningId"
                                   popupTitle="Search and Select: #{bindings.TopLevelMeaning.hints.label}"
                                   value="#{bindings.TopLevelMeaning.inputValue}"
@@ -27,7 +28,8 @@
                                   launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                   autoSubmit="true"
                                   valueChangeListener="#{ConfiguratorBean.rulesetChanged}"
-                                  label="Top Level Choice">
+                                  label="Top Level Choice"
+                                  disabled="#{ConfiguratorBean.quoteSaved}">
               <f:validator binding="#{bindings.TopLevelMeaning.validator}"/>
             </af:inputListOfValues>
             <af:inputListOfValues id="secondLevelMeaningId"
@@ -40,7 +42,7 @@
                                   partialTriggers="topLevelMeaningId"
                                   autoSubmit="true"
                                   valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}"
-                                  disabled="#{bindings.TopLevelMeaning.inputValue eq null}"
+                                  disabled="#{bindings.TopLevelMeaning.inputValue eq null or ConfiguratorBean.quoteSaved}"
                                   label="Second Level Choice"
                                   rendered="#{ConfiguratorBean.oneTimeSpecial ne 'OTS'}">
               <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
@@ -1945,8 +1947,7 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
-                                <af:panelBorderLayout id="dps62_1r1"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                <af:panelBorderLayout id="dps62_1r1">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dps63_1r1"
                                                          layout="horizontal"

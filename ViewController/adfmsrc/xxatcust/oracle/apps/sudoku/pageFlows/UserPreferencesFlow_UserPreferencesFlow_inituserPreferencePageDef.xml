@@ -19,6 +19,8 @@
               DataControl="SudokuAMDataControl" RangeSize="25"/>
     <iterator id="SalesChannelVOIterator" Binds="SalesChannelVO"
               DataControl="SudokuAMDataControl" RangeSize="25"/>
+    <iterator id="businessAgreementVoIterator" Binds="businessAgreementVo"
+              DataControl="SudokuAMDataControl" RangeSize="25"/>
   </executables>
   <bindings>
     <methodAction id="initUserPref"

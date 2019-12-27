@@ -177,7 +177,7 @@
                   </af:inputText>
                 </af:panelGroupLayout>
                 <af:panelGroupLayout id="pgl22" layout="horizontal">
-                  <af:spacer width="90" height="10" id="s20"/>
+                  <af:spacer width="80" height="10" id="s20"/>
                   <af:inputText label="Telephone No/Fax No" id="it12"
                                 columns="20"
                                 inlineStyle="background-color:White;"
@@ -203,7 +203,7 @@
               </af:panelGroupLayout>
               <af:spacer width="10" height="55" id="s4"/>
               <af:panelGroupLayout id="pgl3" layout="horizontal">
-                <af:spacer width="80" height="10" id="s10"/>
+                <af:spacer width="58" height="10" id="s10"/>
                 <af:panelGroupLayout id="pgl11"
                                      >
                   <af:outputLabel value="Sales Representative" id="ol3"
@@ -388,7 +388,7 @@
                     <af:selectOneChoice value="#{bindings.Paymentterms.inputValue}"
                                         required="#{bindings.Paymentterms.hints.mandatory}"
                                         shortDesc="#{bindings.Paymentterms.hints.tooltip}"
-                                        id="soc5"
+                                        id="soc5" autoSubmit="true"
                                         contentStyle="width:419px"
                                         inlineStyle="background-color:White;"
                                         partialTriggers="soc3">
@@ -406,7 +406,7 @@
                     <af:selectOneChoice value="#{bindings.Incoterms.inputValue}"
                                         required="#{bindings.Incoterms.hints.mandatory}"
                                         shortDesc="#{bindings.Incoterms.hints.tooltip}"
-                                        id="soc2"
+                                        id="soc2" autoSubmit="true"
                                         contentStyle="width:170.0px"
                                         inlineStyle="background-color:White;"
                                         partialTriggers="soc3">
@@ -420,7 +420,7 @@
                                     showRequired="true"/>
                     <af:selectOneChoice value="#{bindings.CurrencyCode.inputValue}"
                                         shortDesc="#{bindings.CurrencyCode.hints.tooltip}"
-                                        id="soc1"
+                                        id="soc1" autoSubmit="true"
                                         contentStyle="width:170.0px"
                                         inlineStyle="background-color:White;"
                                         partialTriggers="soc3">

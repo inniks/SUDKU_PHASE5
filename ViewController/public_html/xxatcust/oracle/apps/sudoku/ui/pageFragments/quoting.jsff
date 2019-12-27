@@ -46,7 +46,6 @@
                                         columns="#{bindings.OrganizationUnit.hints.displayWidth}"
                                         shortDesc="#{bindings.OrganizationUnit.hints.tooltip}"
                                         autoSubmit="true"
-                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                         requiredMessageDetail="Please Enter organization Unit"
                                         returnPopupListener="#{pageFlowScope.QuotingBean.OURPE}"
                                         valueChangeListener="#{pageFlowScope.QuotingBean.ouVCE}"
@@ -83,7 +82,6 @@
                                         autoSubmit="true"
                                         requiredMessageDetail="Please Enter Sales Representative"
                                         showRequired="true"
-                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                         partialTriggers="organizationUnitId">
                     <f:validator binding="#{bindings.SalesRepresentative.validator}"/>
                   </af:inputListOfValues>
@@ -95,7 +93,6 @@
                                         columns="#{bindings.CustomerSupportRepresent.hints.displayWidth}"
                                         shortDesc="#{bindings.CustomerSupportRepresent.hints.tooltip}"
                                         autoSubmit="true"
-                                        launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                         requiredMessageDetail="Please Enter Customer Support Represent">
                     <f:validator binding="#{bindings.CustomerSupportRepresent.validator}"/>
                   </af:inputListOfValues>
@@ -205,7 +202,7 @@
               <af:panelGroupLayout id="pgl21" layout="vertical">
                 <af:panelGroupLayout id="pgl20" valign="middle" halign="left"
                                      layout="horizontal">
-                  <af:spacer width="40" height="10" id="s34"/>
+                  <af:spacer width="41" height="10" id="s34"/>
                   <af:outputLabel value="Attention To/Department" id="ol6"
                                   inlineStyle="color:Black; font-weight:bold;"/>
                   <af:panelLabelAndMessage label="Attention To/Department"
@@ -331,7 +328,6 @@
                                       required="#{bindings.PriceList.hints.mandatory}"
                                       columns="#{bindings.PriceList.hints.displayWidth}"
                                       shortDesc="#{bindings.PriceList.hints.tooltip}"
-                                      launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
                                       showRequired="true" autoSubmit="true">
                   <f:validator binding="#{bindings.PriceList.validator}"/>
                 </af:inputListOfValues>

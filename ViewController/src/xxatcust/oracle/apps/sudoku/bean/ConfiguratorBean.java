@@ -196,7 +196,7 @@ public class ConfiguratorBean {
     private RichInputText otsDisplay;
     private String oneTimeSpecial;
     private String otsDislayValue ;
-
+    private Boolean quoteSaved=false;
     public ConfiguratorBean() {
         super();
     }
@@ -451,15 +451,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         //If config is live use this
-//        String responseJson =
-//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-//        System.out.println("Response Json from Configurator : " +
-//                           responseJson);
-//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-//        v93k = (V93kQuote)obj;
+        String responseJson =
+            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        System.out.println("Response Json from Configurator : " +
+                           responseJson);
+        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        v93k = (V93kQuote)obj;
 
         // else use this
-        v93k = (V93kQuote)convertJsonToObject(null);
+        //v93k = (V93kQuote)convertJsonToObject(null);
         Map ruleSetMap = new HashMap();
         if (v93k != null && v93k.getInputParams() != null) {
             
@@ -2394,5 +2394,26 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
         dpsListViewBinding.getGroupDisclosedRowKeys().clear();
         AdfFacesContext.getCurrentInstance().addPartialTarget(parentUiComp);
+    }
+    
+    public Boolean isQuoteSaved(){
+        boolean isQuoteSaved = false ;
+        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(v93k!=null && v93k.getSessionDetails()!=null){
+            isQuoteSaved = v93k.getSessionDetails().isQuoteSaved();
+        }
+        return isQuoteSaved;
+    }
+
+    public void setQuoteSaved(Boolean quoteSaved) {
+        this.quoteSaved = quoteSaved;
+    }
+
+    public Boolean getQuoteSaved() {
+        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(v93k!=null && v93k.getSessionDetails()!=null){
+            quoteSaved = v93k.getSessionDetails().isQuoteSaved();
+        }
+        return quoteSaved;
     }
 }

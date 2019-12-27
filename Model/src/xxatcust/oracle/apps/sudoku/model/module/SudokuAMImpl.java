@@ -651,34 +651,46 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 CallableStatement cs = null;
                 String stmt =
                     "apps.XXAT_ASO_QUOTE_PKG.create_quote_hdr(:1,:2,:3,:4,:5,:6,:7,:8,:9,:10,:11,:12,:13,:14,:15,:16,:17,:18,:19,:20,:21,:22)";
-
+    
                 try {
                     //            cs = dbTrans.createCallableStatement(("BEGIN xxat_quote_create_pkg.create_quote_hdr(?,?,?,?,?,?,?,?,?,?,?,?"+
                     //                                                                             ");" + "END;"), 12);
-
-
+    
+    
                     cs =
- this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
+    this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
                                                  0);
-
+    
                     if (quoteVORow.getAttribute("OrganizationUnit") != null) {
                         cs.setString(1,
                                      quoteVORow.getAttribute("OrganizationUnit").toString());
                     } else {
                         errorMsg.append("<p><b>Organization Unit is required.</b></p>");
                     }
-                    if (quoteVORow.getAttribute("QuoteDescription") != null) {
-                        cs.setString(2,
-                                     quoteVORow.getAttribute("QuoteDescription").toString());
-                    } else {
-                        String custName =
-                            (String)quoteVORow.getAttribute("CustomerName");
-                        if (custName != null) {
+                    
+                    String custName = null;
+                    custName =(String)quoteVORow.getAttribute("CustomerName");
+                    if(custName !=null){
                             cs.setString(2, "Quote For " + custName);
                             quoteVORow.setAttribute("QuoteDescription",
                                                     "Quote For " + custName);
                         }
-                    }
+                    else{
+                            cs.setString(2,
+                                         quoteVORow.getAttribute("QuoteDescription").toString());
+                        }
+//                    if (quoteVORow.getAttribute("QuoteDescription") != null) {
+//                        cs.setString(2,
+//                                     quoteVORow.getAttribute("QuoteDescription").toString());
+//                    } else {
+//                        String custName =
+//                            (String)quoteVORow.getAttribute("CustomerName");
+//                        if (custName != null) {
+//                            cs.setString(2, "Quote For " + custName);
+//                            quoteVORow.setAttribute("QuoteDescription",
+//                                                    "Quote For " + custName);
+//                        }
+//                    }
                     if (quoteVORow.getAttribute("CustNum") != null) {
                         cs.setString(3,
                                      quoteVORow.getAttribute("CustNum").toString());
@@ -697,7 +709,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     } else {
                         errorMsg.append("<p><b> Price List is required.</b></p>");
                     }
-
+    
                     if (quoteVORow.getAttribute("SalesChannel") != null) {
                         cs.setString(6,
                                      quoteVORow.getAttribute("SalesChannel").toString());
@@ -734,7 +746,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     } else {
                         errorMsg.append("<p><b>Currency is required.</b></p>");
                     }
-
+    
                     if (quoteVORow.getAttribute("IncoTerms") != null) {
                         cs.setString(10,
                                      quoteVORow.getAttribute("IncoTerms").toString());
@@ -795,14 +807,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     } else {
                         cs.setString(18, null); //Systemid
                     }
-
+    
                     //                    if (quoteVORow.getAttribute("Discount") != null) {
                     //                        cs.setString(19,
                     //                                     quoteVORow.getAttribute("Discount").toString());
                     //                    } else {
                     //                        cs.setString(19, null); //Systemid
                     //                    }
-
+    
                     if (quoteVORow.getAttribute("Page") != null) {
                         cs.setString(19,
                                      quoteVORow.getAttribute("Page").toString());
@@ -845,7 +857,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     }
                 }
             }
-
+    
         }
         if (errorMsg.toString() != null &&
             !"<html><body></body></html>".equals(errorMsg.toString())) {
@@ -936,9 +948,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             if (quoteFromSesion != null) {
                 //                Integer quoteNum = Integer.parseInt(quoteFromSesion);
                 quoteFromSesion = quoteFromSesion.trim();
-                if (quoteFromSesion.equalsIgnoreCase("")) {
-                    quoteFromSesion = "-1";
-                }
+//                if (quoteFromSesion.equalsIgnoreCase("")) {
+//                    quoteFromSesion = "-1";
+//                }
                 BigDecimal quoteVal = new BigDecimal(quoteFromSesion);
                 //                if (quoteSessionState && duplicateQuoteNum != null) {
                 //                    quoteVO.setWhereClause("QUOTE_NUMBER=" +
@@ -961,21 +973,33 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 while (iter.hasNext()) {
                     row = iter.next();
                     quoteVO.setCurrentRow(row);
-                    //                    QuotesVORowImpl rowImpl = (QuotesVORowImpl)vo.getCurrentRow();
                 }
+                String salesChannel = null;
+                if(row!=null){
+                    salesChannel = (String)row.getAttribute("Saleschannel");
+                    }
                 QuoteUpdateVORowImpl rowImpl =
                     (QuoteUpdateVORowImpl)quoteVO.getCurrentRow();
                 if (rowImpl != null) {
                     rowImpl.getUserBasedCSR();
                     rowImpl.getUserBasedOrderType();
-                    rowImpl.getUserBasedCurrency();
-                    rowImpl.getUserBasedIncoTerm();
+                    if(salesChannel!=null){
+                        rowImpl.getSalesChannelBasedBA(salesChannel);
+                        rowImpl.getSalesChannelBasedCurrency(salesChannel);
+                        rowImpl.getSalesChannelBasedCustomerDetails(salesChannel);
+                        rowImpl.getSalesChannelBasedIncoTerm(salesChannel);
+                        rowImpl.getSalesChannelBasedPaymentTerm(salesChannel);
+                        }
+                    else{
+                            rowImpl.getUserBasedCurrency();
+                            rowImpl.getUserBasedIncoTerm();
+                        }
+                   
                     rowImpl.getUserBasedSalesChannel();
                     rowImpl.getUserBasedSalesRep();
                 }
                 getSalesRepDetails(row);
                 getCustSupportRepDetails(row);
-                //                getPaymentTermsForUpdate(row);
                 getUpdateQuoteCustmerAddress(row);
                 iter.closeRowSetIterator();
 
@@ -1228,444 +1252,362 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     }
 
     public String callUpdateQuoteAPI(int respid, int usrId,
-
         boolean isCustEditable) {
-
         ViewObjectImpl quoteVO = this.getQuoteUpdateVO1();
-
         String returnval = null;
-
         StringBuilder errorMsg = new StringBuilder("<html><body>");
-
         String returnMessage = null;
-
         String returnMsgStatus = null;
-
         if (quoteVO != null) {
-
             Row quoteVORow = quoteVO.getCurrentRow();
-
             if (quoteVORow != null) {
-
                 CallableStatement cs = null;
-
                 String stmt =
-
-                    "apps.XXAT_ASO_QUOTE_PKG.update_quote_hdr(:1,:2,:3,:4,:5,:6,:7,:8,:9,:10,:11,:12,:13,:14,:15,:16,:17,:18,:19,:20,:21)";
-
+                    "apps.XXAT_ASO_QUOTE_PKG.update_quote_hdr(:1,:2,:3,:4,:5,:6,:7,:8,:9,:10,:11,:12,:13,:14,:15,:16,:17,:18,:19,:20,:21,:22)";
                 try {
-
-                    cs = this.getDBTransaction
-
-                            ().createCallableStatement("begin " + stmt +
-                                                       "; end;", 0);
-
-
+                    cs = this.
+                            getDBTransaction().createCallableStatement("begin " +
+                                                                       stmt +
+                                                                       "; end;",
+                                                                       0);
+    
                     if (quoteVORow.getAttribute("QuoteNumber") != null) {
-
-                        cs.setString(1, quoteVORow.getAttribute
-
-                                ("QuoteNumber").toString());
-
-                        System.out.println("QuoteNumber:" +
-                                           quoteVORow.getAttribute
-
-                                ("QuoteNumber").toString());
-
+                        cs.setString(1, quoteVORow.
+                               getAttribute("QuoteNumber").toString());
+                        System.out.println("QuoteNumber:" + quoteVORow.
+                                getAttribute("QuoteNumber").toString());
                     }
-
-                    //                                                             else{
-
-                    //                                                                 errorMsg.append("<p><b>QuoteNumber is required.</b></p>");
-
-                    //                                                                 }
-
                     if (quoteVORow.getAttribute("QuoteName") != null) {
-
-                        cs.setString(2, quoteVORow.getAttribute
-
-                                ("QuoteName").toString());
-
-                        System.out.println("QuoteName:" +
-                                           quoteVORow.getAttribute
-
-                                ("QuoteName").toString());
-
+                        cs.setString(2, quoteVORow.
+                               getAttribute("QuoteName").toString());
+                        System.out.println("QuoteName:" + quoteVORow.
+                                getAttribute("QuoteName").toString());
                     } else if (isCustEditable) { //CustName
-
                         String custName =
-
                             (String)quoteVORow.getAttribute("CustName");
-
                         if (custName != null) {
-
                             cs.setString(2, "Quote For " + custName);
-
                             System.out.println("QuoteDescription:" +
-                                               "Quote For " + custName);
-
-                            quoteVORow.setAttribute("QuoteName",
-                                                    "Quote For " + custName);
-
+                                               "Quote For " +
+                                    custName);
+                            quoteVORow.setAttribute("QuoteName", "Quote For " +
+                                    custName);
                         }
-
-
                     } else {
-
                         String custName =
-
                             (String)quoteVORow.getAttribute("Customername");
-
                         if (custName != null) {
-
                             cs.setString(2, "Quote For " + custName);
-
                             System.out.println("QuoteDescription:" +
-                                               "Quote For " + custName);
-
-                            quoteVORow.setAttribute("QuoteName",
-                                                    "Quote For " + custName);
-
+                                               "Quote For " +
+                                    custName);
+                            quoteVORow.setAttribute("QuoteName", "Quote For " +
+                                   custName);
                         }
-
+                        else
+                        cs.setString(2, null); 
                     }
-
+    
                     if (quoteVORow.getAttribute("Ordertypename") != null) {
-
-                        cs.setString(3, quoteVORow.getAttribute
-
-                                ("Ordertypename").toString());
-
-                        System.out.println("Ordertypename:" +
-                                           quoteVORow.getAttribute
-
-                                ("Ordertypename").toString());
-
+    
+                        cs.setString(3, quoteVORow.
+    
+                                getAttribute("Ordertypename").toString());
+    
+                        System.out.println("Ordertypename:" + quoteVORow.
+    
+                                getAttribute("Ordertypename").toString());
+    
                     } else {
-
+    
                         errorMsg.append("<p><b>OrderType is required.</b></p>");
-
+    
                     }
-
+    
                     if (quoteVORow.getAttribute("Pricelistname") != null) {
-
-                        cs.setString(4, quoteVORow.getAttribute
-
-                                ("Pricelistname").toString());
-
-                        System.out.println("Pricelistname:" +
-                                           quoteVORow.getAttribute
-
-                                ("Pricelistname").toString());
-
+    
+                        cs.setString(4, quoteVORow.
+    
+                                getAttribute("Pricelistname").toString());
+    
+                        System.out.println("Pricelistname:" + quoteVORow.
+    
+                                getAttribute("Pricelistname").toString());
+    
                     } else {
-
+    
                         errorMsg.append("<p><b>Price List is required.</b></p>");
-
+    
                     }
-
+    
                     //-------------------
-
-
+    
+    
                     if (quoteVORow.getAttribute("Saleschannel") != null) {
-
-                        cs.setString(5, quoteVORow.getAttribute
-
-                                ("Saleschannel").toString());
-
-                        System.out.println("Saleschannel:" +
-                                           quoteVORow.getAttribute
-
-                                ("Saleschannel").toString());
-
+    
+                        cs.setString(5, quoteVORow.
+    
+                                getAttribute("Saleschannel").toString());
+    
+                        System.out.println("Saleschannel:" + quoteVORow.
+    
+                                getAttribute("Saleschannel").toString());
+    
                     } else {
-
+    
                         cs.setString(5, null);
-
+    
                     }
-
-                    //                if(quoteVORow.getAttribute("OrganizationUnit")!=null)
-
+                    if (quoteVORow.getAttribute("Customernumber") !=
+                        null) {
+    
+                        cs.setString(6, quoteVORow.
+    
+                                getAttribute("Customernumber").toString());
+    
+                        System.out.println("Customer Number" + quoteVORow.
+    
+                                getAttribute("Customernumber"));
+    
+                    } else {
+    
+                        errorMsg.append("<p><b> Customer Details required.</b></p>");
+    
+                    }
+    
                     if (quoteVORow.getAttribute("Salesrepresentative") !=
                         null) {
-
-                        cs.setString(6, quoteVORow.getAttribute
-
-                                ("Salesrepresentative").toString());
-
-                        System.out.println("Sales representative" +
-                                           quoteVORow.getAttribute
-
-                                ("Salesrepresentative"));
-
+    
+                        cs.setString(7, quoteVORow.
+    
+                                getAttribute("Salesrepresentative").toString());
+    
+                        System.out.println("Sales representative" + quoteVORow.
+    
+                                getAttribute("Salesrepresentative"));
+    
                     } else {
-
+    
                         errorMsg.append("<p><b> Sales Representative is required.</b></p>");
-
+    
                     }
-
-
+    
+    
                     if (quoteVORow.getAttribute("Paymentterms") != null) {
-
-                        cs.setString(7, quoteVORow.getAttribute
-
-                                ("Paymentterms").toString());
-
-                        System.out.println("PaymentTermsName:" +
-                                           quoteVORow.getAttribute
-
-                                ("Paymentterms").toString());
-
+    
+                        cs.setString(8, quoteVORow.
+    
+                                getAttribute("Paymentterms").toString());
+    
+                        System.out.println("PaymentTermsName:" + quoteVORow.
+    
+                                getAttribute("Paymentterms").toString());
+    
                     } else {
-
+    
                         //                                                                 cs.setString(6,null);
-
+    
                         errorMsg.append("<p><b> Payment Terms is required.</b></p>");
-
+    
                     }
-
+    
                     if (quoteVORow.getAttribute("CurrencyCode") != null) {
-
-                        cs.setString(8, quoteVORow.getAttribute
-
-                                ("CurrencyCode").toString());
-
-                        System.out.println("Currency:" +
-                                           quoteVORow.getAttribute
-
-                                ("CurrencyCode").toString());
-
+    
+                        cs.setString(9, quoteVORow.
+    
+                                getAttribute("CurrencyCode").toString());
+    
+                        System.out.println("Currency:" + quoteVORow.
+    
+                                getAttribute("CurrencyCode").toString());
+    
                     } else {
-
+    
                         errorMsg.append("<p><b>Currency Code is required.</b></p>");
-
+    
                     }
-
-
+    
+    
                     if (quoteVORow.getAttribute("Incoterms") != null) {
-
-                        cs.setString(9, quoteVORow.getAttribute
-
-                                ("Incoterms").toString());
-
-                        System.out.println("Incoterms:" +
-                                           quoteVORow.getAttribute
-
-                                ("Incoterms").toString());
-
+    
+                        cs.setString(10, quoteVORow.
+    
+                                getAttribute("Incoterms").toString());
+    
+                        System.out.println("Incoterms:" + quoteVORow.
+    
+                                getAttribute("Incoterms").toString());
+    
                     } else {
-
+    
                         errorMsg.append("<p><b>Incoterms is required.</b></p>");
-
+    
                     }
-
-
+    
+    
                     if (quoteVORow.getAttribute("Businesscentercsr") != null) {
-
-                        cs.setString(10, quoteVORow.getAttribute
-
-                                ("Businesscentercsr").toString());
-
-                        System.out.println("Businesscentercsr:" +
-                                           quoteVORow.getAttribute
-
-                                ("Businesscentercsr").toString());
-
+    
+                        cs.setString(11, quoteVORow.
+    
+                                getAttribute("Businesscentercsr").toString());
+    
+                        System.out.println("Businesscentercsr:" + quoteVORow.
+    
+                                getAttribute("Businesscentercsr").toString());
+    
                     } else {
-
-                        cs.setString(10, null);
-
-                        //                                                             errorMsg.append("<p><b>Businesscentercsr is required.</b></p>");
-
-                    }
-
-                    if (quoteVORow.getAttribute("Attribute8") != null) {
-
-                        cs.setString(11, quoteVORow.getAttribute
-
-                                ("Attribute8").toString());
-
-                        System.out.println("Attribute8:" +
-                                           quoteVORow.getAttribute
-
-                                ("Attribute8").toString());
-
-                    } else {
-
+    
                         cs.setString(11, null);
-
-                        //                                                             errorMsg.append("<p><b>Deal id is required.</b></p>");
-
+    
+                        //                                                             errorMsg.append("<p><b>Businesscentercsr is required.</b></p>");
+    
                     }
-
-
-                    if (quoteVORow.getAttribute("Attribute12") != null) {
-
-                        cs.setString(12, quoteVORow.getAttribute
-
-                                ("Attribute12").toString());
-
-                        System.out.println("Attribute12:" +
-                                           quoteVORow.getAttribute
-
-                                ("Attribute12").toString());
-
+    
+                    if (quoteVORow.getAttribute("Attribute8") != null) {
+    
+                        cs.setString(12, quoteVORow.
+    
+                                getAttribute("Attribute8").toString());
+    
+                        System.out.println("Attribute8:" + quoteVORow.
+    
+                                getAttribute("Attribute8").toString());
+    
                     } else {
-
+    
                         cs.setString(12, null);
-
-                        //errorMsg.append("<p><b>Attentiom/Department To is required.</b></p>");
-
+    
+                        //                                                             errorMsg.append("<p><b>Deal id is required.</b></p>");
+    
                     }
-
-                    if (quoteVORow.getAttribute("Attribute13") != null) {
-
-                        cs.setString(13, quoteVORow.getAttribute
-
-                                ("Attribute13").toString());
-
-                        System.out.println("Attribute13:" +
-                                           quoteVORow.getAttribute
-
-                                ("Attribute13").toString());
-
+    
+    
+                    if (quoteVORow.getAttribute("Attribute12") != null) {
+    
+                        cs.setString(13, quoteVORow.
+    
+                                getAttribute("Attribute12").toString());
+    
+                        System.out.println("Attribute12:" + quoteVORow.
+    
+                                getAttribute("Attribute12").toString());
+    
                     } else {
-
+    
                         cs.setString(13, null);
-
+    
+                        //errorMsg.append("<p><b>Attentiom/Department To is required.</b></p>");
+    
+                    }
+    
+                    if (quoteVORow.getAttribute("Attribute13") != null) {
+    
+                        cs.setString(14, quoteVORow.
+    
+                                getAttribute("Attribute13").toString());
+    
+                        System.out.println("Attribute13:" + quoteVORow.
+    
+                                getAttribute("Attribute13").toString());
+    
+                    } else {
+    
+                        cs.setString(14, null);
+    
                         //                        errorMsg.append("<p><b>Organization Unit is required.</b></p>");
-
+    
                     }
-
-                    cs.setInt(14, respid);
-
-                    cs.setInt(15, usrId);
-
+    
+                    cs.setInt(15, respid);
+    
+                    cs.setInt(16, usrId);
+    
                     //                                                         if(quoteVORow.getAttribute("DealId")!=null){
-
+    
                     //                                                                 cs.setString(12,quoteVORow.getAttribute("DealId").toString());
-
+    
                     //                                                                 }
-
+    
                     //                                                         else{
-
+    
                     //                                                                 cs.setString(12,null);
-
+    
                     //                                     //                        errorMsg.append("<p><b>Deal Id is required.</b></p>");
-
+    
                     //                                                             }
-
+    
                     if (quoteVORow.getAttribute("Agrimentname") != null) {
-
-                        cs.setString(16, quoteVORow.getAttribute
-
-                                ("Agrimentname").toString());
-
+    
+                        cs.setString(17, quoteVORow.
+    
+                                getAttribute("Agrimentname").toString());
+    
                     } else {
-
-                        cs.setString(16, null);
-
-                        //                        errorMsg.append("<p><b>AttentionTo/Dept is required.</b></p>");
-
-                    }
-
-                    if (quoteVORow.getAttribute("Attribute2") != null) {
-
-                        cs.setString(17, quoteVORow.getAttribute
-
-                                ("Attribute2").toString());
-
-                    } else {
-
+    
                         cs.setString(17, null);
-
+    
+                        //                        errorMsg.append("<p><b>AttentionTo/Dept is required.</b></p>");
+    
                     }
-
-
+    
+                    if (quoteVORow.getAttribute("Attribute2") != null) {
+    
+                        cs.setString(18, quoteVORow.
+    
+                                getAttribute("Attribute2").toString());
+    
+                    } else {
+    
+                        cs.setString(18, null);
+    
+                    }
+    
+    
                     //                    cs.setString(17, null); //Discount ,change later
-
-                    cs.setString(18, null); //Page, Change later
-
-                    cs.setString(19, null); // p_phonefax add later
-
-                    cs.registerOutParameter(20, Types.VARCHAR);
-
+                    cs.setString(19, null); //Page, Change later
+                    cs.setString(20, null); // p_phonefax add later
                     cs.registerOutParameter(21, Types.VARCHAR);
-
+                    cs.registerOutParameter(22, Types.VARCHAR);
                     errorMsg.append("</body></html>");
-
                     String err = "<html><body></body></html>";
-
                     if ("<html><body></body></html>".equalsIgnoreCase(errorMsg.toString())) {
-
                         cs.executeUpdate();
-
-                        returnMsgStatus = cs.getString(20);
-
-                        returnMessage = cs.getString(21);
-
+                        returnMsgStatus = cs.getString(21);
+                        returnMessage = cs.getString(22);
                         if (returnMessage != null)
-
                             System.out.println("return Message is:" +
-                                               returnMessage + " ::msg::");
-
+                                               returnMessage +
+                                    " ::msg::");
                     }
-
                 } catch (Exception e) {
-
                     errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
-
                     //                    e.printStackTrace();
-
                 } finally {
-
                     try {
-
                         if (cs != null)
-
                             cs.close();
-
                     } catch (SQLException s) {
-
                         errorMsg.append("<p><b>" + s.getMessage() +
                                         "</b></p>");
-
                         //                        s.printStackTrace();
-
                     }
-
                 }
-
             }
-
         }
-
-        if (errorMsg.toString() != null && !"<html><body></body></html>".
-
-            equals(errorMsg.toString()))
-
+        if (errorMsg.toString() != null && !
+            "<html><body></body></html>".equals(errorMsg.toString()))
             returnval = errorMsg.toString();
-
         else {
-
             if (returnMsgStatus != null && returnMessage != null) {
-
-                returnMsgStatus = returnMsgStatus.concat
-
-                        ("-").concat(returnMessage);
-
+                returnMsgStatus = returnMsgStatus.
+                        concat("-").concat(returnMessage);
                 returnval = returnMsgStatus;
-
             } else
-
                 returnval = "Getting Error From API";
-
         }
-
         return returnval;
-
-
     }
+
 
     public void searchQuote() {
         ViewObjectImpl quoteSearchVO = this.getQuoteSearchVO();
@@ -2019,8 +1961,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                             businessAggrement =
                                                     businessAggrement.trim();
                                             if (!businessAggrement.equals("")) {
-                                                String custAccid =
-                                                    row.getAttribute("CustAccid").toString();
+                                                String custAccid = (String)row.getAttribute("CustAccid");
                                                 if (isBusAgreement(businessAggrement,
                                                                    custAccid)) {
                                                     qheaderValidMap.put("businessAgreement",
@@ -2476,12 +2417,8 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         return row;
     }
 
-    public void defaultSalesRepOnCreateQuote() {
-        ViewObjectImpl vo = this.getQuotesVO();
+    public void defaultSalesRepOnCreateQuote(Row row) {
         Row salesRepRow = null;
-        Row row = null;
-        if (vo != null) {
-            row = vo.getCurrentRow();
             if (row != null) {
                 System.out.println("OrgId is:" + row.getAttribute("OrgId"));
                 salesRepRow =
@@ -2491,7 +2428,6 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                      salesRepRow.getAttribute("ResourceName"));
                 }
             }
-        }
     }
 
 
@@ -2621,7 +2557,10 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             row.setAttribute("CustomerSupportRepresent", csr);
             System.out.println(paymentTerm);
             row.setAttribute("PaymentTerms", paymentTerm);
+            if(salesRep!=null)
             row.setAttribute("SalesRepresentative", salesRep);
+            else
+                defaultSalesRepOnCreateQuote(row);
             vo.insertRow(row);
             vo.setCurrentRow(row);
             getQuoteCustmerAddress(row);
@@ -2646,129 +2585,129 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     }
 
     public void initRuleSet() {
-        System.out.println("Init Rule Set");
-        ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
-        if (ruleSetVO != null) {
-            //            AttributeDef[] attDef = ruleSetVO.getAttributeDefs();
-            //            for (AttributeDef af : attDef) {
-            //                System.out.println(af.getName());
-            //            }
-            //get value of rulset top level and second level choices
-            Row cRow = ruleSetVO.createRow();
-            ruleSetVO.insertRow(cRow);
-            Map ruleSetMap =
-                (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
-            if (ruleSetMap != null) {
-                String topLevelCode = (String)ruleSetMap.get("topLevelCode");
-                String secondLevelCode =
-                    (String)ruleSetMap.get("secondLevelCode");
-                _logger.info("AMIMPL FirstLvCode " + topLevelCode);
-                _logger.info("AMIMPL SecLvlCode " + secondLevelCode);
-                String error = (String)ruleSetMap.get("error");
-                if (error != null && error.equalsIgnoreCase("N")) {
-                    if (secondLevelCode != null) {
-                        secondLevelCode = secondLevelCode.toUpperCase();
+            System.out.println("Init Rule Set");
+            ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
+            if (ruleSetVO != null) {
+                //            AttributeDef[] attDef = ruleSetVO.getAttributeDefs();
+                //            for (AttributeDef af : attDef) {
+                //                System.out.println(af.getName());
+                //            }
+                //get value of rulset top level and second level choices
+                Row cRow = ruleSetVO.createRow();
+                ruleSetVO.insertRow(cRow);
+                Map ruleSetMap =
+                    (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
+                if (ruleSetMap != null) {
+                    String topLevelCode = (String)ruleSetMap.get("topLevelCode");
+                    String secondLevelCode =
+                        (String)ruleSetMap.get("secondLevelCode");
+                    _logger.info("AMIMPL FirstLvCode " + topLevelCode);
+                    _logger.info("AMIMPL SecLvlCode " + secondLevelCode);
+                    String error = (String)ruleSetMap.get("error");
+                    if (error != null && error.equalsIgnoreCase("N")) {
+                        if (secondLevelCode != null) {
+                            secondLevelCode = secondLevelCode.toUpperCase();
+                        }
+                        cRow.setAttribute("TopLevelCode", topLevelCode);
+                        cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                        RuleSetVORowImpl rwImpl =
+                            (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                        String secondLevelMeaning =
+                            rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                        System.out.println("From AM Impl second level meaning " +
+                                           secondLevelMeaning);
+                        cRow.setAttribute("SecondLevelMeaning",
+                                          secondLevelMeaning);
                     }
-                    cRow.setAttribute("TopLevelCode", topLevelCode);
-                    cRow.setAttribute("SecondLevelCode", secondLevelCode);
-                    RuleSetVORowImpl rwImpl =
-                        (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
-                    String secondLevelMeaning =
-                        rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                    System.out.println("From AM Impl second level meaning " +
-                                       secondLevelMeaning);
-                    cRow.setAttribute("SecondLevelMeaning",
-                                      secondLevelMeaning);
-                }
-                if (error == null) {
-                    if (secondLevelCode != null) {
-                        secondLevelCode = secondLevelCode.toUpperCase();
+                    if (error == null) {
+                        if (secondLevelCode != null) {
+                            secondLevelCode = secondLevelCode.toUpperCase();
+                        }
+                        cRow.setAttribute("TopLevelCode", topLevelCode);
+                        cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                        RuleSetVORowImpl rwImpl =
+                            (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                        String secondLevelMeaning =
+                            rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                        System.out.println("From AM Impl second level meaning " +
+                                           secondLevelMeaning);
+                        cRow.setAttribute("SecondLevelMeaning",
+                                          secondLevelMeaning);
                     }
-                    cRow.setAttribute("TopLevelCode", topLevelCode);
-                    cRow.setAttribute("SecondLevelCode", secondLevelCode);
-                    RuleSetVORowImpl rwImpl =
-                        (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
-                    String secondLevelMeaning =
-                        rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                    System.out.println("From AM Impl second level meaning " +
-                                       secondLevelMeaning);
-                    cRow.setAttribute("SecondLevelMeaning",
-                                      secondLevelMeaning);
+
+                    ruleSetVO.setCurrentRow(cRow);
+
+                } else {
+                    ruleSetVO.setCurrentRow(cRow);
                 }
-
-                ruleSetVO.setCurrentRow(cRow);
-
-            } else {
-                ruleSetVO.setCurrentRow(cRow);
             }
         }
-    }
 
 
-    public void initRuleSetForRef() {
-        ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
-        if (ruleSetVO != null) {
-            //get value of rulset top level and second level choices
-            Row cRow = ruleSetVO.createRow();
-            ruleSetVO.insertRow(cRow);
-            Map ruleSetMap =
-                (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
-            Map configRuleSetMap =
-                (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMapConfig");
-            if (ruleSetMap != null && ruleSetMap.size() > 0) {
-                ruleSetVO.setCurrentRow(cRow);
-                String topLevelCode = (String)ruleSetMap.get("topLevelCode");
-                String secondLevelCode =
-                    (String)ruleSetMap.get("secondLevelCode");
-                String error = (String)ruleSetMap.get("error");
-                //                    if (error != null && error.equalsIgnoreCase("N")) {
-                if (secondLevelCode != null) {
-                    secondLevelCode = secondLevelCode.toUpperCase();
-                }
-                if (error == null ||
-                    (error != null && error.equalsIgnoreCase("N"))) {
-                    cRow.setAttribute("TopLevelCode", topLevelCode);
-                    cRow.setAttribute("SecondLevelCode", secondLevelCode);
-                    RuleSetVORowImpl rwImpl =
-                        (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
-                    String secondLevelMeaning =
-                        rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                    System.out.println("From AM Impl second level meaning " +
-                                       secondLevelMeaning);
-                    cRow.setAttribute("SecondLevelMeaning",
-                                      secondLevelMeaning);
-                }
-                ruleSetVO.setCurrentRow(cRow);
-                //                    }
-            }
-
-            else if (configRuleSetMap != null && !configRuleSetMap.isEmpty()) {
-                String topLevelCode =
-                    (String)configRuleSetMap.get("topLevelCode");
-                String secondLevelCode =
-                    (String)configRuleSetMap.get("secondLevelCode");
-                String error = (String)configRuleSetMap.get("error");
-                if (error == null ||
-                    (error != null && error.equalsIgnoreCase("N"))) {
+        public void initRuleSetForRef() {
+            ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
+            if (ruleSetVO != null) {
+                //get value of rulset top level and second level choices
+                Row cRow = ruleSetVO.createRow();
+                ruleSetVO.insertRow(cRow);
+                Map ruleSetMap =
+                    (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMap");
+                Map configRuleSetMap =
+                    (Map)ADFContext.getCurrent().getSessionScope().get("ruleSetMapConfig");
+                if (ruleSetMap != null && ruleSetMap.size() > 0) {
+                    ruleSetVO.setCurrentRow(cRow);
+                    String topLevelCode = (String)ruleSetMap.get("topLevelCode");
+                    String secondLevelCode =
+                        (String)ruleSetMap.get("secondLevelCode");
+                    String error = (String)ruleSetMap.get("error");
+                    //                    if (error != null && error.equalsIgnoreCase("N")) {
                     if (secondLevelCode != null) {
                         secondLevelCode = secondLevelCode.toUpperCase();
                     }
-                    cRow.setAttribute("TopLevelCode", topLevelCode);
-                    cRow.setAttribute("SecondLevelCode", secondLevelCode);
-                    RuleSetVORowImpl rwImpl =
-                        (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
-                    String secondLevelMeaning =
-                        rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                    System.out.println("From AM Impl second level meaning " +
-                                       secondLevelMeaning);
-                    cRow.setAttribute("SecondLevelMeaning",
-                                      secondLevelMeaning);
+                    if (error == null ||
+                        (error != null && error.equalsIgnoreCase("N"))) {
+                        cRow.setAttribute("TopLevelCode", topLevelCode);
+                        cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                        RuleSetVORowImpl rwImpl =
+                            (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                        String secondLevelMeaning =
+                            rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                        System.out.println("From AM Impl second level meaning " +
+                                           secondLevelMeaning);
+                        cRow.setAttribute("SecondLevelMeaning",
+                                          secondLevelMeaning);
+                    }
+                    ruleSetVO.setCurrentRow(cRow);
+                    //                    }
                 }
 
-                ruleSetVO.setCurrentRow(cRow);
+                else if (configRuleSetMap != null && !configRuleSetMap.isEmpty()) {
+                    String topLevelCode =
+                        (String)configRuleSetMap.get("topLevelCode");
+                    String secondLevelCode =
+                        (String)configRuleSetMap.get("secondLevelCode");
+                    String error = (String)configRuleSetMap.get("error");
+                    if (error == null ||
+                        (error != null && error.equalsIgnoreCase("N"))) {
+                        if (secondLevelCode != null) {
+                            secondLevelCode = secondLevelCode.toUpperCase();
+                        }
+                        cRow.setAttribute("TopLevelCode", topLevelCode);
+                        cRow.setAttribute("SecondLevelCode", secondLevelCode);
+                        RuleSetVORowImpl rwImpl =
+                            (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
+                        String secondLevelMeaning =
+                            rwImpl.retrieveSecLevelMeaning(secondLevelCode);
+                        System.out.println("From AM Impl second level meaning " +
+                                           secondLevelMeaning);
+                        cRow.setAttribute("SecondLevelMeaning",
+                                          secondLevelMeaning);
+                    }
+
+                    ruleSetVO.setCurrentRow(cRow);
+                }
             }
         }
-    }
 
 
     public String callDuplicateQuoteAPI(String quoteFromSesion, int respId,
@@ -3216,42 +3155,94 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         }
 
     }
+    
+    
+    public void clearUserPrefSCVO(int usrId) {
+        String query =
+            "delete from XXAT_USERPREF_SALESCHANNEL where user_id=?";
+        PreparedStatement cs = null;
+        ResultSet rs;
+        try {
+            cs = this.getDBTransaction().createPreparedStatement(query, 0);
+            cs.setInt(1, usrId);
+            cs.execute();
+            cs.getConnection().commit();
+            //            this.getDBTransaction().commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } finally {
+            if (cs != null) {
+                try {
+                    cs.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        ViewObjectImpl vo = this.getuserPrefSCVO1();
+        if (vo != null) {
+            vo.clearCache();
+            vo.setWhereClause(null);
+            vo.setWhereClause("USER_ID =" + usrId);
+            vo.executeQuery();
+            System.out.println(vo.getEstimatedRowCount());
+        }
+
+    }
+
+    
+    
+    
 
     public void getSalesChannelBasedUserPref(String salesChannel) {
         ViewObjectImpl vo = this.getQuotesVO();
         String custNum = null, custName = null;
         String currency = null, incoTerm = null, paymentTerm = null, ba = null;
         if (vo != null) {
-            Row r = vo.getCurrentRow();
-            QuotesVORowImpl rowImpl = (QuotesVORowImpl)vo.getCurrentRow();
-            Map map =
-                rowImpl.getSalesChannelBasedCustomerDetails(salesChannel.toString());
-            if (map != null) {
-                custNum = (String)map.get("custNum");
-                custName = (String)map.get("custName");
+           
+                Row r = vo.getCurrentRow();
+                if (r!=null) {
+                    if(r.getAttribute("OrgId")!=null){
+                QuotesVORowImpl rowImpl = (QuotesVORowImpl)vo.getCurrentRow();
+                Map map =
+                    rowImpl.getSalesChannelBasedCustomerDetails(salesChannel.toString());
+                if (map != null) {
+                    custNum = (String)map.get("custNum");
+                    custName = (String)map.get("custName");
+                    System.out.println(custNum);
+                    System.out.println(custName);
+                }
+                currency = rowImpl.getSalesChannelBasedCurrency(salesChannel);
+                incoTerm = rowImpl.getSalesChannelBasedIncoTerm(salesChannel);
+                paymentTerm =
+                        rowImpl.getSalesChannelBasedPaymentTerm(salesChannel);
+                ba = rowImpl.getSalesChannelBasedBA(salesChannel);
+                System.out.println("CustNum:" + r.getAttribute("CustNum"));
+                System.out.println("CustomerName:" +
+                                   r.getAttribute("CustomerName"));
+    //                r.setAttribute("CustNum", "ATJ");
+    //                r.setAttribute("CustomerName", "Advantest Corporation");
+                 r.setAttribute("CustNum", custNum);
+    //                r.setAttribute("CustomerName", custName);
+    //                r.setAttribute("CustName", custName);
+                System.out.println("CustNum:" + r.getAttribute("CustNum"));
+                System.out.println("CustomerName:" +
+                                   r.getAttribute("CustName"));
+                getQuoteCustmerAddress(r);
+                r.setAttribute("IncoTerms", incoTerm);
+                r.setAttribute("Currency", currency);
+                r.setAttribute("PaymentTerms", paymentTerm);
+                r.setAttribute("BusinessAgreement", ba);
             }
-            currency = rowImpl.getSalesChannelBasedCurrency(salesChannel);
-            incoTerm = rowImpl.getSalesChannelBasedIncoTerm(salesChannel);
-            paymentTerm =
-                    rowImpl.getSalesChannelBasedPaymentTerm(salesChannel);
-            ba = rowImpl.getSalesChannelBasedBA(salesChannel);
-            System.out.println("CustNum:" + r.getAttribute("CustNum"));
-            System.out.println("CustomerName:" +
-                               r.getAttribute("CustomerName"));
-            r.setAttribute("CustNum", custNum);
-            r.setAttribute("CustomerName", custName);
-            System.out.println("CustNum:" + r.getAttribute("CustNum"));
-            System.out.println("CustomerName:" +
-                               r.getAttribute("CustomerName"));
-            getQuoteCustmerAddress(r);
-            r.setAttribute("IncoTerms", incoTerm);
-            r.setAttribute("Currency", currency);
-            r.setAttribute("PaymentTerms", paymentTerm);
-            r.setAttribute("BusinessAgreement", ba);
-
+                }
         }
-
+    
     }
+
 
     public boolean getSalesChannelBasedUserPrefForUpdateQuote(String salesChannel) {
         ViewObjectImpl vo = this.getQuoteUpdateVO1();
@@ -3399,7 +3390,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 RowSetIterator iter = otVO.createRowSetIterator(null);
                 while (iter.hasNext()) {
                     Row r = iter.next();
-                    selectedNames.add(r.getAttribute("Name").toString());
+                    selectedNames.add((String)r.getAttribute("Name"));
                 }
             }
         }
@@ -3702,7 +3693,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             //                    currency = (String)r.getAttribute("ColumnVal");
             //                }
             String orgId =
-                (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+                (String)ADFContext.getCurrent().getSessionScope().get("SCBasedOrgId");
             Object obj[] = { usrId, col_type, salesChannel, orgId };
             Key key = new Key(obj);
             Row[] rows = vo.findByKey(key, 4);
@@ -3753,7 +3744,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             vo.setWhereClause(null);
             String col_type = "IncoTerm";
             String orgId =
-                (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+                (String)ADFContext.getCurrent().getSessionScope().get("SCBasedOrgId");
             //            RowQualifier rq1 =
             //                new RowQualifier("UserId =" + usrId + " And ColumnType =" +
             //                                 "'" + col_type + "' AND SalesChannel=" + "'" +
@@ -3799,7 +3790,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         ViewObjectImpl vo = this.getuserPrefSCVO1();
         ViewObjectImpl paymentTermVO = this.getPaymentTermsVO();
         String orgId =
-            (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+            (String)ADFContext.getCurrent().getSessionScope().get("SCBasedOrgId");
         String col_type = "PaymentTerms";
         if (salesChannel != null) {
             vo.clearCache();
@@ -3849,7 +3840,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         ViewObjectImpl vo = this.getuserPrefSCVO1();
         ViewObjectImpl baVO = this.getbusinessAgreementVo();
         String orgId =
-            (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+            (String)ADFContext.getCurrent().getSessionScope().get("SCBasedOrgId");
         if (salesChannel != null) {
             vo.clearCache();
             vo.setWhereClause(null);
@@ -3891,283 +3882,278 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
 
     public void validatePrefStaticValues(int usrId, String numberFormat) {
-        ViewObjectImpl quotesVo = this.getQuotesVO();
-        ViewObjectImpl userPrefVO = this.getuserPrefEntityVO();
-        //        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
-        Row row = null;
-        if (quotesVo != null) {
-            Row quotesRow = quotesVo.getCurrentRow();
-            if (quotesRow != null) {
-                String prdNumRefConfig = "Prd_num_ref_config";
-
-                String prdNumTargetConfig = "Prd_num_target_config";
-
-                String refPriceRefConfig = "Ref_price_ref_config";
-
-                String refPriceTargetConfig = "Ref_price_target_config";
-
-                String numFormat = "Num_format";
-
-                Object PrdNumrefobj[] = { usrId, prdNumRefConfig };
-
-                if (PrdNumrefobj.length > 0) {
-
-                    Key key = new Key(PrdNumrefobj);
-
-                    Row[] prdNumRef = userPrefVO.findByKey(key, 2);
-
-                    if (prdNumRef != null && prdNumRef.length > 0) {
-
-                        row = prdNumRef[0];
-
-                    } else {
-
-                        row = userPrefVO.createRow();
-
-                        row.setAttribute("UserId", usrId);
-
-                        row.setAttribute("ColumnType", prdNumRefConfig);
-
-                        //                        row.setAttribute("OperatingUnit", orgId);
-
-                    }
-
-                    if (row != null) {
-
-                        System.out.println("user Name:" + row.getAttribute
-
-                                ("UserId") + "::column_name::" + row.
-
-                                getAttribute
-
-                                ("ColumnType"));
-
-                        if (quotesRow.getAttribute("PrdNumRefConfig") !=
-                            null) {
-
-                            row.setAttribute("ColumnVal", null);
-
-                            row.setAttribute("ColumnVal",
-                                             quotesRow.getAttribute
-
-                                    ("PrdNumRefConfig"));
-
+            ViewObjectImpl quotesVo = this.getQuotesVO();
+            ViewObjectImpl userPrefVO = this.getuserPrefEntityVO();
+            //        String orgId = (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+            Row row = null;
+            if (quotesVo != null) {
+                Row quotesRow = quotesVo.getCurrentRow();
+                if (quotesRow != null) {
+                    String prdNumRefConfig = "Prd_num_ref_config";
+     
+                    String prdNumTargetConfig = "Prd_num_target_config";
+     
+                    String refPriceRefConfig = "Ref_price_ref_config";
+     
+                    String refPriceTargetConfig = "Ref_price_target_config";
+     
+                    String numFormat = "Num_format";
+     
+                    Object PrdNumrefobj[] = { usrId, prdNumRefConfig };
+     
+                    if (PrdNumrefobj.length > 0) {
+     
+                        Key key = new Key(PrdNumrefobj);
+     
+                        Row[] prdNumRef = userPrefVO.findByKey(key, 2);
+     
+                        if (prdNumRef != null && prdNumRef.length > 0) {
+     
+                            row = prdNumRef[0];
+     
+                        } else {
+     
+                            row = userPrefVO.createRow();
+     
+                            row.setAttribute("UserId", usrId);
+     
+                            row.setAttribute("ColumnType", prdNumRefConfig);
+     
+                            //                        row.setAttribute("OperatingUnit", orgId);
+     
                         }
-
-                        else {
-
-                            row.setAttribute("ColumnVal", "N");
-
+     
+                        if (row != null) {
+     
+                            System.out.println("user Name:" + row.
+     
+                                    getAttribute("UserId") + "::column_name::" +
+     
+                                    row.
+     
+                                    getAttribute("ColumnType"));
+     
+                            if (quotesRow.getAttribute("PrdNumRefConfig") !=
+                                null) {
+     
+                                row.setAttribute("ColumnVal", null);
+     
+                                row.setAttribute("ColumnVal", quotesRow.
+     
+                                        getAttribute("PrdNumRefConfig"));
+     
+                            }
+     
+                            else {
+     
+                                row.setAttribute("ColumnVal", "N");
+     
+                            }
+     
                         }
-
+     
                     }
-
-                }
-
-                Object prdNumTCon[] = { usrId, prdNumTargetConfig };
-
-                if (prdNumTCon.length > 0) {
-
-                    Key key = new Key(prdNumTCon);
-
-                    Row[] prdNumT = userPrefVO.findByKey(key, 2);
-
-                    if (prdNumT != null && prdNumT.length > 0) {
-
-                        row = prdNumT[0];
-
-                    } else {
-
-                        row = userPrefVO.createRow();
-
-                        row.setAttribute("UserId", usrId);
-
-                        row.setAttribute("ColumnType", prdNumTargetConfig);
-
-                        //                        row.setAttribute("OperatingUnit", orgId);
-
-                    }
-
-                    if (row != null) {
-
-                        System.out.println("user Name:" + row.getAttribute
-
-                                ("UserId") + "::column_name::" + row.
-
-                                getAttribute
-
-                                ("ColumnType"));
-
-                        if (quotesRow.getAttribute("PrdNumTargetConfig") !=
-                            null) {
-
-                            row.setAttribute("ColumnVal", null);
-
-                            row.setAttribute("ColumnVal",
-                                             quotesRow.getAttribute
-
-                                    ("PrdNumTargetConfig"));
-
+     
+                    Object prdNumTCon[] = { usrId, prdNumTargetConfig };
+     
+                    if (prdNumTCon.length > 0) {
+     
+                        Key key = new Key(prdNumTCon);
+     
+                        Row[] prdNumT = userPrefVO.findByKey(key, 2);
+     
+                        if (prdNumT != null && prdNumT.length > 0) {
+     
+                            row = prdNumT[0];
+     
+                        } else {
+     
+                            row = userPrefVO.createRow();
+     
+                            row.setAttribute("UserId", usrId);
+     
+                            row.setAttribute("ColumnType", prdNumTargetConfig);
+     
+                            //                        row.setAttribute("OperatingUnit", orgId);
+     
                         }
-
-                    }
-
-                }
-
-
-                Object refNumRefCon[] = { usrId, refPriceRefConfig };
-
-                if (refNumRefCon.length > 0) {
-
-                    Key key = new Key(refNumRefCon);
-
-                    Row[] refNumRCon = userPrefVO.findByKey(key, 2);
-
-                    if (refNumRCon != null && refNumRCon.length > 0) {
-
-                        row = refNumRCon[0];
-
-                    } else {
-
-                        row = userPrefVO.createRow();
-
-                        row.setAttribute("UserId", usrId);
-
-                        row.setAttribute("ColumnType", refPriceRefConfig);
-
-                        //                        row.setAttribute("OperatingUnit", orgId);
-
-                    }
-
-                    if (row != null) {
-
-                        System.out.println("user Name:" + row.getAttribute
-
-                                ("UserId") + "::column_name::" + row.
-
-                                getAttribute
-
-                                ("ColumnType"));
-
-                        if (quotesRow.getAttribute("RefPriceRegConfig") !=
-                            null) {
-
-                            row.setAttribute("ColumnVal", null);
-
-                            row.setAttribute("ColumnVal",
-                                             quotesRow.getAttribute
-
-                                    ("RefPriceRegConfig"));
-
+     
+                        if (row != null) {
+     
+                            System.out.println("user Name:" + row.
+     
+                                    getAttribute("UserId") + "::column_name::" +
+     
+                                    row.
+     
+                                    getAttribute("ColumnType"));
+     
+                            if (quotesRow.getAttribute("PrdNumTargetConfig") !=
+                                null) {
+     
+                                row.setAttribute("ColumnVal", null);
+     
+                                row.setAttribute("ColumnVal", quotesRow.
+     
+                                        getAttribute("PrdNumTargetConfig"));
+     
+                            }
+     
                         }
-
+     
                     }
-
-                }
-
-
-                Object refPriceTConfig[] = { usrId, refPriceTargetConfig };
-
-                if (refPriceTConfig.length > 0) {
-
-                    Key key = new Key(refPriceTConfig);
-
-                    Row[] refPriceTCon = userPrefVO.findByKey(key, 2);
-
-                    if (refPriceTCon != null && refPriceTCon.length > 0) {
-
-                        row = refPriceTCon[0];
-
-                    } else {
-
-                        row = userPrefVO.createRow();
-
-                        row.setAttribute("UserId", usrId);
-
-                        row.setAttribute("ColumnType", refPriceTargetConfig);
-
-                        //                        row.setAttribute("OperatingUnit", orgId);
-
-                    }
-
-                    if (row != null) {
-
-                        System.out.println("user Name:" + row.getAttribute
-
-                                ("UserId") + "::column_name::" + row.
-
-                                getAttribute
-
-                                ("ColumnType"));
-
-                        if (quotesRow.getAttribute("RefPriceTargetConfig") !=
-                            null) {
-
-                            row.setAttribute("ColumnVal", null);
-
-                            row.setAttribute("ColumnVal",
-                                             quotesRow.getAttribute
-
-                                    ("RefPriceTargetConfig"));
-
+     
+     
+                    Object refNumRefCon[] = { usrId, refPriceRefConfig };
+     
+                    if (refNumRefCon.length > 0) {
+     
+                        Key key = new Key(refNumRefCon);
+     
+                        Row[] refNumRCon = userPrefVO.findByKey(key, 2);
+     
+                        if (refNumRCon != null && refNumRCon.length > 0) {
+     
+                            row = refNumRCon[0];
+     
+                        } else {
+     
+                            row = userPrefVO.createRow();
+     
+                            row.setAttribute("UserId", usrId);
+     
+                            row.setAttribute("ColumnType", refPriceRefConfig);
+     
+                            //                        row.setAttribute("OperatingUnit", orgId);
+     
                         }
-
+     
+                        if (row != null) {
+     
+                            System.out.println("user Name:" + row.
+     
+                                    getAttribute("UserId") + "::column_name::" +
+     
+                                    row.
+     
+                                    getAttribute("ColumnType"));
+     
+                            if (quotesRow.getAttribute("RefPriceRegConfig") !=
+                                null) {
+     
+                                row.setAttribute("ColumnVal", null);
+     
+                                row.setAttribute("ColumnVal", quotesRow.
+     
+                                        getAttribute("RefPriceRegConfig"));
+     
+                            }
+     
+                        }
+     
                     }
-
-                }
-                if (numberFormat != null) {
-                    String groupSeparator = null, decimalSeparator = null;
-                    char gs = numberFormat.charAt(2);
-                    char ds = numberFormat.charAt(6);
-                    if (gs == ' ')
-                        groupSeparator = "SPACE";
-                    else if (gs == ',')
+     
+     
+                    Object refPriceTConfig[] = { usrId, refPriceTargetConfig };
+     
+                    if (refPriceTConfig.length > 0) {
+     
+                        Key key = new Key(refPriceTConfig);
+     
+                        Row[] refPriceTCon = userPrefVO.findByKey(key, 2);
+     
+                        if (refPriceTCon != null && refPriceTCon.length > 0) {
+     
+                            row = refPriceTCon[0];
+     
+                        } else {
+     
+                            row = userPrefVO.createRow();
+     
+                            row.setAttribute("UserId", usrId);
+     
+                            row.setAttribute("ColumnType", refPriceTargetConfig);
+     
+                            //                        row.setAttribute("OperatingUnit", orgId);
+     
+                        }
+     
+                       if (row != null) {
+     
+                            System.out.println("user Name:" + row.
+     
+                                    getAttribute("UserId") + "::column_name::" +
+     
+                                    row.
+     
+                                    getAttribute("ColumnType"));
+     
+                            if (quotesRow.getAttribute("RefPriceTargetConfig") !=
+                                null) {
+     
+                                row.setAttribute("ColumnVal", null);
+     
+                                row.setAttribute("ColumnVal", quotesRow.
+     
+                                        getAttribute("RefPriceTargetConfig"));
+     
+                            }
+     
+                        }
+     
+                    }
+                    if (numberFormat != null) {     
+                        String groupSeparator = null,decimalSeparator = null;
+                        char gs = numberFormat.charAt(2);
+                        char ds = numberFormat.charAt(6);
+                        if(gs ==' ')
+                            groupSeparator = "SPACE";
+                        else if(gs ==',')
                         groupSeparator = "COMMA";
-                    else if (gs == '\'')
+                        else if(gs =='\'')
                         groupSeparator = "APOSTROPHE";
-                    else if (gs == '.')
-                        groupSeparator = "DOT";
-                    else
+                            else if(gs =='.')
+                            groupSeparator = "DOT";
+                        else
                         groupSeparator = null;
-
-                    if (ds == ' ')
-                        decimalSeparator = "SPACE";
-                    else if (ds == ',')
+                        
+                        if(ds ==' ')
+                            decimalSeparator = "SPACE";
+                        else if(ds ==',')
                         decimalSeparator = "COMMA";
-                    else if (ds == '\'')
+                        else if(ds =='\'')
                         decimalSeparator = "APOSTROPHE";
-                    else if (ds == '.')
-                        decimalSeparator = "DOT";
-                    else
+                            else if(ds =='.')
+                            decimalSeparator = "DOT";
+                        else
                         decimalSeparator = null;
-
-                    Object numFormating[] = { usrId, numFormat };
-                    //                if (numFormating.length > 0) {
-                    Key key = new Key(numFormating);
-                    Row[] numFRow = userPrefVO.findByKey(key, 2);
-                    if (numFRow != null && numFRow.length > 0) {
-                        row = numFRow[0];
-                    } else {
-                        row = userPrefVO.createRow();
-                        row.setAttribute("UserId", usrId);
-                        row.setAttribute("ColumnType", numFormat);
-                        //                        row.setAttribute("OperatingUnit", orgId);
+                        
+                        Object numFormating[] = { usrId, numFormat };
+                        //                if (numFormating.length > 0) {
+                        Key key = new Key(numFormating);
+                        Row[] numFRow = userPrefVO.findByKey(key, 2);
+                        if (numFRow != null && numFRow.length > 0) {
+                            row = numFRow[0];
+                        } else {
+                            row = userPrefVO.createRow();
+                            row.setAttribute("UserId", usrId);
+                            row.setAttribute("ColumnType", numFormat);
+                            //                        row.setAttribute("OperatingUnit", orgId);
+                        }
+                        if (row != null) {
+                            System.out.println("user Name:" + row.
+                                    getAttribute("UserId") + "::column_name::" +
+                                    row.getAttribute("ColumnType"));
+                            row.setAttribute("ColumnVal", numberFormat);
+                            row.setAttribute("DecimalSeperator", decimalSeparator);
+                            row.setAttribute("GroupSeperator", groupSeparator);
+                            
+                        }
+                        //                }
                     }
-                    if (row != null) {
-                        System.out.println("user Name:" +
-                                           row.getAttribute("UserId") +
-                                           "::column_name::" +
-                                           row.getAttribute("ColumnType"));
-                        row.setAttribute("ColumnVal", numberFormat);
-                        row.setAttribute("DecimalSeperator", decimalSeparator);
-                        row.setAttribute("GroupSeperator", groupSeparator);
-
-                    }
-                    //                }
                 }
             }
         }
-    }
 
 
     public void getViewAccessors(int usrId) {
@@ -4507,9 +4493,16 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 new RowQualifier("Customername in" + sb.toString());
             Row r[] = custVO.getFilteredRows(rq);
             custNumber.append(r[0].getAttribute("Accountnumber"));
-            for (Row r1 : r) {
-                custNumber.append(",").append(r1.getAttribute("Accountnumber"));
+            for (int i = 1; i < r.length; i++) {
+                System.out.println("selected valuseaa:" +
+                                   r[i].getAttribute("Accountnumber"));
+                custNumber.append(",").append(r[i].getAttribute("Accountnumber"));
             }
+            
+            
+//            for (Row r1 : r) {
+//                custNumber.append(",").append(r1.getAttribute("Accountnumber"));
+//            }
         }
         _logger.info("SudkuAmimpl: validateCustValuesForSC: : Customer numbers::" +
                      custNumber.toString());
@@ -5069,7 +5062,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         _logger.info("SudokuAmimpl: validateCurrencyValuesForSC: start: :: ");
         ViewObjectImpl vo = this.getuserPrefSCVO1();
         String orgId =
-            (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+            (String)ADFContext.getCurrent().getSessionScope().get("SCBasedOrgId");
         StringBuilder currencysb = new StringBuilder("");
         if (currencyValues != null && currencyValues.size() > 0) {
             StringBuilder sb = new StringBuilder("('");
@@ -5148,7 +5141,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         }
         ViewObjectImpl vo = this.getuserPrefSCVO1();
         String orgId =
-            (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+            (String)ADFContext.getCurrent().getSessionScope().get("SCBasedOrgId");
         StringBuilder incoTermsb = new StringBuilder();
         if (incoTermValues != null && incoTermValues.size() > 0) {
             StringBuilder sb = new StringBuilder("('");
@@ -5213,12 +5206,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         StringBuilder errorMsg = new StringBuilder("");
         BigDecimal defaultCode = null;
         ViewObjectImpl baVO = this.getbusinessAgreementVo();
+        baVO.clearCache();
+        baVO.setWhereClause(null);
         Row fRows[] = baVO.getFilteredRows("Name", defaultVal);
         if (fRows != null && fRows.length > 0) {
             defaultCode = (BigDecimal)fRows[0].getAttribute("AgreementId");
         }
         String orgId =
-            (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+            (String)ADFContext.getCurrent().getSessionScope().get("SCBasedOrgId");
 
         ViewObjectImpl vo = this.getuserPrefSCVO1();
 
@@ -5286,7 +5281,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         StringBuilder errorMsg = new StringBuilder("");
         String defaultCode = null, temp = null;
         String orgId =
-            (String)ADFContext.getCurrent().getSessionScope().get("UserBasedOrgId");
+            (String)ADFContext.getCurrent().getSessionScope().get("SCBasedOrgId");
         ViewObjectImpl vo = this.getuserPrefSCVO1();
         ViewObjectImpl paymentTermsVO = this.getPaymentTermsVO();
         StringBuilder paymentTermssb = new StringBuilder();
@@ -6368,8 +6363,26 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         return currencyFormat;
     }
 
-    public HashMap getPriceProductChoices() {
+//    public Hashtable getPriceProductChoices(String userId) {
+//        Hashtable choiceHashTable = new Hashtable();
+//        String query =
+//            "select * from xxat_userpref_globalchoice where user_id=:1 and column_type IN ('Prd_num_ref_config','Prd_num_target_config','Ref_price_ref_config','Ref_price_target_config')";
+//        DBTransaction dbTrans = (DBTransaction)this.getTransaction();
+//        PreparedStatement ps = dbTrans.createPreparedStatement(query, 0);
+//        try {
+//            ps.setString(1, userId == null ? "0" : userId);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                choiceHashTable.put(rs.getString(2), rs.getString(3));
+//            }
+//        } catch (SQLException e) {
+//        }
+//        return choiceHashTable;
+//    }
 
+
+public HashMap getPriceProductChoices() {
+ 
         HashMap choiceHashTable =
             (HashMap)ADFContext.getCurrent().getSessionScope().get("userPrefMap");
         if (choiceHashTable == null ||
@@ -6395,8 +6408,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         }
         return choiceHashTable;
     }
-
+ 
     public Hashtable getPriceProductChoices(String userId) {
         return null;
     }
+
+
+
+
+
+
 }

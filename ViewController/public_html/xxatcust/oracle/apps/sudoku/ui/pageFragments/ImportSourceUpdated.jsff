@@ -21,7 +21,8 @@
                                          required="#{bindings.ConfigTypeMeaning.hints.mandatory}"
                                          shortDesc="#{bindings.ConfigTypeMeaning.hints.tooltip}"
                                          id="sor2" autoSubmit="true"
-                                         valueChangeListener="#{pageFlowScope.ImportSourceBean.configTypeChanged}">
+                                         valueChangeListener="#{pageFlowScope.ImportSourceBean.configTypeChanged}"
+                                         disabled="#{bindings.ImportSrcCode.inputValue ne 'BUDGET_QUOTE'}">
                         <f:selectItems value="#{bindings.ConfigTypeMeaning.items}"
                                        id="si2"/>
                       </af:selectOneRadio>
@@ -43,19 +44,6 @@
               <af:panelGroupLayout id="pgl7" layout="vertical"
                                    partialTriggers="sor1" halign="left">
                 <af:panelFormLayout id="pfl2">
-                  <af:panelGroupLayout id="pgl12_1" layout="horizontal">
-                    <af:panelLabelAndMessage id="plam1_1">
-                      <af:inputText value="#{bindings.SalesOrderNumber.inputValue}"
-                                    simple="true"
-                                    required="#{bindings.SalesOrderNumber.hints.mandatory}"
-                                    columns="#{bindings.SalesOrderNumber.hints.displayWidth}"
-                                    maximumLength="#{bindings.SalesOrderNumber.hints.precision}"
-                                    shortDesc="#{bindings.SalesOrderNumber.hints.tooltip}"
-                                    id="it2" disabled="true">
-                        <f:validator binding="#{bindings.SalesOrderNumber.validator}"/>
-                      </af:inputText>
-                    </af:panelLabelAndMessage>
-                  </af:panelGroupLayout>
                   <af:panelGroupLayout id="pgl13" layout="horizontal">
                     <af:panelLabelAndMessage id="pla2m1">
                       <af:inputText id="it21"

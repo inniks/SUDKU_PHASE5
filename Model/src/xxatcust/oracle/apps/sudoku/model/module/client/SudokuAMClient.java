@@ -87,12 +87,6 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
     }
 
 
-    public Hashtable getPriceProductChoices(String userId) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"getPriceProductChoices",new String [] {"java.lang.String"},new Object[] {userId});
-        return (Hashtable)_ret;
-    }
-
     public void clearQuoteFields() {
         Object _ret =
             this.riInvokeExportedMethod(this,"clearQuoteFields",null,null);
@@ -151,12 +145,6 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
     public void getQuoteCustmerAddress(Row curRow) {
         Object _ret =
             this.riInvokeExportedMethod(this,"getQuoteCustmerAddress",new String [] {"oracle.jbo.Row"},new Object[] {curRow});
-        return;
-    }
-
-    public void defaultSalesRepOnCreateQuote() {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"defaultSalesRepOnCreateQuote",null,null);
         return;
     }
 
@@ -541,6 +529,12 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
     public void validatePrefStaticValues(int usrId, String numberFormat) {
         Object _ret =
             this.riInvokeExportedMethod(this,"validatePrefStaticValues",new String [] {"int","java.lang.String"},new Object[] {new Integer(usrId), numberFormat});
+        return;
+    }
+
+    public void clearUserPrefSCVO(int usrId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"clearUserPrefSCVO",new String [] {"int"},new Object[] {new Integer(usrId)});
         return;
     }
 

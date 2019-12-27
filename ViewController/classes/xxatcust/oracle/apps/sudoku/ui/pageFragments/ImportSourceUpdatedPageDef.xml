@@ -22,12 +22,6 @@
         <Item Value="FormalQuoteId"/>
       </AttrNames>
     </attributeValues>
-    <attributeValues IterBinding="ImportSourceVO1Iterator"
-                     id="SalesOrderNumber">
-      <AttrNames>
-        <Item Value="SalesOrderNumber"/>
-      </AttrNames>
-    </attributeValues>
     <list IterBinding="ImportSourceVO1Iterator" StaticList="false"
           Uses="LOV_ConfigTypeMeaning" id="ConfigTypeMeaning"
           DTSupportsMRU="false"/>
@@ -57,5 +51,10 @@
                   ReturnName="data.SudokuAMDataControl.methodResults.getQuoteNum_SudokuAMDataControl_dataProvider_getQuoteNum_result">
       <NamedData NDName="headerid" NDType="java.lang.String"/>
     </methodAction>
+    <attributeValues IterBinding="ImportSourceVO1Iterator" id="ImportSrcCode">
+      <AttrNames>
+        <Item Value="ImportSrcCode"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

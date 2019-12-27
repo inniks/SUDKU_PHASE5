@@ -139,7 +139,7 @@ ORDER BY ou.name]]>
       <ViewCriteriaItem
         Name="OUVOCriteria_vcrow65_OperatingUnit"
         ViewAttribute="OperatingUnit"
-        Operator="CONTAINS"
+        Operator="STARTSWITH"
         Conjunction="AND"
         Value=":bindOU"
         UpperColumns="1"

@@ -206,8 +206,8 @@
     Name="LOV_SalesChannel"
     ListVOName="SalesChannelVO"
     ListRangeSize="-1"
-    NullValueFlag="none"
-    NullValueId="LOV_SalesChannel_LOVUIHints_NullValueId"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
     MRUCount="0">
     <AttrArray Name="AttrNames">
       <Item Value="SalesChannel"/>
@@ -616,6 +616,24 @@
     MRUCount="0">
     <AttrArray Name="AttrNames">
       <Item Value="OperatingUnit"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="OrgId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="OperatingUnit"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_OperatingUnitForSC"
+    ListVOName="OUVO"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="OperatingUnitForSC"/>
     </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="OrgId"/>
@@ -1426,6 +1444,23 @@
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR"
     LOVName="LOV_OperatingUnit">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OperatingUnitForSC"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_OperatingUnitForSC">
     <Properties>
       <SchemaBasedProperties>
         <CONTROLTYPE
