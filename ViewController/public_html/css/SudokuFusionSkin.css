@@ -1,0 +1,38 @@
+@charset "UTF-8";
+/**ADFFaces_Skin_File / DO NOT REMOVE**/
+@namespace af "http://xmlns.oracle.com/adf/faces/rich";
+@namespace dvt "http://xmlns.oracle.com/dss/adf/faces";
+
+af|panelAccordion::disclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+
+.AFDefaultFontFamily:alias {
+       font-family: 'Lucida Sans Unicode';
+       font-size: 11px !important;
+}
+
+af|panelAccordion::undisclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+
+af|showDetailHeader::disclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+
+af|showDetailHeader::undisclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+.mysor af|selectOneRadio::content div {
+  padding: 0px 0px 90px 0px;
+}
+af|commandLink {
+    color: Black; 
+}
+af|listItem::expanded-icon-style {
+    background-image:  url("/select.png"); 
+}
+
+af|listItem::collapsed-icon-style {
+    background-image:  url("/select.png"); 
+}

@@ -33,7 +33,7 @@
           <af:outputText value="#{bindings.TopLevelMeaning1.inputValue}"
                          id="ot2"/>
         </af:panelLabelAndMessage>
-        <af:spacer width="10" height="10" id="s1"/>
+        <af:spacer width="10" height="1" id="s1"/>
         <af:panelLabelAndMessage
                                  id="plam1" rendered="true"
                                  label="Second Level Choice">

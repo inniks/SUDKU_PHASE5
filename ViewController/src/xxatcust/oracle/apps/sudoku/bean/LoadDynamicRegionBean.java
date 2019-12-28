@@ -891,7 +891,8 @@ public class LoadDynamicRegionBean {
                                                                         2);
                                                     if (resMsg[1] != null) {
                                                         resultMsg.append("<p><b>" +
-                                                                         resMsg[1] +
+                                                                       //  resMsg[1] +
+                                                                         "Quote Line "+list.getItemName()+" Update Successfully."+
                                                                          "</b></p>");
                                                     }
                                                     //save to oracle success
@@ -963,7 +964,8 @@ public class LoadDynamicRegionBean {
                                                                 if (resMsg[1] !=
                                                                     null) {
                                                                     resultMsg.append("<p><b>" +
-                                                                                     resMsg[1] +
+                                                                                   //  resMsg[1] +
+                                                                                     "Quote Line "+list.getItemName()+" Updated Successfully."+
                                                                                      "</b></p>");
                                                                 }
                                                             } else if (discountMsg.contains("E-")) {

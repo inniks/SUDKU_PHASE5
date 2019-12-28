@@ -29,7 +29,7 @@
                                   autoSubmit="true"
                                   valueChangeListener="#{ConfiguratorBean.rulesetChanged}"
                                   label="Top Level Choice"
-                                  disabled="#{ConfiguratorBean.quoteSaved}">
+                                  >
               <f:validator binding="#{bindings.TopLevelMeaning.validator}"/>
             </af:inputListOfValues>
             <af:inputListOfValues id="secondLevelMeaningId"
@@ -42,7 +42,7 @@
                                   partialTriggers="topLevelMeaningId"
                                   autoSubmit="true"
                                   valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}"
-                                  disabled="#{bindings.TopLevelMeaning.inputValue eq null or ConfiguratorBean.quoteSaved}"
+                                  disabled="#{bindings.TopLevelMeaning.inputValue eq null}"
                                   label="Second Level Choice"
                                   rendered="#{ConfiguratorBean.oneTimeSpecial ne 'OTS'}">
               <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>

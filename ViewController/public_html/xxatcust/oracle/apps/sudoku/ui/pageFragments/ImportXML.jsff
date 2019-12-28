@@ -90,7 +90,7 @@
           </f:facet>
           <c:set var="viewcontrollerBundle"
                  value="#{adfBundle['xxat.apps.sudoku.view.ViewControllerBundle']}"/>
-          <af:spacer width="415" height="10" id="s14"/>
+          <af:spacer width="350" height="10" id="s14"/>
           <af:panelGroupLayout id="pgl2" halign="end">
             <af:region value="#{bindings.RuleSetFlow1.regionModel}" id="r1"/>
           </af:panelGroupLayout>
