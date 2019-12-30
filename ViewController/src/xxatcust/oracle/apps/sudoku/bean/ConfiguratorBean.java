@@ -451,12 +451,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         //If config is live use this
-//        String responseJson =
-//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-//        System.out.println("Response Json from Configurator : " +
-//                           responseJson);
-//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-//        v93k = (V93kQuote)obj;
+        String responseJson =
+            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        System.out.println("Response Json from Configurator : " +
+                           responseJson);
+        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        v93k = (V93kQuote)obj;
 
         // else use this
         //v93k = (V93kQuote)convertJsonToObject(null);
@@ -1001,10 +1001,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String parentGroupName =
                 (String)inputNodeValueMap.get("parentGroupName");
             String czNodeName = (String)inputNodeValueMap.get("czNodeName");
-            //            if (czNodeName != null) {
-            //                //czNodeName = "\"" + czNodeName + "\"";
-            //                czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
-            //            }
             String refQty = (String)inputNodeValueMap.get("refQty");
             String targetQty = (String)inputNodeValueMap.get("targetQty");
             String uiNodeName = (String)inputNodeValueMap.get("uiNodeName");
@@ -1014,11 +1010,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             uiSelection.setParentGroupName(parentGroupName);
             uiSelection.setSubGroupName(uiSubGrpName);
             uiSelection.setUiNodeName(uiNodeName);
-            uiSelection.setTargetQuantity(Integer.parseInt(targetQty));
+            uiSelection.setTargetQuantity(targetQty==null ? Integer.parseInt("-1"): Integer.parseInt(targetQty));
             uiSelection.setUiType("1");
             uiSelection.setCzModelName(czModelName);
-            uiSelection.setReferenceQuantity(Integer.parseInt(refQty));
-            uiSelection.setQuantity(Integer.parseInt(inputValue));
+            uiSelection.setReferenceQuantity(refQty==null? Integer.parseInt("-1"):  Integer.parseInt(refQty));
+            uiSelection.setQuantity(inputValue==null ? Integer.parseInt("-1"): Integer.parseInt(inputValue));
             uiSelection.setUniqueSessionId(uniqueSessionId);
             uiSelection.setCzNodeName(czNodeName);
             uiSelection.setIdentifier(identifier);

@@ -9,7 +9,6 @@ af|panelAccordion::disclosed-icon-style {
 
 .AFDefaultFontFamily:alias {
        font-family: 'Lucida Sans Unicode';
-       font-size: 11px !important;
 }
 
 af|panelAccordion::undisclosed-icon-style {

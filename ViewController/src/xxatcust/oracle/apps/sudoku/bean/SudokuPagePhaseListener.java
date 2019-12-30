@@ -91,7 +91,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
 
-        //validateEBSSession(pagePhaseEvent);
+        validateEBSSession(pagePhaseEvent);
     }
 
     public static ApplicationModule getAppModule() {
@@ -494,6 +494,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
         } else {
             ruleSetMap.put("error", "Y");
             ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+            ADFUtils.setSessionScopeValue("ruleSetMapConfig", ruleSetMap);
             _logger.info("Putting error in rulesetMap "+ruleSetMap.get("error"));
         }
         ADFUtils.setSessionScopeValue("parentObject", v93k);

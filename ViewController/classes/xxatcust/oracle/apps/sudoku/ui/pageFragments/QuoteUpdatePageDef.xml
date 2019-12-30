@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="QuoteUpdatePageDef"
+                Package="xxatcust.oracle.apps.sudoku.ui.pageFragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="QuoteUpdateVO1" RangeSize="25"
+              DataControl="SudokuAMDataControl" id="QuoteUpdateVO1Iterator"/>
+    <iterator Binds="QuotesVO" RangeSize="25" DataControl="SudokuAMDataControl"
+              id="QuotesVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="Customername">
+      <AttrNames>
+        <Item Value="Customername"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="Customernumber">
+      <AttrNames>
+        <Item Value="Customernumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator"
+                     id="Operatingunitname">
+      <AttrNames>
+        <Item Value="Operatingunitname"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="QuoteName">
+      <AttrNames>
+        <Item Value="QuoteName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="QuoteUpdateVO1Iterator" StaticList="false"
+          Uses="LOV_Saleschannel" id="Saleschannel" DTSupportsMRU="true"/>
+    <listOfValues StaticList="false" IterBinding="QuoteUpdateVO1Iterator"
+                  Uses="LOV_Salesrepresentative" id="Salesrepresentative"/>
+    <listOfValues StaticList="false" IterBinding="QuoteUpdateVO1Iterator"
+                  Uses="LOV_Businesscentercsr" id="Businesscentercsr"/>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="QuoteTo">
+      <AttrNames>
+        <Item Value="QuoteTo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="ShipTo">
+      <AttrNames>
+        <Item Value="ShipTo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="Attribute12">
+      <AttrNames>
+        <Item Value="Attribute12"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="Attribute13">
+      <AttrNames>
+        <Item Value="Attribute13"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="CustomerEmail">
+      <AttrNames>
+        <Item Value="CustomerEmail"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator"
+                     id="CustomerContactName">
+      <AttrNames>
+        <Item Value="CustomerContactName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="CustomerPhoneNum">
+      <AttrNames>
+        <Item Value="CustomerPhoneNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="CustomerFaxNum">
+      <AttrNames>
+        <Item Value="CustomerFaxNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="SalesContactName">
+      <AttrNames>
+        <Item Value="SalesContactName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="SalesEmail">
+      <AttrNames>
+        <Item Value="SalesEmail"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="SalesFaxNum">
+      <AttrNames>
+        <Item Value="SalesFaxNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="SalesPhoneNum">
+      <AttrNames>
+        <Item Value="SalesPhoneNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="Attribute8">
+      <AttrNames>
+        <Item Value="Attribute8"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="QuoteUpdateVO1Iterator"
+                  Uses="LOV_Ordertypename" id="Ordertypename"/>
+    <listOfValues StaticList="false" IterBinding="QuoteUpdateVO1Iterator"
+                  Uses="LOV_Pricelistname" id="Pricelistname"/>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="Discount">
+      <AttrNames>
+        <Item Value="Discount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="QuoteNumber">
+      <AttrNames>
+        <Item Value="QuoteNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="CreationDate">
+      <AttrNames>
+        <Item Value="CreationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="Attribute2">
+      <AttrNames>
+        <Item Value="Attribute2"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="QuoteUpdateVO1Iterator" StaticList="false"
+          Uses="LOV_Paymentterms" id="Paymentterms" DTSupportsMRU="true"/>
+    <list IterBinding="QuoteUpdateVO1Iterator" StaticList="false"
+          Uses="LOV_Incoterms" id="Incoterms" DTSupportsMRU="true"/>
+    <list IterBinding="QuoteUpdateVO1Iterator" StaticList="false"
+          Uses="LOV_CurrencyCode" id="CurrencyCode" DTSupportsMRU="true"/>
+    <list IterBinding="QuoteUpdateVO1Iterator" StaticList="false"
+          Uses="LOV_Agrimentname" id="Agrimentname" DTSupportsMRU="true"/>
+    <methodAction id="callUpdateQuoteAPI"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callUpdateQuoteAPI"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.callUpdateQuoteAPI_SudokuAMDataControl_dataProvider_callUpdateQuoteAPI_result">
+      <NamedData NDName="respid" NDType="int"/>
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="isCustEditable" NDType="boolean"/>
+    </methodAction>
+    <attributeValues IterBinding="QuoteUpdateVO1Iterator" id="Attribute15">
+      <AttrNames>
+        <Item Value="Attribute15"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="QuotesVOIterator"
+                  Uses="LOV_CustName" id="CustName"/>
+    <listOfValues StaticList="false" IterBinding="QuotesVOIterator"
+                  Uses="LOV_CustNum" id="CustNum"/>
+    <methodAction id="getSalesChannelBasedUserPrefForUpdateQuote"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getSalesChannelBasedUserPrefForUpdateQuote"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSalesChannelBasedUserPrefForUpdateQuote_SudokuAMDataControl_dataProvider_getSalesChannelBasedUserPrefForUpdateQuote_result">
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+    </methodAction>
+    <listOfValues StaticList="false" Uses="LOV_Customername"
+                  IterBinding="QuoteUpdateVO1Iterator" id="Customername1"/>
+    <listOfValues StaticList="false" Uses="LOV_Customernumber"
+                  IterBinding="QuoteUpdateVO1Iterator" id="Customernumber1"/>
+    <methodAction id="getQuoteCustmerAddressOnCustNameForUpdateQuoteChange"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getQuoteCustmerAddressOnCustNameForUpdateQuoteChange"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="custName" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getQuoteCustmerAddressOnCustNumForUpdateQuoteChange"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getQuoteCustmerAddressOnCustNumForUpdateQuoteChange"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="custNum" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

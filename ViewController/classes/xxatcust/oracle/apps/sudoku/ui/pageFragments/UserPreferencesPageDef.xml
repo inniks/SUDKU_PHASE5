@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="UserPreferencesPageDef"
+                Package="xxatcust.oracle.apps.sudoku.ui.pageFragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="userPrefEntityVOIterator" Binds="userPrefEntityVO"
+              DataControl="SudokuAMDataControl" RangeSize="25"/>
+    <iterator Binds="OrderTypeVO" RangeSize="25"
+              DataControl="SudokuAMDataControl" id="OrderTypeVOIterator"/>
+    <iterator Binds="IncoTermVO" RangeSize="10"
+              DataControl="SudokuAMDataControl" id="IncoTermVOIterator"/>
+    <iterator Binds="PaymentTermsVO" RangeSize="10"
+              DataControl="SudokuAMDataControl" id="PaymentTermsVOIterator"/>
+    <iterator Binds="QuotesVO" RangeSize="25" DataControl="SudokuAMDataControl"
+              id="QuotesVOIterator"/>
+    <iterator Binds="CustomerNameForPrefVO" RangeSize="25"
+              DataControl="SudokuAMDataControl"
+              id="CustomerNameFOrPrefVOIterator"/>
+    <iterator Binds="OUVO" RangeSize="10" DataControl="SudokuAMDataControl"
+              id="OUVOIterator"/>
+    <iterator Binds="CustomerSupportRepresentVO" RangeSize="10"
+              DataControl="SudokuAMDataControl"
+              id="CustomerSupportRepresentVOIterator"/>
+    <iterator Binds="SalesRepForUserPrefVO" RangeSize="25"
+              DataControl="SudokuAMDataControl"
+              id="SalesRepresentativeVOIterator"/>
+    <iterator Binds="CurrencyVO" RangeSize="10"
+              DataControl="SudokuAMDataControl" id="CurrencyVOIterator"/>
+    <iterator id="businessAgreementVoIterator" Binds="businessAgreementVo"
+              DataControl="SudokuAMDataControl" RangeSize="25"/>
+    <iterator id="SalesChannelVOIterator" Binds="SalesChannelVO"
+              DataControl="SudokuAMDataControl" RangeSize="25"/>
+    <iterator id="CSRForGlobalChoiceVO1Iterator" Binds="CSRForGlobalChoiceVO1"
+              DataControl="SudokuAMDataControl" RangeSize="25"/>
+    <iterator id="CustomerNameVOIterator" Binds="CustomerNameVO"
+              DataControl="SudokuAMDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <action id="Commit" DataControl="SudokuAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <methodAction id="getSelectedOrderTypeValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getSelectedOrderTypeValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedOrderTypeValues_SudokuAMDataControl_dataProvider_getSelectedOrderTypeValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getSelectedCurrencyValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getSelectedCurrencyValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedCurrencyValues_SudokuAMDataControl_dataProvider_getSelectedCurrencyValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
+    <methodAction id="getSelectedIncoTermValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getSelectedIncoTermValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedIncoTermValues_SudokuAMDataControl_dataProvider_getSelectedIncoTermValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
+    <methodAction id="getSelectedCurrencyValuesForSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getSelectedCurrencyValuesForSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedCurrencyValuesForSC_SudokuAMDataControl_dataProvider_getSelectedCurrencyValuesForSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validateCurrencyValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateCurrencyValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateCurrencyValues_SudokuAMDataControl_dataProvider_validateCurrencyValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="currencyValues" NDType="java.util.List"/>
+      <NamedData NDName="defaultName" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validateIncoTermValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateIncoTermValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateIncoTermValues_SudokuAMDataControl_dataProvider_validateIncoTermValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="incoTermValues" NDType="java.util.List"/>
+      <NamedData NDName="dafaultVal" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validateOrderTypeValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateOrderTypeValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateOrderTypeValues_SudokuAMDataControl_dataProvider_validateOrderTypeValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="orderTypeValues" NDType="java.util.List"/>
+      <NamedData NDName="orderTypeDefaultval" NDType="java.lang.String"/>
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <list IterBinding="QuotesVOIterator" StaticList="false"
+          Uses="LOV_PrdNumRefConfig" id="PrdNumRefConfig"
+          DTSupportsMRU="false"/>
+    <list IterBinding="QuotesVOIterator" StaticList="false"
+          Uses="LOV_PrdNumTargetConfig" id="PrdNumTargetConfig"
+          DTSupportsMRU="false"/>
+    <list IterBinding="QuotesVOIterator" StaticList="false"
+          Uses="LOV_RefPriceRegConfig" id="RefPriceRegConfig"
+          DTSupportsMRU="false"/>
+    <list IterBinding="QuotesVOIterator" StaticList="false"
+          Uses="LOV_RefPriceTargetConfig" id="RefPriceTargetConfig"
+          DTSupportsMRU="false"/>
+    <list IterBinding="QuotesVOIterator" StaticList="false"
+          Uses="LOV_NumberFormat" id="NumberFormat" DTSupportsMRU="false"/>
+    <methodAction id="validatePrefStaticValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validatePrefStaticValues"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="numberFormat" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getSelectedCustomerNameValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getSelectedCustomerNameValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedCustomerNameValues_SudokuAMDataControl_dataProvider_getSelectedCustomerNameValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validateCustValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateCustValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateCustValues_SudokuAMDataControl_dataProvider_validateCustValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="custValues" NDType="java.util.List"/>
+      <NamedData NDName="custDefaultVal" NDType="java.lang.String"/>
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getSelectedCustNumValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getSelectedCustNumValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedCustNumValues_SudokuAMDataControl_dataProvider_getSelectedCustNumValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getSelectedSalesRepValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getSelectedSalesRepValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedSalesRepValues_SudokuAMDataControl_dataProvider_getSelectedSalesRepValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validateSalesRepValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateSalesRepValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateSalesRepValues_SudokuAMDataControl_dataProvider_validateSalesRepValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="salesRepVals" NDType="java.util.List"/>
+      <NamedData NDName="defaultVal" NDType="java.lang.String"/>
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validateCsrValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateCsrValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateCsrValues_SudokuAMDataControl_dataProvider_validateCsrValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="csrValues" NDType="java.util.List"/>
+      <NamedData NDName="csr" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="defaultVals"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="defaultVals"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.defaultVals_SudokuAMDataControl_dataProvider_defaultVals_result">
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
+    <methodAction id="validateBAForSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateBAForSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateBAForSC_SudokuAMDataControl_dataProvider_validateBAForSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="baValues" NDType="java.util.List"/>
+      <NamedData NDName="defaultVal" NDType="java.lang.String"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validatePaymentTermValuesforSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="validatePaymentTermValuesforSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validatePaymentTermValuesforSC_SudokuAMDataControl_dataProvider_validatePaymentTermValuesforSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="PaymentTermValues" NDType="java.util.List"/>
+      <NamedData NDName="defaultVal" NDType="java.lang.String"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validateCurrencyValuesForSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateCurrencyValuesForSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateCurrencyValuesForSC_SudokuAMDataControl_dataProvider_validateCurrencyValuesForSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="currencyValues" NDType="java.util.List"/>
+      <NamedData NDName="defaultVal" NDType="java.lang.String"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validateCustValuesForSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateCustValuesForSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateCustValuesForSC_SudokuAMDataControl_dataProvider_validateCustValuesForSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="custValues" NDType="java.util.List"/>
+      <NamedData NDName="custDefaultVal" NDType="java.lang.String"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validateIncoTermValuesForSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateIncoTermValuesForSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateIncoTermValuesForSC_SudokuAMDataControl_dataProvider_validateIncoTermValuesForSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="incoTermValues" NDType="java.util.List"/>
+      <NamedData NDName="defaultVal" NDType="java.lang.String"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getSelectedIncoTermValuesForSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getSelectedIncoTermValuesForSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedIncoTermValuesForSC_SudokuAMDataControl_dataProvider_getSelectedIncoTermValuesForSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getSelectedPaymentTermValuesForSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getSelectedPaymentTermValuesForSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedPaymentTermValuesForSC_SudokuAMDataControl_dataProvider_getSelectedPaymentTermValuesForSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getSelectedBusinessAgreementForSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getSelectedBusinessAgreementForSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedBusinessAgreementForSC_SudokuAMDataControl_dataProvider_getSelectedBusinessAgreementForSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getSelectedCSRValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getSelectedCSRValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedCSRValues_SudokuAMDataControl_dataProvider_getSelectedCSRValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
+    <methodAction id="defaultValsForSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="defaultValsForSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.defaultValsForSC_SudokuAMDataControl_dataProvider_defaultValsForSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="salesChannel" NDType="java.lang.String"/>
+      <NamedData NDName="customerNums" NDType="java.util.List"/>
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validatePaymentTermValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validatePaymentTermValues"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="defaultVal" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="validateSalesChannelForSC"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="validateSalesChannelForSC"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.validateSalesChannelForSC_SudokuAMDataControl_dataProvider_validateSalesChannelForSC_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="salesChannel" NDType="java.util.List"/>
+    </methodAction>
+    <methodAction id="getSelectedSalesChannelValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getSelectedSalesChannelValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getSelectedSalesChannelValues_SudokuAMDataControl_dataProvider_getSelectedSalesChannelValues_result">
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
+    <methodAction id="getAllSalesRepValues"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getAllSalesRepValues"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.getAllSalesRepValues_SudokuAMDataControl_dataProvider_getAllSalesRepValues_result">
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="commitEntities"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="commitEntities"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.commitEntities_SudokuAMDataControl_dataProvider_commitEntities_result"/>
+    <listOfValues StaticList="false" Uses="LOV_OrganizationUnit"
+                  IterBinding="QuotesVOIterator" id="OrganizationUnit"/>
+    <list IterBinding="QuotesVOIterator" StaticList="false"
+          Uses="LOV_OperatingUnit" id="OperatingUnit" DTSupportsMRU="true"/>
+    <methodAction id="initUserPref"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="initUserPref"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.initUserPref_SudokuAMDataControl_dataProvider_initUserPref_result"/>
+    <methodAction id="defaultValsOUDependencies"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="defaultValsOUDependencies"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.defaultValsOUDependencies_SudokuAMDataControl_dataProvider_defaultValsOUDependencies_result">
+      <NamedData NDName="usrId" NDType="int"/>
+      <NamedData NDName="orgId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="clearUserPrefVO"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="clearUserPrefVO"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
+    <list IterBinding="QuotesVOIterator" StaticList="false"
+          Uses="LOV_OperatingUnitForSC" id="OperatingUnitForSC"
+          DTSupportsMRU="true"/>
+    <methodAction id="clearUserPrefSCVO"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="clearUserPrefSCVO"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="usrId" NDType="int"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>
