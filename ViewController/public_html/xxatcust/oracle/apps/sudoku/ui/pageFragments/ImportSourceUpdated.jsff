@@ -5,6 +5,7 @@
   <af:panelBox id="pb2" showDisclosure="false">
     <f:facet name="toolbar"/>
     <af:panelHeader text=" " id="pb1">
+      <af:spacer width="10" height="15" id="s2"/>
       <af:panelSplitter id="ps1" styleClass="AFStretchWidth">
         <f:facet name="second">
           <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
@@ -18,11 +19,12 @@
                     <af:panelGroupLayout id="pgl3" layout="horizontal"
                                          partialTriggers="sor1">
                       <af:selectOneRadio value="#{bindings.ConfigTypeMeaning.inputValue}"
-                                         required="#{bindings.ConfigTypeMeaning.hints.mandatory}"
+                                         required="true"
                                          shortDesc="#{bindings.ConfigTypeMeaning.hints.tooltip}"
                                          id="sor2" autoSubmit="true"
                                          valueChangeListener="#{pageFlowScope.ImportSourceBean.configTypeChanged}"
-                                         disabled="#{bindings.ImportSrcCode.inputValue ne 'BUDGET_QUOTE'}">
+                                         disabled="#{bindings.ImportSrcCode.inputValue ne 'BUDGET_QUOTE'}"
+                                         showRequired="true">
                         <f:selectItems value="#{bindings.ConfigTypeMeaning.items}"
                                        id="si2"/>
                       </af:selectOneRadio>
@@ -138,6 +140,7 @@
           <af:spacer width="10" height="10" id="s4"/>
           <af:outputFormatted value="Import Source Configuration" id="of2"
                               inlineStyle="font-size:large; color:Maroon;"/>
+          <af:spacer width="10" height="10" id="s1"/>
         </af:group>
       </f:facet>
     </af:panelHeader>

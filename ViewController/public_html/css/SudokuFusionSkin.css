@@ -7,10 +7,6 @@ af|panelAccordion::disclosed-icon-style {
     background-image: url("/select.png"); 
 }
 
-.AFDefaultFontFamily:alias {
-       font-family: 'Lucida Sans Unicode';
-}
-
 af|panelAccordion::undisclosed-icon-style {
     background-image: url("/select.png"); 
 }
@@ -28,10 +24,8 @@ af|showDetailHeader::undisclosed-icon-style {
 af|commandLink {
     color: Black; 
 }
-af|listItem::expanded-icon-style {
-    background-image:  url("/select.png"); 
-}
 
-af|listItem::collapsed-icon-style {
-    background-image:  url("/select.png"); 
+
+af|panelSplitter.NonResizable::vertical-divider {
+    visibility: hidden;
 }

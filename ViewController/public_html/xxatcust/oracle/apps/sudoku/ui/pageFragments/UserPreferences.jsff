@@ -27,7 +27,7 @@
             <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pgl1" partialTriggers="soc8" valign="top">
               <af:outputLabel value="Value selected in below dropdowns will be default choice for user in quote creation" id="ol2"
-                              inlineStyle="color:Navy;"/>
+                              inlineStyle="color:Navy;" rendered="false"/>
               <af:spacer width="600" height="25" id="s22"/>
               <af:commandButton text="Save Global Choices" id="cb1"
                                 actionListener="#{pageFlowScope.UserPrefBean.onCommit}"
@@ -43,6 +43,10 @@
                   <f:selectItems value="#{bindings.OperatingUnit.items}"
                                  id="si22"/>
                 </af:selectOneChoice>
+                <af:commandImageLink id="cil1"
+                                     icon="/Resources/images/imgs/icons8-help-16.png"
+                                     shortDesc="Help.."
+                                     actionListener="#{pageFlowScope.UserPrefBean.showOpUnitHelpTip}"/>
               </af:panelGroupLayout>
               <af:spacer width="10" height="10" id="s1"/>
               <af:panelFormLayout id="pfl1" maxColumns="3" rows="3"
@@ -185,10 +189,16 @@
                                  id="pgl8">
               <af:panelGroupLayout id="pgl7" layout="vertical">
                 <af:outputLabel value="	Values selected in below multi-selection choices will be preferred global choices for user in quote creation."
-                                id="ol3" inlineStyle="color:Navy;"/>
+                                id="ol3" inlineStyle="color:Navy;"
+                                showRequired="false" rendered="false"/>
                 <af:outputLabel value="	Please select Operating Unit value to enable Sales Representative, Customer Number and Order Type choices"
-                                id="ol4" inlineStyle="color:Navy;"/>
+                                id="ol4" inlineStyle="color:Navy;"
+                                rendered="false"/>
                 <af:spacer width="10" height="10" id="s16"/>
+                <af:commandImageLink id="cil2"
+                                     icon="/Resources/images/imgs/icons8-help-16.png"
+                                     actionListener="#{pageFlowScope.UserPrefBean.showShuttleHelpTip}"
+                                     shortDesc="Help.."/>
               </af:panelGroupLayout>
               <af:panelFormLayout id="pfl3" rows="2" maxColumns="2"
                                   partialTriggers="soc8">

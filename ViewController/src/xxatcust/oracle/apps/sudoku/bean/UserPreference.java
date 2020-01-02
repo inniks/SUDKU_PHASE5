@@ -330,17 +330,18 @@ public class UserPreference {
     public void onCommit(ActionEvent actionEvent) {
         //nsrivastava Added this
         ADFUtils.setSessionScopeValue("userPrefMap", null);
-        if(orgId==null){
-            ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                "Please Select operating Unit");
-        }
-        else{
+        
+//        if(orgId==null){
+//            ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
+//                                "Please Select operating Unit");
+//        }
+//        else{
         OperationBinding clearDataOB =
             ADFUtils.getBindingContainer().getOperationBinding("clearUserPrefVO");
         clearDataOB.getParamsMap().put("usrId", usrId);
         if(clearDataOB!=null)
             clearDataOB.execute();
-        boolean isOT = false,isCust = false,isSalesRep = false,isCSR =false,isIncoTerm = false,isCurrency = false,isPaymentTerm = false,isSC = false;
+        boolean isOT = false,isCust = false,isSalesRep = false,isCSR =false,isIncoTerm = false,isCurrency = false,isPaymentTerm = false,isSC = false,isRadioChoice= true;
         if(selectedOrderTypeValues==null)
             selectedOrderTypeValues= new ArrayList();
                             if ((selectedOrderTypeValues != null && selectedOrderTypeValues.size() > 0) || orderType != null) {  //selectedOrderTypeValues.size() > 0
@@ -454,16 +455,18 @@ public class UserPreference {
                         }
             OperationBinding commitOperations =
                 ADFUtils.findOperation("commitEntities");
+            
             System.out.println(this.bindPrdNumRefConf.getValue());
             OperationBinding staticValob =
                 ADFUtils.getBindingContainer().getOperationBinding("validatePrefStaticValues");
+            isRadioChoice = true;
             staticValob.getParamsMap().put("usrId", usrId);
         staticValob.getParamsMap().put("numberFormat", numFormat);
             if (staticValob != null) {
                 staticValob.execute();
             }
             
-            if (isOT == true || isCust == true || isSalesRep == true || isCSR ==true || isIncoTerm == true || isCurrency == true || isPaymentTerm ==true || isSC == true) {
+            if (isOT == true || isCust == true || isSalesRep == true || isCSR ==true || isIncoTerm == true || isCurrency == true || isPaymentTerm ==true || isSC == true || isRadioChoice == true) {
             Boolean flag = (Boolean)commitOperations.execute();
             if (flag != null) {
                 if (flag)
@@ -476,7 +479,7 @@ public class UserPreference {
             ADFUtils.addMessage(FacesMessage.SEVERITY_INFO,
                                 "Please Select any of value before save");
         }
-        }
+//        }
     }
 
 
@@ -3138,5 +3141,15 @@ public class UserPreference {
 
     public RichSelectManyShuttle getBindSelectManyBA() {
         return bindSelectManyBA;
+    }
+
+    public void showOpUnitHelpTip(ActionEvent actionEvent) {
+        String helpMsg = "Please select Operating Unit value to enable Sales Representative, Customer Number and Order Type choices";
+        ADFUtils.showFacesMessage(helpMsg, FacesMessage.SEVERITY_INFO);
+    }
+
+    public void showShuttleHelpTip(ActionEvent actionEvent) {
+        String helpMsg = "Values selected in below multi-selection choices will be preferred global choices for user in quote creation.";
+        ADFUtils.showFacesMessage(helpMsg, FacesMessage.SEVERITY_INFO);
     }
 }

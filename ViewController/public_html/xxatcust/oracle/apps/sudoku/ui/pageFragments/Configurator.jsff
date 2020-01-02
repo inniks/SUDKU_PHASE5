@@ -7,9 +7,15 @@
                   binding="#{ConfiguratorBean.parentUiComp}"
                   partialTriggers="topLevelMeaningId">
     <f:facet name="context">
-      <af:outputFormatted value="V93000 Configuration and Budgetary Quoting Tool"
-                          id="of5"
-                          inlineStyle="color:Teal; font-size:x-large;"/>
+      <af:group id="g8">
+        <af:outputFormatted value="V93000 Configuration and Budgetary Quoting Tool"
+                            id="of5"
+                            inlineStyle="color:Teal; font-size:x-large;"/>
+        <af:commandImageLink id="cil1"
+                             icon="/Resources/images/imgs/icons8-help-16.png"
+                             actionListener="#{ConfiguratorBean.showHelpMessage}"
+                             shortDesc="Help"/>
+      </af:group>
     </f:facet>
     <f:facet name="toolbar">
       <af:group id="g2">
@@ -19,7 +25,7 @@
           <af:panelGroupLayout id="pgl13" layout="vertical" halign="end"
                                rendered="true" styleClass="AFStretchWidth">
             <af:inputListOfValues id="topLevelMeaningId"
-                                  popupTitle="Search and Select: #{bindings.TopLevelMeaning.hints.label}"
+                                  popupTitle="Search and Select:Ruleset -  Top Level Choice"
                                   value="#{bindings.TopLevelMeaning.inputValue}"
                                   model="#{bindings.TopLevelMeaning.listOfValuesModel}"
                                   required="#{bindings.TopLevelMeaning.hints.mandatory}"
@@ -29,11 +35,11 @@
                                   autoSubmit="true"
                                   valueChangeListener="#{ConfiguratorBean.rulesetChanged}"
                                   label="Top Level Choice"
-                                  >
+                                  disabled="#{ConfiguratorBean.quoteSaved}">
               <f:validator binding="#{bindings.TopLevelMeaning.validator}"/>
             </af:inputListOfValues>
             <af:inputListOfValues id="secondLevelMeaningId"
-                                  popupTitle="Search and Select: #{bindings.SecondLevelMeaning.hints.label}"
+                                  popupTitle="Search and Select: Ruleset - Second Level Choice"
                                   value="#{bindings.SecondLevelMeaning.inputValue}"
                                   model="#{bindings.SecondLevelMeaning.listOfValuesModel}"
                                   required="#{bindings.SecondLevelMeaning.hints.mandatory}"
@@ -42,26 +48,24 @@
                                   partialTriggers="topLevelMeaningId"
                                   autoSubmit="true"
                                   valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}"
-                                  disabled="#{bindings.TopLevelMeaning.inputValue eq null}"
+                                  disabled="#{bindings.TopLevelMeaning.inputValue eq null or ConfiguratorBean.quoteSaved}"
                                   label="Second Level Choice"
                                   rendered="#{ConfiguratorBean.oneTimeSpecial ne 'OTS'}">
               <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
             </af:inputListOfValues>
-            <af:inputText label="Second Level Choice" id="it5"
-                          
-                          rendered="#{ConfiguratorBean.oneTimeSpecial eq 'OTS'}"
-                          disabled="true"
-                          value="#{ConfiguratorBean.otsDislayValue}"
-                          columns="20" partialTriggers="topLevelMeaningId"/>
+            <af:panelLabelAndMessage label="Second Level Choice" id="plam1"
+                                     rendered="#{ConfiguratorBean.oneTimeSpecial eq 'OTS'}">
+              <af:inputText id="it5"
+                            rendered="#{ConfiguratorBean.oneTimeSpecial eq 'OTS'}"
+                            disabled="true"
+                            value="#{ConfiguratorBean.otsDislayValue}"
+                            columns="20" partialTriggers="topLevelMeaningId"/>
+            </af:panelLabelAndMessage>
           </af:panelGroupLayout>
+          <f:facet name="toolbar">
+            <af:panelGroupLayout id="pgl16" halign="right"/>
+          </f:facet>
         </af:panelBox>
-        <af:toolbar id="t1" rendered="false">
-          <af:commandToolbarButton text="Refresh" id="ctb1"
-                                   actionListener="#{ConfiguratorBean.refreshView}"/>
-          <af:inputText label="jsessionId" id="it1"
-                        binding="#{ConfiguratorBean.jsessionId}"
-                        autoSubmit="true"/>
-        </af:toolbar>
       </af:group>
     </f:facet>
     <af:spacer width="10" height="10" id="s12"/>
@@ -71,7 +75,7 @@
       <f:facet name="center">
         <af:panelGroupLayout layout="scroll"
                              xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                             id="confPGL" partialTriggers="ctb1">
+                             id="confPGL">
           <af:outputText value="outputText1" id="ot1"
                          binding="#{ConfiguratorBean.pageInitText}"
                          visible="false"/>
@@ -6071,7 +6075,7 @@
                                                        layout="horizontal"
                                                        rendered="#{theadIter.identifyLicenceRow eq 'N'}">
                                     <af:panelBorderLayout id="misUpgpbl11"
-                                                          inlineStyle="height:25px; width:30px; border-style:none;">
+                                                          inlineStyle="height:25px; width:40px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgpgl18"
                                                              layout="horizontal"
@@ -6100,7 +6104,7 @@
                                         </af:panelGroupLayout>
                                       </f:facet>
                                     </af:panelBorderLayout>
-                                    <af:spacer width="40" height="10"
+                                    <af:spacer width="10" height="10"
                                                id="misUpgs2"/>
                                     <af:panelBorderLayout id="misUpgpb_l3"
                                                           inlineStyle="height:25px; width:250px; border-style:none;">
@@ -6189,10 +6193,8 @@
                                   <af:panelGroupLayout id="misUpgc_s_12"
                                                        layout="horizontal"
                                                        rendered="#{theadIter.licenseRowIndexMiscUpg eq theadIter.uiGrpIndex and theadIter.elementList eq 'Y'}">
-                                    <af:spacer width="10" height="10"
-                                               id="misUpgc_s_13"/>
                                     <af:panelBorderLayout id="misUpgc_s_14"
-                                                          inlineStyle="height:25px; width:30px; border-style:none;">
+                                                          inlineStyle="height:25px; width:40px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgc_s_1001"
                                                              layout="horizontal">
@@ -6205,7 +6207,7 @@
                                     <af:spacer width="10" height="10"
                                                id="misUpgc_s_18"/>
                                     <af:panelBorderLayout id="misUpgc_s_19"
-                                                          inlineStyle="height:25px; width:200px; border-style:none;">
+                                                          inlineStyle="height:25px; width:250px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgc_s_20"
                                                              halign="left"
@@ -6324,7 +6326,7 @@
                                                        layout="horizontal"
                                                        rendered="#{theadIter.identifyLicenceRow eq 'Y'}">
                                     <af:panelBorderLayout id="misUpgc_s_134"
-                                                          inlineStyle="height:25px; width:45px; border-style:none;">
+                                                          inlineStyle="height:25px; width:40px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgc_s_10301"
                                                              layout="horizontal">
@@ -6350,10 +6352,10 @@
                                         </af:panelGroupLayout>
                                       </f:facet>
                                     </af:panelBorderLayout>
-                                    <af:spacer width="30" height="10"
+                                    <af:spacer width="10" height="10"
                                                id="misUpgc_3s_18"/>
                                     <af:panelBorderLayout id="misUpgc_s3_19"
-                                                          inlineStyle="height:25px; width:200px; border-style:none;">
+                                                          inlineStyle="height:25px; width:250px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgc_3s_20"
                                                              halign="left"
@@ -7791,7 +7793,7 @@
         </af:panelGroupLayout>
       </f:facet>
     </af:panelStretchLayout> 
-    <af:popup id="resetConfig"
+        <af:popup id="resetConfig"
               binding="#{ConfiguratorBean.resetConfigurationPopup}">
       <af:dialog id="d2"
                  title="Your existing configuration will be lost,Are you sure you want to continue?"

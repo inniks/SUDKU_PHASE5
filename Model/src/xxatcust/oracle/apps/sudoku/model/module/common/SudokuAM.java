@@ -211,4 +211,6 @@ public interface SudokuAM extends ApplicationModule {
     void clearUserPrefSCVO(int usrId);
 
     HashMap getPriceProductChoices();
+
+    String deleteProductLine(String lineId);
 }

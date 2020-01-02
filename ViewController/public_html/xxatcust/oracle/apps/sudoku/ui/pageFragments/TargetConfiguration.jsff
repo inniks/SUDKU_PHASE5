@@ -104,8 +104,13 @@
                               </af:gridCell>
                             </af:gridRow>
                           </af:panelGridLayout>
-                            <af:outputText value="#{node.category}" id="ot142"
-                                           inlineStyle="font-weight:bold;"/>
+                            <af:panelGroupLayout id="pgl1" layout="vertical">
+                              <af:outputText value="Line" id="ot13"
+                                             inlineStyle="font-weight:bold; font-size:small;"
+                                             rendered="#{feach.lineNum eq '1' and node.printGroupLevel eq '0'}"/>
+                              <af:outputText value="#{node.category}" id="ot142"
+                                             inlineStyle="font-weight:bold; font-size:small;"/>
+                            </af:panelGroupLayout>
                           </af:listItem>
                         </f:facet>
                         <af:listItem id="li2">

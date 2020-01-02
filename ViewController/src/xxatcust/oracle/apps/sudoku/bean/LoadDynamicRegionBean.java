@@ -442,7 +442,7 @@ public class LoadDynamicRegionBean {
         }
         //Do not call configurator if there is an error from Save Config to quote
         if (!isQuoteSaved) {
-        HashMap map = new HashMap();
+            HashMap map = new HashMap();
             if (v93k != null && v93k.getInputParams() != null &&
                 v93k.getSessionDetails() != null &&
                 v93k.getSessionDetails().getTargetQuoteNumber() != null) {
@@ -624,13 +624,15 @@ public class LoadDynamicRegionBean {
                                         }
                                     }
                                 }
-                                map = callWarranty(v93k, v93k.getSessionDetails().getTargetQuoteNumber(), respid, usrId);
-                                if(map!=null){
-                                    if(map.get("resultErrMsg")!=null)
+                                map =
+callWarranty(v93k, v93k.getSessionDetails().getTargetQuoteNumber(), respid,
+             usrId);
+                                if (map != null) {
+                                    if (map.get("resultErrMsg") != null)
                                         resultErrMsg.append(map.get("resultErrMsg"));
-                                    if(map.get("resultMsg")!=null)
+                                    if (map.get("resultMsg") != null)
                                         resultMsg.append(map.get("resultMsg"));
-                                    }
+                                }
 
                             } else {
                                 if (createQtMsg != null)
@@ -771,13 +773,15 @@ public class LoadDynamicRegionBean {
                                         }
                                     }
                                 }
-                                map = callWarranty(v93k, v93k.getSessionDetails().getTargetQuoteNumber(), respid, usrId);
-                                if(map!=null){
-                                    if(map.get("resultErrMsg")!=null)
+                                map =
+callWarranty(v93k, v93k.getSessionDetails().getTargetQuoteNumber(), respid,
+             usrId);
+                                if (map != null) {
+                                    if (map.get("resultErrMsg") != null)
                                         resultErrMsg.append(map.get("resultErrMsg"));
-                                    if(map.get("resultMsg")!=null)
+                                    if (map.get("resultMsg") != null)
                                         resultMsg.append(map.get("resultMsg"));
-                                    }
+                                }
 
                             } else {
                                 if (createQtMsg != null)
@@ -795,13 +799,15 @@ public class LoadDynamicRegionBean {
                         } else if (v93k.getSessionDetails().isUpdateQuote()) {
                             if (v93k.getSessionDetails().getSourceQuoteNumber() !=
                                 null) {
-                                map = callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid, usrId);
-                                if(map!=null){
-                                    if(map.get("resultErrMsg")!=null)
+                                map =
+callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
+             usrId);
+                                if (map != null) {
+                                    if (map.get("resultErrMsg") != null)
                                         resultErrMsg.append(map.get("resultErrMsg"));
-                                    if(map.get("resultMsg")!=null)
+                                    if (map.get("resultMsg") != null)
                                         resultMsg.append(map.get("resultMsg"));
-                                    }
+                                }
 
                                 for (QuoteLinePOJO list :
                                      v93k.getTargetConfigurationLines()) {
@@ -891,9 +897,11 @@ public class LoadDynamicRegionBean {
                                                                         2);
                                                     if (resMsg[1] != null) {
                                                         resultMsg.append("<p><b>" +
-                                                                       //  resMsg[1] +
-                                                                         "Quote Line "+list.getItemName()+" Update Successfully."+
-                                                                         "</b></p>");
+                                                                //  resMsg[1] +
+                                                                "Quote Line " +
+                                                                list.getItemName() +
+                                                                " Update Successfully." +
+                                                                "</b></p>");
                                                     }
                                                     //save to oracle success
                                                     //                                                ADFUtils.setSessionScopeValue("configSaved",
@@ -964,9 +972,11 @@ public class LoadDynamicRegionBean {
                                                                 if (resMsg[1] !=
                                                                     null) {
                                                                     resultMsg.append("<p><b>" +
-                                                                                   //  resMsg[1] +
-                                                                                     "Quote Line "+list.getItemName()+" Updated Successfully."+
-                                                                                     "</b></p>");
+                                                                            //  resMsg[1] +
+                                                                            "Quote Line " +
+                                                                            list.getItemName() +
+                                                                            " Updated Successfully." +
+                                                                            "</b></p>");
                                                                 }
                                                             } else if (discountMsg.contains("E-")) {
                                                                 String[] resMsg =
@@ -1030,84 +1040,10 @@ public class LoadDynamicRegionBean {
                                 resultErrMsg.append("<p><b>" +
                                                     SudokuUtils.createQteMsg +
                                                     "</b></p>");
-                            //                    resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
-                            //                    resultMsg.append("\n");
+                           
                         }
 
-//
-//                        if (v93k.getSessionDetails().getSourceQuoteNumber() !=
-//                            null ||
-//                            v93k.getSessionDetails().getTargetQuoteNumber() !=
-//                            null) {
-//                            OperationBinding warrantyOb =
-//                                getBindings().getOperationBinding("callWarrentyAPI");
-//                            String quoteForWarranty = null;
-//                            if (v93k.getSessionDetails().isDuplicateQuote() ||
-//                                v93k.getSessionDetails().isCreateNewQuote()) {
-//                                quoteForWarranty =
-//                                        v93k.getSessionDetails().getTargetQuoteNumber();
-//                            } else if (quoteForWarranty == null &&
-//                                       v93k.getSessionDetails().isUpdateQuote()) {
-//                                _logger.info("Calling callWarrentyAPI....QUOTE NUM " +
-//                                             v93k.getSessionDetails().getSourceQuoteNumber());
-//                                warrantyOb.getParamsMap().put("quoteNum",
-//                                                              v93k.getSessionDetails().getSourceQuoteNumber());
-//                                quoteForWarranty =
-//                                        v93k.getSessionDetails().getSourceQuoteNumber();
-//                            }
-//                            if (v93k.getTargetConfigurationLines() != null &&
-//                                !v93k.getTargetConfigurationLines().isEmpty()) {
-//                                for (QuoteLinePOJO list :
-//                                     v93k.getTargetConfigurationLines()) {
-//                                    List<ConfiguratorNodePOJO> warrantyList =
-//                                        list.getWarrantyItems();
-//                                    if (warrantyList != null &&
-//                                        !warrantyList.isEmpty()) {
-//                                        for (ConfiguratorNodePOJO node :
-//                                             warrantyList) {
-//                                            //call the warranty api
-//                                            String item = node.getNodeName();
-//                                            _logger.info("Calling callWarrentyAPI....QUOTE FOR WARRANTY " +
-//                                                         quoteForWarranty +
-//                                                         " " + item);
-//                                            warrantyOb.getParamsMap().put("quoteNum",
-//                                                                          quoteForWarranty);
-//                                            warrantyOb.getParamsMap().put("prodName",
-//                                                                          item);
-//                                            warrantyOb.getParamsMap().put("respId",
-//                                                                          respid);
-//                                            warrantyOb.getParamsMap().put("usrId",
-//                                                                          usrId);
-//                                            String retMsg = null;
-//                                            if (warrantyOb != null) {
-//                                                retMsg =
-//                                                        (String)warrantyOb.execute();
-//                                                _logger.info("After Execute callWarrentyAPI....QUOTE FOR WARRANTY " +
-//                                                             quoteForWarranty +
-//                                                             " " + item);
-//                                                if (retMsg != null) {
-//                                                    if (retMsg.contains("<html><body>")) {
-//                                                        resultErrMsg.append(retMsg.toString());
-//                                                    } else if (retMsg.contains("S-")) {
-//                                                        String[] resMsg =
-//                                                            retMsg.split("-",
-//                                                                         2);
-//                                                        retMsg = resMsg[1];
-//                                                        resultMsg.append(retMsg);
-//                                                    } else if (retMsg.contains("E-")) {
-//                                                        String[] resMsg =
-//                                                            retMsg.split("-",
-//                                                                         2);
-//                                                        retMsg = resMsg[1];
-//                                                        resultErrMsg.append(retMsg);
-//                                                    }
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
+                       
                     } else {
                         if (createQtMsg != null)
                             resultErrMsg.append("<p><b>" + createQtMsg +
@@ -1116,8 +1052,6 @@ public class LoadDynamicRegionBean {
                             resultErrMsg.append("<p><b>" +
                                                 SudokuUtils.createQteMsg +
                                                 "</b></p>");
-                        //                resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
-                        //                resultMsg.append("\n");
                     }
                 } else {
                     if (createQtMsg != null)
@@ -1127,8 +1061,6 @@ public class LoadDynamicRegionBean {
                         resultErrMsg.append("<p><b>" +
                                             SudokuUtils.createQteMsg +
                                             "</b></p>");
-                    //            resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
-                    //            resultMsg.append("\n");
                 }
                 String msg = resultMsg.append("</body></html>").toString();
                 String errMsg =
@@ -1159,6 +1091,16 @@ public class LoadDynamicRegionBean {
             if (v93k != null && v93k.getSessionDetails() != null) {
                 v93k.getSessionDetails().setQuoteSaved(isQuoteSaved);
                 ADFUtils.setSessionScopeValue("parentObject", v93k);
+                String currView = (String)ADFUtils.getSessionScopeValue("currView");
+                if (currView != null && currView.equalsIgnoreCase("configurator")) {
+                    RichCommandImageLink button =
+                        (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb3"); // Navigate to create quote page
+                    if (button != null) {
+                        ActionEvent acEvent = new ActionEvent(button);
+                        acEvent.queue();
+                    }
+                }
+                
             }
         } else {
             ADFUtils.addMessage(FacesMessage.SEVERITY_WARN,
@@ -1297,7 +1239,6 @@ public class LoadDynamicRegionBean {
                 acEvent.queue();
             }
         }
-
     }
 
     public String getRefreshToken() {
@@ -1350,7 +1291,7 @@ public class LoadDynamicRegionBean {
             isQuoteSaved = v93k.getSessionDetails().isQuoteSaved();
             SessionDetails sessDetails = v93k.getSessionDetails();
             boolean isUpgradeFromScratch = sessDetails.isUpgradefromScratch();
-            if(!isUpgradeFromScratch && isQuoteSaved){
+            if (!isUpgradeFromScratch && isQuoteSaved) {
                 disableReports = "N";
             }
 
@@ -2381,7 +2322,7 @@ public class LoadDynamicRegionBean {
             getBindings().getOperationBinding("callWarrentyAPI");
         warrantyOb.getParamsMap().put("quoteNum", quoteNum);
 
-        if (v93k!=null &&  v93k.getTargetConfigurationLines() != null &&
+        if (v93k != null && v93k.getTargetConfigurationLines() != null &&
             !v93k.getTargetConfigurationLines().isEmpty()) {
             for (QuoteLinePOJO list : v93k.getTargetConfigurationLines()) {
                 List<ConfiguratorNodePOJO> warrantyList =

@@ -87,7 +87,7 @@
         <LABEL
           ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.RSetSecLevelLOVI.Meaning_LABEL"/>
         <DISPLAYWIDTH
-          Value="40"/>
+          Value="30"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

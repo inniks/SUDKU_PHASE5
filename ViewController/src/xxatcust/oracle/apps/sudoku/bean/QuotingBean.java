@@ -784,4 +784,12 @@ public class QuotingBean {
     public String getSuccessMsg() {
         return successMsg;
     }
+
+    public void showHelpTips(ActionEvent actionEvent) {
+        //StringBuilder strBuilder =  new StringBuilder();
+        String _msg1 = "Use Save button to create or modify quote header.";
+        String _msg2 = "Use Clear button to clear the input values in create quote header.";
+        ADFUtils.showFacesMessage(_msg1, FacesMessage.SEVERITY_INFO);
+        ADFUtils.showFacesMessage(_msg2, FacesMessage.SEVERITY_INFO);
+    }
 }

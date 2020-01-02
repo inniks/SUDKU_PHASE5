@@ -33,8 +33,8 @@
                                  id="dashPGL" styleClass="AFStretchWidth">
               <af:popup id="imSrcP1" childCreation="deferred"
                         contentDelivery="immediate">
-                <af:dialog id="d2" type="none" contentWidth="600"
-                           contentHeight="300">
+                <af:dialog id="d2" type="none" contentWidth="550"
+                           contentHeight="140">
                   <af:region value="#{bindings.ImportSrcFlow1.regionModel}"
                              id="r2"/>
                 </af:dialog>
@@ -118,7 +118,7 @@
             <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pt_pgl1" styleClass="AFStretchWidth"
                                  layout="vertical"
-                                 partialTriggers="ctb1_vre ctb3 ctb_qhdr ctb4 ctb7 ctb6">
+                                 partialTriggers="ctb1_vre ctb3 ctb_qhdr ctb4 ctb7 ctb6 cb3 ctb12">
               <af:panelGroupLayout id="pt_pgl7" layout="horizontal"
                                    styleClass="AFStretchWidth">
                 <af:panelGroupLayout id="pgl_11" layout="horizontal"
@@ -147,61 +147,61 @@
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToConfigurator}"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'config' or viewScope.LoadDynamicRegionBean.disableCurrentButton eq null}"
                                              partialSubmit="true"
-                                             icon="/Resources/images/imgs/button_configurator.png"
+                                             icon="/Resources/images/imgs/config1.png"
                                              depressedIcon="/Resources/images/config_dis.png"
-                                             disabledIcon="/Resources/images/imgs/button_configurator_dis.png">
+                                             disabledIcon="/Resources/images/imgs/config_dis.png">
                           <af:setPropertyListener from="configurator"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                           <af:setActionListener from="#{viewScope.LoadDynamicRegionBean.refreshToken}"
                                                 to="#{sessionScope.refreshFlag}"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s6"/>
+                        <af:spacer width="3" height="10" id="s6"/>
                         <af:commandImageLink id="ct2b1" partialSubmit="true"
-                                             icon="/Resources/images/imgs/button_import-source-configuration.png">
+                                             icon="/Resources/images/imgs/import.png">
                           <af:showPopupBehavior popupId="imSrcP1"
                                                 triggerType="click"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s7"/>
+                        <af:spacer width="3" height="10" id="s7"/>
                         <af:commandImageLink id="ctb1_vre"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToViewRef}"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'ref'}"
-                                             icon="/Resources/images/imgs/button_view-source.png"
+                                             icon="/Resources/images/imgs/viewSrc.png"
                                              partialSubmit="true"
-                                             disabledIcon="/Resources/images/imgs/button_view-source_dis.png">
+                                             disabledIcon="/Resources/images/imgs/viewSrc_dis.png">
                           <af:setPropertyListener from="viewRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s8"/>
+                        <af:spacer width="3" height="10" id="s8"/>
                         <af:commandImageLink id="ctb_qhdr" rendered="true"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToQuote}"
                                              partialSubmit="true"
-                                             icon="/Resources/images/imgs/button_quote-header.png"
-                                             disabledIcon="/Resources/images/imgs/button_quote-header_dis.png">
+                                             icon="/Resources/images/imgs/quoteHdr.png"
+                                             disabledIcon="/Resources/images/imgs/quoteHdr_dis.png">
                           <af:setPropertyListener from="#{viewScope.LoadDynamicRegionBean.navString}"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s9"/>
+                        <af:spacer width="3" height="10" id="s9"/>
                         <af:commandImageLink id="ctb6"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.saveQuoteFromSysToOrcl}"
-                                             icon="/Resources/images/imgs/button_save-to-oracle.png"
+                                             icon="/Resources/images/imgs/saveOracle.png"
                                              partialSubmit="true"/>
-                        <af:spacer width="4" height="10" id="s10"/>
+                        <af:spacer width="3" height="10" id="s10"/>
                         <af:commandImageLink id="ctb19"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableReportButtons eq 'Y'}"
                                              partialSubmit="true"
-                                             icon="/Resources/images/imgs/button_print-quote.png"
-                                             disabledIcon="/Resources/images/imgs/button_print-quote_dis.png">
+                                             icon="/Resources/images/imgs/prntQuote.png"
+                                             disabledIcon="/Resources/images/imgs/prntQuote_dis.png">
                           <af:fileDownloadActionListener filename="#{bindings.FileName.inputValue}"
                                                          method="#{viewScope.LoadDynamicRegionBean.printCFDReport}"
                                                          contentType="application/pdf"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="5" id="s16"/>
+                        <af:spacer width="3" height="10" id="s11"/>
                         <af:commandImageLink id="ctb12" rendered="true"
                                              disabled="false"
-                                             icon="/Resources/images/imgs/button_cancel-all-fields.png"
+                                             icon="/Resources/images/imgs/reset.png"
                                              partialSubmit="true">
                           <af:showPopupBehavior popupId="can_all"
                                                 triggerType="action"/>
@@ -221,61 +221,61 @@
                         <af:commandImageLink id="ctb7"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToLoadPref}"
                                              partialSubmit="true"
-                                             disabledIcon="/Resources/images/imgs/button_load-preferences_dis.png"
+                                             disabledIcon="/Resources/images/imgs/preference_dis.png"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'loadPref'}"
-                                             icon="/Resources/images/imgs/button_load-preferences.png">
+                                             icon="/Resources/images/imgs/preferences.png">
                           <af:setPropertyListener from="loadPref"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s11"/>
+                        <af:spacer width="3" height="10" id="s12"/>
                         <af:commandImageLink id="ctb5"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.exportTargetConfig}"
-                                             icon="/Resources/images/imgs/button_export-target-configuration.png"
+                                             icon="/Resources/images/imgs/expTrgt.png"
                                              partialSubmit="true"/>
-                        <af:spacer width="5" height="10" id="s12"/>
+                        <af:spacer width="3" height="10" id="s13"/>
                         <af:commandImageLink id="ctb4"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.navToTargetConfig}"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableCurrentButton eq 'target'}"
-                                             icon="/Resources/images/imgs/button_view-target.png"
-                                             disabledIcon="/Resources/images/imgs/button_view-target_dis.png"
+                                             icon="/Resources/images/imgs/viewTrgt.png"
+                                             disabledIcon="/Resources/images/imgs/viewTarget_dis.png"
                                              partialSubmit="true">
                           <af:setPropertyListener from="targetRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s13"/>
+                        <af:spacer width="3" height="10" id="s14"/>
                         <af:commandImageLink id="ctb16"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableReportButtons eq 'Y'}"
-                                             icon="/Resources/images/imgs/button_view-pmf.png"
+                                             icon="/Resources/images/imgs/viewPmf.png"
                                              partialSubmit="true"
-                                             disabledIcon="/Resources/images/imgs/button_view-pmf_dis.png">
+                                             disabledIcon="/Resources/images/imgs/viewPmf_dis.png">
                           <af:fileDownloadActionListener contentType="application/pdf"
                                                          method="#{viewScope.LoadDynamicRegionBean.processPDFOutput}"
                                                          filename="XXATREPT_Report_for_PMF.pdf"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s14"/>
+                        <af:spacer width="3" height="10" id="s15"/>
                         <af:commandImageLink id="ctb17"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableReportButtons eq 'Y'}"
-                                             icon="/Resources/images/imgs/button_view-dut-if.png"
+                                             icon="/Resources/images/imgs/viewDut.png"
                                              partialSubmit="true"
-                                             disabledIcon="/Resources/images/imgs/button_view-dut-if_dis.png">
+                                             disabledIcon="/Resources/images/imgs/viewDut_dis.png">
                           <af:fileDownloadActionListener filename="XXATREPT_RDV_Report___Real_DUT.xls"
                                                          contentType="application/excel"
                                                          method="#{viewScope.LoadDynamicRegionBean.processExcelOutput}"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s15"/>
+                        <af:spacer width="3" height="10" id="s16"/>
                         <af:commandImageLink id="ctb18"
                                              disabled="#{viewScope.LoadDynamicRegionBean.disableReportButtons eq 'Y'}"
-                                             icon="/Resources/images/imgs/button_view-model-file.png"
+                                             icon="/Resources/images/imgs/viewModel.png"
                                              partialSubmit="true"
-                                             disabledIcon="/Resources/images/imgs/button_view-model-file_dis.png">
+                                             disabledIcon="/Resources/images/imgs/viewModel_dis.png">
                           <af:showPopupBehavior popupId="MOFPopup"
                                                 triggerType="action"/>
                         </af:commandImageLink>
-                        <af:spacer width="5" height="10" id="s17"/>
+                        <af:spacer width="3" height="10" id="s17"/>
                         <af:commandImageLink id="cil1" partialSubmit="true"
-                                             icon="/Resources/images/imgs/button_print-page.png"
+                                             icon="/Resources/images/imgs/prntPage.png"
                                              actionListener="#{viewScope.LoadDynamicRegionBean.callPrintPage}"
                                              disabled="false">
                           <af:clientListener method="ShowPrintPage"
@@ -332,10 +332,12 @@
         </af:popup>
         <af:popup id="MOFPopup"
                   popupFetchListener="#{viewScope.LoadDynamicRegionBean.onMOFreportFetch}">
-          <af:dialog id="d7" type="cancel" contentWidth="200"
+          <af:dialog id="d7" type="cancel" contentWidth="400"
                      contentHeight="200" title="Model File Report">
-            <af:outputFormatted id="of5"
-                                binding="#{viewScope.LoadDynamicRegionBean.setMOFop}"/>
+            <af:panelGroupLayout id="pgl9" layout="scroll">
+              <af:outputFormatted id="of5"
+                                  binding="#{viewScope.LoadDynamicRegionBean.setMOFop}"/>
+            </af:panelGroupLayout>
           </af:dialog>
         </af:popup>
         <af:popup id="errPopup"

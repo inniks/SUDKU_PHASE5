@@ -27,48 +27,54 @@
                     wrap="hard">
         <f:validator binding="#{bindings.QuoteTo.validator}"/>
       </af:inputText>-->
-        <af:panelSplitter id="ps1" splitterPosition="445"
+        <af:panelSplitter id="ps1"
                           styleClass="AFStretchWidth"
-                          inlineStyle="height:19cm;">
+                          inlineStyle="height:19cm;" splitterPosition="570"
+                          firstBorder="none" secondBorder="none">
           <f:facet name="first">
             <af:panelGroupLayout layout="scroll"
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pgl25">
               <af:panelGroupLayout id="pgl8" layout="horizontal">
-                <af:spacer width="30" height="10" id="s24"/>
+                <af:spacer width="30" height="10" id="s24" rendered="false"/>
                 <af:panelFormLayout id="pfl1"
-                                    partialTriggers="organizationUnitId soc3">
+                                    partialTriggers="organizationUnitId soc3" maxColumns="1"
+                                    fieldWidth="369px" labelWidth="85px;"
+                                    rows="2147483647">
                   <af:inputListOfValues id="organizationUnitId"
                                         popupTitle="Search and Select: #{bindings.OrganizationUnit.hints.label}"
                                         value="#{bindings.OrganizationUnit.inputValue}"
                                         label="Operating Unit"
                                         model="#{bindings.OrganizationUnit.listOfValuesModel}"
-                                        columns="#{bindings.OrganizationUnit.hints.displayWidth}"
                                         shortDesc="#{bindings.OrganizationUnit.hints.tooltip}"
                                         autoSubmit="true"
                                         requiredMessageDetail="Please Enter organization Unit"
                                         returnPopupListener="#{pageFlowScope.QuotingBean.OURPE}"
                                         valueChangeListener="#{pageFlowScope.QuotingBean.ouVCE}"
-                                        showRequired="true">
+                                        showRequired="true"
+                                        styleClass="ADFStretchWidth"
+                                        contentStyle="width:330px;"
+                                        inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;">
                     <f:validator binding="#{bindings.OrganizationUnit.validator}"/>
                   </af:inputListOfValues>
                   <af:inputText value="#{bindings.QuoteDescription.inputValue}"
                                 label="Quote Description"
-                                columns="#{bindings.QuoteDescription.hints.displayWidth}"
                                 maximumLength="#{bindings.QuoteDescription.hints.precision}"
                                 shortDesc="#{bindings.QuoteDescription.hints.tooltip}"
-                                id="it6" inlineStyle="color:Black;"
-                                requiredMessageDetail="Please Enter Quote Description">
+                                id="it6"
+                                inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                                requiredMessageDetail="Please Enter Quote Description"
+                                rows="1" contentStyle="width:330.0px">
                     <f:validator binding="#{bindings.QuoteDescription.validator}"/>
                   </af:inputText>
-                  <af:spacer width="10" height="10" id="s2"/>
                   <af:selectOneChoice value="#{bindings.SalesChannel.inputValue}"
                                       label="Sales Channel" autoSubmit="true"
                                       shortDesc="#{bindings.SalesChannel.hints.tooltip}"
-                                      id="soc3" contentStyle="width:138.0px"
+                                      id="soc3" contentStyle="width:335.0px"
                                       required="false"
                                       requiredMessageDetail="Please Enter Sales Channel"
-                                      valueChangeListener="#{pageFlowScope.QuotingBean.salesChannelVCE}">
+                                      valueChangeListener="#{pageFlowScope.QuotingBean.salesChannelVCE}"
+                                      inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;">
                     <f:selectItems value="#{bindings.SalesChannel.items}"
                                    id="si1"/>
                   </af:selectOneChoice>
@@ -77,12 +83,13 @@
                                         value="#{bindings.SalesRepresentative.inputValue}"
                                         label="Sales Representative"
                                         model="#{bindings.SalesRepresentative.listOfValuesModel}"
-                                        columns="#{bindings.SalesRepresentative.hints.displayWidth}"
                                         shortDesc="#{bindings.SalesRepresentative.hints.tooltip}"
                                         autoSubmit="true"
                                         requiredMessageDetail="Please Enter Sales Representative"
                                         showRequired="true"
-                                        partialTriggers="organizationUnitId">
+                                        partialTriggers="organizationUnitId"
+                                        contentStyle="width:330px;"
+                                        inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;">
                     <f:validator binding="#{bindings.SalesRepresentative.validator}"/>
                   </af:inputListOfValues>
                   <af:inputListOfValues id="customerSupportRepresentId"
@@ -90,13 +97,13 @@
                                         value="#{bindings.CustomerSupportRepresent.inputValue}"
                                         label="Business Center CSR"
                                         model="#{bindings.CustomerSupportRepresent.listOfValuesModel}"
-                                        columns="#{bindings.CustomerSupportRepresent.hints.displayWidth}"
                                         shortDesc="#{bindings.CustomerSupportRepresent.hints.tooltip}"
                                         autoSubmit="true"
-                                        requiredMessageDetail="Please Enter Customer Support Represent">
+                                        requiredMessageDetail="Please Enter Customer Support Represent"
+                                        contentStyle="width:330px;"
+                                        inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;">
                     <f:validator binding="#{bindings.CustomerSupportRepresent.validator}"/>
                   </af:inputListOfValues>
-                  <af:spacer width="10" height="10" id="s3"/>
                   <!--<af:inputListOfValues id="customerNumberId"
                                         popupTitle="Search and Select: #{bindings.CustomerNumber.hints.label}"
                                         value="#{bindings.CustomerNumber.inputValue}"
@@ -118,7 +125,6 @@
                                         value="#{bindings.CustNum.inputValue}"
                                         label="Customer Number"
                                         model="#{bindings.CustNum.listOfValuesModel}"
-                                        columns="#{bindings.CustNum.hints.displayWidth}"
                                         shortDesc="#{bindings.CustNum.hints.tooltip}"
                                         partialTriggers="organizationUnitId customerNameId soc3"
                                         requiredMessageDetail="Please Enter Customer Number"
@@ -126,7 +132,9 @@
                                         showRequired="true"
                                         binding="#{pageFlowScope.QuotingBean.bindCustNumber}"
                                         autoSubmit="true"
-                                        disabled="#{pageFlowScope.QuotingBean.isCustEnable eq false}">
+                                        disabled="#{pageFlowScope.QuotingBean.isCustEnable eq false}"
+                                        contentStyle="width:330px;"
+                                        inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;">
                     <f:validator binding="#{bindings.CustNum.validator}"/>
                   </af:inputListOfValues>
         
@@ -135,7 +143,6 @@
                                         value="#{bindings.CustomerName.inputValue}"
                                         label="Customer Name"
                                         model="#{bindings.CustomerName.listOfValuesModel}"
-                                        columns="#{bindings.CustomerName.hints.displayWidth}"
                                         shortDesc="#{bindings.CustomerName.hints.tooltip}"
                                         autoSubmit="true"
                                         requiredMessageDetail="Please Enter Customer Name"
@@ -143,10 +150,11 @@
                                         showRequired="true"
                                         binding="#{pageFlowScope.QuotingBean.bindCustomerName}"
                                         disabled="#{pageFlowScope.QuotingBean.isCustEnable eq false}"
-                                        partialTriggers="organizationUnitId customerNumberId soc3">
+                                        partialTriggers="organizationUnitId customerNumberId soc3"
+                                        contentStyle="width:330px;"
+                                        inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;">
                     <f:validator binding="#{bindings.CustomerName.validator}"/>
                   </af:inputListOfValues>
-                  <af:spacer width="10" height="10" id="s1"/>
                    <af:inputListOfValues id="custNameId"
                                         popupTitle="Search and Select: #{bindings.CustName.hints.label}"
                                         value="#{bindings.CustName.inputValue}"
@@ -181,92 +189,95 @@
                   </af:panelGroupLayout>
                 </af:dialog>
               </af:popup>
-              <af:separator id="s32"
-                            inlineStyle="color:Black; font-size:large; font-weight:bolder;"/>
-              <af:spacer width="10" height="20" id="s14"/>
+              <af:spacer width="10" height="10" id="s14"/>
               <af:panelGroupLayout id="pgl9" layout="horizontal"
-                                   partialTriggers="soc3">
-                <af:spacer width="30" height="10" id="s12"/>
-                <af:panelGroupLayout id="pgl26" layout="vertical"
-                                     partialTriggers="customerNameId customerNumberId">
-                  <af:outputLabel value="Quote To" id="ol1"
-                                  inlineStyle="font-weight:bold; color:Black;"/>
-                  <af:spacer width="10" height="5" id="s15"/>
-                  <h:inputTextarea id="it9"
-                                   value="#{bindings.QuoteTo.inputValue}"
-                                   label="Quote To" cols="25" readonly="true"
-                                   style="font-weight:bold; border-style:hidden; overflow:hidden; height:24.0mm;"/>
-                </af:panelGroupLayout>
+                                   partialTriggers="soc3"
+                                   styleClass="AFStretchWidth">
+                <af:spacer width="30" height="10" id="s12" rendered="false"/>
+                <af:panelFormLayout id="pfl4" fieldWidth="430px"
+                                    inlineStyle="text-align:left;"
+                                    styleClass="AFStretchWidth">
+                  <af:panelGroupLayout id="pgl26" layout="vertical"
+                                       partialTriggers="customerNameId customerNumberId"
+                                       styleClass="AFStretchWidth">
+                    <af:outputLabel value="Quote To" id="ol1"
+                                    inlineStyle="font-weight:bold; color:Black;"/>
+                    <af:spacer width="10" height="5" id="s15"/>
+                    <h:inputTextarea id="it9"
+                                     value="#{bindings.QuoteTo.inputValue}"
+                                     label="Quote To" readonly="true"
+                                     style="font-weight:bold; border-style:hidden; overflow:hidden; height:24.0mm; background-color:white;"
+                                     cols="67"/>
+                  </af:panelGroupLayout>
+                </af:panelFormLayout>
               </af:panelGroupLayout>
-              <af:spacer width="10" height="75" id="s5"/>
-              <af:panelGroupLayout id="pgl21" layout="vertical">
-                <af:panelGroupLayout id="pgl20" valign="middle" halign="left"
-                                     layout="horizontal">
-                  <af:spacer width="41" height="10" id="s34"/>
-                  <af:outputLabel value="Attention To/Department" id="ol6"
-                                  inlineStyle="color:Black; font-weight:bold;"/>
-                  <af:panelLabelAndMessage label="Attention To/Department"
-                                           id="plam1" rendered="false"/>
-                  <af:inputText value="#{bindings.AttentionToOrDept.inputValue}"
-                                columns="20"
-                                maximumLength="#{bindings.AttentionToOrDept.hints.precision}"
-                                shortDesc="#{bindings.AttentionToOrDept.hints.tooltip}"
-                                id="it2"
-                                requiredMessageDetail="Please Enter Attention To/Department"
-                                inlineStyle="font-weight:bold;background-color:White;">
-                    <f:validator binding="#{bindings.AttentionToOrDept.validator}"/>
-                  </af:inputText>
-                </af:panelGroupLayout>
-                <af:panelGroupLayout id="pgl22" layout="horizontal">
-                  <af:spacer width="71" height="10" id="s20"/>
-                  <af:inputText label="Telephone No/Fax No" id="it12"
-                                columns="20"
-                                value="#{bindings.CustPhoneFax.inputValue}"
-                                required="#{bindings.CustPhoneFax.hints.mandatory}"
-                                maximumLength="#{bindings.CustPhoneFax.hints.precision}">
-                    <f:validator binding="#{bindings.CustPhoneFax.validator}"/>
-                  </af:inputText>
-                </af:panelGroupLayout>
-                <af:panelGroupLayout id="pgl23" layout="horizontal">
-                  <af:spacer width="160" height="10" id="s22"/>
-                  <af:inputText value="#{bindings.QuoteEmail.inputValue}"
-                                label="Email" columns="20"
-                                maximumLength="#{bindings.QuoteEmail.hints.precision}"
-                                shortDesc="#{bindings.QuoteEmail.hints.tooltip}"
-                                id="it22"
-                                requiredMessageDetail="Please Enter Email">
-                    <f:validator binding="#{bindings.QuoteEmail.validator}"/>
-                  </af:inputText>
-                  <af:spacer width="10" height="10" id="s21"/>
-                </af:panelGroupLayout>
-              </af:panelGroupLayout>
-              <af:spacer width="10" height="54" id="s4"/>
-              <af:panelGroupLayout id="pgl3" layout="horizontal">
-                <af:spacer width="40" height="10" id="s10"/>
+              <af:spacer width="10" height="10" id="s5"/>
+              <af:panelFormLayout id="pfl2" fieldWidth="365px"
+                                  labelWidth="130px;">
+                <af:inputText value="#{bindings.AttentionToOrDept.inputValue}"
+                              maximumLength="#{bindings.AttentionToOrDept.hints.precision}"
+                              shortDesc="#{bindings.AttentionToOrDept.hints.tooltip}"
+                              id="it2"
+                              requiredMessageDetail="Please Enter Attention To/Department"
+                              inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                               rows="1" label="Attention To/Dept"
+                              contentStyle="width:330.0px">
+                  <f:validator binding="#{bindings.AttentionToOrDept.validator}"/>
+                </af:inputText>
+                <af:inputText label="Telephone No/Fax No" id="it12" columns="35"
+                              value="#{bindings.CustPhoneFax.inputValue}"
+                              required="#{bindings.CustPhoneFax.hints.mandatory}"
+                              maximumLength="#{bindings.CustPhoneFax.hints.precision}"
+                              rows="1"
+                              inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                              contentStyle="width:330.0px">
+                  <f:validator binding="#{bindings.CustPhoneFax.validator}"/>
+                </af:inputText>
+                <af:inputText value="#{bindings.QuoteEmail.inputValue}"
+                              label="Email" columns="35"
+                              maximumLength="#{bindings.QuoteEmail.hints.precision}"
+                              shortDesc="#{bindings.QuoteEmail.hints.tooltip}"
+                              id="it22"
+                              requiredMessageDetail="Please Enter Email"
+                              inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                              contentStyle="width:330.0px">
+                  <f:validator binding="#{bindings.QuoteEmail.validator}"/>
+                </af:inputText>
+              </af:panelFormLayout>
+              <af:panelGroupLayout id="pgl3" layout="horizontal"
+                                   styleClass="AFStretchWidth">
+                <af:spacer width="40" height="10" id="s10" rendered="false"/>
                 <af:panelGroupLayout id="pgl11"
-                                     partialTriggers="salesRepresentativeId">
+                                     partialTriggers="salesRepresentativeId"
+                                     styleClass="AFStretchWidth">
                   <af:outputLabel value="Sales Representative" id="ol3"
                                   inlineStyle="color:Black; font-weight:bold;"/>
                   <af:panelFormLayout id="pfl6"
-                                      partialTriggers="salesRepresentativeId">
+                                      partialTriggers="salesRepresentativeId"
+                                      styleClass="AFStrechWidth"
+                                      fieldWidth="410px" labelWidth="85px"
+                                      rows="2147483647">
                     <af:inputText value="#{bindings.SalesContactName.inputValue}"
-                                  label="Contact Name" id="it13" columns="20"
+                                  label="Contact Name" id="it13" columns="38"
                                   partialTriggers="salesRepresentativeId"
-                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:White;"
-                                  readOnly="true"/>
+                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                                  readOnly="true" contentStyle="width:330.0px"/>
                     <af:inputText value="#{bindings.SalesPhoneNum.inputValue}"
-                                  label="Telephone No" id="it14" columns="20"
+                                  label="Telephone No" id="it14" columns="38"
                                   partialTriggers="salesRepresentativeId"
                                   readOnly="true"
-                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:White;"/>
+                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                                  contentStyle="width:330.0px"/>
                     <af:inputText value="#{bindings.SalesFaxNum.inputValue}"
-                                  label="Fax No" id="it15" columns="20"
+                                  label="Fax No" id="it15" columns="38"
                                   partialTriggers="salesRepresentativeId" readOnly="true"
-                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:White;"/>
+                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                                  contentStyle="width:330.0px"/>
                     <af:inputText value="#{bindings.SalesEmail.inputValue}"
-                                  label="Email" id="it16" columns="20"
+                                  label="Email" id="it16" columns="38"
                                   partialTriggers="salesRepresentativeId" readOnly="true"
-                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:White;"/>
+                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                                  contentStyle="width:330.0px"/>
                   </af:panelFormLayout>
                 </af:panelGroupLayout>
               </af:panelGroupLayout>
@@ -275,35 +286,20 @@
           </f:facet>
           <f:facet name="second">
             <af:panelGroupLayout id="pgl6" layout="vertical">
-              <af:panelGroupLayout id="pgl2">
-                <af:spacer width="300" height="10" id="s17"/>
-                <af:commandButton text="Create Quote Header" id="cb1"
-                                  action="#{pageFlowScope.QuotingBean.saveQuoteDetails}"/>
-                <af:spacer width="10" height="10" id="s18"/>
-                <af:commandButton text="Clear" id="cb2" immediate="true"
-                                  action="clear">
-                  <af:resetActionListener/>
-                </af:commandButton>
-                <af:resetButton text="resetButton 1" id="rb2" rendered="false"/>
-                <af:spacer width="10" height="10" id="s25"/>
-                <af:commandButton text="updateQuote" id="cb5"
-                                  action="updateQuote" rendered="false"/>
-                <af:commandButton text="Update Quote" id="cb4"
-                                  action="#{pageFlowScope.QuotingBean.updateQuote}"
-                                  rendered="false"/>
-                <af:resetButton text="Clear" id="rb1" rendered="false"/>
-                <af:commandButton text="Return" id="cb3" action="backToSearch"
-                                  rendered="false"/>
-              </af:panelGroupLayout>
-              <af:panelFormLayout id="pfl3" labelAlignment="start"
-                                  partialTriggers="cb2 soc3">
+              <af:panelFormLayout id="pfl3"
+                                  partialTriggers="cb2 soc3"
+                                  fieldWidth="377px;" labelWidth="118px;"
+                                  rows="2147483647"
+                                  inlineStyle="height: 160px;">
                 <af:inputText value="#{bindings.DealId.inputValue}"
                               label="CRM Deal ID"
                               columns="#{bindings.DealId.hints.displayWidth}"
                               maximumLength="#{bindings.DealId.hints.precision}"
                               shortDesc="#{bindings.DealId.hints.tooltip}"
                               id="it7"
-                              requiredMessageDetail="Please Enter Deal Id">
+                              requiredMessageDetail="Please Enter Deal Id"
+                              inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                              contentStyle="width:340px;">
                   <f:validator binding="#{bindings.DealId.validator}"/>
                 </af:inputText>
                 <af:inputListOfValues id="orderTypeId"
@@ -311,13 +307,13 @@
                                       value="#{bindings.OrderType.inputValue}"
                                       label="Order Type"
                                       model="#{bindings.OrderType.listOfValuesModel}"
-                                      columns="#{bindings.OrderType.hints.displayWidth}"
                                       shortDesc="#{bindings.OrderType.hints.tooltip}"
-                                      partialTriggers="organizationUnitId"
                                       requiredMessageDetail="Please Enter order Type"
                                       showRequired="true"
-                                      binding="#{pageFlowScope.QuotingBean.bindOrderType}"
-                                      autoSubmit="true">
+                                      autoSubmit="true"
+                                      inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                                      partialTriggers="organizationUnitId"
+                                      contentStyle="width:342px;">
                   <f:validator binding="#{bindings.OrderType.validator}"/>
                 </af:inputListOfValues>
                 <af:inputListOfValues id="priceListId"
@@ -326,19 +322,20 @@
                                       label="#{bindings.PriceList.hints.label}"
                                       model="#{bindings.PriceList.listOfValuesModel}"
                                       required="#{bindings.PriceList.hints.mandatory}"
-                                      columns="#{bindings.PriceList.hints.displayWidth}"
                                       shortDesc="#{bindings.PriceList.hints.tooltip}"
-                                      showRequired="true" autoSubmit="true">
+                                      showRequired="true" autoSubmit="true"
+                                      inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                                      contentStyle="width:342px;">
                   <f:validator binding="#{bindings.PriceList.validator}"/>
                 </af:inputListOfValues>
-                <af:spacer width="10" height="10" id="s8"/>
                 <af:selectOneChoice value="#{bindings.BusinessAgreement.inputValue}"
                                     label="#{bindings.BusinessAgreement.label}"
                                     required="#{bindings.BusinessAgreement.hints.mandatory}"
                                     shortDesc="#{bindings.BusinessAgreement.hints.tooltip}"
                                     id="soc5"
                                     partialTriggers="customerNumberId customerNameId soc3"
-                                    contentStyle="width:138.0px">
+                                    contentStyle="width:346px;"
+                                    inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;">
                   <f:selectItems value="#{bindings.BusinessAgreement.items}"
                                  id="si5"/>
                 </af:selectOneChoice>
@@ -349,13 +346,13 @@
                               maximumLength="#{bindings.Discount.hints.precision}"
                               shortDesc="#{bindings.Discount.hints.tooltip}"
                               id="it10"
-                              binding="#{pageFlowScope.QuotingBean.bindDiscount}">
+                              binding="#{pageFlowScope.QuotingBean.bindDiscount}"
+                              inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                              contentStyle="width:340px;">
                   <f:validator binding="#{bindings.Discount.validator}"/>
                 </af:inputText>
-                <af:spacer width="10" height="46" id="s9"/>
               </af:panelFormLayout>
-              <af:separator id="s33"
-                            inlineStyle="font-weight:bold; color:Black;"/>
+              <af:spacer width="10" height="30" id="s1"/>
               <af:panelBox id="pb2" showDisclosure="false"
                            inlineStyle="width:788px; border-width:medium; border-color:Black;"
                            partialTriggers="soc3">
@@ -368,7 +365,7 @@
                               inlineStyle="font-size:x-large; font-weight:bolder; color:Black;"/>
                 <af:panelGroupLayout id="pgl1" layout="horizontal">
                   <af:panelGroupLayout id="pgl17"
-                                       inlineStyle="border-color:Black;"
+                                       inlineStyle="border-color:Black; "
                                        layout="vertical">
                     <af:panelLabelAndMessage label="Advantest Quotation"
                                              id="plam2"/>
@@ -399,7 +396,7 @@
                   </af:panelGroupLayout>
                   <af:spacer width="10" height="10" id="s28"/>
                   <af:panelGroupLayout id="pgl19"
-                                       inlineStyle="border-color:Black;"
+                                       inlineStyle="border-color:Black; "
                                        layout="vertical">
                     <af:panelLabelAndMessage label="Page" id="plam4"/>
                     <af:inputText value="#{bindings.Page.inputValue}"
@@ -422,8 +419,7 @@
                                   columns="#{bindings.Systemid.hints.displayWidth}"
                                   maximumLength="#{bindings.Systemid.hints.precision}"
                                   shortDesc="#{bindings.Systemid.hints.tooltip}"
-                                  id="it5" wrap="soft" label=" "
-                                  inlineStyle="background-color:White;">
+                                  id="it5" wrap="soft" label=" ">
                       <f:validator binding="#{bindings.Systemid.validator}"/>
                     </af:inputText>
                   </af:panelGroupLayout>
@@ -498,8 +494,8 @@
                                 inlineStyle="font-weight:bold; color:Black;"/>
                 <af:spacer width="10" height="5" id="s19"/>
                 <h:inputTextarea id="it1" value="#{bindings.ShipTo.inputValue}"
-                                 cols="25"
-                                 style="height:23mm; overflow:hidden; border-style:hidden; font-weight:bold;"
+                                 cols="68"
+                                 style="height:23mm; overflow:hidden; border-style:hidden; font-weight:bold; background-color:white;"
                                  readonly="true" disabled="false"/>
               </af:panelGroupLayout>
               <af:spacer width="10" height="10" id="s7"/>
@@ -511,7 +507,9 @@
                                   inlineStyle="color:Black; font-weight:bold;"/>
                   <af:panelFormLayout id="pfl7"
                                       partialTriggers="customerSupportRepresentId"
-                                      inlineStyle="background-color:White;">
+                                      inlineStyle="background-color:white;"
+                                      fieldWidth="410px;" labelWidth="85px;"
+                                      rows="2147483647">
                     <!--  <af:inputText value="#{bindings.CustomerContactName.inputValue}"
                             label="#{bindings.CustomerContactName.hints.label}"
                             required="#{bindings.CustomerContactName.hints.mandatory}"
@@ -551,19 +549,19 @@
                     <af:inputText value="#{bindings.CustomerContactName.inputValue}"
                                   label="Contact Name" id="it17" columns="20"
                                   partialTriggers="customerSupportRepresentId" readOnly="true"
-                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:White;"/>
+                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"/>
                     <af:inputText value="#{bindings.CustomerPhoneNum.inputValue}"
                                   label="Telephone No" id="it18" columns="20"
                                   partialTriggers="customerSupportRepresentId" readOnly="true"
-                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:White;"/>
+                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"/>
                     <af:inputText value="#{bindings.CustomerFaxNum.inputValue}"
                                   label="Fax No" id="it19" columns="20"
                                   partialTriggers="customerSupportRepresentId" readOnly="true"
-                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:White;"/>
+                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"/>
                     <af:inputText value="#{bindings.CustomerEmail.inputValue}"
                                   label="Email" id="it20" columns="20"
                                   partialTriggers="customerSupportRepresentId" readOnly="true"
-                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:White;"/>
+                                  inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"/>
                   </af:panelFormLayout>
                 </af:panelGroupLayout>
               </af:panelGroupLayout>
@@ -590,7 +588,30 @@
         <af:outputText value="Quote Header Customer &amp; Deal Related Data"
                              id="ot1"
                        inlineStyle="color:Navy; font-weight:bold; font-size:large;"/>
-            </af:panelGroupLayout>
+        <af:commandImageLink id="cil1"
+                             icon="/Resources/images/imgs/icons8-help-16.png"
+                             actionListener="#{pageFlowScope.QuotingBean.showHelpTips}"/>
+        <af:panelGroupLayout id="pgl2">
+          <af:spacer width="300" height="10" id="s17"/>
+          <af:commandButton text="Save" id="cb1"
+                            action="#{pageFlowScope.QuotingBean.saveQuoteDetails}"/>
+          <af:spacer width="10" height="10" id="s18"/>
+          <af:commandButton text="Clear" id="cb2" immediate="true"
+                            action="clear">
+            <af:resetActionListener/>
+          </af:commandButton>
+          <af:resetButton text="resetButton 1" id="rb2" rendered="false"/>
+          <af:spacer width="10" height="10" id="s25"/>
+          <af:commandButton text="updateQuote" id="cb5" action="updateQuote"
+                            rendered="false"/>
+          <af:commandButton text="Update Quote" id="cb4"
+                            action="#{pageFlowScope.QuotingBean.updateQuote}"
+                            rendered="false"/>
+          <af:resetButton text="Clear" id="rb1" rendered="false"/>
+          <af:commandButton text="Return" id="cb3" action="backToSearch"
+                            rendered="false"/>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
     </f:facet>
   </af:panelStretchLayout>
   <!--oracle-jdev-comment:preferred-managed-bean-name:QuotingBean-->

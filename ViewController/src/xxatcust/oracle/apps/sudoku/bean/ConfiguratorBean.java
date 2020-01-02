@@ -2410,6 +2410,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         if(v93k!=null && v93k.getSessionDetails()!=null){
             quoteSaved = v93k.getSessionDetails().isQuoteSaved();
         }
+        else if(v93k==null || (v93k!=null && v93k.getSessionDetails()==null)){
+            quoteSaved = false ;
+        }
         return quoteSaved;
+    }
+
+    public void showHelpMessage(ActionEvent actionEvent) {
+        ADFUtils.showFacesMessage("Please select values in RuleSet Selection to load the configurtor UI.", FacesMessage.SEVERITY_INFO);
     }
 }

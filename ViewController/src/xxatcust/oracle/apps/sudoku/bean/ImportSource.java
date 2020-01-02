@@ -27,7 +27,10 @@ import javax.faces.event.ValueChangeEvent;
 
 import javax.xml.bind.JAXBException;
 
+import javax.xml.bind.UnmarshalException;
+
 import oracle.adf.model.BindingContext;
+import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.share.ADFContext;
 import oracle.adf.share.logging.ADFLogger;
@@ -72,6 +75,7 @@ public class ImportSource {
     private RichInputText formalQuote;
     private RichInputFile inputFileBinding;
     V93kQuote v93kQuote;
+    private Boolean disableRadioChoice;
 
     public ImportSource() {
     }
@@ -209,11 +213,6 @@ public class ImportSource {
         String importSource = null;
         String quoteNumber = null;
         String configType = null;
-        Boolean configTypeBool = null;
-        //String reuseQuote =
-        //    null; //true if "Re-use the existing Quote ID, if possible" is selected
-        //String copyReferenceConfiguration = null;
-        //boolean copyRefConf = false;
         DCIteratorBinding iter =
             ADFUtils.findIterator("ImportSourceVO1Iterator");
         if (iter != null) {
@@ -224,27 +223,6 @@ public class ImportSource {
                         (String)currRow.getAttribute("BudgetQuoteId"); //can be formal quote id as well
                 formalQuoteNum = (String)currRow.getAttribute("FormalQuoteId");
                 configType = (String)currRow.getAttribute("ConfigurationType");
-                //                if(configType!=null){
-                //                    if(configType.equalsIgnoreCase("UPGRADE")){
-                //
-                //                    }
-                //                }
-                // if(budgetQuoteNum!=null && b)
-                //                System.out.println("Reuse quote value " +
-                //                                   currRow.getAttribute("ReuseQuote"));
-                // reuseQuote = (String)currRow.getAttribute("ReuseQuote");
-                //   Boolean reuseQuoteBool = true;
-                //                if (reuseQuote != null && reuseQuote.equalsIgnoreCase("N")) {
-                //                    reuseQuoteBool = false;
-                //                }
-                //                copyReferenceConfiguration =
-                //                        (String)currRow.getAttribute("CopyRefConfig");
-                //                if (copyReferenceConfiguration != null) {
-                //                    if (copyReferenceConfiguration.equalsIgnoreCase("Y")) {
-                //                        copyRefConf = true;
-                //                    } else
-                //                        copyRefConf = false;
-                //                }
                 if (importSource != null &&
                     importSource.equalsIgnoreCase("BUDGET_QUOTE")) {
                     quoteNumber = budgetQuoteNum;
@@ -261,8 +239,6 @@ public class ImportSource {
                 inputParamsMap.put("importSource", importSource);
                 inputParamsMap.put("quoteNumber", quoteNumber);
                 inputParamsMap.put("configType", configType);
-                //   inputParamsMap.put("reuseQuote", reuseQuoteBool);
-                //inputParamsMap.put("copyRefConf", copyRefConf);
                 ADFUtils.setSessionScopeValue("inputParamsMap",
                                               inputParamsMap);
                 if (quoteNumber != null) {
@@ -438,8 +414,8 @@ public class ImportSource {
 
         } catch (Exception jaxbe) {
             
-            if(jaxbe instanceof SAXParseException){
-                ADFUtils.showFacesMessage("XML cannot be parsed correctly , Please check if the file has any special characters", FacesMessage.SEVERITY_ERROR);
+            if(jaxbe instanceof UnmarshalException){
+                ADFUtils.showFacesMessage("XML is not formed correctly , Please check if the file has any special characters(For Instance '&' should be '&amp;')", FacesMessage.SEVERITY_ERROR);
             }
             
             if (jaxbe instanceof IllegalArgumentException) {
@@ -536,10 +512,6 @@ public class ImportSource {
             if (inputParamsMap.get("reuseQuote") != null) {
                 inputParam.setReuseQuote((Boolean)inputParamsMap.get("reuseQuote"));
             }
-            //            if (inputParamsMap.get("copyRefConf") != null) {
-            //                inputParam.setCopyReferenceConfiguration((Boolean)inputParamsMap.get("copyRefConf"));
-            //            }
-
             if (inputParamsMap.get("configType") != null) {
                 String configType = (String)inputParamsMap.get("configType");
                 if (configType.equalsIgnoreCase("UPGRADE")) {
@@ -733,5 +705,14 @@ public class ImportSource {
 
     public void configTypeChanged(ValueChangeEvent valueChangeEvent) {
         // Add event code here...
+    }
+
+
+    public void setDisableRadioChoice(Boolean disableRadioChoice) {
+        this.disableRadioChoice = disableRadioChoice;
+    }
+
+    public Boolean getDisableRadioChoice() {
+        return disableRadioChoice;
     }
 }

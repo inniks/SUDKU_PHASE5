@@ -543,4 +543,10 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
             this.riInvokeExportedMethod(this,"getPriceProductChoices",null,null);
         return (HashMap)_ret;
     }
+
+    public String deleteProductLine(String lineId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"deleteProductLine",new String [] {"java.lang.String"},new Object[] {lineId});
+        return (String)_ret;
+    }
 }

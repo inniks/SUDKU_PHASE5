@@ -124,11 +124,6 @@
                                      rendered="true" fetchSize="100">
                           <f:facet name="groupHeaderStamp">
                             <af:listItem id="li3" styleClass="ABHeader">
-                              <af:panelGroupLayout id="pgl16">
-                                <af:outputText value="#{node.category}" id="ot1"
-                                               inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
-                                               truncateAt="0"/>
-                              </af:panelGroupLayout>
                               <af:panelGridLayout id="pgl15k"
                                                   rendered="#{feach.lineNum eq '1' and node.printGroupLevel eq '0'}">
                                 <af:gridRow marginTop="5px" height="auto"
@@ -182,7 +177,11 @@
                                                rendered="#{XMLImportPageBean.priceRendered}">
                                     <af:outputText value="Extended Price"
                                                    id="ot6_a"
-                                                   inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
+                                                   inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"
+                                                   rendered="false"/>
+                                    <af:outputFormatted value="Extended Price"
+                                                        id="of3"
+                                                        inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
                                   </af:gridCell>
                                   <af:gridCell marginStart="5px" width="14%"
                                                id="gc6_1_a"
@@ -192,6 +191,14 @@
                                   </af:gridCell>
                                 </af:gridRow>
                               </af:panelGridLayout>
+                              <af:panelGroupLayout id="pgl15" layout="vertical">
+                                <af:outputText value="Line" id="ot2"
+                                               inlineStyle="font-weight:bold; font-size:small;"
+                                               rendered="#{feach.lineNum eq '1' and node.printGroupLevel eq '0'}"/>
+                                <af:outputText value="#{node.category}" id="ot1"
+                                               inlineStyle='font-weight:bold; font-size:small;'
+                                               truncateAt="0"/>
+                              </af:panelGroupLayout>
                             </af:listItem>
                           </f:facet>
                           <af:listItem id="li2">

@@ -556,7 +556,7 @@ public class UiField {
                         //                        if (uiField2_dis) {
                         //                            uiField2_color = "Yellow";
                         //                        }
-                        if (qty != -1) {
+                        if (qty != -1 && !node.isReadOnly()) {
                             uiField2_qty = Integer.toString(qty);
                             sumLicenceInputs =
                                     sumLicenceInputs + node.getQuantity();
@@ -611,7 +611,7 @@ public class UiField {
                         ConfiguratorUiElement uiElement = listOfNodes.get(i);
                         int uiElementType = uiElement.getUiElementType();
                         int qty = node.getQuantity();
-                        if (qty != -1) {
+                        if (qty != -1 && !node.isReadOnly()) {
                             uiField3_qty = Integer.toString(qty);
                             sumLicenceInputs =
                                     sumLicenceInputs + node.getQuantity();
@@ -713,7 +713,7 @@ public class UiField {
 
                         }
                         //If an input is there ,disable other inputs
-                        if (node.getQuantity() != -1) {
+                        if (node.getQuantity() != -1 && !node.isReadOnly()) {
                             //some value already exists
 //                            sumLicenceInputs =
 //                                    sumLicenceInputs + node.getQuantity();
@@ -799,7 +799,7 @@ public class UiField {
 
                         }
                         //If an input is there ,disable other inputs
-                        if (node.getQuantity() != -1) {
+                        if (node.getQuantity() != -1 && !node.isReadOnly()) {
                             //some value already exists
                             countLicensesEntered++;
                             countOfEFEntries++;
@@ -883,7 +883,7 @@ public class UiField {
 
                         }
                         //If an input is there ,disable other inputs
-                        if (node.getQuantity() != -1) {
+                        if (node.getQuantity() != -1 && !node.isReadOnly()) {
                             //some value already exists
                             countLicensesEntered++;
                             countOfEFEntries++;
@@ -968,7 +968,7 @@ public class UiField {
 
                         }
                         //If an input is there ,disable other inputs
-                        if (node.getQuantity() != -1) {
+                        if (node.getQuantity() != -1 && !node.isReadOnly()) {
                             //some value already exists
                             countLicensesEntered++;
                             countOfEFEntries++;
@@ -1053,7 +1053,7 @@ public class UiField {
 
                         }
                         //If an input is there ,disable other inputs
-                        if (node.getQuantity() != -1) {
+                        if (node.getQuantity() != -1 && !node.isReadOnly()) {
                             //some value already exists
                             countLicensesEntered++;
                             countOfEFEntries++;
@@ -1139,7 +1139,7 @@ public class UiField {
 
                         }
                         //If an input is there ,disable other inputs
-                        if (node.getQuantity() != -1) {
+                        if (node.getQuantity() != -1 && !node.isReadOnly()) {
                             //some value already exists
                             countLicensesEntered++;
                             countOfEFEntries++;
@@ -1214,7 +1214,7 @@ public class UiField {
 
                         }
                         //If an input is there ,disable other inputs
-                        if (node.getQuantity() != -1) {
+                        if (node.getQuantity() != -1 && !node.isReadOnly()) {
                             //some value already exists
                             countLicensesEntered++;
                             countOfEFEntries++;
@@ -1290,7 +1290,7 @@ public class UiField {
 
                         }
                         //If an input is there ,disable other inputs
-                        if (node.getQuantity() != -1) {
+                        if (node.getQuantity() != -1 && !node.isReadOnly()) {
                             //some value already exists
                             countLicensesEntered++;
                             countOfEFEntries++;
@@ -1367,7 +1367,7 @@ public class UiField {
 
                         }
                         //If an input is there ,disable other inputs
-                        if (node.getQuantity() != -1) {
+                        if (node.getQuantity() != -1 && !node.isReadOnly()) {
                             //some value already exists
                             countLicensesEntered++;
                             countOfEFEntries++;

@@ -368,8 +368,8 @@
     Name="LOV_BusinessAgreement"
     ListVOName="businessAgreementVo"
     ListRangeSize="-1"
-    NullValueFlag="none"
-    NullValueId="LOV_BusinessAgreement_LOVUIHints_NullValueId"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
     MRUCount="0">
     <AttrArray Name="AttrNames">
       <Item Value="BusinessAgreement"/>
