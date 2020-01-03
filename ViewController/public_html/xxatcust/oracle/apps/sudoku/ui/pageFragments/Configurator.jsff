@@ -522,7 +522,7 @@
                               <af:panelGroupLayout id="drs12_11"
                                                    layout="horizontal"
                                                    rendered="#{theadIter.uiGrpIndex eq '1'}">
-                                <af:spacer width="10" height="10"
+                                <af:spacer width="15" height="10"
                                            id="drs1_13_11"/>
                                 <af:panelBorderLayout id="drs19_21"
                                                       inlineStyle="height:25px; width:40px; border-style:none;">
@@ -1072,7 +1072,7 @@
                               <af:panelGroupLayout id="drs12m"
                                                    layout="horizontal"
                                                    rendered="#{theadIter.uiGrpIndex ne '1' and theadIter.uiGrpIndex ne '2' and theadIter.uiGrpIndex eq '3'}">
-                                <af:spacer width="10" height="10" id="drs13m"/>
+                                <af:spacer width="15" height="10" id="drs13m"/>
                                 <af:panelBorderLayout id="drs14m"
                                                       inlineStyle="height:25px; width:100px; border-style:none;">
                                   <f:facet name="innerLeft">
@@ -1080,7 +1080,8 @@
                                                          layout="horizontal">
                                       <af:outputFormatted id="drs1003m"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="Licensed Features"/>
+                                                          value="Licensed Features"
+                                                          inlineStyle="font-weight:bold;"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1118,7 +1119,8 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="drs36m"
-                                                          value="#{theadIter.uiField1}"/>
+                                                          value="#{theadIter.uiField1}"
+                                                          inlineStyle="font-weight:bold;"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1129,7 +1131,8 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="drs361m"
-                                                          value="#{theadIter.uiField2}"/>
+                                                          value="#{theadIter.uiField2}"
+                                                          inlineStyle="font-weight:bold;"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1140,7 +1143,8 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="drs362m"
-                                                          value="#{theadIter.uiField3}"/>
+                                                          value="#{theadIter.uiField3}"
+                                                          inlineStyle="font-weight:bold;"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -1150,6 +1154,7 @@
                                                        layout="horizontal"
                                                        halign="left">
                                     <af:outputFormatted id="drs363m"
+                                    inlineStyle="font-weight:bold;"
                                                         value="#{theadIter.uiField4}"/>
                                   </af:panelGroupLayout>
                                 </af:panelBorderLayout>
@@ -1160,6 +1165,7 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="drs365m"
+                                      inlineStyle="font-weight:bold;"
                                                           value="#{theadIter.uiField5}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
@@ -1171,6 +1177,7 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="drs366m"
+                                      inlineStyle="font-weight:bold;"
                                                           value="#{theadIter.uiField6}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
@@ -2277,7 +2284,8 @@
                                                          layout="horizontal">
                                       <af:outputFormatted id="dps1003m"
                                                           shortDesc="#{theadIter.parentGroupName}"
-                                                          value="Licensed Features"/>
+                                                          value="Licensed Features"
+                                                          inlineStyle="font-weight:bold;"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -2301,8 +2309,10 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dps31m"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
-                                  <f:facet name="innerLeft"/>
+                                                      inlineStyle="height:25px; width:80px; border-style:none;">
+                                  <f:facet name="innerLeft">
+                                    <af:spacer width="8" height="10" id="s4"/>
+                                  </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dps33m"
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
@@ -2311,6 +2321,7 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="dps36m"
+                                      inlineStyle="font-weight:bold;"
                                                           value="#{theadIter.uiField1}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
@@ -2322,17 +2333,20 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="dps361m"
+                                      inlineStyle="font-weight:bold;"
                                                           value="#{theadIter.uiField2}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dps43m"
+                                
                                                       inlineStyle="height:25px; width:90px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dps342m"
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="dps362m"
+                                      inlineStyle="font-weight:bold;"
                                                           value="#{theadIter.uiField3}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
@@ -2343,6 +2357,7 @@
                                                        layout="horizontal"
                                                        halign="left">
                                     <af:outputFormatted id="dps363m"
+                                    inlineStyle="font-weight:bold;"
                                                         value="#{theadIter.uiField4}"/>
                                   </af:panelGroupLayout>
                                 </af:panelBorderLayout>
@@ -2353,6 +2368,7 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="dps365m"
+                                      inlineStyle="font-weight:bold;"
                                                           value="#{theadIter.uiField5}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
@@ -2364,6 +2380,7 @@
                                                          layout="horizontal"
                                                          halign="left">
                                       <af:outputFormatted id="dps366m"
+                                      inlineStyle="font-weight:bold;"
                                                           value="#{theadIter.uiField6}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
@@ -2442,7 +2459,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dps31"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;">
+                                                      inlineStyle="height:25px; width:95px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="dps33"
@@ -2624,7 +2641,7 @@
               </af:panelGridLayout>
             </af:listItem>
           </af:listView>
-          <af:listView id="mixLv" var="node" rendered="true"
+                    <af:listView id="mixLv" var="node" rendered="true"
                        groupDisclosureListener="#{ConfiguratorBean.groupDisclosureListener}"
                        binding="#{ConfiguratorBean.mixSigListBinding}"
                        value="#{ConfiguratorBean.mixSignalTreeModel}">
@@ -6197,10 +6214,14 @@
                                                           inlineStyle="height:25px; width:40px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgc_s_1001"
-                                                             layout="horizontal">
+                                                             layout="horizontal"
+                                                             halign="center">
+                                          <af:spacer width="5" height="10"
+                                                     id="s5"/>
                                           <af:outputFormatted id="misUpgc_s_1003"
                                                               visible="true"
-                                                              value="Licensed Features"/>
+                                                              value="Licensed Features"
+                                                              inlineStyle="font-weight:bold;"/>
                                         </af:panelGroupLayout>
                                       </f:facet>
                                     </af:panelBorderLayout>
@@ -6230,16 +6251,12 @@
                                     </af:panelBorderLayout>
                                     <af:spacer width="20" height="10"
                                                id="misUpgc_s_28"/>
-                                    <af:panelBorderLayout id="misUpgc_s_29mmmnm"
-                                                          inlineStyle="height:25px; width:35px; border-style:none;">
-                                      <f:facet name="innerLeft"/>
-                                    </af:panelBorderLayout>
                                     <af:panelBorderLayout id="misUpgc_s_31"
                                                           inlineStyle="height:25px; width:60px; border-style:none;">
                                       <f:facet name="innerLeft"/>
                                     </af:panelBorderLayout>
                                     <af:panelBorderLayout id="misUpgc_s_32"
-                                                          inlineStyle="height:25px; width:60px; border-style:none;">
+                                                          inlineStyle="height:25px; width:75px; border-style:none;">
                                       <f:facet name="innerLeft"/>
                                     </af:panelBorderLayout>
                                     <af:panelBorderLayout id="misUpgc_s_s33"
@@ -6250,7 +6267,8 @@
                                                              halign="left">
                                           <af:outputFormatted id="misUpgc_s_36"
                                                               value="#{theadIter.uiField1}"
-                                                              visible="true"/>
+                                                              visible="true"
+                                                              inlineStyle="font-weight:bold;"/>
                                         </af:panelGroupLayout>
                                       </f:facet>
                                     </af:panelBorderLayout>
@@ -6263,7 +6281,8 @@
                                           <af:outputFormatted id="misUpgc_s_361"
                                                               value="#{theadIter.uiField2}"
                                                               visible="true"
-                                                              shortDesc="#{theadIter.parentGroupName}"/>
+                                                              shortDesc="#{theadIter.parentGroupName}"
+                                                              inlineStyle="font-weight:bold;"/>
                                         </af:panelGroupLayout>
                                       </f:facet>
                                     </af:panelBorderLayout>
@@ -6275,7 +6294,8 @@
                                                              halign="left">
                                           <af:outputFormatted id="misUpgc_s_362"
                                                               value="#{theadIter.uiField3}"
-                                                              visible="true"/>
+                                                              visible="true"
+                                                              inlineStyle="font-weight:bold;"/>
                                         </af:panelGroupLayout>
                                       </f:facet>
                                     </af:panelBorderLayout>
@@ -6286,7 +6306,8 @@
                                                            halign="left">
                                         <af:outputFormatted id="misUpgc_s_363"
                                                             value="#{theadIter.uiField4}"
-                                                            visible="true"/>
+                                                            visible="true"
+                                                            inlineStyle="font-weight:bold;"/>
                                       </af:panelGroupLayout>
                                     </af:panelBorderLayout>
                                     <af:panelBorderLayout id="misUpgc_s_52"
@@ -6297,7 +6318,8 @@
                                                              halign="left">
                                           <af:outputFormatted id="misUpgc_s_365"
                                                               value="#{theadIter.uiField5}"
-                                                              visible="true"/>
+                                                              visible="true"
+                                                              inlineStyle="font-weight:bold;"/>
                                         </af:panelGroupLayout>
                                       </f:facet>
                                     </af:panelBorderLayout>
@@ -6309,16 +6331,9 @@
                                                              halign="left">
                                           <af:outputFormatted id="misUpgc_s_366"
                                                               value="#{theadIter.uiField6}"
-                                                              visible="true"/>
+                                                              visible="true"
+                                                              inlineStyle="font-weight:bold;"/>
                                         </af:panelGroupLayout>
-                                      </f:facet>
-                                    </af:panelBorderLayout>
-                                    <af:panelBorderLayout id="misUpgc_s_s62"
-                                                          inlineStyle="height:25px; width:60px; border-style:none;">
-                                      <f:facet name="innerLeft">
-                                        <af:panelGroupLayout id="misUpgc_s_63"
-                                                             layout="horizontal"
-                                                             halign="left"/>
                                       </f:facet>
                                     </af:panelBorderLayout>
                                   </af:panelGroupLayout>
@@ -6399,11 +6414,7 @@
                                       </f:facet>
                                     </af:panelBorderLayout>
                                     <af:panelBorderLayout id="misUpgcx_s_31"
-                                                          inlineStyle="height:25px; width:60px; border-style:none;">
-                                      <f:facet name="innerLeft"/>
-                                    </af:panelBorderLayout>
-                                    <af:panelBorderLayout id="misUpvgc_s_32"
-                                                          inlineStyle="height:25px; width:60px; border-style:none;">
+                                                          inlineStyle="height:25px; width:85px; border-style:none;">
                                       <f:facet name="innerLeft"/>
                                     </af:panelBorderLayout>
                                     <af:panelBorderLayout id="misUpgvc_s_s33"

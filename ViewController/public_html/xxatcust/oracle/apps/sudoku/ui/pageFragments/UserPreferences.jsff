@@ -27,27 +27,11 @@
             <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pgl1" partialTriggers="soc8" valign="top">
               <af:outputLabel value="Value selected in below dropdowns will be default choice for user in quote creation" id="ol2"
-                              inlineStyle="color:Navy;" rendered="false"/>
+                              inlineStyle="color:Navy;"/>
               <af:spacer width="600" height="25" id="s22"/>
               <af:commandButton text="Save Global Choices" id="cb1"
                                 actionListener="#{pageFlowScope.UserPrefBean.onCommit}"
                                 partialSubmit="true"/>
-              <af:panelGroupLayout id="pgl10"
-                                   halign="center"
-                                   valign="baseline" layout="horizontal">
-                <af:spacer width="10" height="10" id="s26"/>
-                <af:selectOneChoice value="#{bindings.OperatingUnit.inputValue}"
-                                    label="Operating Unit"
-                                    valueChangeListener="#{pageFlowScope.UserPrefBean.ouVCE}"
-                                    id="soc8" autoSubmit="true">
-                  <f:selectItems value="#{bindings.OperatingUnit.items}"
-                                 id="si22"/>
-                </af:selectOneChoice>
-                <af:commandImageLink id="cil1"
-                                     icon="/Resources/images/imgs/icons8-help-16.png"
-                                     shortDesc="Help.."
-                                     actionListener="#{pageFlowScope.UserPrefBean.showOpUnitHelpTip}"/>
-              </af:panelGroupLayout>
               <af:spacer width="10" height="10" id="s1"/>
               <af:panelFormLayout id="pfl1" maxColumns="3" rows="3"
                                   partialTriggers="soc2 soc8">
@@ -189,16 +173,42 @@
                                  id="pgl8">
               <af:panelGroupLayout id="pgl7" layout="vertical">
                 <af:outputLabel value="	Values selected in below multi-selection choices will be preferred global choices for user in quote creation."
-                                id="ol3" inlineStyle="color:Navy;"
-                                showRequired="false" rendered="false"/>
+                                id="ol3" inlineStyle="color:Navy;"/>
                 <af:outputLabel value="	Please select Operating Unit value to enable Sales Representative, Customer Number and Order Type choices"
-                                id="ol4" inlineStyle="color:Navy;"
-                                rendered="false"/>
+                                id="ol4" inlineStyle="color:Navy;"/>
                 <af:spacer width="10" height="10" id="s16"/>
-                <af:commandImageLink id="cil2"
-                                     icon="/Resources/images/imgs/icons8-help-16.png"
-                                     actionListener="#{pageFlowScope.UserPrefBean.showShuttleHelpTip}"
-                                     shortDesc="Help.."/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="pgl10" halign="start" valign="baseline"
+                                   layout="vertical"
+                                   inlineStyle="font-size:large; font-weight:bold;">
+                <af:panelFormLayout id="pfl4" maxColumns="2" rows="1"
+                                    fieldWidth="134" labelAlignment="start"
+                                    inlineStyle="text-align:left; Height: 35px;">
+                  <af:spacer width="350" height="10" id="s29" rendered="false"/>
+                  <af:outputFormatted value="Operating Unit :" id="ot1"
+                                 inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-size:medium; font-weight:bold; text-align:right; vertical-align:text-top;"
+                                      rendered="false"/>
+                  <af:selectOneChoice value="#{bindings.OperatingUnit.inputValue}"
+                                      valueChangeListener="#{pageFlowScope.UserPrefBean.ouVCE}"
+                                      id="soc8" autoSubmit="true"
+                                      inlineStyle="text-align:left; font-weight:bold; background:#A1B3E4; font-size:x-large;"
+                                      label="Operating Unit"
+                                      contentStyle="width: 250px;">
+                    <f:selectItems value="#{bindings.OperatingUnit.items}"
+                                   id="si22"/>
+                  </af:selectOneChoice>
+                </af:panelFormLayout>
+                <!-- <af:panelLabelAndMessage label="Operating Unit" id="plam1"
+                                         inlineStyle="font-weight:bold; font-size:medium;">
+                  <af:selectOneChoice value="#{bindings.OperatingUnit.inputValue}"
+                                      required="#{bindings.OperatingUnit.hints.mandatory}"
+                                      shortDesc="#{bindings.OperatingUnit.hints.tooltip}"
+                                      id="soc9" simple="true"
+                                      contentStyle="width:280.0px">
+                    <f:selectItems value="#{bindings.OperatingUnit.items}"
+                                   id="si9"/>
+                  </af:selectOneChoice>
+                </af:panelLabelAndMessage> -->
               </af:panelGroupLayout>
               <af:panelFormLayout id="pfl3" rows="2" maxColumns="2"
                                   partialTriggers="soc8">
@@ -292,34 +302,17 @@
           <f:facet name="first">
             <af:panelGroupLayout
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                                 id="pgl3" valign="top">
+                                 id="pgl3" valign="top"
+                                 styleClass="height:800px">
               <af:outputLabel value="Value selected in below dropdowns will be default choice for user in quote creation, these values take precedence over global choices if any" id="ol5"
                               inlineStyle="color:Navy;"/>
-              <af:spacer width="400" height="30" id="s25"/>
+              <af:spacer width="200" height="30" id="s25"/>
               <af:commandButton text="Save Sales Channel Details" id="cb4"
                                 actionListener="#{pageFlowScope.UserPrefBean.onCommitSalesChannel}"/>
               <af:panelGroupLayout id="pgl4"
-                                   styleClass="AFStretchWidth" valign="top">
-                <af:spacer width="10" height="10" id="s27"/>
-                <af:panelGroupLayout id="pgl6" layout="horizontal">
-                  <af:selectOneChoice value="#{bindings.OperatingUnitForSC.inputValue}"
-                                      label="Operating Unit" autoSubmit="true"
-                                      valueChangeListener="#{pageFlowScope.UserPrefBean.ouForSalesChannelVCE}"
-                                      id="soc2">
-                    <f:selectItems value="#{bindings.OperatingUnitForSC.items}"
-                                   id="si10"/>
-                  </af:selectOneChoice>
-                  <af:spacer width="350" height="10" id="s28"/>
-                  <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.salesChannel}"
-                                      label="Sales Channel" autoSubmit="true"
-                                      id="soc16"
-                                      valueChangeListener="#{pageFlowScope.UserPrefBean.salesChannelForDefaultVCE}"
-                                      contentStyle="width:140.0px"
-                                      binding="#{pageFlowScope.UserPrefBean.bindSalesChannel}">
-                    <f:selectItems value="#{pageFlowScope.UserPrefBean.salesChannelSCForDefault}"
-                                   id="si28"/>
-                  </af:selectOneChoice>
-                </af:panelGroupLayout>
+                                   styleClass="AFStretchWidth" valign="top"
+                                   rendered="false">
+                <af:spacer width="10" height="10" id="s27" rendered="false"/>
                 <!--<af:selectOneChoice value="#{pageFlowScope.UserPrefBean.scOrgId}"
                                     label="Operating Unit"
                                     required="#{bindings.OperatingUnit.hints.mandatory}"
@@ -332,7 +325,17 @@
               </af:panelGroupLayout>
               <af:panelFormLayout id="pfl6" rows="3" fieldWidth="3"
                                   styleClass="AFStretchWidth">
-                <af:spacer width="10" height="10" id="s4"/>
+                <af:selectOneChoice value="#{bindings.OperatingUnitForSC.inputValue}"
+                                    label="Operating Unit" autoSubmit="true"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.ouForSalesChannelVCE}"
+                                    id="soc2" contentStyle="width:140.0px">
+                  <f:selectItems value="#{bindings.OperatingUnitForSC.items}"
+                                 id="si10"/>
+                </af:selectOneChoice>
+                <af:spacer width="250" height="10" id="s28"/>
+                <af:panelGroupLayout id="pgl6" layout="horizontal"
+                                     rendered="false"/>
+                <af:spacer width="10" height="10" id="s4" rendered="false"/>
                 <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.custNameForSC}"
                                     label="Customer Name" autoSubmit="true"
                                     valueChangeListener="#{pageFlowScope.UserPrefBean.custNameForSCDefaultVCE}"
@@ -352,7 +355,7 @@
                   <f:selectItems value="#{pageFlowScope.UserPrefBean.currencyValuesForDefault}"
                                  id="si30"/>
                 </af:selectOneChoice>
-                <af:spacer width="10" height="10" id="s10"/>
+                <af:spacer width="12" height="36" id="s10"/>
                 <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.baForSC}"
                                     label="#{viewcontrollerBundle.BUSINESS_AGREEMENT}"
                                     disabled="#{pageFlowScope.UserPrefBean.scOrgId eq null and pageFlowScope.UserPrefBean.salesChannel eq null}"
@@ -373,6 +376,16 @@
                                  id="si27"/>
                 </af:selectOneChoice>
                 <af:spacer width="10" height="10" id="s24"/>
+                <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.salesChannel}"
+                                    label="Sales Channel" autoSubmit="true"
+                                    id="soc16"
+                                    valueChangeListener="#{pageFlowScope.UserPrefBean.salesChannelForDefaultVCE}"
+                                    contentStyle="width:140.0px"
+                                    binding="#{pageFlowScope.UserPrefBean.bindSalesChannel}">
+                  <f:selectItems value="#{pageFlowScope.UserPrefBean.salesChannelSCForDefault}"
+                                 id="si28"/>
+                </af:selectOneChoice>
+                <af:spacer width="10" height="10" id="s26"/>
                 <af:selectOneChoice value="#{pageFlowScope.UserPrefBean.paymentTemForSC}"
                                     label="Payment Terms"
                                     disabled="#{pageFlowScope.UserPrefBean.scOrgId eq null and pageFlowScope.UserPrefBean.salesChannel eq null}"

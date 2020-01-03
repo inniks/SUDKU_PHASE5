@@ -150,5 +150,13 @@
                   ReturnName="data.SudokuAMDataControl.methodResults.getQuoteHdrOrgID_SudokuAMDataControl_dataProvider_getQuoteHdrOrgID_result">
       <NamedData NDName="pquoteNo" NDType="java.lang.String"/>
     </methodAction>
+    <methodAction id="deleteProductLine"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deleteProductLine"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SudokuAMDataControl.methodResults.deleteProductLine_SudokuAMDataControl_dataProvider_deleteProductLine_result">
+      <NamedData NDName="lineId" NDType="java.lang.String"/>
+    </methodAction>
   </bindings>
 </pageDefinition>
