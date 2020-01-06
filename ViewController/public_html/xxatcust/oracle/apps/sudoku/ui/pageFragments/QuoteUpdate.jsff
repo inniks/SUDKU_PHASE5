@@ -560,7 +560,7 @@
         <af:spacer width="20" height="10" id="s11"/>
         <af:outputText value="Quote Header Customer &amp; Deal Related Data"
                              id="ot1"
-                       inlineStyle="color:Navy; font-weight:bold; font-size:large;"/>
+                       inlineStyle="color:Navy; font-weight:bold; font-size:x-large;"/>
         <af:panelGroupLayout id="pgl2">
           <af:spacer width="300" height="10" id="s17"/>
           <af:commandButton text="Save" id="cb1"

@@ -6,13 +6,13 @@
   <c:set var="viewcontrollerBundle"
          value="#{adfBundle['xxatcust.oracle.apps.sudoku.view.ViewControllerBundle']}"/>
   <af:panelGroupLayout id="pgl5" layout="vertical">
-    <af:panelBox text="User Preferences" id="pb1" showDisclosure="false"
-                 background="medium" disclosed="false" showHeader="never">
+    <af:panelHeader text=" " id="pb1" 
+                 >
       <af:outputLabel value="User Preferences" id="ol1"
-                      inlineStyle="color:Navy; font-weight:bold; font-size:large;"
+                      inlineStyle="color:Navy; font-weight:bold; font-size:x-large;"
                       styleClass="AFStretchWidth"/>
-    </af:panelBox>
-    <af:separator id="s20"/>
+      <af:separator id="s20"/>
+    </af:panelHeader>
     <af:panelGroupLayout id="pgl2" layout="vertical" styleClass="AFStretchWidth"
                          partialTriggers="soc16">
       <af:showDetailHeader text="Global Choices" id="sdh1"
@@ -26,8 +26,8 @@
           <f:facet name="first">
             <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pgl1" partialTriggers="soc8" valign="top">
-              <af:outputLabel value="Value selected in below dropdowns will be default choice for user in quote creation" id="ol2"
-                              inlineStyle="color:Navy;"/>
+              <af:outputLabel value="Value selected in below dropdowns will be default choice for user in quote creation"
+                              id="ol2" inlineStyle="color:Navy;"/>
               <af:spacer width="600" height="25" id="s22"/>
               <af:commandButton text="Save Global Choices" id="cb1"
                                 actionListener="#{pageFlowScope.UserPrefBean.onCommit}"
@@ -168,8 +168,7 @@
             </af:panelGroupLayout>
           </f:facet>
           <f:facet name="second">
-            <af:panelGroupLayout
-                                 xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+            <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pgl8">
               <af:panelGroupLayout id="pgl7" layout="vertical">
                 <af:outputLabel value="	Values selected in below multi-selection choices will be preferred global choices for user in quote creation."
@@ -186,7 +185,7 @@
                                     inlineStyle="text-align:left; Height: 35px;">
                   <af:spacer width="350" height="10" id="s29" rendered="false"/>
                   <af:outputFormatted value="Operating Unit :" id="ot1"
-                                 inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-size:medium; font-weight:bold; text-align:right; vertical-align:text-top;"
+                                      inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-size:medium; font-weight:bold; text-align:right; vertical-align:text-top;"
                                       rendered="false"/>
                   <af:selectOneChoice value="#{bindings.OperatingUnit.inputValue}"
                                       valueChangeListener="#{pageFlowScope.UserPrefBean.ouVCE}"
@@ -300,18 +299,16 @@
                           styleClass="AFStretchWidth"
                           inlineStyle="height:830.0px;" orientation="vertical">
           <f:facet name="first">
-            <af:panelGroupLayout
-                                 xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+            <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pgl3" valign="top"
                                  styleClass="height:800px">
-              <af:outputLabel value="Value selected in below dropdowns will be default choice for user in quote creation, these values take precedence over global choices if any" id="ol5"
-                              inlineStyle="color:Navy;"/>
+              <af:outputLabel value="Value selected in below dropdowns will be default choice for user in quote creation, these values take precedence over global choices if any"
+                              id="ol5" inlineStyle="color:Navy;"/>
               <af:spacer width="200" height="30" id="s25"/>
               <af:commandButton text="Save Sales Channel Details" id="cb4"
                                 actionListener="#{pageFlowScope.UserPrefBean.onCommitSalesChannel}"/>
-              <af:panelGroupLayout id="pgl4"
-                                   styleClass="AFStretchWidth" valign="top"
-                                   rendered="false">
+              <af:panelGroupLayout id="pgl4" styleClass="AFStretchWidth"
+                                   valign="top" rendered="false">
                 <af:spacer width="10" height="10" id="s27" rendered="false"/>
                 <!--<af:selectOneChoice value="#{pageFlowScope.UserPrefBean.scOrgId}"
                                     label="Operating Unit"
@@ -406,8 +403,8 @@
             <af:panelGroupLayout layout="scroll"
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pgl9">
-              <af:outputLabel value="Values selected in below multi-selection choices will be preferred choices for user in quote creation and takes precedence over global choice if any" id="ol6"
-                              inlineStyle="color:Navy;"/>
+              <af:outputLabel value="Values selected in below multi-selection choices will be preferred choices for user in quote creation and takes precedence over global choice if any"
+                              id="ol6" inlineStyle="color:Navy;"/>
               <af:panelFormLayout id="pfl5" rows="2" maxColumns="2">
                 <af:selectManyShuttle value="#{pageFlowScope.UserPrefBean.selectedCustNameValues}"
                                       id="sms3" autoSubmit="true" label=" "

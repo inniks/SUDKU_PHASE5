@@ -11,6 +11,25 @@
             window.print();
         }
       </af:resource>
+      <af:resource type="javascript">
+        var timeoutID;
+        resetTimeout();
+        function resetTimeout() {
+            if (timeoutID)
+            clearTimeout(timeoutID);
+            timeoutID = setTimeout(ShowTimeoutWarning, 1800000);
+            // this is popup will come if user is idle
+            //for 25minutes(25 * 6000)
+        }
+
+        function ShowTimeoutWarning() {
+            var popup = AdfPage.PAGE.findComponentByAbsoluteId('pt_p1');
+            popup.show();
+        }
+        document.onkeyup = resetTimeout;
+        document.onkeydown = resetTimeout;
+        document.onclick = resetTimeout;
+      </af:resource>
       <af:messages id="m1"/>
       <af:form id="f1" usesUpload="true">
         <af:panelStretchLayout id="psl1" topHeight="80px" endWidth="10px"
@@ -362,11 +381,17 @@
         </af:popup>
         <af:popup id="quoteNavPopup" autoCancel="disabled"
                   binding="#{viewScope.LoadDynamicRegionBean.quoteNavPopup}">
-          <af:dialog id="d1_wrning" title="Your existing quote header changes will be lost. Do you want to proceed?"
+          <af:dialog id="d1_wrning"
+                     title="Your existing quote header changes will be lost. Do you want to proceed?"
                      contentWidth="400" contentHeight="200" type="yesNo"
-                     dialogListener="#{viewScope.LoadDynamicRegionBean.quoteNavigationDialogEvent}">
-          </af:dialog>
+                     dialogListener="#{viewScope.LoadDynamicRegionBean.quoteNavigationDialogEvent}"></af:dialog>
         </af:popup>
+         <af:popup id="pt_p1" animate="default" contentDelivery="lazy">
+     <af:dialog id="tod" title="Warning" closeIconVisible="false" type="ok"
+           dialogListener="#{viewScope.LoadDynamicRegionBean.OnSessionExpire}">
+       <af:outputText value="Your session has Expired.You Will be logged out" id="pt_ot1"/>
+     </af:dialog>
+    </af:popup>
       </af:form>
     </af:document>
   </f:view>

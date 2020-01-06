@@ -19,11 +19,19 @@ import java.util.Map;
 
 import java.util.TreeMap;
 
+import javax.el.ELContext;
+
+import javax.el.ExpressionFactory;
+
+import javax.el.ValueExpression;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
+
+import javax.faces.model.SelectItem;
 
 import javax.xml.bind.JAXBException;
 
@@ -37,6 +45,7 @@ import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.input.RichInputFile;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
+import oracle.adf.view.rich.component.rich.input.RichSelectOneRadio;
 import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
 
 import oracle.adf.view.rich.component.rich.nav.RichCommandImageLink;
@@ -76,6 +85,10 @@ public class ImportSource {
     private RichInputFile inputFileBinding;
     V93kQuote v93kQuote;
     private Boolean disableRadioChoice;
+    Object currentSource;
+    List<SelectItem> selectItemList = null;
+    ArrayList<SelectItem> newSelectItemList = null;
+    private RichSelectOneRadio configTypeBinding;
 
     public ImportSource() {
     }
@@ -85,6 +98,10 @@ public class ImportSource {
         "xxatcust/oracle/apps/sudoku/view/V93000 C&Q 3.0 - XML File Schema.xsd";
 
     public void importSrcSelected(ValueChangeEvent valueChangeEvent) {
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+        if(configTypeBinding!=null){
+            configTypeBinding.setValue(null);
+        }
         if (valueChangeEvent.getNewValue() != null) {
             String selectedVal = null;
             UIComponent uiComp = (UIComponent)valueChangeEvent.getSource();
@@ -96,8 +113,9 @@ public class ImportSource {
                 if (currRw != null) {
                     currRw.setAttribute("BudgetQuoteId", null);
                     currRw.setAttribute("FormalQuoteId", null);
-                    currRw.setAttribute("CopyRefConfig", null);
-                    currRw.setAttribute("ReuseQuote", "Y");
+                    //currRw.setAttribute("CopyRefConfig", null);
+                    currRw.setAttribute("ConfigurationType", "Y");
+                    currRw.setAttribute("ConfigTypeMeaning", null);
                     inputFileBinding.setValue(null);
                 }
             }
@@ -413,11 +431,12 @@ public class ImportSource {
             // }
 
         } catch (Exception jaxbe) {
-            
-            if(jaxbe instanceof UnmarshalException){
-                ADFUtils.showFacesMessage("XML is not formed correctly , Please check if the file has any special characters(For Instance '&' should be '&amp;')", FacesMessage.SEVERITY_ERROR);
+
+            if (jaxbe instanceof UnmarshalException) {
+                ADFUtils.showFacesMessage("XML is not formed correctly , Please check if the file has any special characters(For Instance '&' should be '&amp;')",
+                                          FacesMessage.SEVERITY_ERROR);
             }
-            
+
             if (jaxbe instanceof IllegalArgumentException) {
                 if (invalidUploadMsgg != null)
                     ADFUtils.showFacesMessage(invalidUploadMsgg,
@@ -561,10 +580,10 @@ public class ImportSource {
             ADFUtils.setSessionScopeValue("quoteNumber", otherTemp);
             String jsonStr = JSONUtils.convertObjToJson(parent);
             ObjectMapper mapper = new ObjectMapper();
-                        String responseJson =
-                            (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-//            obj =
-//(V93kQuote)JSONUtils.convertJsonToObject(null); //For local run,use this to debug xml upload related issues
+            String responseJson =
+                (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+            //            obj =
+            //(V93kQuote)JSONUtils.convertJsonToObject(null); //For local run,use this to debug xml upload related issues
             obj = mapper.readValue(responseJson, V93kQuote.class);
         } else if (importSource != null) {
             V93kQuote v93k = new V93kQuote();
@@ -714,5 +733,78 @@ public class ImportSource {
 
     public Boolean getDisableRadioChoice() {
         return disableRadioChoice;
+    }
+
+    public void setSelectItemList(List<SelectItem> selectItemList) {
+        //this.selectItemList = selectItemList;
+    }
+
+    /**
+     * Queries the list data from the ADF binding layer and returns the
+     * list with disabled set to true or false dependent on whether
+     * displayed item is in location or not
+     * @return List<SelectItem>
+     */
+
+    public List<SelectItem> getSelectItemList() {
+        FacesContext fctx = FacesContext.getCurrentInstance();
+        ELContext elctx = fctx.getELContext();
+        ExpressionFactory exprfact =
+            fctx.getApplication().getExpressionFactory();
+        ValueExpression vexpr =
+            exprfact.createValueExpression(elctx, "#{bindings.ConfigTypeMeaning.items}",
+                                           Object.class);
+        selectItemList = (List<SelectItem>)vexpr.getValue(elctx);
+        BindingContext bctx = BindingContext.getCurrent();
+        BindingContainer bindings = bctx.getCurrentBindingsEntry();
+        //get access to the Import Source list to determine the current
+        //location
+        JUCtrlListBinding locationListBinding =
+            (JUCtrlListBinding)bindings.get("ImportSrcMeaning");
+        Row selectedListRow = locationListBinding.getCurrentRow();
+        Object impSource = selectedListRow.getAttribute("ImportSrcCode");
+        //only refresh list if location id has changed
+        if (impSource != currentSource) {
+            JUCtrlListBinding deptListBinding =
+                (JUCtrlListBinding)bindings.get("ConfigTypeMeaning");
+            //we need to copy the list items into a new list and return
+            //this to the select many component as the list read from the
+            //ADF binding layer appears to be immutabl
+            newSelectItemList = new ArrayList<SelectItem>();
+            //Custom logic to disable a select item will go here
+            for (SelectItem li : selectItemList) {
+                //the departments list queried from the ADF binding layer only
+                //returns a list of indx that we need to resolve to determine
+                //the department select items LocationId
+                Integer listIndex = (Integer)li.getValue();
+                Row listRow =
+                    deptListBinding.getRowAtRangeIndex(listIndex.intValue());
+                SelectItem s = new SelectItem();
+                s.setLabel(li.getLabel());
+                s.setValue(li.getValue());
+                if (s.getValue() != null && s.getValue().toString().equals("1")) {
+                    System.out.println("S Val "+s.getValue()+"Imp SOurce "+impSource);
+                    if(impSource.equals("BUDGET_QUOTE")){
+                        s.setDisabled(false);
+                    }
+                    else{
+                        s.setDisabled(true);
+                    }
+                }
+                newSelectItemList.add(s);
+            }
+            impSource = currentSource;
+            //return the modified list
+
+        }
+        return newSelectItemList;
+    }
+
+    public void setConfigTypeBinding(RichSelectOneRadio configTypeBinding) {
+        this.configTypeBinding = configTypeBinding;
+    }
+
+    public RichSelectOneRadio getConfigTypeBinding() {
+        return configTypeBinding;
     }
 }

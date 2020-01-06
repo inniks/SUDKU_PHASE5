@@ -29,3 +29,28 @@ af|commandLink {
 af|panelSplitter.NonResizable::vertical-divider {
     visibility: hidden;
 }
+af|listItem::expanded-icon-style {
+    background-image:  url("/select.png"); 
+}
+
+af|listItem::collapsed-icon-style {
+    background-image:  url("/select.png"); 
+}
+af|panelAccordion::disclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+
+af|panelAccordion::undisclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+
+af|showDetailHeader::disclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+
+af|showDetailHeader::undisclosed-icon-style {
+    background-image: url("/select.png"); 
+}
+.mysor af|selectOneRadio::content div {
+  padding: 0px 0px 90px 0px;
+}

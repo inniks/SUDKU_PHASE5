@@ -195,8 +195,9 @@ public class ConfiguratorBean {
     private RichOutputFormatted conflictText;
     private RichInputText otsDisplay;
     private String oneTimeSpecial;
-    private String otsDislayValue ;
-    private Boolean quoteSaved=false;
+    private String otsDislayValue;
+    private Boolean quoteSaved = false;
+
     public ConfiguratorBean() {
         super();
     }
@@ -230,20 +231,20 @@ public class ConfiguratorBean {
     public void initConfigurator() throws IOException, JsonGenerationException,
                                           JsonMappingException {
         //The refresh should happen only if there is a v93k object available
-//                        System.out.println("Init Configurator..");
-//                                V93kQuote v93k =
-//                                    (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
-//                                ADFUtils.setSessionScopeValue("parentObject",
-//                                                              v93k); //Comment for server run
-//                                HashMap ruleSetMap = new HashMap();
-//                                if (v93k.getInputParams() != null) {
-//                                    ruleSetMap.put("topLevelCode",
-//                                                   v93k.getInputParams().getRuleSetTopLevelChoice());
-//                                    ruleSetMap.put("secondLevelCode",
-//                                                   v93k.getInputParams().getRuleSetSecondLevelChoice());
-//                                    //ruleSetMap.put("error", "Y");
-//                                    ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-//                                }
+        //                        System.out.println("Init Configurator..");
+        //                                V93kQuote v93k =
+        //                                    (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
+        //                                ADFUtils.setSessionScopeValue("parentObject",
+        //                                                              v93k); //Comment for server run
+        //                                HashMap ruleSetMap = new HashMap();
+        //                                if (v93k.getInputParams() != null) {
+        //                                    ruleSetMap.put("topLevelCode",
+        //                                                   v93k.getInputParams().getRuleSetTopLevelChoice());
+        //                                    ruleSetMap.put("secondLevelCode",
+        //                                                   v93k.getInputParams().getRuleSetSecondLevelChoice());
+        //                                    //ruleSetMap.put("error", "Y");
+        //                                    ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
+        //                                }
         //Comment till here
 
         V93kQuote v93k =
@@ -462,16 +463,16 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         //v93k = (V93kQuote)convertJsonToObject(null);
         Map ruleSetMap = new HashMap();
         if (v93k != null && v93k.getInputParams() != null) {
-            
+
             ruleSetMap.put("topLevelCode",
                            v93k.getInputParams().getRuleSetTopLevelChoice());
             ruleSetMap.put("secondLevelCode",
                            v93k.getInputParams().getRuleSetSecondLevelChoice());
-            
+
         }
         // Testing this
         boolean configHasErrors = configHasErrors(v93k);
-        if(configHasErrors){
+        if (configHasErrors) {
             ruleSetMap.put("error", "Y");
         }
         ADFUtils.setSessionScopeValue("ruleSetMapConfig", ruleSetMap);
@@ -1010,11 +1011,17 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             uiSelection.setParentGroupName(parentGroupName);
             uiSelection.setSubGroupName(uiSubGrpName);
             uiSelection.setUiNodeName(uiNodeName);
-            uiSelection.setTargetQuantity(targetQty==null ? Integer.parseInt("-1"): Integer.parseInt(targetQty));
+            uiSelection.setTargetQuantity(targetQty == null ?
+                                          Integer.parseInt("-1") :
+                                          Integer.parseInt(targetQty));
             uiSelection.setUiType("1");
             uiSelection.setCzModelName(czModelName);
-            uiSelection.setReferenceQuantity(refQty==null? Integer.parseInt("-1"):  Integer.parseInt(refQty));
-            uiSelection.setQuantity(inputValue==null ? Integer.parseInt("-1"): Integer.parseInt(inputValue));
+            uiSelection.setReferenceQuantity(refQty == null ?
+                                             Integer.parseInt("-1") :
+                                             Integer.parseInt(refQty));
+            uiSelection.setQuantity(inputValue == null ?
+                                    Integer.parseInt("-1") :
+                                    Integer.parseInt(inputValue));
             uiSelection.setUniqueSessionId(uniqueSessionId);
             uiSelection.setCzNodeName(czNodeName);
             uiSelection.setIdentifier(identifier);
@@ -1059,7 +1066,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public void rulesetChanged(ValueChangeEvent valueChangeEvent) {
-        if(otsDisplay!=null){
+        if (otsDisplay != null) {
             otsDisplay.setValue(null);
         }
         oneTimeSpecial = null;
@@ -1145,10 +1152,11 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         rfResourcesTreeModel = null;
         miscUpgTreeModel = null;
         infraUpgTreeModel = null;
-        
+        //collapseUiGroups();
         ADFUtils.setSessionScopeValue("ruleSetMap", null);
         ADFUtils.setSessionScopeValue("configSaved", null);
-        String targetQuoteNumber = (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
+        String targetQuoteNumber =
+            (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
         v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k == null) {
             v93k = new V93kQuote();
@@ -1952,7 +1960,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     cutStr = StringUtils.replace(cutStr, "<html><body>", "");
                     cutStr = StringUtils.replace(cutStr, "<body><html>", "");
                     cutStr = StringUtils.replace(cutStr, "<p><b>", "");
-                    cutStr = StringUtils.replace(cutStr, "</b></p>","");
+                    cutStr = StringUtils.replace(cutStr, "</b></p>", "");
                     ADFUtils.showFacesMessage(cutStr,
                                               FacesMessage.SEVERITY_ERROR);
                     _logger.info("Cut String " + cutStr);
@@ -2151,29 +2159,31 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public String getOneTimeSpecial() {
-        boolean ruleSetChanged = false ;
+        boolean ruleSetChanged = false;
         String newRuleSetVal = null;
         String oldRuleSetVal = null;
         DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
         if (iter != null) {
             Row currRow = iter.getCurrentRow();
-            if(currRow!=null){
+            if (currRow != null) {
                 newRuleSetVal = (String)currRow.getAttribute("TopLevelCode");
             }
         }
         oneTimeSpecial = null;
-        String displayOts = null ;
+        String displayOts = null;
         String ots = null;
-        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        if(v93k!=null && v93k.getInputParams()!=null){
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93k != null && v93k.getInputParams() != null) {
             ots = v93k.getInputParams().getRuleSetSecondLevelChoice();
             oldRuleSetVal = v93k.getInputParams().getRuleSetTopLevelChoice();
         }
-       
-        if(ots!=null && ots.equalsIgnoreCase("OTS")){
+
+        if (ots != null && ots.equalsIgnoreCase("OTS")) {
             oneTimeSpecial = "OTS";
         }
-        if(ots!=null && newRuleSetVal!=null &&  oldRuleSetVal!=null && !oldRuleSetVal.equalsIgnoreCase(newRuleSetVal)){
+        if (ots != null && newRuleSetVal != null && oldRuleSetVal != null &&
+            !oldRuleSetVal.equalsIgnoreCase(newRuleSetVal)) {
             oneTimeSpecial = null;
             otsDislayValue = null;
         }
@@ -2368,34 +2378,75 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public String getOtsDislayValue() {
-        if(oneTimeSpecial!=null && oneTimeSpecial.equalsIgnoreCase("OTS")){
+        if (oneTimeSpecial != null && oneTimeSpecial.equalsIgnoreCase("OTS")) {
             otsDislayValue = "Advantest Expert";
         }
-        System.out.println("OTS Display Value "+otsDislayValue);
+        System.out.println("OTS Display Value " + otsDislayValue);
         return otsDislayValue;
     }
-    
-    public void collapseUiGroups(){
-        sysInfraListView.getGroupDisclosedRowKeys().clear();
-        warrantyListView.getGroupDisclosedRowKeys().clear();
-        sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
-        addSwListBinding.getGroupDisclosedRowKeys().clear();
-        dianosticListBinding.getGroupDisclosedRowKeys().clear();
-        digitalListBinding.getGroupDisclosedRowKeys().clear();
-        dockingListViewBinding.getGroupDisclosedRowKeys().clear();
-        miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
-        infraUpgListBinding.getGroupDisclosedRowKeys().clear();
-        infraUpgListBinding.getGroupDisclosedRowKeys().clear();
-        mixSigListBinding.getGroupDisclosedRowKeys().clear();
-        rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
-        dpsListViewBinding.getGroupDisclosedRowKeys().clear();
-        AdfFacesContext.getCurrentInstance().addPartialTarget(parentUiComp);
+
+    public void collapseUiGroups() {
+        if (sysInfraListView != null &&
+            sysInfraListView.getGroupDisclosedRowKeys() != null &&
+            sysInfraListView.getGroupDisclosedRowKeys().size() > 0)
+            sysInfraListView.getGroupDisclosedRowKeys().clear();
+        if (warrantyListView != null &&
+            warrantyListView.getGroupDisclosedRowKeys() != null &&
+            warrantyListView.getGroupDisclosedRowKeys().size() > 0)
+            warrantyListView.getGroupDisclosedRowKeys().clear();
+        if (sysControllerListViewBinding != null &&
+            sysControllerListViewBinding.getGroupDisclosedRowKeys() != null &&
+            sysControllerListViewBinding.getGroupDisclosedRowKeys().size() > 0)
+            sysControllerListViewBinding.getGroupDisclosedRowKeys().clear();
+        if (addSwListBinding != null &&
+            addSwListBinding.getGroupDisclosedRowKeys() != null &&
+            addSwListBinding.getGroupDisclosedRowKeys().size() > 0)
+            addSwListBinding.getGroupDisclosedRowKeys().clear();
+        if (dianosticListBinding != null &&
+            dianosticListBinding.getGroupDisclosedRowKeys() != null &&
+            dianosticListBinding.getGroupDisclosedRowKeys().size() > 0)
+            dianosticListBinding.getGroupDisclosedRowKeys().clear();
+        if (digitalListBinding != null &&
+            digitalListBinding.getGroupDisclosedRowKeys() != null &&
+            digitalListBinding.getGroupDisclosedRowKeys().size() > 0)
+            digitalListBinding.getGroupDisclosedRowKeys().clear();
+        if (dockingListViewBinding != null &&
+            dockingListViewBinding.getGroupDisclosedRowKeys() != null &&
+            dockingListViewBinding.getGroupDisclosedRowKeys().size() > 0)
+            dockingListViewBinding.getGroupDisclosedRowKeys().clear();
+        if (miscUpgrListBinding != null &&
+            miscUpgrListBinding.getGroupDisclosedRowKeys() != null &&
+            miscUpgrListBinding.getGroupDisclosedRowKeys().size() > 0)
+            miscUpgrListBinding.getGroupDisclosedRowKeys().clear();
+        if (infraUpgListBinding != null &&
+            infraUpgListBinding.getGroupDisclosedRowKeys() != null &&
+            infraUpgListBinding.getGroupDisclosedRowKeys().size() > 0)
+            infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+        if (infraUpgListBinding != null &&
+            infraUpgListBinding.getGroupDisclosedRowKeys() != null &&
+            infraUpgListBinding.getGroupDisclosedRowKeys().size() > 0)
+            infraUpgListBinding.getGroupDisclosedRowKeys().clear();
+        if (mixSigListBinding != null &&
+            mixSigListBinding.getGroupDisclosedRowKeys() != null &&
+            mixSigListBinding.getGroupDisclosedRowKeys().size() > 0)
+            mixSigListBinding.getGroupDisclosedRowKeys().clear();
+        if (rfResourceListViewBinding != null &&
+            rfResourceListViewBinding.getGroupDisclosedRowKeys() != null &&
+            rfResourceListViewBinding.getGroupDisclosedRowKeys().size() > 0)
+            rfResourceListViewBinding.getGroupDisclosedRowKeys().clear();
+        if (dpsListViewBinding != null &&
+            dpsListViewBinding.getGroupDisclosedRowKeys() != null &&
+            dpsListViewBinding.getGroupDisclosedRowKeys().size() > 0)
+            dpsListViewBinding.getGroupDisclosedRowKeys().clear();
+        if (parentUiComp != null)
+            AdfFacesContext.getCurrentInstance().addPartialTarget(parentUiComp);
     }
-    
-    public Boolean isQuoteSaved(){
-        boolean isQuoteSaved = false ;
-        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        if(v93k!=null && v93k.getSessionDetails()!=null){
+
+    public Boolean isQuoteSaved() {
+        boolean isQuoteSaved = false;
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93k != null && v93k.getSessionDetails() != null) {
             isQuoteSaved = v93k.getSessionDetails().isQuoteSaved();
         }
         return isQuoteSaved;
@@ -2406,17 +2457,19 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
     }
 
     public Boolean getQuoteSaved() {
-        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        if(v93k!=null && v93k.getSessionDetails()!=null){
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if (v93k != null && v93k.getSessionDetails() != null) {
             quoteSaved = v93k.getSessionDetails().isQuoteSaved();
-        }
-        else if(v93k==null || (v93k!=null && v93k.getSessionDetails()==null)){
-            quoteSaved = false ;
+        } else if (v93k == null ||
+                   (v93k != null && v93k.getSessionDetails() == null)) {
+            quoteSaved = false;
         }
         return quoteSaved;
     }
 
     public void showHelpMessage(ActionEvent actionEvent) {
-        ADFUtils.showFacesMessage("Please select values in RuleSet Selection to load the configurtor UI.", FacesMessage.SEVERITY_INFO);
+        ADFUtils.showFacesMessage("Please select values in RuleSet Selection to load the configurtor UI.",
+                                  FacesMessage.SEVERITY_INFO);
     }
 }

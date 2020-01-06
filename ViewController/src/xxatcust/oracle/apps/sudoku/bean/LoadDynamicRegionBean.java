@@ -1040,10 +1040,10 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                                 resultErrMsg.append("<p><b>" +
                                                     SudokuUtils.createQteMsg +
                                                     "</b></p>");
-                           
+
                         }
 
-                       
+
                     } else {
                         if (createQtMsg != null)
                             resultErrMsg.append("<p><b>" + createQtMsg +
@@ -1091,8 +1091,10 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             if (v93k != null && v93k.getSessionDetails() != null) {
                 v93k.getSessionDetails().setQuoteSaved(isQuoteSaved);
                 ADFUtils.setSessionScopeValue("parentObject", v93k);
-                String currView = (String)ADFUtils.getSessionScopeValue("currView");
-                if (currView != null && currView.equalsIgnoreCase("configurator")) {
+                String currView =
+                    (String)ADFUtils.getSessionScopeValue("currView");
+                if (currView != null &&
+                    currView.equalsIgnoreCase("configurator")) {
                     RichCommandImageLink button =
                         (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb3"); // Navigate to create quote page
                     if (button != null) {
@@ -1100,7 +1102,7 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                         acEvent.queue();
                     }
                 }
-                
+
             }
         } else {
             ADFUtils.addMessage(FacesMessage.SEVERITY_WARN,
@@ -2365,4 +2367,13 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
         return map;
     }
 
+    public void OnSessionExpire(DialogEvent dialogEvent) throws IOException,
+                                                            JsonGenerationException,
+                                                            JsonMappingException {
+        _logger.info("Session expired,Logout warning display");
+        if (DialogEvent.Outcome.ok == dialogEvent.getOutcome().ok) {
+            _logger.info("Logging out the user from EBS on session.");
+            logoutEBS(null);
+        }
+    }
 }

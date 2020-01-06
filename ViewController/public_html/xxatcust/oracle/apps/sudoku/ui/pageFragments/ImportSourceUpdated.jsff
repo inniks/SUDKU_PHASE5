@@ -23,10 +23,22 @@
                                          shortDesc="#{bindings.ConfigTypeMeaning.hints.tooltip}"
                                          id="sor2" autoSubmit="true"
                                          valueChangeListener="#{pageFlowScope.ImportSourceBean.configTypeChanged}"
-                                         disabled="#{bindings.ImportSrcCode.inputValue ne 'BUDGET_QUOTE'}"
-                                         showRequired="true">
-                        <f:selectItems value="#{bindings.ConfigTypeMeaning.items}"
+                                         showRequired="true"
+                                         rendered="#{bindings.ImportSrcMeaning.inputValue ne null}">
+                        <!--f:selectItems value="#{bindings.ConfigTypeMeaning.items}"
+                                       id="si2"/-->
+                        <f:selectItems value="#{pageFlowScope.ImportSourceBean.selectItemList}"
                                        id="si2"/>
+                      </af:selectOneRadio>
+                      <af:selectOneRadio value="#{bindings.ConfigTypeMeaning.inputValue}"
+                                         required="true"
+                                         shortDesc="#{bindings.ConfigTypeMeaning.hints.tooltip}"
+                                         id="sor3" autoSubmit="true"
+                                         showRequired="true" disabled="true"
+                                         rendered="#{bindings.ImportSrcMeaning.inputValue eq null}"
+                                         binding="#{pageFlowScope.ImportSourceBean.configTypeBinding}">
+                        <f:selectItems value="#{bindings.ConfigTypeMeaning.items}"
+                                       id="si3"/>
                       </af:selectOneRadio>
                     </af:panelGroupLayout>
                   </af:panelGroupLayout>
@@ -38,7 +50,8 @@
                                    shortDesc="#{bindings.ImportSrcMeaning.hints.tooltip}"
                                    id="sor1" valuePassThru="true"
                                    valueChangeListener="#{pageFlowScope.ImportSourceBean.importSrcSelected}"
-                                   autoSubmit="true" layout="vertical">
+                                   autoSubmit="true" layout="vertical"
+                                   immediate="true">
                   <f:selectItems value="#{bindings.ImportSrcMeaning.items}"
                                  id="si1"/>
                 </af:selectOneRadio>
@@ -77,8 +90,7 @@
                     </af:panelLabelAndMessage>
                   </af:panelGroupLayout>
                   <af:panelGroupLayout id="pgl14" layout="horizontal">
-                    <af:panelLabelAndMessage
-                                             id="plam3">
+                    <af:panelLabelAndMessage id="plam3">
                       <af:inputFile id="it111"
                                     disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'XML_FILE'}"
                                     binding="#{pageFlowScope.ImportSourceBean.inputFileBinding}"
@@ -122,14 +134,15 @@
               <af:toolbar id="t1">
                 <af:commandToolbarButton text="Ok" id="ctb1"
                                          actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"
-                                         rendered="true">
+                                         rendered="true" immediate="false"
+                                         partialSubmit="false">
                   <af:setPropertyListener from="#{pageFlowScope.ImportSourceBean.refreshToken}"
                                           to="#{sessionScope.refreshFlag}"
                                           type="action"/>
                 </af:commandToolbarButton>
                 <af:commandToolbarButton text="Cancel" id="ctb2"
                                          actionListener="#{pageFlowScope.ImportSourceBean.cancelPopup}"
-                                         rendered="true"/>
+                                         rendered="true" immediate="true"/>
               </af:toolbar>
             </af:panelGroupLayout>
           </af:panelGroupLayout>

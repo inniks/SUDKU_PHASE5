@@ -20,13 +20,17 @@
     <param-name>APPL_SERVER_ID</param-name>
     <param-value>897A2EF37F10D692E0530CC9730A746C18305223798250103316936430324016</param-value>
   </context-param>
-   <context-param>
-   <param-name>oracle.adf.view.rich.HIDE_UNSUPPORTED_BROWSER_ALERTS</param-name>
-   <param-value>IECompatibilityModes</param-value>
+  <context-param>
+    <param-name>oracle.adf.view.rich.HIDE_UNSUPPORTED_BROWSER_ALERTS</param-name>
+    <param-value>IECompatibilityModes</param-value>
   </context-param>
-   <context-param>
+  <context-param>
     <param-name>oracle.adf.view.rich.dvt.DEFAULT_IMAGE_FORMAT</param-name>
     <param-value>HTML5</param-value>
+  </context-param>
+  <context-param>
+    <param-name>oracle.adf.view.rich.sessionHandling.WARNING_BEFORE_TIMEOUT</param-name>
+    <param-value>0</param-value>
   </context-param>
   <context-param>
     <param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>
@@ -49,15 +53,15 @@
     <filter-name>trinidad</filter-name>
     <filter-class>org.apache.myfaces.trinidad.webapp.TrinidadFilter</filter-class>
   </filter>
-  <filter> 
-   <filter-name>IECompatibleFilter</filter-name> 
-   <filter-class>xxatcust.oracle.apps.sudoku.bean.IECompatibleFilter</filter-class> 
+  <filter>
+    <filter-name>IECompatibleFilter</filter-name>
+    <filter-class>xxatcust.oracle.apps.sudoku.bean.IECompatibleFilter</filter-class>
   </filter>
   <filter>
     <filter-name>adfBindings</filter-name>
     <filter-class>oracle.adf.model.servlet.ADFBindingFilter</filter-class>
   </filter>
-   <filter>
+  <filter>
     <filter-name>ADFLibraryFilter</filter-name>
     <filter-class>oracle.adf.model.servlet.ADFBindingFilter</filter-class>
   </filter>
@@ -72,12 +76,12 @@
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
   </filter-mapping>
-  <filter-mapping>  
-    <filter-name>IECompatibleFilter</filter-name>  
-    <servlet-name>Faces Servlet</servlet-name>  
-    <dispatcher>FORWARD</dispatcher>  
-    <dispatcher>REQUEST</dispatcher>  
-  </filter-mapping> 
+  <filter-mapping>
+    <filter-name>IECompatibleFilter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
   <filter-mapping>
     <filter-name>trinidad</filter-name>
     <servlet-name>Faces Servlet</servlet-name>
@@ -90,7 +94,7 @@
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
-   <filter-mapping>
+  <filter-mapping>
     <filter-name>AppSessionFilter</filter-name>
     <servlet-name>Faces Servlet</servlet-name>
   </filter-mapping>

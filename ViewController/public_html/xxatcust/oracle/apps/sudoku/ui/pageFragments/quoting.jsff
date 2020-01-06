@@ -587,7 +587,7 @@
         <af:spacer width="20" height="10" id="s11"/>
         <af:outputText value="Quote Header Customer &amp; Deal Related Data"
                              id="ot1"
-                       inlineStyle="color:Navy; font-weight:bold; font-size:large;"/>
+                       inlineStyle="color:Navy; font-weight:bold; font-size:x-large;"/>
         <af:commandImageLink id="cil1"
                              icon="/Resources/images/imgs/icons8-help-16.png"
                              actionListener="#{pageFlowScope.QuotingBean.showHelpTips}"/>

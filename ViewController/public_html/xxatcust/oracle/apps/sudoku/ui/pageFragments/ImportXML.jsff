@@ -36,7 +36,7 @@
             <f:facet name="context">
               <af:group id="g1">
                 <af:outputFormatted value="Imported Source Configuration" id="of2"
-                                    inlineStyle="font-size:large; color:Maroon;"/>
+                                    inlineStyle="font-size:x-large; color:Maroon;"/>
                 <af:spacer width="15" height="10" id="s6"/>
                 <af:panelGroupLayout id="pgl14" halign="left">
                   <af:spacer width="10" height="10" id="s16"/>
@@ -386,7 +386,7 @@
             <f:facet name="context">
               <af:group id="g1_1">
                 <af:outputFormatted value="Import Source Configuration" id="of3_1"
-                                    inlineStyle="color:Maroon; font-size:large; font-weight:bold;"/>
+                                    inlineStyle="color:Maroon; font-size:x-large; font-weight:bold;"/>
               </af:group>
             </f:facet>
             <f:facet name="menuBar"/>
@@ -408,7 +408,7 @@
         </af:panelGroupLayout>
       </af:dialog>
     </af:popup>
-    <af:outputText value="outputText1" id="ot17" visible="false"
-                   binding="#{XMLImportPageBean.pageInitText}"/>
   </af:panelBox>
+  <af:outputText value="outputText1" id="ot17" visible="false"
+                 binding="#{XMLImportPageBean.pageInitText}"/>
 </jsp:root>
