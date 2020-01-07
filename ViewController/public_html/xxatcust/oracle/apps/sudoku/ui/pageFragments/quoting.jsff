@@ -3,9 +3,8 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:h="http://java.sun.com/jsf/html">
-  <af:panelStretchLayout id="psl1" startWidth="159px" topHeight="69px"
+  <af:panelStretchLayout id="psl1" startWidth="159px" topHeight="150px"
                          dimensionsFrom="children">
-    <f:facet name="bottom"/>
     <f:facet name="center">
       <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                            id="pgl15" styleClass="AFStretchWidth"
@@ -207,13 +206,13 @@
                                      value="#{bindings.QuoteTo.inputValue}"
                                      label="Quote To" readonly="true"
                                      style="font-weight:bold; border-style:hidden; overflow:hidden; height:24.0mm; background-color:white;"
-                                     cols="67"/>
+                                     cols="60"/>
                   </af:panelGroupLayout>
                 </af:panelFormLayout>
               </af:panelGroupLayout>
-              <af:spacer width="10" height="10" id="s5"/>
+              <af:spacer width="10" height="180" id="s5"/>
               <af:panelFormLayout id="pfl2" fieldWidth="365px"
-                                  labelWidth="130px;">
+                                  labelWidth="128px;">
                 <af:inputText value="#{bindings.AttentionToOrDept.inputValue}"
                               maximumLength="#{bindings.AttentionToOrDept.hints.precision}"
                               shortDesc="#{bindings.AttentionToOrDept.hints.tooltip}"
@@ -244,9 +243,9 @@
                   <f:validator binding="#{bindings.QuoteEmail.validator}"/>
                 </af:inputText>
               </af:panelFormLayout>
-              <af:panelGroupLayout id="pgl3" layout="horizontal"
+              <af:panelGroupLayout id="pgl3" layout="vertical"
                                    styleClass="AFStretchWidth">
-                <af:spacer width="40" height="10" id="s10" rendered="false"/>
+                <af:spacer width="10" height="15" id="s10"/>
                 <af:panelGroupLayout id="pgl11"
                                      partialTriggers="salesRepresentativeId"
                                      styleClass="AFStretchWidth">
@@ -352,9 +351,9 @@
                   <f:validator binding="#{bindings.Discount.validator}"/>
                 </af:inputText>
               </af:panelFormLayout>
-              <af:spacer width="10" height="30" id="s1"/>
+              <af:spacer width="10" height="60" id="s1"/>
               <af:panelBox id="pb2" showDisclosure="false"
-                           inlineStyle="width:788px; border-width:medium; border-color:Black;"
+                           inlineStyle="width:505px; border-width:medium; border-color:Black;"
                            partialTriggers="soc3">
                 <af:panelGroupLayout id="pgl16" layout="horizontal"
                                      halign="center">
@@ -379,7 +378,7 @@
                       <f:validator binding="#{bindings.AdvantestQuotationNumber.validator}"/>
                     </af:inputText>
                   </af:panelGroupLayout>
-                  <af:spacer width="121" height="10" id="s27"/>
+                  <af:spacer width="10" height="10" id="s27"/>
                   <af:panelGroupLayout id="pgl18"
                                        inlineStyle="border-color:Black;"
                                        layout="vertical">
@@ -494,7 +493,7 @@
                                 inlineStyle="font-weight:bold; color:Black;"/>
                 <af:spacer width="10" height="5" id="s19"/>
                 <h:inputTextarea id="it1" value="#{bindings.ShipTo.inputValue}"
-                                 cols="68"
+                                 cols="62"
                                  style="height:23mm; overflow:hidden; border-style:hidden; font-weight:bold; background-color:white;"
                                  readonly="true" disabled="false"/>
               </af:panelGroupLayout>
@@ -570,7 +569,6 @@
         </af:panelSplitter>
       </af:panelGroupLayout>
     </f:facet>
-    <f:facet name="start"/>
     <f:facet name="end">
       <!--<af:popup id="p1"
                 binding="#{pageFlowScope.QuotingBean.bindCreateQuotePopup}">
@@ -585,32 +583,63 @@
                <af:image id="pt_i1" source="/Resources/images/adv.gif"
                             inlineStyle="width:215px;" rendered="false"/>
         <af:spacer width="20" height="10" id="s11"/>
-        <af:outputText value="Quote Header Customer &amp; Deal Related Data"
-                             id="ot1"
-                       inlineStyle="color:Navy; font-weight:bold; font-size:x-large;"/>
-        <af:commandImageLink id="cil1"
-                             icon="/Resources/images/imgs/icons8-help-16.png"
-                             actionListener="#{pageFlowScope.QuotingBean.showHelpTips}"/>
-        <af:panelGroupLayout id="pgl2">
-          <af:spacer width="300" height="10" id="s17"/>
-          <af:commandButton text="Save" id="cb1"
-                            action="#{pageFlowScope.QuotingBean.saveQuoteDetails}"/>
-          <af:spacer width="10" height="10" id="s18"/>
-          <af:commandButton text="Clear" id="cb2" immediate="true"
-                            action="clear">
-            <af:resetActionListener/>
-          </af:commandButton>
-          <af:resetButton text="resetButton 1" id="rb2" rendered="false"/>
-          <af:spacer width="10" height="10" id="s25"/>
-          <af:commandButton text="updateQuote" id="cb5" action="updateQuote"
-                            rendered="false"/>
-          <af:commandButton text="Update Quote" id="cb4"
-                            action="#{pageFlowScope.QuotingBean.updateQuote}"
-                            rendered="false"/>
-          <af:resetButton text="Clear" id="rb1" rendered="false"/>
-          <af:commandButton text="Return" id="cb3" action="backToSearch"
-                            rendered="false"/>
-        </af:panelGroupLayout>
+        <af:panelHeader text=" " id="ph1" styleClass="ADFStretchWidth"
+                        inlineStyle="width: 1050px">
+          <f:facet name="context">
+            <af:panelGroupLayout id="pgl2">
+              <af:panelGroupLayout id="pgl21" layout="vertical">
+                <af:outputText value="Quote Header Customer &amp; Deal Related Data"
+                               id="ot1"
+                               inlineStyle="color:Navy; font-weight:bold; font-size:x-large;"/>
+                <af:spacer width="10" height="10" id="s2"/>
+                <af:panelGroupLayout id="pgl20" layout="vertical">
+                  <af:panelGroupLayout id="pgl31" layout="horizontal">
+                    <af:image source="/Resources/images/imgs/tip.png"
+                              shortDesc="help tips" id="i11"/>
+                    <af:outputFormatted value="Use Save button to create or modify quote header"
+                                        id="of8"
+                                        inlineStyle="color:Navy; font-size:x-small;"/>
+                  </af:panelGroupLayout>
+                  <af:panelGroupLayout id="panelGroupLayout1"
+                                       layout="horizontal">
+                    <af:image source="/Resources/images/imgs/tip.png"
+                              shortDesc="help tips" id="image1"/>
+                    <af:outputFormatted value="Use Clear button to clear the input values in create quote header."
+                                        id="outputFormatted1"
+                                        inlineStyle="color:Navy; font-size:x-small;"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              <af:spacer height="10" id="s17" width="300"/>
+              <af:resetButton text="resetButton 1" id="rb2" rendered="false"/>
+              <af:spacer width="10" height="10" id="s25"/>
+              <af:commandButton text="updateQuote" id="cb5" action="updateQuote"
+                                rendered="false"/>
+              <af:commandButton text="Update Quote" id="cb4"
+                                action="#{pageFlowScope.QuotingBean.updateQuote}"
+                                rendered="false"/>
+              <af:resetButton text="Clear" id="rb1" rendered="false"/>
+              <af:commandButton text="Return" id="cb3" action="backToSearch"
+                                rendered="false"/>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="toolbar">
+            <af:group id="g1">
+              <af:panelGroupLayout id="pgl22" inlineStyle="width: 1550px;">
+                <af:spacer width="135" height="10" id="s3"/>
+                <af:commandButton text="Save" id="cb1"
+                                  action="#{pageFlowScope.QuotingBean.saveQuoteDetails}"/>
+                <af:spacer width="10" height="10" id="s18"/>
+                <af:commandButton text="Clear" id="cb2" immediate="true"
+                                  action="clear">
+                  <af:resetActionListener/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+            </af:group>
+          </f:facet>
+          <f:facet name="legend"/>
+          <f:facet name="info"/>
+        </af:panelHeader>
       </af:panelGroupLayout>
     </f:facet>
   </af:panelStretchLayout>

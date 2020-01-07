@@ -3,9 +3,8 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:h="http://java.sun.com/jsf/html">
- <af:panelStretchLayout id="psl1" startWidth="158px" topHeight="69px"
+ <af:panelStretchLayout id="psl1" startWidth="158px" topHeight="150px;"
                         dimensionsFrom="children">
-    <f:facet name="bottom"/>
     <f:facet name="center">
       <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                            id="pgl15" styleClass="AFStretchWidth"
@@ -180,7 +179,7 @@
                                    partialTriggers="soc3" rendered="false">
                 <af:spacer width="57" height="10" id="s12" rendered="false"/>
               </af:panelGroupLayout>
-              <af:spacer width="10" height="10" id="s5"/>
+              <af:spacer width="10" height="180" id="s5"/>
               <af:panelFormLayout id="pfl2" fieldWidth="367px"
                                   labelWidth="150px" rows="2147483647">
                 <af:spacer width="57" height="10" id="s26" rendered="false"/>
@@ -233,7 +232,7 @@
                   <af:spacer width="10" height="10" id="s21"/>
                 </af:panelGroupLayout>
               </af:panelGroupLayout>
-              <af:spacer width="10" height="5" id="s4"/>
+              <af:spacer width="10" height="16" id="s4"/>
               <af:panelGroupLayout id="pgl3" layout="horizontal">
                 <af:spacer width="58" height="10" id="s10" rendered="false"/>
                 <af:panelGroupLayout id="pgl11"
@@ -338,7 +337,7 @@
                             inlineStyle="font-weight:bold; color:Black;"
                             rendered="false"/>
               <af:panelBox id="pb2" showDisclosure="false"
-                           inlineStyle="width:788px; border-width:medium; border-color:Black;">
+                           inlineStyle="width:500px; border-width:medium; border-color:Black;">
                 <af:panelGroupLayout id="pgl16" layout="horizontal"
                                      halign="center">
                   <af:outputLabel value="Budgetary Quote" id="ol5"
@@ -365,7 +364,7 @@
                       </af:inputText>
                     </af:panelGroupLayout>
                   </af:panelGroupLayout>
-                  <af:spacer width="101" height="10" id="s19"/>
+                  <af:spacer width="10" height="10" id="s19"/>
                   <af:panelGroupLayout id="pgl18"
                                        inlineStyle="border-color:Black;"
                                        layout="horizontal">
@@ -475,7 +474,7 @@
                                   inlineStyle="font-weight:bold; color:Black;"/>
                   <af:spacer width="10" height="5" id="spacer2"/>
                   <h:inputTextarea id="it1" value="#{bindings.ShipTo.inputValue}"
-                                 cols="63"
+                                 cols="62"
                                  style="height:23mm; overflow:hidden; border-style:hidden; font-weight:bold; background-color:white;"
                                  readonly="true" disabled="false"/>
                 </af:panelGroupLayout>
@@ -551,18 +550,35 @@
         </af:panelSplitter>
       </af:panelGroupLayout>
     </f:facet>
-    <f:facet name="start"/>
-    <f:facet name="end"/>
     <f:facet name="top">
      <af:panelGroupLayout id="pgl5" layout="horizontal">
                <af:image id="pt_i1" source="/Resources/images/adv.gif"
                             inlineStyle="width:215px;" rendered="false"/>
         <af:spacer width="20" height="10" id="s11"/>
-        <af:outputText value="Quote Header Customer &amp; Deal Related Data"
-                             id="ot1"
-                       inlineStyle="color:Navy; font-weight:bold; font-size:x-large;"/>
-        <af:panelGroupLayout id="pgl2">
-          <af:spacer width="300" height="10" id="s17"/>
+        <af:panelGroupLayout id="pgl34" layout="vertical">
+          <af:outputText value="Quote Header Customer &amp; Deal Related Data"
+                         id="ot1"
+                         inlineStyle="color:Navy; font-weight:bold; font-size:x-large;"/>
+          <af:panelGroupLayout id="xpgl20" layout="vertical">
+            <af:panelGroupLayout id="xpgl31" layout="horizontal">
+              <af:image source="/Resources/images/imgs/tip.png"
+                        shortDesc="help tips" id="i11"/>
+              <af:outputFormatted value="Use Save button to create or modify quote header"
+                                  id="of8"
+                                  inlineStyle="font-weight:bold; color:Navy;"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout id="panelGroupLayout1" layout="horizontal">
+              <af:image source="/Resources/images/imgs/tip.png"
+                        shortDesc="help tips" id="image1"/>
+              <af:outputFormatted value="Use Clear button to clear the input values in create quote header."
+                                  id="outputFormatted1"
+                                  inlineStyle="font-weight:bold; color:Navy;"/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+        <af:spacer width="10" height="10" id="xs2"/>
+        <af:panelGroupLayout id="pgl2" inlineStyle="width: 510px">
+          <af:spacer width="380" height="10" id="s17"/>
           <af:commandButton text="Save" id="cb1"
                             actionListener="#{pageFlowScope.QuotingBean.updateQuote}"/>
           <af:spacer width="10" height="10" id="s18"/>
@@ -571,7 +587,7 @@
                             disabled="false">
             <af:resetActionListener/>
           </af:commandButton>
-          <af:spacer width="10" height="10" id="s25"/>
+          <af:spacer width="10" height="10" id="s25" rendered="false"/>
           <af:resetButton text="Clear" id="rb1" disabled="true"/>
           <af:commandButton text="Return" id="cb3" action="backToSearch"
                             rendered="false"/>

@@ -11,7 +11,7 @@
             window.print();
         }
       </af:resource>
-      <af:resource type="javascript">
+      <!--af:resource type="javascript">
         var timeoutID;
         resetTimeout();
         function resetTimeout() {
@@ -29,7 +29,7 @@
         document.onkeyup = resetTimeout;
         document.onkeydown = resetTimeout;
         document.onclick = resetTimeout;
-      </af:resource>
+      </af:resource-->
       <af:messages id="m1"/>
       <af:form id="f1" usesUpload="true">
         <af:panelStretchLayout id="psl1" topHeight="80px" endWidth="10px"
@@ -354,8 +354,14 @@
           <af:dialog id="d7" type="cancel" contentWidth="400"
                      contentHeight="200" title="Model File Report">
             <af:panelGroupLayout id="pgl9" layout="scroll">
-              <af:outputFormatted id="of5"
-                                  binding="#{viewScope.LoadDynamicRegionBean.setMOFop}"/>
+              <af:panelFormLayout id="pfl2">
+                <f:facet name="footer"/>
+                <af:panelLabelAndMessage id="plam2">
+                  <af:outputFormatted id="of5"
+                                      binding="#{viewScope.LoadDynamicRegionBean.setMOFop}"
+                                      styleClass="PreWrap"/>
+                </af:panelLabelAndMessage>
+              </af:panelFormLayout>
             </af:panelGroupLayout>
           </af:dialog>
         </af:popup>

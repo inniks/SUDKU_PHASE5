@@ -99,9 +99,9 @@ public class ImportSource {
 
     public void importSrcSelected(ValueChangeEvent valueChangeEvent) {
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
-        if(configTypeBinding!=null){
-            configTypeBinding.setValue(null);
-        }
+//        if (configTypeBinding != null) {
+//            configTypeBinding.setValue(null);
+//        }
         if (valueChangeEvent.getNewValue() != null) {
             String selectedVal = null;
             UIComponent uiComp = (UIComponent)valueChangeEvent.getSource();
@@ -114,9 +114,17 @@ public class ImportSource {
                     currRw.setAttribute("BudgetQuoteId", null);
                     currRw.setAttribute("FormalQuoteId", null);
                     //currRw.setAttribute("CopyRefConfig", null);
-                    currRw.setAttribute("ConfigurationType", "Y");
+                    currRw.setAttribute("ConfigurationType", null);
                     currRw.setAttribute("ConfigTypeMeaning", null);
                     inputFileBinding.setValue(null);
+                    //configTypeBinding.setValue(null);
+                    configTypeBinding.setSubmittedValue(null);
+                    ADFUtils.addPartialTarget(configTypeBinding);
+                    formalQuote.setValue(null);
+                    budgetQuote.setValue(null);
+                    ADFUtils.addPartialTarget(formalQuote);
+                    ADFUtils.addPartialTarget(budgetQuote);
+                    ADFUtils.addPartialTarget(inputFileBinding);
                 }
             }
             BindingContainer bindings =
@@ -208,7 +216,7 @@ public class ImportSource {
         //        Boolean isUpdateQuote = false;
         //        String duplicateQuoteNum = null;
         //Reset import source flow refresh parameter
-
+        
         ADFUtils.setSessionScopeValue("configSaved", null);
         int respid =
             Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
@@ -267,212 +275,239 @@ public class ImportSource {
                 }
             }
         }
-
-        ADFUtils.setSessionScopeValue("targetQuoteNumber", null);
-        ADFUtils.setSessionScopeValue("qheaderValidMap", null);
-        String str = null;
         UploadedFile xmlFile = (UploadedFile)inputFileBinding.getValue();
-        // if (xmlFile != null) {
+        if ((importSource != null && configType != null)) {
+
+                ADFUtils.setSessionScopeValue("targetQuoteNumber", null);
+                ADFUtils.setSessionScopeValue("qheaderValidMap", null);
+                String str = null;
+
+                // if (xmlFile != null) {
 
 
-        ADFUtils.setSessionScopeValue("refreshImport", "Y");
-        ADFUtils.setSessionScopeValue("cancelAll", null);
-        try {
-            if (importSource != null &&
-                importSource.equalsIgnoreCase("XML_FILE")) {
+                ADFUtils.setSessionScopeValue("refreshImport", "Y");
+                ADFUtils.setSessionScopeValue("cancelAll", null);
+                try {
+                    if (importSource != null &&
+                        importSource.equalsIgnoreCase("XML_FILE")) {
+                        if(xmlFile!=null){
+                        af.getSessionScope().put("quoteNumber", null);
+                        
+                        parseXMLToPojo(xmlFile.getInputStream());
+                        }
+                        else{
+                            ADFUtils.showFacesMessage("Please upload a xml file", FacesMessage.SEVERITY_WARN);
+                            return;
+                        }
+                    } else {
+                        parseXMLToPojo(null);
+                    }
+                    V93kQuote v93kQuote =
+                        (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+                    HashMap ruleSetMap = new HashMap();
+                    if (v93kQuote.getInputParams() != null) {
+                        ruleSetMap.put("topLevelCode",
+                                       v93kQuote.getInputParams().getRuleSetTopLevelChoice());
+                        ruleSetMap.put("secondLevelCode",
+                                       v93kQuote.getInputParams().getRuleSetSecondLevelChoice());
+                        if (v93kQuote.getExceptionMap() != null) {
+                            TreeMap<String, ArrayList<String>> exceptionMap =
+                                v93kQuote.getExceptionMap().getErrorList();
+                            List<String> errorMessages =
+                                v93kQuote.getExceptionMap().getErrorsMessages();
+                            StringBuilder errMessage =
+                                new StringBuilder("ERROR");
+                            if (exceptionMap != null &&
+                                exceptionMap.size() > 0) {
 
-                af.getSessionScope().put("quoteNumber", null);
-                parseXMLToPojo(xmlFile.getInputStream());
-            } else {
-                parseXMLToPojo(null);
-            }
-            V93kQuote v93kQuote =
-                (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-            HashMap ruleSetMap = new HashMap();
-            if (v93kQuote.getInputParams() != null) {
-                ruleSetMap.put("topLevelCode",
-                               v93kQuote.getInputParams().getRuleSetTopLevelChoice());
-                ruleSetMap.put("secondLevelCode",
-                               v93kQuote.getInputParams().getRuleSetSecondLevelChoice());
-                if (v93kQuote.getExceptionMap() != null) {
-                    TreeMap<String, ArrayList<String>> exceptionMap =
-                        v93kQuote.getExceptionMap().getErrorList();
-                    List<String> errorMessages =
-                        v93kQuote.getExceptionMap().getErrorsMessages();
-                    StringBuilder errMessage = new StringBuilder("ERROR");
-                    if (exceptionMap != null && exceptionMap.size() > 0) {
+                                for (Map.Entry<String, ArrayList<String>> entry :
+                                     exceptionMap.entrySet()) {
+                                    String key = entry.getKey();
+                                    ArrayList<String> value = entry.getValue();
+                                    for (String s : value) {
+                                        errMessage.append(s);
+                                    }
+                                }
+                            }
+                            if (errorMessages != null &&
+                                errorMessages.size() > 0) {
+                                for (String s : errorMessages) {
+                                    errMessage.append(s);
+                                }
+                            }
+                            if (errMessage != null &&
+                                errMessage.toString().equals("ERROR")) {
+                                //no error
+                                ruleSetMap.put("error", "N");
+                            } else {
+                                ruleSetMap.put("error", "Y");
 
-                        for (Map.Entry<String, ArrayList<String>> entry :
-                             exceptionMap.entrySet()) {
-                            String key = entry.getKey();
-                            ArrayList<String> value = entry.getValue();
-                            for (String s : value) {
-                                errMessage.append(s);
                             }
                         }
+
+                        ADFUtils.setSessionScopeValue("ruleSetMap",
+                                                      ruleSetMap);
                     }
-                    if (errorMessages != null && errorMessages.size() > 0) {
-                        for (String s : errorMessages) {
-                            errMessage.append(s);
-                        }
-                    }
-                    if (errMessage != null &&
-                        errMessage.toString().equals("ERROR")) {
-                        //no error
-                        ruleSetMap.put("error", "N");
-                    } else {
-                        ruleSetMap.put("error", "Y");
-
-                    }
-                }
-
-                ADFUtils.setSessionScopeValue("ruleSetMap", ruleSetMap);
-            }
-            boolean configHasErrors = configHasErrors(v93kQuote);
-            if (v93kQuote != null && !configHasErrors) {
-                ADFUtils.setSessionScopeValue("isDuplicateQuote",
-                                              v93kQuote.getSessionDetails().isDuplicateQuote());
-                ADFUtils.setSessionScopeValue("isUpdateQuote",
-                                              v93kQuote.getSessionDetails().isUpdateQuote());
-                ADFUtils.setSessionScopeValue("isCreateQuote",
-                                              v93kQuote.getSessionDetails().isCreateNewQuote());
-                System.out.println("update status::::::::::" +
-                                   v93kQuote.getSessionDetails().isUpdateQuote());
-                System.out.println("Duplicate status::::::::::" +
-                                   v93kQuote.getSessionDetails().isDuplicateQuote());
-                System.out.println("Create status::::::::::" +
-                                   v93kQuote.getSessionDetails().isCreateNewQuote());
+                    boolean configHasErrors = configHasErrors(v93kQuote);
+                    if (v93kQuote != null && !configHasErrors) {
+                        ADFUtils.setSessionScopeValue("isDuplicateQuote",
+                                                      v93kQuote.getSessionDetails().isDuplicateQuote());
+                        ADFUtils.setSessionScopeValue("isUpdateQuote",
+                                                      v93kQuote.getSessionDetails().isUpdateQuote());
+                        ADFUtils.setSessionScopeValue("isCreateQuote",
+                                                      v93kQuote.getSessionDetails().isCreateNewQuote());
+                        System.out.println("update status::::::::::" +
+                                           v93kQuote.getSessionDetails().isUpdateQuote());
+                        System.out.println("Duplicate status::::::::::" +
+                                           v93kQuote.getSessionDetails().isDuplicateQuote());
+                        System.out.println("Create status::::::::::" +
+                                           v93kQuote.getSessionDetails().isCreateNewQuote());
 
 
-                if (v93kQuote.getSessionDetails().isDuplicateQuote()) {
-                    String msg = null;
-                    StringBuilder msages = new StringBuilder("<html><body>");
-                    String targetQuote =
-                        (String)ADFUtils.getSessionScopeValue("quoteNumber");
-                    if (targetQuote != null) {
-                        OperationBinding ob =
-                            getBindings().getOperationBinding("callDuplicateQuoteAPI");
-                        ob.getParamsMap().put("quoteFromSesion", targetQuote);
-                        ob.getParamsMap().put("respId", respid);
-                        ob.getParamsMap().put("usrId", usrId);
-                        if (ob != null) {
-                            msg = (String)ob.execute();
-                            if (msg != null && !("").equalsIgnoreCase(msg)) {
-                                FacesMessage message = new FacesMessage(msg);
-                                if (msg.contains("<html><body>")) {
-                                    message.setSeverity(FacesMessage.SEVERITY_ERROR);
-                                    fc.addMessage(null, message);
-                                } else if (msg.contains("S-")) {
-                                    String[] resultMsg = msg.split("-", 2);
-                                    msg = resultMsg[1];
-                                    message = new FacesMessage(msg);
-                                    message.setSeverity(FacesMessage.SEVERITY_INFO);
-                                    String[] arrOfStr = msg.split(":", 2);
-                                    if (arrOfStr[1].toString() != null) {
-                                        v93kQuote.getSessionDetails().setTargetQuoteNumber(arrOfStr[1].toString());
-                                        ADFContext.getCurrent().getSessionScope().put("targetQuoteNumber",
-                                                                                      arrOfStr[1].toString());
-                                        _logger.info("Tareget Quote in duplicate mode " +
-                                                     arrOfStr[1]);
+                        if (v93kQuote.getSessionDetails().isDuplicateQuote()) {
+                            String msg = null;
+                            StringBuilder msages =
+                                new StringBuilder("<html><body>");
+                            String targetQuote =
+                                (String)ADFUtils.getSessionScopeValue("quoteNumber");
+                            if (targetQuote != null) {
+                                OperationBinding ob =
+                                    getBindings().getOperationBinding("callDuplicateQuoteAPI");
+                                ob.getParamsMap().put("quoteFromSesion",
+                                                      targetQuote);
+                                ob.getParamsMap().put("respId", respid);
+                                ob.getParamsMap().put("usrId", usrId);
+                                if (ob != null) {
+                                    msg = (String)ob.execute();
+                                    if (msg != null &&
+                                        !("").equalsIgnoreCase(msg)) {
+                                        FacesMessage message =
+                                            new FacesMessage(msg);
+                                        if (msg.contains("<html><body>")) {
+                                            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                                            fc.addMessage(null, message);
+                                        } else if (msg.contains("S-")) {
+                                            String[] resultMsg =
+                                                msg.split("-", 2);
+                                            msg = resultMsg[1];
+                                            message = new FacesMessage(msg);
+                                            message.setSeverity(FacesMessage.SEVERITY_INFO);
+                                            String[] arrOfStr =
+                                                msg.split(":", 2);
+                                            if (arrOfStr[1].toString() !=
+                                                null) {
+                                                v93kQuote.getSessionDetails().setTargetQuoteNumber(arrOfStr[1].toString());
+                                                ADFContext.getCurrent().getSessionScope().put("targetQuoteNumber",
+                                                                                              arrOfStr[1].toString());
+                                                _logger.info("Tareget Quote in duplicate mode " +
+                                                             arrOfStr[1]);
 
-                                        if ((v93kQuote.getSessionDetails().isDuplicateQuote() ||
-                                             v93kQuote.getSessionDetails().isCreateNewQuote())) {
-                                            msages.append("<p><b>");
-                                            //                                            msages.append("New quote has been assigned" +
-                                            //                                                          arrOfStr[1].toString() +
-                                            //                                                          " as the existing cannot be used</b></p>");
-                                            if (newQtMsg != null)
-                                                msages.append(newQtMsg +
-                                                              arrOfStr[1].toString());
-                                            else
-                                                msages.append(SudokuUtils.newQteMsg +
-                                                              arrOfStr[1].toString());
-                                            msages.append("</b></p>");
-                                            msages.append("</body></html>");
-                                            FacesMessage infoMsgs =
-                                                new FacesMessage(msages.toString());
-                                            infoMsgs.setSeverity(FacesMessage.SEVERITY_INFO);
-                                            fc.addMessage(null, infoMsgs);
+                                                if ((v93kQuote.getSessionDetails().isDuplicateQuote() ||
+                                                     v93kQuote.getSessionDetails().isCreateNewQuote())) {
+                                                    msages.append("<p><b>");
+                                                    //                                            msages.append("New quote has been assigned" +
+                                                    //                                                          arrOfStr[1].toString() +
+                                                    //                                                          " as the existing cannot be used</b></p>");
+                                                    if (newQtMsg != null)
+                                                        msages.append(newQtMsg +
+                                                                      arrOfStr[1].toString());
+                                                    else
+                                                        msages.append(SudokuUtils.newQteMsg +
+                                                                      arrOfStr[1].toString());
+                                                    msages.append("</b></p>");
+                                                    msages.append("</body></html>");
+                                                    FacesMessage infoMsgs =
+                                                        new FacesMessage(msages.toString());
+                                                    infoMsgs.setSeverity(FacesMessage.SEVERITY_INFO);
+                                                    fc.addMessage(null,
+                                                                  infoMsgs);
 
+                                                }
+                                            }
+                                            //                                    fc.addMessage(null, message);
+                                        } else if (msg.contains("E-")) {
+                                            String[] resultMsg =
+                                                msg.split("-", 2);
+                                            msg = resultMsg[1];
+                                            message = new FacesMessage(msg);
+                                            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                                            fc.addMessage(null, message);
                                         }
                                     }
-                                    //                                    fc.addMessage(null, message);
-                                } else if (msg.contains("E-")) {
-                                    String[] resultMsg = msg.split("-", 2);
-                                    msg = resultMsg[1];
-                                    message = new FacesMessage(msg);
-                                    message.setSeverity(FacesMessage.SEVERITY_ERROR);
-                                    fc.addMessage(null, message);
                                 }
                             }
                         }
+                        if (v93kQuote.getSessionDetails().isUpdateQuote()) {
+                            if (ADFContext.getCurrent().getSessionScope().get("quoteNumber") !=
+                                null)
+                                v93kQuote.getSessionDetails().setSourceQuoteNumber(ADFContext.getCurrent().getSessionScope().get("quoteNumber").toString());
+                        }
+                    }
+                    //Get the quote related values based on uploaded quote number
+                    if (v93kQuote != null &&
+                        v93kQuote.getQheaderObject() != null &&
+                        v93kQuote.getQheaderObject().getDealObject() != null &&
+                        v93kQuote.getQheaderObject().getDealObject().getQuoteid() !=
+                        null) {
+                        //Quote id exists in the xml,query other values from DB and attach to v93k object
+
+                    }
+                    ADFUtils.setSessionScopeValue("parentObject", v93kQuote);
+                    //Trying to queue a button press event
+                    RichCommandImageLink button =
+                        (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to view reference page
+                    ActionEvent acEvent = new ActionEvent(button);
+                    acEvent.queue();
+                    // }
+
+                } catch (Exception jaxbe) {
+
+                    if (jaxbe instanceof UnmarshalException) {
+                        ADFUtils.showFacesMessage("XML is not formed correctly , Please check if the file has any special characters(For Instance '&' should be '&amp;')",
+                                                  FacesMessage.SEVERITY_ERROR);
+                    }
+
+                    if (jaxbe instanceof IllegalArgumentException) {
+                        if (invalidUploadMsgg != null)
+                            ADFUtils.showFacesMessage(invalidUploadMsgg,
+                                                      FacesMessage.SEVERITY_ERROR);
+                        else
+                            ADFUtils.showFacesMessage(SudokuUtils.invalidUploadMsg,
+                                                      FacesMessage.SEVERITY_ERROR);
+
+                        //                ADFUtils.showFacesMessage("Invalid Upload/File Already uploaded,Unable to parse...",
+                        //                                          FacesMessage.SEVERITY_ERROR);
+                    }
+                    if (jaxbe instanceof IOException) {
+                        ADFUtils.showFacesMessage("EBS is not responding to the request,Please contact your system administrator : SERVER RESPONSE : 500",
+                                                  FacesMessage.SEVERITY_ERROR);
+                        jaxbe.printStackTrace();
+                    } else {
+                        str = jaxbe.getMessage();
+                        Throwable e = null;
+                        while (jaxbe.getCause() != null) {
+                            jaxbe = (Exception)jaxbe.getCause();
+
+                        }
+                        str = jaxbe.getMessage();
+                        ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR,
+                                            jaxbe.getMessage());
+                        jaxbe.printStackTrace();
                     }
                 }
-                if (v93kQuote.getSessionDetails().isUpdateQuote()) {
-                    if (ADFContext.getCurrent().getSessionScope().get("quoteNumber") !=
-                        null)
-                        v93kQuote.getSessionDetails().setSourceQuoteNumber(ADFContext.getCurrent().getSessionScope().get("quoteNumber").toString());
+
+
+                if (str == null) {
+                    RichPopup impSrcPopup =
+                        (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
+                    if (impSrcPopup != null) {
+                        impSrcPopup.cancel();
+                    }
                 }
-            }
-            //Get the quote related values based on uploaded quote number
-            if (v93kQuote != null && v93kQuote.getQheaderObject() != null &&
-                v93kQuote.getQheaderObject().getDealObject() != null &&
-                v93kQuote.getQheaderObject().getDealObject().getQuoteid() !=
-                null) {
-                //Quote id exists in the xml,query other values from DB and attach to v93k object
 
-            }
-            ADFUtils.setSessionScopeValue("parentObject", v93kQuote);
-            //Trying to queue a button press event
-            RichCommandImageLink button =
-                (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to view reference page
-            ActionEvent acEvent = new ActionEvent(button);
-            acEvent.queue();
-            // }
-
-        } catch (Exception jaxbe) {
-
-            if (jaxbe instanceof UnmarshalException) {
-                ADFUtils.showFacesMessage("XML is not formed correctly , Please check if the file has any special characters(For Instance '&' should be '&amp;')",
-                                          FacesMessage.SEVERITY_ERROR);
-            }
-
-            if (jaxbe instanceof IllegalArgumentException) {
-                if (invalidUploadMsgg != null)
-                    ADFUtils.showFacesMessage(invalidUploadMsgg,
-                                              FacesMessage.SEVERITY_ERROR);
-                else
-                    ADFUtils.showFacesMessage(SudokuUtils.invalidUploadMsg,
-                                              FacesMessage.SEVERITY_ERROR);
-
-                //                ADFUtils.showFacesMessage("Invalid Upload/File Already uploaded,Unable to parse...",
-                //                                          FacesMessage.SEVERITY_ERROR);
-            }
-            if (jaxbe instanceof IOException) {
-                ADFUtils.showFacesMessage("EBS is not responding to the request,Please contact your system administrator : SERVER RESPONSE : 500",
-                                          FacesMessage.SEVERITY_ERROR);
-                jaxbe.printStackTrace();
-            } else {
-                str = jaxbe.getMessage();
-                Throwable e = null;
-                while (jaxbe.getCause() != null) {
-                    jaxbe = (Exception)jaxbe.getCause();
-
-                }
-                str = jaxbe.getMessage();
-                ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                    jaxbe.getMessage());
-                jaxbe.printStackTrace();
-            }
-        }
-
-
-        if (str == null) {
-            RichPopup impSrcPopup =
-                (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
-            if (impSrcPopup != null) {
-                impSrcPopup.cancel();
-            }
+        } else {
+            ADFUtils.showFacesMessage("Required quote or configuration type is not selected,Please review your choices..",
+                                      FacesMessage.SEVERITY_WARN);
         }
         // RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("ps1imXML"));
     }
@@ -782,12 +817,13 @@ public class ImportSource {
                 SelectItem s = new SelectItem();
                 s.setLabel(li.getLabel());
                 s.setValue(li.getValue());
-                if (s.getValue() != null && s.getValue().toString().equals("1")) {
-                    System.out.println("S Val "+s.getValue()+"Imp SOurce "+impSource);
-                    if(impSource.equals("BUDGET_QUOTE")){
+                if (s.getValue() != null &&
+                    s.getValue().toString().equals("1")) {
+                    System.out.println("S Val " + s.getValue() +
+                                       "Imp SOurce " + impSource);
+                    if (impSource.equals("BUDGET_QUOTE")) {
                         s.setDisabled(false);
-                    }
-                    else{
+                    } else {
                         s.setDisabled(true);
                     }
                 }

@@ -3,24 +3,24 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core">
   <af:panelBox id="pb1" showDisclosure="false"
-               text="Source Configuration Ruleset">
+               text="Source Configuration Ruleset" background="medium">
     <af:panelFormLayout id="pfl1">
-      <af:panelLabelAndMessage id="plam3" label="Top Level Choice">
-        <af:inputText value="#{bindings.TopLevelMeaning1.inputValue}"
-                      simple="true"
-                      required="#{bindings.TopLevelMeaning1.hints.mandatory}"
-                      maximumLength="#{bindings.TopLevelMeaning1.hints.precision}"
-                      shortDesc="#{bindings.TopLevelMeaning1.hints.tooltip}"
-                      id="it1" disabled="true" contentStyle="width:120px;"
-                      dimensionsFrom="parent">
-          <f:validator binding="#{bindings.TopLevelMeaning1.validator}"/>
-        </af:inputText>
-      </af:panelLabelAndMessage>
-      <af:panelLabelAndMessage id="plam1" label="Second Level Choice">
-        <af:inputText value="#{bindings.SecondLevelMeaning.inputValue}" id="ot1"
-                      disabled="true" contentStyle="width:120px;"
-                      dimensionsFrom="parent"/>
-      </af:panelLabelAndMessage>
+      <af:inputText value="#{bindings.TopLevelMeaning1.inputValue}"
+                    required="#{bindings.TopLevelMeaning1.hints.mandatory}"
+                    maximumLength="#{bindings.TopLevelMeaning1.hints.precision}"
+                    shortDesc="#{bindings.TopLevelMeaning1.hints.tooltip}"
+                    id="it1" disabled="true" contentStyle="width:120px;"
+                    dimensionsFrom="parent" label="Top Level Choice">
+        <f:validator binding="#{bindings.TopLevelMeaning1.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.SecondLevelMeaning.inputValue}" id="ot1"
+                    disabled="true" contentStyle="width:120px;"
+                    dimensionsFrom="parent" label="Second Level Choice"
+                    rendered="#{!pageFlowScope.RuleSetBean.isOts}"/>
+      <af:inputText label="Second Level Choice" id="it2" disabled="true"
+                    contentStyle="width:120px;"
+                    rendered="#{pageFlowScope.RuleSetBean.isOts}"
+                    value="#{pageFlowScope.RuleSetBean.otsDisplay}"/>
     </af:panelFormLayout>
   </af:panelBox>
 </jsp:root>

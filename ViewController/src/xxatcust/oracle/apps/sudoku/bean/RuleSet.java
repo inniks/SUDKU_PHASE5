@@ -12,8 +12,11 @@ import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.jbo.Row;
 
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 
 public class RuleSet {
+    private String otsDisplay;
+    private Boolean isOts=false;
     public RuleSet() {
     }
 
@@ -128,4 +131,35 @@ public class RuleSet {
             }
         }
 
+    public void setOtsDisplay(String otsDisplay) {
+        this.otsDisplay = otsDisplay;
+    }
+
+    public String getOtsDisplay() {
+        String otsDisplay = null;
+        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(v93k!=null && v93k.getInputParams()!=null){
+            String secondLevelRuleSet = v93k.getInputParams().getRuleSetSecondLevelChoice();
+            if(secondLevelRuleSet!=null && secondLevelRuleSet.equalsIgnoreCase("OTS")){
+                otsDisplay = "Advantest Expert";
+            }
+        }
+        return otsDisplay;
+    }
+
+    public void setIsOts(Boolean isOts) {
+        this.isOts = isOts;
+    }
+
+    public Boolean getIsOts() {
+        boolean isOts = false;
+        V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(v93k!=null && v93k.getInputParams()!=null){
+            String secondLevelRuleSet = v93k.getInputParams().getRuleSetSecondLevelChoice();
+            if(secondLevelRuleSet!=null && secondLevelRuleSet.equalsIgnoreCase("OTS")){
+                isOts = true;
+            }
+        }
+        return isOts;
+    }
 }

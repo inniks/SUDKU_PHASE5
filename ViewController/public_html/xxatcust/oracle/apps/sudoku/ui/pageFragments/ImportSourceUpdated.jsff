@@ -14,17 +14,17 @@
             <af:panelFormLayout id="pfl1" rows="1" maxColumns="2">
               <f:facet name="footer">
                 <af:group id="g1">
-                  <af:panelGroupLayout id="pgl4">
+                  <af:panelGroupLayout id="pgl4" partialTriggers="sor1">
                     <af:spacer width="10" height="40" id="s3"/>
                     <af:panelGroupLayout id="pgl3" layout="horizontal"
                                          partialTriggers="sor1">
                       <af:selectOneRadio value="#{bindings.ConfigTypeMeaning.inputValue}"
-                                         required="true"
                                          shortDesc="#{bindings.ConfigTypeMeaning.hints.tooltip}"
                                          id="sor2" autoSubmit="true"
                                          valueChangeListener="#{pageFlowScope.ImportSourceBean.configTypeChanged}"
                                          showRequired="true"
-                                         rendered="#{bindings.ImportSrcMeaning.inputValue ne null}">
+                                         rendered="#{bindings.ImportSrcMeaning.inputValue ne null}"
+                                         binding="#{pageFlowScope.ImportSourceBean.configTypeBinding}">
                         <!--f:selectItems value="#{bindings.ConfigTypeMeaning.items}"
                                        id="si2"/-->
                         <f:selectItems value="#{pageFlowScope.ImportSourceBean.selectItemList}"
@@ -35,8 +35,7 @@
                                          shortDesc="#{bindings.ConfigTypeMeaning.hints.tooltip}"
                                          id="sor3" autoSubmit="true"
                                          showRequired="true" disabled="true"
-                                         rendered="#{bindings.ImportSrcMeaning.inputValue eq null}"
-                                         binding="#{pageFlowScope.ImportSourceBean.configTypeBinding}">
+                                         rendered="#{bindings.ImportSrcMeaning.inputValue eq null}">
                         <f:selectItems value="#{bindings.ConfigTypeMeaning.items}"
                                        id="si3"/>
                       </af:selectOneRadio>
@@ -58,7 +57,7 @@
               </af:panelGroupLayout>
               <af:panelGroupLayout id="pgl7" layout="vertical"
                                    partialTriggers="sor1" halign="left">
-                <af:panelFormLayout id="pfl2">
+                <af:panelFormLayout id="pfl2" partialTriggers="sor1">
                   <af:panelGroupLayout id="pgl13" layout="horizontal">
                     <af:panelLabelAndMessage id="pla2m1">
                       <af:inputText id="it21"
@@ -135,14 +134,14 @@
                 <af:commandToolbarButton text="Ok" id="ctb1"
                                          actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"
                                          rendered="true" immediate="false"
-                                         partialSubmit="false">
+                                         partialSubmit="true">
                   <af:setPropertyListener from="#{pageFlowScope.ImportSourceBean.refreshToken}"
                                           to="#{sessionScope.refreshFlag}"
                                           type="action"/>
                 </af:commandToolbarButton>
                 <af:commandToolbarButton text="Cancel" id="ctb2"
                                          actionListener="#{pageFlowScope.ImportSourceBean.cancelPopup}"
-                                         rendered="true" immediate="true"/>
+                                         rendered="true" immediate="false"/>
               </af:toolbar>
             </af:panelGroupLayout>
           </af:panelGroupLayout>

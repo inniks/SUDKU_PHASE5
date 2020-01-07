@@ -11,10 +11,6 @@
         <af:outputFormatted value="V93000 Configuration and Budgetary Quoting Tool"
                             id="of5"
                             inlineStyle="color:Teal; font-size:x-large;"/>
-        <af:commandImageLink id="cil1"
-                             icon="/Resources/images/imgs/icons8-help-16.png"
-                             actionListener="#{ConfiguratorBean.showHelpMessage}"
-                             shortDesc="Help"/>
       </af:group>
     </f:facet>
     <f:facet name="toolbar">
@@ -24,43 +20,44 @@
                      inlineStyle="width:350px; text-align:justify;">
           <af:panelGroupLayout id="pgl13" layout="vertical" halign="end"
                                rendered="true" styleClass="AFStretchWidth">
-            <af:inputListOfValues id="topLevelMeaningId"
-                                  popupTitle="Search and Select:Ruleset -  Top Level Choice"
-                                  value="#{bindings.TopLevelMeaning.inputValue}"
-                                  model="#{bindings.TopLevelMeaning.listOfValuesModel}"
-                                  required="#{bindings.TopLevelMeaning.hints.mandatory}"
-                                  columns="20"
-                                  shortDesc="#{bindings.TopLevelMeaning.hints.tooltip}"
-                                  launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
-                                  autoSubmit="true"
-                                  valueChangeListener="#{ConfiguratorBean.rulesetChanged}"
-                                  label="Top Level Choice"
-                                  disabled="#{ConfiguratorBean.quoteSaved}">
-              <f:validator binding="#{bindings.TopLevelMeaning.validator}"/>
-            </af:inputListOfValues>
-            <af:inputListOfValues id="secondLevelMeaningId"
-                                  popupTitle="Search and Select: Ruleset - Second Level Choice"
-                                  value="#{bindings.SecondLevelMeaning.inputValue}"
-                                  model="#{bindings.SecondLevelMeaning.listOfValuesModel}"
-                                  required="#{bindings.SecondLevelMeaning.hints.mandatory}"
-                                  columns="20"
-                                  shortDesc="#{bindings.SecondLevelMeaning.hints.tooltip}"
-                                  partialTriggers="topLevelMeaningId"
-                                  autoSubmit="true"
-                                  valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}"
-                                  disabled="#{bindings.TopLevelMeaning.inputValue eq null or ConfiguratorBean.quoteSaved}"
-                                  label="Second Level Choice"
-                                  rendered="#{ConfiguratorBean.oneTimeSpecial ne 'OTS'}">
-              <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
-            </af:inputListOfValues>
-            <af:panelLabelAndMessage label="Second Level Choice" id="plam1"
-                                     rendered="#{ConfiguratorBean.oneTimeSpecial eq 'OTS'}">
+            <af:panelFormLayout id="pfl1">
+              <f:facet name="footer"/>
+              <af:inputListOfValues id="topLevelMeaningId"
+                                    popupTitle="Search and Select:Ruleset -  Top Level Choice"
+                                    value="#{bindings.TopLevelMeaning.inputValue}"
+                                    model="#{bindings.TopLevelMeaning.listOfValuesModel}"
+                                    required="#{bindings.TopLevelMeaning.hints.mandatory}"
+                                    columns="20"
+                                    shortDesc="#{bindings.TopLevelMeaning.hints.tooltip}"
+                                    launchPopupListener="#{pageFlowScope.PartialSearchBean.launchPopup}"
+                                    autoSubmit="true"
+                                    valueChangeListener="#{ConfiguratorBean.rulesetChanged}"
+                                    label="Top Level Choice"
+                                    disabled="#{ConfiguratorBean.quoteSaved}">
+                <f:validator binding="#{bindings.TopLevelMeaning.validator}"/>
+              </af:inputListOfValues>
+              <af:inputListOfValues id="secondLevelMeaningId"
+                                    popupTitle="Search and Select: Ruleset - Second Level Choice"
+                                    value="#{bindings.SecondLevelMeaning.inputValue}"
+                                    model="#{bindings.SecondLevelMeaning.listOfValuesModel}"
+                                    required="#{bindings.SecondLevelMeaning.hints.mandatory}"
+                                    columns="20"
+                                    shortDesc="#{bindings.SecondLevelMeaning.hints.tooltip}"
+                                    partialTriggers="topLevelMeaningId"
+                                    autoSubmit="true"
+                                    valueChangeListener="#{ConfiguratorBean.ruleSetSecondValChange}"
+                                    disabled="#{bindings.TopLevelMeaning.inputValue eq null or ConfiguratorBean.quoteSaved}"
+                                    label="Second Level Choice"
+                                    rendered="#{ConfiguratorBean.oneTimeSpecial ne 'OTS'}">
+                <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
+              </af:inputListOfValues>
               <af:inputText id="it5"
                             rendered="#{ConfiguratorBean.oneTimeSpecial eq 'OTS'}"
                             disabled="true"
                             value="#{ConfiguratorBean.otsDislayValue}"
-                            columns="20" partialTriggers="topLevelMeaningId"/>
-            </af:panelLabelAndMessage>
+                            columns="20" partialTriggers="topLevelMeaningId"
+                            label="Second Level Choice"/>
+            </af:panelFormLayout>
           </af:panelGroupLayout>
           <f:facet name="toolbar">
             <af:panelGroupLayout id="pgl16" halign="right"/>
@@ -7834,9 +7831,22 @@
         <af:popup id="resetConfig"
               binding="#{ConfiguratorBean.resetConfigurationPopup}">
       <af:dialog id="d2"
-                 title="Your existing configuration will be lost,Are you sure you want to continue?"
                  type="yesNo"
-                 dialogListener="#{ConfiguratorBean.resetConfigurationAndCallServlet}"/>
+                 dialogListener="#{ConfiguratorBean.resetConfigurationAndCallServlet}">
+        <af:panelGroupLayout id="pgXl16" layout="vertical"
+                             inlineStyle="width:550px">
+          <af:panelGroupLayout id="pgl31" layout="horizontal"
+                               inlineStyle="font-weight:bold;">
+            <af:image source="/Resources/images/imgs/iconfinder_error_36026 (1).png"
+                      id="i12"/>
+            <af:spacer width="5" height="10" id="xs4"/>
+            <af:outputFormatted value="Warning!" id="of8"
+                                inlineStyle="font-size:small; font-weight:bold;"/>
+          </af:panelGroupLayout>
+          <af:outputText value="Your existing configuration will be lost, Are you sure you want to continue?"
+                         id="ot3" inlineStyle="width:450px; font-weight:bold;"/>
+        </af:panelGroupLayout>
+      </af:dialog>
     </af:popup>
     <af:popup id="p1" binding="#{ConfiguratorBean.errorPopup}">
       <af:dialog id="d3" title="Error(s) occurred :" contentWidth="450"
@@ -7868,5 +7878,24 @@
         </af:panelGroupLayout>
       </af:dialog>
     </af:popup>
+    <f:facet name="info"/>
+    <f:facet name="legend">
+      <af:group id="g9">
+        <af:panelBorderLayout id="pbl7" inlineStyle="border-style:none;">
+          <f:facet name="start"/>
+          <f:facet name="bottom"/>
+          <f:facet name="end"/>
+          <f:facet name="top">
+            <af:panelGroupLayout id="ypgl31" layout="horizontal">
+              <af:image source="/Resources/images/imgs/tip.png"
+                        shortDesc="help tips" id="i11"/>
+              <af:outputFormatted value="Please select values in RuleSet Selection to load the configurator UI"
+                                  id="yof8"
+                                  inlineStyle="font-weight:bold; color:Navy;"/>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:panelBorderLayout>
+      </af:group>
+    </f:facet>
   </af:panelHeader>
 </jsp:root>
