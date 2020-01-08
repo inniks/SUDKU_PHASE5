@@ -1280,6 +1280,16 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
             }
         }
         ,
+        Discount {
+            public Object get(QuoteUpdateVORowImpl obj) {
+                return obj.getDiscount();
+            }
+
+            public void put(QuoteUpdateVORowImpl obj, Object value) {
+                obj.setDiscount((BigDecimal)value);
+            }
+        }
+        ,
         QuoteTo {
             public Object get(QuoteUpdateVORowImpl obj) {
                 return obj.getQuoteTo();
@@ -1387,16 +1397,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
 
             public void put(QuoteUpdateVORowImpl obj, Object value) {
                 obj.setCustomerEmail((String)value);
-            }
-        }
-        ,
-        Discount {
-            public Object get(QuoteUpdateVORowImpl obj) {
-                return obj.getDiscount();
-            }
-
-            public void put(QuoteUpdateVORowImpl obj, Object value) {
-                obj.setDiscount((String)value);
             }
         }
         ,
@@ -1738,6 +1738,7 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
     public static final int BUSINESSCENTERCSR = AttributesEnum.Businesscentercsr.index();
     public static final int PAYMENTTERMS = AttributesEnum.Paymentterms.index();
     public static final int INCOTERMS = AttributesEnum.Incoterms.index();
+    public static final int DISCOUNT = AttributesEnum.Discount.index();
     public static final int QUOTETO = AttributesEnum.QuoteTo.index();
     public static final int SHIPTO = AttributesEnum.ShipTo.index();
     public static final int BUSINESSAGREEMENTID = AttributesEnum.BusinessAgreementId.index();
@@ -1749,7 +1750,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
     public static final int CUSTOMERPHONENUM = AttributesEnum.CustomerPhoneNum.index();
     public static final int CUSTOMERFAXNUM = AttributesEnum.CustomerFaxNum.index();
     public static final int CUSTOMEREMAIL = AttributesEnum.CustomerEmail.index();
-    public static final int DISCOUNT = AttributesEnum.Discount.index();
     public static final int PAYMENTTERMSNAME = AttributesEnum.PaymentTermsName.index();
     public static final int INCOTERMSMEANING = AttributesEnum.IncoTermsMeaning.index();
     public static final int CUSTNUM = AttributesEnum.CustNum.index();
@@ -4275,6 +4275,22 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
     }
 
     /**
+     * Gets the attribute value for the calculated attribute Discount.
+     * @return the Discount
+     */
+    public BigDecimal getDiscount() {
+        return (BigDecimal) getAttributeInternal(DISCOUNT);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for the calculated attribute Discount.
+     * @param value value to set the  Discount
+     */
+    public void setDiscount(BigDecimal value) {
+        setAttributeInternal(DISCOUNT, value);
+    }
+
+    /**
      * Gets the attribute value for the calculated attribute QuoteTo.
      * @return the QuoteTo
      */
@@ -4450,21 +4466,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
         setAttributeInternal(CUSTOMEREMAIL, value);
     }
 
-    /**
-     * Gets the attribute value for the calculated attribute Discount.
-     * @return the Discount
-     */
-    public String getDiscount() {
-        return (String)getAttributeInternal(DISCOUNT);
-    }
-
-    /**
-     * Sets <code>value</code> as the attribute value for the calculated attribute Discount.
-     * @param value value to set the  Discount
-     */
-    public void setDiscount(String value) {
-        setAttributeInternal(DISCOUNT, value);
-    }
 
     /**
      * Gets the attribute value for the calculated attribute PaymentTermsName.

@@ -568,7 +568,12 @@ AND AsoQuoteHeadersAll.QUOTE_HEADER_ID =ASP.QUOTE_HEADER_ID)PaymentTerms,
 (select flv1.Meaning from fnd_lookup_values flv1, ASO_SHIPMENTS ASS 
 where flv1.lookup_type = 'FOB' 
 and ASS.FOB_CODE =flv1.lookup_code 
-and AsoQuoteHeadersAll.QUOTE_HEADER_ID          =ASS.QUOTE_HEADER_ID)IncoTerms
+and AsoQuoteHeadersAll.QUOTE_HEADER_ID          =ASS.QUOTE_HEADER_ID)IncoTerms,
+(SELECT  operand
+    FROM  ASO_PRICE_ADJUSTMENTS K
+    WHERE    K.QUOTE_HEADER_ID = AsoQuoteHeadersAll.QUOTE_HEADER_ID
+        AND QUOTE_LINE_ID IS NULL
+        AND MODIFIER_LINE_TYPE_CODE = 'DIS')Discount
 FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll]]>
   </SQLQuery>
   <ViewAttribute
@@ -2379,6 +2384,19 @@ FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll]]>
     </Properties>
   </ViewAttribute>
   <ViewAttribute
+    Name="Discount"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="DISCOUNT"
+    Expression="DISCOUNT"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
     Name="QuoteTo"
     IsSelected="false"
     IsPersistent="false"
@@ -2470,15 +2488,6 @@ FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll]]>
     SQLType="VARCHAR"/>
   <ViewAttribute
     Name="CustomerEmail"
-    IsSelected="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    AliasName="VIEW_ATTR"
-    SQLType="VARCHAR"/>
-  <ViewAttribute
-    Name="Discount"
     IsSelected="false"
     IsPersistent="false"
     PrecisionRule="true"

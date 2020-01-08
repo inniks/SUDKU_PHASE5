@@ -328,7 +328,8 @@
                                       shortDesc="#{bindings.Agrimentname.hints.tooltip}"
                                       id="soc4" contentStyle="width:374px;"
                                       autoSubmit="true" partialTriggers="soc3"
-                                      inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;">
+                                      inlineStyle="font-weight:bold; border-style:hidden; overflow:hidden; background-color:white;"
+                                      valueChangeListener="#{pageFlowScope.QuotingBean.businessAgreementChanged}">
                     <f:selectItems value="#{bindings.Agrimentname.items}"
                                    id="si4"/>
                   </af:selectOneChoice>

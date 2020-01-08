@@ -671,9 +671,17 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     String custName = null;
                     custName = (String)quoteVORow.getAttribute("CustomerName");
                     if (custName != null) {
-                        cs.setString(2, "Quote For " + custName);
-                        quoteVORow.setAttribute("QuoteDescription",
-                                                "Quote For " + custName);
+                        //cs.setString(2, "Quote For " + custName);
+                        String quoteDesc =
+                            (String)quoteVORow.getAttribute("QuoteDescription");
+                        if (quoteDesc != null && !quoteDesc.equals("")) {
+                            quoteVORow.setAttribute("QuoteDescription",
+                                                    quoteDesc);
+                        } else if (quoteDesc == null) {
+                            quoteVORow.setAttribute("QuoteDescription",
+                                                    "Quote For " + custName);
+                        }
+                        cs.setString(2, (String)quoteVORow.getAttribute("QuoteDescription"));
                     } else {
                         cs.setString(2,
                                      quoteVORow.getAttribute("QuoteDescription").toString());
@@ -1282,11 +1290,17 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         String custName =
                             (String)quoteVORow.getAttribute("CustName");
                         if (custName != null) {
-                            cs.setString(2, "Quote For " + custName);
-                            System.out.println("QuoteDescription:" +
-                                               "Quote For " + custName);
-                            quoteVORow.setAttribute("QuoteName",
-                                                    "Quote For " + custName);
+                            //cs.setString(2, "Quote For " + custName);
+                            String quoteDesc =
+                                (String)quoteVORow.getAttribute("QuoteDescription");
+                            if (quoteDesc != null && !quoteDesc.equals("")) {
+                                quoteVORow.setAttribute("QuoteDescription",
+                                                        quoteDesc);
+                            } else if (quoteDesc == null) {
+                                quoteVORow.setAttribute("QuoteDescription",
+                                                        "Quote For " + custName);
+                            }
+                            cs.setString(2, (String)quoteVORow.getAttribute("QuoteDescription"));
                         }
                     } else {
                         String custName =
@@ -1303,14 +1317,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (quoteVORow.getAttribute("Ordertypename") != null) {
 
-                        cs.setString(3, quoteVORow.getAttribute
+                        cs.setString(3, quoteVORow.getAttribute(
 
-                                ("Ordertypename").toString());
+                                    "Ordertypename").toString());
 
                         System.out.println("Ordertypename:" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Ordertypename").toString());
+                                    "Ordertypename").toString());
 
                     } else {
 
@@ -1320,14 +1334,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (quoteVORow.getAttribute("Pricelistname") != null) {
 
-                        cs.setString(4, quoteVORow.getAttribute
+                        cs.setString(4, quoteVORow.getAttribute(
 
-                                ("Pricelistname").toString());
+                                    "Pricelistname").toString());
 
                         System.out.println("Pricelistname:" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Pricelistname").toString());
+                                    "Pricelistname").toString());
 
                     } else {
 
@@ -1340,14 +1354,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (quoteVORow.getAttribute("Saleschannel") != null) {
 
-                        cs.setString(5, quoteVORow.getAttribute
+                        cs.setString(5, quoteVORow.getAttribute(
 
-                                ("Saleschannel").toString());
+                                    "Saleschannel").toString());
 
                         System.out.println("Saleschannel:" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Saleschannel").toString());
+                                    "Saleschannel").toString());
 
                     } else {
 
@@ -1356,14 +1370,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     }
                     if (quoteVORow.getAttribute("Customernumber") != null) {
 
-                        cs.setString(6, quoteVORow.getAttribute
+                        cs.setString(6, quoteVORow.getAttribute(
 
-                                ("Customernumber").toString());
+                                    "Customernumber").toString());
 
                         System.out.println("Customer Number" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Customernumber"));
+                                    "Customernumber"));
 
                     } else {
 
@@ -1374,14 +1388,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     if (quoteVORow.getAttribute("Salesrepresentative") !=
                         null) {
 
-                        cs.setString(7, quoteVORow.getAttribute
+                        cs.setString(7, quoteVORow.getAttribute(
 
-                                ("Salesrepresentative").toString());
+                                    "Salesrepresentative").toString());
 
                         System.out.println("Sales representative" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Salesrepresentative"));
+                                    "Salesrepresentative"));
 
                     } else {
 
@@ -1392,14 +1406,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (quoteVORow.getAttribute("Paymentterms") != null) {
 
-                        cs.setString(8, quoteVORow.getAttribute
+                        cs.setString(8, quoteVORow.getAttribute(
 
-                                ("Paymentterms").toString());
+                                    "Paymentterms").toString());
 
                         System.out.println("PaymentTermsName:" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Paymentterms").toString());
+                                    "Paymentterms").toString());
 
                     } else {
 
@@ -1411,14 +1425,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (quoteVORow.getAttribute("CurrencyCode") != null) {
 
-                        cs.setString(9, quoteVORow.getAttribute
+                        cs.setString(9, quoteVORow.getAttribute(
 
-                                ("CurrencyCode").toString());
+                                    "CurrencyCode").toString());
 
                         System.out.println("Currency:" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("CurrencyCode").toString());
+                                    "CurrencyCode").toString());
 
                     } else {
 
@@ -1429,14 +1443,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (quoteVORow.getAttribute("Incoterms") != null) {
 
-                        cs.setString(10, quoteVORow.getAttribute
+                        cs.setString(10, quoteVORow.getAttribute(
 
-                                ("Incoterms").toString());
+                                    "Incoterms").toString());
 
                         System.out.println("Incoterms:" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Incoterms").toString());
+                                    "Incoterms").toString());
 
                     } else {
 
@@ -1447,14 +1461,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (quoteVORow.getAttribute("Businesscentercsr") != null) {
 
-                        cs.setString(11, quoteVORow.getAttribute
+                        cs.setString(11, quoteVORow.getAttribute(
 
-                                ("Businesscentercsr").toString());
+                                    "Businesscentercsr").toString());
 
                         System.out.println("Businesscentercsr:" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Businesscentercsr").toString());
+                                    "Businesscentercsr").toString());
 
                     } else {
 
@@ -1466,14 +1480,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (quoteVORow.getAttribute("Attribute8") != null) {
 
-                        cs.setString(12, quoteVORow.getAttribute
+                        cs.setString(12, quoteVORow.getAttribute(
 
-                                ("Attribute8").toString());
+                                    "Attribute8").toString());
 
                         System.out.println("Attribute8:" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Attribute8").toString());
+                                    "Attribute8").toString());
 
                     } else {
 
@@ -1486,14 +1500,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (quoteVORow.getAttribute("Attribute12") != null) {
 
-                        cs.setString(13, quoteVORow.getAttribute
+                        cs.setString(13, quoteVORow.getAttribute(
 
-                                ("Attribute12").toString());
+                                    "Attribute12").toString());
 
                         System.out.println("Attribute12:" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Attribute12").toString());
+                                    "Attribute12").toString());
 
                     } else {
 
@@ -1505,14 +1519,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (quoteVORow.getAttribute("Attribute13") != null) {
 
-                        cs.setString(14, quoteVORow.getAttribute
+                        cs.setString(14, quoteVORow.getAttribute(
 
-                                ("Attribute13").toString());
+                                    "Attribute13").toString());
 
                         System.out.println("Attribute13:" +
-                                           quoteVORow.getAttribute
+                                           quoteVORow.getAttribute(
 
-                                ("Attribute13").toString());
+                                    "Attribute13").toString());
 
                     } else {
 
@@ -1526,39 +1540,26 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     cs.setInt(16, usrId);
 
-                    //                                                         if(quoteVORow.getAttribute("DealId")!=null){
-
-                    //                                                                 cs.setString(12,quoteVORow.getAttribute("DealId").toString());
-
-                    //                                                                 }
-
-                    //                                                         else{
-
-                    //                                                                 cs.setString(12,null);
-
-                    //                                     //                        errorMsg.append("<p><b>Deal Id is required.</b></p>");
-
-                    //                                                             }
-
-                    if (quoteVORow.getAttribute("Agrimentname") != null) {
-
-                        cs.setString(17, quoteVORow.getAttribute
-
-                                ("Agrimentname").toString());
-
-                    } else {
-
-                        cs.setString(17, null);
-
-                        //                        errorMsg.append("<p><b>AttentionTo/Dept is required.</b></p>");
-
-                    }
+                    //                    if (quoteVORow.getAttribute("Agrimentname") != null) {
+                    //
+                    //                        cs.setString(17, quoteVORow.getAttribute
+                    //
+                    //                                ("Agrimentname").toString());
+                    //
+                    //                    } else {
+                    //
+                    //                        cs.setString(17, null);
+                    //                    }
+                    System.out.println("Agreement name "+quoteVORow.getAttribute("Agrimentname"));
+                    cs.setString(17,
+                                 (String)quoteVORow.getAttribute("Agrimentname"));
+                    //cs.setString(17, null);
 
                     if (quoteVORow.getAttribute("Attribute2") != null) {
 
-                        cs.setString(18, quoteVORow.getAttribute
+                        cs.setString(18, quoteVORow.getAttribute(
 
-                                ("Attribute2").toString());
+                                    "Attribute2").toString());
 
                     } else {
 
@@ -1569,7 +1570,8 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     //                    cs.setString(17, null); //Discount ,change later
                     cs.setString(19, null); //Page, Change later
-                    cs.setString(20, null); // p_phonefax add later
+                    cs.setString(20,
+                                 (String)quoteVORow.getAttribute("Attribute15")); // p_phonefax add later
                     cs.registerOutParameter(21, Types.VARCHAR);
                     cs.registerOutParameter(22, Types.VARCHAR);
                     errorMsg.append("</body></html>");
@@ -3929,13 +3931,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.getAttribute
+                        System.out.println("user Name:" + row.getAttribute(
 
-                                ("UserId") + "::column_name::" + row.
+                                    "UserId") + "::column_name::" +
+                                row.getAttribute
 
-                                getAttribute
+                                (
 
-                                ("ColumnType"));
+                                    "ColumnType"));
 
                         if (quotesRow.getAttribute("PrdNumRefConfig") !=
                             null) {
@@ -3943,9 +3946,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                             row.setAttribute("ColumnVal", null);
 
                             row.setAttribute("ColumnVal",
-                                             quotesRow.getAttribute
+                                             quotesRow.getAttribute(
 
-                                    ("PrdNumRefConfig"));
+                                        "PrdNumRefConfig"));
 
                         }
 
@@ -3985,13 +3988,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.getAttribute
+                        System.out.println("user Name:" + row.getAttribute(
 
-                                ("UserId") + "::column_name::" + row.
+                                    "UserId") + "::column_name::" +
+                                row.getAttribute
 
-                                getAttribute
+                                (
 
-                                ("ColumnType"));
+                                    "ColumnType"));
 
                         if (quotesRow.getAttribute("PrdNumTargetConfig") !=
                             null) {
@@ -3999,9 +4003,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                             row.setAttribute("ColumnVal", null);
 
                             row.setAttribute("ColumnVal",
-                                             quotesRow.getAttribute
+                                             quotesRow.getAttribute(
 
-                                    ("PrdNumTargetConfig"));
+                                        "PrdNumTargetConfig"));
 
                         }
 
@@ -4036,13 +4040,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.getAttribute
+                        System.out.println("user Name:" + row.getAttribute(
 
-                                ("UserId") + "::column_name::" + row.
+                                    "UserId") + "::column_name::" +
+                                row.getAttribute
 
-                                getAttribute
+                                (
 
-                                ("ColumnType"));
+                                    "ColumnType"));
 
                         if (quotesRow.getAttribute("RefPriceRegConfig") !=
                             null) {
@@ -4050,9 +4055,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                             row.setAttribute("ColumnVal", null);
 
                             row.setAttribute("ColumnVal",
-                                             quotesRow.getAttribute
+                                             quotesRow.getAttribute(
 
-                                    ("RefPriceRegConfig"));
+                                        "RefPriceRegConfig"));
 
                         }
 
@@ -4087,13 +4092,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.getAttribute
+                        System.out.println("user Name:" + row.getAttribute(
 
-                                ("UserId") + "::column_name::" + row.
+                                    "UserId") + "::column_name::" +
+                                row.getAttribute
 
-                                getAttribute
+                                (
 
-                                ("ColumnType"));
+                                    "ColumnType"));
 
                         if (quotesRow.getAttribute("RefPriceTargetConfig") !=
                             null) {
@@ -4101,9 +4107,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                             row.setAttribute("ColumnVal", null);
 
                             row.setAttribute("ColumnVal",
-                                             quotesRow.getAttribute
+                                             quotesRow.getAttribute(
 
-                                    ("RefPriceTargetConfig"));
+                                        "RefPriceTargetConfig"));
 
                         }
 
@@ -6429,7 +6435,8 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         StringBuilder errorMsg = new StringBuilder("<html><body>");
         String returnMessage = "";
         String returnStatus = "";
-        String stmt = "XXAT_ASO_QUOTE_PKG.Delete_product_line(:1,:2)";
+        
+        String stmt = "XXAT_ASO_QUOTE_PKG.Delete_product_line(:1,:2,:3)";
         try {
             cs =
  this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
@@ -6440,10 +6447,12 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             } else
                 errorMsg.append("<p><b> Line Id is missing.</b></p>");
             cs.registerOutParameter(2, Types.VARCHAR);
+            cs.registerOutParameter(3, Types.VARCHAR);
             errorMsg.append("</body></html>");
             if ("<html><body></body></html>".equalsIgnoreCase(errorMsg.toString())) {
                 cs.executeUpdate();
                 returnStatus = cs.getString(2);
+                returnMessage = cs.getString(3);
             }
         } catch (Exception e) {
             errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");

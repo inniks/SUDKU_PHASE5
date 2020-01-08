@@ -480,7 +480,6 @@ public class LoadDynamicRegionBean {
             if (configHasWarnings && !configHasErrors) {
                 displayWarnings(v93k);
             }
-
             if (!configHasErrors && !configHasWarnings) {
                 String createQtMsg = getFndMessages(SudokuUtils.createQteMsg);
                 String discount = null;
@@ -1019,6 +1018,34 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                                     }
 
                                 }
+                                //Call DELETE LINE API HERE
+                                if (v93k != null &&
+                                    v93k.getTargetConfigurationLines() !=
+                                    null &&
+                                    !v93k.getTargetConfigurationLines().isEmpty()) {
+                                    for (QuoteLinePOJO list :
+                                         v93k.getTargetConfigurationLines()) {
+                                        if (list.getOperationCode() != null &&
+                                            list.getOperationCode().equalsIgnoreCase("DELETE")) {
+                                            _logger.info("Quote Line Delete API Start for "+list.getItemName());
+                                            String deleteLineStatus =
+                                                deleteConfigLineFromQuote(list.getQuoteLineId());
+                                            if (deleteLineStatus != null &&
+                                                deleteLineStatus.equalsIgnoreCase("S")) {
+                                                resultMsg.append("<p><b>"+"Quote Line " +
+                                                                 list.getItemName() +
+                                                                 " Deleted Successfully."+"<b><p>");
+                                                _logger.info("Quote Line deleted for "+list.getItemName());
+                                            } else {
+                                                resultErrMsg.append("<p><b>" +
+                                                                    "Quote Line could not be deleted" +deleteLineStatus+
+                                                                    "</b></p>");
+                                                _logger.info("Could Not delete quote line");
+                                            }
+                                        }
+                                    }
+                                }
+
                             } else {
                                 if (createQtMsg != null)
                                     resultErrMsg.append("<p><b>" +
@@ -2212,8 +2239,8 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                     warningMessage.append("<p><b>" + key + " : " + "</b></p>");
                     ArrayList<String> value = entry.getValue();
                     for (String str : value) {
-                        if(value!=null && !value.equals(""))
-                        warningMessage.append("<p><b>" + str + "</b></p>");
+                        if (value != null && !value.equals(""))
+                            warningMessage.append("<p><b>" + str + "</b></p>");
                     }
                 }
                 warningMessage.append("</body></html>");
@@ -2369,12 +2396,22 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
     }
 
     public void OnSessionExpire(DialogEvent dialogEvent) throws IOException,
-                                                            JsonGenerationException,
-                                                            JsonMappingException {
+                                                                JsonGenerationException,
+                                                                JsonMappingException {
         _logger.info("Session expired,Logout warning display");
         if (DialogEvent.Outcome.ok == dialogEvent.getOutcome().ok) {
             _logger.info("Logging out the user from EBS on session.");
             logoutEBS(null);
         }
+    }
+
+    private String deleteConfigLineFromQuote(String lineId) {
+        OperationBinding op = ADFUtils.findOperation("deleteProductLine");
+        String returnStatus = null;
+        if (op != null) {
+            op.getParamsMap().put("lineId", lineId);
+            returnStatus = (String)op.execute();
+        }
+        return returnStatus;
     }
 }

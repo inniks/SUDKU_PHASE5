@@ -792,4 +792,9 @@ public class QuotingBean {
         ADFUtils.showFacesMessage(_msg1, FacesMessage.SEVERITY_INFO);
         ADFUtils.showFacesMessage(_msg2, FacesMessage.SEVERITY_INFO);
     }
+
+    public void businessAgreementChanged(ValueChangeEvent valueChangeEvent) {
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+        System.out.println("New Value "+valueChangeEvent.getNewValue());
+    }
 }
