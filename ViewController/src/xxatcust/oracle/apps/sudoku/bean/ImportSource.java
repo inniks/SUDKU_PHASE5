@@ -122,6 +122,8 @@ public class ImportSource {
                     ADFUtils.addPartialTarget(configTypeBinding);
                     formalQuote.setValue(null);
                     budgetQuote.setValue(null);
+                    budgetQuote.resetValue();
+                    formalQuote.resetValue();
                     ADFUtils.addPartialTarget(formalQuote);
                     ADFUtils.addPartialTarget(budgetQuote);
                     ADFUtils.addPartialTarget(inputFileBinding);

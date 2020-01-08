@@ -452,12 +452,12 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
         // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         //If config is live use this
-        String responseJson =
-            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        System.out.println("Response Json from Configurator : " +
-                           responseJson);
-        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-        v93k = (V93kQuote)obj;
+                String responseJson =
+                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+                System.out.println("Response Json from Configurator : " +
+                                   responseJson);
+                Object obj = mapper.readValue(responseJson, V93kQuote.class);
+                v93k = (V93kQuote)obj;
 
         // else use this
         //v93k = (V93kQuote)convertJsonToObject(null);
@@ -1789,6 +1789,8 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             (String)ADFUtils.getSessionScopeValue("configSaved");
         HashMap ruleSetMap =
             (HashMap)ADFUtils.getSessionScopeValue("ruleSetMapConfig");
+        HashMap srcRuleSetMap =
+            (HashMap)ADFUtils.getSessionScopeValue("ruleSetMap");
         if (configCancelled != null && configCancelled.equalsIgnoreCase("Y")) {
             defaultViewOnLoad = true;
         }
@@ -1802,6 +1804,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         }
         if (configSaved != null && configSaved.equalsIgnoreCase("Y")) {
             defaultViewOnLoad = true;
+        }
+        if (srcRuleSetMap != null && !srcRuleSetMap.isEmpty()) {
+            if (srcRuleSetMap.containsKey("error")) {
+                String error = (String)srcRuleSetMap.get("error");
+                if (error != null && error.equalsIgnoreCase("Y")) {
+                    _logger.info("Source Ruleset Map contaiins error");
+                    defaultViewOnLoad = true;
+                }
+            }
         }
         return defaultViewOnLoad;
     }
@@ -1882,12 +1893,16 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     for (Map.Entry<String, ArrayList<String>> entry :
                          warnings.entrySet()) {
                         String key = entry.getKey();
-                        //iterate for each key
-                        warningMessage.append("<p><b>" + key + " : " +
-                                              "</b></p>");
                         ArrayList<String> value = entry.getValue();
-                        for (String str : value) {
-                            warningMessage.append("<p><b>" + str + "</b></p>");
+                        //iterate for each key
+                        if (value!=null && !value.equals("")) {
+                            warningMessage.append("<p><b>" + key + " : " +
+                                                  "</b></p>");
+
+                            for (String str : value) {
+                                warningMessage.append("<p><b>" + str +
+                                                      "</b></p>");
+                            }
                         }
                     }
                     warningMessage.append("</body></html>");

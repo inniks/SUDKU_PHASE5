@@ -137,45 +137,35 @@
                               <af:gridCell marginStart="5px" width="100px"
                                            id="gc3_1"
                                            inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                <af:outputText value="#{node.nodeQty}"
-                                               id="ot3_1"/>
+                                <af:panelGroupLayout id="pgl11" halign="right">
+                                  <af:outputText value="#{node.nodeQty}"
+                                                 id="ot3_1"/>
+                                </af:panelGroupLayout>
                               </af:gridCell>
                               <af:gridCell marginStart="5px" width="100px"
                                            id="gc8_1"
                                            inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
                                 <af:outputText id="ot4_1" value="#{node.uom}"/>
                               </af:gridCell>
-                              <af:gridCell marginStart="5px" width="100px"
+                              <af:gridCell marginStart="5px" width="150px"
                                            id="gc11_1"
                                            inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
                                            rendered="#{pageFlowScope.TargetConfigurationBean.priceRendered}">
-                                <af:panelBorderLayout id="pbl3">
-                                  <f:facet name="right">
-                                    <af:group id="g5">
-                                      <af:panelGroupLayout id="pgl9"
-                                                           halign="right">
-                                        <af:outputText value="#{node.unitPrice}"
-                                                       id="ot5_1"/>
-                                      </af:panelGroupLayout>
-                                    </af:group>
-                                  </f:facet>
-                                </af:panelBorderLayout>
+                                <af:panelGroupLayout id="pgl9"
+                                                     layout="horizontal">
+                                  <af:outputText value="#{node.unitPrice}"
+                                                 id="ot5_1"
+                                                 inlineStyle="text-align:right;"/>
+                                </af:panelGroupLayout>
                               </af:gridCell>
                               <af:gridCell marginStart="5px" width="100px"
                                            id="gc6_11"
                                            inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
                                            rendered="#{pageFlowScope.TargetConfigurationBean.priceRendered}">
-                                <af:panelBorderLayout id="pbl2">
-                                  <f:facet name="right">
-                                    <af:group id="g4">
-                                      <af:panelGroupLayout id="pgl3"
-                                                           halign="right">
-                                        <af:outputText value="#{node.extendedPrice}"
-                                                       id="ot6_1"/>
-                                      </af:panelGroupLayout>
-                                    </af:group>
-                                  </f:facet>
-                                </af:panelBorderLayout>
+                                <af:panelGroupLayout id="pgl3">
+                                  <af:outputText value="#{node.extendedPrice}"
+                                                 id="ot6_1"/>
+                                </af:panelGroupLayout>
                               </af:gridCell>
                               <af:gridCell marginStart="5px" width="100px"
                                            id="gc6_111"

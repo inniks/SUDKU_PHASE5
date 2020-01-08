@@ -113,13 +113,16 @@
                 <af:dialog id="d5"
                            title="Are you sure you want to Reset all existing changes ?"
                            type="none">
-                  <af:panelGroupLayout id="pgl1" halign="end">
+                  <af:spacer width="10" height="10" id="s19"/>
+                  <af:panelGroupLayout id="pgl1" halign="right">
+                    <af:spacer width="200" height="10" id="s20"/>
                     <af:commandButton text="Yes" id="cb4"
                                       actionListener="#{viewScope.LoadDynamicRegionBean.cancelAllConfigurations}">
                       <af:setPropertyListener from="#{viewScope.LoadDynamicRegionBean.refreshToken}"
                                               to="#{sessionScope.refreshFlag}"
                                               type="action"/>
                     </af:commandButton>
+                    <af:spacer width="10" height="10" id="s18"/>
                     <af:commandButton text="No" id="cb5"
                                       actionListener="#{viewScope.LoadDynamicRegionBean.closeCancelPopup}"/>
                   </af:panelGroupLayout>

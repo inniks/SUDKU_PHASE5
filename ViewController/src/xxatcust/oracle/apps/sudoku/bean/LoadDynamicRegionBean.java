@@ -2212,6 +2212,7 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                     warningMessage.append("<p><b>" + key + " : " + "</b></p>");
                     ArrayList<String> value = entry.getValue();
                     for (String str : value) {
+                        if(value!=null && !value.equals(""))
                         warningMessage.append("<p><b>" + str + "</b></p>");
                     }
                 }

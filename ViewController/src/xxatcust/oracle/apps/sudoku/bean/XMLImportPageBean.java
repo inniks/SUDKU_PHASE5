@@ -707,12 +707,15 @@ public class XMLImportPageBean {
                              warnings.entrySet()) {
                             String key = entry.getKey();
                             //iterate for each key
-                            warningMessage.append("<p><b>" + key + " : " +
-                                                  "</b></p>");
                             ArrayList<String> value = entry.getValue();
-                            for (String str : value) {
-                                warningMessage.append("<p><b>" + str +
+                            if (value != null && !value.equals("")) {
+                                warningMessage.append("<p><b>" + key + " : " +
                                                       "</b></p>");
+
+                                for (String str : value) {
+                                    warningMessage.append("<p><b>" + str +
+                                                          "</b></p>");
+                                }
                             }
                         }
                         warningMessage.append("</body></html>");
