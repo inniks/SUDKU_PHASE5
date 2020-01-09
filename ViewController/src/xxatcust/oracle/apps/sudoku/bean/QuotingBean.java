@@ -481,10 +481,6 @@ public class QuotingBean {
                 if (ob != null) {
                     ob.execute();
                 }
-                //                OperationBinding binding =
-                //                    getBindings().getOperationBinding("defaultSalesRepOnCreateQuote");
-                //                if (binding != null && binding.getErrors().size() == 0)
-                //                    binding.execute();
             } else {
                 isUserDefault = true;
                 OperationBinding ob =
@@ -494,26 +490,9 @@ public class QuotingBean {
                     ob.execute();
                 }
             }
-            //            UIComponent uiComp = (UIComponent)vce.getSource();
-            //            uiComp.processUpdates(FacesContext.getCurrentInstance());
-            //            ADFContext.getCurrent().getSessionScope().put("OrderTypeValue",
-            //                                                          null);
-            //            Row r = null;
-            //            DCIteratorBinding iter = ADFUtils.findIterator("QuotesVOIterator");
-            //            if (iter != null) {
-            //                ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
-            //                if (vo != null)
-            //                    r = vo.getCurrentRow();
-            //            }
             isCustEnable = true;
-
-            //            getBindCustomerName().setValue(null);
-            //            getBindCustNumber().setValue(null);
-
         } else {
 
-            //                        getBindCustomerName().setValue(null);
-            //                        getBindCustNumber().setValue(null);
             isCustEnable = false;
         }
     }
@@ -521,13 +500,6 @@ public class QuotingBean {
     public void OURPE(ReturnPopupEvent returnPopupEvent) {
         if (returnPopupEvent != null) {
             isCustEnable = true;
-            //            OperationBinding binding =
-            //                getBindings().getOperationBinding("defaultSalesRepOnCreateQuote");
-            //            if (binding != null && binding.getErrors().size() == 0)
-            //                binding.execute();
-            //            getBindOrderType().setValue(null);
-            //            getBindCustomerName().setValue(null);
-            //            getBindCustNumber().setValue(null);
 
         } else {
             isCustEnable = false;
@@ -536,12 +508,6 @@ public class QuotingBean {
 
 
     public String updateQuote() {
-        //getUpdateQuote
-        //        OperationBinding ob =
-        //            getBindings().getOperationBinding("getUpdateQuote");
-        //        if (ob.getErrors().size() == 0) {
-        //            ob.execute();
-        //        }
         return "updateQuote";
     }
 

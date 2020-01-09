@@ -449,8 +449,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         String jsonStr = JSONUtils.convertObjToJson(v93k);
 
         ObjectMapper mapper = new ObjectMapper();
-        //mapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
-        // mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         //If config is live use this
                 String responseJson =
                     ConfiguratorUtils.callConfiguratorServlet(jsonStr);
@@ -460,7 +458,7 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 v93k = (V93kQuote)obj;
 
     // else use this
-       // v93k = (V93kQuote)convertJsonToObject(null);
+        //v93k = (V93kQuote)convertJsonToObject(null);
         Map ruleSetMap = new HashMap();
         if (v93k != null && v93k.getInputParams() != null) {
 

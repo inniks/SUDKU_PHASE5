@@ -2407,7 +2407,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
     public Row getDefaulSalesRepVal(BigDecimal orgId) {
         Row row = null;
-        ViewObjectImpl vo = this.getSalesRepresentativeVO();
+        ViewObjectImpl vo = this.getPrimarySalesRepVO();
         if (vo != null) {
             vo.clearCache();
             vo.setWhereClause(null);

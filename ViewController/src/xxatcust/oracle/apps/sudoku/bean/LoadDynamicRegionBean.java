@@ -1173,18 +1173,15 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
     }
 
     public void navToConfigurator(ActionEvent actionEvent) {
+        System.out.println("Current TF "+currentTF);
         ADFUtils.setSessionScopeValue("currView", "config");
 
     }
 
     public void navToViewRef(ActionEvent actionEvent) {
+        System.out.println("Current TF "+currentTF);
         ADFUtils.setSessionScopeValue("currView", "viewRef");
-        //        RichCommandImageLink button =
-        //            (RichCommandImageLink)ADFUtils.findComponentInRoot("ctb1_vre"); // Navigate to create quote page
-        //        if (button != null) {
-        //            ActionEvent acEvent = new ActionEvent(button);
-        //            acEvent.queue();
-        //        }
+        quoteNavPopup.cancel();
     }
 
     public void navToTargetConfig(ActionEvent actionEvent) {
