@@ -1027,18 +1027,23 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                                          v93k.getTargetConfigurationLines()) {
                                         if (list.getOperationCode() != null &&
                                             list.getOperationCode().equalsIgnoreCase("DELETE")) {
-                                            _logger.info("Quote Line Delete API Start for "+list.getItemName());
+                                            _logger.info("Quote Line Delete API Start for " +
+                                                         list.getItemName());
                                             String deleteLineStatus =
                                                 deleteConfigLineFromQuote(list.getQuoteLineId());
                                             if (deleteLineStatus != null &&
                                                 deleteLineStatus.equalsIgnoreCase("S")) {
-                                                resultMsg.append("<p><b>"+"Quote Line " +
+                                                resultMsg.append("<p><b>" +
+                                                                 "Quote Line " +
                                                                  list.getItemName() +
-                                                                 " Deleted Successfully."+"<b><p>");
-                                                _logger.info("Quote Line deleted for "+list.getItemName());
+                                                                 " Deleted Successfully." +
+                                                                 "<b><p>");
+                                                _logger.info("Quote Line deleted for " +
+                                                             list.getItemName());
                                             } else {
                                                 resultErrMsg.append("<p><b>" +
-                                                                    "Quote Line could not be deleted" +deleteLineStatus+
+                                                                    "Quote Line could not be deleted" +
+                                                                    deleteLineStatus +
                                                                     "</b></p>");
                                                 _logger.info("Could Not delete quote line");
                                             }
@@ -1173,13 +1178,13 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
     }
 
     public void navToConfigurator(ActionEvent actionEvent) {
-        System.out.println("Current TF "+currentTF);
+        System.out.println("Current TF " + currentTF);
         ADFUtils.setSessionScopeValue("currView", "config");
 
     }
 
     public void navToViewRef(ActionEvent actionEvent) {
-        System.out.println("Current TF "+currentTF);
+        System.out.println("Current TF " + currentTF);
         ADFUtils.setSessionScopeValue("currView", "viewRef");
         quoteNavPopup.cancel();
     }
@@ -1981,23 +1986,35 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
 
 
             ob.getParamsMap().put("confighid", null);
-
             ob.getParamsMap().put("configrevno", null);
             ob.getParamsMap().put("orderhid", null);
             ob.getParamsMap().put("quoteno", squotehid);
             ob.getParamsMap().put("ponum", null);
-            //                        ob.getParamsMap().put("respId", 51157);
-            //                        ob.getParamsMap().put("usrId", 0);
-
+            String outStr = null;
             if (ob != null) {
-                System.out.println("print operation binding start to execute");
                 output = ob.execute();
-                //   System.out.println("print req id"+reqid);
-                System.out.println("print operation binding end to execute" +
-                                   output);
-                setMOFop.setValue(output);
-                //         if(output!=null)
-                //      setResponse(output.toString());
+                if (output != null) {
+                    _logger.info("OutPut of MOF Report is " +
+                                 output.toString());
+                    _logger.info("Has New Line Characters1? " +
+                                 output.toString().contains("\n"));
+                    _logger.info("Has New Line Characters2? " +
+                                 output.toString().contains("\\n"));
+                    boolean hasNwLine = output.toString().contains("\\n");
+                    boolean hasNwLine1 = output.toString().contains("\n");
+                    if (hasNwLine || hasNwLine1) {
+                        _logger.info("Inside MOOF CONDITION");
+                        outStr = outStr.replaceAll("\\n", "<br>");
+                        _logger.info("Kya Ho raha bc "+outStr);
+                        outStr = outStr.replaceAll("\n", "<br>");
+                        _logger.info("MOF Text now " + outStr);
+
+                    }
+                }
+//                if (outStr != null)
+//                    setMOFop.setValue(outStr);
+//                else
+                    setMOFop.setValue(output);
             }
 
         } catch (Exception e) {

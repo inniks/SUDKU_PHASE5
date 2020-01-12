@@ -149,6 +149,7 @@
                             <af:iterator id="i2"
                                          value="#{topNode.uiFieldCollection}"
                                          var="theadIter">
+                              <af:spacer width="10" height="10" id="s35"/>
                               <af:panelGroupLayout id="theadPgl"
                                                    layout="horizontal">
                                 <af:spacer width="50" height="10" id="s1"/>
@@ -225,7 +226,7 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="pbl9"
-                                                      inlineStyle="height:25px; width:60px; border-style:none;">
+                                                      inlineStyle="height:25px; width:50px; border-style:none;">
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="pb20"
@@ -233,11 +234,11 @@
                                   <f:facet name="innerLeft"/>
                                 </af:panelBorderLayout>
                                 <af:panelBorderLayout id="pb1"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField1_color};">
+                                                      inlineStyle="height:25px; width:125px; border-style:none;background-color:#{theadIter.uiField1_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl7"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="cl1"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
@@ -260,12 +261,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="5" height="10" id="s29"/>
                                 <af:panelBorderLayout id="pb2"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl_7"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="cl2"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
@@ -286,13 +288,14 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s30"/>
                                 <af:panelBorderLayout id="pb3"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
                                   <f:facet name="innerLeft">
                                     <af:group id="g7">
                                       <af:panelGroupLayout id="pgl_71"
                                                            layout="horizontal"
-                                                           halign="left">
+                                                           halign="center">
                                         <af:commandLink id="cl3"
                                                         actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                         disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
@@ -319,12 +322,13 @@
                                     </af:group>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s31"/>
                                 <af:panelBorderLayout id="pb4"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl_17"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="cl4"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
@@ -345,12 +349,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="5" height="10" id="s34"/>
                                 <af:panelBorderLayout id="pb5"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                                                      inlineStyle="height:25px; width:80px; border-style:none;background-color:#{theadIter.uiField5_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl9"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="cl5"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
@@ -371,12 +376,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="5" height="10" id="s33"/>
                                 <af:panelBorderLayout id="pb6"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                                      inlineStyle="height:25px; width:80px; border-style:none;background-color:#{theadIter.uiField6_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl10"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="cl6"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
@@ -397,12 +403,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="5" height="10" id="s32"/>
                                 <af:panelBorderLayout id="pb7"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                                      inlineStyle="height:25px; width:80px; border-style:none;background-color:#{theadIter.uiField7_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="pgl20"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="cl7"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
@@ -427,7 +434,7 @@
                             </af:iterator>
                             <af:showDetailHeader text="Product Description, Specifications, Drawings and Pictures"
                                                  id="sdh1"
-                                                 rendered="#{node.codeName eq topNode.index}">
+                                                 rendered="false">
                               <af:panelGroupLayout id="pgl8" layout="vertical">
                                 <af:commandLink text="Product Description"
                                                 id="cl8"/>
@@ -4217,6 +4224,7 @@
                             <af:iterator id="i4"
                                          value="#{iter.uiFieldCollection}"
                                          var="sysConIter">
+                              <af:spacer width="10" height="10" id="s36"/>
                               <af:panelGroupLayout id="syscon_Pgl"
                                                    layout="horizontal">
                                 <af:spacer width="10" height="10" id="s6"/>
@@ -4316,7 +4324,7 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_panelGroupLayout1"
                                                          layout="horizontal"
-                                                         halign="left"
+                                                         halign="center"
                                                          rendered="#{sysConIter.uiGrpIndex ne '1'}">
                                       <af:commandLink id="syscon_commandLink1"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
@@ -4339,13 +4347,14 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s37"/>
                                 <af:panelBorderLayout id="syscon_panelBorderLayout4"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{sysConIter.uiField2_color};">
                                   <f:facet name="innerLeft">
                                     <af:group id="g4">
                                       <af:panelGroupLayout id="syscon_panelGroupLayout2"
                                                            layout="horizontal"
-                                                           halign="left"
+                                                           halign="center"
                                                            rendered="#{sysConIter.uiGrpIndex ne '1'}">
                                         <af:commandLink id="syscon_commandLink2"
                                                         actionListener="#{ConfiguratorBean.handleNodeSelection}"
@@ -4385,12 +4394,13 @@
                                     </af:group>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s38"/>
                                 <af:panelBorderLayout id="syscon_panelBorderLayout5"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{sysConIter.uiField3_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_panelGroupLayout3"
                                                          layout="horizontal"
-                                                         halign="left"
+                                                         halign="center"
                                                          rendered="#{sysConIter.uiGrpIndex ne '1'}">
                                       <af:commandLink id="syscon_commandLink3"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
@@ -4412,12 +4422,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s39"/>
                                 <af:panelBorderLayout id="syscon_panelBorderLayout6"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{sysConIter.uiField4_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_panelGroupLayout4"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="syscon_commandLink4"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{sysConIter.uiField4_dis or sysConIter.uiField4_readOnly}">
@@ -4438,12 +4449,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s40"/>
                                 <af:panelBorderLayout id="syscon_panelBorderLayout7"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{sysConIter.uiField5_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_panelGroupLayout5"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="syscon_commandLink5"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{sysConIter.uiField5_dis or sysConIter.uiField5_readOnly}">
@@ -4464,12 +4476,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s41"/>
                                 <af:panelBorderLayout id="syscon_panelBorderLayout8"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{sysConIter.uiField6_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_panelGroupLayout6"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="syscon_commandLink6"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{sysConIter.uiField6_dis or sysConIter.uiField6_readOnly}">
@@ -4490,12 +4503,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s42"/>
                                 <af:panelBorderLayout id="syscon_panelBorderLayout9"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{sysConIter.uiField7_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="syscon_panelGroupLayout7"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="syscon_commandLink7"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{sysConIter.uiField7_dis or sysConIter.uiField7_readOnly}">
@@ -4608,6 +4622,7 @@
                             <af:iterator id="addSwTool_i2"
                                          value="#{topNode.uiFieldCollection}"
                                          var="theadIter">
+                              <af:spacer width="10" height="10" id="s43"/>
                               <af:panelGroupLayout id="addSwTool_theadPgl"
                                                    layout="horizontal">
                                 <af:spacer width="50" height="10"
@@ -4965,6 +4980,7 @@
                             <af:iterator id="diagCal_i2"
                                          value="#{topNode.uiFieldCollection}"
                                          var="theadIter">
+                              <af:spacer width="10" height="10" id="s44"/>
                               <af:panelGroupLayout id="diagCal_theadPgl"
                                                    layout="horizontal">
                                 <af:spacer width="50" height="10"
@@ -5077,6 +5093,7 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="30" height="10" id="s45"/>
                                 <af:panelBorderLayout id="diagCal_pb2"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
                                   <f:facet name="innerLeft">
@@ -5321,6 +5338,7 @@
                             <af:iterator id="docki2"
                                          value="#{topNode.uiFieldCollection}"
                                          var="theadIter">
+                              <af:spacer width="10" height="10" id="s46"/>
                               <af:panelGroupLayout id="docktheadPgl"
                                                    layout="horizontal"
                                                    rendered="#{ topNode.index ne '3'}">
@@ -5417,7 +5435,7 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl7"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="dockcl1"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
@@ -5439,24 +5457,26 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s47"/>
                                 <af:panelBorderLayout id="dockpb8"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl211"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:image id="dockcl8"
                                                 source="/Resources/images/imgs/pogoTower.PNG"
                                                 rendered="#{ topNode.index eq '2' and theadIter.uiGrpIndex eq '11'}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s48"/>
                                 <af:panelBorderLayout id="dockpb2"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl_7"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="dockcl2"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
@@ -5477,12 +5497,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s49"/>
                                 <af:panelBorderLayout id="dockpb3"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl_71"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="dockcl3"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
@@ -5503,12 +5524,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s50"/>
                                 <af:panelBorderLayout id="dockpb4"
                                                       inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl_17"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="dockcl4"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
@@ -5529,12 +5551,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s51"/>
                                 <af:panelBorderLayout id="dockpb5"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl9"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="dockcl5"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
@@ -5555,12 +5578,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s52"/>
                                 <af:panelBorderLayout id="dockpb6"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl10"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="dockcl6"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
@@ -5581,12 +5605,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s53"/>
                                 <af:panelBorderLayout id="dockpb7"
                                                       inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="dockpgl20"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="dockcl7"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
@@ -6274,7 +6299,7 @@
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgpgl7"
                                                              layout="horizontal"
-                                                             halign="left"
+                                                             halign="center"
                                                              rendered="#{node.codeName ne '5' ? true : (theadIter.uiGrpIndex eq '1'  ? false : true)}">
                                           <af:outputFormatted id="misUpgth_of1"
                                                               value="#{theadIter.uiField1}"
@@ -6353,7 +6378,7 @@
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgc_s_341"
                                                              layout="horizontal"
-                                                             halign="left">
+                                                             halign="center">
                                           <af:outputFormatted id="misUpgc_s_361"
                                                               value="#{theadIter.uiField2}"
                                                               visible="true"
@@ -7493,6 +7518,7 @@
                             <af:iterator id="wty_i2"
                                          value="#{topNode.uiFieldCollection}"
                                          var="theadIter">
+                              <af:spacer width="10" height="10" id="s54"/>
                               <af:panelGroupLayout id="wty_theadPgl"
                                                    layout="horizontal"
                                                    rendered="#{topNode.index eq '1'}">
@@ -7582,7 +7608,7 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="wty_pgl7"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="wty_cl1"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
@@ -7605,12 +7631,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s55"/>
                                 <af:panelBorderLayout id="wty_pb2"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField2_color};">
+                                                      inlineStyle="height:25px; width:80px; border-style:none;background-color:#{theadIter.uiField2_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="wty_pgl_7"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="wty_cl2"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
@@ -7631,12 +7658,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s56"/>
                                 <af:panelBorderLayout id="wty1_pb3"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField3_color};">
+                                                      inlineStyle="height:25px; width:80px; border-style:none;background-color:#{theadIter.uiField3_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="wtupgl_71"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="wty_cl3wty_"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
@@ -7657,12 +7685,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s57"/>
                                 <af:panelBorderLayout id="wty_pb4"
-                                                      inlineStyle="height:25px; width:130px; border-style:none;background-color:#{theadIter.uiField4_color};">
+                                                      inlineStyle="height:25px; width:120px; border-style:none;background-color:#{theadIter.uiField4_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="wty_pgl_17"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="wty_cl4"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
@@ -7683,12 +7712,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s58"/>
                                 <af:panelBorderLayout id="wty_pb5"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField5_color};">
+                                                      inlineStyle="height:25px; width:80px; border-style:none;background-color:#{theadIter.uiField5_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="wty_pgl9"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="wty_cl5"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
@@ -7709,12 +7739,13 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s59"/>
                                 <af:panelBorderLayout id="wty_pb6"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField6_color};">
+                                                      inlineStyle="height:25px; width:80px; border-style:none;background-color:#{theadIter.uiField6_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="wty_pgl10"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="wty_cl6"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
@@ -7735,8 +7766,9 @@
                                     </af:panelGroupLayout>
                                   </f:facet>
                                 </af:panelBorderLayout>
+                                <af:spacer width="10" height="10" id="s60"/>
                                 <af:panelBorderLayout id="wty_pb7"
-                                                      inlineStyle="height:25px; width:90px; border-style:none;background-color:#{theadIter.uiField7_color};">
+                                                      inlineStyle="height:25px; width:80px; border-style:none;background-color:#{theadIter.uiField7_color};">
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="wty_pgl20"
                                                          layout="horizontal"
@@ -7762,7 +7794,8 @@
                                   </f:facet>
                                 </af:panelBorderLayout>
                               </af:panelGroupLayout>
-                             <af:panelGroupLayout id="wty1_Pgl"
+                              <af:spacer width="10" height="10" id="s61"/>
+                              <af:panelGroupLayout id="wty1_Pgl"
                                                        layout="horizontal"
                                                   rendered="#{topNode.index ne '1'}">
                                     <af:panelBorderLayout id="wty1_l11"
@@ -7853,7 +7886,7 @@
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="wty1_pgpgl7"
                                                              layout="horizontal"
-                                                             halign="left">
+                                                             halign="center">
                                           <af:outputFormatted id="wty1_gth_of1"
                                                               value="#{theadIter.uiField1}"
                                                               inlineStyle="#{theadIter.uiField1_bgColor}"/>
