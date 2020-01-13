@@ -73,8 +73,8 @@
                          partialTriggers="::imSrcP1"/>
               <af:popup id="p1"
                         binding="#{viewScope.LoadDynamicRegionBean.expConfigPopup}">
-                <af:dialog id="d3" type="none" contentWidth="80"
-                           contentHeight="80">
+                <af:dialog id="d3" type="none" contentWidth="100"
+                           contentHeight="100">
                   <af:panelHeader text="Export Configuration" id="ph1"
                                   inlineStyle="color:Teal;"
                                   partialTriggers="cb2">
@@ -110,10 +110,19 @@
               </af:popup>
               <af:popup id="can_all"
                         binding="#{viewScope.LoadDynamicRegionBean.cancelPop}">
-                <af:dialog id="d5"
-                           title="Are you sure you want to Reset all existing changes ?"
-                           type="none">
-                  <af:spacer width="10" height="10" id="s19"/>
+                <af:dialog id="d5" type="none">
+                  <af:panelGroupLayout id="pgXl16_cb" layout="vertical">
+                    <af:panelGroupLayout id="pgl31_cb" layout="horizontal"
+                                         inlineStyle="font-weight:bold;">
+                      <af:image source="/Resources/images/imgs/warning.PNG"
+                                id="i12_b"/>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="s62_cb"/>
+                    <af:outputText value="Are you sure you want to Reset all existing changes?"
+                                   id="ot3"
+                                   inlineStyle="font-weight:bold;"/>
+                  </af:panelGroupLayout>
+                  <af:spacer width="10" height="25" id="s19"/>
                   <af:panelGroupLayout id="pgl1" halign="right">
                     <af:spacer width="200" height="10" id="s20"/>
                     <af:commandButton text="Yes" id="cb4"
@@ -333,9 +342,20 @@
         <af:popup id="p3"
                   binding="#{viewScope.LoadDynamicRegionBean.bindSaveToOrclPopup}"
                   partialTriggers="ctb6">
-          <af:dialog id="d6" type="ok"
-                     title="Below Are the results for This Action"
-                     contentWidth="450" contentHeight="200">
+          <af:dialog id="d6" type="ok" contentWidth="450" contentHeight="200">
+            <af:panelGroupLayout id="pgXl16_cbx" layout="vertical"
+                                 inlineStyle="width:550px">
+              <af:panelGroupLayout id="pgl31_cbx" layout="horizontal"
+                                   inlineStyle="font-weight:bold;">
+                <af:image source="/Resources/images/imgs/info.PNG"
+                          id="i12_bx"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="10" id="s62_cbx"/>
+              <af:outputText value="This action yielded the results shown below."
+                             id="ot3x"
+                             inlineStyle="font-weight:bold;"/>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="10" id="s21"/>
             <af:panelGroupLayout id="pgl8" layout="scroll">
               <af:outputLabel value="Notification(s):" id="ol1"
                               rendered='#{viewScope.LoadDynamicRegionBean.infoFromPopup ne null and viewScope.LoadDynamicRegionBean.infoFromPopup ne "" }'
@@ -343,6 +363,7 @@
                               partialTriggers="ctb6"/>
               <af:outputFormatted id="of3"
                                   binding="#{viewScope.LoadDynamicRegionBean.successMsgOnSaveToOrcl}"/>
+              <af:spacer width="10" height="10" id="s22"/>
               <af:outputLabel value="Error(s):" id="ol2"
                               rendered='#{viewScope.LoadDynamicRegionBean.errorFromPopup ne null and viewScope.LoadDynamicRegionBean.errorFromPopup ne "" }'
                               partialTriggers="ctb6"/>
@@ -355,7 +376,18 @@
         <af:popup id="MOFPopup"
                   popupFetchListener="#{viewScope.LoadDynamicRegionBean.onMOFreportFetch}">
           <af:dialog id="d7" type="cancel" contentWidth="400"
-                     contentHeight="200" title="Model File Report">
+                     contentHeight="200">
+            <af:panelGroupLayout id="pgXl16_cbxz" layout="vertical"
+                                 inlineStyle="width:550px">
+              <af:panelGroupLayout id="pgl31_cbxz" layout="horizontal"
+                                   inlineStyle="font-weight:bold;">
+                <af:image source="/Resources/images/imgs/info.PNG"
+                          id="i12_bxz"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="10" id="s62_cbxz"/>
+              <af:outputText value="Model File Report" id="ot3xz"
+                             inlineStyle="width:450px; font-weight:bold;"/>
+            </af:panelGroupLayout>
             <af:panelGroupLayout id="pgl9" layout="scroll">
               <af:panelFormLayout id="pfl2">
                 <f:facet name="footer"/>
@@ -370,8 +402,19 @@
         </af:popup>
         <af:popup id="errPopup"
                   binding="#{viewScope.LoadDynamicRegionBean.errorPopupBinding}">
-          <af:dialog id="errorD3" title="Error(s) occurred :" contentWidth="450"
-                     contentHeight="200" type="cancel" inlineStyle="color:Red;">
+          <af:dialog id="errorD3" contentWidth="450" contentHeight="200"
+                     type="cancel" inlineStyle="color:Red;">
+            <af:panelGroupLayout id="pgXl16_cbyz" layout="vertical"
+                                 inlineStyle="width:550px">
+              <af:panelGroupLayout id="pgl31_cbyz" layout="horizontal"
+                                   inlineStyle="font-weight:bold;">
+                <af:image source="/Resources/images/imgs/error.PNG"
+                          id="i12_byz"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="10" id="s62_cbyz"/>
+              <af:outputText value="Error(s) occurred :" id="ot3yz"
+                             inlineStyle="width:450px; font-weight:bold;"/>
+            </af:panelGroupLayout>
             <af:panelGroupLayout id="pgl11" layout="scroll">
               <af:outputFormatted id="ot15" inlineStyle="color:Red;"
                                   binding="#{viewScope.LoadDynamicRegionBean.errMsgFromConfig}"/>
@@ -380,8 +423,19 @@
         </af:popup>
         <af:popup id="wrnPop" autoCancel="disabled"
                   binding="#{viewScope.LoadDynamicRegionBean.warningPopup}">
-          <af:dialog id="d1_wrn" title="Configurations has below warning(s)"
-                     contentWidth="450" contentHeight="200">
+          <af:dialog id="d1_wrn" contentWidth="450" contentHeight="200">
+            <af:panelGroupLayout id="pgXl16_cbmz" layout="vertical"
+                                 inlineStyle="width:550px">
+              <af:panelGroupLayout id="pgl31_cbmz" layout="horizontal"
+                                   inlineStyle="font-weight:bold;">
+                <af:image source="/Resources/images/imgs/warning.PNG"
+                          id="i12_bmz"/>
+              </af:panelGroupLayout>
+              <af:spacer width="10" height="10" id="s62_cbmz"/>
+              <af:outputText value="Configurations has below warning(s)"
+                             id="ot3mz"
+                             inlineStyle="width:450px; font-weight:bold;"/>
+            </af:panelGroupLayout>
             <af:panelGroupLayout id="pg12l4" layout="scroll">
               <af:outputFormatted id="of4_warn"
                                   binding="#{viewScope.LoadDynamicRegionBean.warnText}"/>
@@ -395,12 +449,13 @@
                      contentWidth="400" contentHeight="200" type="yesNo"
                      dialogListener="#{viewScope.LoadDynamicRegionBean.quoteNavigationDialogEvent}"></af:dialog>
         </af:popup>
-         <af:popup id="pt_p1" animate="default" contentDelivery="lazy">
-     <af:dialog id="tod" title="Warning" closeIconVisible="false" type="ok"
-           dialogListener="#{viewScope.LoadDynamicRegionBean.OnSessionExpire}">
-       <af:outputText value="Your session has Expired.You Will be logged out" id="pt_ot1"/>
-     </af:dialog>
-    </af:popup>
+        <af:popup id="pt_p1" animate="default" contentDelivery="lazy">
+          <af:dialog id="tod" title="Warning" closeIconVisible="false" type="ok"
+                     dialogListener="#{viewScope.LoadDynamicRegionBean.OnSessionExpire}">
+            <af:outputText value="Your session has Expired.You Will be logged out"
+                           id="pt_ot1"/>
+          </af:dialog>
+        </af:popup>
       </af:form>
     </af:document>
   </f:view>

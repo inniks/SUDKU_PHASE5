@@ -450,14 +450,14 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
         ObjectMapper mapper = new ObjectMapper();
         //If config is live use this
-                String responseJson =
-                    ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-                System.out.println("Response Json from Configurator : " +
-                                   responseJson);
-                Object obj = mapper.readValue(responseJson, V93kQuote.class);
-                v93k = (V93kQuote)obj;
+        String responseJson =
+            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        System.out.println("Response Json from Configurator : " +
+                           responseJson);
+        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+        v93k = (V93kQuote)obj;
 
-    // else use this
+        // else use this
         //v93k = (V93kQuote)convertJsonToObject(null);
         Map ruleSetMap = new HashMap();
         if (v93k != null && v93k.getInputParams() != null) {
@@ -1871,12 +1871,13 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                          confictWarnings.entrySet()) {
                         String key = entry.getKey();
                         //iterate for each key
-                        conflictMessage.append("<p><b>" + key + " : " +
-                                               "</b></p>");
+                        conflictMessage.append("<p><b>" + key + "</b></p>");
                         ArrayList<String> value = entry.getValue();
                         for (String str : value) {
-                            conflictMessage.append("<p><b>" + str +
-                                                   "</b></p>");
+                            if (value != null && !value.equals("")) {
+                                conflictMessage.append("<p><b>" + " : " + str +
+                                                       "</b></p>");
+                            }
                         }
                     }
                     conflictMessage.append("</body></html>");
@@ -1893,15 +1894,18 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                         String key = entry.getKey();
                         ArrayList<String> value = entry.getValue();
                         //iterate for each key
-                        if (value!=null && !value.equals("")) {
-                            warningMessage.append("<p><b>" + key + " : " +
-                                                  "</b></p>");
+                        // if (value!=null && !value.equals("")) {
 
-                            for (String str : value) {
-                                warningMessage.append("<p><b>" + str +
+                        warningMessage.append("<p><b>" + key + "</b></p>");
+                        for (String str : value) {
+                            if (str != null && !str.equals("")) {
+
+
+                                warningMessage.append("<p><b>" + ": " + str +
                                                       "</b></p>");
                             }
                         }
+                        //}
                     }
                     warningMessage.append("</body></html>");
                 }
@@ -1922,13 +1926,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
                     // debugMsgBind.setValue(debugStr.toString());
                 }
-                //                if (warningMessage != null &&
-                //                    !warningMessage.toString().equalsIgnoreCase("<html><body>") &&
-                //                    confirmPopup != null) {
-                //                    warnText.setValue(warningMessage.toString());
-                //                    RichPopup.PopupHints hints = new RichPopup.PopupHints();
-                //                    confirmPopup.show(hints);
-                //                }
                 List<String> errorMessages =
                     obj.getExceptionMap().getErrorsMessages();
                 StringBuilder formattedErrStr =
@@ -1976,7 +1973,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                     cutStr = StringUtils.replace(cutStr, "</b></p>", "");
                     ADFUtils.showFacesMessage(cutStr,
                                               FacesMessage.SEVERITY_ERROR);
-                    _logger.info("Cut String " + cutStr);
                 }
                 if (!isError && isConflict && conflictText != null &&
                     conflictPopup != null) {

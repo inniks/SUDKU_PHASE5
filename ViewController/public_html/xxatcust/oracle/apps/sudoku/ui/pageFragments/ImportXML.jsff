@@ -35,7 +35,8 @@
             </af:panelGroupLayout>
             <f:facet name="context">
               <af:group id="g1">
-                <af:outputFormatted value="Imported Source Configuration" id="of2"
+                <af:outputFormatted value="Imported Source Configuration"
+                                    id="of2"
                                     inlineStyle="font-size:x-large; color:Maroon;"/>
                 <af:spacer width="15" height="10" id="s6"/>
                 <af:panelGroupLayout id="pgl14" halign="left">
@@ -50,12 +51,10 @@
             <af:toolbar id="t1" partialTriggers="ctb1 ctb4 ctb2 ctb6">
               <af:commandToolbarButton text="Show Products" id="ctb1"
                                        actionListener="#{XMLImportPageBean.showProducts}"
-                                       rendered="false"
-                                       partialTriggers="ctb4"/>
+                                       rendered="false" partialTriggers="ctb4"/>
               <af:commandToolbarButton text="Hide Products" id="ctb4"
                                        actionListener="#{XMLImportPageBean.hideProducts}"
-                                       rendered="false"
-                                       partialTriggers="ctb1"/>
+                                       rendered="false" partialTriggers="ctb1"/>
               <af:spacer width="10" height="10" id="s15"/>
               <af:commandToolbarButton text="Show Prices" id="ctb2"
                                        partialTriggers="ctb6" rendered="false"/>
@@ -67,8 +66,8 @@
                 <af:showPopupBehavior popupId="debugPop" triggerType="click"/>
               </af:commandToolbarButton>
               <af:spacer width="10" height="10" id="s19"/>
-              <af:commandToolbarButton text="Show Warning(s)"
-                                       id="ctb5" rendered="false">
+              <af:commandToolbarButton text="Show Warning(s)" id="ctb5"
+                                       rendered="false">
                 <af:showPopupBehavior popupId="wrnPop" triggerType="click"/>
               </af:commandToolbarButton>
               <af:spacer width="50" height="10" id="s25"/>
@@ -152,23 +151,20 @@
                                   <af:gridCell marginStart="5px" width="100px"
                                                id="gc3_a"
                                                inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                    <af:outputText value="Quantity"
-                                                   id="ot3_a"
+                                    <af:outputText value="Quantity" id="ot3_a"
                                                    inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
                                   </af:gridCell>
                                   <af:gridCell marginStart="5px" width="100px"
                                                id="gc8_a"
                                                inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                    <af:outputText id="ot4_a"
-                                                   value="UOM"
+                                    <af:outputText id="ot4_a" value="UOM"
                                                    inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
                                   </af:gridCell>
                                   <af:gridCell marginStart="5px" width="100px"
                                                id="gc11_a"
                                                inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
                                                rendered="#{XMLImportPageBean.priceRendered}">
-                                    <af:outputText value="Unit Price"
-                                                   id="ot5_a"
+                                    <af:outputText value="Unit Price" id="ot5_a"
                                                    inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
                                   </af:gridCell>
                                   <af:gridCell marginStart="5px" width="100px"
@@ -222,7 +218,8 @@
                                 <af:gridCell marginStart="5px" marginEnd="5px"
                                              width="100px" id="gc5_a1"
                                              inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                  <af:spacer width="150" height="10" id="s4_a1"/>
+                                  <af:spacer width="150" height="10"
+                                             id="s4_a1"/>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="100px"
                                              id="gc3_a1"
@@ -275,7 +272,8 @@
                                      binding="#{XMLImportPageBean.quoteTotal}"
                                      inlineStyle="font-size:small; color:Navy; font-weight:bold;"
                                      value="#{XMLImportPageBean.quoteNetTotal}"/>
-                      <af:panelLabelAndMessage label="Quote Net Total :" id="plam5"
+                      <af:panelLabelAndMessage label="Quote Net Total :"
+                                               id="plam5"
                                                inlineStyle="font-size:x-large; color:Navy; font-weight:bolder; font-family:'Courier New', Courier, monospace;"
                                                rendered="false"/>
                     </af:panelGroupLayout>
@@ -336,8 +334,19 @@
               <af:popup id="wrnPop" autoCancel="disabled"
                         binding="#{XMLImportPageBean.warningPopup}">
                 <af:dialog id="d1"
-                           title="Configurations has below warning(s)"
-                           contentWidth="450" contentHeight="200">
+                           contentWidth="400" contentHeight="250">
+                  <af:panelGroupLayout id="pgXl16_cbmz" layout="vertical"
+                                       inlineStyle="width:550px">
+                    <af:panelGroupLayout id="pgl31_cbmz" layout="horizontal"
+                                         inlineStyle="font-weight:bold;">
+                      <af:image source="/Resources/images/imgs/warning.PNG"
+                                id="i12_bmz"/>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="s62_cbmz"/>
+                    <af:outputText value="Configurations has below warning(s)"
+                                   id="ot3mz"
+                                   inlineStyle="width:450px; font-weight:bold;"/>
+                  </af:panelGroupLayout>
                   <af:panelGroupLayout id="pg12l4" layout="scroll">
                     <af:outputFormatted id="of4"
                                         binding="#{XMLImportPageBean.warnText}"/>
@@ -376,31 +385,42 @@
                              visible="false"/>
             </af:panelGroupLayout>
           </af:panelBox>
-          <af:panelBox id="pb3"
-                     rendered="#{XMLImportPageBean.readOnlyUI}"
-                     showDisclosure="false" background="medium">
-          <f:facet name="toolbar"/>
-          <af:panelHeader text=" " id="ph1_1" size="-1"
-                          inlineStyle="color:Teal; font-weight:bolder;"
-                          type="default">
-            <f:facet name="context">
-              <af:group id="g1_1">
-                <af:outputFormatted value="Import Source Configuration" id="of3_1"
-                                    inlineStyle="color:Maroon; font-size:x-large; font-weight:bold;"/>
-              </af:group>
-            </f:facet>
-            <f:facet name="menuBar"/>
-            <af:panelBox text="No Results" id="pb4">
-              <f:facet name="toolbar"/>
-            </af:panelBox>
-          </af:panelHeader>
-        </af:panelBox>
+          <af:panelBox id="pb3" rendered="#{XMLImportPageBean.readOnlyUI}"
+                       showDisclosure="false" background="medium">
+            <f:facet name="toolbar"/>
+            <af:panelHeader text=" " id="ph1_1" size="-1"
+                            inlineStyle="color:Teal; font-weight:bolder;"
+                            type="default">
+              <f:facet name="context">
+                <af:group id="g1_1">
+                  <af:outputFormatted value="Import Source Configuration"
+                                      id="of3_1"
+                                      inlineStyle="color:Maroon; font-size:x-large; font-weight:bold;"/>
+                </af:group>
+              </f:facet>
+              <f:facet name="menuBar"/>
+              <af:panelBox text="No Results" id="pb4">
+                <f:facet name="toolbar"/>
+              </af:panelBox>
+            </af:panelHeader>
+          </af:panelBox>
         </af:panelGroupLayout>
       </f:facet>
     </af:panelSplitter>
     <af:popup id="p1" binding="#{XMLImportPageBean.errorPopup}">
-      <af:dialog id="d3" title="Error(s) occurred :" contentWidth="450"
+      <af:dialog id="d3" contentWidth="450"
                  contentHeight="200" type="cancel" inlineStyle="color:Red;">
+        <af:panelGroupLayout id="pgXl16_c" layout="vertical"
+                             inlineStyle="width:550px">
+          <af:panelGroupLayout id="pgl31_cb" layout="horizontal"
+                               inlineStyle="font-weight:bold;">
+            <af:image source="/Resources/images/imgs/error.PNG" id="i12_b"/>
+          </af:panelGroupLayout>
+          <af:spacer width="10" height="10" id="s62_cz"/>
+          <af:outputText value="Error(s) occurred :" id="otz"
+                         inlineStyle="width:450px; font-weight:bold;"
+                         rendered="false"/>
+        </af:panelGroupLayout>
         <af:panelGroupLayout id="pgl11" layout="scroll">
           <af:outputFormatted id="ot15" inlineStyle="color:Red;"
                               binding="#{XMLImportPageBean.validationError}"

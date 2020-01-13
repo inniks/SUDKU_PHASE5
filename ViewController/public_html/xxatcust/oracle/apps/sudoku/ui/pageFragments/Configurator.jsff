@@ -107,7 +107,7 @@
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="of3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bolder;"/>
+                                      inlineStyle="font-size:medium; font-weight:bolder;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -475,12 +475,12 @@
                                         rendered="#{node.requiredFlag eq 'Y'}">
                     <f:facet name="innerLeft">
                       <af:outputFormatted value="*" id="digiof11"
-                                          inlineStyle="color:Red; font-size:x-large;"/>
+                                          inlineStyle="color:Maroon; font-size:x-large;"/>
                     </f:facet>
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="digiof3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -512,7 +512,7 @@
                                                   inlineStyle="height:15px; width:10px; border-style:none;">
                               <f:facet name="innerLeft">
                                 <af:outputFormatted value="*" id="drs9"
-                                                    inlineStyle="color:Red; font-size:x-large;"
+                                                    inlineStyle="color:Maroon; font-size:x-large;"
                                                     rendered="#{node.requiredFlag eq 'Y'}"/>
                               </f:facet>
                             </af:panelBorderLayout>
@@ -679,7 +679,10 @@
                                                       helpTopicId="#{theadIter.uiField1_tarQty}"
                                                       changedDesc="#{theadIter.uiField1_czModelName}"
                                                       shortDesc="#{theadIter.uiField1_uiNodeName}"
-                                                      valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                      valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                      </af:inputText>
                                         <af:outputFormatted id="drs3612"
                                                             value="#{theadIter.czNodeName1}"
                                                             visible="false"
@@ -703,8 +706,10 @@
                                                     changedDesc="#{theadIter.uiField2_czModelName}"
                                                     shortDesc="#{theadIter.uiField2_uiNodeName}"
                                                     value="#{theadIter.uiField2_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
-                                      <af:outputFormatted id="drs3622"
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText
                                                           value="#{theadIter.czNodeName2}"
                                                           visible="false"
                                                           shortDesc="#{theadIter.parentGroupName}"/>
@@ -752,7 +757,7 @@
                                     <af:panelGroupLayout id="drs26_11r">
                                       <af:outputFormatted value="*"
                                                           id="drs_of9r"
-                                                          inlineStyle="font-size:x-large; color:Red;"
+                                                          inlineStyle="font-size:x-large; color:Maroon;"
                                                           rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
@@ -837,7 +842,10 @@
                                                     helpTopicId="#{theadIter.uiField4_tarQty}"
                                                     changedDesc="#{theadIter.uiField4_czModelName}"
                                                     shortDesc="#{theadIter.uiField4_uiNodeName}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs362i"
                                                           value="#{theadIter.uiField4_code}"
                                                           inlineStyle="#{theadIter.uiField4_bgColor}"
@@ -863,7 +871,10 @@
                                                     changedDesc="#{theadIter.uiField5_czModelName}"
                                                     shortDesc="#{theadIter.uiField5_uiNodeName}"
                                                     value="#{theadIter.uiField5_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs362h"
                                                           value="#{theadIter.czNodeName5}"
                                                           inlineStyle="#{theadIter.uiField5_bgColor}"
@@ -890,7 +901,10 @@
                                                     shortDesc="#{theadIter.uiField6_uiNodeName}"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField6_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs362i1"
                                                           value="#{theadIter.uiField6_code}"
                                                           inlineStyle="#{theadIter.uiField6_bgColor}"
@@ -916,7 +930,10 @@
                                                     changedDesc="#{theadIter.uiField7_czModelName}"
                                                     shortDesc="#{theadIter.uiField7_uiNodeName}"
                                                     value="#{theadIter.uiField7_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs362j"
                                                           value="#{theadIter.uiField7_code}"
                                                           inlineStyle="#{theadIter.uiField7_bgColor}"
@@ -955,7 +972,10 @@
                                                     changedDesc="#{theadIter.uiField1_czModelName}"
                                                     shortDesc="#{theadIter.uiField1_uiNodeName}"
                                                     value="#{theadIter.uiField1_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs366k"
                                                           value="#{theadIter.uiField1_code}"
                                                           visible="false"
@@ -979,7 +999,10 @@
                                                     changedDesc="#{theadIter.uiField2_czModelName}"
                                                     shortDesc="#{theadIter.uiField2_uiNodeName}"
                                                     value="#{theadIter.uiField2_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs366l"
                                                           value="#{theadIter.uiField2_code}"
                                                           visible="false"
@@ -1031,7 +1054,7 @@
                                     <af:panelGroupLayout id="pgl6">
                                       <af:outputFormatted value="*"
                                                           id="drs_of9x"
-                                                          inlineStyle="font-size:x-large; color:Red;"
+                                                          inlineStyle="font-size:x-large; color:Maroon;"
                                                           rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
@@ -1294,7 +1317,10 @@
                                                     changedDesc="#{theadIter.uiField1_czModelName}"
                                                     shortDesc="#{theadIter.uiField1_uiNodeName}"
                                                     value="#{theadIter.uiField1_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs36"
                                                           value="#{theadIter.uiField1_code}"
                                                           visible="false"
@@ -1318,7 +1344,10 @@
                                                     changedDesc="#{theadIter.uiField2_czModelName}"
                                                     shortDesc="#{theadIter.uiField2_uiNodeName}"
                                                     autoSubmit="true"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs361"
                                                           value="#{theadIter.uiField2_code}"
                                                           visible="false"
@@ -1341,7 +1370,10 @@
                                                     placeholder="#{theadIter.uiField3_czModelName}"
                                                     shortDesc="#{theadIter.uiField3_uiNodeName}"
                                                     value="#{theadIter.uiField3_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs362"
                                                           value="#{theadIter.uiField3_code}"
                                                           inlineStyle="#{theadIter.uiField3_bgColor}"
@@ -1365,7 +1397,10 @@
                                                   changedDesc="#{theadIter.uiField4_czModelName}"
                                                   shortDesc="#{theadIter.uiField4_uiNodeName}"
                                                   autoSubmit="true"
-                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                  <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                  </af:inputText>
                                     <af:outputFormatted id="drs363"
                                                         value="#{theadIter.uiField4_code}"
                                                         inlineStyle="#{theadIter.uiField4_bgColor}"
@@ -1389,7 +1424,10 @@
                                                     changedDesc="#{theadIter.uiField5_czModelName}"
                                                     shortDesc="#{theadIter.uiField5_uiNodeName}"
                                                     value="#{theadIter.uiField5_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs365"
                                                           value="#{theadIter.uiField5_code}"
                                                           visible="false"
@@ -1413,7 +1451,10 @@
                                                     helpTopicId="#{theadIter.uiField6_tarQty}"
                                                     changedDesc="#{theadIter.uiField6_czModelName}"
                                                     shortDesc="#{theadIter.uiField6_uiNodeName}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="drs366"
                                                           value="#{theadIter.uiField6_code}"
                                                           visible="false"
@@ -1509,7 +1550,7 @@
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="dps_of3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -1724,7 +1765,10 @@
                                                       changedDesc="#{theadIter.uiField1_czModelName}"
                                                       shortDesc="#{theadIter.uiField1_uiNodeName}"
                                                       valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                      rendered="#{theadIter.uiGrpIndex eq '1'  or theadIter.uiGrpIndex eq '3' or theadIter.uiGrpIndex eq '5' or theadIter.uiGrpIndex eq '7'}"/>
+                                                      rendered="#{theadIter.uiGrpIndex eq '1'  or theadIter.uiGrpIndex eq '3' or theadIter.uiGrpIndex eq '5' or theadIter.uiGrpIndex eq '7'}">
+                                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                      </af:inputText>
                                         <af:outputFormatted id="dps3612"
                                                             value="#{theadIter.czNodeName1}"
                                                             visible="false"
@@ -1749,7 +1793,10 @@
                                                     changedDesc="#{theadIter.uiField2_czModelName}"
                                                     shortDesc="#{theadIter.uiField2_uiNodeName}"
                                                     valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                    rendered="#{theadIter.uiGrpIndex eq '2'  or theadIter.uiGrpIndex eq '4' or theadIter.uiGrpIndex eq '6' or theadIter.uiGrpIndex eq '8'}"/>
+                                                    rendered="#{theadIter.uiGrpIndex eq '2'  or theadIter.uiGrpIndex eq '4' or theadIter.uiGrpIndex eq '6' or theadIter.uiGrpIndex eq '8'}">
+                                                   <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps3622"
                                                           value="#{theadIter.czNodeName2}"
                                                           visible="false"
@@ -1798,7 +1845,7 @@
                                     <af:panelGroupLayout id="dps26_11r">
                                       <af:outputFormatted value="*"
                                                           id="dps_of9r"
-                                                          inlineStyle="font-size:x-large; color:Red;"
+                                                          inlineStyle="font-size:x-large; color:Maroon;"
                                                           rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
@@ -1825,7 +1872,10 @@
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField2_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps362i1"
                                                           value="#{theadIter.uiField2_code}"
                                                           inlineStyle="#{theadIter.uiField2_bgColor}"
@@ -1851,7 +1901,10 @@
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField3_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps362cxi1"
                                                           value="#{theadIter.uiField3_code}"
                                                           inlineStyle="#{theadIter.uiField3_bgColor}"
@@ -1877,7 +1930,10 @@
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField4_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps_1362cxi1"
                                                           value="#{theadIter.uiField4_code}"
                                                           inlineStyle="#{theadIter.uiField4_bgColor}"
@@ -1902,7 +1958,10 @@
                                                     helpTopicId="#{theadIter.uiField5_tarQty}"
                                                     changedDesc="#{theadIter.uiField5_czModelName}"
                                                     shortDesc="#{theadIter.uiField5_uiNodeName}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps362i"
                                                           value="#{theadIter.uiField5_code}"
                                                           inlineStyle="#{theadIter.uiField5_bgColor}"
@@ -1927,7 +1986,10 @@
                                                     helpTopicId="#{theadIter.uiField6_tarQty}"
                                                     changedDesc="#{theadIter.uiField6_czModelName}"
                                                     shortDesc="#{theadIter.uiField6_uiNodeName}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps362h"
                                                           value="#{theadIter.czNodeName6}"
                                                           inlineStyle="#{theadIter.uiField6_bgColor}"
@@ -1953,7 +2015,10 @@
                                                     helpTopicId="#{theadIter.uiField7_tarQty}"
                                                     changedDesc="#{theadIter.uiField7_czModelName}"
                                                     shortDesc="#{theadIter.uiField7_uiNodeName}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps_b362i1"
                                                           value="#{theadIter.uiField7_code}"
                                                           inlineStyle="#{theadIter.uiField7_bgColor}"
@@ -1978,7 +2043,10 @@
                                                     helpTopicId="#{theadIter.uiField8_tarQty}"
                                                     changedDesc="#{theadIter.uiField1_czModelName}"
                                                     shortDesc="#{theadIter.uiField8_uiNodeName}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps362j"
                                                           value="#{theadIter.uiField8_code}"
                                                           inlineStyle="#{theadIter.uiField8_bgColor}"
@@ -2018,7 +2086,10 @@
                                                       columns="5"
                                                       autoSubmit="true"
                                                       value="#{theadIter.uiField1_qty}"
-                                                      valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                      valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                      </af:inputText>
                                         <af:outputFormatted id="d1ps3612"
                                                             value="#{theadIter.czNodeName1}"
                                                             visible="false"
@@ -2044,7 +2115,10 @@
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField2_qty}"
                                                     valueChangeListener="#{ConfiguratorBean.handleInput}"
-                                                    rendered="#{topNode.index ne '4'}"/>
+                                                    rendered="#{topNode.index ne '4'}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="d1ps3622"
                                                           value="#{theadIter.czNodeName2}"
                                                           visible="false"
@@ -2093,7 +2167,7 @@
                                     <af:panelGroupLayout id="d1ps26_11r">
                                       <af:outputFormatted value="*"
                                                           id="d1ps_of9r"
-                                                          inlineStyle="font-size:x-large; color:Red;"
+                                                          inlineStyle="font-size:x-large; color:Maroon;"
                                                           rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                     </af:panelGroupLayout>
                                   </f:facet>
@@ -2121,7 +2195,10 @@
                                                     changedDesc="#{theadIter.uiField2_czModelName}"
                                                     shortDesc="#{theadIter.uiField2_uiNodeName}"
                                                     value="#{theadIter.uiField2_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dp1s362i1"
                                                           value="#{theadIter.uiField2_code}"
                                                           inlineStyle="#{theadIter.uiField2_bgColor}"
@@ -2148,7 +2225,10 @@
                                                     changedDesc="#{theadIter.uiField3_czModelName}"
                                                     shortDesc="#{theadIter.uiField3_uiNodeName}"
                                                     value="#{theadIter.uiField3_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dp1s362cxi1"
                                                           value="#{theadIter.uiField3_code}"
                                                           inlineStyle="#{theadIter.uiField3_bgColor}"
@@ -2175,7 +2255,10 @@
                                                     changedDesc="#{theadIter.uiField1_czModelName}"
                                                     shortDesc="#{theadIter.uiField4_uiNodeName}"
                                                     value="#{theadIter.uiField4_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="d1ps_1362cxi1"
                                                           value="#{theadIter.uiField4_code}"
                                                           inlineStyle="#{theadIter.uiField4_bgColor}"
@@ -2202,7 +2285,10 @@
                                                     changedDesc="#{theadIter.uiField5_czModelName}"
                                                     shortDesc="#{theadIter.uiField5_uiNodeName}"
                                                     value="#{theadIter.uiField5_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="d1ps362i"
                                                           value="#{theadIter.uiField5_code}"
                                                           inlineStyle="#{theadIter.uiField5_bgColor}"
@@ -2229,7 +2315,10 @@
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField6_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="d1ps362h"
                                                           value="#{theadIter.czNodeName6}"
                                                           inlineStyle="#{theadIter.uiField6_bgColor}"
@@ -2256,7 +2345,10 @@
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField7_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="d1ps_b362i1"
                                                           value="#{theadIter.uiField7_code}"
                                                           inlineStyle="#{theadIter.uiField7_bgColor}"
@@ -2283,7 +2375,10 @@
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField8_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="d1ps362j"
                                                           value="#{theadIter.uiField8_code}"
                                                           inlineStyle="#{theadIter.uiField8_bgColor}"
@@ -2510,7 +2605,10 @@
                                                     changedDesc="#{theadIter.uiField1_czModelName}"
                                                     shortDesc="#{theadIter.uiField1_uiNodeName}"
                                                     value="#{theadIter.uiField1_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps36"
                                                           value="#{theadIter.uiField1_code}"
                                                           visible="false"
@@ -2534,7 +2632,10 @@
                                                     changedDesc="#{theadIter.uiField2_czModelName}"
                                                     shortDesc="#{theadIter.uiField2_uiNodeName}"
                                                     autoSubmit="true"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps361"
                                                           value="#{theadIter.uiField2_code}"
                                                           visible="false"
@@ -2557,7 +2658,10 @@
                                                     helpTopicId="#{theadIter.uiField3_tarQty}"
                                                     changedDesc="#{theadIter.uiField3_czModelName}"
                                                     shortDesc="#{theadIter.uiField3_uiNodeName}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps362"
                                                           value="#{theadIter.uiField3_code}"
                                                           inlineStyle="#{theadIter.uiField3_bgColor}"
@@ -2581,7 +2685,10 @@
                                                   changedDesc="#{theadIter.uiField4_czModelName}"
                                                   shortDesc="#{theadIter.uiField4_uiNodeName}"
                                                   autoSubmit="true"
-                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                  <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                  </af:inputText>
                                     <af:outputFormatted id="dps363"
                                                         value="#{theadIter.uiField4_code}"
                                                         inlineStyle="#{theadIter.uiField4_bgColor}"
@@ -2605,7 +2712,10 @@
                                                     changedDesc="#{theadIter.uiField5_czModelName}"
                                                     shortDesc="#{theadIter.uiField5_uiNodeName}"
                                                     value="#{theadIter.uiField5_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps365"
                                                           value="#{theadIter.uiField5_code}"
                                                           visible="false"
@@ -2629,7 +2739,8 @@
                                                     changedDesc="#{theadIter.uiField6_czModelName}"
                                                     shortDesc="#{theadIter.uiField6_uiNodeName}"
                                                     value="#{theadIter.uiField6_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    </af:inputText>
                                       <af:outputFormatted id="dps366"
                                                           value="#{theadIter.uiField6_code}"
                                                           visible="false"
@@ -2696,12 +2807,12 @@
                                         rendered="#{node.requiredFlag eq 'Y'}">
                     <f:facet name="innerLeft">
                       <af:outputFormatted value="*" id="mixof11"
-                                          inlineStyle="color:Red; font-size:x-large;"/>
+                                          inlineStyle="color:Maroon; font-size:small;"/>
                     </f:facet>
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="mixof3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -2733,7 +2844,7 @@
                                                   inlineStyle="height:15px; width:10px; border-style:none;">
                               <f:facet name="innerLeft">
                                 <af:outputFormatted value="*" id="mix9"
-                                                    inlineStyle="color:Red; font-size:x-large;"
+                                                    inlineStyle="color:Maroon; font-size:x-large;"
                                                     rendered="#{node.requiredFlag eq 'Y'}"/>
                               </f:facet>
                             </af:panelBorderLayout>
@@ -2869,7 +2980,10 @@
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField1_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="mix_s3612"
                                                           value="#{theadIter.czNodeName1}"
                                                           visible="false"
@@ -2939,7 +3053,10 @@
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField2_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="mix1366"
                                                           value="#{theadIter.uiField2_code}"
                                                           visible="false"
@@ -2968,7 +3085,10 @@
                                                     changedDesc="#{theadIter.uiField3_czModelName}"
                                                     shortDesc="#{theadIter.uiField3_uiNodeName}"
                                                     value="#{theadIter.uiField3_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="mix2366"
                                                           value="#{theadIter.uiField3_code}"
                                                           visible="false"
@@ -3211,7 +3331,7 @@
                                                       inlineStyle="height:25px; width:30px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted value="*" id="m3ix_s_30"
-                                                        inlineStyle="font-size:x-large; color:Red;"
+                                                        inlineStyle="font-size:x-large; color:Maroon;"
                                                         rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -3239,7 +3359,10 @@
                                                     changedDesc="#{theadIter.uiField1_czModelName}"
                                                     shortDesc="#{theadIter.uiField1_uiNodeName}"
                                                     value="#{theadIter.uiField1_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="dm3ix_s_36"
                                                           value="#{theadIter.uiField1_code}"
                                                           visible="false"
@@ -3264,7 +3387,10 @@
                                                     shortDesc="#{theadIter.uiField2_uiNodeName}"
                                                     value="#{theadIter.uiField2_qty}"
                                                     autoSubmit="true"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="mi3x1_s_361"
                                                           value="#{theadIter.uiField2_code}"
                                                           visible="false"
@@ -3288,7 +3414,10 @@
                                                     changedDesc="#{theadIter.uiField3_czModelName}"
                                                     shortDesc="#{theadIter.uiField3_uiNodeName}"
                                                     value="#{theadIter.uiField3_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="mi3x_s_362"
                                                           value="#{theadIter.uiField3_code}"
                                                           inlineStyle="#{theadIter.uiField3_bgColor}"
@@ -3312,7 +3441,10 @@
                                                   changedDesc="#{theadIter.uiField4_czModelName}"
                                                   shortDesc="#{theadIter.uiField4_uiNodeName}"
                                                   autoSubmit="true"
-                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                  <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                  </af:inputText>
                                     <af:outputFormatted id="mi3x_s_363"
                                                         value="#{theadIter.uiField4_code}"
                                                         inlineStyle="#{theadIter.uiField4_bgColor}"
@@ -3337,7 +3469,10 @@
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField5_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="m3ix_s_365"
                                                           value="#{theadIter.uiField5_code}"
                                                           visible="false"
@@ -3362,7 +3497,10 @@
                                                     helpTopicId="#{theadIter.uiField6_tarQty}"
                                                     changedDesc="#{theadIter.uiField6_czModelName}"
                                                     shortDesc="#{theadIter.uiField6_uiNodeName}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="m3ix_s_366"
                                                           value="#{theadIter.uiField6_code}"
                                                           visible="false"
@@ -3425,7 +3563,7 @@
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="rf_of3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -3585,7 +3723,8 @@
                                                     changedDesc="#{theadIter.uiField1_czModelName}"
                                                     shortDesc="#{theadIter.uiField1_uiNodeName}"
                                                     value="#{theadIter.uiField1_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    </af:inputText>
                                       <af:outputFormatted id="rf2_s3612"
                                                           value="#{theadIter.czNodeName1}"
                                                           visible="false"
@@ -3656,7 +3795,10 @@
                                                     changedDesc="#{theadIter.uiField2_czModelName}"
                                                     shortDesc="#{theadIter.uiField2_uiNodeName}"
                                                     value="#{theadIter.uiField2_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="rf21366"
                                                           value="#{theadIter.uiField2_code}"
                                                           visible="false"
@@ -3681,7 +3823,10 @@
                                                     changedDesc="#{theadIter.uiField3_czModelName}"
                                                     shortDesc="#{theadIter.uiField3_uiNodeName}"
                                                     value="#{theadIter.uiField3_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="rf22366"
                                                           value="#{theadIter.uiField3_code}"
                                                           visible="false"
@@ -3709,7 +3854,10 @@
                                                     changedDesc="#{theadIter.uiField4_czModelName}"
                                                     shortDesc="#{theadIter.uiField4_uiNodeName}"
                                                     value="#{theadIter.uiField4_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="rf222366"
                                                           value="#{theadIter.uiField4_code}"
                                                           visible="false"
@@ -3736,7 +3884,10 @@
                                                     changedDesc="#{theadIter.uiField4_czModelName}"
                                                     shortDesc="#{theadIter.uiField4_uiNodeName}"
                                                     value="#{theadIter.uiField4_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="rf5222366"
                                                           value="#{theadIter.uiField4_code}"
                                                           visible="false"
@@ -3761,7 +3912,10 @@
                                                       helpTopicId="#{theadIter.uiField5_tarQty}"
                                                       changedDesc="#{theadIter.uiField5_czModelName}"
                                                       shortDesc="#{theadIter.uiField5_uiNodeName}"
-                                                      valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                      valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                      </af:inputText>
                                         <af:outputFormatted id="rf6222366"
                                                             value="#{theadIter.uiField5_code}"
                                                             visible="false"
@@ -4006,7 +4160,10 @@
                                                     changedDesc="#{theadIter.uiField1_czModelName}"
                                                     shortDesc="#{theadIter.uiField1_uiNodeName}"
                                                     value="#{theadIter.uiField1_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="rf3_36"
                                                           value="#{theadIter.uiField1_code}"
                                                           visible="false"
@@ -4031,7 +4188,10 @@
                                                     columns="5"
                                                     value="#{theadIter.uiField2_qty}"
                                                     autoSubmit="true"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="rf3_361"
                                                           value="#{theadIter.uiField2_code}"
                                                           visible="false"
@@ -4054,7 +4214,10 @@
                                                     changedDesc="#{theadIter.uiField3_czModelName}"
                                                     shortDesc="#{theadIter.uiField3_uiNodeName}"
                                                     value="#{theadIter.uiField3_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="rf3_362"
                                                           value="#{theadIter.uiField3_code}"
                                                           inlineStyle="#{theadIter.uiField3_bgColor}"
@@ -4078,7 +4241,10 @@
                                                   changedDesc="#{theadIter.uiField4_czModelName}"
                                                   shortDesc="#{theadIter.uiField4_uiNodeName}"
                                                   autoSubmit="true"
-                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                  <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                  </af:inputText>
                                     <af:outputFormatted id="rf3_363"
                                                         value="#{theadIter.uiField4_code}"
                                                         inlineStyle="#{theadIter.uiField4_bgColor}"
@@ -4102,7 +4268,10 @@
                                                     changedDesc="#{theadIter.uiField5_czModelName}"
                                                     shortDesc="#{theadIter.uiField5_uiNodeName}"
                                                     value="#{theadIter.uiField5_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="rf3_s_365"
                                                           value="#{theadIter.uiField5_code}"
                                                           visible="false"
@@ -4127,7 +4296,10 @@
                                                     changedDesc="#{theadIter.uiField6_czModelName}"
                                                     shortDesc="#{theadIter.uiField6_uiNodeName}"
                                                     value="#{theadIter.uiField6_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="rf3_s_366"
                                                           value="#{theadIter.uiField6_code}"
                                                           visible="false"
@@ -4183,7 +4355,7 @@
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="syscon_of3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -4304,7 +4476,7 @@
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted value="*"
                                                         id="syscon_of10"
-                                                        inlineStyle="font-size:x-large; color:Red;"
+                                                        inlineStyle="font-size:x-large; color:Maroon;"
                                                         rendered="#{sysConIter.requiredFlagSubGrp eq 'Y'}"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -4570,12 +4742,12 @@
                                         rendered="#{node.requiredFlag eq 'Y'}">
                     <f:facet name="innerLeft">
                       <af:outputFormatted value="*" id="addSwTool_of11"
-                                          inlineStyle="color:Red; font-size:x-large;"/>
+                                          inlineStyle="color:Maroon; font-size:x-large;"/>
                     </f:facet>
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}"
                                       id="addSwTool_of3" styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -4611,7 +4783,7 @@
                                                   inlineStyle="height:15px; width:10px; border-style:none;">
                               <f:facet name="innerLeft">
                                 <af:outputFormatted value="*" id="addSwTool_of6"
-                                                    inlineStyle="color:Red; font-size:x-large;"
+                                                    inlineStyle="color:Maroon; font-size:x-large;"
                                                     rendered="#{node.requiredFlag eq 'Y'}"/>
                               </f:facet>
                             </af:panelBorderLayout>
@@ -4694,7 +4866,7 @@
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted value="*"
                                                         id="addSwTool_of9"
-                                                        inlineStyle="font-size:x-large; color:Red;"
+                                                        inlineStyle="font-size:x-large; color:Maroon;"
                                                         rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -4930,12 +5102,12 @@
                                         rendered="#{node.requiredFlag eq 'Y'}">
                     <f:facet name="innerLeft">
                       <af:outputFormatted value="*" id="diagCal_of11"
-                                          inlineStyle="color:Red; font-size:x-large;"/>
+                                          inlineStyle="color:Maroon; font-size:x-large;"/>
                     </f:facet>
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="diagCal_of3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -4969,7 +5141,7 @@
                                                   inlineStyle="height:15px; width:10px; border-style:none;">
                               <f:facet name="innerLeft">
                                 <af:outputFormatted value="*" id="diagCal_of6"
-                                                    inlineStyle="color:Red; font-size:x-large;"
+                                                    inlineStyle="color:Maroon; font-size:x-large;"
                                                     rendered="#{node.requiredFlag eq 'Y'}"/>
                               </f:facet>
                             </af:panelBorderLayout>
@@ -5053,7 +5225,7 @@
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted value="*"
                                                         id="diagCal_of9"
-                                                        inlineStyle="font-size:x-large; color:Red;"
+                                                        inlineStyle="font-size:x-large; color:Maroon;"
                                                         rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -5071,7 +5243,7 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="diagCal_pgl7"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="diagCal_cl1"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField1_dis or theadIter.uiField1_readOnly}"
@@ -5099,7 +5271,7 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="diagCal_pgl_7"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="diagCal_cl2"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField2_dis or theadIter.uiField2_readOnly}">
@@ -5125,7 +5297,7 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="diagCal_pgl_71"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="diagCal_cl3"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField3_dis or theadIter.uiField3_readOnly}">
@@ -5151,7 +5323,7 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="diagCal_pgl_17"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="diagCal_cl4"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField4_dis or theadIter.uiField4_readOnly}">
@@ -5177,7 +5349,7 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="diagCal_pgl9"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="diagCal_cl5"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField5_dis or theadIter.uiField5_readOnly}">
@@ -5203,7 +5375,7 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="diagCal_pgl10"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="diagCal_cl6"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField6_dis or theadIter.uiField6_readOnly}">
@@ -5229,7 +5401,7 @@
                                   <f:facet name="innerLeft">
                                     <af:panelGroupLayout id="diagCal_pgl20"
                                                          layout="horizontal"
-                                                         halign="left">
+                                                         halign="center">
                                       <af:commandLink id="diagCal_cl7"
                                                       actionListener="#{ConfiguratorBean.handleNodeSelection}"
                                                       disabled="#{theadIter.uiField7_dis or theadIter.uiField7_readOnly}">
@@ -5290,12 +5462,12 @@
                                         rendered="#{node.requiredFlag eq 'Y'}">
                     <f:facet name="innerLeft">
                       <af:outputFormatted value="*" id="dockof11"
-                                          inlineStyle="color:Red; font-size:x-large;"/>
+                                          inlineStyle="color:Maroon; font-size:x-large;"/>
                     </f:facet>
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="dockof3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -5327,7 +5499,7 @@
                                                   inlineStyle="height:15px; width:10px; border-style:none;">
                               <f:facet name="innerLeft">
                                 <af:outputFormatted value="*" id="dockof6"
-                                                    inlineStyle="color:Red; font-size:x-large;"
+                                                    inlineStyle="color:Maroon; font-size:x-large;"
                                                     rendered="#{node.requiredFlag eq 'Y'}"/>
                               </f:facet>
                             </af:panelBorderLayout>
@@ -5417,7 +5589,7 @@
                                                       inlineStyle="height:25px; width:10px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted value="*" id="dockof9"
-                                                        inlineStyle="font-size:x-large; color:Red;"
+                                                        inlineStyle="font-size:x-large; color:Maroon;"
                                                         rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -5668,7 +5840,7 @@
                                                       inlineStyle="height:25px; width:10px; border-style:none;">
                                   <f:facet name="innerLeft">
                                     <af:outputFormatted value="*" id="dockof9x"
-                                                        inlineStyle="font-size:x-large; color:Red;"
+                                                        inlineStyle="font-size:x-large; color:Maroon;"
                                                         rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                   </f:facet>
                                 </af:panelBorderLayout>
@@ -6140,7 +6312,7 @@
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="misUpgof3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -6189,6 +6361,7 @@
                                 <af:iterator id="misUpgi2"
                                              value="#{var.uiFieldCollection}"
                                              var="theadIter">
+                                  <af:spacer width="10" height="10" id="s63"/>
                                   <af:panelGroupLayout id="misUpgtheadPgl"
                                                        layout="horizontal"
                                                        rendered="#{theadIter.identifyLicenceRow eq 'N'}">
@@ -6308,6 +6481,7 @@
                                       </f:facet>
                                     </af:panelBorderLayout>
                                   </af:panelGroupLayout>
+                                  <af:spacer width="10" height="10" id="s64"/>
                                   <af:panelGroupLayout id="misUpgc_s_12"
                                                        layout="horizontal"
                                                        rendered="#{theadIter.licenseRowIndexMiscUpg eq theadIter.uiGrpIndex and theadIter.elementList eq 'Y'}">
@@ -6377,8 +6551,7 @@
                                                           inlineStyle="height:25px; width:90px; border-style:none;">
                                       <f:facet name="innerLeft">
                                         <af:panelGroupLayout id="misUpgc_s_341"
-                                                             layout="horizontal"
-                                                             halign="center">
+                                                             layout="horizontal">
                                           <af:outputFormatted id="misUpgc_s_361"
                                                               value="#{theadIter.uiField2}"
                                                               visible="true"
@@ -6438,6 +6611,7 @@
                                       </f:facet>
                                     </af:panelBorderLayout>
                                   </af:panelGroupLayout>
+                                  <af:spacer width="10" height="10" id="s65"/>
                                   <af:panelGroupLayout id="misUpgc_s_123"
                                                        layout="horizontal"
                                                        rendered="#{theadIter.identifyLicenceRow eq 'Y'}">
@@ -6510,7 +6684,7 @@
                                       <f:facet name="innerLeft">
                                         <af:outputFormatted value="*"
                                                             id="misUpgc_s_30"
-                                                            inlineStyle="font-size:x-large; color:Red;"
+                                                            inlineStyle="font-size:x-large; color:Maroon;"
                                                             rendered="#{theadIter.requiredFlagSubGrp eq 'Y'}"/>
                                       </f:facet>
                                     </af:panelBorderLayout>
@@ -6535,7 +6709,10 @@
                                                         changedDesc="#{theadIter.uiField1_czModelName}"
                                                         shortDesc="#{theadIter.uiField1_uiNodeName}"
                                                         value="#{theadIter.uiField1_qty}"
-                                                        valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                        valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                        </af:inputText>
                                           <af:outputFormatted id="misUpgcx_s_36"
                                                               value="#{theadIter.uiField1_code}"
                                                               visible="false"
@@ -6561,7 +6738,10 @@
                                                         columns="5"
                                                         value="#{theadIter.uiField2_qty}"
                                                         autoSubmit="true"
-                                                        valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                        valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                        </af:inputText>
                                           <af:outputFormatted id="misUpgcx1_s_361"
                                                               value="#{theadIter.uiField2_code}"
                                                               visible="false"
@@ -6586,7 +6766,10 @@
                                                         columns="5"
                                                         autoSubmit="true"
                                                         value="#{theadIter.uiField3_qty}"
-                                                        valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                        valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                        </af:inputText>
                                           <af:outputFormatted id="misUpgcx_s_362"
                                                               value="#{theadIter.uiField3_code}"
                                                               inlineStyle="#{theadIter.uiField3_bgColor}"
@@ -6612,7 +6795,10 @@
                                                       changedDesc="#{theadIter.uiField4_czModelName}"
                                                       shortDesc="#{theadIter.uiField4_uiNodeName}"
                                                       autoSubmit="true"
-                                                      valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                      valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                      <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                      </af:inputText>
                                         <af:outputFormatted id="misUpgcx_s_363"
                                                             value="#{theadIter.uiField4_code}"
                                                             inlineStyle="#{theadIter.uiField4_bgColor}"
@@ -6638,7 +6824,10 @@
                                                         changedDesc="#{theadIter.uiField5_czModelName}"
                                                         shortDesc="#{theadIter.uiField5_uiNodeName}"
                                                         value="#{theadIter.uiField5_qty}"
-                                                        valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                        valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                        </af:inputText>
                                           <af:outputFormatted id="misUpgcx_s_365"
                                                               value="#{theadIter.uiField5_code}"
                                                               visible="false"
@@ -6664,7 +6853,10 @@
                                                         changedDesc="#{theadIter.uiField6_czModelName}"
                                                         shortDesc="#{theadIter.uiField6_uiNodeName}"
                                                         value="#{theadIter.uiField6_qty}"
-                                                        valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                        valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                        </af:inputText>
                                           <af:outputFormatted id="misUpgcx_s_366"
                                                               value="#{theadIter.uiField6_code}"
                                                               visible="false"
@@ -6690,7 +6882,10 @@
                                                         changedDesc="#{theadIter.uiField7_czModelName}"
                                                         shortDesc="#{theadIter.uiField7_uiNodeName}"
                                                         value="#{theadIter.uiField7_qty}"
-                                                        valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                        valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                        <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                        </af:inputText>
                                           <af:outputFormatted id="misUpgcx1_s_366"
                                                               value="#{theadIter.uiField7_code}"
                                                               visible="false"
@@ -6746,7 +6941,7 @@
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="infupgof3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -7271,7 +7466,10 @@
                                                     columns="5"
                                                     autoSubmit="true"
                                                     value="#{theadIter.uiField1_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="infupgcx_s_36"
                                                           value="#{theadIter.uiField1_code}"
                                                           visible="false"
@@ -7297,7 +7495,10 @@
                                                     shortDesc="#{theadIter.uiField2_uiNodeName}"
                                                     value="#{theadIter.uiField2_qty}"
                                                     autoSubmit="true"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="infupgcx1_s_361"
                                                           value="#{theadIter.uiField2_code}"
                                                           visible="false"
@@ -7322,7 +7523,10 @@
                                                     helpTopicId="#{theadIter.uiField3_tarQty}"
                                                     changedDesc="#{theadIter.uiField3_czModelName}"
                                                     shortDesc="#{theadIter.uiField3_uiNodeName}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="infupgcx_s_362"
                                                           value="#{theadIter.uiField3_code}"
                                                           inlineStyle="#{theadIter.uiField3_bgColor}"
@@ -7348,7 +7552,10 @@
                                                   changedDesc="#{theadIter.uiField4_czModelName}"
                                                   shortDesc="#{theadIter.uiField4_uiNodeName}"
                                                   autoSubmit="true"
-                                                  valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                  valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                  <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                  </af:inputText>
                                     <af:outputFormatted id="infupgcx_s_363"
                                                         value="#{theadIter.uiField4_code}"
                                                         inlineStyle="#{theadIter.uiField4_bgColor}"
@@ -7374,7 +7581,10 @@
                                                     helpTopicId="#{theadIter.uiField5_tarQty}"
                                                     changedDesc="#{theadIter.uiField5_czModelName}"
                                                     shortDesc="#{theadIter.uiField5_uiNodeName}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="infupgcx_s_365"
                                                           value="#{theadIter.uiField5_code}"
                                                           visible="false"
@@ -7400,7 +7610,10 @@
                                                     changedDesc="#{theadIter.uiField6_czModelName}"
                                                     shortDesc="#{theadIter.uiField6_uiNodeName}"
                                                     value="#{theadIter.uiField6_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="infupgcx_s_366"
                                                           value="#{theadIter.uiField6_code}"
                                                           visible="false"
@@ -7426,7 +7639,10 @@
                                                     changedDesc="#{theadIter.uiField7_czModelName}"
                                                     shortDesc="#{theadIter.uiField7_uiNodeName}"
                                                     value="#{theadIter.uiField7_qty}"
-                                                    valueChangeListener="#{ConfiguratorBean.handleInput}"/>
+                                                    valueChangeListener="#{ConfiguratorBean.handleInput}">
+                                                    <af:validateRegExp pattern="[0-9]{1,10}"
+                                                           messageDetailNoMatch="Only Numbers allowed.."/>
+                                                    </af:inputText>
                                       <af:outputFormatted id="infupgcx1_s_366"
                                                           value="#{theadIter.uiField7_code}"
                                                           visible="false"
@@ -7479,7 +7695,7 @@
                   </af:panelBorderLayout>
                   <af:outputFormatted value="#{node.nodeName}" id="wty_of3"
                                       styleClass="ABHeader"
-                                      inlineStyle="font-size:small; font-weight:bold;"/>
+                                      inlineStyle="font-size:medium; font-weight:bold;"/>
                 </af:panelGroupLayout>
               </af:listItem>
             </f:facet>
@@ -7932,30 +8148,43 @@
                              inlineStyle="width:550px">
           <af:panelGroupLayout id="pgl31" layout="horizontal"
                                inlineStyle="font-weight:bold;">
-            <af:image source="/Resources/images/imgs/iconfinder_error_36026 (1).png"
-                      id="i12"/>
-            <af:spacer width="5" height="10" id="xs4"/>
-            <af:outputFormatted value="Warning!" id="of8"
-                                inlineStyle="font-size:small; font-weight:bold;"/>
+            <af:image source="/Resources/images/imgs/warning.PNG" id="i12"/>
           </af:panelGroupLayout>
+          <af:spacer width="10" height="10" id="s62"/>
           <af:outputText value="Your existing configuration will be lost, Are you sure you want to continue?"
                          id="ot3" inlineStyle="width:450px; font-weight:bold;"/>
         </af:panelGroupLayout>
       </af:dialog>
     </af:popup>
     <af:popup id="p1" binding="#{ConfiguratorBean.errorPopup}">
-      <af:dialog id="d3" title="Error(s) occurred :" contentWidth="450"
+      <af:dialog id="d3" contentWidth="450"
                  contentHeight="200" type="cancel" inlineStyle="color:Red;">
-        <af:panelGroupLayout id="pgl11" layout="scroll">
-          <af:outputFormatted id="ot15" inlineStyle="color:Red;"
+                 <af:panelGroupLayout id="pgXl16_1" layout="vertical"
+                             inlineStyle="width:550px">
+          <af:panelGroupLayout id="pgl31_1" layout="scroll"
+                               inlineStyle="font-weight:bold;">
+            <af:image source="/Resources/images/imgs/error.PNG" id="i12_1"/>
+          </af:panelGroupLayout>
+          <af:spacer width="10" height="10" id="s62_1"/>
+           <af:outputFormatted id="ot15" inlineStyle="color:Red;"
                               binding="#{ConfiguratorBean.errMessage}"/>
         </af:panelGroupLayout>
       </af:dialog>
     </af:popup>
     <af:popup id="cnfPopup" autoCancel="disabled"
               binding="#{ConfiguratorBean.confirmPopup}">
-      <af:dialog id="d1" title="Configuration has below warning(s)"
+      <af:dialog id="d1"
                  contentWidth="450" contentHeight="200" type="ok">
+                 <af:panelGroupLayout id="pgXl16_c" layout="vertical"
+                             inlineStyle="width:550px">
+          <af:panelGroupLayout id="pgl31_c" layout="horizontal"
+                               inlineStyle="font-weight:bold;">
+            <af:image source="/Resources/images/imgs/warning.PNG" id="i12_bv"/>
+          </af:panelGroupLayout>
+          <af:spacer width="10" height="10" id="s62_c"/>
+          <af:outputText value="Configuration has below warning(s)"
+                         id="ot3_bn" inlineStyle="width:450px; font-weight:bold;"/>
+        </af:panelGroupLayout>
         <af:panelGroupLayout id="pg12l4" layout="scroll">
           <af:outputFormatted id="ofpop4"
                               binding="#{ConfiguratorBean.warnText}"/>
@@ -7964,9 +8193,19 @@
     </af:popup>
     <af:popup id="conflictPop" autoCancel="disabled"
               binding="#{ConfiguratorBean.conflictPopup}">
-      <af:dialog id="conflict_d1" title="Configuration has below conflict(s)"
+      <af:dialog id="conflict_d1"
                  contentWidth="450" contentHeight="200" type="okCancel"
                  dialogListener="#{ConfiguratorBean.warnPopupDialogListener}">
+                 <af:panelGroupLayout id="pgXl16_cb" layout="vertical"
+                             inlineStyle="width:550px">
+          <af:panelGroupLayout id="pgl31_cb" layout="horizontal"
+                               inlineStyle="font-weight:bold;">
+            <af:image source="/Resources/images/imgs/warning.PNG" id="i12_b"/>
+          </af:panelGroupLayout>
+          <af:spacer width="10" height="10" id="s62_cb"/>
+          <af:outputText value="Configuration has below conflict(s)"
+                         id="ot3_mmc" inlineStyle="width:450px; font-weight:bold;"/>
+        </af:panelGroupLayout>
         <af:panelGroupLayout id="conflictpg12l4" layout="scroll">
           <af:outputFormatted id="conflictofpop4"
                               binding="#{ConfiguratorBean.conflictText}"/>

@@ -54,3 +54,6 @@ af|showDetailHeader::undisclosed-icon-style {
 .mysor af|selectOneRadio::content div {
   padding: 0px 0px 90px 0px;
 }
+af|listItem:group-header {
+    background-color: #c6c6c6; 
+}

@@ -90,8 +90,13 @@
                                              id="gc6"
                                              inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
                                              rendered="#{pageFlowScope.TargetConfigurationBean.priceRendered}">
-                                  <af:outputText value="Extended Price" id="ot6"
-                                                 inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
+                                  <af:panelGroupLayout id="pgl13"
+                                                       inlineStyle="text-align:right;">
+                                    <af:outputText value="Extended Price"
+                                                   id="ot6"
+                                                   inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"
+                                                   styleClass="AFFieldNumberMarker"/>
+                                  </af:panelGroupLayout>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="100px"
                                              id="gc6_1"
@@ -164,7 +169,8 @@
                                            rendered="#{pageFlowScope.TargetConfigurationBean.priceRendered}">
                                 <af:panelGroupLayout id="pgl3">
                                   <af:outputText value="#{node.extendedPrice}"
-                                                 id="ot6_1"/>
+                                                 id="ot6_1"
+                                                 styleClass="AFFieldNumberMarker"/>
                                 </af:panelGroupLayout>
                               </af:gridCell>
                               <af:gridCell marginStart="5px" width="100px"

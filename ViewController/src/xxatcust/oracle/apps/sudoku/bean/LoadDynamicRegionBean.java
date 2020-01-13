@@ -2250,11 +2250,11 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                      warnings.entrySet()) {
                     String key = entry.getKey();
                     //iterate for each key
-                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
+                    warningMessage.append("<p><b>" + key  + "</b></p>");
                     ArrayList<String> value = entry.getValue();
                     for (String str : value) {
                         if (value != null && !value.equals(""))
-                            warningMessage.append("<p><b>" + str + "</b></p>");
+                            warningMessage.append("<p><b>" + " : "+str + "</b></p>");
                     }
                 }
                 warningMessage.append("</body></html>");
@@ -2266,9 +2266,10 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                      notifications.entrySet()) {
                     String key = entry.getKey();
                     ArrayList<String> value = entry.getValue();
-                    warningMessage.append("<p><b>" + key + " : " + "</b></p>");
+                    warningMessage.append("<p><b>" + key  + "</b></p>");
                     for (String str : value) {
-                        warningMessage.append("<p><b>" + str + "</b></p>");
+                        if(value!=null && !value.equals(""))
+                        warningMessage.append("<p><b>" + " :"+str + "</b></p>");
                     }
                 }
                 warningMessage.append("</body></html>");
