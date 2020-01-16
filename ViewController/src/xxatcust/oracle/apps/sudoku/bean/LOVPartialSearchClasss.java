@@ -73,7 +73,6 @@ public class LOVPartialSearchClasss {
 //                    if(valueExpression!=null && valueExpression.equalsIgnoreCase("ValueExpression[#{sessionScope.sessionWideSiteName}]")){
 //                        
 //                    }
-                    System.out.println(valueExpression);
                     currentColumnName =
                             valueExpression.substring(valueExpression.indexOf(".") +
                                                       1,

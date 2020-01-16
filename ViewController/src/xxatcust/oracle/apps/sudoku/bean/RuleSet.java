@@ -31,7 +31,6 @@ public class RuleSet {
                                      null); // reset the second level choice
                 String topLevelCode =
                     (String)currRow.getAttribute("TopLevelCode");
-                System.out.println("Top Level Code " + topLevelCode);
                 HashMap inputParamsMap =
                     (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap");
                 if (inputParamsMap == null) {
@@ -53,7 +52,6 @@ public class RuleSet {
             if (currRw != null) {
                 String secondLevelCode =
                     (String)currRw.getAttribute("SecondLevelCode");
-                System.out.println("Second Level Code " + secondLevelCode);
                 HashMap inputParamsMap =
                     (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap");
                 if (inputParamsMap == null) {
@@ -68,7 +66,6 @@ public class RuleSet {
     }
 
     public void topLevelChangeConfig(ValueChangeEvent valueChangeEvent) {
-            System.out.println("from Rule Set Toplevel");
             UIComponent ui = (UIComponent)valueChangeEvent.getSource();
             ui.processUpdates(FacesContext.getCurrentInstance());
             DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
@@ -81,7 +78,6 @@ public class RuleSet {
                     String topLevelCode =
                         (String)currRow.getAttribute("TopLevelCode");
                     
-                    System.out.println("Top Level Code " + topLevelCode);
                     HashMap inputParamsMap =
                         (HashMap)ADFUtils.getSessionScopeValue("inputParamsMapFromConfig");
                     HashMap inputParamsMapForRef =
@@ -104,7 +100,6 @@ public class RuleSet {
         }
      
         public void secondlevelVCEConfig(ValueChangeEvent valueChangeEvent) {
-            System.out.println("from Rule Set secondLevel");
             UIComponent ui = (UIComponent)valueChangeEvent.getSource();
             ui.processUpdates(FacesContext.getCurrentInstance());
             DCIteratorBinding iter = ADFUtils.findIterator("RuleSetVO1Iterator");
@@ -113,7 +108,6 @@ public class RuleSet {
                 if (currRw != null) {
                     String secondLevelCode =
                         (String)currRw.getAttribute("SecondLevelCode");
-                    System.out.println("Second Level Code " + secondLevelCode);
                     HashMap inputParamsMap =
                         (HashMap)ADFUtils.getSessionScopeValue("inputParamsMapFromConfig");
                     if (inputParamsMap == null) {

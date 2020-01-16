@@ -464,7 +464,7 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                 custVO.setNamedWhereClauseParam("p_orgId", null);
                 custVO.setNamedWhereClauseParam("p_orgId", orgId);
                 custVO.setWhereClause("customername = '" + custName + "'");
-                System.out.println(custVO.getQuery());
+                 _logger.info(custVO.getQuery());
                 custVO.executeQuery();
                 RowSetIterator iter = custVO.createRowSetIterator(null);
                 while (iter.hasNext()) {
@@ -532,7 +532,7 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                 custVO.setNamedWhereClauseParam("p_orgId", null);
                 custVO.setNamedWhereClauseParam("p_orgId", orgId);
                 custVO.setWhereClause("customername = '" + custName + "'");
-                System.out.println(custVO.getQuery());
+                 _logger.info(custVO.getQuery());
                 custVO.executeQuery();
                 RowSetIterator iter = custVO.createRowSetIterator(null);
                 while (iter.hasNext()) {
@@ -720,7 +720,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     if (quoteVORow.getAttribute("SalesChannel") != null) {
                         cs.setString(6,
                                      quoteVORow.getAttribute("SalesChannel").toString());
-                        //                        System.out.println("SalesChannel:" +
+                        //                         _logger.info("SalesChannel:" +
                         //                                           quoteVORow.getAttribute("SalesChannel").toString());
                     } else {
                         cs.setString(6, null);
@@ -730,17 +730,17 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         null) {
                         cs.setString(7,
                                      quoteVORow.getAttribute("SalesRepresentative").toString());
-                        //                        System.out.println("Sales Representative:" +
+                        //                         _logger.info("Sales Representative:" +
                         //                                           quoteVORow.getAttribute("SalesRepresentative").toString());
                     } else {
                         errorMsg.append("<p><b>Sales Representative is required.</b></p>");
                     }
-                    //                    System.out.println("Payment Terms " +
+                    //                     _logger.info("Payment Terms " +
                     //                                       quoteVORow.getAttribute("PaymentTerms"));
                     if (quoteVORow.getAttribute("PaymentTerms") != null) {
                         cs.setString(8,
                                      quoteVORow.getAttribute("PaymentTerms").toString());
-                        //                        System.out.println("PaymentTerms:" +
+                        //                         _logger.info("PaymentTerms:" +
                         //                                           quoteVORow.getAttribute("PaymentTermsMean").toString());
                     } else {
                         errorMsg.append("<p><b>Payment Terms is required.</b></p>");
@@ -748,7 +748,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     if (quoteVORow.getAttribute("Currency") != null) {
                         cs.setString(9,
                                      quoteVORow.getAttribute("Currency").toString());
-                        //                        System.out.println("Currency:" +
+                        //                         _logger.info("Currency:" +
                         //                                           quoteVORow.getAttribute("CurrencyCode").toString());
                     } else {
                         errorMsg.append("<p><b>Currency is required.</b></p>");
@@ -757,7 +757,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     if (quoteVORow.getAttribute("IncoTerms") != null) {
                         cs.setString(10,
                                      quoteVORow.getAttribute("IncoTerms").toString());
-                        //                        System.out.println("IncoTerms:" +
+                        //                         _logger.info("IncoTerms:" +
                         //                                           quoteVORow.getAttribute("IncoTermsMeaning").toString());
                     } else {
                         errorMsg.append("<p><b>Inco Terms is required.</b></p>");
@@ -766,7 +766,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         null) {
                         cs.setString(11,
                                      quoteVORow.getAttribute("CustomerSupportRepresent").toString());
-                        //                        System.out.println("CustomerSupportRepresent:" +
+                        //                         _logger.info("CustomerSupportRepresent:" +
                         //                                           quoteVORow.getAttribute("CustomerSupportRepresent").toString());
                     } else {
                         cs.setString(11, null);
@@ -799,11 +799,11 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         null) {
                         cs.setString(17,
                                      quoteVORow.getAttribute("BusinessAgreement").toString());
-                        System.out.println("Business Agreeement Val:" +
+                         _logger.info("Business Agreeement Val:" +
                                            quoteVORow.getAttribute("BusinessAgreement").toString());
-                        //                        System.out.println("CustAccId : " +
+                        //                         _logger.info("CustAccId : " +
                         //                                           quoteVORow.getAttribute("CustAccid"));
-                        //                        System.out.println("BusinessAgreement : " +
+                        //                         _logger.info("BusinessAgreement : " +
                         //                                           quoteVORow.getAttribute("BusinessAgreementId"));
                     } else {
                         cs.setString(17, null);
@@ -844,7 +844,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     }
                     if (returnMessage != null &&
                         returnConfrmMsg.contains("S")) {
-                        System.out.println("return Message is:" +
+                         _logger.info("return Message is:" +
                                            returnMessage + " ::msg::");
                         String[] arrOfStr = returnMessage.split(":", 2);
                         quoteVORow.setAttribute("AdvantestQuotationNumber",
@@ -929,7 +929,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
 
     public void getUpdateQuote() {
-        //        System.out.println("getUpdateQuote : start");
+        //         _logger.info("getUpdateQuote : start");
         Boolean quoteSessionState = false;
         ViewObjectImpl quoteVO = this.getQuoteUpdateVO1();
         Row row = null;
@@ -951,7 +951,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         (Boolean)ADFContext.getCurrent().getSessionScope().get("isDuplicateQuote");
             String duplicateQuoteNum =
                 (String)ADFContext.getCurrent().getSessionScope().get("targetQuoteNumber");
-            System.out.println("from AMPIML:" + quoteFromSesion);
+             _logger.info("from AMPIML:" + quoteFromSesion);
             if (quoteFromSesion != null) {
                 //                Integer quoteNum = Integer.parseInt(quoteFromSesion);
                 quoteFromSesion = quoteFromSesion.trim();
@@ -969,12 +969,12 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     _logger.info("In Update Quote Executing with quote Num " +
                                  quoteVal);
                 }
-                System.out.println("get Query:" + quoteVO.getQuery());
+                 _logger.info("get Query:" + quoteVO.getQuery());
 
                 quoteVO.executeQuery();
                 _logger.info("In update quote,query executed and returns " +
                              quoteVO.getEstimatedRowCount() + " Rows");
-                System.out.println("after Execution");
+                 _logger.info("after Execution");
                 RowSetIterator iter = quoteVO.createRowSetIterator("");
 
                 while (iter.hasNext()) {
@@ -1017,7 +1017,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     }
 
     public String getQuoteNum(String headerid) {
-        System.out.println("headerId" + headerid);
+         _logger.info("headerId" + headerid);
         headerid = headerid.replaceAll("\\s", "");
         String quoteNum = "";
 
@@ -1030,8 +1030,8 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 BigDecimal headerNum = new BigDecimal(headerid);
                 quoteVO.setWhereClause("Quote_Header_Id=" + headerNum);
                 quoteVO.executeQuery();
-                System.out.println("QUery is:" + quoteVO.getQuery());
-                System.out.println("row Count:" +
+                 _logger.info("QUery is:" + quoteVO.getQuery());
+                 _logger.info("row Count:" +
                                    quoteVO.getEstimatedRowCount());
                 RowSetIterator iter = quoteVO.createRowSetIterator("");
                 if (iter.hasNext()) {
@@ -1040,7 +1040,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 }
                 quoteNum = row.getAttribute("QuoteNumber").toString();
                 iter.closeRowSetIterator();
-                //                        System.out.println("QUote Number from Duplicate:::::::"+row.getAttribute("QuoteNumber"));
+                //                         _logger.info("QUote Number from Duplicate:::::::"+row.getAttribute("QuoteNumber"));
 
             }
         }
@@ -1051,14 +1051,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         ViewObjectImpl vo = this.getSalesRepresentativeVO();
         if (vo != null) {
             if (row != null) {
-                System.out.println(" resource Name" +
+                 _logger.info(" resource Name" +
                                    row.getAttribute("Salesrepresentative"));
                 vo.setNamedWhereClauseParam("p_orgId",
                                             row.getAttribute("OrgId"));
                 vo.setWhereClause("resource_name ='" +
                                   row.getAttribute("Salesrepresentative") +
                                   "'"); //Businesscentercsr
-                System.out.println("Sales Rep Query:" + vo.getQuery());
+                 _logger.info("Sales Rep Query:" + vo.getQuery());
                 vo.executeQuery();
                 RowSetIterator iter = vo.createRowSetIterator("");
                 Row salesRow = null;
@@ -1085,14 +1085,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         ViewObjectImpl vo = this.getSalesRepresentativeVO();
         if (vo != null) {
             if (row != null) {
-                System.out.println(" resource Name" +
+                 _logger.info(" resource Name" +
                                    row.getAttribute("SalesRepresentative"));
                 vo.setNamedWhereClauseParam("p_orgId",
                                             row.getAttribute("OrgId"));
                 vo.setWhereClause("resource_name ='" +
                                   row.getAttribute("SalesRepresentative") +
                                   "'"); //Businesscentercsr
-                System.out.println("Sales Rep Query:" + vo.getQuery());
+                 _logger.info("Sales Rep Query:" + vo.getQuery());
                 vo.executeQuery();
                 RowSetIterator iter = vo.createRowSetIterator("");
                 Row salesRow = null;
@@ -1118,10 +1118,10 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         ViewObjectImpl vo = this.getPaymentTermsVO();
 
         if (vo != null) {
-            System.out.println("1 " + vo);
+             _logger.info("1 " + vo);
             if (row != null) {
-                System.out.println("2 " + row);
-                System.out.println("PaymentTerms from getPaymentTermsForUpdate method :" +
+                 _logger.info("2 " + row);
+                 _logger.info("PaymentTerms from getPaymentTermsForUpdate method :" +
                                    row.getAttribute("Paymentterms"));
                 vo.setWhereClause("description = '" +
                                   row.getAttribute("Paymentterms") + "'");
@@ -1136,7 +1136,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     row.setAttribute("Paymentterms",
                                      PaymentRow.getAttribute("Name"));
-                    System.out.println("Tst " +
+                     _logger.info("Tst " +
                                        row.getAttribute("PaymentTermsName"));
                 }
             }
@@ -1148,7 +1148,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         ViewObjectImpl vo = this.getCustomerSupportRepresentVO();
         if (vo != null) {
             if (row != null) {
-                System.out.println(" Business center csr" +
+                 _logger.info(" Business center csr" +
                                    row.getAttribute("Businesscentercsr"));
                 vo.setWhereClause("Customer_name = '" +
                                   row.getAttribute("Businesscentercsr") +
@@ -1179,7 +1179,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         ViewObjectImpl vo = this.getCustomerSupportRepresentVO();
         if (vo != null) {
             if (row != null) {
-                System.out.println(" Business center csr" +
+                 _logger.info(" Business center csr" +
                                    row.getAttribute("CustomerSupportRepresent"));
                 vo.setWhereClause("Customer_name = '" +
                                   row.getAttribute("CustomerSupportRepresent") +
@@ -1223,7 +1223,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 ResultSet rs = cs.executeQuery();
                 while (rs.next()) {
                     quoteTo = rs.getString(5);
-                    System.out.println("quoteTo is:" + quoteTo);
+                     _logger.info("quoteTo is:" + quoteTo);
                 }
                 cs1 =
 this.getDBTransaction().createPreparedStatement(query, 0);
@@ -1233,11 +1233,11 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 ResultSet rs1 = cs1.executeQuery();
                 while (rs1.next()) {
                     shipTo = rs1.getString(5);
-                    System.out.println("ShipTo is:" + shipTo);
+                     _logger.info("ShipTo is:" + shipTo);
                 }
                 row.setAttribute("QuoteTo", quoteTo);
                 row.setAttribute("ShipTo", shipTo);
-                System.out.println("QuoteTo:" + quoteTo + ":shipto:" + shipTo);
+                 _logger.info("QuoteTo:" + quoteTo + ":shipto:" + shipTo);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -1278,13 +1278,13 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     if (quoteVORow.getAttribute("QuoteNumber") != null) {
                         cs.setString(1,
                                      quoteVORow.getAttribute("QuoteNumber").toString());
-                        System.out.println("QuoteNumber:" +
+                         _logger.info("QuoteNumber:" +
                                            quoteVORow.getAttribute("QuoteNumber").toString());
                     }
                     if (quoteVORow.getAttribute("QuoteName") != null) {
                         cs.setString(2,
                                      quoteVORow.getAttribute("QuoteName").toString());
-                        System.out.println("QuoteName:" +
+                         _logger.info("QuoteName:" +
                                            quoteVORow.getAttribute("QuoteName").toString());
                     } else if (isCustEditable) { //CustName
                         String custName =
@@ -1307,7 +1307,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                             (String)quoteVORow.getAttribute("Customername");
                         if (custName != null) {
                             cs.setString(2, "Quote For " + custName);
-                            System.out.println("QuoteDescription:" +
+                             _logger.info("QuoteDescription:" +
                                                "Quote For " + custName);
                             quoteVORow.setAttribute("QuoteName",
                                                     "Quote For " + custName);
@@ -1321,7 +1321,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Ordertypename").toString());
 
-                        System.out.println("Ordertypename:" +
+                         _logger.info("Ordertypename:" +
                                            quoteVORow.getAttribute(
 
                                     "Ordertypename").toString());
@@ -1338,7 +1338,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Pricelistname").toString());
 
-                        System.out.println("Pricelistname:" +
+                         _logger.info("Pricelistname:" +
                                            quoteVORow.getAttribute(
 
                                     "Pricelistname").toString());
@@ -1358,7 +1358,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Saleschannel").toString());
 
-                        System.out.println("Saleschannel:" +
+                         _logger.info("Saleschannel:" +
                                            quoteVORow.getAttribute(
 
                                     "Saleschannel").toString());
@@ -1374,7 +1374,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Customernumber").toString());
 
-                        System.out.println("Customer Number" +
+                         _logger.info("Customer Number" +
                                            quoteVORow.getAttribute(
 
                                     "Customernumber"));
@@ -1392,7 +1392,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Salesrepresentative").toString());
 
-                        System.out.println("Sales representative" +
+                         _logger.info("Sales representative" +
                                            quoteVORow.getAttribute(
 
                                     "Salesrepresentative"));
@@ -1410,7 +1410,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Paymentterms").toString());
 
-                        System.out.println("PaymentTermsName:" +
+                         _logger.info("PaymentTermsName:" +
                                            quoteVORow.getAttribute(
 
                                     "Paymentterms").toString());
@@ -1429,7 +1429,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "CurrencyCode").toString());
 
-                        System.out.println("Currency:" +
+                         _logger.info("Currency:" +
                                            quoteVORow.getAttribute(
 
                                     "CurrencyCode").toString());
@@ -1447,7 +1447,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Incoterms").toString());
 
-                        System.out.println("Incoterms:" +
+                         _logger.info("Incoterms:" +
                                            quoteVORow.getAttribute(
 
                                     "Incoterms").toString());
@@ -1465,7 +1465,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Businesscentercsr").toString());
 
-                        System.out.println("Businesscentercsr:" +
+                         _logger.info("Businesscentercsr:" +
                                            quoteVORow.getAttribute(
 
                                     "Businesscentercsr").toString());
@@ -1484,7 +1484,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Attribute8").toString());
 
-                        System.out.println("Attribute8:" +
+                         _logger.info("Attribute8:" +
                                            quoteVORow.getAttribute(
 
                                     "Attribute8").toString());
@@ -1504,7 +1504,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Attribute12").toString());
 
-                        System.out.println("Attribute12:" +
+                         _logger.info("Attribute12:" +
                                            quoteVORow.getAttribute(
 
                                     "Attribute12").toString());
@@ -1523,7 +1523,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                                     "Attribute13").toString());
 
-                        System.out.println("Attribute13:" +
+                         _logger.info("Attribute13:" +
                                            quoteVORow.getAttribute(
 
                                     "Attribute13").toString());
@@ -1550,7 +1550,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     //
                     //                        cs.setString(17, null);
                     //                    }
-                    System.out.println("Agreement name "+quoteVORow.getAttribute("Agrimentname"));
+                     _logger.info("Agreement name "+quoteVORow.getAttribute("Agrimentname"));
                     cs.setString(17,
                                  (String)quoteVORow.getAttribute("Agrimentname"));
                     //cs.setString(17, null);
@@ -1581,7 +1581,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         returnMsgStatus = cs.getString(21);
                         returnMessage = cs.getString(22);
                         if (returnMessage != null)
-                            System.out.println("return Message is:" +
+                             _logger.info("return Message is:" +
                                                returnMessage + " ::msg::");
                     }
                 } catch (Exception e) {
@@ -1634,14 +1634,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                                       quoteSearchVORow.getAttribute("Customer"));
             quoteResultTabVO.setNamedWhereClauseParam("p_orgId",
                                                       quoteSearchVORow.getAttribute("OUId"));
-            //            System.out.println("Quote Number" +
+            //             _logger.info("Quote Number" +
             //                               quoteSearchVORow.getAttribute("QuoteNumber"));
-            //            System.out.println("Org id" +
+            //             _logger.info("Org id" +
             //                               quoteSearchVORow.getAttribute("OUId"));
             quoteResultTabVO.applyViewCriteria(null);
             quoteResultTabVO.applyViewCriteria(quoteSearchTabVC);
             //            String query = quoteResultTabVO.getQuery().toString();
-            //            System.out.println("query is:" + query);
+            //             _logger.info("query is:" + query);
             quoteResultTabVO.executeQuery();
 
         }
@@ -1654,13 +1654,13 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         Row row = queryVO.getCurrentRow();
 
         BigDecimal parentId;
-        System.out.println("Description:"+row.getAttribute("QuoteDescription"));
-        System.out.println("Customer name is:"+row.getAttribute("CustomerName"));
-        System.out.println("CSR" +
+         _logger.info("Description:"+row.getAttribute("QuoteDescription"));
+         _logger.info("Customer name is:"+row.getAttribute("CustomerName"));
+         _logger.info("CSR" +
                            row.getAttribute("CustomerSupportRepresent"));
-        System.out.println("CCN" + row.getAttribute("CustomerContactName"));
+         _logger.info("CCN" + row.getAttribute("CustomerContactName"));
 
-        System.out.println(row.getAttribute("Customerparentid"));
+         _logger.info(row.getAttribute("Customerparentid"));
         parentId = (BigDecimal)row.getAttribute("Customerparentid");
         String faxNum = null;
         PreparedStatement pstmt = null;
@@ -1674,7 +1674,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             ResultSet rs = pstmt.getResultSet();
             while (rs.next()) {
                 faxNum = rs.getString(1);
-                System.out.println("fax Number is:" + faxNum);
+                 _logger.info("fax Number is:" + faxNum);
             }
 
             row.setAttribute("CustomerFaxNum", faxNum);
@@ -1830,7 +1830,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         //        errorMsg.append("The following quote parameters could not be verified in the Imported Reference Configuration.");
         BigDecimal orgid = null;
         BigDecimal partyId = null;
-        System.out.println("OU:" + ou + "--IncoTerm:" + incoTerm +
+         _logger.info("OU:" + ou + "--IncoTerm:" + incoTerm +
                            "--currency:" + currency + "--payTerm:" + payTerm +
                            "--custNumber:" + custNumber + "custName:" +
                            custName + "Price List Id " + priceList);
@@ -1949,7 +1949,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                                 errorMsg.append("<p>Customer Details:</p>");
                                         } else {
                                             //showWarning = true;
-                                            System.out.println("customer details are null");
+                                             _logger.info("customer details are null");
                                         }
                                     }
 
@@ -1958,7 +1958,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                                 getPartyId(custNumber, custName,
                                                            numCheck,
                                                            nameCheck);
-                                        System.out.println("partyId::" +
+                                         _logger.info("partyId::" +
                                                            partyId);
                                         row.setAttribute("PartyId", partyId);
 
@@ -1977,7 +1977,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                                 } else {
                                                     showWarning = true;
                                                     errorMsg.append("<p>Business Agreement</p>");
-                                                    System.out.println("Business Agreement");
+                                                     _logger.info("Business Agreement");
                                                 }
                                             }
                                         }
@@ -1990,7 +1990,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         } else {
                             showWarning = true;
                             errorMsg.append("<p>Operating Unit</p>");
-                            System.out.println("OU");
+                             _logger.info("OU");
                         }
                     }
                 }
@@ -2021,7 +2021,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                        validCSR.equalsIgnoreCase("N")) {
                                 showWarning = true;
                                 errorMsg.append("<p>Business Center CSR</p>");
-                                System.out.println("Business Center CSR");
+                                 _logger.info("Business Center CSR");
                             }
                         }
                     }
@@ -2039,7 +2039,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         } else {
                             showWarning = true;
                             errorMsg.append("<p>Price List</p>");
-                            System.out.println("Price List");
+                             _logger.info("Price List");
                         }
                     }
                 }
@@ -2052,7 +2052,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         } else {
                             showWarning = true;
                             errorMsg.append("<p>Currency</p>");
-                            System.out.println("Currency");
+                             _logger.info("Currency");
                         }
                     }
                 }
@@ -2066,7 +2066,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         } else {
                             showWarning = true;
                             errorMsg.append("<p>IncoTerm</p>");
-                            System.out.println("IncoTerm");
+                             _logger.info("IncoTerm");
                         }
                     }
                 }
@@ -2083,13 +2083,13 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         } else {
                             showWarning = true;
                             errorMsg.append("<p>Sales Channel</p>");
-                            System.out.println("Sales Channel");
+                             _logger.info("Sales Channel");
                         }
                     }
                 }
                 if (quoteDesc != null) {
                     quoteDesc = quoteDesc.trim();
-                    System.out.println("Quote Desc:" + quoteDesc);
+                     _logger.info("Quote Desc:" + quoteDesc);
                     row.setAttribute("QuoteDescription", quoteDesc);
                 }
 
@@ -2103,7 +2103,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         } else {
                             showWarning = true;
                             errorMsg.append("<p>Payment Terms</p>");
-                            System.out.println("PaymentTerm");
+                             _logger.info("PaymentTerm");
                         }
                     }
                 }
@@ -2128,7 +2128,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         if (vo != null) {
             vo.setWhereClause("currency_code='" + currency + "'");
             vo.executeQuery();
-            System.out.println("Currency Query:" + vo.getQuery() + "count:" +
+             _logger.info("Currency Query:" + vo.getQuery() + "count:" +
                                vo.getEstimatedRowCount());
             if (vo.getEstimatedRowCount() > 0)
                 isCurrency = true;
@@ -2256,9 +2256,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //                vo.setWhereClause("customername='" + custName + "'");
     //            else
     //                vo.setWhereClause("accountnumber='" + custNum + "'");
-    //            System.out.println("QUery is:" + vo.getQuery());
+    //             _logger.info("QUery is:" + vo.getQuery());
     //            vo.executeQuery();
-    //            System.out.println("QUery is:" + vo.getQuery());
+    //             _logger.info("QUery is:" + vo.getQuery());
     //            if (vo.getEstimatedRowCount() > 0)
     //                isCustValidate = true;
     //            else
@@ -2353,7 +2353,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 //                customerNum = customerNum.replaceAll("\\s","");
                 vo.setWhereClause("accountnumber='" + customerNum + "'");
                 vo.executeQuery();
-                //                System.out.println("Query::" + vo.getQuery());
+                //                 _logger.info("Query::" + vo.getQuery());
             }
             if (custName != null && nameCheck) {
                 custName = custName.trim();
@@ -2362,7 +2362,6 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 vo.executeQuery();
             }
             RowSetIterator iter = vo.createRowSetIterator("");
-            System.out.println(vo.getEstimatedRowCount());
             Row row = null;
             while (iter.hasNext()) {
                 row = iter.next();
@@ -2382,7 +2381,6 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 vo.setWhereClause("OPERATING_UNIT ='" + ou + "'");
                 vo.executeQuery();
                 RowSetIterator iter = vo.createRowSetIterator("");
-                System.out.println(vo.getEstimatedRowCount());
                 Row ouRow = null;
                 while (iter.hasNext()) {
                     ouRow = iter.next();
@@ -2426,7 +2424,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     public void defaultSalesRepOnCreateQuote(Row row) {
         Row salesRepRow = null;
         if (row != null) {
-            System.out.println("OrgId is:" + row.getAttribute("OrgId"));
+             _logger.info("OrgId is:" + row.getAttribute("OrgId"));
             salesRepRow =
                     getDefaulSalesRepVal((BigDecimal)row.getAttribute("OrgId"));
             if (salesRepRow != null) {
@@ -2460,7 +2458,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //        if (isUserDefault) {
     //            if (vo != null) {
     //                Row row = vo.getCurrentRow();
-    //            System.out.println("org value"+row.getAttribute("OrgId"));
+    //             _logger.info("org value"+row.getAttribute("OrgId"));
     //                Map custDetails = rowImpl.getUserBasedCustomerDetails();
     //                if (custDetails != null) {
     //                    custNum = (String)custDetails.get("custNum");
@@ -2469,15 +2467,15 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     ////                String salesRep = rowImpl.getUserBasedSalesRep();
     ////                String orderType = rowImpl.getUserBasedOrderType();
     ////                row.setAttribute("OrderType", orderType);
-    //                System.out.println("custName:"+custName+" custNumber:"+custNum);
+    //                 _logger.info("custName:"+custName+" custNumber:"+custNum);
     ////                row.setAttribute("CustNum", custNum);
     ////                row.setAttribute("CustName", custName);
     //                row.setAttribute("CustomerNumber", custNum);
-    //                System.out.println(row.getAttribute("CustomerNumber"));
+    //                 _logger.info(row.getAttribute("CustomerNumber"));
     //                row.setAttribute("CustomerName", custName);
     ////                row.setAttribute("Currency", currency);
     ////                row.setAttribute("IncoTerms", incoTerm);
-    //                System.out.println(paymentTerm);
+    //                 _logger.info(paymentTerm);
     //                row.setAttribute("PaymentTerms",paymentTerm);
     ////                row.setAttribute("CustomerSupportRepresent", csr);
     ////                row.setAttribute("SalesRepresentative", salesRep);
@@ -2547,21 +2545,20 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         csr = rowImpl.getUserBasedCSR(null);
         if (vo != null) {
             Row row = vo.getCurrentRow();
-            System.out.println("org value" + row.getAttribute("OrgId"));
+             _logger.info("org value" + row.getAttribute("OrgId"));
             custNum = (String)custDetails.get("custNum");
             custName = (String)custDetails.get("custName");
             row.setAttribute("OrderType", orderType);
-            System.out.println("OrderType Value:" + orderType);
-            System.out.println("custName:" + custName + " custNumber:" +
+             _logger.info("OrderType Value:" + orderType);
+             _logger.info("custName:" + custName + " custNumber:" +
                                custNum);
             row.setAttribute("CustNum", custNum);
-            System.out.println(row.getAttribute("CustNum"));
             row.setAttribute("CustomerName", custName);
             row.setAttribute("CustName", custName);
             row.setAttribute("Currency", currency);
             row.setAttribute("IncoTerms", incoTerm);
             row.setAttribute("CustomerSupportRepresent", csr);
-            System.out.println(paymentTerm);
+             _logger.info(paymentTerm);
             row.setAttribute("PaymentTerms", paymentTerm);
             if (salesRep != null)
                 row.setAttribute("SalesRepresentative", salesRep);
@@ -2591,12 +2588,12 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     }
 
     public void initRuleSet() {
-        System.out.println("Init Rule Set");
+         _logger.info("Init Rule Set");
         ViewObjectImpl ruleSetVO = this.getRuleSetVO1();
         if (ruleSetVO != null) {
             //            AttributeDef[] attDef = ruleSetVO.getAttributeDefs();
             //            for (AttributeDef af : attDef) {
-            //                System.out.println(af.getName());
+            //                 _logger.info(af.getName());
             //            }
             //get value of rulset top level and second level choices
             Row cRow = ruleSetVO.createRow();
@@ -2620,7 +2617,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
                     String secondLevelMeaning =
                         rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                    System.out.println("From AM Impl second level meaning " +
+                     _logger.info("From AM Impl second level meaning " +
                                        secondLevelMeaning);
                     cRow.setAttribute("SecondLevelMeaning",
                                       secondLevelMeaning);
@@ -2635,7 +2632,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
                     String secondLevelMeaning =
                         rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                    System.out.println("From AM Impl second level meaning " +
+                     _logger.info("From AM Impl second level meaning " +
                                        secondLevelMeaning);
                     cRow.setAttribute("SecondLevelMeaning",
                                       secondLevelMeaning);
@@ -2678,7 +2675,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
                     String secondLevelMeaning =
                         rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                    System.out.println("From AM Impl second level meaning " +
+                     _logger.info("From AM Impl second level meaning " +
                                        secondLevelMeaning);
                     cRow.setAttribute("SecondLevelMeaning",
                                       secondLevelMeaning);
@@ -2704,7 +2701,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         (RuleSetVORowImpl)ruleSetVO.getCurrentRow();
                     String secondLevelMeaning =
                         rwImpl.retrieveSecLevelMeaning(secondLevelCode);
-                    System.out.println("From AM Impl second level meaning " +
+                     _logger.info("From AM Impl second level meaning " +
                                        secondLevelMeaning);
                     cRow.setAttribute("SecondLevelMeaning",
                                       secondLevelMeaning);
@@ -2752,7 +2749,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     returnStatus = cs.getString(4);
                     returnMessage = cs.getString(5);
                     if (returnMessage != null)
-                        System.out.println("return Message is:" +
+                         _logger.info("return Message is:" +
                                            returnMessage + " ::msg::");
                 }
             } catch (SQLException e) {
@@ -2839,7 +2836,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 returnStatus = cs.getString(8);
                 returnMessage = cs.getString(9);
                 if (returnMessage != null) {
-                    //                    System.out.println("return Message from update:" +
+                    //                     _logger.info("return Message from update:" +
                     //                                       returnMessage);
                 }
             }
@@ -3021,7 +3018,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             String returnMessage = "";
             String returnStatus = "";
             quoteNum = quoteNum.trim();
-            System.out.println("quoteNum:" + quoteNum + "prodName::" +
+             _logger.info("quoteNum:" + quoteNum + "prodName::" +
                                prodName + "respId:" + respId + "usrId:" +
                                usrId);
 
@@ -3052,7 +3049,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     returnStatus = cs.getString(5);
                     returnMessage = cs.getString(6);
                     if (returnMessage != null)
-                        System.out.println("return Message is:" +
+                         _logger.info("return Message is:" +
                                            returnMessage + " ::msg::");
                 }
             } catch (SQLException e) {
@@ -3139,7 +3136,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+             _logger.info(e.getMessage());
         } finally {
             if (cs != null) {
                 try {
@@ -3157,7 +3154,6 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             vo.setWhereClause(null);
             vo.setWhereClause("USER_ID =" + usrId);
             vo.executeQuery();
-            System.out.println(vo.getEstimatedRowCount());
         }
 
     }
@@ -3177,7 +3173,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+             _logger.info(e.getMessage());
         } finally {
             if (cs != null) {
                 try {
@@ -3195,7 +3191,6 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             vo.setWhereClause(null);
             vo.setWhereClause("USER_ID =" + usrId);
             vo.executeQuery();
-            System.out.println(vo.getEstimatedRowCount());
         }
 
     }
@@ -3217,8 +3212,8 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     if (map != null) {
                         custNum = (String)map.get("custNum");
                         custName = (String)map.get("custName");
-                        System.out.println(custNum);
-                        System.out.println(custName);
+                         _logger.info(custNum);
+                         _logger.info(custName);
                     }
                     currency =
                             rowImpl.getSalesChannelBasedCurrency(salesChannel);
@@ -3227,16 +3222,16 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     paymentTerm =
                             rowImpl.getSalesChannelBasedPaymentTerm(salesChannel);
                     ba = rowImpl.getSalesChannelBasedBA(salesChannel);
-                    System.out.println("CustNum:" + r.getAttribute("CustNum"));
-                    System.out.println("CustomerName:" +
+                     _logger.info("CustNum:" + r.getAttribute("CustNum"));
+                     _logger.info("CustomerName:" +
                                        r.getAttribute("CustomerName"));
                     //                r.setAttribute("CustNum", "ATJ");
                     //                r.setAttribute("CustomerName", "Advantest Corporation");
                     r.setAttribute("CustNum", custNum);
                     //                r.setAttribute("CustomerName", custName);
                     //                r.setAttribute("CustName", custName);
-                    System.out.println("CustNum:" + r.getAttribute("CustNum"));
-                    System.out.println("CustomerName:" +
+                     _logger.info("CustNum:" + r.getAttribute("CustNum"));
+                     _logger.info("CustomerName:" +
                                        r.getAttribute("CustName"));
                     getQuoteCustmerAddress(r);
                     r.setAttribute("IncoTerms", incoTerm);
@@ -3323,9 +3318,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //            for (Row r : filteredRows) {
     //                selectedValues.add(r.getAttribute("OperatingUnit").toString());
     //                selectedOrgValues.add(r.getAttribute("OrgId").toString());
-    //                System.out.println("Filtered Row- " +
+    //                 _logger.info("Filtered Row- " +
     //                                   r.getAttribute("OperatingUnit") + "n");
-    //                System.out.println("Filtered Row- " + r.getAttribute("OrgId") +
+    //                 _logger.info("Filtered Row- " + r.getAttribute("OrgId") +
     //                                   "n");
     //            }
     //        } else {
@@ -3337,7 +3332,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //                if (rows != null && rows.length > 0) {
     //                    row = rows[0];
     //                    ou = (String)row.getAttribute("ColumnVal");
-    //                    System.out.println("ou is:" + ou);
+    //                     _logger.info("ou is:" + ou);
     //                }
     //                if (ouVO != null && ou != null) {
     //                    temp = Arrays.asList(ou.split("\\s*,\\s*"));
@@ -3349,9 +3344,9 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //                        for (Row r : filteredRows) {
     //                            selectedValues.add(r.getAttribute("OperatingUnit").toString());
     //                            selectedOrgValues.add(r.getAttribute("OrgId"));
-    //                            System.out.println("Filtered Row OU- " +
+    //                             _logger.info("Filtered Row OU- " +
     //                                               r.getAttribute("OperatingUnit"));
-    //                            System.out.println("Filtered Row-OrgList " +
+    //                             _logger.info("Filtered Row-OrgList " +
     //                                               r.getAttribute("OrgId"));
     //                        }
     //                    }
@@ -3478,7 +3473,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
     public List getSelectedCustNumValues(int usrId, String orgId) {
         long startTime = System.currentTimeMillis();
-        System.out.println("SudokuAmImpl:getSelectedCustNumValues: Start " +
+         _logger.info("SudokuAmImpl:getSelectedCustNumValues: Start " +
                            (System.currentTimeMillis() - startTime));
         ViewObjectImpl vo = this.getuserPrefEntityVO();
         //        ViewObjectImpl custVO = this.getCustomerNameVO();   //p_orgId
@@ -3500,15 +3495,15 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         }
         if (customer != null) {
             temp = Arrays.asList(customer.split("\\s*,\\s*"));
-            System.out.println("SudokuAmImpl:getSelectedCustNumValues: 2 " +
+             _logger.info("SudokuAmImpl:getSelectedCustNumValues: 2 " +
                                (System.currentTimeMillis() - startTime));
             //            if(temp!=null && temp.size()>0)
             //                      selectedCustvals = temp;
             for (String s : temp) {
                 selectedCustvals.add(s);
-                System.out.println("value is:" + s);
+                 _logger.info("value is:" + s);
             }
-            System.out.println("SudokuAmImpl:getSelectedCustNumValues: 3 " +
+             _logger.info("SudokuAmImpl:getSelectedCustNumValues: 3 " +
                                (System.currentTimeMillis() - startTime));
         }
 
@@ -3518,7 +3513,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
     public List getSelectedCurrencyValues(int usrId) {
         long startTime = System.currentTimeMillis();
-        System.out.println("from Sudoku:getSelectedCurrencyValues: Start " +
+         _logger.info("from Sudoku:getSelectedCurrencyValues: Start " +
                            (System.currentTimeMillis() - startTime));
         StringBuilder currencysb = new StringBuilder("('");
         Row row = null;
@@ -3537,7 +3532,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             row = rows[0];
             currency = (String)row.getAttribute("ColumnVal");
         }
-        System.out.println("from Sudoku:getSelectedCurrencyValues: UserPref lists " +
+         _logger.info("from Sudoku:getSelectedCurrencyValues: UserPref lists " +
                            (System.currentTimeMillis() - startTime));
         if (currencyVO != null && currency != null) {
             temp = Arrays.asList(currency.split("\\s*,\\s*"));
@@ -3546,18 +3541,18 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 currencysb.append("','").append(temp.get(i));
             }
             currencysb.append("')");
-            System.out.println("cusrrency List:" + currencysb.toString());
+             _logger.info("cusrrency List:" + currencysb.toString());
             RowQualifier rq =
                 new RowQualifier("CurrencyCode in" + currencysb.toString());
             Row filteredRows[] = currencyVO.getFilteredRows(rq);
-            System.out.println("from Sudoku:getSelectedCurrencyValues: After Filtieing " +
+             _logger.info("from Sudoku:getSelectedCurrencyValues: After Filtieing " +
                                (System.currentTimeMillis() - startTime));
             for (Row r : filteredRows) {
-                System.out.println("Value issss:" +
+                 _logger.info("Value issss:" +
                                    r.getAttribute("Name").toString());
                 selectedValues.add(r.getAttribute("Name").toString());
             }
-            System.out.println("from Sudoku:getSelectedCurrencyValues: closing: " +
+             _logger.info("from Sudoku:getSelectedCurrencyValues: closing: " +
                                (System.currentTimeMillis() - startTime));
         }
         return selectedValues;
@@ -3593,7 +3588,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             rq.setWhereClause("Meaning in" + incoTermsb.toString());
             Row filteredRows[] = incoTermVO.getFilteredRows(rq);
             for (Row r : filteredRows) {
-                System.out.println("IncoTerm Value is:" +
+                 _logger.info("IncoTerm Value is:" +
                                    r.getAttribute("Description").toString());
                 selectedValues.add(r.getAttribute("Description"));
             }
@@ -3606,7 +3601,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
     public List getSelectedCSRValues(int usrId) {
         long startTime = System.currentTimeMillis();
-        System.out.println("from Sudoku:getSelectedCSRalues: Start " +
+         _logger.info("from Sudoku:getSelectedCSRalues: Start " +
                            (System.currentTimeMillis() - startTime));
         StringBuilder csrsb = new StringBuilder("(");
         String csr = null;
@@ -3622,7 +3617,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         if (rows != null && rows.length > 0) {
             csr = (String)rows[0].getAttribute("ColumnVal");
         }
-        System.out.println("from Sudoku:getSelectedCSRValues: UserPref lists " +
+         _logger.info("from Sudoku:getSelectedCSRValues: UserPref lists " +
                            (System.currentTimeMillis() - startTime));
         if (csrVO != null && csr != null) {
             csrsb.append(csr);
@@ -3630,14 +3625,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             RowQualifier rq =
                 new RowQualifier("PersonId in" + csrsb.toString());
             Row filteredRows[] = csrVO.getFilteredRows(rq);
-            System.out.println("from Sudoku:getSelectedCsrValues: After Filtieing " +
+             _logger.info("from Sudoku:getSelectedCsrValues: After Filtieing " +
                                (System.currentTimeMillis() - startTime));
             for (Row r : filteredRows) {
-                System.out.println("Value issss:" +
+                 _logger.info("Value issss:" +
                                    r.getAttribute("CustomerName").toString());
                 selectedValues.add(r.getAttribute("CustomerName").toString());
             }
-            System.out.println("from Sudoku:getSelectedCsrValues: closing: " +
+             _logger.info("from Sudoku:getSelectedCsrValues: closing: " +
                                (System.currentTimeMillis() - startTime));
         }
         return selectedValues;
@@ -3669,7 +3664,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                                                String salesChannel) {
         long startTime = System.currentTimeMillis();
         _logger.info("SudkuAmimpl: getSelectedCurrencyValuesForSC: Start:::");
-        System.out.println("from Sudoku:getSelectedCurrencyValues: Start " +
+         _logger.info("from Sudoku:getSelectedCurrencyValues: Start " +
                            (System.currentTimeMillis() - startTime));
         StringBuilder currencysb = new StringBuilder("('");
         String currency = null;
@@ -3691,7 +3686,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             //                currency = (String)r1[0].getAttribute("ColumnVal");
             //            }
             //            vo.setWhereClause("USER_ID ="+usrId+" And COLUMN_TYPE ="+"'"+col_type+"' AND SALES_CHANNEL="+"'"+salesChannel+"'");
-            //            System.out.println("Query:"+vo.getQuery());
+            //             _logger.info("Query:"+vo.getQuery());
             //            vo.executeQuery();
             //            RowSetIterator iter = vo.getRowSetIterator();
             //            while(iter.hasNext()){
@@ -3706,7 +3701,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             if (rows != null && rows.length > 0) {
                 currency = (String)rows[0].getAttribute("ColumnVal");
             }
-            System.out.println("from Sudoku:getSelectedCurrencyValues: UserPref lists " +
+             _logger.info("from Sudoku:getSelectedCurrencyValues: UserPref lists " +
                                (System.currentTimeMillis() - startTime));
             if (currencyVO != null && currency != null) {
                 currencyVO.clearCache();
@@ -3717,19 +3712,19 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 }
                 currencysb.append("')");
 
-                System.out.println("cusrrency List:" + currencysb.toString());
+                 _logger.info("cusrrency List:" + currencysb.toString());
                 RowQualifier rq =
                     new RowQualifier("CurrencyCode in" + currencysb.toString());
                 Row filteredRows[] = currencyVO.getFilteredRows(rq);
-                System.out.println("from Sudoku:getSelectedCurrencyValues: After Filtieing " +
+                 _logger.info("from Sudoku:getSelectedCurrencyValues: After Filtieing " +
                                    (System.currentTimeMillis() - startTime));
                 for (Row r : filteredRows) {
-                    System.out.println("Value issss:" +
+                     _logger.info("Value issss:" +
                                        r.getAttribute("Name").toString());
                     selectedValues.add(r.getAttribute("Name").toString());
                 }
             }
-            System.out.println("from Sudoku:getSelectedCurrencyValues: closing: " +
+             _logger.info("from Sudoku:getSelectedCurrencyValues: closing: " +
                                (System.currentTimeMillis() - startTime));
         }
         return selectedValues;
@@ -3777,7 +3772,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 rq.setWhereClause("Meaning in" + incoTermsb.toString());
                 Row filteredRows[] = incoTermVO.getFilteredRows(rq);
                 for (Row r : filteredRows) {
-                    System.out.println("IncoTerm Value is:" +
+                     _logger.info("IncoTerm Value is:" +
                                        r.getAttribute("Description").toString());
                     selectedValues.add(r.getAttribute("Description"));
                 }
@@ -3827,7 +3822,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 rq.setWhereClause("Name in" + paymentTermsb.toString());
                 Row filteredRows[] = paymentTermVO.getFilteredRows(rq);
                 for (Row r : filteredRows) {
-                    System.out.println("PaymentTerm Value is:" +
+                     _logger.info("PaymentTerm Value is:" +
                                        r.getAttribute("Description").toString());
                     selectedValues.add(r.getAttribute("Description").toString());
                 }
@@ -3877,7 +3872,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 rq.setWhereClause("AgreementId in" + baSB.toString());
                 Row filteredRows[] = baVO.getFilteredRows(rq);
                 for (Row r : filteredRows) {
-                    System.out.println("business Agreement Value is:" +
+                     _logger.info("business Agreement Value is:" +
                                        r.getAttribute("Name").toString());
                     selectedValues.add(r.getAttribute("Name"));
                 }
@@ -3931,7 +3926,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.getAttribute(
+                         _logger.info("user Name:" + row.getAttribute(
 
                                     "UserId") + "::column_name::" +
                                 row.getAttribute
@@ -3988,7 +3983,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.getAttribute(
+                         _logger.info("user Name:" + row.getAttribute(
 
                                     "UserId") + "::column_name::" +
                                 row.getAttribute
@@ -4040,7 +4035,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.getAttribute(
+                         _logger.info("user Name:" + row.getAttribute(
 
                                     "UserId") + "::column_name::" +
                                 row.getAttribute
@@ -4092,7 +4087,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
                     if (row != null) {
 
-                        System.out.println("user Name:" + row.getAttribute(
+                         _logger.info("user Name:" + row.getAttribute(
 
                                     "UserId") + "::column_name::" +
                                 row.getAttribute
@@ -4155,7 +4150,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                         //                        row.setAttribute("OperatingUnit", orgId);
                     }
                     if (row != null) {
-                        System.out.println("user Name:" +
+                         _logger.info("user Name:" +
                                            row.getAttribute("UserId") +
                                            "::column_name::" +
                                            row.getAttribute("ColumnType"));
@@ -4184,7 +4179,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             Row[] rows = prefVO.findByKey(key, 2);
             if (rows != null && rows.length > 0) {
                 orderTypeValueList.append(rows[0].getAttribute("ColumnVal"));
-                //                   System.out.println("list values are:"+orderTypeValueList);
+                //                    _logger.info("list values are:"+orderTypeValueList);
             } else
                 orderTypeValueList.append("''");
 
@@ -4192,10 +4187,8 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             va.setWhereClause("transaction_type_id in" +
                               orderTypeValueList.toString());
             va.setNamedWhereClauseParam("p_orgId", 143);
-            System.out.println("Query::" + va.getQuery());
+             _logger.info("Query::" + va.getQuery());
             va.executeQuery();
-            System.out.println(va);
-            System.out.println(va.getEstimatedRowCount());
 
 
         }
@@ -4215,7 +4208,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //          Row[] rows = vo.findByKey(key,2);
     //          if(rows!=null && rows.length>0){
     //              orderTypeValueList = (String)rows[0].getAttribute("ColumnVal");
-    //              System.out.println("list values are:"+orderTypeValueList);
+    //               _logger.info("list values are:"+orderTypeValueList);
     //              temp =  Arrays.asList(orderTypeValueList.split("\\s*,\\s*"));
     //              orderV.append(temp.get(0));
     //              for(int i=1;i<temp.size();i++)
@@ -4223,7 +4216,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //
     //              orderV.append("')");
     //              orderTypeVO.setWhereClause("transaction_type_id in"+orderV.toString());
-    //              System.out.println("Query::"+orderTypeVO.getQuery());
+    //               _logger.info("Query::"+orderTypeVO.getQuery());
     //              orderTypeVO.executeQuery();
     //              }
     //        }
@@ -4241,12 +4234,12 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         Row[] rows = vo.findByKey(key, 3);
         if (rows != null && rows.length > 0) {
             orderTypeValueList.append(rows[0].getAttribute("ColumnVal"));
-            System.out.println("list values are:" + orderTypeValueList);
+             _logger.info("list values are:" + orderTypeValueList);
         }
         orderTypeValueList.append(")");
         orderTypeVO.setWhereClause("transaction_type_id in" +
                                    orderTypeValueList.toString());
-        System.out.println("Query::" + orderTypeVO.getQuery());
+         _logger.info("Query::" + orderTypeVO.getQuery());
         orderTypeVO.executeQuery();
     }
 
@@ -4261,14 +4254,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             int size = ouValues.size();
             sb.append(ouValues.get(0));
             for (int i = 1; i < ouValues.size(); i++) {
-                System.out.println("selected valuseaa:" + ouValues.get(i));
+                 _logger.info("selected valuseaa:" + ouValues.get(i));
                 sb.append(",").append(ouValues.get(i));
             }
             String temp = sb.toString();
             if (temp != null && temp.endsWith(",")) {
                 temp = temp.substring(0, temp.length() - 1);
             }
-            System.out.println("after removing last comma:" + temp);
+             _logger.info("after removing last comma:" + temp);
             Row row = null;
             String colType = "Operating_unit";
             if (vo != null) {
@@ -4285,7 +4278,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     } else
                         row = null;
                     if (row != null) {
-                        System.out.println("user Name:" +
+                         _logger.info("user Name:" +
                                            row.getAttribute("UserId") +
                                            "::column_name::" +
                                            row.getAttribute("ColumnType"));
@@ -4310,7 +4303,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
         if (custValues != null && custValues.size() > 0) {
             sb.append(custValues.get(0));
             for (int i = 1; i < custValues.size(); i++) {
-                System.out.println("selected valuseaa:" + custValues.get(i));
+                 _logger.info("selected valuseaa:" + custValues.get(i));
                 sb.append(",").append(custValues.get(i));
             }
         }
@@ -4337,7 +4330,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             } else
                 row = null;
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
                 row.setAttribute("ColumnVal", sb.toString());
@@ -4365,7 +4358,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //            custVO.setNamedWhereClauseParam("p_orgId", null);
     //                custVO.setNamedWhereClauseParam("p_orgId", orgId);
     //                custVO.setWhereClause("customername ='"+custDefaultVal+"'");
-    //            System.out.println("Query:"+custVO.getQuery());
+    //             _logger.info("Query:"+custVO.getQuery());
     //                custVO.executeQuery();
     //                RowSetIterator iter = custVO.createRowSetIterator(null);
     //                while(iter.hasNext()){
@@ -4377,14 +4370,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //
     //            sb.append(custValues.get(0));
     //            for (int i = 1; i < custValues.size(); i++) {
-    //                System.out.println("selected valuseaa:" + custValues.get(i));
+    //                 _logger.info("selected valuseaa:" + custValues.get(i));
     //                sb.append("','").append(custValues.get(i));
     //            }
     //        }
     //            sb.append("')");
     //            _logger.info("SudkuAmimpl: validateCustValuesForSC: : set of customoer names:" +
     //                         sb.toString());
-    //            System.out.println(sb.toString());
+    //             _logger.info(sb.toString());
     //            custVO.clearCache();
     //            custVO.setWhereClause(null);
     //            custVO.setNamedWhereClauseParam("p_orgId", null);
@@ -4396,7 +4389,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //                while(iter.hasNext()){
     //                    Row r = iter.next();
     //                    if(r!=null){
-    //                    System.out.println(""+r.getAttribute("Accountnumber"));
+    //                     _logger.info(""+r.getAttribute("Accountnumber"));
     //                        custNumber.append(r.getAttribute("Accountnumber").toString());
     //                       custNumber.append(",");
     //                    }
@@ -4409,7 +4402,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //            temp = temp.substring(0, temp.length() - 1);
     //        }
     //
-    //             System.out.println("Customer Numbers:"+temp);
+    //              _logger.info("Customer Numbers:"+temp);
     ////            RowQualifier rq =
     ////                new RowQualifier("Customername in" + sb.toString());
     ////            Row r[] = custVO.getFilteredRows(rq);
@@ -4444,7 +4437,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     //                    row.setAttribute("DefaultVal", defaultVal);
     //            }
     //            if (row != null) {
-    //                System.out.println("user Name:" + row.getAttribute("UserId") +
+    //                 _logger.info("user Name:" + row.getAttribute("UserId") +
     //                                   "::column_name::" +
     //                                   row.getAttribute("ColumnType"));
     //
@@ -4477,7 +4470,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             custVO.setNamedWhereClauseParam("p_orgId", null);
             custVO.setNamedWhereClauseParam("p_orgId", orgId);
             custVO.setWhereClause("customername ='" + custDefaultVal + "'");
-            System.out.println("Query:" + custVO.getQuery());
+             _logger.info("Query:" + custVO.getQuery());
             custVO.executeQuery();
             RowSetIterator iter = custVO.createRowSetIterator(null);
             while (iter.hasNext()) {
@@ -4489,7 +4482,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             if (custValues.size() > 0) {
                 sb.append(custValues.get(0));
                 for (int i = 1; i < custValues.size(); i++) {
-                    System.out.println("selected valuseaa:" +
+                     _logger.info("selected valuseaa:" +
                                        custValues.get(i));
                     sb.append("','").append(custValues.get(i));
                 }
@@ -4509,7 +4502,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             Row r[] = custVO.getFilteredRows(rq);
             custNumber.append(r[0].getAttribute("Accountnumber"));
             for (int i = 1; i < r.length; i++) {
-                System.out.println("selected valuseaa:" +
+                 _logger.info("selected valuseaa:" +
                                    r[i].getAttribute("Accountnumber"));
                 custNumber.append(",").append(r[i].getAttribute("Accountnumber"));
             }
@@ -4547,7 +4540,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 row.setAttribute("DefaultVal", defaultVal);
             }
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
 
@@ -4578,13 +4571,13 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             defaultId =
                     (BigDecimal)filteredRows[0].getAttribute("TransactionTypeId");
         }
-        System.out.println("default OrderType Id is:" + defaultId);
+         _logger.info("default OrderType Id is:" + defaultId);
         StringBuilder orderValues = new StringBuilder();
         if (orderTypeValues != null && orderTypeValues.size() > 0) {
             StringBuilder sb = new StringBuilder("('");
             sb.append(orderTypeValues.get(0));
             for (int i = 1; i < orderTypeValues.size(); i++) {
-                System.out.println("selected valuseaa:" +
+                 _logger.info("selected valuseaa:" +
                                    orderTypeValues.get(i));
                 sb.append("','").append(orderTypeValues.get(i));
             }
@@ -4595,7 +4588,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 RowQualifier rq = new RowQualifier("Name in" + sb.toString());
                 Row filteredRow[] = otVO.getFilteredRows(rq);
                 for (Row r : filteredRow) {
-                    System.out.println("Value issss:" +
+                     _logger.info("Value issss:" +
                                        r.getAttribute("TransactionTypeId").toString());
                     orderValues.append(r.getAttribute("TransactionTypeId")).append(",");
                 }
@@ -4628,7 +4621,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 row.setAttribute("DefaultVal", defaultId);
             }
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
 
@@ -4662,18 +4655,18 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             StringBuilder sb = new StringBuilder("('");
             sb.append(currencyValues.get(0));
             for (int i = 1; i < currencyValues.size(); i++) {
-                System.out.println("selected valuseaa:" +
+                 _logger.info("selected valuseaa:" +
                                    currencyValues.get(i));
                 sb.append("','").append(currencyValues.get(i));
             }
             sb.append("')");
-            System.out.println("currency list:" + sb.toString());
+             _logger.info("currency list:" + sb.toString());
             RowQualifier rq = new RowQualifier(currencyVO);
             rq.setWhereClause("Name in" + sb.toString());
             Row filteredRows[] = currencyVO.getFilteredRows(rq);
             currencysb.append(filteredRows[0].getAttribute("CurrencyCode"));
             for (int i = 1; i < filteredRows.length; i++) {
-                System.out.println("Value issss:" +
+                 _logger.info("Value issss:" +
                                    filteredRows[i].getAttribute("CurrencyCode").toString());
                 currencysb.append(",").append(filteredRows[i].getAttribute("CurrencyCode"));
             }
@@ -4701,7 +4694,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             } else
                 row = null;
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
                 if (currencysb.toString().equalsIgnoreCase(""))
@@ -4752,14 +4745,14 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             }
             _logger.info("SudokuAmimpl: validateSalesRepValues: start: :: default Id:: " +
                          defaultId);
-            System.out.println("default resource Id is:" + defaultId);
+             _logger.info("default resource Id is:" + defaultId);
         }
         StringBuilder salesRepValsb = new StringBuilder();
         if (salesRepVals != null && salesRepVals.size() > 0) {
             StringBuilder sb = new StringBuilder("('");
             sb.append(salesRepVals.get(0));
             for (int i = 1; i < salesRepVals.size(); i++) {
-                System.out.println("selected valuseaa:" + salesRepVals.get(i));
+                 _logger.info("selected valuseaa:" + salesRepVals.get(i));
                 sb.append("','").append(salesRepVals.get(i));
             }
             sb.append("')");
@@ -4771,7 +4764,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 if (orgId != null) {
                     salesRepVO.setWhereClause("resource_name in" +
                                               sb.toString());
-                    System.out.println("Query::" + salesRepVO.getQuery());
+                     _logger.info("Query::" + salesRepVO.getQuery());
                     salesRepVO.executeQuery();
                     RowSetIterator iter = salesRepVO.getRowSetIterator();
                     while (iter.hasNext()) {
@@ -4782,7 +4775,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     //                Row filteredRow[] = salesRepVO.getFilteredRows(rq);
                     //                for (Row r : filteredRow) {
                     //
-                    //                    System.out.println("Value issss:" +
+                    //                     _logger.info("Value issss:" +
                     //                                       r.getAttribute("ResourceId").toString());
                     //                    salesRepValsb.append(r.getAttribute("ResourceId")).append(",");
                     //                }
@@ -4792,7 +4785,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     }
                     _logger.info("SudokuAmimpl: validateSalesRepValues: start: :: Sales Rep Ids:: " +
                                  temp);
-                    System.out.println("after removing last comma:" + temp);
+                     _logger.info("after removing last comma:" + temp);
                 }
             }
         }
@@ -4822,7 +4815,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             } else
                 row = null;
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
                 //                row.setAttribute("ColumnVal", null);
@@ -4858,7 +4851,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             StringBuilder sb = new StringBuilder("('");
             sb.append(csrValues.get(0));
             for (int i = 1; i < csrValues.size(); i++) {
-                System.out.println("selected valuseaa:" + csrValues.get(i));
+                 _logger.info("selected valuseaa:" + csrValues.get(i));
                 sb.append("','").append(csrValues.get(i));
             }
             sb.append("')");
@@ -4867,7 +4860,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             Row filteredRows[] = csrVO.getFilteredRows(rq);
             //            csrsb.append(filteredRows[0].getAttribute("PersonId"));
             for (Row r : filteredRows) {
-                System.out.println("Value issss:" +
+                 _logger.info("Value issss:" +
                                    r.getAttribute("PersonId").toString());
                 csrsb.append(r.getAttribute("PersonId")).append(",");
             }
@@ -4893,7 +4886,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 row.setAttribute("DefaultVal", defaultval);
             }
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
                 //                if (temp != null) {
@@ -4927,7 +4920,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             StringBuilder sb = new StringBuilder("('");
             sb.append(incoTermValues.get(0));
             for (int i = 1; i < incoTermValues.size(); i++) {
-                System.out.println("selected valuseaa:" +
+                 _logger.info("selected valuseaa:" +
                                    incoTermValues.get(i));
                 sb.append("'").append(",").append("'").append(incoTermValues.get(i));
             }
@@ -4966,7 +4959,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             } else
                 row = null;
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
 
@@ -5010,7 +5003,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             } else
                 row = null;
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
                 row.setAttribute("ColumnVal", null);
@@ -5083,23 +5076,22 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             StringBuilder sb = new StringBuilder("('");
             sb.append(currencyValues.get(0));
             for (int i = 1; i < currencyValues.size(); i++) {
-                System.out.println("selected valuseaa:" +
+                 _logger.info("selected valuseaa:" +
                                    currencyValues.get(i));
                 sb.append("','").append(currencyValues.get(i));
             }
             sb.append("')");
             _logger.info("SudokuAmimpl: validateCurrencyValuesForSC: names list: :: " +
                          sb.toString());
-            System.out.println("currency list:" + sb.toString());
+             _logger.info("currency list:" + sb.toString());
             if (currencyVO != null) {
                 currencyVO.clearCache();
-                System.out.println(currencyVO.getEstimatedRowCount());
                 RowQualifier rq = new RowQualifier("Name in" + sb.toString());
                 //            rq.setWhereClause();
                 Row filteredRows[] = currencyVO.getFilteredRows(rq);
                 currencysb.append(filteredRows[0].getAttribute("CurrencyCode"));
                 for (int i = 1; i < filteredRows.length; i++) {
-                    System.out.println("Value issss:" +
+                     _logger.info("Value issss:" +
                                        filteredRows[i].getAttribute("CurrencyCode").toString());
                     currencysb.append(",").append(filteredRows[i].getAttribute("CurrencyCode"));
                 }
@@ -5127,7 +5119,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             } else
                 row = null;
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
                 //                if (currencysb.toString() != null) {
@@ -5162,7 +5154,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             StringBuilder sb = new StringBuilder("('");
             sb.append(incoTermValues.get(0));
             for (int i = 1; i < incoTermValues.size(); i++) {
-                System.out.println("selected valuseaa:" +
+                 _logger.info("selected valuseaa:" +
                                    incoTermValues.get(i));
                 sb.append("','").append(incoTermValues.get(i));
             }
@@ -5175,7 +5167,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 Row filteredRows[] = incoTermVO.getFilteredRows(rq);
                 incoTermsb.append(filteredRows[0].getAttribute("Meaning"));
                 for (int i = 1; i < filteredRows.length; i++) {
-                    System.out.println("Value issss:" +
+                     _logger.info("Value issss:" +
                                        filteredRows[i].getAttribute("Meaning").toString());
                     incoTermsb.append(",").append(filteredRows[i].getAttribute("Meaning"));
                 }
@@ -5202,7 +5194,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 row.setAttribute("DefaultVal", defaultCode);
             }
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
                 //                row.setAttribute("ColumnVal", null);
@@ -5237,7 +5229,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             StringBuilder sb = new StringBuilder("('");
             sb.append(baValues.get(0));
             for (int i = 1; i < baValues.size(); i++) {
-                System.out.println("selected valuseaa:" + baValues.get(i));
+                 _logger.info("selected valuseaa:" + baValues.get(i));
                 sb.append("','").append(baValues.get(i));
             }
             sb.append("')");
@@ -5249,7 +5241,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 Row filteredRows[] = baVO.getFilteredRows(rq);
                 basb.append(filteredRows[0].getAttribute("AgreementId"));
                 for (Row r : filteredRows) {
-                    System.out.println("Value issss:" +
+                     _logger.info("Value issss:" +
                                        r.getAttribute("AgreementId").toString());
                     basb.append(",").append(r.getAttribute("AgreementId"));
                 }
@@ -5274,7 +5266,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 row.setAttribute("OperatingUnit", orgId);
             }
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
                 //                if (basb.toString() != null) {
@@ -5311,7 +5303,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
             sb.append(PaymentTermValues.get(0));
             for (int i = 1; i < PaymentTermValues.size(); i++) {
-                System.out.println("selected valuseaa:" +
+                 _logger.info("selected valuseaa:" +
                                    PaymentTermValues.get(i));
                 sb.append("','").append(PaymentTermValues.get(i));
             }
@@ -5326,7 +5318,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                     paymentTermssb.append(r.getAttribute("Name")).append(",");
                 }
 
-                System.out.println("Query::" + paymentTermsVO.getQuery());
+                 _logger.info("Query::" + paymentTermsVO.getQuery());
             }
             temp = paymentTermssb.toString();
             if (temp != null && temp.endsWith(",")) {
@@ -5334,7 +5326,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             }
             _logger.info("SudokuAmimpl: validatePaymentTermValuesforSC: Names :: " +
                          temp);
-            System.out.println("after removing last comma:" + temp);
+             _logger.info("after removing last comma:" + temp);
         }
         Row row = null;
         String colType = "PaymentTerms";
@@ -5354,7 +5346,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 row.setAttribute("DefaultVal", defaultCode);
             }
             if (row != null) {
-                System.out.println("user Name:" + row.getAttribute("UserId") +
+                 _logger.info("user Name:" + row.getAttribute("UserId") +
                                    "::column_name::" +
                                    row.getAttribute("ColumnType"));
 
@@ -5677,7 +5669,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("p_orgId", null);
                 vo.setNamedWhereClauseParam("p_orgId", new BigDecimal(orgId));
-                System.out.println("result Query is:" + vo.getQuery());
+                 _logger.info("result Query is:" + vo.getQuery());
                 _logger.info("All SalesRep Query from SudokuAMImpl: " +
                              vo.getQuery());
                 vo.executeQuery();
@@ -5694,7 +5686,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
 
     public List getSelectedSalesRepValues(int usrId, String orgId) { //salesRep
         long startTime = System.currentTimeMillis();
-        System.out.println("SudokuAMIMpl:getSelctedSalesRepValues:Start" +
+         _logger.info("SudokuAMIMpl:getSelctedSalesRepValues:Start" +
                            (System.currentTimeMillis() - startTime));
         StringBuilder salesRepV = new StringBuilder("(");
         String salesRepId = null;
@@ -5723,12 +5715,12 @@ this.getDBTransaction().createPreparedStatement(query, 0);
                 salesRepVO.setWhereClause("resource_id in" +
                                           salesRepV.toString());
                 salesRepVO.executeQuery();
-                System.out.println("SalesRep Count:" +
+                 _logger.info("SalesRep Count:" +
                                    salesRepVO.getEstimatedRowCount());
                 RowSetIterator iter = salesRepVO.createRowSetIterator(null);
                 while (iter.hasNext()) {
                     Row r = iter.next();
-                    System.out.println("Value issss:" +
+                     _logger.info("Value issss:" +
                                        r.getAttribute("ResourceName").toString());
                     selectedNames.add(r.getAttribute("ResourceName").toString());
                 }
@@ -5736,7 +5728,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             //            RowQualifier rq =
             //                new RowQualifier("ResourceId in" + salesRepV.toString());
             //            Row filteredRows[] = salesRepVO.getFilteredRows(rq);
-            System.out.println("SudokuAMIMpl:getSelctedSalesRepValues:4" +
+             _logger.info("SudokuAMIMpl:getSelctedSalesRepValues:4" +
                                (System.currentTimeMillis() - startTime));
         }
         return selectedNames;
@@ -5899,18 +5891,18 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             cs.setInt(6, respId);
             cs.setInt(7, usrId);
             cs.registerOutParameter(8, Types.INTEGER);
-            System.out.println("print before execute the procedure");
+             _logger.info("print before execute the procedure");
 
 
             cs.executeUpdate();
             reqid = cs.getInt(8);
 
-            System.out.println("print after execute the procedure");
+             _logger.info("print after execute the procedure");
 
-            System.out.println("print reqid" + reqid);
+             _logger.info("print reqid" + reqid);
         } catch (Exception e) {
             errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
-            System.out.println("print error found in package execution" +
+             _logger.info("print error found in package execution" +
                                e.getMessage());
             //                e.printStackTrace();
         } finally {
@@ -5920,7 +5912,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             } catch (SQLException s) {
                 errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
                 //                    s.printStackTrace();
-                System.out.println("print error found in package execution1" +
+                 _logger.info("print error found in package execution1" +
                                    s.getMessage());
             }
         }
@@ -5952,18 +5944,18 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             //            cs.setInt(6, respId);
             //            cs.setInt(7, usrId);
             cs.registerOutParameter(6, Types.VARCHAR);
-            System.out.println("print before execute the procedure");
+             _logger.info("print before execute the procedure");
 
 
             cs.executeUpdate();
             output = cs.getString(6);
 
-            System.out.println("print after execute the procedure");
+             _logger.info("print after execute the procedure");
 
-            System.out.println("print output" + output);
+             _logger.info("print output" + output);
         } catch (Exception e) {
             errorMsg.append("<p><b>" + e.getMessage() + "</b></p>");
-            System.out.println("print error found in package execution" +
+             _logger.info("print error found in package execution" +
                                e.getMessage());
             //                e.printStackTrace();
         } finally {
@@ -5973,7 +5965,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             } catch (SQLException s) {
                 errorMsg.append("<p><b>" + s.getMessage() + "</b></p>");
                 //                    s.printStackTrace();
-                System.out.println("print error found in package execution1" +
+                 _logger.info("print error found in package execution1" +
                                    s.getMessage());
             }
         }
@@ -6010,7 +6002,7 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             cs.executeUpdate();
             reqstid = cs.getString(4);
             //  String output =cs.getString(5);
-            System.out.println("print req id" + reqstid);
+             _logger.info("print req id" + reqstid);
             //            if ("<html><body></body></html>".equalsIgnoreCase(errorMsg.toString())) {
             //                cs.executeUpdate();
             //                returnStatus = cs.getString(5);

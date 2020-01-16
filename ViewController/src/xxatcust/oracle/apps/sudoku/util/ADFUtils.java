@@ -1542,7 +1542,6 @@ public class ADFUtils {
            ex= (Exception)ex.getCause();       
         }
         rootCause = ex.getMessage() ;
-        System.out.println("Error cause "+ex.getMessage());
         JboException jboex = new JboException(rootCause);
         BindingContext bctx = BindingContext.getCurrent();
         ((DCBindingContainer)bctx.getCurrentBindingsEntry()).reportException(jboex);
@@ -1552,7 +1551,6 @@ public class ADFUtils {
         ControllerContext context = ControllerContext.getInstance();
         ViewPortContext currentRootViewPort = context.getCurrentRootViewPort();
         if (currentRootViewPort.isExceptionPresent()) {
-            System.out.println("Clearing controller exception");
             currentRootViewPort.clearException();
         }
     }

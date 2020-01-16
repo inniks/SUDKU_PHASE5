@@ -274,8 +274,6 @@ public class MiscUpgradesBean {
             int index = 1;
             int licenseIndex = 1;
             licenseIndex = findLicenseRowIndex(subGroup, uiSubGrpName);
-            System.out.println("License Index for "+uiSubGrpName+" "+licenseIndex);
-
             while (sgIter.hasNext()) {
                 Map.Entry subGrppair = (Map.Entry)sgIter.next();
                 ConfiguratorUiSubGroup subGrp =

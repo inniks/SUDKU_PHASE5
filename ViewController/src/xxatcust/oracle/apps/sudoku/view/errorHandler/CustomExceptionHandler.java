@@ -19,7 +19,6 @@ public class CustomExceptionHandler extends DCErrorHandlerImpl {
     @Override
     public void reportException(DCBindingContainer dCBindingContainer,
                                 Exception exception) {
-        System.out.println("In DC Exception Handler "+exception.getMessage());
         super.reportException(dCBindingContainer, exception);
     }
 }

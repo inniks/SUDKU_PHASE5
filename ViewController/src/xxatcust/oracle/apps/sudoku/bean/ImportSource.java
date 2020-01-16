@@ -138,7 +138,6 @@ public class ImportSource {
                 selectedVal =
                         (String)selectedRow.getAttribute("ImportSrcCode");
                 setSourceSelected(selectedVal);
-                System.out.println("Selected Import Source " + selectedVal);
             }
         }
 
@@ -358,14 +357,6 @@ public class ImportSource {
                                                       v93kQuote.getSessionDetails().isUpdateQuote());
                         ADFUtils.setSessionScopeValue("isCreateQuote",
                                                       v93kQuote.getSessionDetails().isCreateNewQuote());
-                        System.out.println("update status::::::::::" +
-                                           v93kQuote.getSessionDetails().isUpdateQuote());
-                        System.out.println("Duplicate status::::::::::" +
-                                           v93kQuote.getSessionDetails().isDuplicateQuote());
-                        System.out.println("Create status::::::::::" +
-                                           v93kQuote.getSessionDetails().isCreateNewQuote());
-
-
                         if (v93kQuote.getSessionDetails().isDuplicateQuote()) {
                             String msg = null;
                             StringBuilder msages =
@@ -592,7 +583,6 @@ public class ImportSource {
         //Check what is the import source
         if (importSource != null &&
             importSource.equalsIgnoreCase("XML_FILE")) {
-            System.out.println("Input Stream is " + inputStream);
             File xsdFile = readXsdResource();
             V93kQuote parent = null;
             parent = JaxbParser.jaxbXMLToObject(inputStream, xsdFile);
@@ -649,14 +639,12 @@ public class ImportSource {
             this.getClass().getClassLoader().getResourceAsStream(XSD_FILE);
         if (asStream == null) {
             // file not foun
-            System.out.println("File Not found");
             _logger.info("File not found: '" + XSD_FILE + "'");
         } else {
-            System.out.println("Stream found");
+            _logger.info("Stream found");
 
             try {
                 f = stream2file(asStream, "V93", ".xsd");
-                System.out.println("File Name " + f.getName());
                 return f;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -708,8 +696,6 @@ public class ImportSource {
 
         UIComponent uiComp = (UIComponent)valueChangeEvent.getSource();
         uiComp.processUpdates(FacesContext.getCurrentInstance());
-        System.out.println("Inside new File Uploaded");
-        //dialogActionListener(null);
     }
 
     public void dialogReturnListener(ReturnEvent returnEvent) {
@@ -725,7 +711,6 @@ public class ImportSource {
         if (valueChangeEvent != null &&
             valueChangeEvent.getOldValue() != valueChangeEvent.getNewValue()) {
             //Some Parameters have changed
-            System.out.println("Value changed in popup");
             ADFUtils.setSessionScopeValue("ImpSrcChanged", "Y");
         }
     }
@@ -821,8 +806,6 @@ public class ImportSource {
                 s.setValue(li.getValue());
                 if (s.getValue() != null &&
                     s.getValue().toString().equals("1")) {
-                    System.out.println("S Val " + s.getValue() +
-                                       "Imp SOurce " + impSource);
                     if (impSource.equals("BUDGET_QUOTE")) {
                         s.setDisabled(false);
                     } else {

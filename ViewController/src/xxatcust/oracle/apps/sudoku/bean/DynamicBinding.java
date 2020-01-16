@@ -1,6 +1,7 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
 import oracle.adf.controller.TaskFlowId;
+import oracle.adf.share.logging.ADFLogger;
 
 public class DynamicBinding {
     private String configuratorTFId =
@@ -12,25 +13,24 @@ public class DynamicBinding {
     private String quoteTFUpdateId =
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuoteUpdateFlow.xml#QuoteUpdateFlow";
     String currentTF = "configurator";
-
+    private static ADFLogger _logger =
+        ADFLogger.createADFLogger(DynamicBinding.class);
     public DynamicBinding() {
     }
 
     public TaskFlowId getDynamicTaskFlowId() {
-        System.out.println("enter to TaskFLow getDynamicTaskFlowId " +
-                           this.getCurrentTF());
         if (this.getCurrentTF().equalsIgnoreCase("configurator")) {
-            System.out.println("Return config");
+            _logger.info("Return config");
             return TaskFlowId.parse(configuratorTFId);
         } else if (this.getCurrentTF().equalsIgnoreCase("viewRef")) {
-            System.out.println("Return View Ref");
+            _logger.info("Return View Ref");
             return TaskFlowId.parse(viewReferenceTFId);
         } else if(this.getCurrentTF().equalsIgnoreCase("quoteUpdate")){
-                System.out.println("Quote Update");
+                _logger.info("Quote Update");
                 return TaskFlowId.parse(quoteTFUpdateId);
             }
        else{
-            System.out.println("Return Quote");
+            _logger.info("Return Quote");
             return TaskFlowId.parse(quoteTFId);
         }
     }

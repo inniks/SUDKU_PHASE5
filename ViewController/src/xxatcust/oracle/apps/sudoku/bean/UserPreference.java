@@ -207,8 +207,6 @@ public class UserPreference {
 
     public List<SelectItem> getAllOrderTypeValues() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getAllOrderTypeValues:Start" +
-                           (System.currentTimeMillis() - startTime));
         if (orgId != null) {
             DCIteratorBinding DCiter =
                 ADFUtils.findIterator("OrderTypeVOIterator");
@@ -235,8 +233,6 @@ public class UserPreference {
             if (iter != null)
                 iter.closeRowSetIterator();
         }
-        System.out.println("getAllOrderTypeValues:Close Rowset " +
-                           (System.currentTimeMillis() - startTime));
         return orderTypeValues;
     }
 
@@ -251,9 +247,6 @@ public class UserPreference {
 
     public List getSelctedOTValues() {
         long startTime = System.currentTimeMillis();
-        //        List otValuesList = new ArrayList();
-        System.out.println("getSelctedOTValues:Start" +
-                           (System.currentTimeMillis() - startTime));
         if (selectedOrderTypeValues == null)
             selectedOrderTypeValues = new ArrayList();
         if (selectedOrderTypeValues != null &&
@@ -277,8 +270,7 @@ public class UserPreference {
 
 
             }
-            System.out.println("getSelctedOTValues:after ob call" +
-                               (System.currentTimeMillis() - startTime));
+
             //            }
         }
         return selectedOrderTypeValues;
@@ -302,9 +294,6 @@ public class UserPreference {
                 selectedCurrencyValues.size() > 0)
                 selectedCurrencyValues.clear();
             for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
                 selectedCurrencyValues = selectedListFromUI;
             }
         }
@@ -319,9 +308,6 @@ public class UserPreference {
         if (selectedListFromUI.size() > 0) {
 
             for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
                 selectedIncoTermValues.add(selectedListFromUI.get(i).toString());
             }
         }
@@ -456,7 +442,6 @@ public class UserPreference {
             OperationBinding commitOperations =
                 ADFUtils.findOperation("commitEntities");
             
-            System.out.println(this.bindPrdNumRefConf.getValue());
             OperationBinding staticValob =
                 ADFUtils.getBindingContainer().getOperationBinding("validatePrefStaticValues");
             isRadioChoice = true;
@@ -490,8 +475,6 @@ public class UserPreference {
 
     public List<SelectItem> getAllCurrencyValues() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getAllCurrencyValues: Start " +
-                           (System.currentTimeMillis() - startTime));
         if (currencyValues != null) {
             //            currencyValues.add(new SelectItem(null));
             if (currencyValuesForDefault != null) {
@@ -507,8 +490,6 @@ public class UserPreference {
                 currencyValuesForDefault.add(new SelectItem(row.getAttribute("Name")));
             }
             it.closeRowSetIterator();
-            System.out.println("getAllCurrencyValues: after close Rowset: " +
-                               (System.currentTimeMillis() - startTime));
         }
 
         return currencyValues;
@@ -517,8 +498,6 @@ public class UserPreference {
 
     public List<SelectItem> getAllSalesChannel() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getAllSalesChannel: Start " +
-                           (System.currentTimeMillis() - startTime));
         if (salesChannelSC != null) {
             //            salesChannelSC.add(new SelectItem(null));
             if (salesChannelSCForDefault != null)
@@ -533,8 +512,6 @@ public class UserPreference {
                 salesChannelSCForDefault.add(new SelectItem(row.getAttribute("Meaning")));
             }
             it.closeRowSetIterator();
-            System.out.println("getAllSalesChannelValues: after close Rowset: " +
-                               (System.currentTimeMillis() - startTime));
         }
 
         return salesChannelSC;
@@ -624,8 +601,6 @@ public class UserPreference {
 
     public List getSelectedCurrencyVals() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getSelectedCurrencyVals: Start " +
-                           (System.currentTimeMillis() - startTime));
         if (selectedCurrencyValues != null &&
             selectedCurrencyValues.size() == 0) {
 
@@ -635,8 +610,6 @@ public class UserPreference {
             if (ob != null) {
                 selectedCurrencyValues = (List<String>)ob.execute();
             }
-            System.out.println("getSelectedCurrencyVals: closing " +
-                               (System.currentTimeMillis() - startTime));
         }
         return selectedCurrencyValues;
     }
@@ -651,8 +624,6 @@ public class UserPreference {
 
     public List getSelectedIncoTermVals() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getSelctedIncoTermValues:Start" +
-                           (System.currentTimeMillis() - startTime));
         if (selectedIncoTermValues != null &&
             selectedIncoTermValues.size() == 0) {
             OperationBinding ob =
@@ -660,8 +631,6 @@ public class UserPreference {
             ob.getParamsMap().put("usrId", usrId);
             if (ob != null) {
                 selectedIncoTermValues = (List<String>)ob.execute();
-                System.out.println("getSelctedIncTermValues:End" +
-                                   (System.currentTimeMillis() - startTime));
             }
         }
         return selectedIncoTermValues;
@@ -680,8 +649,6 @@ public class UserPreference {
     }
 
     public void booleanVCE(ValueChangeEvent vce) {
-        System.out.println("old value:" + vce.getOldValue());
-        System.out.println("New value:" + vce.getNewValue());
     }
 
     public void getPrdNumRefConf() {
@@ -836,7 +803,6 @@ public class UserPreference {
         if (vo != null) {
             vo.clearCache();
             vo.setWhereClause(null);
-            System.out.println("size of VO:" + vo.getEstimatedRowCount());
             Object obj[] = { usrId, colVal };
             Key key = new Key(obj);
             Row[] rows = vo.findByKey(key, 2);
@@ -1055,11 +1021,9 @@ public class UserPreference {
                     vce.getOldValue() != vce.getNewValue()) {
                     //                    RichInputListOfValues soc = (RichInputListOfValues)vce.getComponent();
                     RichSelectOneChoice soc = (RichSelectOneChoice)vce.getComponent();
-                    System.out.println("Index: " + soc.getValue().toString());
                     vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
                     Object orgValue =
                         ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("OperatingUnit");
-                    System.out.println("OrgId idddds:" + orgValue);
             ADFUtils.setSessionScopeValue("UserBasedOrgId", null);
             if (orgValue != null)
                 orgId = orgValue.toString();
@@ -1131,7 +1095,6 @@ public class UserPreference {
             vce.getOldValue() != vce.getNewValue())) {
             scOrgId = null;
             RichSelectOneChoice soc = (RichSelectOneChoice)vce.getComponent();
-            System.out.println("Index: " + soc.getValue().toString());
             vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
             Object orgValue =
                 ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("OperatingUnitForSC");
@@ -1225,9 +1188,6 @@ public class UserPreference {
         selectedListFromUI = (List)vce.getNewValue();
         if (selectedListFromUI.size() > 0) {
             for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
                 selectedValues.add(selectedListFromUI.get(i).toString());
             }
             selectedCustNameValues = selectedValues;
@@ -1238,8 +1198,6 @@ public class UserPreference {
 
     public List<SelectItem> getAllBAgreement() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getAllBA: Start " +
-                           (System.currentTimeMillis() - startTime));
         if (businessAgreemnt != null) {
             if (businessCenterCSRForDefault != null)
                 businessCenterCSRForDefault.add(new SelectItem(null));
@@ -1252,8 +1210,6 @@ public class UserPreference {
                 businessAgreemnt.add(new SelectItem(row.getAttribute("Name")));
             }
             it.closeRowSetIterator();
-            System.out.println("getAllBAValues: after close Rowset: " +
-                               (System.currentTimeMillis() - startTime));
         }
 
         return businessAgreemnt;
@@ -1277,8 +1233,6 @@ public class UserPreference {
 
     public List getSelectedBusinessAgreementForSC() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getSelctedBAValues:Start" +
-                           (System.currentTimeMillis() - startTime));
         if (selectedBusinessAgreementValues != null &&
             selectedBusinessAgreementValues.size() == 0) {
             selectedBusinessAgreementValues.add(new SelectItem(null));
@@ -1288,8 +1242,6 @@ public class UserPreference {
             ob.getParamsMap().put("salesChannel", salesChannel);
             if (ob != null) {
                 selectedBusinessAgreementValues = (List<String>)ob.execute();
-                System.out.println("getSelctedBAValues:End" +
-                                   (System.currentTimeMillis() - startTime));
             }
         }
         return selectedBusinessAgreementValues;
@@ -1312,9 +1264,6 @@ public class UserPreference {
         selectedListFromUI = (List)vce.getNewValue();
         if (selectedListFromUI.size() > 0) {
             for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
                 selectedValues.add(selectedListFromUI.get(i).toString());
             }
             selectedBusinessAgreementValues = selectedValues;
@@ -1338,10 +1287,7 @@ public class UserPreference {
 
     public List<SelectItem> getAllCustNums() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getAllCustNumValues:Start" +
-                           (System.currentTimeMillis() - startTime));
-//        if (custNames == null)
-//            custNames = new ArrayList<SelectItem>();
+
         if (custNumbers == null)
             custNumbers = new ArrayList<SelectItem>();
         //            custNames.add(new SelectItem(null));
@@ -1514,11 +1460,6 @@ public class UserPreference {
     public void orderTypeForGCVCE(ValueChangeEvent valueChangeEvent) {
         if (valueChangeEvent.getNewValue() != null) {
             String orderValue = valueChangeEvent.getNewValue().toString();
-            System.out.println("Old value is:" +
-                               valueChangeEvent.getOldValue());
-            System.out.println("Changed value is:" +
-                               valueChangeEvent.getNewValue());
-            System.out.println("orderType value is:" + orderValue);
         }
     }
 
@@ -1551,39 +1492,27 @@ public class UserPreference {
 
 
     public void currencyForGlobalChoiceVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         currency = (String)vce.getNewValue();
-        System.out.println(currency);
     }
 
     public void incoTermForGlobalChoiceVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         incoTerm = (String)vce.getNewValue();
-        System.out.println(incoTerm);
     }
 
     public void paymentTermForGlobalChoiceVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         paymentTerm = (String)vce.getNewValue();
-        System.out.println(paymentTerm);
     }
 
     public void csrForGlobalChoiceVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         csr = (String)vce.getNewValue();
-        System.out.println(csr);
     }
 
     public void salesRepForGlobalChoiceVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         salesRep = (String)vce.getNewValue();
-        System.out.println(salesRep);
     }
 
     public void custNumForDefaultVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         custNum = (String)vce.getNewValue();
-        System.out.println(custNum);
     }
 
     public void salesChannelForDefaultVCE(ValueChangeEvent vce) {
@@ -1649,39 +1578,27 @@ public class UserPreference {
 
 
     public void custNameForSCDefaultVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         custNameForSC = (String)vce.getNewValue();
-        System.out.println(custNameForSC);
     }
 
     public void currencyForSCDefaultVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         currencyForSC = (String)vce.getNewValue();
-        System.out.println(currencyForSC);
     }
 
     public void baForSCDefaultVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         baForSC = (String)vce.getNewValue();
-        System.out.println(baForSC);
     }
 
     public void incoTermForSCDefaultVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         incoTermForSC = (String)vce.getNewValue();
-        System.out.println(incoTermForSC);
     }
 
     public void paymentTErmForSCDefaultVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         paymentTemForSC = (String)vce.getNewValue();
-        System.out.println(paymentTemForSC);
     }
 
     public void OrderTypeForChoiceVCE(ValueChangeEvent vce) {
-        System.out.println("Selected Value is:" + vce.getNewValue());
         orderType = (String)vce.getNewValue();
-        System.out.println(orderType);
     }
 
     //    public void getRadioButtonValues(ActionEvent actionEvent) {
@@ -1703,8 +1620,6 @@ public class UserPreference {
 
     public List getSelectedCustNumVals() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getSelctedCustNumValues:Start" +
-                           (System.currentTimeMillis() - startTime));
         List custNumList = new ArrayList();
         if (selectedCustNumValues == null)
             selectedCustNumValues = new ArrayList();
@@ -1747,9 +1662,6 @@ public class UserPreference {
                 selectedCustNumValues.size() > 0)
                 selectedCustNumValues.clear();
             for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
                 selectedCustNumValues = selectedListFromUI;
             }
         }
@@ -1780,9 +1692,6 @@ public class UserPreference {
             if (selectedCSRValues != null && selectedCSRValues.size() > 0)
                 selectedCSRValues.clear();
             for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
                 selectedCSRValues = selectedListFromUI;
             }
         }
@@ -1795,12 +1704,6 @@ public class UserPreference {
         }
         List selectedListFromUI = (List)vce.getNewValue();
         if (selectedListFromUI.size() > 0) {
-            for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
-            }
-
             selectedSalesRepValues = selectedListFromUI;
         }
     }
@@ -1811,8 +1714,6 @@ public class UserPreference {
 
     public List<SelectItem> getAllCSRValues() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getAllCSRValues:Start" +
-                           (System.currentTimeMillis() - startTime));
         if (businessCenterCSR != null) {
             //            businessCenterCSR.add(new SelectItem(null));
             if (businessCenterCSRForDefault != null)
@@ -1827,8 +1728,6 @@ public class UserPreference {
                 businessCenterCSRForDefault.add(new SelectItem(row.getAttribute("CustomerName")));
             }
             it.closeRowSetIterator();
-            System.out.println("getAllCSRValues:Start" +
-                               (System.currentTimeMillis() - startTime));
         }
         return businessCenterCSR;
     }
@@ -1843,8 +1742,6 @@ public class UserPreference {
 
     public List getSelectedCSRVals() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getSelectedCSRVals: Start " +
-                           (System.currentTimeMillis() - startTime));
         if (selectedCSRValues != null && selectedCSRValues.size() == 0) {
 
             OperationBinding ob =
@@ -1853,8 +1750,6 @@ public class UserPreference {
             if (ob != null) {
                 selectedCSRValues = (List<String>)ob.execute();
             }
-            System.out.println("getSelectedCSRVals: closing " +
-                               (System.currentTimeMillis() - startTime));
         }
         return selectedCSRValues;
     }
@@ -1870,8 +1765,6 @@ public class UserPreference {
     public List<SelectItem> getAllSalesRepValues() {
         List salesRepVal = new ArrayList();
         long startTime = System.currentTimeMillis();
-        System.out.println("getSalesRepValues:Start" +
-                           (System.currentTimeMillis() - startTime));
         if (orgId != null) {
             if (SalesRepValues != null)
                 SalesRepValues.clear();
@@ -1892,8 +1785,6 @@ public class UserPreference {
                     }
                 }
             }
-            System.out.println("getSalesRepValues:Start" +
-                               (System.currentTimeMillis() - startTime));
         }
         //        }
         return SalesRepValues;
@@ -1909,8 +1800,6 @@ public class UserPreference {
 
     public List getSelectedSalesRepVals() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getSelcteSalesRepValues:Start" +
-                           (System.currentTimeMillis() - startTime));
         if (selectedSalesRepValues != null &&
             selectedSalesRepValues.size() == 0) {
             OperationBinding ob =
@@ -1919,8 +1808,6 @@ public class UserPreference {
             ob.getParamsMap().put("orgId", orgId);
             if (ob != null) {
                 selectedSalesRepValues = (List)ob.execute();
-                System.out.println("getSelctedSalesRepValues:End" +
-                                   (System.currentTimeMillis() - startTime));
             }
         }
         return selectedSalesRepValues;
@@ -2020,7 +1907,6 @@ public class UserPreference {
         if (vo != null) {
             vo.clearCache();
             vo.setWhereClause(null);
-            System.out.println("size of VO:" + vo.getEstimatedRowCount());
             Object obj[] = { usrId, colType };
             Key key = new Key(obj);
             Row[] rows = vo.findByKey(key, 2);
@@ -2232,12 +2118,6 @@ public class UserPreference {
         List selectedListFromUI = new ArrayList();
         selectedListFromUI = (List)vce.getNewValue();
         if (selectedListFromUI.size() > 0) {
-            for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
-                //                    selectedValues.add(selectedListFromUI.get(i).toString());
-            }
             selectedSalesChannel = selectedListFromUI;
         }
     }
@@ -2269,15 +2149,11 @@ public class UserPreference {
     public void currencySCVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != null &&
             vce.getOldValue() != vce.getNewValue()) {
-            System.out.println("vce Values:" + vce.getNewValue().toString());
             List<String> selectedValues = new ArrayList<String>();
             List selectedListFromUI = new ArrayList();
             selectedListFromUI = (List)vce.getNewValue();
             if (selectedListFromUI.size() > 0) {
                 for (int i = 0; i < selectedListFromUI.size(); i++) {
-                    System.out.println("Selected values are from loop:" +
-                                       selectedListFromUI.get(i) +
-                                       "id value is:" + i);
                     selectedValues.add(selectedListFromUI.get(i).toString());
                 }
                 selectedCurrencyValsSC = selectedValues;
@@ -2296,9 +2172,6 @@ public class UserPreference {
         selectedListFromUI = (List)vce.getNewValue();
         if (selectedListFromUI.size() > 0) {
             for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
                 selectedValues.add(selectedListFromUI.get(i).toString());
             }
             selectedIncoTermSC = selectedValues;
@@ -2316,9 +2189,6 @@ public class UserPreference {
         selectedListFromUI = (List)vce.getNewValue();
         if (selectedListFromUI.size() > 0) {
             for (int i = 0; i < selectedListFromUI.size(); i++) {
-                System.out.println("Selected values are from loop:" +
-                                   selectedListFromUI.get(i) + "id value is:" +
-                                   i);
                 selectedValues.add(selectedListFromUI.get(i).toString());
             }
             selectedPaymentTermSC = selectedValues;
@@ -2328,8 +2198,6 @@ public class UserPreference {
 
     public List getSelectedPaymentTermForSC() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getSelectedCPaymentTerermForSC: Start " +
-                           (System.currentTimeMillis() - startTime));
         if (selectedPaymentTermSC != null &&
             selectedPaymentTermSC.size() == 0) {
 
@@ -2340,8 +2208,6 @@ public class UserPreference {
             if (ob != null) {
                 selectedPaymentTermSC = (List<String>)ob.execute();
             }
-            System.out.println("getSelectedCPaymentTerermForSC: closing " +
-                               (System.currentTimeMillis() - startTime));
         }
 
         return selectedPaymentTermSC;
@@ -2353,8 +2219,6 @@ public class UserPreference {
 
     public List getSelectedCurrencyValuesForSC() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getSelectedCurrencyValuesForSC: Start " +
-                           (System.currentTimeMillis() - startTime));
         if (selectedCurrencyValsSC == null)
             selectedCurrencyValsSC = new ArrayList();
         if (selectedCurrencyValsSC != null &&
@@ -2367,8 +2231,6 @@ public class UserPreference {
             if (ob != null)
                 selectedCurrencyValsSC = (List<String>)ob.execute();
 
-            System.out.println("getSelectedCurrencyValuesForSC: closing " +
-                               (System.currentTimeMillis() - startTime));
         }
         return selectedCurrencyValsSC;
     }
@@ -2393,8 +2255,6 @@ public class UserPreference {
             ob.getParamsMap().put("salesChannel", salesChannel);
             if (ob != null) {
                 selectedIncoTermSC = (List<String>)ob.execute();
-                System.out.println("getSelctedIncTermValues:End" +
-                                   (System.currentTimeMillis() - startTime));
             }
         }
         return selectedIncoTermSC;
@@ -2403,16 +2263,12 @@ public class UserPreference {
 
     public List getSelectedSalesChannelSC() {
         long startTime = System.currentTimeMillis();
-        System.out.println("getselectedSalesChannel:Start" +
-                           (System.currentTimeMillis() - startTime));
         if (selectedSalesChannel != null && selectedSalesChannel.size() == 0) {
             OperationBinding ob =
                 ADFUtils.getBindingContainer().getOperationBinding("getSelectedSalesChannelValues");
             ob.getParamsMap().put("usrId", usrId);
             if (ob != null) {
                 selectedSalesChannel = (List<String>)ob.execute();
-                System.out.println("getselectedSalesChannel:End" +
-                                   (System.currentTimeMillis() - startTime));
             }
         }
         return selectedSalesChannel;
@@ -2950,7 +2806,6 @@ public class UserPreference {
         }
 
     public void numFormatVCE(ValueChangeEvent vce) {
-        System.out.println("value is:"+vce.getNewValue());
         numFormat = vce.getNewValue().toString();
 //    String s = (String)ADFUtils.invokeEL("#{bindings.NumberFormat.selectedValue}");
         

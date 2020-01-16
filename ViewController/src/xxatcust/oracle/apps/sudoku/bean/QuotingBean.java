@@ -151,8 +151,6 @@ public class QuotingBean {
                     if ((String)v93k.getSessionDetails().getPriceListID() !=
                         null &&
                         !"".equalsIgnoreCase(v93k.getSessionDetails().getPriceListID())) {
-                        System.out.println("priceList id::" +
-                                           (String)v93k.getSessionDetails().getPriceListID());
                         ob.getParamsMap().put("priceList",
                                               v93k.getSessionDetails().getPriceListID().toString());
                     } else {
@@ -166,8 +164,6 @@ public class QuotingBean {
                             if ((String)v93k.getQheaderObject().getSalesteamObject().getCsrrespo() !=
                                 null &&
                                 !"".equalsIgnoreCase(v93k.getQheaderObject().getSalesteamObject().getCsrrespo())) {
-                                System.out.println("CSR name:" +
-                                                   v93k.getQheaderObject().getSalesteamObject().getCsrrespo().toString());
                                 ob.getParamsMap().put("businessCSR",
                                                       v93k.getQheaderObject().getSalesteamObject().getCsrrespo().toString());
                             } else
@@ -181,8 +177,6 @@ public class QuotingBean {
                                 v93k.getQheaderObject().getSalesteamObject().getOu().toString() !=
                                 null &&
                                 !"".equalsIgnoreCase(v93k.getQheaderObject().getSalesteamObject().getOu())) {
-                                System.out.println("Operating Unit:" +
-                                                   v93k.getQheaderObject().getSalesteamObject().getOu().toString());
                                 ob.getParamsMap().put("ou",
                                                       v93k.getQheaderObject().getSalesteamObject().getOu().toString());
                                 if (v93k.getQheaderObject().getDealObject() !=
@@ -376,7 +370,6 @@ public class QuotingBean {
     public void custNameVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != vce.getOldValue() &&
             vce.getNewValue() != null) {
-            System.out.println("customer number:" + vce.getNewValue());
             businessAgrement = true;
             OperationBinding ob =
                 getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNameChange"); //curRow
@@ -391,7 +384,6 @@ public class QuotingBean {
     public void custNameForUpdateQuoteVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != vce.getOldValue() &&
             vce.getNewValue() != null) {
-            System.out.println("customer number:" + vce.getNewValue());
             businessAgrement = true;
             OperationBinding ob =
                 getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNameForUpdateQuoteChange"); //curRow
@@ -406,7 +398,6 @@ public class QuotingBean {
     public void custNumForUpdateQuoteVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != vce.getOldValue() &&
             vce.getNewValue() != null) {
-            System.out.println("customer number:" + vce.getNewValue());
             businessAgrement = true;
             OperationBinding ob =
                 getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNumForUpdateQuoteChange"); //curRow
@@ -422,7 +413,6 @@ public class QuotingBean {
     public void custNumVCE(ValueChangeEvent vce) {
         if (vce.getNewValue() != vce.getOldValue() &&
             vce.getNewValue() != null) {
-            System.out.println("customer number:" + vce.getNewValue());
             businessAgrement = true;
             OperationBinding ob =
                 getBindings().getOperationBinding("getQuoteCustmerAddressOnCustNumChange"); //curRow
@@ -450,8 +440,6 @@ public class QuotingBean {
 
     public void oucustNameRPL(ReturnPopupEvent returnPopupEvent) {
         if (returnPopupEvent != null) {
-            System.out.println("rop:" +
-                               returnPopupEvent.getReturnValue().toString());
             OperationBinding ob =
                 getBindings().getOperationBinding("getQuoteCustmerAddress");
             ob.getParamsMap().put("curRow", null);
@@ -465,11 +453,9 @@ public class QuotingBean {
             vce.getNewValue() != null && !vce.getNewValue().equals("")) {
             RichInputListOfValues soc =
                 (RichInputListOfValues)vce.getComponent();
-            System.out.println("Index: " + soc.getValue().toString());
             vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
             Object value =
                 ADFUtils.findIterator("QuotesVOIterator").getCurrentRow().getAttribute("OrganizationUnit");
-            //            System.out.println("org valuu: " + value.toString());
             boolean isUserDefault = true;
             V93kQuote v93k =
                 (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
@@ -713,11 +699,9 @@ public class QuotingBean {
             vce.getOldValue() != vce.getNewValue()) {
             isCustEditable = true;
             RichSelectOneChoice soc = (RichSelectOneChoice)vce.getComponent();
-            System.out.println("Index: " + soc.getValue().toString());
             vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
             Object value =
                 ADFUtils.findIterator("QuoteUpdateVO1Iterator").getCurrentRow().getAttribute("Saleschannel");
-            System.out.println("Value " + value.toString());
             OperationBinding ob =
                 ADFUtils.findOperation("getSalesChannelBasedUserPrefForUpdateQuote");
             ob.getParamsMap().put("salesChannel", value.toString());
@@ -761,6 +745,5 @@ public class QuotingBean {
 
     public void businessAgreementChanged(ValueChangeEvent valueChangeEvent) {
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
-        System.out.println("New Value "+valueChangeEvent.getNewValue());
     }
 }

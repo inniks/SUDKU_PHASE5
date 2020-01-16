@@ -800,6 +800,7 @@ public class XMLImportPageBean {
                             reloadInExpertMode =
                                     obj.getSessionDetails().isReloadInExpertMode();
                         }
+                        //reloadInExpertMode = true;
                         if (expertMode != null) {
                             if (reloadInExpertMode) {
                                 expertMode.setValue("Configuration switched to 93k expert mode");
@@ -976,12 +977,12 @@ public class XMLImportPageBean {
                                                      node.getPrintGroupLevel(),
                                                      nodeDesig);
                                 if (i == 2) {
-                                    System.out.println("Adding Node " +
-                                                       node.getNodeName() +
-                                                       " " +
-                                                       node.getNodeCategory() +
-                                                       " " +
-                                                       node.getPrintGroupLevel());
+//                                    System.out.println("Adding Node " +
+//                                                       node.getNodeName() +
+//                                                       " " +
+//                                                       node.getNodeCategory() +
+//                                                       " " +
+//                                                       node.getPrintGroupLevel());
                                 }
                                 firstLevel.addNodes(secondLevel);
                             }

@@ -564,12 +564,9 @@ public class DOMParser {
                 List<ConfiguratorNodePOJO> list = entry.getValue();
                 if (list != null) {
                     for (ConfiguratorNodePOJO node : list) {
-                        System.out.println("Node " + node.getNodeName());
                         if (node != null && node.getNodeName() != null &&
                             node.getNodeCategory() != null &&
                             node.getNodeCategory().equals("1")) {
-                            System.out.println("Setting ModelBom Id " +
-                                               node.getNodeName());
                             modelbomNode.setAttribute("id",
                                                       node.getNodeName());
                         }
@@ -579,11 +576,6 @@ public class DOMParser {
                             null &&
                             node.getNodeCategory().equalsIgnoreCase("1") &&
                             node.getNodeName().equalsIgnoreCase(v93.getInputParams().getRuleSetTopLevelChoice())) {
-                            System.out.println("Matched the values");
-                            System.out.println("Rule Set Top Level " +
-                                               v93.getInputParams().getRuleSetTopLevelChoice());
-                            System.out.println("Config object is " +
-                                               v93.getConfigObject());
                             if (v93.getConfigObject() != null) {
                                 List<ModelBom> modelBomList =
                                     v93.getConfigObject().getModelbomObjectList();
@@ -650,8 +642,6 @@ public class DOMParser {
                         (firstNode.getNodeCategory().equals("1") ||
                          firstNode.getNodeCategory().equals("2") ||
                          firstNode.getNodeCategory().equals("3"))) {
-                        System.out.println("Setting ModelBom Id " +
-                                           firstNode.getNodeName());
                         modelbomNode.setAttribute("id",
                                                   firstNode.getNodeName());
                     }
@@ -661,7 +651,6 @@ public class DOMParser {
                     List<ConfiguratorNodePOJO> listItems = entry.getValue();
 
                     Element itemNode = doc.createElement(key);
-                    System.out.println("**************************************");
                     if (!listItems.isEmpty()) {
 
                         for (ConfiguratorNodePOJO node : listItems) {

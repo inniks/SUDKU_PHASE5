@@ -243,12 +243,10 @@ public class LoadDynamicRegionBean {
             (String)ADFContext.getCurrent().getSessionScope().get("quoteNumFromXML") !=
             null) {
             _logger.info("LOAD PAGE ::CREATE QUOTE IN XML MODE");
-            System.out.println("LOAD PAGE ::CREATE QUOTE IN XML MODE");
             return "quote";
         }
         if ((error != null || cancelAll != null || importSource == null) &&
             targetQuoteNumber == null) {
-            System.out.println("LOAD PAGE ::CREATE QUOTE");
             _logger.info("LOAD PAGE ::CREATE QUOTE");
             return "quote";
         }
@@ -258,21 +256,11 @@ public class LoadDynamicRegionBean {
 
         if (((targetQuoteNumber != null && !targetQuoteNumber.equals("")) ||
              quoteNumber != null)) {
-            System.out.println("LOAD PAGE ::UPDATE QUOTE");
             ADFContext.getCurrent().getSessionScope().put("targetQuoteNumber",
                                                           targetQuoteNumber);
             _logger.info("LOAD PAGE ::UPDATE QUOTE " + targetQuoteNumber);
             return "quoteUpdate";
         }
-        //        quoteNumFromSession =
-        //                (String)ADFUtils.getSessionScopeValue("quoteNumber");
-        //        if (importSource != null &&
-        //            (quoteNumFromSession != null || ADFUtils.getSessionScopeValue("targetQuoteNumber") !=
-        //             null)) {
-        //            System.out.println("LOAD PAGE ::UPDATE QUOTE");
-        //            _logger.info("LOAD PAGE ::UPDATE QUOTE");
-        //            return "quoteUpdate";
-        //        }
         else
             return "configurator";
 
@@ -292,16 +280,6 @@ public class LoadDynamicRegionBean {
     }
 
     public void export(ActionEvent actionEvent) {
-        // For now create the xml file and display in console
-        //        System.out.println("Export button pressed");
-        //        V93kQuote parentObj =
-        //            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        //        if (parentObj == null) {
-        //            exportException.setValue("No configuration exists.");
-        //        } else {
-        //            File createdXml = DOMParser.XMLWriterDOM(parentObj);
-        //            ADFUtils.setPageFlowScopeValue("createdXML", createdXml);
-        //        }
     }
 
     public void setExpConfigPopup(RichPopup expConfigPopup) {
@@ -330,14 +308,11 @@ public class LoadDynamicRegionBean {
 
     public void fileDownloadListener(FacesContext facesContext,
                                      OutputStream outputStream) {
-        System.out.println("Download Listener Fired");
         Row row = null;
         V93kQuote parentObj =
             (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         String quoteNum =
             (String)ADFUtils.getSessionScopeValue("targetQuoteNumber");
-        System.out.println("Target Quote Number " +
-                           ADFUtils.getSessionScopeValue("targetQuoteNumber"));
         if (parentObj != null && parentObj.getQheaderObject() != null &&
             parentObj.getQheaderObject().getDealObject() != null &&
             parentObj.getQheaderObject().getDealObject().getQuoteid() !=
@@ -346,7 +321,6 @@ public class LoadDynamicRegionBean {
                 quoteNum =
                         parentObj.getQheaderObject().getDealObject().getQuoteid();
             }
-            System.out.println("QUOTE NUMBER :" + quoteNum);
             if (quoteNum != null) {
                 quoteNum = quoteNum.trim();
             }
@@ -369,7 +343,6 @@ public class LoadDynamicRegionBean {
                 quoteNum = quoteNum.trim();
                 OperationBinding op =
                     ADFUtils.findOperation("getQuoteExportValues");
-                System.out.println("QUOTE NUMBER : " + quoteNum);
                 op.getParamsMap().put("quoteNumber", quoteNum);
                 if (op != null) {
                     row = (Row)op.execute();
@@ -453,11 +426,8 @@ public class LoadDynamicRegionBean {
                 }
 
                 String jsonStr = JSONUtils.convertObjToJson(v93k);
-                System.out.println("Json being sent " + jsonStr);
                 String responseJson =
                     ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-                System.out.println("Response Json from Configurator : " +
-                                   responseJson);
                 ObjectMapper mapper = new ObjectMapper();
                 Object obj = mapper.readValue(responseJson, V93kQuote.class);
                 v93k = (V93kQuote)obj;
@@ -604,9 +574,6 @@ public class LoadDynamicRegionBean {
                                                                          "</b></p>");
                                                     }
 
-                                                    //Save to oracle success , set param here
-                                                    //                                                ADFUtils.setSessionScopeValue("configSaved",
-                                                    //                                                                              "Y");
                                                     isQuoteSaved = true;
                                                 } else if (createMsg.contains("E-")) {
                                                     String[] resMsg =
@@ -645,7 +612,6 @@ callWarranty(v93k, v93k.getSessionDetails().getTargetQuoteNumber(), respid,
 
                                 //                        resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
                                 //                        resultMsg.append("\n");
-                                System.out.println("Please create Quote before save");
                             }
                         } else if (v93k.getSessionDetails().isDuplicateQuote()) {
                             if (v93k.getSessionDetails().getTargetQuoteNumber() !=
@@ -793,7 +759,6 @@ callWarranty(v93k, v93k.getSessionDetails().getTargetQuoteNumber(), respid,
                                                         "</b></p>");
                                 //                        resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
                                 //                        resultMsg.append("\n");
-                                System.out.println("Please craete Quote before Save");
                             }
                         } else if (v93k.getSessionDetails().isUpdateQuote()) {
                             if (v93k.getSessionDetails().getSourceQuoteNumber() !=
@@ -1062,7 +1027,6 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                                                         "</b></p>");
                                 //                        resultErrMsg.append("<p><b>Please verify and create quote before saving</b></p>");
                                 //                        resultMsg.append("\n");
-                                System.out.println("Please create Quote before Save");
                             }
                         } else {
                             if (createQtMsg != null)
@@ -1178,13 +1142,11 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
     }
 
     public void navToConfigurator(ActionEvent actionEvent) {
-        System.out.println("Current TF " + currentTF);
         ADFUtils.setSessionScopeValue("currView", "config");
 
     }
 
     public void navToViewRef(ActionEvent actionEvent) {
-        System.out.println("Current TF " + currentTF);
         ADFUtils.setSessionScopeValue("currView", "viewRef");
         quoteNavPopup.cancel();
     }
@@ -1220,11 +1182,11 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             v93k.setInputParams(inputParams);
             v93k.setSessionDetails(sessionDetails);
             String jsonStr = JSONUtils.convertObjToJson(v93k);
-            System.out.println("Input JSON " + jsonStr);
+            _logger.info("Input JSON " + jsonStr);
             ObjectMapper mapper = new ObjectMapper();
             String responseJson =
                 ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-            System.out.println("Response Json from Configurator : " +
+            _logger.info("Response Json from Configurator : " +
                                responseJson);
             Object obj = mapper.readValue(responseJson, V93kQuote.class);
             v93k = (V93kQuote)obj;
@@ -1602,8 +1564,6 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             }
 
             String squotehid = String.valueOf(quotehid);
-            System.out.println("print quotehid" + squotehid);
-
             int respid =
                 Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
                                  null ? "51156" :
@@ -1648,9 +1608,6 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             }
 
             String spath = String.valueOf(path);
-            System.out.println("print serverpath" + spath);
-
-
             dataProcessor.setDataTemplate("" + spath +
                                           "PMF_REPORT_pmux_frames_PDF.xml"); //server
 
@@ -1692,9 +1649,6 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             byte[] data = out.toByteArray();
             _logger.info("byte " + data);
             ByteArrayInputStream istream = new ByteArrayInputStream(data);
-            System.out.println("Done data template");
-
-            _logger.info("Done data template");
 
             //  RTFProcessor rtf = new RTFProcessor("C:\\Users\\vthommandru\\Downloads\\XXATRPT_PMF_V4_Y_mux_FRAMES_PDF.rtf");  // local
 
@@ -1729,13 +1683,10 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                          FOProcessor.FORMAT_PDF);
             processor.generate();
             _logger.info("Done power point");
-            System.out.println("Done power point");
             outputStream.flush();
-            _logger.info("Done flush");
 
 
         } catch (Exception e) {
-            System.out.println("error::: " + e.getMessage());
             _logger.info("error::: " + e.getMessage());
         }
     }
@@ -1834,11 +1785,7 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             ob.getParamsMap().put("usrId", usrId);
 
             if (ob != null) {
-                System.out.println("print operation binding start to execute");
                 reqid = ob.execute();
-                //   System.out.println("print req id"+reqid);
-                System.out.println("print operation binding end to execute" +
-                                   reqid);
             }
 
 
@@ -1886,9 +1833,6 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             byte[] data = out.toByteArray();
             _logger.info("byte " + data);
             ByteArrayInputStream istream = new ByteArrayInputStream(data);
-            System.out.println("Done data template");
-
-            _logger.info("Done data template");
 
             //  RTFProcessor rtf = new RTFProcessor("C:\\Users\\vthommandru\\Desktop\\reportswork\\XXAT_RDV_REP_CTH_OUT.rtf");  // local
 
@@ -1896,14 +1840,9 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             RTFProcessor rtf =
                 new RTFProcessor("" + spath + "XXAT_RDV_REP_CTH_OUT.rtf"); // server
 
-            _logger.info("print rtf directory " + rtf);
-
             ByteArrayOutputStream outXslFo = new ByteArrayOutputStream();
-            _logger.info("outXslFo" + outXslFo);
             rtf.setOutput(outXslFo);
-            _logger.info("outXslFo set output");
             rtf.process();
-            _logger.info("set rtf process");
             byte[] dataXslFo = outXslFo.toByteArray();
             _logger.info("print" + dataXslFo);
             ByteArrayInputStream inXslFo = new ByteArrayInputStream(dataXslFo);
@@ -1922,13 +1861,11 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
 
             processor.generate();
             _logger.info("Done power point");
-            System.out.println("Done power point");
             outputStream.flush();
             _logger.info("Done flush");
 
 
         } catch (Exception e) {
-            System.out.println("error::: " + e.getMessage());
             _logger.info("error::: " + e.getMessage());
         }
 
@@ -1960,7 +1897,6 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             }
 
             String squotehid = String.valueOf(quotehid);
-            System.out.println("print quotehid" + squotehid);
 
             int respid =
                 Integer.parseInt((String)ADFUtils.getSessionScopeValue("RespId") ==
@@ -2060,26 +1996,23 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
 
             cst = am.getDBTransaction().createCallableStatement(query1, 0);
 
-            System.out.println("Query ::: " + query1);
             cst.executeUpdate();
             am.getDBTransaction().commit();
             //Finally get returned value
         } catch (SQLException e) {
-            System.out.println("SQL Exception ::: " + e.getMessage());
+            _logger.info("SQL Exception ::: " + e.getMessage());
         } finally {
             if (cst != null) {
                 try {
                     cst.close();
                 } catch (SQLException e) {
-                    System.out.println("Exception ::: " + e.getMessage());
+                    _logger.info(e.getMessage());
                 }
             }
         }
         if (vo != null) {
             vo.clearCache();
             vo.executeEmptyRowSet();
-            System.out.println("Row  Count:" + vo.getEstimatedRowCount());
-
         }
 
 
@@ -2103,11 +2036,7 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             ob.getParamsMap().put("usrId", usrId);
 
             if (ob != null) {
-                System.out.println("print operation binding start to execute");
                 reqid = (String)ob.execute();
-                //   System.out.println("print req id"+reqid);
-                System.out.println("print operation binding end to execute" +
-                                   reqid);
             }
 
 
@@ -2126,7 +2055,6 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
 
 
                 blobDomain = (BlobDomain)row.getAttribute("FileData");
-                System.out.println("blobDomain ::: " + blobDomain);
                 BufferedInputStream bin =
                     new BufferedInputStream(blobDomain.getBinaryStream());
 
@@ -2138,7 +2066,7 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                 outputStream.close();
             }
         } catch (Exception e) {
-            System.out.println("exception ::: " + e.getMessage());
+            _logger.info(e.getMessage());
         }
     }
 

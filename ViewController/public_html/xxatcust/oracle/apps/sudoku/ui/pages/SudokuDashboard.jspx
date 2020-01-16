@@ -114,8 +114,11 @@
                   <af:panelGroupLayout id="pgXl16_cb" layout="vertical">
                     <af:panelGroupLayout id="pgl31_cb" layout="horizontal"
                                          inlineStyle="font-weight:bold;">
-                      <af:image source="/Resources/images/imgs/warning.PNG"
+                      <af:image source="/problem.png"
                                 id="i12_b"/>
+                      <af:spacer width="10" height="10" id="s26"/>
+                      <af:outputFormatted value="Warning!" id="of9"
+                                          inlineStyle="color:Black; font-size:medium;"/>
                     </af:panelGroupLayout>
                     <af:spacer width="10" height="10" id="s62_cb"/>
                     <af:outputText value="Are you sure you want to Reset all existing changes?"
@@ -347,13 +350,16 @@
                                  inlineStyle="width:550px">
               <af:panelGroupLayout id="pgl31_cbx" layout="horizontal"
                                    inlineStyle="font-weight:bold;">
-                <af:image source="/Resources/images/imgs/info.PNG"
+                <af:image source="/info_color.png"
                           id="i12_bx"/>
+                <af:spacer width="10" height="10" id="s27"/>
+                <af:outputFormatted value="Information" id="of10"
+                                    inlineStyle="color:Black; font-size:medium;"/>
               </af:panelGroupLayout>
               <af:spacer width="10" height="10" id="s62_cbx"/>
               <af:outputText value="This action yielded the results shown below."
                              id="ot3x"
-                             inlineStyle="font-weight:bold;"/>
+                             inlineStyle="font-weight:bold;" rendered="false"/>
             </af:panelGroupLayout>
             <af:spacer width="10" height="10" id="s21"/>
             <af:panelGroupLayout id="pgl8" layout="scroll">
@@ -381,8 +387,11 @@
                                  inlineStyle="width:550px">
               <af:panelGroupLayout id="pgl31_cbxz" layout="horizontal"
                                    inlineStyle="font-weight:bold;">
-                <af:image source="/Resources/images/imgs/info.PNG"
+                <af:image source="/info_color.png"
                           id="i12_bxz"/>
+                <af:spacer width="10" height="10" id="s23"/>
+                <af:outputFormatted value="Information" id="of6"
+                                    inlineStyle="color:Black; font-size:medium;"/>
               </af:panelGroupLayout>
               <af:spacer width="10" height="10" id="s62_cbxz"/>
               <af:outputText value="Model File Report" id="ot3xz"
@@ -408,8 +417,11 @@
                                  inlineStyle="width:550px">
               <af:panelGroupLayout id="pgl31_cbyz" layout="horizontal"
                                    inlineStyle="font-weight:bold;">
-                <af:image source="/Resources/images/imgs/error.PNG"
+                <af:image source="/wrong.png"
                           id="i12_byz"/>
+                <af:spacer width="10" height="10" id="s24"/>
+                <af:outputFormatted value="Error!" id="of7"
+                                    inlineStyle="color:Black; font-size:medium;"/>
               </af:panelGroupLayout>
               <af:spacer width="10" height="10" id="s62_cbyz"/>
               <af:outputText value="Error(s) occurred :" id="ot3yz"
@@ -428,8 +440,11 @@
                                  inlineStyle="width:550px">
               <af:panelGroupLayout id="pgl31_cbmz" layout="horizontal"
                                    inlineStyle="font-weight:bold;">
-                <af:image source="/Resources/images/imgs/warning.PNG"
+                <af:image source="/problem.png"
                           id="i12_bmz"/>
+                <af:spacer width="10" height="10" id="s25"/>
+                <af:outputFormatted value="Warning!" id="of8"
+                                    inlineStyle="color:Black; font-size:medium;"/>
               </af:panelGroupLayout>
               <af:spacer width="10" height="10" id="s62_cbmz"/>
               <af:outputText value="Configurations has below warning(s)"

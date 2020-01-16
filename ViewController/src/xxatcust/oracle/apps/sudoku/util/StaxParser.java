@@ -41,7 +41,6 @@ public class StaxParser {
 
             stringWriter.close();
 
-            System.out.println(xmlString);
         } catch (FactoryConfigurationError fce) {
             // TODO: Add catch code
             fce.printStackTrace();

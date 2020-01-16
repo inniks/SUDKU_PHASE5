@@ -206,22 +206,6 @@ public class DpsDCScaleBean {
                 counter++;
             }
         }
-        
-        
-    //        if (listofcollections != null && !listofcollections.isEmpty()) {
-    //            int counter = 1;
-    //            for (int i = 0; i < listofcollections.size(); i++) {
-    //                if (listofcollections.get(i).size() > 0) {
-    //                    ShowDetailItemCollection sdi =
-    //                        new ShowDetailItemCollection(Integer.toString(counter),
-    //                                                     listofcollections.get(i),
-    //                                                     listofcollections.get(i).get(0).getSelectedValue());
-    //                    sdiCollection.add(sdi);
-    //                    counter++;
-    //                }
-    //            }
-    //        }
-        System.out.println();
         return (ArrayList<ShowDetailItemCollection>)sdiCollection;
     }
 }

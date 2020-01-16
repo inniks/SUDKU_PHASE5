@@ -109,7 +109,6 @@ public class JaxbParser {
             while ((line = reader.readLine()) != null) {
 
                 result.append(line.trim());
-                System.out.println("Line " + line);
             }
             InputStream is =
                 new ByteArrayInputStream(result.toString().getBytes(Charset.forName("UTF-8")));

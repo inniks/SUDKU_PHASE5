@@ -36,7 +36,6 @@ public class MyFilter implements Filter {
         boolean sameSession = currentSessionID.equalsIgnoreCase(reqSessionID);
         if (!sameSession && reqSessionID != null) {
             ((HttpServletResponse)servletResponse).sendRedirect(requestURI);
-            System.out.println("Session is null");
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

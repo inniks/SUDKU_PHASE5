@@ -1779,7 +1779,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
     public void getUserBasedCurrency() {
         ViewObjectImpl vo =
             (ViewObjectImpl)this.getCurrencyVO().getViewObject();
-        System.out.println("currency code value from Quote:"+this.getCurrencyCode());
         String colType = "Currency";
         String currency = null;
         List<String> temp = null;
@@ -1790,7 +1789,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
             Row[] rows = this.getuserPrefEntityVA().findByKey(key, 2);
             if (rows != null && rows.length > 0)
                 currency = (String)rows[0].getAttribute("ColumnVal");
-            System.out.println("currency values is:" + currency);
             if (currency != null) {
                 temp = Arrays.asList(currency.split("\\s*,\\s*"));
                 sb.append(this.getCurrencyCode());
@@ -1799,7 +1797,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 } 
             }
             sb.append("')");
-            System.out.println("currency List :values:" + sb.toString());
             vo.clearCache();
             vo.setWhereClause(null);
             if (currency!=null)
@@ -1827,7 +1824,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 currency = (String)rows[0].getAttribute("ColumnVal");
                 defaultval = (String)rows[0].getAttribute("DefaultVal");
             }
-            System.out.println("currency values is:" + currency);
             if (defaultval !=
                 null) { //vo.getFilteredRows("CurrencyCode",defaultval);
                 vo.clearCache();
@@ -1852,7 +1848,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 }
             }
                 sb.append("')");
-                System.out.println("currency List :values:" + sb.toString());
                 vo.clearCache();
                 vo.setWhereClause(null);
                 if (!sb.toString().equalsIgnoreCase("('')"))
@@ -1879,17 +1874,14 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
             if (rows != null && rows.length > 0) {
                 incoTerm = (String)rows[0].getAttribute("ColumnVal");
             }
-            System.out.println("IncoTerm values is:" + incoTerm);
             if (incoTerm != null) {
                 temp = Arrays.asList(incoTerm.split("\\s*,\\s*"));
-                System.out.println("Incoterm Value from update QUote:"+this.getIncoterms());
                 sb.append(this.getIncoterms());
                 for (int i = 0; i < temp.size(); i++) {
                     sb.append("','").append(temp.get(i));
                 }  
             }
             sb.append("')");
-                System.out.println("incoTerm values:" + sb.toString());
                 vo.clearCache();
                 vo.setWhereClause(null);
                 if (!sb.toString().equalsIgnoreCase("('')"))
@@ -1913,7 +1905,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
            
             String colType = "Customer";
             if (vo != null) {
-                System.out.println("SalesChannel::" + salesChannel);
                 Object[] obj = { usrId, colType, salesChannel,String.valueOf(this.getOrgId()) };
                 Key key = new Key(obj);
                 Row[] rows = this.getuserPrefSCVA().findByKey(key, 4);
@@ -1951,8 +1942,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                     }
                 }
                 sb.append("')");
-                System.out.println("customer Name list valuse ::" +
-                                   sb.toString());
                 vo.clearCache();
                 vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("p_orgId", this.getOrgId());
@@ -1982,7 +1971,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 incoTerm = (String)rows[0].getAttribute("ColumnVal");
                 defaultval = (String)rows[0].getAttribute("DefaultVal");
             }
-            System.out.println("IncoTerm values is:" + incoTerm);
             if (defaultval != null) {
                 vo.clearCache();
                 vo.setWhereClause(null);
@@ -2009,7 +1997,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
             sb.append("')");
                 vo.clearCache();
                 vo.setWhereClause(null);
-                System.out.println("incoTerm values:" + sb.toString());
                 if(!sb.toString().equalsIgnoreCase("('')"))
                 vo.setWhereClause("meaning in" + sb.toString());
                 else{}
@@ -2033,7 +2020,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
             if (rows != null && rows.length > 0) {
                 salesChannel = (String)rows[0].getAttribute("ColumnVal");
             }
-            System.out.println("currency values is:" + salesChannel);
             if (salesChannel != null) {
                 temp = Arrays.asList(salesChannel.split("\\s*,\\s*"));
                 if(this.getSalesChannelCode()!=null){
@@ -2048,7 +2034,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 }
             }
             sb.append("')");
-            System.out.println("sales Channel values:" + sb.toString());
             vo.clearCache();
             vo.setWhereClause(null);
             if(!sb.toString().equalsIgnoreCase("('')"))
@@ -2060,8 +2045,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
     }
 
     public void getUserBasedOrderType() {
-        System.out.println("OrgId::" + this.getOrgId());
-        System.out.println("Order Type:"+this.getOrdertypename()+"OrderTypeId:"+this.getOrderTypeId());
         ViewObjectImpl userBasedVO = (ViewObjectImpl)this.getuserPrefEntityVA().getViewObject();
         if (this.getOrgId() != null) {
             String orderTypeValues = null;
@@ -2114,7 +2097,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 paymentTerm = (String)rows[0].getAttribute("ColumnVal");
                 defaultval = (String)rows[0].getAttribute("DefaultVal");
             }
-            System.out.println("PaymentTerm values is:" + paymentTerm);
             if (defaultval != null) {
                 vo.clearCache();
                 vo.setWhereClause(null);
@@ -2143,7 +2125,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 vo.clearCache();
                 vo.setWhereClause(null);
                 if(!sb.toString().equalsIgnoreCase("('')")){
-                System.out.println("Payment Term values:" + sb.toString());
                 vo.setWhereClause("Name in" + sb.toString());
                 }
                 else{}
@@ -2171,7 +2152,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 ba = (String)rows[0].getAttribute("ColumnVal");
                 defaultval = (String)rows[0].getAttribute("DefaultVal");
             }
-            System.out.println("ba values is:" + ba);
             if (defaultval != null) {
                 vo.clearCache();
                 vo.setWhereClause(null);
@@ -2198,7 +2178,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
             } sb.append(")");
                 vo.clearCache();
                 vo.setWhereClause(null);
-                System.out.println("ba values:" + sb.toString());
                 if(!sb.toString().equalsIgnoreCase("()"))
                 vo.setWhereClause("agreement_id in" + sb.toString());
                 else{}
@@ -2209,9 +2188,7 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
 
 
     public void getUserBasedSalesRep() {
-        System.out.println("OrgId::" + this.getOrgId());
         BigDecimal defaultval = null;
-        System.out.println("QUote Based SalesRep:"+this.getSalesrepresentative());
         ViewObjectImpl userBasedVO = (ViewObjectImpl)this.getuserPrefEntityVA().getViewObject();
         if (this.getOrgId() != null) {
             String salesRepValues = null;
@@ -2219,14 +2196,12 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
             ViewObjectImpl vo =
                 (ViewObjectImpl)this.getSalesRepresentativeVO().getViewObject();
             String colType = "'Sales_Rep'";
-            System.out.println("default valuess:"+this.getSalesrepresentative());
             if(this.getSalesrepresentative()!=null){
                 vo.setWhereClause(null);
                 vo.setNamedWhereClauseParam("p_orgId", null);
                 vo.setNamedWhereClauseParam("p_orgId",this.getOrgId());
     //                vo.setNamedWhereClauseParam("p_orgId",new BigDecimal(this.getOrgId().toString()));
                 vo.setWhereClause("resource_name='"+this.getSalesrepresentative()+"'");
-                System.out.println("Query:"+vo.getQuery());
                 vo.executeQuery();
                 RowSetIterator iter = vo.createRowSetIterator(null);
                 while(iter.hasNext()){
@@ -2259,7 +2234,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
                 if(salesRepValues!=null)
                 vo.setWhereClause("RESOURCE_ID in" + sb.toString());
                 vo.executeQuery();
-                System.out.println("count:"+vo.getEstimatedRowCount());
             }
         }
     }
@@ -4520,7 +4494,6 @@ public class QuoteUpdateVORowImpl extends ViewRowImpl {
      * @return the CustName
      */
     public String getCustName() {
-        System.out.println("GEtCustNmae"+getAttributeInternal(CUSTNAME));
         return (String) getAttributeInternal(CUSTNAME);
     }
 

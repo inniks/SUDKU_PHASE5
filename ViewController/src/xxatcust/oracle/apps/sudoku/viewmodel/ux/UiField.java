@@ -292,8 +292,6 @@ public class UiField {
                                     uiNode.getIdentifier();
                                 selectedLovValue =
                                         czNodeName.concat("-").concat(uiNodeName).concat("-").concat(identifier);
-                                System.out.println("Selected LOV Value is " +
-                                                   selectedLovValue);
                             }
                             String czNodeName =
                                 uiNode.getCzNodeName() == null ? "-1" :
@@ -1325,7 +1323,6 @@ public class UiField {
                         !listOfNodes.get(i).getConfigUiNodes().isEmpty()) {
                         node = listOfNodes.get(i).getConfigUiNodes().get(0);
                         uiField12 = node.getUiNodeName();
-                        System.out.println("Field 12 value " + uiField12);
                         selectedValue = subGrpName;
                         czNodeName12 = node.getCzNodeName();
                         uiField12_code = czNodeName12;

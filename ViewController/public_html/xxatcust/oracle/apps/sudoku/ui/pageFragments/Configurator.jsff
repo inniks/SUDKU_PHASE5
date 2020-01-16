@@ -8148,7 +8148,10 @@
                              inlineStyle="width:550px">
           <af:panelGroupLayout id="pgl31" layout="horizontal"
                                inlineStyle="font-weight:bold;">
-            <af:image source="/Resources/images/imgs/warning.PNG" id="i12"/>
+            <af:image source="/problem.png" id="i12"/>
+            <af:spacer width="10" height="10" id="s66"/>
+            <af:outputFormatted value="Warning!" id="of8"
+                                inlineStyle="font-size:small; font-weight:bold;"/>
           </af:panelGroupLayout>
           <af:spacer width="10" height="10" id="s62"/>
           <af:outputText value="Your existing configuration will be lost, Are you sure you want to continue?"
@@ -8161,9 +8164,12 @@
                  contentHeight="200" type="cancel" inlineStyle="color:Red;">
                  <af:panelGroupLayout id="pgXl16_1" layout="vertical"
                              inlineStyle="width:550px">
-          <af:panelGroupLayout id="pgl31_1" layout="scroll"
+          <af:panelGroupLayout id="pgl31_1" layout="horizontal"
                                inlineStyle="font-weight:bold;">
-            <af:image source="/Resources/images/imgs/error.PNG" id="i12_1"/>
+            <af:image source="/wrong.png" id="i12_1"/>
+            <af:spacer width="10" height="10" id="s67"/>
+            <af:outputFormatted value="Error!" id="of10"
+                                inlineStyle="color:Black; font-size:medium;"/>
           </af:panelGroupLayout>
           <af:spacer width="10" height="10" id="s62_1"/>
            <af:outputFormatted id="ot15" inlineStyle="color:Red;"
@@ -8179,7 +8185,10 @@
                              inlineStyle="width:550px">
           <af:panelGroupLayout id="pgl31_c" layout="horizontal"
                                inlineStyle="font-weight:bold;">
-            <af:image source="/Resources/images/imgs/warning.PNG" id="i12_bv"/>
+            <af:image source="/problem.png" id="i12_bv"/>
+            <af:spacer width="10" height="10" id="s68"/>
+            <af:outputFormatted value="Warning!" id="of17"
+                                inlineStyle="color:Black; font-size:medium;"/>
           </af:panelGroupLayout>
           <af:spacer width="10" height="10" id="s62_c"/>
           <af:outputText value="Configuration has below warning(s)"
@@ -8200,7 +8209,10 @@
                              inlineStyle="width:550px">
           <af:panelGroupLayout id="pgl31_cb" layout="horizontal"
                                inlineStyle="font-weight:bold;">
-            <af:image source="/Resources/images/imgs/warning.PNG" id="i12_b"/>
+            <af:image source="/problem.png" id="i12_b"/>
+            <af:spacer width="10" height="10" id="s69"/>
+            <af:outputFormatted value="Warning!" id="of18"
+                                inlineStyle="color:Black; font-size:medium;"/>
           </af:panelGroupLayout>
           <af:spacer width="10" height="10" id="s62_cb"/>
           <af:outputText value="Configuration has below conflict(s)"

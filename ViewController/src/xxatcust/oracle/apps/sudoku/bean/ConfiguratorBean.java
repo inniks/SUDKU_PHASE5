@@ -231,7 +231,6 @@ public class ConfiguratorBean {
     public void initConfigurator() throws IOException, JsonGenerationException,
                                           JsonMappingException {
         //The refresh should happen only if there is a v93k object available
-        //                        System.out.println("Init Configurator..");
         //                                V93kQuote v93k =
         //                                    (V93kQuote)convertJsonToObject(null); //Comment for server, this i s to simulate OAF call
         //                                ADFUtils.setSessionScopeValue("parentObject",
@@ -713,15 +712,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
             String selectedValue =
                 (String)selectedNodeValueMap.get("selectedValue");
             String czNodeName = (String)selectedNodeValueMap.get("czNodeName");
-
-            //            if(czNodeName!=null && czNodeName.contains("\"")){
-            //                System.out.println("Cz Node name has special characters : "+czNodeName);
-            //                czNodeName = "\""+czNodeName+"\"";
-            //            }
-            //            if (czNodeName != null) {
-            //                czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
-            //                //czNodeName = "\"" + czNodeName + "\"";
-            //            }
             String identifier = (String)selectedNodeValueMap.get("identifier");
             String nodeColor = (String)selectedNodeValueMap.get("nodeColor");
             String parentGroupName =
@@ -1691,12 +1681,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
                 (String)inputLOVMap.get("parentGroupName");
             String czNodeName = (String)inputLOVMap.get("czNodeName");
             String czModelName = (String)inputLOVMap.get("czModelName");
-            //            if (czNodeName != null) {
-            //                System.out.println("Cz Node name has special characters : " +
-            //                                   czNodeName);
-            //                czNodeName = ConfiguratorUtils.returnFormattedNode(czNodeName);
-            //                //czNodeName = "\"" + czNodeName + "\"";
-            //            }
             String identifier = (String)inputLOVMap.get("identifier");
             UiSelection uiSelection = v93k.getUiSelection();
             if (uiSelection == null) {
@@ -2390,7 +2374,6 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
         if (oneTimeSpecial != null && oneTimeSpecial.equalsIgnoreCase("OTS")) {
             otsDislayValue = "Advantest Expert";
         }
-        System.out.println("OTS Display Value " + otsDislayValue);
         return otsDislayValue;
     }
 

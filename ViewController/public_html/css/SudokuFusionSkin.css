@@ -57,3 +57,16 @@ af|showDetailHeader::undisclosed-icon-style {
 af|listItem:group-header {
     background-color: #c6c6c6; 
 }
+af|messages::info-icon 
+{
+content: url("/info_color.png");
+}
+
+af|messages::warning-icon
+{
+content: url("/problem.png");
+}
+af|messages::error-icon
+{
+content: url("/wrong.png");
+}

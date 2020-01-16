@@ -208,7 +208,6 @@ public class InfraUpgradesBean {
                 counter++;
             }
         }
-        System.out.println();
         return (ArrayList<ShowDetailItemCollection>)sdiCollection;
     }
 

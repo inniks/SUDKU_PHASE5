@@ -227,38 +227,6 @@ public class RuleSetVORowImpl extends ViewRowImpl {
                         }
                     } 
                 } 
-//                else {
-//
-//                    Object[] obj = { "STANDARD" };
-//                    Key key = new Key(obj);
-//                    //Based on the value of LOV switcher attribute , Select the LOV to be used here
-//                    if (topLevelCode != null &&
-//                        topLevelCode.equalsIgnoreCase("E8000SYS")) {
-//                        //use 1st LOV
-//                        Row[] rows =
-//                            this.getRSetSecLevelLOVII1().findByKey(key, 1);
-//                        if (rows != null && rows.length > 0) {
-//                            secondLevelMeaning =
-//                                    (String)rows[0].getAttribute("Meaning");
-//                            System.out.println("VO Row Impl E8000SYS : SecondLevel " +
-//                                               secondLevelMeaning);
-//                        }
-//                    }
-//                    if (topLevelCode != null &&
-//                        topLevelCode.equalsIgnoreCase("E8008SYS")) {
-//                        //use 2nd lov
-//                        Row[] rows =
-//                            this.getRSetSecLevelLOVI1().findByKey(key, 1);
-//                        if (rows != null && rows.length > 0) {
-//                            secondLevelMeaning =
-//                                    (String)rows[0].getAttribute("Meaning");
-//                            System.out.println("VO Row Impl E8008SYS : SecondLevel " +
-//                                               secondLevelMeaning);
-//                        }
-//                    }
-//
-//
-//                }
             }
         }
         return secondLevelMeaning;

@@ -73,7 +73,7 @@ public class ConfiguratorUtils {
         URL url =
             new URL("http://usdcnvspt2ap1.adv.advantest.com:8000/OA_HTML/configurator/XXATSudokuCzServletP5");
         _logger.info("Print url in callConfiguratorServlet " + url);
-        System.out.println("Opening Connection");
+        _logger.info("Opening Connection");
         HttpURLConnection con = (HttpURLConnection)url.openConnection();        
         // inform the connection that we will send output and accept input
         long start = System.nanoTime();

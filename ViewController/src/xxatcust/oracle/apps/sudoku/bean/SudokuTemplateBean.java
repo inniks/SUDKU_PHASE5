@@ -25,7 +25,6 @@ public class SudokuTemplateBean {
         return taskFlowParam;
     }
     public void controllerExceptionHandler() {
-        System.out.println("Inside Exception Handler");
         ControllerContext context = ControllerContext.getInstance();
         ViewPortContext currentRootViewPort = context.getCurrentRootViewPort();
         Exception exceptionData = currentRootViewPort.getExceptionData();
