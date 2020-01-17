@@ -1874,7 +1874,7 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
     public void onMOFreportFetch(PopupFetchEvent popupFetchEvent) {
         try {
 
-
+            setMOFop.setValue(null);
             String quoteNum = null;
             V93kQuote v93k =
                 (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
@@ -1932,25 +1932,18 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
                 if (output != null) {
                     _logger.info("OutPut of MOF Report is " +
                                  output.toString());
-                    _logger.info("Has New Line Characters1? " +
-                                 output.toString().contains("\n"));
-                    _logger.info("Has New Line Characters2? " +
-                                 output.toString().contains("\\n"));
                     boolean hasNwLine = output.toString().contains("\\n");
                     boolean hasNwLine1 = output.toString().contains("\n");
                     if (hasNwLine || hasNwLine1) {
                         _logger.info("Inside MOOF CONDITION");
+                        outStr = output.toString();
                         outStr = outStr.replaceAll("\\n", "<br>");
-                        _logger.info("Kya Ho raha bc "+outStr);
                         outStr = outStr.replaceAll("\n", "<br>");
                         _logger.info("MOF Text now " + outStr);
 
                     }
                 }
-//                if (outStr != null)
-//                    setMOFop.setValue(outStr);
-//                else
-                    setMOFop.setValue(output);
+                    setMOFop.setValue(outStr);
             }
 
         } catch (Exception e) {

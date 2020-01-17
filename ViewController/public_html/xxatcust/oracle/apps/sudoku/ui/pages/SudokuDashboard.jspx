@@ -398,14 +398,8 @@
                              inlineStyle="width:450px; font-weight:bold;"/>
             </af:panelGroupLayout>
             <af:panelGroupLayout id="pgl9" layout="scroll">
-              <af:panelFormLayout id="pfl2">
-                <f:facet name="footer"/>
-                <af:panelLabelAndMessage id="plam2">
-                  <af:outputFormatted id="of5"
-                                      binding="#{viewScope.LoadDynamicRegionBean.setMOFop}"
-                                      styleClass="PreWrap"/>
-                </af:panelLabelAndMessage>
-              </af:panelFormLayout>
+              <af:outputFormatted id="of5"
+                                  binding="#{viewScope.LoadDynamicRegionBean.setMOFop}"/>
             </af:panelGroupLayout>
           </af:dialog>
         </af:popup>

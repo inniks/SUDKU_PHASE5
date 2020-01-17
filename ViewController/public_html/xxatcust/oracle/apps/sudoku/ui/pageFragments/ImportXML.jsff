@@ -147,7 +147,8 @@
                                   </af:gridCell>
                                   <af:gridCell marginStart="5px" width="400px"
                                                id="gc4_a"
-                                               inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
+                                               inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
+                                               halign="start">
                                     <af:outputText value="Product Description"
                                                    id="ot2_a" truncateAt="65"
                                                    shortDesc="#{node.nodeDescription}"
@@ -156,39 +157,58 @@
                                   <af:gridCell marginStart="5px" marginEnd="5px"
                                                width="100px" id="gc5_a"
                                                inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                    <af:spacer width="150" height="10"
+                                    <af:spacer width="80" height="10"
                                                id="s4_a"/>
                                   </af:gridCell>
                                   <af:gridCell marginStart="5px" width="100px"
                                                id="gc3_a"
-                                               inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                    <af:outputText value="Quantity" id="ot3_a"
-                                                   inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
+                                               inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
+                                               halign="center">
+                                    <af:panelGroupLayout id="pgl25"
+                                                         halign="center"
+                                                         layout="horizontal">
+                                      <af:outputText value="Quantity" id="ot3_a"
+                                                     inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
+                                    </af:panelGroupLayout>
                                   </af:gridCell>
                                   <af:gridCell marginStart="5px" width="100px"
                                                id="gc8_a"
-                                               inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                    <af:outputText id="ot4_a" value="UOM"
-                                                   inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
+                                               inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
+                                               halign="center">
+                                    <af:panelGroupLayout id="pgl24"
+                                                         halign="center">
+                                      <af:outputText id="ot4_a" value="UOM"
+                                                     inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
+                                    </af:panelGroupLayout>
                                   </af:gridCell>
-                                  <af:gridCell marginStart="5px" width="100px"
+                                  <af:gridCell marginStart="5px" width="130px"
                                                id="gc11_a"
                                                inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
-                                               rendered="#{XMLImportPageBean.priceRendered}">
-                                    <af:outputText value="Unit Price" id="ot5_a"
-                                                   inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
+                                               rendered="#{XMLImportPageBean.priceRendered}"
+                                               halign="end">
+                                    <af:panelGroupLayout id="pgl23"
+                                                         layout="default"
+                                                         halign="right">
+                                      <af:outputText value="Unit Price"
+                                                     id="ot5_a"
+                                                     inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
+                                    </af:panelGroupLayout>
                                   </af:gridCell>
-                                  <af:gridCell marginStart="5px" width="100px"
+                                  <af:gridCell marginStart="5px" width="130px"
                                                id="gc6_a"
                                                inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
-                                               rendered="#{XMLImportPageBean.priceRendered}">
-                                    <af:outputText value="Extended Price"
-                                                   id="ot6_a"
-                                                   inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"
-                                                   rendered="false"/>
-                                    <af:outputFormatted value="Extended Price"
-                                                        id="of3"
-                                                        inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
+                                               rendered="#{XMLImportPageBean.priceRendered}"
+                                               halign="end" marginEnd="0px">
+                                    <af:panelGroupLayout id="pgl22"
+                                                         halign="right">
+                                      <af:outputText value="Extended Price"
+                                                     id="ot6_a"
+                                                     inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"
+                                                     rendered="false"/>
+                                      <af:outputFormatted value="Extended Price"
+                                                          id="of3"
+                                                          inlineStyle="color:Navy; font-family:'Times New Roman', 'Arial Black', times, Serif; font-weight:bold; font-size:medium;"/>
+                                    </af:panelGroupLayout>
                                   </af:gridCell>
                                   <af:gridCell marginStart="5px" width="14%"
                                                id="gc6_1_a"
@@ -229,37 +249,54 @@
                                 <af:gridCell marginStart="5px" marginEnd="5px"
                                              width="100px" id="gc5_a1"
                                              inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                  <af:spacer width="150" height="10"
+                                  <af:spacer width="80" height="10"
                                              id="s4_a1"/>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="100px"
                                              id="gc3_a1"
-                                             inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                  <af:outputText value="#{node.nodeQty}"
-                                                 id="ot3_a1"
-                                                 inlineStyle="text-align:center;"/>
+                                             inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
+                                             halign="center">
+                                  <af:panelGroupLayout id="pgl21"
+                                                       layout="horizontal"
+                                                       halign="center">
+                                    <af:outputText value="#{node.nodeQty}"
+                                                   id="ot3_a1"
+                                                   inlineStyle="text-align:center;"/>
+                                  </af:panelGroupLayout>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="100px"
                                              id="gc8_a1"
-                                             inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'>
-                                  <af:outputText id="ot4_a1" value="#{node.uom}"
-                                                 inlineStyle="text-align:center;"/>
+                                             inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
+                                             halign="center">
+                                  <af:panelGroupLayout id="pgl20"
+                                                       halign="center"
+                                                       layout="horizontal">
+                                    <af:outputText id="ot4_a1"
+                                                   value="#{node.uom}"
+                                                   inlineStyle="text-align:center;"/>
+                                  </af:panelGroupLayout>
                                 </af:gridCell>
-                                <af:gridCell marginStart="5px" width="100px"
+                                <af:gridCell marginStart="5px" width="130px"
                                              id="gc11_a1"
                                              inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
-                                             rendered="#{XMLImportPageBean.priceRendered}">
-                                  <af:outputText value="#{node.unitPrice}"
-                                                 id="ot5_a1"
-                                                 inlineStyle="text-align:right;"/>
+                                             rendered="#{XMLImportPageBean.priceRendered}"
+                                             halign="end" marginEnd="0px">
+                                  <af:panelGroupLayout id="pgl19"
+                                                       halign="right">
+                                    <af:outputText value="#{node.unitPrice}"
+                                                   id="ot5_a1"/>
+                                  </af:panelGroupLayout>
                                 </af:gridCell>
-                                <af:gridCell marginStart="5px" width="100px"
+                                <af:gridCell marginStart="5px" width="130px"
                                              id="gc6_a1"
                                              inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeDesignation ne null ? "Bolder" : null  or node.nodeColor eq "Red" ? "Bolder" : null}; font-size:#{node.nodeDesignation ne null ? "small" : null};'
-                                             rendered="#{XMLImportPageBean.priceRendered}">
-                                  <af:outputText value="#{node.extendedPrice}"
-                                                 id="ot6_a1"
-                                                 inlineStyle="text-align:right;"/>
+                                             rendered="#{XMLImportPageBean.priceRendered}"
+                                             halign="end">
+                                  <af:panelGroupLayout id="pgl18"
+                                                       halign="right">
+                                    <af:outputText value="#{node.extendedPrice}"
+                                                   id="ot6_a1"/>
+                                  </af:panelGroupLayout>
                                 </af:gridCell>
                                 <af:gridCell marginStart="5px" width="100px"
                                              id="gc6_1_a1"
