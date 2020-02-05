@@ -453,10 +453,22 @@
         </af:popup>
         <af:popup id="quoteNavPopup" autoCancel="disabled"
                   binding="#{viewScope.LoadDynamicRegionBean.quoteNavPopup}">
-          <af:dialog id="d1_wrning"
+          <!--af:dialog id="d1_wrning"
                      title="Your existing quote header changes will be lost. Do you want to proceed?"
                      contentWidth="400" contentHeight="200" type="yesNo"
-                     dialogListener="#{viewScope.LoadDynamicRegionBean.quoteNavigationDialogEvent}"></af:dialog>
+                     dialogListener="#{viewScope.LoadDynamicRegionBean.quoteNavigationDialogEvent}"></af:dialog-->
+          <af:panelWindow id="pw1">
+            <af:panelGroupLayout id="pgl10">
+              <af:outputFormatted value="Your existing changes will be lost,Proceed?" id="of11"/>
+              <af:commandButton text="Yes" id="cb6"
+                                actionListener="#{viewScope.LoadDynamicRegionBean.testMethod}">
+                <af:setPropertyListener from="configurator"
+                                        to="#{viewScope.LoadDynamicRegionBean.currentTF}"
+                                        type="action"/>
+              </af:commandButton>
+              <af:commandButton text="No" id="cb7"/>
+            </af:panelGroupLayout>
+          </af:panelWindow>
         </af:popup>
         <af:popup id="pt_p1" animate="default" contentDelivery="lazy">
           <af:dialog id="tod" title="Warning" closeIconVisible="false" type="ok"

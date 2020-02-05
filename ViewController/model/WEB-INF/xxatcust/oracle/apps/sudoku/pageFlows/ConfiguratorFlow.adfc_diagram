@@ -15,11 +15,11 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">168.19531</property>
+         name="y">134.49414</property>
+      <property
+         name="x">358.0</property>
       <property
          name="pageFragment">true</property>
-      <property
-         name="x">690.0</property>
    </View>
    <MethodCall
       id="MethodCall5">
@@ -32,9 +32,9 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">99.59766</property>
+         name="y">210.89648</property>
       <property
-         name="x">420.0</property>
+         name="x">192.0</property>
    </MethodCall>
    <ControlFlowCase
       islink="true"
@@ -44,7 +44,7 @@
       <property
          name="fromOutcome">init</property>
       <property
-         name="sdm:polyPoints">R50,461.0,99.24707,649.0,167.84473,L50</property>
+         name="sdm:polyPoints">R50,233.0,210.5459,317.0,134.14355,L50</property>
    </ControlFlowCase>
    <MethodCall
       id="MethodCall8">
@@ -57,9 +57,9 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">239.14941</property>
+         name="y">124.44824</property>
       <property
-         name="x">169.56055</property>
+         name="x">36.560547</property>
    </MethodCall>
    <ControlFlowCase
       islink="true"
@@ -69,6 +69,6 @@
       <property
          name="fromOutcome">initRuleSetForRef</property>
       <property
-         name="sdm:polyPoints">R50,210.56055,238.79883,379.0,99.24707,L50</property>
+         name="sdm:polyPoints">R50,77.56055,124.09766,151.0,210.5459,L50</property>
    </ControlFlowCase>
 </SDM>

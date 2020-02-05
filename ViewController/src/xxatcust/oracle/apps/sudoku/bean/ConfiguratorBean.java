@@ -449,15 +449,15 @@ mapper.readValue(new File("D://Projects//Advantest//JsonResponse/UIRoot.json"),
 
         ObjectMapper mapper = new ObjectMapper();
         //If config is live use this
-        String responseJson =
-            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        System.out.println("Response Json from Configurator : " +
-                           responseJson);
-        Object obj = mapper.readValue(responseJson, V93kQuote.class);
-        v93k = (V93kQuote)obj;
+//        String responseJson =
+//            ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+//        System.out.println("Response Json from Configurator : " +
+//                           responseJson);
+//        Object obj = mapper.readValue(responseJson, V93kQuote.class);
+//        v93k = (V93kQuote)obj;
 
         // else use this
-       // v93k = (V93kQuote)convertJsonToObject(null);
+        v93k = (V93kQuote)convertJsonToObject(null);
         Map ruleSetMap = new HashMap();
         if (v93k != null && v93k.getInputParams() != null) {
 

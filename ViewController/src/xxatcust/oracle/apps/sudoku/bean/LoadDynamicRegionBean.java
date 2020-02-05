@@ -1142,6 +1142,8 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
     }
 
     public void navToConfigurator(ActionEvent actionEvent) {
+//        RichPopup.PopupHints hints = new RichPopup.PopupHints();
+//        quoteNavPopup.show(hints);
         ADFUtils.setSessionScopeValue("currView", "config");
 
     }
@@ -2349,5 +2351,10 @@ callWarranty(v93k, v93k.getSessionDetails().getSourceQuoteNumber(), respid,
             returnStatus = (String)op.execute();
         }
         return returnStatus;
+    }
+
+    public void testMethod(ActionEvent actionEvent) {
+        ADFUtils.setSessionScopeValue("currView", "config");
+        quoteNavPopup.cancel();
     }
 }
